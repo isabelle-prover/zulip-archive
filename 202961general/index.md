@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: Lean Prover Zulip Chat Archive
+title: Isabelle Zulip Archive
 permalink: ./202961general/index.html
 ---
 
@@ -61,9 +61,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
-<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a><a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+
 {% include archive_update.html %}

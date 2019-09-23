@@ -63,9 +63,9 @@ else:
 # directory to store the generated .json files
 json_root = Path(get_config("archive", "json_root", "./_json"))
 # directory to store the generated .md and .html files
-md_root = Path(get_config("archive", "md_root", "./archive"))
+md_root = Path(get_config("archive", "md_root", "./"))
 # user-facing path for the index
-html_root = Path(get_config("archive", "html_root", "archive"))
+html_root = Path(get_config("archive", "html_root", ""))
 
 # These options these should be little reason to need to update.
 md_index = Path("index.md") # name for the index files
@@ -396,8 +396,7 @@ def github_pull():
 
 # commits changes in archive/ and pushes the current repository to origin/master
 def github_push():
-    print(subprocess.check_output(['git','add','archive/*']))
-    print(subprocess.check_output(['git','add','_includes/archive_update.html']))
+    print(subprocess.check_output(['git','add','*']))
     print(subprocess.check_output(['git','commit','-m','auto update: {}'.format(datetime.utcfromtimestamp(time.time()).strftime('%b %d %Y at %H:%M UTC'))]))
     print(subprocess.check_output(['git','push']))
 

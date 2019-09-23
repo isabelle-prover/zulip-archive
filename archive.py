@@ -107,6 +107,7 @@ def write_stream_index(streams):
             sanitize_stream(s, streams[s]['id']),
             num_topics,
             '' if num_topics == 1 else 's'))
+    outfile.write('<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a> <a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>')
     outfile.write('\n{% include ' + str(last_updated_file) + ' %}')
     outfile.close()
 
@@ -137,7 +138,6 @@ def write_topic_index(stream_name, stream):
             datetime.utcfromtimestamp(t['latest_date']).strftime('%b %d %Y at %H:%M'),
             '' if t['size'] == 1 else 's'
         ))
-    outfile.write('<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a><a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>')
     outfile.write('\n{% include ' + str(last_updated_file) + ' %}')
     outfile.close()
 

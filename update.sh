@@ -1,2 +1,2 @@
 cd "${0%/*}"
-python3 archive.py -ibfp
+python3 archive.py -ibp

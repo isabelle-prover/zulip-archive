@@ -49,5 +49,5 @@ permalink: ./202968quantumcomputing/index.html
 
 * [hello](47413hello.html) (1 message, latest: Jul 02 2019 at 13:31)
 
-
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a><a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>
 {% include archive_update.html %}

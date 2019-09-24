@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Zulip archive](08343Zuliparchive.html) (6 messages, latest: Sep 23 2019 at 23:07)
+* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (4 messages, latest: Sep 24 2019 at 06:26)
 
-* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (3 messages, latest: Sep 23 2019 at 15:17)
+* [Zulip archive](08343Zuliparchive.html) (6 messages, latest: Sep 23 2019 at 23:07)
 
 * [VS Code](48165VSCode.html) (73 messages, latest: Sep 22 2019 at 19:44)
 
@@ -61,9 +61,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

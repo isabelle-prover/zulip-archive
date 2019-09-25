@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [show theorems with certain attributes](50610showtheoremswithcertainattributes.html) (1 message, latest: Sep 25 2019 at 13:23)
+
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (4 messages, latest: Sep 24 2019 at 06:26)
 
 * [Zulip archive](08343Zuliparchive.html) (6 messages, latest: Sep 23 2019 at 23:07)
@@ -61,9 +63,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

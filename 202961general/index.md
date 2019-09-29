@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (6 messages, latest: Sep 29 2019 at 06:43)
+* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (7 messages, latest: Sep 29 2019 at 11:24)
 
 * [Isabelle Phabricator](82353IsabellePhabricator.html) (1 message, latest: Sep 27 2019 at 08:26)
 

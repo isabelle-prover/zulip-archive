@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Isabelle Phabricator](82353IsabellePhabricator.html) (1 message, latest: Sep 27 2019 at 08:26)
+* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (6 messages, latest: Sep 29 2019 at 06:43)
 
-* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (5 messages, latest: Sep 26 2019 at 17:02)
+* [Isabelle Phabricator](82353IsabellePhabricator.html) (1 message, latest: Sep 27 2019 at 08:26)
 
 * [show theorems with certain attributes](50610showtheoremswithcertainattributes.html) (3 messages, latest: Sep 26 2019 at 12:26)
 

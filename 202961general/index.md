@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (10 messages, latest: Sep 30 2019 at 13:06)
+* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (11 messages, latest: Sep 30 2019 at 14:09)
 
 * [Isabelle Phabricator](82353IsabellePhabricator.html) (1 message, latest: Sep 27 2019 at 08:26)
 
@@ -65,9 +65,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

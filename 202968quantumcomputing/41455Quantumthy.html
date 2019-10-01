@@ -74,6 +74,51 @@ permalink: ./202968quantumcomputing/41455Quantumthy.html
 <p><span class="user-mention" data-user-id="228785">@Yijun He</span> <br>
 I should probably rename <code>hermite_cnj</code> with <code>dagger</code> for conciseness.</p>
 
+<a name="177048659"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202968-quantum%20computing/topic/Quantum.thy/near/177048659" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202968quantumcomputing/41455Quantumthy.html#177048659">Hanna Lachnitt (Oct 01 2019 at 12:13)</a>:</h4>
+<p>I would also like to move this lemma into Quantum.thy if thats fine for you.</p>
+<div class="codehilite"><pre><span></span>lemma cpx_mat_transpose_prod:
+  fixes M N::&quot;complex Matrix.mat&quot;
+  assumes &quot;dim_col M = dim_row N&quot;
+  shows &quot;(M * N)⇧t = N⇧t * (M⇧t)&quot;
+proof
+  fix i j::nat
+  assume a0: &quot;i &lt; dim_row (N⇧t * (M⇧t))&quot; and a1: &quot;j &lt; dim_col (N⇧t * (M⇧t))&quot;
+  then have &quot;(M * N)⇧t $$ (i,j) = (M * N) $$ (j,i)&quot; by auto
+  also have &quot;... = (∑k&lt;dim_row M⇧t.  M $$ (j,k) * N $$ (k,i))&quot;
+    using assms a0 a1 by auto
+  also have &quot;... = (∑k&lt;dim_row M⇧t. N $$ (k,i) * M $$ (j,k))&quot;
+   by (simp add: semiring_normalization_rules(7))
+  also have &quot;... = (∑k&lt;dim_row M⇧t. ((N⇧t) $$ (i,k)) * (M⇧t) $$ (k,j))&quot;
+    using assms a0 a1 by auto
+  finally show &quot;((M * N)⇧t) $$ (i,j) = (N⇧t * (M⇧t)) $$ (i,j)&quot;
+    using assms a0 a1 by auto
+next
+  show &quot;dim_row ((M * N)⇧t) = dim_row (N⇧t * (M⇧t))&quot; by auto
+next
+  show &quot;dim_col ((M * N)⇧t) = dim_col (N⇧t * (M⇧t))&quot; by auto
+qed
+</pre></div>
+
+
+<p>I need it for the quantum fourier transform, but it fits into Quantum.thy much better. I can also make a pull request for this if you want to.</p>
+
+<a name="177049783"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202968-quantum%20computing/topic/Quantum.thy/near/177049783" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202968quantumcomputing/41455Quantumthy.html#177049783">Hanna Lachnitt (Oct 01 2019 at 12:29)</a>:</h4>
+<p>And also this </p>
+<div class="codehilite"><pre><span></span>lemma cpx_mat_hermite_cnj_prod:
+  fixes M N::&quot;complex Matrix.mat&quot;
+  assumes &quot;dim_col M = dim_row N&quot;
+  shows &quot;(M * N)⇧† = N⇧† * (M⇧†)&quot;
+proof-
+  have &quot;(M * N)⇧† = ((M * N)⇧⋆)⇧t&quot; by auto
+  also have &quot;... = ((M⇧⋆) * (N⇧⋆))⇧t&quot; using assms cpx_mat_cnj_prod by auto
+  also have &quot;... = (N⇧⋆)⇧t * ((M⇧⋆)⇧t)&quot;
+    by (metis assms cpx_mat_transpose_prod cnj_transpose hermite_cnj_dim_col hermite_cnj_dim_row index_transpose_mat(2) index_transpose_mat(3))
+  finally show &quot;(M * N)⇧† = N⇧† * (M⇧†)&quot; by auto
+qed
+</pre></div>
+
 
 {% endraw %}
 

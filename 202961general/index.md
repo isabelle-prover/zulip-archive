@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Applying method n times](55638Applyingmethodntimes.html) (3 messages, latest: Sep 30 2019 at 16:18)
+* [Applying method n times](55638Applyingmethodntimes.html) (5 messages, latest: Oct 01 2019 at 06:43)
 
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (11 messages, latest: Sep 30 2019 at 14:09)
 
@@ -67,9 +67,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

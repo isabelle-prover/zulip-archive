@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (12 messages, latest: Oct 01 2019 at 14:38)
+* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (13 messages, latest: Oct 02 2019 at 12:26)
 
 * [Applying method n times](55638Applyingmethodntimes.html) (6 messages, latest: Oct 01 2019 at 09:05)
 

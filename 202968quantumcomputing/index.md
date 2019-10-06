@@ -9,7 +9,7 @@ permalink: ./202968quantumcomputing/index.html
 
 ### Topics:
 
-* [quantum prisoner's dilemma](21809quantumprisonersdilemma.html) (49 messages, latest: Oct 06 2019 at 10:15)
+* [quantum prisoner's dilemma](21809quantumprisonersdilemma.html) (50 messages, latest: Oct 06 2019 at 20:52)
 
 * [Quantum.thy](41455Quantumthy.html) (21 messages, latest: Oct 04 2019 at 13:38)
 

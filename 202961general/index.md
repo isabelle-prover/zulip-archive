@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [jEdit](75729jEdit.html) (10 messages, latest: Oct 09 2019 at 15:14)
+
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (13 messages, latest: Oct 02 2019 at 12:26)
 
 * [Applying method n times](55638Applyingmethodntimes.html) (6 messages, latest: Oct 01 2019 at 09:05)
@@ -61,15 +63,13 @@ permalink: ./202961general/index.html
 
 * [Proofs refactoring](88878Proofsrefactoring.html) (1 message, latest: Jul 06 2019 at 11:45)
 
-* [jEdit](75729jEdit.html) (9 messages, latest: Jul 06 2019 at 09:22)
-
 * [documentation](05083documentation.html) (2 messages, latest: Jul 05 2019 at 09:45)
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./202968quantumcomputing/index.html
 
 ### Topics:
 
+* [work in progress](95824workinprogress.html) (6 messages, latest: Oct 14 2019 at 16:13)
+
 * [basics](17142basics.html) (3 messages, latest: Oct 14 2019 at 12:05)
 
 * [quantum prisoner's dilemma](21809quantumprisonersdilemma.html) (50 messages, latest: Oct 06 2019 at 20:52)
@@ -16,8 +18,6 @@ permalink: ./202968quantumcomputing/index.html
 * [Quantum.thy](41455Quantumthy.html) (21 messages, latest: Oct 04 2019 at 13:38)
 
 * [quantum Fourier transform](89892quantumFouriertransform.html) (64 messages, latest: Aug 30 2019 at 09:36)
-
-* [work in progress](95824workinprogress.html) (5 messages, latest: Aug 24 2019 at 09:26)
 
 * [table of contents](83180tableofcontents.html) (5 messages, latest: Aug 23 2019 at 21:17)
 

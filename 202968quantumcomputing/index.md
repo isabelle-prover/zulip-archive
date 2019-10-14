@@ -9,6 +9,8 @@ permalink: ./202968quantumcomputing/index.html
 
 ### Topics:
 
+* [basics](17142basics.html) (3 messages, latest: Oct 14 2019 at 12:05)
+
 * [quantum prisoner's dilemma](21809quantumprisonersdilemma.html) (50 messages, latest: Oct 06 2019 at 20:52)
 
 * [Quantum.thy](41455Quantumthy.html) (21 messages, latest: Oct 04 2019 at 13:38)
@@ -34,8 +36,6 @@ permalink: ./202968quantumcomputing/index.html
 * [(* _ *) vs text < _ >](79084vstext.html) (1 message, latest: Jul 06 2019 at 10:50)
 
 * [Deutsch](18481Deutsch.html) (4 messages, latest: Jul 05 2019 at 20:17)
-
-* [basics](17142basics.html) (2 messages, latest: Jul 04 2019 at 22:08)
 
 * [Embedding](02848Embedding.html) (1 message, latest: Jul 04 2019 at 20:36)
 

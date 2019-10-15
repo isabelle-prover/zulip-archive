@@ -12,7 +12,7 @@ permalink: ./index.html
 
 * [quantum computing](202968quantumcomputing/index.html) (20 topics)
 
-* [new projects](202967newprojects/index.html) (9 topics)
+* [new projects](202967newprojects/index.html) (10 topics)
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (3 topics)
 

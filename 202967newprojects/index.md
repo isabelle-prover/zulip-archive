@@ -9,7 +9,7 @@ permalink: ./202967newprojects/index.html
 
 ### Topics:
 
-* [Dependent types for Isabelle](40917DependenttypesforIsabelle.html) (1 message, latest: Oct 15 2019 at 20:45)
+* [Dependent types for Isabelle](40917DependenttypesforIsabelle.html) (2 messages, latest: Oct 15 2019 at 23:12)
 
 * [diagrammatic reasoning](92650diagrammaticreasoning.html) (16 messages, latest: Sep 22 2019 at 19:42)
 

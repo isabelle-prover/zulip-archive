@@ -9,6 +9,8 @@ permalink: ./202968quantumcomputing/index.html
 
 ### Topics:
 
+* [project ideas](18270projectideas.html) (1 message, latest: Oct 17 2019 at 17:27)
+
 * [work in progress](95824workinprogress.html) (6 messages, latest: Oct 14 2019 at 16:13)
 
 * [basics](17142basics.html) (3 messages, latest: Oct 14 2019 at 12:05)

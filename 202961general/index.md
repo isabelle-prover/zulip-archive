@@ -9,11 +9,11 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (14 messages, latest: Oct 19 2019 at 01:07)
+
 * [new streams](74282newstreams.html) (2 messages, latest: Oct 14 2019 at 10:25)
 
 * [jEdit](75729jEdit.html) (10 messages, latest: Oct 09 2019 at 15:14)
-
-* [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (13 messages, latest: Oct 02 2019 at 12:26)
 
 * [Applying method n times](55638Applyingmethodntimes.html) (6 messages, latest: Oct 01 2019 at 09:05)
 

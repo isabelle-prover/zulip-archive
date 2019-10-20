@@ -9,7 +9,7 @@ permalink: ./202968quantumcomputing/index.html
 
 ### Topics:
 
-* [quantum Fourier transform](89892quantumFouriertransform.html) (72 messages, latest: Oct 20 2019 at 10:25)
+* [quantum Fourier transform](89892quantumFouriertransform.html) (73 messages, latest: Oct 20 2019 at 13:20)
 
 * [project ideas](18270projectideas.html) (1 message, latest: Oct 17 2019 at 17:27)
 

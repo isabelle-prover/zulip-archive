@@ -9,6 +9,8 @@ permalink: ./203204MLforIsabelle/index.html
 
 ### Topics:
 
+* [autoformalization](27673autoformalization.html) (1 message, latest: Oct 23 2019 at 10:24)
+
 * [Machine Learning & Isabelle/HOL](40479MachineLearningIsabelleHOL.html) (1 message, latest: Jul 17 2019 at 03:21)
 
 * [Cambridge reading group](81414Cambridgereadinggroup.html) (10 messages, latest: Jul 16 2019 at 11:22)

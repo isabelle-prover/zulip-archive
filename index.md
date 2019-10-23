@@ -14,7 +14,7 @@ permalink: ./index.html
 
 * [new projects](202967newprojects/index.html) (10 topics)
 
-* [ML for Isabelle](203204MLforIsabelle/index.html) (3 topics)
+* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
 

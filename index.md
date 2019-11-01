@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [general](202961general/index.html) (32 topics)
+* [general](202961general/index.html) (33 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (21 topics)
 
@@ -16,9 +16,9 @@ permalink: ./index.html
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
-* [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
-
 * [Lie](211306Lie/index.html) (2 topics)
+
+* [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
 
 * [unification in induction tactic](208984unificationininductiontactic/index.html) (1 topic)
 

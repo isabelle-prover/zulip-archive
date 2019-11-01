@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [partial derivative](92033partialderivative.html) (1 message, latest: Nov 01 2019 at 12:59)
+
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (14 messages, latest: Oct 19 2019 at 01:07)
 
 * [new streams](74282newstreams.html) (2 messages, latest: Oct 14 2019 at 10:25)
@@ -69,9 +71,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Automatic indentation](93253Automaticindentation.html) (1 message, latest: Nov 11 2019 at 11:02)
+* [partial derivative](92033partialderivative.html) (4 messages, latest: Nov 11 2019 at 16:39)
 
-* [partial derivative](92033partialderivative.html) (3 messages, latest: Nov 07 2019 at 15:01)
+* [Automatic indentation](93253Automaticindentation.html) (1 message, latest: Nov 11 2019 at 11:02)
 
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (14 messages, latest: Oct 19 2019 at 01:07)
 
@@ -73,9 +73,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

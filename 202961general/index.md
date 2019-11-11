@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Automatic indentation](93253Automaticindentation.html) (1 message, latest: Nov 11 2019 at 11:02)
+
 * [partial derivative](92033partialderivative.html) (3 messages, latest: Nov 07 2019 at 15:01)
 
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (14 messages, latest: Oct 19 2019 at 01:07)

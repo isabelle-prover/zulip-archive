@@ -9,13 +9,13 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [new streams](74282newstreams.html) (3 messages, latest: Nov 12 2019 at 16:41)
+
 * [partial derivative](92033partialderivative.html) (4 messages, latest: Nov 11 2019 at 16:39)
 
 * [Automatic indentation](93253Automaticindentation.html) (1 message, latest: Nov 11 2019 at 11:02)
 
 * [Isabelle code in LaTeX documents](30308IsabellecodeinLaTeXdocuments.html) (14 messages, latest: Oct 19 2019 at 01:07)
-
-* [new streams](74282newstreams.html) (2 messages, latest: Oct 14 2019 at 10:25)
 
 * [jEdit](75729jEdit.html) (10 messages, latest: Oct 09 2019 at 15:14)
 

@@ -9,6 +9,8 @@ permalink: ./214136announcements/index.html
 
 ### Topics:
 
+* [Synthese volume on Foundations](07443SynthesevolumeonFoundations.html) (1 message, latest: Nov 19 2019 at 14:24)
+
 * [stream events](95106streamevents.html) (1 message, latest: Nov 12 2019 at 16:41)
 
 

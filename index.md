@@ -18,9 +18,9 @@ permalink: ./index.html
 
 * [Lie](211306Lie/index.html) (2 topics)
 
-* [announcements](214136announcements/index.html) (2 topics)
-
 * [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
+
+* [announcements](214136announcements/index.html) (2 topics)
 
 * [unification in induction tactic](208984unificationininductiontactic/index.html) (1 topic)
 

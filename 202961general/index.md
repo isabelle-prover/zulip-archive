@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Editing Pure](09345EditingPure.html) (2 messages, latest: Nov 26 2019 at 15:32)
+
 * [macros for comments](95123macrosforcomments.html) (1 message, latest: Nov 14 2019 at 15:56)
 
 * [new streams](74282newstreams.html) (3 messages, latest: Nov 12 2019 at 16:41)

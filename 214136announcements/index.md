@@ -9,6 +9,8 @@ permalink: ./214136announcements/index.html
 
 ### Topics:
 
+* [quantum game theory](04929quantumgametheory.html) (1 message, latest: Nov 27 2019 at 08:53)
+
 * [Assistant Prof. position in Quantum Information](33437AssistantProfpositioninQuantumInformation.html) (1 message, latest: Nov 21 2019 at 00:36)
 
 * [Synthese volume on Foundations](07443SynthesevolumeonFoundations.html) (1 message, latest: Nov 19 2019 at 14:24)

@@ -9,7 +9,7 @@ permalink: ./211306Lie/index.html
 
 ### Topics:
 
-* [Hypersurface.thy](04981Hypersurfacethy.html) (3 messages, latest: Nov 28 2019 at 17:00)
+* [Hypersurface.thy](04981Hypersurfacethy.html) (4 messages, latest: Nov 29 2019 at 06:29)
 
 * [Sphere2.thy](74461Sphere2thy.html) (2 messages, latest: Nov 28 2019 at 16:59)
 

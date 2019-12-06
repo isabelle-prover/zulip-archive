@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Editing Pure](09345EditingPure.html) (2 messages, latest: Nov 26 2019 at 15:32)
+* [Editing Pure](09345EditingPure.html) (3 messages, latest: Dec 06 2019 at 08:27)
 
 * [macros for comments](95123macrosforcomments.html) (1 message, latest: Nov 14 2019 at 15:56)
 
@@ -77,9 +77,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

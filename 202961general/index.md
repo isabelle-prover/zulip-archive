@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [isabelle build](33874isabellebuild.html) (1 message, latest: Jan 17 2020 at 11:07)
+
 * [Editing Pure](09345EditingPure.html) (3 messages, latest: Dec 06 2019 at 08:27)
 
 * [macros for comments](95123macrosforcomments.html) (1 message, latest: Nov 14 2019 at 15:56)

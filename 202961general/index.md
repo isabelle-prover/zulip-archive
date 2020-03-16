@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (1 message, latest: Mar 16 2020 at 11:23)
+* [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (2 messages, latest: Mar 16 2020 at 12:41)
 
 * [isabelle build](33874isabellebuild.html) (1 message, latest: Jan 17 2020 at 11:07)
 
@@ -81,9 +81,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

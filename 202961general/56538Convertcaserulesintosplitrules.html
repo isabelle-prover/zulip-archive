@@ -16,6 +16,36 @@ permalink: ./202961general/56538Convertcaserulesintosplitrules.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190875177" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190875177">Lukas Stevens (Mar 17 2020 at 16:33)</a>:</h4>
 <p>Is there any way to convert a case rule into a split rule such that the rule can be used with <code>apply(simp split: rl)</code>?</p>
 
+<a name="190879681"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190879681" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190879681">Kevin Kappelmann (Mar 17 2020 at 17:02)</a>:</h4>
+<p>how about <code>auto elim: rl</code>?</p>
+
+<a name="190881433"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190881433" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190881433">Lukas Stevens (Mar 17 2020 at 17:14)</a>:</h4>
+<p>That does not work. For reference, my proof looks like follows:</p>
+<div class="codehilite"><pre><span></span>proof(induction φ)
+  case (Atom x)
+  then show ?case
+    apply(cases x rule: o_literal_cases) by auto
+qed (auto simp: and_def or_def neg_def split: if_splits)
+</pre></div>
+
+
+<p>What I want to have is:</p>
+<div class="codehilite"><pre><span></span>apply(induction φ) by (auto simp: and_def or_def neg_def split: if_splits o_literal_cases)
+</pre></div>
+
+
+<p>I have several proofs of this form and all would go through if the split on x would happen automatically.</p>
+
+<a name="190882695"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190882695" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190882695">Kevin Kappelmann (Mar 17 2020 at 17:23)</a>:</h4>
+<p>Is it always about <code>o_literal_cases</code>? If so, I'd just prove the split rule form the case rule and then use it.</p>
+
+<a name="190882843"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190882843" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190882843">Lukas Stevens (Mar 17 2020 at 17:24)</a>:</h4>
+<p>Yes, that would work but shouldn't there be an automatic conversion?</p>
+
 
 {% endraw %}
 

@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (1 message, latest: Mar 17 2020 at 16:33)
+
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (4 messages, latest: Mar 16 2020 at 18:26)
 
 * [isabelle build](33874isabellebuild.html) (1 message, latest: Jan 17 2020 at 11:07)

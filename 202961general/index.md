@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (8 messages, latest: Mar 17 2020 at 18:51)
+* [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (9 messages, latest: Mar 17 2020 at 19:42)
 
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (4 messages, latest: Mar 16 2020 at 18:26)
 

@@ -46,6 +46,18 @@ qed (auto simp: and_def or_def neg_def split: if_splits)
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190882843" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190882843">Lukas Stevens (Mar 17 2020 at 17:24)</a>:</h4>
 <p>Yes, that would work but shouldn't there be an automatic conversion?</p>
 
+<a name="190894084"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190894084" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190894084">Kevin Kappelmann (Mar 17 2020 at 18:47)</a>:</h4>
+<p>I think that only works under certain conditions (e.g. non-overlapping cases) and proving the split lemma is the easiest way in this case.</p>
+
+<a name="190894571"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190894571" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190894571">Manuel Eberl (Mar 17 2020 at 18:51)</a>:</h4>
+<p>I don't think you need non-overlapping. The problem is rather that a split rule requires an if-and-only-if</p>
+
+<a name="190894609"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Convert%20case%20rules%20into%20split%20rules/near/190894609" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/56538Convertcaserulesintosplitrules.html#190894609">Manuel Eberl (Mar 17 2020 at 18:51)</a>:</h4>
+<p>which is more specific than an "elim" rule</p>
+
 
 {% endraw %}
 

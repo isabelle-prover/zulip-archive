@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (5 messages, latest: Mar 17 2020 at 17:24)
+* [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (8 messages, latest: Mar 17 2020 at 18:51)
 
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (4 messages, latest: Mar 16 2020 at 18:26)
 
@@ -83,9 +83,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

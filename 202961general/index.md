@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Symbol for equivalence](47504Symbolforequivalence.html) (17 messages, latest: Mar 18 2020 at 11:51)
+
 * [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (9 messages, latest: Mar 17 2020 at 19:42)
 
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (4 messages, latest: Mar 16 2020 at 18:26)
@@ -83,9 +85,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

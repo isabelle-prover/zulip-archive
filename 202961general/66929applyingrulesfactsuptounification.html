@@ -1,0 +1,42 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/66929applyingrulesfactsuptounification.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/66929applyingrulesfactsuptounification.html">applying rules/facts up to unification</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="190975113"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/applying%20rules/facts%20up%20to%20unification/near/190975113" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/66929applyingrulesfactsuptounification.html#190975113">Kevin Kappelmann (Mar 18 2020 at 12:52)</a>:</h4>
+<p>Hey, is there some way to apply a rule/fact such that terms not matching by unification will be spit out as a new subgoal? For example, consider this:</p>
+<div class="codehilite"><pre><span></span><span class="k">definition</span> <span class="s">&quot;myProp s ≡ s = {}&quot;</span>
+
+<span class="c">(* some proof *)</span>
+<span class="kn">lemma</span> <span class="n">myProof</span><span class="o">:</span> <span class="s">&quot;myProp {}&quot;</span>
+  <span class="k">unfolding</span> <span class="n">myProp_def</span> <span class="k">by</span> <span class="n">safe</span>
+
+<span class="c">(* some very similar proof that only needs to rewrite {} ∪ {} to {} *)</span>
+<span class="c">(* this is the best I could come up with *)</span>
+<span class="kn">lemma</span> <span class="n">myProof&#39;</span><span class="o">:</span> <span class="s">&quot;myProp ({} ∪ {})&quot;</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">have</span> <span class="n">1</span><span class="o">:</span> <span class="s">&quot;{} ∪ {} = {}&quot;</span> <span class="k">by</span> <span class="n">safe</span>
+  <span class="k">show</span> <span class="o">?</span><span class="n">thesis</span> <span class="k">by</span> <span class="o">(</span><span class="n">subst</span> <span class="n">1</span><span class="o">,</span> <span class="n">fact</span> <span class="n">myProof</span><span class="o">)</span>
+<span class="k">qed</span>
+
+<span class="c">(* The next thing is what I would like to have *)</span>
+<span class="kn">lemma</span> <span class="n">myProof&#39;&#39;</span><span class="o">:</span> <span class="s">&quot;myProp ({} ∪ {})&quot;</span>
+<span class="k">proof</span> <span class="o">(</span><span class="n">fact</span> <span class="n">myProof</span><span class="o">)</span>
+  <span class="k">show</span> <span class="s">&quot;{} ∪ {} = {}&quot;</span> <span class="k">by</span> <span class="n">safe</span>
+<span class="k">qed</span>
+</pre></div>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

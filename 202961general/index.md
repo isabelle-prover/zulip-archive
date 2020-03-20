@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [applying rules/facts up to unification](66929applyingrulesfactsuptounification.html) (1 message, latest: Mar 18 2020 at 12:52)
+* [applying rules/facts up to unification](66929applyingrulesfactsuptounification.html) (2 messages, latest: Mar 20 2020 at 01:45)
 
 * [Symbol for equivalence](47504Symbolforequivalence.html) (17 messages, latest: Mar 18 2020 at 11:51)
 

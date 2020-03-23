@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [applying rules/facts up to unification](66929applyingrulesfactsuptounification.html) (4 messages, latest: Mar 23 2020 at 12:54)
+* [applying rules/facts up to unification](66929applyingrulesfactsuptounification.html) (5 messages, latest: Mar 23 2020 at 13:52)
 
-* [`rewrite` method tutorial](24344rewritemethodtutorial.html) (1 message, latest: Mar 23 2020 at 12:54)
+* [`rewrite` method tutorial](24344rewritemethodtutorial.html) (3 messages, latest: Mar 23 2020 at 13:52)
 
 * [Symbol for equivalence](47504Symbolforequivalence.html) (17 messages, latest: Mar 18 2020 at 11:51)
 

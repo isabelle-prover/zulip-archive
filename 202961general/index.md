@@ -9,7 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Hiding flex-flex constraints](78135Hidingflexflexconstraints.html) (8 messages, latest: Mar 24 2020 at 10:59)
+* [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (5 messages, latest: Mar 24 2020 at 11:40)
+
+* [Hiding flex-flex constraints](78135Hidingflexflexconstraints.html) (10 messages, latest: Mar 24 2020 at 11:34)
 
 * [Function "on"](95976Functionon.html) (4 messages, latest: Mar 23 2020 at 15:29)
 
@@ -20,8 +22,6 @@ permalink: ./202961general/index.html
 * [Symbol for equivalence](47504Symbolforequivalence.html) (17 messages, latest: Mar 18 2020 at 11:51)
 
 * [Convert case rules into split rules](56538Convertcaserulesintosplitrules.html) (9 messages, latest: Mar 17 2020 at 19:42)
-
-* [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (4 messages, latest: Mar 16 2020 at 18:26)
 
 * [isabelle build](33874isabellebuild.html) (1 message, latest: Jan 17 2020 at 11:07)
 

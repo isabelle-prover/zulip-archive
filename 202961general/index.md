@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [`rewrite` method tutorial](24344rewritemethodtutorial.html) (4 messages, latest: Mar 24 2020 at 18:42)
+
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (5 messages, latest: Mar 24 2020 at 11:40)
 
 * [Hiding flex-flex constraints](78135Hidingflexflexconstraints.html) (10 messages, latest: Mar 24 2020 at 11:34)
@@ -16,8 +18,6 @@ permalink: ./202961general/index.html
 * [Function "on"](95976Functionon.html) (4 messages, latest: Mar 23 2020 at 15:29)
 
 * [applying rules/facts up to unification](66929applyingrulesfactsuptounification.html) (5 messages, latest: Mar 23 2020 at 13:52)
-
-* [`rewrite` method tutorial](24344rewritemethodtutorial.html) (3 messages, latest: Mar 23 2020 at 13:52)
 
 * [Symbol for equivalence](47504Symbolforequivalence.html) (17 messages, latest: Mar 18 2020 at 11:51)
 

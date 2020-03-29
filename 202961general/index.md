@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [`rewrite` method tutorial](24344rewritemethodtutorial.html) (4 messages, latest: Mar 24 2020 at 18:42)
+* [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (6 messages, latest: Mar 29 2020 at 11:54)
 
-* [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (5 messages, latest: Mar 24 2020 at 11:40)
+* [`rewrite` method tutorial](24344rewritemethodtutorial.html) (4 messages, latest: Mar 24 2020 at 18:42)
 
 * [Hiding flex-flex constraints](78135Hidingflexflexconstraints.html) (10 messages, latest: Mar 24 2020 at 11:34)
 

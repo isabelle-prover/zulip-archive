@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Keep case names with lemmas](01201Keepcasenameswithlemmas.html) (1 message, latest: Mar 30 2020 at 11:30)
+
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (6 messages, latest: Mar 29 2020 at 11:54)
 
 * [`rewrite` method tutorial](24344rewritemethodtutorial.html) (4 messages, latest: Mar 24 2020 at 18:42)
@@ -93,9 +95,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

@@ -1,0 +1,37 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/01201Keepcasenameswithlemmas.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/01201Keepcasenameswithlemmas.html">Keep case names with lemmas</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="192242598"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Keep%20case%20names%20with%20lemmas/near/192242598" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/01201Keepcasenameswithlemmas.html#192242598">Lukas Stevens (Mar 30 2020 at 11:30)</a>:</h4>
+<p>I have declared an inductive predicate in an unnamed context like so:</p>
+<div class="codehilite"><pre><span></span>context
+  fixes a_convs :: &quot;&#39;a ⇒ &#39;a fm ⇒ &#39;a_conv_prf ⇒ bool&quot;
+  fixes aneg_convs :: &quot;&#39;a ⇒ &#39;a fm ⇒ &#39;aneg_conv_prf ⇒ bool&quot;
+begin
+inductive fm_convs :: &quot;&#39;a fm ⇒ &#39;a fm ⇒ (&#39;a_conv_prf, &#39;aneg_conv_prf) fm_conv_prf ⇒ bool&quot;
+end
+</pre></div>
+
+
+<p>Suppose that I have instantiations for <code>a_convs</code> and <code>aneg_convs</code>. I can declare an abbreviation for <code>fm_convs.induct</code> like so:</p>
+<div class="codehilite"><pre><span></span>lemmas convs_induct = fm_convs.induct[of a_convs aneg_convs]
+</pre></div>
+
+
+<p>The problem now is that convs_induct does not have the case names attached to fm_convs.induct. Is there a way to transfer those case names automatically?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

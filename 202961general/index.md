@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Schematic variables in goal after intro](38211Schematicvariablesingoalafterintro.html) (12 messages, latest: Apr 07 2020 at 09:52)
+
 * [Keep case names with lemmas](01201Keepcasenameswithlemmas.html) (3 messages, latest: Mar 30 2020 at 15:26)
 
 * [Websites with Isabelle information](47274WebsiteswithIsabelleinformation.html) (6 messages, latest: Mar 29 2020 at 11:54)

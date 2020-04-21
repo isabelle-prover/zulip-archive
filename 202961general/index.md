@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Simplify only the assumptions, not the goal](86744Simplifyonlytheassumptionsnotthegoal.html) (2 messages, latest: Apr 21 2020 at 21:35)
+
 * [Cookbook](57560Cookbook.html) (1 message, latest: Apr 08 2020 at 16:11)
 
 * [Schematic variables in goal after intro](38211Schematicvariablesingoalafterintro.html) (12 messages, latest: Apr 07 2020 at 09:52)
@@ -99,9 +101,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

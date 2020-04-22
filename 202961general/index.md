@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Simplify only the assumptions, not the goal](86744Simplifyonlytheassumptionsnotthegoal.html) (2 messages, latest: Apr 21 2020 at 21:35)
+* [Simplify only the assumptions, not the goal](86744Simplifyonlytheassumptionsnotthegoal.html) (3 messages, latest: Apr 22 2020 at 09:22)
 
 * [Cookbook](57560Cookbook.html) (1 message, latest: Apr 08 2020 at 16:11)
 

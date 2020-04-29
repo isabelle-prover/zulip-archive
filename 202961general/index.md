@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Cookbook](57560Cookbook.html) (3 messages, latest: Apr 29 2020 at 14:15)
+* [Cookbook](57560Cookbook.html) (4 messages, latest: Apr 29 2020 at 16:35)
 
 * [Simplify only the assumptions, not the goal](86744Simplifyonlytheassumptionsnotthegoal.html) (3 messages, latest: Apr 22 2020 at 09:22)
 
@@ -101,9 +101,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

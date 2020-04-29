@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Simplify only the assumptions, not the goal](86744Simplifyonlytheassumptionsnotthegoal.html) (3 messages, latest: Apr 22 2020 at 09:22)
+* [Cookbook](57560Cookbook.html) (3 messages, latest: Apr 29 2020 at 14:15)
 
-* [Cookbook](57560Cookbook.html) (1 message, latest: Apr 08 2020 at 16:11)
+* [Simplify only the assumptions, not the goal](86744Simplifyonlytheassumptionsnotthegoal.html) (3 messages, latest: Apr 22 2020 at 09:22)
 
 * [Schematic variables in goal after intro](38211Schematicvariablesingoalafterintro.html) (12 messages, latest: Apr 07 2020 at 09:52)
 

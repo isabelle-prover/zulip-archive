@@ -14,9 +14,9 @@ permalink: ./index.html
 
 * [new projects](202967newprojects/index.html) (11 topics)
 
-* [announcements](214136announcements/index.html) (4 topics)
-
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
+
+* [announcements](214136announcements/index.html) (4 topics)
 
 * [Lie](211306Lie/index.html) (3 topics)
 

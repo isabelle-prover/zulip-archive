@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [new streams](74282newstreams.html) (4 messages, latest: May 12 2020 at 10:52)
+
 * [Generalized Pigeonhole Principle](51547GeneralizedPigeonholePrinciple.html) (2 messages, latest: May 12 2020 at 09:59)
 
 * [Proof Ground 2020](29690ProofGround2020.html) (1 message, latest: May 12 2020 at 08:38)
@@ -40,8 +42,6 @@ permalink: ./202961general/index.html
 * [Editing Pure](09345EditingPure.html) (3 messages, latest: Dec 06 2019 at 08:27)
 
 * [macros for comments](95123macrosforcomments.html) (1 message, latest: Nov 14 2019 at 15:56)
-
-* [new streams](74282newstreams.html) (3 messages, latest: Nov 12 2019 at 16:41)
 
 * [partial derivative](92033partialderivative.html) (4 messages, latest: Nov 11 2019 at 16:39)
 

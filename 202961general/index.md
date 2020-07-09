@@ -9,11 +9,21 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Continuous integration](65308Continuousintegration.html) (6 messages, latest: Jul 09 2020 at 11:04)
+
+* [new streams](74282newstreams.html) (5 messages, latest: Jul 01 2020 at 07:34)
+
+* [Proposal: Functional dependencies for overloaded constants](98094ProposalFunctionaldependenciesforoverloadedconstants.html) (16 messages, latest: Jun 19 2020 at 11:44)
+
+* [Proof Ground 2020](29690ProofGround2020.html) (4 messages, latest: Jun 18 2020 at 07:01)
+
+* [fast_term_ord](14154fasttermord.html) (1 message, latest: Jun 17 2020 at 14:35)
+
+* [Simplifier - term ordering](46804Simplifiertermordering.html) (4 messages, latest: Jun 17 2020 at 10:01)
+
+* [Reusing heap images](33170Reusingheapimages.html) (2 messages, latest: May 28 2020 at 11:58)
+
 * [Generalized Pigeonhole Principle](51547GeneralizedPigeonholePrinciple.html) (8 messages, latest: May 14 2020 at 10:08)
-
-* [new streams](74282newstreams.html) (4 messages, latest: May 12 2020 at 10:52)
-
-* [Proof Ground 2020](29690ProofGround2020.html) (1 message, latest: May 12 2020 at 08:38)
 
 * [Cookbook](57560Cookbook.html) (4 messages, latest: Apr 29 2020 at 16:35)
 

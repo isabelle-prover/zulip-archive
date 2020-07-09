@@ -1,10 +1,10 @@
 ---
 layout: archive
 title: Lean Prover Zulip Chat Archive
-permalink: ./238521BeginnerQuestions/index.html
+permalink: ./238552BeginnerQuestions/index.html
 ---
 
-## Stream: [Beginner Questions](file:///tmp/zulip_archive/./238521BeginnerQuestions/index.html)
+## Stream: [Beginner Questions](file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html)
 ---
 
 ### Topics:

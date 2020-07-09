@@ -1,0 +1,63 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/54884Applytheoremtoassumptions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html">Apply theorem to assumptions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="201398794"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201398794" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201398794">Lukas Stevens (Jun 19 2020 at 14:40)</a>:</h4>
+<p>How can I apply a theorem to the assumptions? Specifically, I want to convert the assumptions to a single conjunction.</p>
+
+<a name="201401598"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201401598" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201401598">Josh Chen (Jun 19 2020 at 15:00)</a>:</h4>
+<p>You mean you want to apply a rule like <code>A1 /\ ... /\ An ==&gt; B</code> and you know the <code>Ai</code> separately?</p>
+
+<a name="201401868"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201401868" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201401868">Lukas Stevens (Jun 19 2020 at 15:02)</a>:</h4>
+<p>No, I have the goal <code>A ==&gt; B ==&gt; C ==&gt; D</code> and I want to get the goal <code>A /\ B /\ C ==&gt; D</code>.</p>
+
+<a name="201402400"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201402400" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201402400">Josh Chen (Jun 19 2020 at 15:06)</a>:</h4>
+<p>If that's a Pure <code>==&gt;</code> (as opposed to a HOL <code>--&gt;</code>) then I'm not sure this is easily doable...</p>
+
+<a name="201402531"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201402531" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201402531">Lukas Stevens (Jun 19 2020 at 15:07)</a>:</h4>
+<p>Yeah, I'd like the Pure <code>==&gt;</code> one.</p>
+
+<a name="201403319"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201403319" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201403319">Josh Chen (Jun 19 2020 at 15:13)</a>:</h4>
+<p>I seem to recall the last time I asked something like this the answer was that such direct manipulation of meta-implications breaks some Isar paradigm...</p>
+
+<a name="201403447"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201403447" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201403447">Josh Chen (Jun 19 2020 at 15:13)</a>:</h4>
+<p>But I'm a rebel, so: try <code>simp only: atomize_conjL</code>.<br>
+<strong>BEGINNER WARNING</strong> THIS IS BAD PRACTICE, there's most likely a better way to prove the concrete statement you want.</p>
+
+<a name="201403784"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201403784" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201403784">Lukas Stevens (Jun 19 2020 at 15:16)</a>:</h4>
+<p>I am not afraid since it is only a preprocessing for a tactic and I am using SUBGOAL.Focus :D</p>
+
+<a name="201403857"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201403857" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201403857">Josh Chen (Jun 19 2020 at 15:16)</a>:</h4>
+<p>Excellent! :D But if you're already using Subgoal.FOCUS then why is this in beginner questions :p</p>
+
+<a name="201404525"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201404525" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201404525">Lukas Stevens (Jun 19 2020 at 15:22)</a>:</h4>
+<p>Ah, I think I had a lapse of thought. Instead of doing this step, I can just convert the thms that I get from SUBGOAL.Focus to a single thm that is the conjunction of those thms.</p>
+
+<a name="201404541"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Apply%20theorem%20to%20assumptions/near/201404541" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54884Applytheoremtoassumptions.html#201404541">Lukas Stevens (Jun 19 2020 at 15:22)</a>:</h4>
+<p>Thanks anyways!</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -16,9 +16,9 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (5 topics)
 
-* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
-
 * [announcements](214136announcements/index.html) (4 topics)
+
+* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
 

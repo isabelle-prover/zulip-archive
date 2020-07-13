@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [bundled syntax / translations](34839bundledsyntaxtranslations.html) (1 message, latest: Jul 13 2020 at 15:54)
+
 * [Continuous integration](65308Continuousintegration.html) (10 messages, latest: Jul 09 2020 at 15:27)
 
 * [new streams](74282newstreams.html) (5 messages, latest: Jul 01 2020 at 07:34)
@@ -115,9 +117,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

@@ -1,0 +1,15 @@
+---
+layout: archive
+title: Lean Prover Zulip Chat Archive
+permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
+---
+
+## Stream: [Mirror: Isabelle Development Mailing List](file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/index.html)
+---
+
+### Topics:
+
+* [stream events](95106streamevents.html) (1 message, latest: Jul 13 2020 at 21:27)
+
+
+{% include archive_update.html %}

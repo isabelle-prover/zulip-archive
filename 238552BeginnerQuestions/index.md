@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Bad session "<Session_Name>"](14414BadsessionSessionName.html) (1 message, latest: Jul 13 2020 at 07:26)
+* [Bad session "<Session_Name>"](14414BadsessionSessionName.html) (5 messages, latest: Jul 13 2020 at 08:43)
 
 * [Apply theorem to assumptions](54884Applytheoremtoassumptions.html) (11 messages, latest: Jun 19 2020 at 15:22)
 

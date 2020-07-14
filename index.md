@@ -16,9 +16,9 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (6 topics)
 
-* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
-
 * [announcements](214136announcements/index.html) (4 topics)
+
+* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
 
@@ -26,9 +26,9 @@ permalink: ./index.html
 
 * [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (1 topic)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (2 topics)
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (1 topic)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (1 topic)
 
 <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a> <a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>
 {% include archive_update.html %}

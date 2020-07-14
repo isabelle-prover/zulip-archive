@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (7 messages, latest: Jul 14 2020 at 13:57)
+
 * [new streams](74282newstreams.html) (8 messages, latest: Jul 13 2020 at 21:36)
 
 * [bundled syntax / translations](34839bundledsyntaxtranslations.html) (1 message, latest: Jul 13 2020 at 15:54)
@@ -117,9 +119,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

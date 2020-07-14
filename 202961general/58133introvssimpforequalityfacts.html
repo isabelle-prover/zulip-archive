@@ -48,6 +48,18 @@ permalink: ./202961general/58133introvssimpforequalityfacts.html
 <p><del>Are you sure? <code>Not</code> is not an abbreviation</del><br>
 Nevermind, I thought you said <code>simp</code> lemma</p>
 
+<a name="203836513"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/intro%20vs%20simp%20for%20equality%20facts/near/203836513" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/58133introvssimpforequalityfacts.html#203836513">Lukas Stevens (Jul 14 2020 at 14:01)</a>:</h4>
+<p>My suspicion is that the rule <code>powerset {} = {{}}</code> is not the problem. Adding the rule just exposes that there is already a problematic rule in the simpset.</p>
+
+<a name="203836791"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/intro%20vs%20simp%20for%20equality%20facts/near/203836791" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/58133introvssimpforequalityfacts.html#203836791">Mohammad Abdulaziz (Jul 14 2020 at 14:03)</a>:</h4>
+<p>What does the goal look like? If you have a goal that causes the simplifier to loop when you label the lemma with simp, then that label is no good. Maybe you have a recursive definition that automatically unfolds in a way that loops when "powerset {} ={{}}" is simp.</p>
+
+<a name="203842412"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/intro%20vs%20simp%20for%20equality%20facts/near/203842412" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/58133introvssimpforequalityfacts.html#203842412">Kevin Kappelmann (Jul 14 2020 at 14:51)</a>:</h4>
+<p>I do not quite get why it was timing out, but I added a more easier to reason about rule that solves my problem <code>[iff]: "x ∈ powerset {} ⟷ x = {}"</code></p>
+
 
 {% endraw %}
 

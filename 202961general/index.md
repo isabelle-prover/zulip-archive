@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (7 messages, latest: Jul 14 2020 at 13:57)
+* [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (10 messages, latest: Jul 14 2020 at 14:51)
 
 * [new streams](74282newstreams.html) (8 messages, latest: Jul 13 2020 at 21:36)
 

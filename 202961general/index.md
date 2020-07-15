@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Kolmogorov–Arnol'd superposition theorem](31140KolmogorovArnoldsuperpositiontheorem.html) (1 message, latest: Jul 15 2020 at 16:07)
+
 * [Continuous integration](65308Continuousintegration.html) (31 messages, latest: Jul 15 2020 at 14:55)
 
 * [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (12 messages, latest: Jul 15 2020 at 14:12)
@@ -119,9 +121,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

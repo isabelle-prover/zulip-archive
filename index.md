@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [general](202961general/index.html) (57 topics)
+* [general](202961general/index.html) (58 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (21 topics)
 
@@ -16,11 +16,11 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (6 topics)
 
+* [announcements](214136announcements/index.html) (4 topics)
+
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
-
-* [announcements](214136announcements/index.html) (4 topics)
 
 * [Lie](211306Lie/index.html) (3 topics)
 

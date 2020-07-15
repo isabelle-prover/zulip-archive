@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Continuous integration](65308Continuousintegration.html) (13 messages, latest: Jul 15 2020 at 13:59)
+* [Continuous integration](65308Continuousintegration.html) (31 messages, latest: Jul 15 2020 at 14:55)
 
-* [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (10 messages, latest: Jul 14 2020 at 14:51)
+* [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (12 messages, latest: Jul 15 2020 at 14:12)
 
 * [new streams](74282newstreams.html) (8 messages, latest: Jul 13 2020 at 21:36)
 

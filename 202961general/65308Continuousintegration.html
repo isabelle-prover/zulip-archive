@@ -64,6 +64,78 @@ permalink: ./202961general/65308Continuousintegration.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203958577" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203958577">Simon Wimmer (Jul 15 2020 at 13:59)</a>:</h4>
 <p>For your project, I could however imagine if it still works because you do not need much underlying material, right?</p>
 
+<a name="203958679"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203958679" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203958679">Simon Wimmer (Jul 15 2020 at 14:00)</a>:</h4>
+<p>Also, Travis is just the simplest way. You can also have the Github CI on your own hardware, and then it's a different story of course.</p>
+
+<a name="203961946"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203961946" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203961946">Manuel Eberl (Jul 15 2020 at 14:25)</a>:</h4>
+<p>This actually downloads Isabelle anew every time the CI is run, right?</p>
+
+<a name="203961969"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203961969" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203961969">Manuel Eberl (Jul 15 2020 at 14:25)</a>:</h4>
+<p>Or is there some kind of persistency?</p>
+
+<a name="203961977"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203961977" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203961977">Simon Hudon (Jul 15 2020 at 14:25)</a>:</h4>
+<p>With Travis, we managed to get the timeout up to 50 min. 20 min is the maximum without response but you can pretend to be responsive every minute</p>
+
+<a name="203962043"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203962043" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203962043">Simon Hudon (Jul 15 2020 at 14:26)</a>:</h4>
+<p>With Travis, you can cache the setup</p>
+
+<a name="203962740"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203962740" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203962740">Manuel Eberl (Jul 15 2020 at 14:31)</a>:</h4>
+<p>I think the Isabelle process emits random text to stdout frequently enough.</p>
+
+<a name="203963069"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203963069" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203963069">Simon Hudon (Jul 15 2020 at 14:34)</a>:</h4>
+<p>You should be able to go up to 50 min then. Actually, with staged builds, we managed to get about 4x 50  minutes</p>
+
+<a name="203963194"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203963194" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203963194">Simon Wimmer (Jul 15 2020 at 14:35)</a>:</h4>
+<p>It does download it anew every time. So, yeah, it's not very good :D</p>
+
+<a name="203963314"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203963314" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203963314">Simon Wimmer (Jul 15 2020 at 14:36)</a>:</h4>
+<p>But that sounds interesting, Simon. Maybe I should give it another shot.</p>
+
+<a name="203963654"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203963654" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203963654">Simon Hudon (Jul 15 2020 at 14:38)</a>:</h4>
+<p>There's a lot that we managed to do with Travis but, disclaimer, we started feeling constrained in the  last 6 months and moved to Github CI. There, we met new challenges as we had multiple PRs everyday that we needed to build and the build taking over an hour, it took a long time before entering the queue and getting a build machine. So we started batching the builds using a tool called bors</p>
+
+<a name="203963706"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203963706" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203963706">Simon Hudon (Jul 15 2020 at 14:39)</a>:</h4>
+<p>I say we but I was mostly hands off in that process</p>
+
+<a name="203963747"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203963747" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203963747">Simon Hudon (Jul 15 2020 at 14:39)</a>:</h4>
+<p><span class="user-mention" data-user-id="234947">@Rob Lewis</span> did a lot of heavy lifting, if I'm not mistaken</p>
+
+<a name="203964230"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203964230" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203964230">Simon Wimmer (Jul 15 2020 at 14:44)</a>:</h4>
+<p>Interesting. The setup that Lars did for Isabelle is also quite involved. And builds are not triggered from Github but Mercurial repositories, of course ;)</p>
+
+<a name="203964861"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203964861" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203964861">Simon Hudon (Jul 15 2020 at 14:48)</a>:</h4>
+<p>Shows what I know! I wasn't even aware that Mercurial was preferred in Isabelle projectts</p>
+
+<a name="203964972"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203964972" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203964972">Manuel Eberl (Jul 15 2020 at 14:49)</a>:</h4>
+<p>Depends on what you mean by "Isabelle projects". There's the Isabelle distribution and the AFP, each in its own Mercurial repository. We thought about switching the AFP to Git when Bitbucket kicked out Mercurial, but ultimately decided against it.</p>
+
+<a name="203965121"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203965121" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203965121">Manuel Eberl (Jul 15 2020 at 14:50)</a>:</h4>
+<p>For most of us, Mercurial over Git has historic reasons only. Makarius, however, is very adamant about Mercurial being the superior system and I don't think anyone cares enough about the whole Git vs. Mercurial discussion to go against him, since he's the one who makes things work behind the scenes at the end of the day.</p>
+
+<a name="203965620"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203965620" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203965620">Simon Hudon (Jul 15 2020 at 14:54)</a>:</h4>
+<p>That's fair. I also don't know enough about the difference to pass judgement. Git is getting ubiquitous so I usually default to git.</p>
+
+<a name="203965785"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Continuous%20integration/near/203965785" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/65308Continuousintegration.html#203965785">Manuel Eberl (Jul 15 2020 at 14:55)</a>:</h4>
+<p>Yeah me, too. I am equally incompetent at using both systems, so I don't really care.</p>
+
 
 {% endraw %}
 

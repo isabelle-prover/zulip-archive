@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Kolmogorov–Arnol'd superposition theorem](31140KolmogorovArnoldsuperpositiontheorem.html) (1 message, latest: Jul 15 2020 at 16:07)
+* [Continuous integration](65308Continuousintegration.html) (40 messages, latest: Jul 15 2020 at 18:55)
 
-* [Continuous integration](65308Continuousintegration.html) (31 messages, latest: Jul 15 2020 at 14:55)
+* [Kolmogorov–Arnol'd superposition theorem](31140KolmogorovArnoldsuperpositiontheorem.html) (1 message, latest: Jul 15 2020 at 16:07)
 
 * [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (12 messages, latest: Jul 15 2020 at 14:12)
 

@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Making proofs with inductive predicates easier](39925Makingproofswithinductivepredicateseasier.html) (3 messages, latest: Jul 16 2020 at 12:58)
+* [Making proofs with inductive predicates easier](39925Makingproofswithinductivepredicateseasier.html) (5 messages, latest: Jul 16 2020 at 13:13)
 
 * [Continuous integration](65308Continuousintegration.html) (53 messages, latest: Jul 15 2020 at 19:12)
 

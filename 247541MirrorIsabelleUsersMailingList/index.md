@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (2 messages, latest: Jul 16 2020 at 04:45)
+* [\[isabelle\] File antiquotation broken after Theory.join_th...](37883isabelleFileantiquotationbrokenafterTheoryjointh.html) (2 messages, latest: Jul 16 2020 at 21:07)
 
-* [\[isabelle\] File antiquotation broken after Theory.join_th...](37883isabelleFileantiquotationbrokenafterTheoryjointh.html) (1 message, latest: Jul 15 2020 at 14:34)
+* [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (2 messages, latest: Jul 16 2020 at 04:45)
 
 * [\[isabelle\] Folding abbreviations with TYPE(_) parameters](50984isabelleFoldingabbreviationswithTYPEparameters.html) (1 message, latest: Jul 14 2020 at 12:29)
 

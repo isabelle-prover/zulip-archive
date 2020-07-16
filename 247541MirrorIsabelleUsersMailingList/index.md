@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (1 message, latest: Jul 16 2020 at 01:33)
+* [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (2 messages, latest: Jul 16 2020 at 04:45)
 
 * [\[isabelle\] File antiquotation broken after Theory.join_th...](37883isabelleFileantiquotationbrokenafterTheoryjointh.html) (1 message, latest: Jul 15 2020 at 14:34)
 

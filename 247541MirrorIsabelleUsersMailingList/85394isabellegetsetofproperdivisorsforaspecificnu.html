@@ -36,6 +36,19 @@ much larger numbers is.</p>
 <p>Thank you,<br>
 Angeliki</p>
 
+<a name="204044605"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20get%20set%20of%20%28proper%29%20divisors%20for%20a%20specific%20nu.../near/204044605" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/85394isabellegetsetofproperdivisorsforaspecificnu.html#204044605">Email Gateway (Jul 16 2020 at 04:45)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+If you formulate it more computationally (and more consistenly spaced), you can <br>
+use evaluation in ML:</p>
+<p>definition proper_divisor :: "int ⇒int ⇒ bool "  (infixr "properdiv" 80)<br>
+   where "n properdiv m = (n ≥ 1 ∧ n&lt; m ∧ n dvd m)"</p>
+<p>definition properdiv_set:  "properdivs m = filter (λn. n properdiv m) [1..m]"</p>
+<p>lemma "properdivs 819 = [1, 3, 7, 9, 13, 21, 39, 63, 91, 117, 273]"<br>
+by eval</p>
+<p>Tobias<br>
+<a href="/user_uploads/14278/uGyZdkei16nUaU_VLKHk0LPU/smime.p7s">smime.p7s</a></p>
+
 
 {% endraw %}
 

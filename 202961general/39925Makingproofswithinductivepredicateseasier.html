@@ -1,0 +1,30 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/39925Makingproofswithinductivepredicateseasier.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/39925Makingproofswithinductivepredicateseasier.html">Making proofs with inductive predicates easier</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="204073607"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Making%20proofs%20with%20inductive%20predicates%20easier/near/204073607" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/39925Makingproofswithinductivepredicateseasier.html#204073607">Mark Wassell (Jul 16 2020 at 12:00)</a>:</h4>
+<p>Hi, I have a set of mutually recursive inductive predicates that define a well-formedness condition for a language. I often need to prove well-formedness for various forms of terms in the language. These proofs are easy if I break them down into the consituent subgoals either using apply style or Isar style but they are getting tedious to do. If I throw all of the intros at sledgehammer,sledgehammer doesn't find a proof even though it seems 'obvious' to me. If I limit the set of facts to the facts I used to prove the wf condition by hand then sledgehammer finds the proof. Any suggestions on how I can prove these wf facts easily and in a general way?</p>
+
+<a name="204076011"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Making%20proofs%20with%20inductive%20predicates%20easier/near/204076011" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/39925Makingproofswithinductivepredicateseasier.html#204076011">Manuel Eberl (Jul 16 2020 at 12:31)</a>:</h4>
+<p>auto/force with suitable simp/intro/dest/elim rules doesn't do it?</p>
+
+<a name="204078866"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Making%20proofs%20with%20inductive%20predicates%20easier/near/204078866" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/39925Makingproofswithinductivepredicateseasier.html#204078866">Mark Wassell (Jul 16 2020 at 12:58)</a>:</h4>
+<p>Metis with all of the intros for the wf predicates + extras sometimes works. Sometimes a more refined set of intros is needed. In cases where these don't work a few steps of apply to break it up into simpler subgoals and then the above works.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

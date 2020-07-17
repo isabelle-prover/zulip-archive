@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (1 message, latest: Jul 17 2020 at 17:53)
+
 * [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (3 messages, latest: Jul 17 2020 at 11:11)
 
 * [\[isabelle\] FTfJP 2020 (virtual) - Call for Participation ...](89377isabelleFTfJP2020virtualCallforParticipation.html) (1 message, latest: Jul 17 2020 at 07:46)

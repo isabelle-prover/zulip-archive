@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Making proofs with inductive predicates easier](39925Makingproofswithinductivepredicateseasier.html) (6 messages, latest: Jul 16 2020 at 14:42)
+* [Making proofs with inductive predicates easier](39925Makingproofswithinductivepredicateseasier.html) (7 messages, latest: Jul 17 2020 at 09:16)
 
 * [Continuous integration](65308Continuousintegration.html) (53 messages, latest: Jul 15 2020 at 19:12)
 
@@ -123,9 +123,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

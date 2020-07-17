@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FTfJP 2020 (virtual) - Call for Participation ...](89377isabelleFTfJP2020virtualCallforParticipation.html) (1 message, latest: Jul 17 2020 at 07:46)
+
 * [\[isabelle\] File antiquotation broken after Theory.join_th...](37883isabelleFileantiquotationbrokenafterTheoryjointh.html) (2 messages, latest: Jul 16 2020 at 21:07)
 
 * [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (2 messages, latest: Jul 16 2020 at 04:45)

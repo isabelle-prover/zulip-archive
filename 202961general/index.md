@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Automatically contracted abbreviations](05386Automaticallycontractedabbreviations.html) (9 messages, latest: Jul 17 2020 at 14:49)
+
 * [Making proofs with inductive predicates easier](39925Makingproofswithinductivepredicateseasier.html) (7 messages, latest: Jul 17 2020 at 09:16)
 
 * [Continuous integration](65308Continuousintegration.html) (53 messages, latest: Jul 15 2020 at 19:12)

@@ -1,0 +1,54 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/05386Automaticallycontractedabbreviations.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html">Automatically contracted abbreviations</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="204210098"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204210098" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204210098">Lukas Stevens (Jul 17 2020 at 14:09)</a>:</h4>
+<p>I have the theorem <code>x &lt; y ⟷ x ≤ y ∧ ¬ (x = y)</code>. The term of that theorem (Thm.prop_of) gets automatically changed to  <code>x &lt; y ⟷ x ≤ y ∧ x ≠ y</code>. This term is used as a key in a <code>Termtab</code>. Later, I manually build a term that is of the first form, but because of the contracted abbreviation it is not found in the table. Is there any way to prevent that contraction?</p>
+
+<a name="204210727"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204210727" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204210727">Lukas Stevens (Jul 17 2020 at 14:15)</a>:</h4>
+<p>Is it possible that the pretty-printing is just fooling me?</p>
+
+<a name="204212344"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204212344" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204212344">Manuel Eberl (Jul 17 2020 at 14:29)</a>:</h4>
+<p>How do you get hold of these terms in the first place?</p>
+
+<a name="204212365"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204212365" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204212365">Lukas Stevens (Jul 17 2020 at 14:29)</a>:</h4>
+<p>Ah, the problem is that the type does not match apparently.</p>
+
+<a name="204212369"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204212369" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204212369">Manuel Eberl (Jul 17 2020 at 14:29)</a>:</h4>
+<p>It is somewhat unusual to have a term where abbreviations have not yet been unfolded.</p>
+
+<a name="204212383"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204212383" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204212383">Manuel Eberl (Jul 17 2020 at 14:29)</a>:</h4>
+<p>yeah that seems more likely</p>
+
+<a name="204212948"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204212948" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204212948">Lukas Stevens (Jul 17 2020 at 14:33)</a>:</h4>
+<p>It was confusing because I printed several terms with a TERM exception and one term had the abbreviation contracted while the other term didn't.</p>
+
+<a name="204214813"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204214813" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204214813">Manuel Eberl (Jul 17 2020 at 14:49)</a>:</h4>
+<p>btw you can also print terms with Pretty.writeln/Syntax.pretty_term.</p>
+
+<a name="204214839"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Automatically%20contracted%20abbreviations/near/204214839" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/05386Automaticallycontractedabbreviations.html#204214839">Manuel Eberl (Jul 17 2020 at 14:49)</a>:</h4>
+<p>or, even more easily, convert them to a cterm and do @{print}</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

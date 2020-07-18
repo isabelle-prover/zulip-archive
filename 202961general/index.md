@@ -9,11 +9,11 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Continuous integration](65308Continuousintegration.html) (54 messages, latest: Jul 18 2020 at 09:20)
+
 * [Automatically contracted abbreviations](05386Automaticallycontractedabbreviations.html) (11 messages, latest: Jul 17 2020 at 15:12)
 
 * [Making proofs with inductive predicates easier](39925Makingproofswithinductivepredicateseasier.html) (7 messages, latest: Jul 17 2020 at 09:16)
-
-* [Continuous integration](65308Continuousintegration.html) (53 messages, latest: Jul 15 2020 at 19:12)
 
 * [Kolmogorov–Arnol'd superposition theorem](31140KolmogorovArnoldsuperpositiontheorem.html) (1 message, latest: Jul 15 2020 at 16:07)
 

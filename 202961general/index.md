@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Continuous integration](65308Continuousintegration.html) (58 messages, latest: Jul 19 2020 at 09:33)
+* [Continuous integration](65308Continuousintegration.html) (59 messages, latest: Jul 19 2020 at 11:41)
 
 * [Automatically contracted abbreviations](05386Automaticallycontractedabbreviations.html) (11 messages, latest: Jul 17 2020 at 15:12)
 
@@ -125,9 +125,9 @@ permalink: ./202961general/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
-
 * [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
+
+* [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

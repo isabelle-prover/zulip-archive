@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Continuous integration](65308Continuousintegration.html) (56 messages, latest: Jul 18 2020 at 19:04)
+* [Continuous integration](65308Continuousintegration.html) (58 messages, latest: Jul 19 2020 at 09:33)
 
 * [Automatically contracted abbreviations](05386Automaticallycontractedabbreviations.html) (11 messages, latest: Jul 17 2020 at 15:12)
 

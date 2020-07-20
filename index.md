@@ -18,17 +18,17 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (6 topics)
 
-* [announcements](214136announcements/index.html) (4 topics)
-
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
+* [announcements](214136announcements/index.html) (4 topics)
+
 * [Lie](211306Lie/index.html) (3 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (2 topics)
-
 * [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
+
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (2 topics)
 
 <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a> <a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>
 {% include archive_update.html %}

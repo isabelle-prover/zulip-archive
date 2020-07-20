@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] ML style "functors" for Isabelle theories?](02950isabelleMLstylefunctorsforIsabelletheories.html) (1 message, latest: Jul 20 2020 at 06:17)
+* [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (5 messages, latest: Jul 20 2020 at 15:50)
 
-* [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (4 messages, latest: Jul 20 2020 at 05:38)
+* [\[isabelle\] ML style "functors" for Isabelle theories?](02950isabelleMLstylefunctorsforIsabelletheories.html) (1 message, latest: Jul 20 2020 at 06:17)
 
 * [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (4 messages, latest: Jul 18 2020 at 22:08)
 

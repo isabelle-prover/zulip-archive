@@ -14,9 +14,9 @@ permalink: ./index.html
 
 * [new projects](202967newprojects/index.html) (10 topics)
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (6 topics)
-
 * [Beginner Questions](238552BeginnerQuestions/index.html) (6 topics)
+
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (6 topics)
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 

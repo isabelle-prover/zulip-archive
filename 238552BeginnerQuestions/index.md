@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [OF: resolving premise that is an implication](95955OFresolvingpremisethatisanimplication.html) (6 messages, latest: Jul 21 2020 at 08:54)
+* [OF: resolving premise that is an implication](95955OFresolvingpremisethatisanimplication.html) (14 messages, latest: Jul 21 2020 at 10:39)
 
 * [Bad session "<Session_Name>"](14414BadsessionSessionName.html) (5 messages, latest: Jul 13 2020 at 08:43)
 

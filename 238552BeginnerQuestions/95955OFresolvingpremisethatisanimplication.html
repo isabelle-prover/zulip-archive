@@ -55,6 +55,47 @@ permalink: ./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204524887" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204524887">Lukas Stevens (Jul 21 2020 at 08:54)</a>:</h4>
 <p>What I am showing here is part of a procedure which constructs a thm. So I would like to avoid tactics.</p>
 
+<a name="204530488"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204530488" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204530488">Kevin Kappelmann (Jul 21 2020 at 10:08)</a>:</h4>
+<p>How about this?</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">lemma</span>
+  <span class="kp">assumes</span> <span class="s">&quot;A ⟹ B ⟹ C&quot;</span>
+  <span class="kp">assumes</span> <span class="s">&quot;(A ⟹ B ⟹ C) ⟹ D&quot;</span>
+  <span class="kp">shows</span> <span class="n">D</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">from</span> <span class="n">assms</span><span class="o">(</span><span class="n">2</span><span class="o">)</span> <span class="n">assms</span><span class="o">(</span><span class="n">1</span><span class="o">)</span> <span class="k">have</span> <span class="s">&quot;D&quot;</span> <span class="k">by</span> <span class="o">(</span><span class="n">fact</span> <span class="n">Pure.cut_rl</span><span class="o">)</span>
+<span class="gr">oops</span>
+</code></pre></div>
+
+<a name="204531512"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204531512" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204531512">Lukas Stevens (Jul 21 2020 at 10:23)</a>:</h4>
+<p>This still uses the fact tactic.</p>
+
+<a name="204531907"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204531907" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204531907">Josh Chen (Jul 21 2020 at 10:29)</a>:</h4>
+<p>I doubt there's any way of using <code>OF</code> to remove that premise, the really strict way resolution works precludes that. You'll have to resort to doing some ML<del>, or else define some wrapper constant.</del> [I'm not sure this is possible here.]</p>
+
+<a name="204532222"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204532222" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204532222">Simon Roßkopf (Jul 21 2020 at 10:32)</a>:</h4>
+<p>If you plan to work on the ML level, you might have some success with Drule.compose, depending on how your concrete theorems look</p>
+
+<a name="204532356"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204532356" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204532356">Josh Chen (Jul 21 2020 at 10:34)</a>:</h4>
+<p>Yes. Note that there might be issues with lifting for <code>Drule.compose</code> (e.g. <a href="https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2019-September/msg00090.html">https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2019-September/msg00090.html</a> for a previous version of Isabelle, but I think the problem is still there).</p>
+<p>For <em>conclusions</em> this is achievable by <code>Goal.protect</code>, and for terms <code>Logic.protect</code>, <code>Drule.protect</code>.</p>
+
+<a name="204532526"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204532526" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204532526">Lukas Stevens (Jul 21 2020 at 10:37)</a>:</h4>
+<p>I am working on the ML level, so using ML functions is my goal anyways.</p>
+
+<a name="204532636"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204532636" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204532636">Lukas Stevens (Jul 21 2020 at 10:38)</a>:</h4>
+<p>Judging from Makarius answer, it is probably better to discharge all the trivial goals coming from the final resolution step with <code>assume_tac</code>.</p>
+
+<a name="204532660"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/OF%3A%20resolving%20premise%20that%20is%20an%20implication/near/204532660" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/95955OFresolvingpremisethatisanimplication.html#204532660">Josh Chen (Jul 21 2020 at 10:39)</a>:</h4>
+<p>I think that's the god-given way to do it, yes ;)</p>
+
 
 {% endraw %}
 

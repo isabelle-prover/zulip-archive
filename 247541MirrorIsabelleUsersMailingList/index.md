@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle standard mathematics library,	HOL-Ana...](76720isabelleIsabellestandardmathematicslibraryHOLAna.html) (1 message, latest: Jul 21 2020 at 20:38)
+* [\[isabelle\] ML style "functors" for Isabelle theories?](02950isabelleMLstylefunctorsforIsabelletheories.html) (3 messages, latest: Jul 21 2020 at 22:37)
 
-* [\[isabelle\] ML style "functors" for Isabelle theories?](02950isabelleMLstylefunctorsforIsabelletheories.html) (2 messages, latest: Jul 21 2020 at 20:27)
+* [\[isabelle\] Isabelle standard mathematics library,	HOL-Ana...](76720isabelleIsabellestandardmathematicslibraryHOLAna.html) (1 message, latest: Jul 21 2020 at 20:38)
 
 * [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (5 messages, latest: Jul 20 2020 at 15:50)
 

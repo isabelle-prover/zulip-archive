@@ -9,9 +9,9 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Thm.assume: undeclared hyps](44891Thmassumeundeclaredhyps.html) (6 messages, latest: Jul 20 2020 at 16:32)
+* [Continuous integration](65308Continuousintegration.html) (60 messages, latest: Jul 21 2020 at 08:33)
 
-* [Continuous integration](65308Continuousintegration.html) (59 messages, latest: Jul 19 2020 at 11:41)
+* [Thm.assume: undeclared hyps](44891Thmassumeundeclaredhyps.html) (6 messages, latest: Jul 20 2020 at 16:32)
 
 * [Automatically contracted abbreviations](05386Automaticallycontractedabbreviations.html) (11 messages, latest: Jul 17 2020 at 15:12)
 

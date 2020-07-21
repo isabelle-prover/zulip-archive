@@ -140,6 +140,44 @@ qed</p>
     Title = {Diagram Operators in a Logical Framework},<br>
     Year = {2020}}</p>
 
+<a name="204599060"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ML%20style%20%22functors%22%20for%20Isabelle%20theories%3F/near/204599060" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/02950isabelleMLstylefunctorsforIsabelletheories.html#204599060">Email Gateway (Jul 21 2020 at 20:27)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear Brendan Patrick Mahony/All,</p>
+<p>I would like to make a side remark for your question.</p>
+<p>At one point, I did think about developing an infrastructure for the<br>
+definition of generic 'meta-theories' by using implicit quantification over<br>
+types modelled via the use of the schematic type variables (see<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-September/msg00095.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-September/msg00095.html</a><br>
+and,<br>
+more importantly, the reply). For this to work, one would need to write<br>
+Isabelle/ML infrastructure that can generate an 'instance' of (for example)<br>
+category theory on demand for a given set of constants like group,<br>
+group_hom, etc. This is certainly possible (see the screenshot and please<br>
+ignore all aspects not directly related to the software infrastructure that<br>
+the screenshot is meant to demonstrate), but, for me, the amount of effort<br>
+required seemed to be unsurmountable. The advantage of this approach is<br>
+that it does not require any new axioms to be added to Isabelle/HOL.</p>
+<p>Since then, I have converged on the idea that it is best to use an<br>
+extension of HOL (e.g. ZFC in HOL or HOTG) and allow the 'meta-theory' and<br>
+the 'object-theory' to coexist using only the standard techniques. In the<br>
+context of such extensions, this means that the 'object-theory' will be<br>
+limited to some reasonably small set (e.g. V(ω+ω)). Of course, once such<br>
+theory is developed, one might be able to develop an infrastructure for the<br>
+translation of concepts across isomorphisms, under the limitation of size<br>
+only (I am not certain how easy and well automated this could become). I<br>
+have been doing some work in this direction for a certain time. The<br>
+foundational part of my development is available here:<br>
+<a href="https://gitlab.com/user9716869/czh_foundations">https://gitlab.com/user9716869/czh_foundations</a> (more applied concepts are<br>
+still in a very transient state and not available publicly). However, most<br>
+likely, this work will be superseded by HOTG that is being developed by<br>
+Alexander Krauss, Kevin Kappelmann and Joshua Chen (see<br>
+<a href="https://bitbucket.org/cezaryka/tyset/src">https://bitbucket.org/cezaryka/tyset/src</a>).</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov<br>
+<a href="/user_uploads/14278/qzeovXYKHkBcOTGZYrV9cyXu/MCATS.png">MCATS.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/qzeovXYKHkBcOTGZYrV9cyXu/MCATS.png" title="MCATS.png"><img src="/user_uploads/14278/qzeovXYKHkBcOTGZYrV9cyXu/MCATS.png"></a></div>
+
 
 {% endraw %}
 

@@ -36,6 +36,14 @@ permalink: ./202961general/44891Thmassumeundeclaredhyps.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Thm.assume%3A%20undeclared%20hyps/near/204444714" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/44891Thmassumeundeclaredhyps.html#204444714">Lukas Stevens (Jul 20 2020 at 16:32)</a>:</h4>
 <p>It appears to be that I was  using <code>Thm.assume</code> incorrectly (I did not close some assumptions).</p>
 
+<a name="204695229"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Thm.assume%3A%20undeclared%20hyps/near/204695229" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/44891Thmassumeundeclaredhyps.html#204695229">Manuel Eberl (Jul 22 2020 at 17:16)</a>:</h4>
+<p><code>Thm.assume</code> is a pretty low-level tool. You have to be careful to actually add these to the assumptions eventually using <code>Thm.implies_intr</code>. I think the more modern approach (that I don't know much about) is using contexts that have these as local assumptions. (In Isar you would write <code>context assumes … begin</code>)</p>
+
+<a name="204695401"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Thm.assume%3A%20undeclared%20hyps/near/204695401" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/44891Thmassumeundeclaredhyps.html#204695401">Manuel Eberl (Jul 22 2020 at 17:17)</a>:</h4>
+<p>When you do <code>Thm.assume ct</code>, you get <code>ct</code> as a theorem, but with the pending hypothesis <code>ct</code>. All other theorems you create based on this one will also have <code>ct</code> as a hypothesis. It is only discharged when you do <code>Thm.implies_intr</code> eventually.</p>
+
 
 {% endraw %}
 

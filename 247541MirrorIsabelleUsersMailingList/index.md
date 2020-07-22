@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (1 message, latest: Jul 22 2020 at 06:48)
+
+* [\[isabelle\] Isabelle build failure for ’threads=1’](46281isabelleIsabellebuildfailureforthreads1.html) (1 message, latest: Jul 22 2020 at 06:26)
+
 * [\[isabelle\] ML style "functors" for Isabelle theories?](02950isabelleMLstylefunctorsforIsabelletheories.html) (3 messages, latest: Jul 21 2020 at 22:37)
 
 * [\[isabelle\] Isabelle standard mathematics library,	HOL-Ana...](76720isabelleIsabellestandardmathematicslibraryHOLAna.html) (1 message, latest: Jul 21 2020 at 20:38)

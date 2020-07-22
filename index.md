@@ -12,17 +12,17 @@ permalink: ./index.html
 
 * [quantum computing](202968quantumcomputing/index.html) (21 topics)
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (10 topics)
-
 * [new projects](202967newprojects/index.html) (10 topics)
+
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (10 topics)
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (7 topics)
 
-* [announcements](214136announcements/index.html) (4 topics)
+* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
 
-* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
+* [announcements](214136announcements/index.html) (4 topics)
 
 * [Lie](211306Lie/index.html) (3 topics)
 

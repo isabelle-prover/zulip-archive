@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Summer School on Programming Languages and Ver...](93980isabelleSummerSchoolonProgrammingLanguagesandVer.html) (1 message, latest: Jul 23 2020 at 08:40)
+
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (7 messages, latest: Jul 23 2020 at 07:15)
 
 * [\[isabelle\] Isabelle build failure for ’threads=1’](46281isabelleIsabellebuildfailureforthreads1.html) (1 message, latest: Jul 22 2020 at 06:26)

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (5 messages, latest: Jul 23 2020 at 06:58)
+* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (7 messages, latest: Jul 23 2020 at 07:15)
 
 * [\[isabelle\] Isabelle build failure for ’threads=1’](46281isabelleIsabellebuildfailureforthreads1.html) (1 message, latest: Jul 22 2020 at 06:26)
 

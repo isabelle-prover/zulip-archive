@@ -96,6 +96,61 @@ If there is an obvious dependency, clearly it is desirable to express this symbo
 <p>Ken Kubota<br>
 <a href="https://doi.org/10.4444/100">https://doi.org/10.4444/100</a></p>
 
+<a name="204855184"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Standard%20group%20theory%20in%20Isabelle/HOL%20%E2%80%93%20Isabel.../near/204855184" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html#204855184">Email Gateway (Jul 23 2020 at 21:24)</a>:</h4>
+<p>From: Ken Kubota &lt;<a href="mailto:mail@kenkubota.de">mail@kenkubota.de</a>&gt;</p>
+<blockquote>
+<p>Am 23.07.2020 um 14:44 schrieb Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;:</p>
+<blockquote>
+<p>Where can I find this paper?<br>
+See here: <a href="https://doi.org/10.1007/s10817-019-09537-9">https://doi.org/10.1007/s10817-019-09537-9</a></p>
+</blockquote>
+</blockquote>
+<p>Thank you very much.<br>
+I will try to have a look at it soon.</p>
+<blockquote>
+<blockquote>
+<p>How are the type dependencies in expressing group theory covered, as type abstraction, as suggested by Mike Gordon, still isn’t implemented in HOL?</p>
+</blockquote>
+<p>I don't know why people keep claiming you need dependent types/type<br>
+abstraction/whatever to do abstract algebra.</p>
+<p>The way abstract algebra is done in Isabelle is simply to have some big<br>
+enough type and the carrier of your group is then only a subset of that<br>
+type and not the entire type. HOL-Algebra additionally also packages the<br>
+group operations up into a record and uses locales to bundle all the<br>
+group axioms together. It's a bit painful and perhaps not as natural as<br>
+it is in Coq and Lean, but it undoubtedly works.</p>
+<p>HOL-Analysis has similar "relativised" notions of topologies. Normally,<br>
+the topology of a type always spans the entire type and is fixed for<br>
+that type using type classes, but one can also have topologies as values<br>
+and then say that a set is open w.r.t. a particular topology.</p>
+<p>The main disadvantage of this is that you have two parallel<br>
+developments: the typeclass-based ones and the relativised ones. That is<br>
+certainly a drawback, but people (cf. Mikhail Chekhov) seem to be<br>
+working on making this smoother.</p>
+</blockquote>
+<p>Let me ask directly. Is it possible to:</p>
+<ol>
+<li>Prove a property in an abstract way for all groups (e.g., the uniqueness of the identity element),</li>
+<li>and then, given a certain group, transfer (instantiate) this theorem for that particular group without having to carry out the proof again?<br>
+If so, please provide a link.</li>
+</ol>
+<p>Your description above doesn't look like a natural representation at all.<br>
+a) Circumlocations are necessary ("have some big enough type and the carrier of your group is then only a subset of that type").<br>
+b) Duplication of structures ("two parallel developments: the typeclass-based ones and the relativised ones").<br>
+c) Auxiliary structures like type classes are needed.<br>
+d) Extra work is required to unify the parallel developments ("working on making this smoother").</p>
+<p>I'm not too familiar with Isabelle's type classes.<br>
+But I vaguely remember that in the past they lead to an inconsistency (antinomy: negative self-reference) in Isabelle/HOL, and the way this was fixed was by manually tracking the dependencies, if I'm not mistaken.<br>
+However, this clearly contradicts the very idea of type theory, in which the formal language (the syntax: types) prevents the formulation of antinomies from the very beginning.<br>
+One may accept the fix as an auxiliary solution, but not more.</p>
+<p>So altogether the impression is, that simply because the formal language (the type system) used here is too poor, a lot of problems and extra work are created.<br>
+There is no sense in defending an impoverished type system, in which trivial ideas such as the link (the dependency) between the type and the term level cannot be expressed naturally.<br>
+In particular, since it can easily be expressed using the lambda variable binder, as suggested by Mike Gordon.</p>
+<hr>
+<p>Ken Kubota<br>
+<a href="https://doi.org/10.4444/100">https://doi.org/10.4444/100</a> &lt;<a href="https://doi.org/10.4444/100">https://doi.org/10.4444/100</a>&gt;</p>
+
 
 {% endraw %}
 

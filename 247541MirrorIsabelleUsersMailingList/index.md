@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (9 messages, latest: Jul 23 2020 at 12:59)
+* [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (3 messages, latest: Jul 23 2020 at 13:37)
 
-* [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (2 messages, latest: Jul 23 2020 at 12:44)
+* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (9 messages, latest: Jul 23 2020 at 12:59)
 
 * [\[isabelle\] Summer School on Programming Languages and Ver...](93980isabelleSummerSchoolonProgrammingLanguagesandVer.html) (1 message, latest: Jul 23 2020 at 08:40)
 

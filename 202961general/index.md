@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Thm.assume: undeclared hyps](44891Thmassumeundeclaredhyps.html) (8 messages, latest: Jul 22 2020 at 17:17)
+* [Thm.assume: undeclared hyps](44891Thmassumeundeclaredhyps.html) (10 messages, latest: Jul 23 2020 at 09:23)
 
 * [Continuous integration](65308Continuousintegration.html) (60 messages, latest: Jul 21 2020 at 08:33)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (5 messages, latest: Jul 24 2020 at 16:22)
+
 * [\[isabelle\] Standard group theory in Isabelle/HOL and in d...](19957isabelleStandardgrouptheoryinIsabelleHOLandind.html) (1 message, latest: Jul 24 2020 at 14:37)
 
 * [\[isabelle\] Importing from session 2019 vs. 2020](77074isabelleImportingfromsession2019vs2020.html) (1 message, latest: Jul 24 2020 at 13:58)
@@ -26,8 +28,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle standard mathematics library,	HOL-Ana...](76720isabelleIsabellestandardmathematicslibraryHOLAna.html) (1 message, latest: Jul 21 2020 at 20:38)
 
 * [\[isabelle\] get set of (proper) divisors for a specific nu...](85394isabellegetsetofproperdivisorsforaspecificnu.html) (5 messages, latest: Jul 20 2020 at 15:50)
-
-* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (4 messages, latest: Jul 18 2020 at 22:08)
 
 * [\[isabelle\] FTfJP 2020 (virtual) - Call for Participation ...](89377isabelleFTfJP2020virtualCallforParticipation.html) (1 message, latest: Jul 17 2020 at 07:46)
 

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (5 messages, latest: Jul 23 2020 at 21:24)
+* [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (6 messages, latest: Jul 24 2020 at 07:22)
 
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (9 messages, latest: Jul 23 2020 at 12:59)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Importing from session 2019 vs. 2020](77074isabelleImportingfromsession2019vs2020.html) (1 message, latest: Jul 24 2020 at 13:58)
+
 * [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (7 messages, latest: Jul 24 2020 at 08:50)
 
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (9 messages, latest: Jul 23 2020 at 12:59)

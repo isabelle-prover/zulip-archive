@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Github](32452Github.html) (11 messages, latest: Jul 24 2020 at 12:56)
+* [Github](32452Github.html) (13 messages, latest: Jul 25 2020 at 08:19)
 
 * [OF: resolving premise that is an implication](95955OFresolvingpremisethatisanimplication.html) (14 messages, latest: Jul 21 2020 at 10:39)
 

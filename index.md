@@ -24,9 +24,9 @@ permalink: ./index.html
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
-* [Lie](211306Lie/index.html) (3 topics)
-
 * [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (3 topics)
+
+* [Lie](211306Lie/index.html) (3 topics)
 
 * [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
 

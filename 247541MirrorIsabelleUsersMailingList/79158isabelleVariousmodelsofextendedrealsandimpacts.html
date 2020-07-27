@@ -32,6 +32,43 @@ latest HOL4 where <code>PosInf + NegInf</code> is unspecified.</p>
 <p>Regards,</p>
 <p>Chun Tian</p>
 
+<a name="205089041"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205089041" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205089041">Email Gateway (Jul 27 2020 at 07:44)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Hello,</p>
+<p>I find this a bit odd and I think that abstractly, there should be no<br>
+problem here.</p>
+<p>Your assumptions include</p>
+<p>(AE y::(Y,B,v). integrable (X,A,u) (λx. f (x,y)))<br>
+(AE x::(X,A,u). integrable (Y,B,v) (λy. f (x,y)))</p>
+<p>And you say you need to add the assumptions</p>
+<p>∀y. y ∈ Y ⇒ ∫⁺ (X,A,u) (λx. (abs ∘ f) (x,y)) ≠ +∞<br>
+∀x. x ∈ X ⇒ ∫⁺ (Y,B,v) (λy. (abs ∘ f) (x,y)) ≠ +∞</p>
+<p>The former implies the "almost everywhere" form of the latter. So,<br>
+suppose X' and Y' are the subsets of X and Y where it doesn't hold, why<br>
+don't you just w.l.o.g. assume f to be zero on (X'×Y)∪(X×Y')? That does<br>
+not change the value of the integral – since both measures are<br>
+sigma-finite, and X' and Y' are null sets, (X'×Y)∪(X×Y') is also a null set.</p>
+<p>Not saying that this is the easiest way to do it, but it should work.</p>
+<p>In Isabelle, the situation is quite a bit different. Most of the heavy<br>
+lifting is done with non-negative integrals (nn_integral), which work on<br>
+extended non-negative reals, which are a much nicer algebraic structure<br>
+than "normal" extended reals.</p>
+<p>The "normal" integral (lebesgue_integral) does not even return extended<br>
+reals, but normal reals, and is undefined (or rather always returns 0)<br>
+if the function is not integrable (i.e. if the nn_integral of the<br>
+absolute value is ∞).</p>
+<p>If I recall correctly, results for lebesgue_integral usually follow<br>
+fairly easily from those of nn_integral. Especially because<br>
+integrability is just measurability + "nn_integral ≠ ∞" so the results<br>
+for nn_integral allow you to show integrability easily, and once you<br>
+have shown integrability, lebesgue_integral behaves fairly nicely.</p>
+<p>(I've only contributed a little bit to this library, most of the work<br>
+was done by Johannes Hölzl, so the above is just my impression from<br>
+using and browsing the library)</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

@@ -136,6 +136,44 @@ that is measurable with finitely many exceptions should also be measurable.</p>
 doing something crazy (like choice operators) is Borel-measurable.</p>
 <p>Manuel</p>
 
+<a name="205096957"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205096957" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205096957">Email Gateway (Jul 27 2020 at 09:39)</a>:</h4>
+<p>From: "Chun Tian (binghe)" &lt;<a href="mailto:binghe.lisp@gmail.com">binghe.lisp@gmail.com</a>&gt;<br>
+Hi,</p>
+<p>If f and g are both measurable functions, then {x | f x = g x /\ x IN<br>
+m_space m} (abbrev: {f = g}) must be a measurable set. However, if you have<br>
+just f a measurable function, and {f = g} a measurable set, then it is NOT<br>
+true that g is a measurable set, UNLESS m is a complete measure space.</p>
+<p>But actually I just got a new idea to resolve my problem:</p>
+<p>Although the value of <code>PosInf + NegInf</code>, etc. are not specified (in latest<br>
+HOL4), but if I let <code>x = PosInf + NegInf</code> in a proof, and then do a case<br>
+analysis on <code>x</code>, there must be only three possibilities: x = PosInf, x =<br>
+NegInf, x = Normal r, where r is an arbitrary normal real number.   But I<br>
+do have proven the involved theorems under all these 3 cases (with very<br>
+different proofs, sometimes), thus in theory I also have a proof when<br>
+<code>PosInf + NegInf</code> is unspecified!</p>
+<p>What I have just benefited from logic is that the same logical term cannot<br>
+equal to different values in the same proof.</p>
+<p>Regards,</p>
+<p>Chun Tian</p>
+
+<a name="205098138"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205098138" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205098138">Email Gateway (Jul 27 2020 at 09:52)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+I don't understand that statement at all. Did you mean "it is NOT true<br>
+that g is a measurable function"? If yes, then, well, of course not,<br>
+since {f = g} could be the empty set (which is certainly measurable) and<br>
+then obviously the measurability of f does not tell you anything about<br>
+g. Not sure why you are bringing this up.</p>
+<p>In any case, all I said in my last email was that you should be able to<br>
+easily prove</p>
+<p>⊢ ∀a f g h. sigma_algebra a ∧ f ∈ Borel_measurable a ∧ g ∈<br>
+Borel_measurable a ⇒ (λx. f x − g x) ∈ Borel_measurable a</p>
+<p>no matter what ∞ + -∞ is defined as (including undefined, which is just<br>
+some globally fixed value in HOL). But perhaps that is the same<br>
+realisation that you also had in your last email.</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

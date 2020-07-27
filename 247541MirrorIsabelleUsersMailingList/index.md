@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (4 messages, latest: Jul 27 2020 at 08:27)
+* [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (6 messages, latest: Jul 27 2020 at 09:52)
 
 * [\[isabelle\] Representing type dependencies in Isabelle/HOL...](12397isabelleRepresentingtypedependenciesinIsabelleHOL.html) (1 message, latest: Jul 25 2020 at 20:51)
 

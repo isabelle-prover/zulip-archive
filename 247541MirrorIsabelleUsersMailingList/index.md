@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (6 messages, latest: Jul 27 2020 at 11:56)
+
 * [\[isabelle\] new bibitems in document preparation](01358isabellenewbibitemsindocumentpreparation.html) (1 message, latest: Jul 27 2020 at 10:52)
 
 * [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (6 messages, latest: Jul 27 2020 at 09:52)
 
 * [\[isabelle\] Representing type dependencies in Isabelle/HOL...](12397isabelleRepresentingtypedependenciesinIsabelleHOL.html) (1 message, latest: Jul 25 2020 at 20:51)
-
-* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (5 messages, latest: Jul 24 2020 at 16:22)
 
 * [\[isabelle\] Standard group theory in Isabelle/HOL and in d...](19957isabelleStandardgrouptheoryinIsabelleHOLandind.html) (1 message, latest: Jul 24 2020 at 14:37)
 

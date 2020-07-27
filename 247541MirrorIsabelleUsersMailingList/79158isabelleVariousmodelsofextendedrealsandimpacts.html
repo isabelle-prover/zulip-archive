@@ -69,6 +69,73 @@ using and browsing the library)</p>
 <p>Cheers,</p>
 <p>Manuel</p>
 
+<a name="205090440"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205090440" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205090440">Email Gateway (Jul 27 2020 at 08:04)</a>:</h4>
+<p>From: "Chun Tian (binghe)" &lt;<a href="mailto:binghe.lisp@gmail.com">binghe.lisp@gmail.com</a>&gt;<br>
+Hi Manuel,</p>
+<p>please be noticed that</p>
+<p>(AE y::(Y,B,v). integrable (X,A,u) (λx. f (x,y)))<br>
+(AE x::(X,A,u). integrable (Y,B,v) (λy. f (x,y)))</p>
+<p>are conclusions of Fubini's theorem.</p>
+<p>Furthermore, the definition of integrability, besides the finiteness of<br>
+nn_integral (pos_fn_integral in HOL4) of the positive and negative parts,<br>
+also includes the measurability of the involved functions. And actually the<br>
+measurability is the main problem:</p>
+<p>[integrable_def]  Definition<br>
+      ⊢ ∀m f.<br>
+            integrable m f ⇔<br>
+            f ∈ Borel_measurable (m_space m,measurable_sets m) ∧<br>
+            ∫⁺ m f⁺ ≠ +∞ ∧ ∫⁺ m f⁻ ≠ +∞</p>
+<p>One may think that, if two functions f and g only differ at a null set<br>
+(i.e. they're a.e.-equivalent), and one of them, say f, is measurable, then<br>
+so is the other.  But this is actually not true. In fact, this argument is<br>
+only true if the involved measure space is complete (i.e. all subsets of<br>
+null sets are null sets too).  However their integrations are the same<br>
+(when they're integrable). See the following two theorems in HOL4:</p>
+<p>[integral_cong_AE]  Theorem<br>
+      ⊢ ∀m f g. measure_space m ∧ (AE x::m. f x = g x) ⇒ ∫ m f = ∫ m g</p>
+<p>[integrable_eq_AE]  Theorem<br>
+      ⊢ ∀m f g.<br>
+            complete_measure_space m ∧ integrable m f ∧<br>
+            (AE x::m. f x = g x) ⇒<br>
+            integrable m g</p>
+<p>To see a counterexample (of integrable_eq_AE when <code>complete_measure_space</code><br>
+is replaced by just <code>measure_space</code>), see the following artificial example<br>
+given by Prof. Massimo Campanino (University of Bologna):</p>
+<p>"I think I found an example using Cantor set C which has 0 Lebesque<br>
+measure. Let f and g  both be equal to 1 on the complementary set of C. We<br>
+can decompose C as the union of two disjoint non-measurable sets C_1 and<br>
+C_2  using a modification of the standard example of non-measurable subset<br>
+of [0, 1]. Let f be equal to 0 ang g be equal to 1/3 on C_1 and to 2/3 on<br>
+C_2."</p>
+<p>Regards,</p>
+<p>Chun Tian</p>
+
+<a name="205091790"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205091790" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205091790">Email Gateway (Jul 27 2020 at 08:27)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+On 27/07/2020 10:04, Chun Tian (binghe) wrote:</p>
+<blockquote>
+<p>are conclusions of Fubini's theorem.</p>
+</blockquote>
+<p>Oops, okay, sorry!</p>
+<blockquote>
+<p>Furthermore, the definition of integrability, besides the finiteness of<br>
+nn_integral (pos_fn_integral in HOL4) of the positive and negative parts,<br>
+also includes the measurability of the involved functions.</p>
+</blockquote>
+<p>Perhaps the problem is simply that your measurability theorem for<br>
+subtraction on extreals is too weak. I would be very surprised if it<br>
+were not possible to prove that subtraction of extreals is measurable<br>
+with no preconditions.</p>
+<p>After all, there are only finitely many problematic points and you can<br>
+treat those separately. Testing for equality is measurable, constant<br>
+functions are measurable, "if-then-else" is measurable – so a function<br>
+that is measurable with finitely many exceptions should also be measurable.</p>
+<p>At the end of the day, pretty much everything you can write down without<br>
+doing something crazy (like choice operators) is Borel-measurable.</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

@@ -190,6 +190,51 @@ involve when you actually try to prove that proposition, and these four<br>
 cases have in total 3^4 possible value combinations, none leads to any<br>
 inconsistency.</p>
 
+<a name="205118648"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205118648" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205118648">Email Gateway (Jul 27 2020 at 13:47)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+The way that measurability of subtraction on ereals is proven in<br>
+Isabelle strongly suggests to me that it does not depend on any<br>
+particular choice of what ∞ - ∞ and -∞ - (-∞) are. I quickly checked it<br>
+by defining my own ereals and leaving it undefined, and all those proofs<br>
+still work fine.</p>
+<p>In case you are interested in /how/ this is proven in Isabelle: You take<br>
+the following lemma:</p>
+<p>lemma borel_measurable_ereal2:<br>
+  fixes f g :: "'a ⇒ ereal"<br>
+  assumes f: "f ∈ borel_measurable M"<br>
+  assumes g: "g ∈ borel_measurable M"<br>
+  assumes H: "(λx. H (ereal (real_of_ereal (f x))) (ereal (real_of_ereal<br>
+(g x)))) ∈ borel_measurable M"<br>
+    "(λx. H (-∞) (ereal (real_of_ereal (g x)))) ∈ borel_measurable M"<br>
+    "(λx. H (∞) (ereal (real_of_ereal (g x)))) ∈ borel_measurable M"<br>
+    "(λx. H (ereal (real_of_ereal (f x))) (-∞)) ∈ borel_measurable M"<br>
+    "(λx. H (ereal (real_of_ereal (f x))) (∞)) ∈ borel_measurable M"<br>
+  shows "(λx. H (f x) (g x)) ∈ borel_measurable M"<br>
+proof -<br>
+  let ?G = "λy x. if g x = ∞ then H y ∞ else if g x = - ∞ then H y (-∞)<br>
+else H y (ereal (real_of_ereal (g x)))"<br>
+  let ?F = "λx. if f x = ∞ then ?G ∞ x else if f x = - ∞ then ?G (-∞) x<br>
+else ?G (ereal (real_of_ereal (f x))) x"<br>
+  { fix x have "H (f x) (g x) = ?F x" by (cases "f x" "g x" rule:<br>
+ereal2_cases) auto }<br>
+  note * = this<br>
+  from assms show ?thesis unfolding * by simp<br>
+qed</p>
+<p>Then you note that the conversions between "real" and "ereal" (which are<br>
+called "ereal :: real ⇒ ereal" and "real_of_ereal :: ereal ⇒ real" in<br>
+Isabelle) are unconditionally Borel-measurable.</p>
+<p>For the first one, that should be obvious. For the second one, note that<br>
+"real_of_ereal" is clearly a continuous map from "UNIV - {±∞} :: ereal"<br>
+to "UNIV :: real" and then still Borel-measurable on the entire Borel<br>
+space of ereal because there are only countable many (namely 2)<br>
+exceptional points.</p>
+<p>I don't see why this kind of argument should not work in HOL4. This does<br>
+not even assume that "∞ - ∞ = -∞ - (-∞)" or anything of the sort. It<br>
+only assumes that "∞ - ∞" is some arbitrary but globally fixed value –<br>
+surely that is the case in HOL4's logic.</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

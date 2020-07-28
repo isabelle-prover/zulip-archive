@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (2 messages, latest: Jul 28 2020 at 20:21)
+
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (10 messages, latest: Jul 28 2020 at 15:30)
 
 * [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (1 message, latest: Jul 28 2020 at 14:12)
 
 * [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (1 message, latest: Jul 28 2020 at 13:46)
-
-* [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (1 message, latest: Jul 28 2020 at 10:39)
 
 * [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (9 messages, latest: Jul 28 2020 at 09:36)
 

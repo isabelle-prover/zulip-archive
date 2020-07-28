@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (10 messages, latest: Jul 28 2020 at 15:30)
+
 * [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (1 message, latest: Jul 28 2020 at 14:12)
 
 * [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (1 message, latest: Jul 28 2020 at 13:46)
@@ -30,8 +32,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Importing from session 2019 vs. 2020](77074isabelleImportingfromsession2019vs2020.html) (1 message, latest: Jul 24 2020 at 13:58)
 
 * [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (7 messages, latest: Jul 24 2020 at 08:50)
-
-* [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (9 messages, latest: Jul 23 2020 at 12:59)
 
 * [\[isabelle\] Summer School on Programming Languages and Ver...](93980isabelleSummerSchoolonProgrammingLanguagesandVer.html) (1 message, latest: Jul 23 2020 at 08:40)
 

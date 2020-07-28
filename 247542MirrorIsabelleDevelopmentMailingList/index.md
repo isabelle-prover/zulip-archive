@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] proof state layout](92587isabelledevproofstatelayout.html) (2 messages, latest: Jul 26 2020 at 20:42)
+* [\[isabelle-dev\] proof state layout](92587isabelledevproofstatelayout.html) (3 messages, latest: Jul 28 2020 at 05:54)
 
 * [\[isabelle-dev\] Isabelle/jEdit won't start today](14244isabelledevIsabellejEditwontstarttoday.html) (3 messages, latest: Jul 14 2020 at 13:29)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (1 message, latest: Jul 28 2020 at 14:12)
+
 * [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (1 message, latest: Jul 28 2020 at 13:46)
 
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (1 message, latest: Jul 28 2020 at 10:39)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New AFP entry: Relational Characterisations of...](19080isabelleNewAFPentryRelationalCharacterisationsof.html) (1 message, latest: Jul 28 2020 at 07:59)
+
 * [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (7 messages, latest: Jul 28 2020 at 00:51)
 
 * [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (8 messages, latest: Jul 27 2020 at 13:47)

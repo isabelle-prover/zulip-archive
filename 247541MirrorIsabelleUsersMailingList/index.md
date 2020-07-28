@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (8 messages, latest: Jul 27 2020 at 13:47)
+* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (7 messages, latest: Jul 28 2020 at 00:51)
 
-* [\[isabelle\] Rosetta Code](13815isabelleRosettaCode.html) (6 messages, latest: Jul 27 2020 at 11:56)
+* [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (8 messages, latest: Jul 27 2020 at 13:47)
 
 * [\[isabelle\] new bibitems in document preparation](01358isabellenewbibitemsindocumentpreparation.html) (1 message, latest: Jul 27 2020 at 10:52)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (1 message, latest: Jul 28 2020 at 10:39)
+
 * [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (9 messages, latest: Jul 28 2020 at 09:36)
 
 * [\[isabelle\] New AFP entry: Relational Characterisations of...](19080isabelleNewAFPentryRelationalCharacterisationsof.html) (1 message, latest: Jul 28 2020 at 07:59)

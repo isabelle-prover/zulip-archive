@@ -1,0 +1,38 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/56419isabelleRecordupdatesyntax.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/56419isabelleRecordupdatesyntax.html">[isabelle] Record update syntax</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="205220699"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Record%20update%20syntax/near/205220699" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/56419isabelleRecordupdatesyntax.html#205220699">Email Gateway (Jul 28 2020 at 10:39)</a>:</h4>
+<p>From: Lukas Stevens &lt;lukas.stevens+isabelle-users@in.tum.de&gt;<br>
+Hi,</p>
+<p>when using records a common theme is to just update some fields of a <br>
+record and leave the others at is. To this end, many functional <br>
+languages have a record update syntax, e.g. in OCaml you can write {bar <br>
+with x = 1} to obtain a new record that has all the same values as bar <br>
+except for x. As far as I can see, Isabelle/ML currently has no such <br>
+syntax which can lead to quite a bit of bloat. For a pathological <br>
+example, see src/Provers/order.ML where multiple functions are declared <br>
+that each just update one field of the record, but you still have to <br>
+explicitly provide all the other fields. It would be nice to have this <br>
+build into the language. An even more flexible solution would be to <br>
+implement this as an ML antiquotation; however, this requires the <br>
+ability to introspect the type of a record to obtain a list of all the <br>
+record members. I am not sure if this is currently (or at all) possible.</p>
+<p>Is there any interest in having such a language construct?</p>
+<p>Lukas</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

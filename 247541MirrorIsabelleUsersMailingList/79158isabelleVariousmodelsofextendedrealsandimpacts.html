@@ -235,6 +235,39 @@ only assumes that "∞ - ∞" is some arbitrary but globally fixed value –<br>
 surely that is the case in HOL4's logic.</p>
 <p>Manuel</p>
 
+<a name="205215160"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Various%20%22models%22%20of%20extended%20reals%20and%20impacts.../near/205215160" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79158isabelleVariousmodelsofextendedrealsandimpacts.html#205215160">Email Gateway (Jul 28 2020 at 09:36)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Well, if you want to do it the "proper" way, you need a logic with an<br>
+explicit notion of undefinedness. Or some form of dependent types,<br>
+perhaps. But I think even in Coq and Lean they often go for the "let's<br>
+pick a convenient dummy result" approach as opposed to the "let's<br>
+restrict the function's input to a subtype" approach when it comes to<br>
+questions like "what is the integral of a non-integrable function".</p>
+<p>(I don't have any hard data for that, just from anecdotes I recall from<br>
+talking to people, but I'm sure someone will contradict me if the above<br>
+is wrong.)</p>
+<p>In Isabelle/HOL, the current consensus seems to be that convenient dummy<br>
+values are the best way to go. We've yet to encounter a situation where<br>
+they are a problem (and I for one do not think there is one) and they<br>
+make life much easier.</p>
+<p>For instance, if you define something like "ln x = (THE y. x = exp y)",<br>
+the ln of all non-positive numbers is completely unspecified. If you add<br>
+a "if x ≤ 0 then undefined else …", it's still unspecified, but you at<br>
+least know that "ln x1 = ln x2" for any non-positive numbers x1, x2.<br>
+That might sound silly to you, but the nice thing is that this allows<br>
+you to prove that ln is measurable on the reals, whereas the other thing<br>
+does not.</p>
+<p>Of course, you could do all the maths you can do with that definition<br>
+also with the previous one, but things just become a lot messier because<br>
+you then have to talk about measurability on a subspace and some of the<br>
+automation will probably not work anymore etc. So why not make your life<br>
+a bit easier?</p>
+<p>All in all, I think this fixation on defining things the "proper" way is<br>
+unnecessary. But don't get me wrong, I totally understand where it is<br>
+coming from, and I do think it is a legitimate view.</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

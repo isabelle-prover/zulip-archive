@@ -10,9 +10,9 @@ permalink: ./index.html
 
 * [general](202961general/index.html) (62 topics)
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (21 topics)
-
 * [quantum computing](202968quantumcomputing/index.html) (21 topics)
+
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (21 topics)
 
 * [new projects](202967newprojects/index.html) (10 topics)
 

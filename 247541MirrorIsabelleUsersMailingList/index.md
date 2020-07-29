@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Unexpected behaviour of lemmas x = ... for A](37167isabelleUnexpectedbehaviouroflemmasxforA.html) (1 message, latest: Jul 29 2020 at 12:02)
+
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (3 messages, latest: Jul 28 2020 at 23:08)
 
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (10 messages, latest: Jul 28 2020 at 15:30)

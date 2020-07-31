@@ -18,6 +18,8 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (8 topics)
 
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (4 topics)
+
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [announcements](214136announcements/index.html) (4 topics)
@@ -25,8 +27,6 @@ permalink: ./index.html
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
 
 * [Lie](211306Lie/index.html) (3 topics)
-
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (3 topics)
 
 * [Isabelle/ML](211483IsabelleML/index.html) (2 topics)
 

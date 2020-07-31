@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [general](202961general/index.html) (62 topics)
+* [general](202961general/index.html) (63 topics)
 
 * [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (22 topics)
 
@@ -18,11 +18,11 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (8 topics)
 
-* [announcements](214136announcements/index.html) (4 topics)
+* [Proof Ground](245944ProofGround/index.html) (4 topics)
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
-* [Proof Ground](245944ProofGround/index.html) (4 topics)
+* [announcements](214136announcements/index.html) (4 topics)
 
 * [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (3 topics)
 

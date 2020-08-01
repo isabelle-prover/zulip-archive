@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] testboard stuck?](41239isabelledevtestboardstuck.html) (1 message, latest: Jul 31 2020 at 15:27)
+* [\[isabelle-dev\] testboard stuck?](41239isabelledevtestboardstuck.html) (2 messages, latest: Aug 01 2020 at 09:16)
 
 * [\[isabelle-dev\] proof state layout](92587isabelledevproofstatelayout.html) (3 messages, latest: Jul 28 2020 at 05:54)
 

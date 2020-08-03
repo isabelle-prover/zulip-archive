@@ -63,6 +63,46 @@ Unfinished session(s): Minimal
 Max<br>
 <a href="/user_uploads/14278/P6yE_MlR7qZGDZ6eW5jJ2fv1/minimal_isabelle_document_session.zip">minimal_isabelle_document_session.zip</a></p>
 
+<a name="205815225"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20document%20fails%20with%20non-descriptive%20e.../near/205815225" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96078isabelleIsabelledocumentfailswithnondescriptivee.html#205815225">Email Gateway (Aug 03 2020 at 16:26)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Hi Max,</p>
+<blockquote>
+<p>The root.tex file is a minimal Isabelle LaTeX file with NO \bibliography command.</p>
+<p>The command <code>isabelle build -d . -o document=pdf Minimal</code> has the following output:<br>
+```<br>
+Running Minimal ...<br>
+Minimal FAILED<br>
+(see also /Users/mhaslbeck/.isabelle/Isabelle2020/heaps/polyml-5.8.1_x86_64-darwin/log/Minimal)<br>
+Loading theory "Minimal.Submission"</p>
+<h3>theory "Minimal.Submission"</h3>
+<h3>0.014s elapsed time, 0.027s cpu time, 0.000s GC time</h3>
+<p>isabelle document -d /Users/mhaslbeck/.isabelle/Isabelle2020/browser_info/Unsorted/Minimal/document -o pdf -n document<br>
+*** Failed to build document in "/Users/mhaslbeck/.isabelle/Isabelle2020/browser_info/Unsorted/Minimal/document"<br>
+Unfinished session(s): Minimal<br>
+0:00:05 elapsed time</p>
+</blockquote>
+<p>as far as I know this terse message is due to bibtex returning a non-0<br>
+exit value without further error messages in absence of bib entries,<br>
+making the &amp;&amp;-chain</p>
+<blockquote>
+<p>bash(<br>
+          List(<br>
+            latex_bash("sty"),<br>
+            latex_bash(document_format),<br>
+            "{ [ ! -f " + root_bash("bib") + " ] || " + latex_bash("bbl") + "; }", (***)<br>
+            "{ [ ! -f " + root_bash("idx") + " ] || " + latex_bash("idx") + "; }",<br>
+            latex_bash(document_format),<br>
+            latex_bash(document_format)).mkString(" &amp;&amp; "))</p>
+</blockquote>
+<p>in present.scala break at (***), where bibtex is called by «isabelle<br>
+latex -o bbl«</p>
+<p>Maybe an explicit error message issued by isabelle latex in that case<br>
+would be appropriate.  But that would need further investigation.</p>
+<p>Cheers,<br>
+    Florian<br>
+<a href="/user_uploads/14278/ENd8-PXB2dPhA-c6kep-BEF4/signature.asc">signature.asc</a></p>
+
 
 {% endraw %}
 

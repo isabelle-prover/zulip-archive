@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (6 messages, latest: Aug 03 2020 at 12:38)
+* [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (7 messages, latest: Aug 03 2020 at 13:18)
 
 * [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (1 message, latest: Aug 03 2020 at 10:47)
 

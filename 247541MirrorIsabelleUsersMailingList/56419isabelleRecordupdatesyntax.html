@@ -245,6 +245,47 @@ antiquotations you proposed. Especially the generalised antiquotation<br>
 would be great and also make sense since records can be viewed as tuples<br>
 with names instead of indices.</p>
 
+<a name="205792188"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Record%20update%20syntax/near/205792188" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/56419isabelleRecordupdatesyntax.html#205792188">Email Gateway (Aug 03 2020 at 13:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 03/08/2020 14:38, Lukas Stevens wrote:</p>
+<blockquote>
+<p>The application is exactly src/Provers/order.ML but I'd like to refactor<br>
+the interface of the prover to reduce boilerplate on the ML side of<br>
+things. Reducing boilerplate when instantiating the prover would also be<br>
+great. One way is, as you suggested, to just use tables instead of<br>
+records. This would increase the opaqueness of the code since it hides<br>
+which theorems are needed exactly.</p>
+</blockquote>
+<p>In that case, I do propose to use a plain table that maps a thm name to thm<br>
+value: the Order_Tac module has already several operations that use (untyped)<br>
+string "tags" instead of typed record fields, so it fits stylistically and<br>
+actually simplifies the current situation (notably operations like "empty" and<br>
+"update"; the odd dummy_thm will disappear, it is replaced by an undefined<br>
+table entry).</p>
+<p>As you proceed to explore order.ML and learn idiomatic use of Isabelle/ML, you<br>
+will find more and more ways to make the implementation  concise and to the point.</p>
+<p>(The file name should be actually order_tac.ML in correspondence to structure<br>
+Order_Tac in it.)</p>
+<p>There is yet another perspective on the problem: type less_arith is like an<br>
+algebraic structure with "laws" for operations (=), (&lt;=), (&lt;). This could in<br>
+principle become an axiomatic specification as a locale context, and the tool<br>
+then operates "under a morphisms" to move it from the abstract context to<br>
+application contexts.</p>
+<p>Then the record disappears altogether and is replaced by fancy operations on<br>
+logical context elements (due to locale interpretation). An example for this<br>
+approach is src/HOL/Tools/semiring_normalizer.ML but it has its own added<br>
+complexity.</p>
+<blockquote>
+<p>Another way would be to use the<br>
+antiquotations you proposed. Especially the generalised antiquotation<br>
+would be great and also make sense since records can be viewed as tuples<br>
+with names instead of indices.</p>
+</blockquote>
+<p>Right now I recommend to concentrate on the core problems of the application,<br>
+and ignore accidental inconveniences of records in Isabelle/ML.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

@@ -20,9 +20,9 @@ permalink: ./index.html
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (4 topics)
-
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
+
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (4 topics)
 
 * [announcements](214136announcements/index.html) (4 topics)
 

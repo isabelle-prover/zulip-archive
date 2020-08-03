@@ -185,6 +185,66 @@ type definition and defines the record type while automatically<br>
 generating the code for the lens as well. Or is there a way to generate<br>
 the lens for an existing record type (which would make it more flexible)?</p>
 
+<a name="205785431"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Record%20update%20syntax/near/205785431" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/56419isabelleRecordupdatesyntax.html#205785431">Email Gateway (Aug 03 2020 at 12:00)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 31/07/2020 12:19, Lukas Stevens wrote:</p>
+<blockquote>
+<p>Of course, the example is, as I said, pathological but you will find<br>
+clumsy usage of records in other places as well.</p>
+</blockquote>
+<p>What is your own application like? Is it more like the 19-tuple in<br>
+src/Provers/order.ML or like the 8-tuple in src/Pure/variable.ML (or even less<br>
+complex)?</p>
+<p>I do see slight inconveniences in using records in SML and thus Isabelle/ML,<br>
+but the overall balance is still quite good (compared to related or unrelated<br>
+inconveniences in Scala, Haskell, OCaml).</p>
+<blockquote>
+<p>I agree with you that introducing a new language feature would not be a<br>
+good idea. Lenses would probably be a nice and flexible solution. The<br>
+problem with those is that you have to write quite a bit of boilerplate<br>
+if you can't generate them automatically. To generate them<br>
+automatically, one could define an ML antiquotation that reads a record<br>
+type definition and defines the record type while automatically<br>
+generating the code for the lens as well. Or is there a way to generate<br>
+the lens for an existing record type (which would make it more flexible)?</p>
+</blockquote>
+<p>In the meantime I have also spent more thoughts on the general problem of<br>
+records in SML.</p>
+<p>I don't want to see genuine language extensions: this would further weaken the<br>
+language and its few implementations. SML is de-facto a dead language (like<br>
+classical Latin), and hypothetical discussions and proposals like<br>
+<a href="https://smlfamily.github.io/successor-ml">https://smlfamily.github.io/successor-ml</a> are not going to change that after<br>
+several decades.</p>
+<p>I also don't want to see fancy workarounds like in MLton<br>
+<a href="http://mlton.org/FunctionalRecordUpdate">http://mlton.org/FunctionalRecordUpdate</a> --- that is a somewhat different<br>
+culture from Isabelle/ML. Why make a relatively simple problem harder than it<br>
+really is?</p>
+<p>Nonetheless, I see a prospect of future refinements of Isabelle/ML as follows:</p>
+<p>* The very essence of a record in SML is the list (or set) of fields, not<br>
+the concrete field types. Field names are global, without scope, but field<br>
+types are determined by type-inference in a particular scope of ML text.</p>
+<p>* There could be an antiquotation @{record RECORD = FIELDS ...} to define a<br>
+named set of fields within the Isabelle/ML compiler context.</p>
+<p>* The existing antiquotation @{apply m(n)} could be generalized to @{apply<br>
+RECORD(FIELD)}.</p>
+<p>* There could be a few more antiquotations, e.g. @{make RECORD} for a<br>
+function that composes a record from its fields.</p>
+<p>Makarius</p>
+
+<a name="205788507"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Record%20update%20syntax/near/205788507" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/56419isabelleRecordupdatesyntax.html#205788507">Email Gateway (Aug 03 2020 at 12:38)</a>:</h4>
+<p>From: Lukas Stevens &lt;lukas.stevens+isabelle-users@in.tum.de&gt;<br>
+The application is exactly src/Provers/order.ML but I'd like to refactor<br>
+the interface of the prover to reduce boilerplate on the ML side of<br>
+things. Reducing boilerplate when instantiating the prover would also be<br>
+great. One way is, as you suggested, to just use tables instead of<br>
+records. This would increase the opaqueness of the code since it hides<br>
+which theorems are needed exactly. Another way would be to use the<br>
+antiquotations you proposed. Especially the generalised antiquotation<br>
+would be great and also make sense since records can be viewed as tuples<br>
+with names instead of indices.</p>
+
 
 {% endraw %}
 

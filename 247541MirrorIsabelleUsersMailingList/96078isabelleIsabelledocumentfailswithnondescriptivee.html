@@ -1,0 +1,69 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/96078isabelleIsabelledocumentfailswithnondescriptivee.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96078isabelleIsabelledocumentfailswithnondescriptivee.html">[isabelle] Isabelle document fails with non-descriptive e...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="205780808"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20document%20fails%20with%20non-descriptive%20e.../near/205780808" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96078isabelleIsabelledocumentfailswithnondescriptivee.html#205780808">Email Gateway (Aug 03 2020 at 10:47)</a>:</h4>
+<p>From: "Max W. Haslbeck" &lt;<a href="mailto:max.haslbeck@gmx.de">max.haslbeck@gmx.de</a>&gt;<br>
+Hi everyone,</p>
+<p>We ran into the following problem last week when we had a new submission to the AFP.</p>
+<p>Consider this minimal Isabelle session (see also the attached archive):</p>
+<ul>
+<li>Submission.thy (the Isabelle thy file doesn’t really matter)</li>
+<li>document/root.bib</li>
+<li>document/root.tex</li>
+<li>ROOT</li>
+</ul>
+<p>The ROOT file has the following content:</p>
+<div class="codehilite"><pre><span></span><code>session Minimal = HOL +
+  theories
+    Submission
+  document_files
+    &quot;root.tex&quot;
+    &quot;root.bib&quot;
+</code></pre></div>
+
+
+<p>The root.tex file is a minimal Isabelle LaTeX file with NO \bibliography command.</p>
+<p>The command <code>isabelle build -d . -o document=pdf Minimal</code> has the following output:</p>
+<div class="codehilite"><pre><span></span><code>Running Minimal ...
+Minimal FAILED
+(see also /Users/mhaslbeck/.isabelle/Isabelle2020/heaps/polyml-5.8.1_x86_64-darwin/log/Minimal)
+Loading theory &quot;Minimal.Submission&quot;
+### theory &quot;Minimal.Submission&quot;
+### 0.014s elapsed time, 0.027s cpu time, 0.000s GC time
+isabelle document -d /Users/mhaslbeck/.isabelle/Isabelle2020/browser_info/Unsorted/Minimal/document -o pdf -n document
+*** Failed to build document in &quot;/Users/mhaslbeck/.isabelle/Isabelle2020/browser_info/Unsorted/Minimal/document&quot;
+Unfinished session(s): Minimal
+0:00:05 elapsed time
+</code></pre></div>
+
+
+<p>The "*** Failed to build …" line is the only error message I was able to find and nothing more. <code>isabelle document</code> seems to have a problem with the reference to the root.bib file in the ROOT file that then isn’t actually used in root.tex.</p>
+<p>If I remove the reference to "root.bib" from the ROOT file, the build process succeeds. Or I can add</p>
+<div class="codehilite"><pre><span></span><code>\cite{LNCS2283}
+\bibliographystyle{abbrv}
+\bibliography{root}
+</code></pre></div>
+
+
+<p>to root.tex for a successful build.</p>
+<p>So, I just wanted to report that. I think, a more descriptive error message would be helpful here.</p>
+<p>Gruß<br>
+Max<br>
+<a href="/user_uploads/14278/P6yE_MlR7qZGDZ6eW5jJ2fv1/minimal_isabelle_document_session.zip">minimal_isabelle_document_session.zip</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

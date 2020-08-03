@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (1 message, latest: Aug 03 2020 at 10:47)
+
 * [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (2 messages, latest: Aug 03 2020 at 06:01)
 
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (4 messages, latest: Jul 31 2020 at 10:20)

@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (2 messages, latest: Aug 03 2020 at 06:01)
+
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (4 messages, latest: Jul 31 2020 at 10:20)
 
 * [\[isabelle\] Unexpected behaviour of lemmas x = ... for A](37167isabelleUnexpectedbehaviouroflemmasxforA.html) (1 message, latest: Jul 29 2020 at 12:02)
 
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (10 messages, latest: Jul 28 2020 at 15:30)
-
-* [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (1 message, latest: Jul 28 2020 at 14:12)
 
 * [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (1 message, latest: Jul 28 2020 at 13:46)
 

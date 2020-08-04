@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Referring to a type class](97601Referringtoatypeclass.html) (1 message, latest: Aug 04 2020 at 10:52)
+
 * [Github](32452Github.html) (13 messages, latest: Jul 25 2020 at 08:19)
 
 * [OF: resolving premise that is an implication](95955OFresolvingpremisethatisanimplication.html) (14 messages, latest: Jul 21 2020 at 10:39)

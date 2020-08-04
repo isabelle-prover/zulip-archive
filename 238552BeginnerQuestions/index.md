@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Isar for if-then-else](02040Isarforifthenelse.html) (2 messages, latest: Aug 04 2020 at 13:58)
+* [Isar for if-then-else](02040Isarforifthenelse.html) (3 messages, latest: Aug 04 2020 at 14:32)
 
 * [Referring to a type class](97601Referringtoatypeclass.html) (15 messages, latest: Aug 04 2020 at 12:28)
 

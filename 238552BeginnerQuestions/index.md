@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Referring to a type class](97601Referringtoatypeclass.html) (1 message, latest: Aug 04 2020 at 10:52)
+* [Referring to a type class](97601Referringtoatypeclass.html) (12 messages, latest: Aug 04 2020 at 11:59)
+
+* [Ambigous parsing](73292Ambigousparsing.html) (4 messages, latest: Aug 04 2020 at 11:54)
 
 * [Github](32452Github.html) (13 messages, latest: Jul 25 2020 at 08:19)
 

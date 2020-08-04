@@ -1,0 +1,57 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/73292Ambigousparsing.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/73292Ambigousparsing.html">Ambigous parsing</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="205894529"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Ambigous%20parsing/near/205894529" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/73292Ambigousparsing.html#205894529">Gergely Buday (Aug 04 2020 at 11:14)</a>:</h4>
+<p>Here is my simple locale definition in Isabelle:</p>
+<p>locale sig =<br>
+  fixes le:: "'a ⇒ 'a ⇒ bool" (infixl "≤" 50)<br>
+  assumes refl: "x ≤ x"</p>
+<p>Now, I get an error message:</p>
+<p>Ambiguous input⌂ produces 2 parse trees:<br>
+  ("\&lt;^const&gt;HOL.Trueprop"<br>
+    ("\&lt;^const&gt;Orderings.ord_class.less_eq" ("_position" x) ("_position" x)))<br>
+  ("\&lt;^const&gt;HOL.Trueprop" ("\&lt;^fixed&gt;le" ("_position" x) ("_position" x)))<br>
+Ambiguous input<br>
+2 terms are type correct:<br>
+  (x ≤ x)<br>
+  (x ≤ x)<br>
+Failed to parse prop</p>
+<p>Do I have a conflict with a builtin less-or-equal operator?</p>
+<p>How can I fix this?</p>
+<p>The Coq original I took uses</p>
+<p>Infix "≤" := le : order_scope.<br>
+  Open Scope order_scope.</p>
+<p>So, it instructs the system to use less-or-equal  "≤" only in a scope. Is there similar functionality in Isabelle?</p>
+
+<a name="205895281"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Ambigous%20parsing/near/205895281" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/73292Ambigousparsing.html#205895281">Kevin Kappelmann (Aug 04 2020 at 11:26)</a>:</h4>
+<p>If you ctrl+f "notation" in <a href="https://isabelle.in.tum.de/dist/library/HOL/HOL/Orderings.html">Orderings.thy</a>, you will see the defined notation for leq. You can copy the respective notation declarations and disable them using <code>no_notation</code>. In this case</p>
+<div class="codehilite"><pre><span></span><code><span class="k">no_notation</span>
+  <span class="n">less_eq</span>  <span class="o">(</span><span class="s">&quot;&#39;(≤&#39;)&quot;</span><span class="o">)</span> <span class="kp">and</span>
+  <span class="n">less_eq</span>  <span class="o">(</span><span class="s">&quot;(_/ ≤ _)&quot;</span>  <span class="o">[</span><span class="n">51</span><span class="o">,</span> <span class="n">51</span><span class="o">]</span> <span class="n">50</span><span class="o">)</span>
+</code></pre></div>
+
+<a name="205895546"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Ambigous%20parsing/near/205895546" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/73292Ambigousparsing.html#205895546">Gergely Buday (Aug 04 2020 at 11:30)</a>:</h4>
+<p>Thanks, <strong>Kevin Kappelmann</strong>. Is there scoping a 'la Coq in Isabelle?</p>
+
+<a name="205897252"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Ambigous%20parsing/near/205897252" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/73292Ambigousparsing.html#205897252">Lukas Stevens (Aug 04 2020 at 11:54)</a>:</h4>
+<p>You can use locales as a scoping mechanism. However, notation outside of locales is global. It is therefore recommended to use bundles which allow you to enable/disable notation.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

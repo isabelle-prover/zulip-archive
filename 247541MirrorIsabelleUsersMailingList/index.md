@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: The Chandy--Lamport Distribute...](63943isabelleNewintheAFPTheChandyLamportDistribute.html) (1 message, latest: Aug 04 2020 at 11:49)
+
 * [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (2 messages, latest: Aug 03 2020 at 16:26)
 
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (8 messages, latest: Aug 03 2020 at 14:14)

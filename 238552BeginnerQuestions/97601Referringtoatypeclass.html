@@ -88,6 +88,42 @@ goal (1 subgoal):</p>
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Referring%20to%20a%20type%20class/near/205897595" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97601Referringtoatypeclass.html#205897595">Lukas Stevens (Aug 04 2020 at 11:59)</a>:</h4>
 <p>But the first one is the canonical way to do it.</p>
 
+<a name="205897702"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Referring%20to%20a%20type%20class/near/205897702" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97601Referringtoatypeclass.html#205897702">Lukas Stevens (Aug 04 2020 at 12:00)</a>:</h4>
+<p>And works in both cases.</p>
+
+<a name="205899365"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Referring%20to%20a%20type%20class/near/205899365" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97601Referringtoatypeclass.html#205899365">Gergely Buday (Aug 04 2020 at 12:20)</a>:</h4>
+<p>I'm afraid it does not work for me, not even with locale:</p>
+<p>theory Locale</p>
+<p>imports Main </p>
+<p>begin</p>
+<p>locale order =<br>
+  fixes lesseq :: " 'a ⇒ 'a ⇒ bool" (infix "≼" 50)<br>
+  assumes refl:    "x ≼ x"<br>
+      and trans:   "x ≼ y ⟹ y ≼ z ⟹ x ≼ z"<br>
+      and antisym: "x ≼ y ⟹ y ≼ x ⟹ x = y"</p>
+<p>theorem ‹order (myle :: 'a ⇒ 'a ⇒ bool) ⟹ myle x x›<br>
+proof -<br>
+  show ?thesis by (rule order.refl)<br>
+qed</p>
+<p>end</p>
+<p>Failed to finish proof⌂:<br>
+goal (1 subgoal):</p>
+<ol>
+<li>order (λa b. b)</li>
+</ol>
+<p>How does the K* combinator pop up here?</p>
+
+<a name="205900006"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Referring%20to%20a%20type%20class/near/205900006" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97601Referringtoatypeclass.html#205900006">Gergely Buday (Aug 04 2020 at 12:28)</a>:</h4>
+<p>theorem assumes "order myle"<br>
+          shows "myle x x"<br>
+proof -<br>
+  from assms show ?thesis by (rule order.refl)<br>
+qed</p>
+<p>did the trick.</p>
+
 
 {% endraw %}
 

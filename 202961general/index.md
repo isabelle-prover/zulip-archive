@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Construct term while instantiating schematic type variables](28224Constructtermwhileinstantiatingschematictypevariables.html) (4 messages, latest: Aug 04 2020 at 14:58)
+* [Construct term while instantiating schematic type variables](28224Constructtermwhileinstantiatingschematictypevariables.html) (15 messages, latest: Aug 04 2020 at 15:50)
 
 * [Theory namespaces](05372Theorynamespaces.html) (3 messages, latest: Jul 31 2020 at 11:42)
 

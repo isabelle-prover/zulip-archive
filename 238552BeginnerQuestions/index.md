@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Isar for if-then-else](02040Isarforifthenelse.html) (2 messages, latest: Aug 04 2020 at 13:58)
+
 * [Referring to a type class](97601Referringtoatypeclass.html) (15 messages, latest: Aug 04 2020 at 12:28)
 
 * [Ambigous parsing](73292Ambigousparsing.html) (5 messages, latest: Aug 04 2020 at 12:01)

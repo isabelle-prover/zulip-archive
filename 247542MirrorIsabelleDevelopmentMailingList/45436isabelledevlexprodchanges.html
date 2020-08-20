@@ -45,6 +45,38 @@ As somebody who’s wasted a week trying to do this, I can’t say that I like i
 <a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
 <a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
 
+<a name="207578252"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20lex_prod%20changes/near/207578252" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/45436isabelledevlexprodchanges.html#207578252">Email Gateway (Aug 20 2020 at 21:46)</a>:</h4>
+<p>From: Bertram Felgenhauer &lt;<a href="mailto:bertram.felgenhauer@googlemail.com">bertram.felgenhauer@googlemail.com</a>&gt;<br>
+Bertram Felgenhauer wrote:</p>
+<blockquote>
+<p>Apparently, R1 &lt;<em>lex</em>&gt; R2 was changed to artificially impose<br>
+irreflexivity on R1 (checking  a ~= a'  in addition to  a R1 a').</p>
+</blockquote>
+<p>Is there a chance to revert this?</p>
+<p>Instead, one could define a relation version of <code>mk_less</code>, say[*]</p>
+<p>definition less_rel where<br>
+    "less_rel R = {(x,y) |x y. (x,y) ∈ R ∧ (y,x) ∉ R}"</p>
+<p>and use</p>
+<p>less_rel R1 &lt;<em>lex</em>&gt; R2</p>
+<p>instead of the new definition of &lt;<em>lex</em>&gt;. That looks like a tolerable<br>
+overhead to me.</p>
+<p>Note that <code>less_rel</code> is defined slightly differently from the new<br>
+&lt;<em>lex</em>&gt; check, but we can prove equivalence for antisymmetric<br>
+relations:</p>
+<p>lemma less_rel_antisym:<br>
+    "antisym R ⟹ ((x,y) ∈ less_rel R ⟷ x ≠ y ∧ (x,y) ∈ R)"<br>
+    by (auto simp: less_rel_def antisym_def)</p>
+<p>But a lot hinges on why the change was made in the first place.</p>
+<p>Cheers,</p>
+<p>Bertram</p>
+<p>[*] This should probably be an inductive set. And there may be better<br>
+names, like <code>strict_part</code>.</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
 
 {% endraw %}
 

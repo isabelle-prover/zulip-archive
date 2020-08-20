@@ -46,6 +46,40 @@ Georgy Dunaev<br>
 <a href="/user_uploads/14278/aCv_GHA0MlXiqCqC1e3KJlGb/translation.tex">translation.tex</a><br>
 <a href="/user_uploads/14278/ASPdjHdTZtsyq9AxYd5N0DlS/translation.pdf">translation.pdf</a></p>
 
+<a name="207514165"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Translation%20of%20Isabelle/ZF%20statements%20into%20met.../near/207514165" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/88128isabelleTranslationofIsabelleZFstatementsintomet.html#207514165">Email Gateway (Aug 20 2020 at 11:58)</a>:</h4>
+<p>From: Georgy Dunaev &lt;<a href="mailto:georgedunaev@gmail.com">georgedunaev@gmail.com</a>&gt;<br>
+Dear All,<br>
+I am sorry about that letter about the translation: now I understand, that<br>
+it is very easy,</p>
+<p>For example: this theorem</p>
+<p>theorem enlight : "⋀n::o⇒o. (⋀P::o. (P⟶n(P))) ⟹ (⋀P::o. (P⟶n(n(P))))"<br>
+proof<br>
+  fix n<br>
+  assume H1:"(⋀P::o. (P⟶n(P)))"<br>
+  fix P<br>
+  assume H2:"P"<br>
+  have H3:"n(P)"<br>
+    by (rule mp[OF H1 H2])<br>
+  show H4:"n(n(P))"<br>
+    by (rule mp[OF H1 H3])<br>
+qed</p>
+<p>should be translated as</p>
+<p>$$\forall n : Fm-&gt;Fm. (\forall P\in Fm. T \vdash (P --&gt; n(P)) ) --&gt;<br>
+(\forall P\in Fm. T \vdash (P --&gt; n(n(P))) )$$, where functions are<br>
+partial(n, for example) and \vdash is derivability in case that all<br>
+arguments of partial functions are in their domains.</p>
+<p>So it is easy, indeed.</p>
+<p>I think it is possible to implement(in Ocaml) such a function(let's call it<br>
+"t") in the Isabelle system, which will translate theorems of Isabelle/ZF<br>
+to theorems about Isabelle/ZF, but still inside the Isabelle/ZF.</p>
+<p>So, what do you think about such a function t? May it be handy for some<br>
+applications?<br>
+Maybe the left-inverse function of t is also useful. It allows lifting of<br>
+proved theorems to the metatheory!</p>
+<p>Kind regards,<br>
+Georgy Dunaev</p>
+
 
 {% endraw %}
 

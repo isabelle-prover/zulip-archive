@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Notation for Pure.all may not work. Bug or fea...](96398isabelleNotationforPureallmaynotworkBugorfea.html) (1 message, latest: Aug 20 2020 at 10:27)
+* [\[isabelle\] Translation of Isabelle/ZF statements into met...](88128isabelleTranslationofIsabelleZFstatementsintomet.html) (2 messages, latest: Aug 20 2020 at 11:58)
 
-* [\[isabelle\] Translation of Isabelle/ZF statements into met...](88128isabelleTranslationofIsabelleZFstatementsintomet.html) (1 message, latest: Aug 19 2020 at 13:16)
+* [\[isabelle\] Notation for Pure.all may not work. Bug or fea...](96398isabelleNotationforPureallmaynotworkBugorfea.html) (1 message, latest: Aug 20 2020 at 10:27)
 
 * [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (1 message, latest: Aug 19 2020 at 10:31)
 

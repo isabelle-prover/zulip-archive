@@ -32,6 +32,118 @@ prettyprints the superscript.</p>
 <a href="http://cs.famaf.unc.edu.ar/~pedro/home_en">cs.famaf.unc.edu.ar/~pedro/home_en</a> <br>
 &lt;<a href="https://cs.famaf.unc.edu.ar/~pedro/home_en.html">https://cs.famaf.unc.edu.ar/~pedro/home_en.html</a>&gt;</p>
 
+<a name="206434701"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Superscript%20argument%20to%20a%20function/near/206434701" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99371isabelleSuperscriptargumenttoafunction.html#206434701">Email Gateway (Aug 10 2020 at 07:28)</a>:</h4>
+<p>From: Benedikt Nordhoff &lt;<a href="mailto:bnord01@gmail.com">bnord01@gmail.com</a>&gt;<br>
+Dear Pedro,</p>
+<p>I implemented basic support for this for Isabelle 2014 but it never made it into any release. It worked fine till the 2017 release, I haven’t tried the patch on later versions. If you’re interested and want to try whether the patch still works you can find it here: <a href="https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2014-August/msg00214.html">https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2014-August/msg00214.html</a></p>
+<p>Best<br>
+Benedikt</p>
+
+<a name="206804049"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Superscript%20argument%20to%20a%20function/near/206804049" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99371isabelleSuperscriptargumenttoafunction.html#206804049">Email Gateway (Aug 13 2020 at 11:33)</a>:</h4>
+<p>From: Benedikt Nordhoff &lt;<a href="mailto:bnord01@gmail.com">bnord01@gmail.com</a>&gt;<br>
+Dear Pedro, </p>
+<p>I’m certainly not the most qualified to answer this. I haven’t build Isabelle from source for quite a while. I think back then I used the README_REPOSITORY file as a guide.</p>
+<p>Concerning applying the patch, I’m not familiar with hg but in git I’d try checking out the commit mentioned in the path, apply it there and hope for merge to do it’s magic. </p>
+<p>Best Benedikt</p>
+
+<a name="207351849"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Superscript%20argument%20to%20a%20function/near/207351849" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99371isabelleSuperscriptargumenttoafunction.html#207351849">Email Gateway (Aug 18 2020 at 22:52)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;<br>
+Hello,</p>
+<blockquote>
+<p>Concerning applying the patch, I’m not familiar with hg but in git I’d<br>
+try checking out the commit mentioned in the path, apply it there and<br>
+hope for merge to do it’s magic.<br>
+Just in case I adapted the patch for Isabelle 2020 (last relevant commit <br>
+97ccf48c2f0c) and it works for me on some non-trivial theories with <br>
+nested subscripts and superscripts (I also don't have any previous <br>
+experience with Isabelle/Scala though)</p>
+</blockquote>
+<p>Sample original theory source fragment:<br>
+⬚‹<br>
+also from Sucinner have<br>
+     "... = - G κ⇘i+1⇙ κ⇘i+2⇙</p>
+<p>+ int (∑x|x&lt;m⇘κ⇘i+1⇙⇙∧x⇧♮∈vars K⇘κ⇘i+1⇙⇙.<br>
+                     MAX⇩0 t∈terms K⇘κ⇘i+1⇙⇙|t~P⇘κ⇘i+2⇙⇙!0. #⇘x⇧♮⇙ t * <br>
+size (σ⇘i+1⇙ x⇧♮))</p>
+<p>- int (∑x≤(m⇘κ⇘i+1⇙⇙ - 1)⇧♯. #⇩x (P⇘κ⇘i+1⇙⇙!0) * size (σ⇘i+1⇙ <br>
+x))"<br>
+     (is "_ + int (∑x∈?S. ?g x) - _ = _ + int (∑x∈?T. ?h x)- _") by<br>
+›</p>
+<p>Regards,<br>
+Mikhail</p>
+<p>Benedikt Nordhoff писал 2020-08-13 14:33:</p>
+<blockquote>
+<p>Dear Pedro,</p>
+<p>I’m certainly not the most qualified to answer this. I haven’t build<br>
+Isabelle from source for quite a while. I think back then I used the<br>
+README_REPOSITORY file as a guide.<br>
+</p>
+<p>Best Benedikt</p>
+<blockquote>
+<p>Am 12.08.2020 um 17:36 schrieb Pedro Sánchez Terraf <br>
+&lt;<a href="mailto:sterraf@famaf.unc.edu.ar">sterraf@famaf.unc.edu.ar</a>&gt;:</p>
+<p>Dear Benedikt,</p>
+<p>Sorry to bother you with an dumb question, but I do not know how to <br>
+build jEdit. Could you point me to some docs where I can find this? <br>
+(Note: I'm not a computer scientist but I can manage some stuff).<br>
+It seems that there have been many some movements and the patch should <br>
+be applied somewhere in</p>
+<p>Tools/jEdit/src/syntax_style.scala,<br>
+but I could be wrong.</p>
+<p>Best wishes,<br>
+PST.-<br>
+<a href="http://cs.famaf.unc.edu.ar/~pedro/home_en">cs.famaf.unc.edu.ar/~pedro/home_en</a> <br>
+&lt;<a href="https://cs.famaf.unc.edu.ar/~pedro/home_en.html">https://cs.famaf.unc.edu.ar/~pedro/home_en.html</a>&gt;</p>
+<p>El 10/8/20 a las 04:27, Benedikt Nordhoff escribió:</p>
+<blockquote>
+<p>Dear Pedro,</p>
+<p>I implemented basic support for this for Isabelle 2014 but it never <br>
+made it into any release. It worked fine till the 2017 release, I <br>
+haven’t tried the patch on later versions. If you’re interested and <br>
+want to try whether the patch still works you can find it here: <br>
+<a href="https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2014-August/msg00214.html">https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2014-August/msg00214.html</a> <br>
+&lt;<a href="https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2014-August/msg00214.html">https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2014-August/msg00214.html</a>&gt;</p>
+<p>Best<br>
+Benedikt</p>
+<blockquote>
+<p>Am 28.07.2020 um 15:45 schrieb Pedro Sánchez Terraf <br>
+&lt;<a href="mailto:sterraf@famaf.unc.edu.ar">sterraf@famaf.unc.edu.ar</a>&gt; &lt;mailto:<a href="mailto:sterraf@famaf.unc.edu.ar">sterraf@famaf.unc.edu.ar</a>&gt;:</p>
+<p>Good day,</p>
+<p>I have a question concerning the use of superscripts as arguments to <br>
+functions. I have a function ccc_rel that has 3 arguments, and I <br>
+would like that the syntax for the first one is a superscript. (I'm <br>
+working in ZF, don't know if that is relevant.)</p>
+<p>If I enter</p>
+<p>notation ccc_rel (‹ccc⇧_'(_,_')›)</p>
+<p>everything works fine <em>until</em> the first argument has more than one <br>
+character. If I use \&lt;bsup&gt;...\&lt;esup&gt; instead:</p>
+<p>notation ccc_rel (‹ccc⇗_⇖'(_,_')›)</p>
+<p>it accepts a multi-character first argument but it the PIDE does not <br>
+prettyprints the superscript.</p>
+<p>Can I have the cake and eat it?</p>
+<p>PST.-<br>
+<a href="http://cs.famaf.unc.edu.ar/~pedro/home_en">cs.famaf.unc.edu.ar/~pedro/home_en</a> <br>
+&lt;<a href="https://cs.famaf.unc.edu.ar/~pedro/home_en.html">https://cs.famaf.unc.edu.ar/~pedro/home_en.html</a>&gt; <br>
+&lt;<a href="https://cs.famaf.unc.edu.ar/~pedro/home_en.html">https://cs.famaf.unc.edu.ar/~pedro/home_en.html</a>&gt;<br>
+<a href="/user_uploads/14278/kRtdfKel_m_djMd10obHufqS/sub_sup.patch">sub_sup.patch</a><br>
+<a href="/user_uploads/14278/jE3pZGBIEGEOm9xMrf8Sad9O/sub_sup.png">sub_sup.png</a></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<a name="207365075"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Superscript%20argument%20to%20a%20function/near/207365075" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99371isabelleSuperscriptargumenttoafunction.html#207365075">Email Gateway (Aug 19 2020 at 02:48)</a>:</h4>
+<p>From: Pedro Sánchez Terraf &lt;<a href="mailto:sterraf@famaf.unc.edu.ar">sterraf@famaf.unc.edu.ar</a>&gt;<br>
+This is great, I hope it makes it into the 2021 release.</p>
+<p>PST.-<br>
+<a href="http://cs.famaf.unc.edu.ar/~pedro/home_en">cs.famaf.unc.edu.ar/~pedro/home_en</a> <br>
+&lt;<a href="https://cs.famaf.unc.edu.ar/~pedro/home_en.html">https://cs.famaf.unc.edu.ar/~pedro/home_en.html</a>&gt;<br>
+El 18/8/20 a las 19:51, Mikhail Mandrykin escribió:</p>
+
 
 {% endraw %}
 

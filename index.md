@@ -8,21 +8,23 @@ permalink: ./index.html
 
 ## Streams:
 
-* [general](202961general/index.html) (64 topics)
+* [general](202961general/index.html) (69 topics)
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (24 topics)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (44 topics)
+
+* [Beginner Questions](238552BeginnerQuestions/index.html) (22 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (21 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (11 topics)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (11 topics)
 
 * [new projects](202967newprojects/index.html) (10 topics)
+
+* [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 
 * [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
-
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (4 topics)
 
 * [announcements](214136announcements/index.html) (4 topics)
 

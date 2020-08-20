@@ -1,0 +1,43 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/78505Additionaltypevariableinanextendedlocale.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/78505Additionaltypevariableinanextendedlocale.html">Additional type variable in an extended locale</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="206557107"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%20in%20an%20extended%20locale/near/206557107" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/78505Additionaltypevariableinanextendedlocale.html#206557107">Gergely Buday (Aug 11 2020 at 09:46)</a>:</h4>
+<p>For this extended locale:</p>
+<p>locale preorder </p>
+<p>begin</p>
+<p>typedecl conf<br>
+  type_synonym vm = "conf ⇒ conf ⇒ bool"</p>
+<p>end</p>
+<p>locale calculation = preorder + </p>
+<p>assumes refl: "vm x x"</p>
+<p>I get</p>
+<p>locale calculation<br>
+  assumes "calculation TYPE('a)" <br>
+Additional type variable(s) in locale specification "calculation": 'a</p>
+<p>Why I get this error message? </p>
+<p>And, do I understand correctly that calculation is a functor on the structure preorder here? I am using Standard ML terminology in this question.</p>
+
+<a name="206572919"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%20in%20an%20extended%20locale/near/206572919" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/78505Additionaltypevariableinanextendedlocale.html#206572919">Lukas Stevens (Aug 11 2020 at 13:16)</a>:</h4>
+<p><code>vm</code> is a type_synonym but you are also using it as a term. That does not make sense. Note that Isabelle/HOL is simply typed so types cannot appear in terms.</p>
+
+<a name="206666152"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%20in%20an%20extended%20locale/near/206666152" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/78505Additionaltypevariableinanextendedlocale.html#206666152">Gergely Buday (Aug 12 2020 at 07:19)</a>:</h4>
+<p>Oh well. Thanks.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

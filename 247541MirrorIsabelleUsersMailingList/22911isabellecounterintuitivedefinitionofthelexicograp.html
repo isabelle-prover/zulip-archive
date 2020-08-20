@@ -1,0 +1,55 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/22911isabellecounterintuitivedefinitionofthelexicograp.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22911isabellecounterintuitivedefinitionofthelexicograp.html">[isabelle] counter-intuitive definition of the lexicograp...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="206468349"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20counter-intuitive%20definition%20of%20the%20lexicograp.../near/206468349" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22911isabellecounterintuitivedefinitionofthelexicograp.html#206468349">Email Gateway (Aug 10 2020 at 14:41)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt;<br>
+Dear all,</p>
+<p>the definition of the lexicographical product &lt;<em>lex</em>&gt; in HOL <br>
+(Wellfounded.thy) is counter-intuitive for any relation with nonempty <br>
+diagonal. In particular, we have</p>
+<p>lemma "(a,a) ∈ r ⟹ ((a,b),(a,c)) ∈ r &lt;<em>lex</em>&gt; s"<br>
+   by simp</p>
+<p>that is, the product is not even an order (only a preorder) if r is not <br>
+irreflexive. I wonder whether this was intended or whether the <br>
+alternative definition</p>
+<p>definition lex_prod' :: "('a ×'a) set ⇒ ('b × 'b) set ⇒ (('a × 'b) × ('a <br>
+× 'b)) set"<br>
+       where "lex_prod' ra  rb = {((a, b), (a', b')).  a ≠ a' ∧ (a, a') <br>
+∈ ra ∨ a = a' ∧ (b, b') ∈ rb}"</p>
+<p>would be more natural.</p>
+<p>I understand that, in the context of wellfoundedness, the irreflexivity <br>
+condition is implicit. However, &lt;<em>lex</em>&gt;  is naturally used even in other <br>
+contexts. For example, the effect is inherited by the ordinary lenlex in <br>
+List.thy,</p>
+<p>lemma "(a, a) ∈ r ⟹ length xs = length ys ⟹ (a # xs, a # ys) ∈ lenlex r"<br>
+   by (simp add: Cons_lenlex_iff)</p>
+<p>Even lexord, where wellfoundedness of r is lost anyway, is explicitly <br>
+defined this way, and we have</p>
+<p>lemma "(a, a) ∈ r ⟹ (a # xs, a # ys) ∈ lexord r"<br>
+   by simp</p>
+<p>so it is probably by design. What is the motivation?</p>
+<p>Again I would expect the following definition of lexord which works <br>
+perfectly in the usual context of a linear order on letters:</p>
+<p>definition lexord :: "('a × 'a) set ⇒ ('a list × 'a list) set" where<br>
+"lexord r = {(x,y). ∃ a v. y = x @ a # v ∨<br>
+             (∃ u a b v w. (a,b) ∈ r ∧ a ≠ b ∧ x = u @ (a # v) ∧ y = u @ <br>
+(b # w))}"</p>
+<p>Best regards</p>
+<p>Stepan</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

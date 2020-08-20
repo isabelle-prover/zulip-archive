@@ -9,6 +9,28 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Automatic reordering of current facts to apply rule](62307Automaticreorderingofcurrentfactstoapplyrule.html) (10 messages, latest: Aug 19 2020 at 07:03)
+
+* [Certified terms](74331Certifiedterms.html) (7 messages, latest: Aug 18 2020 at 14:42)
+
+* [Inspecting context](91610Inspectingcontext.html) (21 messages, latest: Aug 18 2020 at 12:02)
+
+* [Locales as modules](87793Localesasmodules.html) (2 messages, latest: Aug 13 2020 at 09:09)
+
+* [Additional type variable in an extended locale](78505Additionaltypevariableinanextendedlocale.html) (3 messages, latest: Aug 12 2020 at 07:19)
+
+* [type declarations in a locale](80356typedeclarationsinalocale.html) (5 messages, latest: Aug 10 2020 at 13:06)
+
+* [Typesetting math notation](01687Typesettingmathnotation.html) (20 messages, latest: Aug 10 2020 at 11:34)
+
+* [Finishing a proof](77991Finishingaproof.html) (4 messages, latest: Aug 07 2020 at 08:00)
+
+* [Assigning to schematic variable](24542Assigningtoschematicvariable.html) (3 messages, latest: Aug 06 2020 at 10:52)
+
+* [Using *this* twice](06799Usingthistwice.html) (2 messages, latest: Aug 05 2020 at 11:57)
+
+* [Tactic that fails with no premises](15322Tacticthatfailswithnopremises.html) (8 messages, latest: Aug 05 2020 at 11:37)
+
 * [Isar for if-then-else](02040Isarforifthenelse.html) (3 messages, latest: Aug 04 2020 at 14:32)
 
 * [Referring to a type class](97601Referringtoatypeclass.html) (15 messages, latest: Aug 04 2020 at 12:28)

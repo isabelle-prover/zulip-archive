@@ -9,6 +9,16 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Visual Studio Code Remote + Isabelle](79328VisualStudioCodeRemoteIsabelle.html) (6 messages, latest: Aug 16 2020 at 12:08)
+
+* [Generalising to subset](65426Generalisingtosubset.html) (19 messages, latest: Aug 13 2020 at 12:09)
+
+* [The context record](97318Thecontextrecord.html) (1 message, latest: Aug 12 2020 at 11:41)
+
+* [Hiding type class instances](39220Hidingtypeclassinstances.html) (31 messages, latest: Aug 11 2020 at 16:42)
+
+* [Simplifier.prems_of](82846Simplifierpremsof.html) (24 messages, latest: Aug 06 2020 at 16:44)
+
 * [Construct term while instantiating schematic type variables](28224Constructtermwhileinstantiatingschematictypevariables.html) (15 messages, latest: Aug 04 2020 at 15:50)
 
 * [Theory namespaces](05372Theorynamespaces.html) (3 messages, latest: Jul 31 2020 at 11:42)

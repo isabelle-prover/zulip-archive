@@ -9,19 +9,61 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Translation of Isabelle/ZF statements into met...](88128isabelleTranslationofIsabelleZFstatementsintomet.html) (1 message, latest: Aug 19 2020 at 13:16)
+
+* [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (1 message, latest: Aug 19 2020 at 10:31)
+
+* [\[isabelle\] CADE-28 Call for Papers, Workshops, Tutorials,...](68177isabelleCADE28CallforPapersWorkshopsTutorials.html) (1 message, latest: Aug 19 2020 at 09:46)
+
+* [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (5 messages, latest: Aug 19 2020 at 02:48)
+
+* [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (1 message, latest: Aug 18 2020 at 14:51)
+
+* [\[isabelle\] New AFP entry: Ordinal Partitions](06781isabelleNewAFPentryOrdinalPartitions.html) (1 message, latest: Aug 18 2020 at 10:31)
+
+* [\[isabelle\] Certified Programs and Proofs (CPP) 2021: Fina...](03611isabelleCertifiedProgramsandProofsCPP2021Fina.html) (1 message, latest: Aug 18 2020 at 01:33)
+
+* [\[isabelle\] Code generation of a definition obtained throu...](86946isabelleCodegenerationofadefinitionobtainedthrou.html) (2 messages, latest: Aug 17 2020 at 17:50)
+
+* [\[isabelle\] Issue with pattern_aliases and let](13782isabelleIssuewithpatternaliasesandlet.html) (3 messages, latest: Aug 17 2020 at 13:11)
+
+* [\[isabelle\] AFP/Containers, "HOL-Library.Numeral_Type", co...](16118isabelleAFPContainersHOLLibraryNumeralTypeco.html) (4 messages, latest: Aug 16 2020 at 13:57)
+
+* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (1 message, latest: Aug 15 2020 at 23:20)
+
+* [\[isabelle\] New AFP entry: Amicable Numbers](02481isabelleNewAFPentryAmicableNumbers.html) (1 message, latest: Aug 15 2020 at 08:18)
+
+* [\[isabelle\] Duplicate fact declaration "RBT.color.simps" v...](71948isabelleDuplicatefactdeclarationRBTcolorsimpsv.html) (3 messages, latest: Aug 14 2020 at 13:58)
+
+* [\[isabelle\] Union of RBT sets](16831isabelleUnionofRBTsets.html) (2 messages, latest: Aug 13 2020 at 11:17)
+
+* [\[isabelle\] counter-intuitive definition of the lexicograp...](22911isabellecounterintuitivedefinitionofthelexicograp.html) (1 message, latest: Aug 10 2020 at 14:41)
+
+* [\[isabelle\] Unbound schematic variable: ?thesis](35317isabelleUnboundschematicvariablethesis.html) (4 messages, latest: Aug 08 2020 at 10:10)
+
+* [\[isabelle\] Accessing the proof context from ML](48355isabelleAccessingtheproofcontextfromML.html) (4 messages, latest: Aug 07 2020 at 17:04)
+
+* [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (11 messages, latest: Aug 05 2020 at 15:15)
+
+* [\[isabelle\] How to edit the Isabelle sources?](56566isabelleHowtoedittheIsabellesources.html) (2 messages, latest: Aug 05 2020 at 14:40)
+
+* [\[isabelle\] Cl-isabelle-users Digest, Vol 182, Issue 4](59575isabelleClisabelleusersDigestVol182Issue4.html) (1 message, latest: Aug 05 2020 at 12:44)
+
+* [\[isabelle\] Isabelle build failure for ’threads=1’](46281isabelleIsabellebuildfailureforthreads1.html) (2 messages, latest: Aug 05 2020 at 09:50)
+
+* [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (3 messages, latest: Aug 05 2020 at 09:50)
+
+* [\[isabelle\] \[Isabelle\] Isabelle proving theorem with trans...](77467isabelleIsabelleIsabelleprovingtheoremwithtrans.html) (1 message, latest: Aug 05 2020 at 09:43)
+
 * [\[isabelle\] New in the AFP: The Chandy--Lamport Distribute...](63943isabelleNewintheAFPTheChandyLamportDistribute.html) (1 message, latest: Aug 04 2020 at 11:49)
 
 * [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (2 messages, latest: Aug 03 2020 at 16:26)
 
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (8 messages, latest: Aug 03 2020 at 14:14)
 
-* [\[isabelle\] Exporting local setup to global context](78383isabelleExportinglocalsetuptoglobalcontext.html) (2 messages, latest: Aug 03 2020 at 06:01)
-
 * [\[isabelle\] Unexpected behaviour of lemmas x = ... for A](37167isabelleUnexpectedbehaviouroflemmasxforA.html) (1 message, latest: Jul 29 2020 at 12:02)
 
 * [\[isabelle\] Isabelle standard mathematics library, HOL-Ana...](57351isabelleIsabellestandardmathematicslibraryHOLAna.html) (10 messages, latest: Jul 28 2020 at 15:30)
-
-* [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (1 message, latest: Jul 28 2020 at 13:46)
 
 * [\[isabelle\] Various "models" of extended reals and impacts...](79158isabelleVariousmodelsofextendedrealsandimpacts.html) (9 messages, latest: Jul 28 2020 at 09:36)
 
@@ -40,8 +82,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Standard group theory in Isabelle/HOL – Isabel...](62252isabelleStandardgrouptheoryinIsabelleHOLIsabel.html) (7 messages, latest: Jul 24 2020 at 08:50)
 
 * [\[isabelle\] Summer School on Programming Languages and Ver...](93980isabelleSummerSchoolonProgrammingLanguagesandVer.html) (1 message, latest: Jul 23 2020 at 08:40)
-
-* [\[isabelle\] Isabelle build failure for ’threads=1’](46281isabelleIsabellebuildfailureforthreads1.html) (1 message, latest: Jul 22 2020 at 06:26)
 
 * [\[isabelle\] ML style "functors" for Isabelle theories?](02950isabelleMLstylefunctorsforIsabelletheories.html) (3 messages, latest: Jul 21 2020 at 22:37)
 

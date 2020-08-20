@@ -33,6 +33,37 @@ Operand:   P :: prop</p>
 <p>Sincerely Yours,<br>
 Georgy Dunaev</p>
 
+<a name="207515404"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Notation%20for%20Pure.all%20may%20not%20work.%20Bug%20or%20fea.../near/207515404" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96398isabelleNotationforPureallmaynotworkBugorfea.html#207515404">Email Gateway (Aug 20 2020 at 12:16)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 20/08/2020 12:27, Georgy Dunaev wrote:</p>
+<blockquote>
+<p>I'd like to report that in Isabelle/ZF session I noticed that this<br>
+definition is good:</p>
+<p>definition PROPFALSE1 :: "prop"<br>
+  where ‹PROPFALSE1 == Pure.all (%(P::o). Trueprop(P))›</p>
+<p>and this is a bad definition:</p>
+<p>definition PROPFALSE2 :: "prop"<br>
+  where ‹PROPFALSE == (⋀P::o. (Trueprop(P)))›</p>
+<p>While, I think, they should mean exactly the same.<br>
+Error message:</p>
+</blockquote>
+<p>This is how to do it properly:</p>
+<p>definition PROPFALSE1 :: "prop"<br>
+  where ‹PROPFALSE1 ≡ Pure.all (λP::o. Trueprop(P))›</p>
+<p>definition PROPFALSE2 :: "prop"<br>
+  where ‹PROPFALSE2 ≡ (⋀P::o. P)›</p>
+<blockquote>
+<p>I don't have an explanation of such behaviour, do you?</p>
+</blockquote>
+<p>Logical syntax inserts the implicit Trueprop already (you can use PROP to<br>
+suppress that). The body of a quantification is logical syntax, but plain<br>
+application/abstraction of lambda calculus is not.</p>
+<p>See also the isar-ref manual chapter 8, especially section 8.4.3 .</p>
+<p>(Side-remark: "bug" and "feature" are both mostly equivalent and meaningless.<br>
+Complexity and confusion is something else.)</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

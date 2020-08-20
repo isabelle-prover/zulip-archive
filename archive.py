@@ -399,7 +399,7 @@ def github_pull():
 def github_push():
     print(subprocess.check_output(['git','add','*']))
     print(subprocess.check_output(['git','commit','-m','auto update: {}'.format(datetime.utcfromtimestamp(time.time()).strftime('%b %d %Y at %H:%M UTC'))]))
-    print(subprocess.check_output(['git','push']))
+    print(subprocess.check_output(['git','push', '--queit']))
 
 parser = argparse.ArgumentParser(description='Build an html archive of the isabelle Zulip chat.')
 parser.add_argument('-b', action='store_true', default=False, help='Build .md files')

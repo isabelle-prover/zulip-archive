@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Translation of TPTP to Isabelle/HOL?](36827isabelleTranslationofTPTPtoIsabelleHOL.html) (1 message, latest: Aug 21 2020 at 07:44)
+
 * [\[isabelle\] Translation of Isabelle/ZF statements into met...](88128isabelleTranslationofIsabelleZFstatementsintomet.html) (3 messages, latest: Aug 20 2020 at 14:35)
 
 * [\[isabelle\] Notation for Pure.all may not work. Bug or fea...](96398isabelleNotationforPureallmaynotworkBugorfea.html) (2 messages, latest: Aug 20 2020 at 12:16)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (2 messages, latest: Aug 21 2020 at 21:02)
+
 * [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (3 messages, latest: Aug 21 2020 at 20:56)
 
 * [\[isabelle\] counter-intuitive definition of the lexicograp...](22911isabellecounterintuitivedefinitionofthelexicograp.html) (2 messages, latest: Aug 21 2020 at 08:33)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Translation of Isabelle/ZF statements into met...](88128isabelleTranslationofIsabelleZFstatementsintomet.html) (3 messages, latest: Aug 20 2020 at 14:35)
 
 * [\[isabelle\] Notation for Pure.all may not work. Bug or fea...](96398isabelleNotationforPureallmaynotworkBugorfea.html) (2 messages, latest: Aug 20 2020 at 12:16)
-
-* [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (1 message, latest: Aug 19 2020 at 10:31)
 
 * [\[isabelle\] CADE-28 Call for Papers, Workshops, Tutorials,...](68177isabelleCADE28CallforPapersWorkshopsTutorials.html) (1 message, latest: Aug 19 2020 at 09:46)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] counter-intuitive definition of the lexicograp...](22911isabellecounterintuitivedefinitionofthelexicograp.html) (2 messages, latest: Aug 21 2020 at 08:33)
+
 * [\[isabelle\] Translation of TPTP to Isabelle/HOL?](36827isabelleTranslationofTPTPtoIsabelleHOL.html) (1 message, latest: Aug 21 2020 at 07:44)
 
 * [\[isabelle\] Translation of Isabelle/ZF statements into met...](88128isabelleTranslationofIsabelleZFstatementsintomet.html) (3 messages, latest: Aug 20 2020 at 14:35)
@@ -40,8 +42,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Duplicate fact declaration "RBT.color.simps" v...](71948isabelleDuplicatefactdeclarationRBTcolorsimpsv.html) (3 messages, latest: Aug 14 2020 at 13:58)
 
 * [\[isabelle\] Union of RBT sets](16831isabelleUnionofRBTsets.html) (2 messages, latest: Aug 13 2020 at 11:17)
-
-* [\[isabelle\] counter-intuitive definition of the lexicograp...](22911isabellecounterintuitivedefinitionofthelexicograp.html) (1 message, latest: Aug 10 2020 at 14:41)
 
 * [\[isabelle\] Unbound schematic variable: ?thesis](35317isabelleUnboundschematicvariablethesis.html) (4 messages, latest: Aug 08 2020 at 10:10)
 

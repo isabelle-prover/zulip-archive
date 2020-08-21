@@ -49,6 +49,46 @@ perfectly in the usual context of a linear order on letters:</p>
 <p>Best regards</p>
 <p>Stepan</p>
 
+<a name="207610689"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20counter-intuitive%20definition%20of%20the%20lexicograp.../near/207610689" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22911isabellecounterintuitivedefinitionofthelexicograp.html#207610689">Email Gateway (Aug 21 2020 at 08:33)</a>:</h4>
+<p>From: Bertram Felgenhauer via Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Stepan Holub wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>the definition of the lexicographical product &lt;<em>lex</em>&gt; in HOL<br>
+(Wellfounded.thy) is counter-intuitive for any relation with nonempty<br>
+diagonal. In particular, we have</p>
+<p>lemma "(a,a) ∈ r ⟹ ((a,b),(a,c)) ∈ r &lt;<em>lex</em>&gt; s"<br>
+  by simp</p>
+</blockquote>
+<p>Sorry for the late reply... I wish I had seen this sooner.</p>
+<p>I'd guess that the definition of lex_prod was chosen with strict<br>
+partial orders in mind. This is not much of a limitation; you can<br>
+always extract the strict part of the first relation before using<br>
+&lt;<em>lex</em>&gt;, where <code>strict_part R = R - R¯</code>. One could (and I would) also<br>
+argue that while surprising, the construction does something useful<br>
+and interesting for preorders.</p>
+<p>Changing the definition now causes considerable pain (see<br>
+isabelle-dev), partly because the extra inequality check messes up<br>
+existing proofs, and partly because it's actually being used for<br>
+preorders (and has nice properties like preserving transitivity) that<br>
+the change loses. I think the former speaks strongly against <em>any</em><br>
+change of the lex_prod definition now.</p>
+<p>If it is changed, it should properly extract the strict part of the<br>
+relation rather than just adding a disequality check (which is only<br>
+equivalent for partial orders).</p>
+<blockquote>
+<p>so it is probably by design. What is the motivation?</p>
+</blockquote>
+<p>I think the motivation was to keep the definition as simple as<br>
+possible for the use case it was designed for (strict orders);<br>
+any complication will end up making proofs more difficult.</p>
+<p>And, by now, people (like myself) have come to rely on its behavior<br>
+for preorders. I never imagined anybody would touch this widely used<br>
+definition, ever...</p>
+<p>Cheers,</p>
+<p>Bertram</p>
+
 
 {% endraw %}
 

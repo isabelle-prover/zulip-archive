@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] lex_prod changes](45436isabelledevlexprodchanges.html) (7 messages, latest: Aug 21 2020 at 08:34)
+* [\[isabelle-dev\] lex_prod changes](45436isabelledevlexprodchanges.html) (9 messages, latest: Aug 21 2020 at 09:59)
 
 * [\[isabelle-dev\] A suggestion: call eval with try0](86616isabelledevAsuggestioncallevalwithtry0.html) (6 messages, latest: Aug 17 2020 at 17:28)
 

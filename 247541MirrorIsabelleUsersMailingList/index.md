@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (2 messages, latest: Aug 21 2020 at 19:29)
+
 * [\[isabelle\] counter-intuitive definition of the lexicograp...](22911isabellecounterintuitivedefinitionofthelexicograp.html) (2 messages, latest: Aug 21 2020 at 08:33)
 
 * [\[isabelle\] Translation of TPTP to Isabelle/HOL?](36827isabelleTranslationofTPTPtoIsabelleHOL.html) (1 message, latest: Aug 21 2020 at 07:44)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] CADE-28 Call for Papers, Workshops, Tutorials,...](68177isabelleCADE28CallforPapersWorkshopsTutorials.html) (1 message, latest: Aug 19 2020 at 09:46)
 
 * [\[isabelle\] Superscript argument to a function](99371isabelleSuperscriptargumenttoafunction.html) (5 messages, latest: Aug 19 2020 at 02:48)
-
-* [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (1 message, latest: Aug 18 2020 at 14:51)
 
 * [\[isabelle\] New AFP entry: Ordinal Partitions](06781isabelleNewAFPentryOrdinalPartitions.html) (1 message, latest: Aug 18 2020 at 10:31)
 

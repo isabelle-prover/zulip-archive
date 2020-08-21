@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (2 messages, latest: Aug 21 2020 at 19:29)
+* [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (3 messages, latest: Aug 21 2020 at 20:56)
 
 * [\[isabelle\] counter-intuitive definition of the lexicograp...](22911isabellecounterintuitivedefinitionofthelexicograp.html) (2 messages, latest: Aug 21 2020 at 08:33)
 

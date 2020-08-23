@@ -1,0 +1,47 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/76861isabelleHandmadetransferrulesnotinvoked.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/76861isabelleHandmadetransferrulesnotinvoked.html">[isabelle] Handmade transfer rules not invoked</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="207786304"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Handmade%20transfer%20rules%20not%20invoked/near/207786304" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/76861isabelleHandmadetransferrulesnotinvoked.html#207786304">Email Gateway (Aug 23 2020 at 18:55)</a>:</h4>
+<p>From: Wolfgang Jeltsch &lt;<a href="mailto:wolfgang-it@jeltsch.info">wolfgang-it@jeltsch.info</a>&gt;<br>
+Hi!</p>
+<p>I would like to replace terms of the form <code>curry ?f</code> by <code>?g</code> in facts,<br>
+where <code>?g</code> would be a curried function. I’m trying to achieve this via<br>
+the Transfer package, essentially treating non-curried functions as<br>
+representations and curried functions as abstract values.</p>
+<p>To this end, I have written the following code:</p>
+<p>definition<br>
+    curry_relation :: "('a × 'b ⇒ 'c) ⇒ ('a ⇒ 'b ⇒ 'c) ⇒ bool"<br>
+  where<br>
+    [simp]: "curry_relation f g ⟷ curry f = g"</p>
+<p>lemma curry_relation_bi_uniqueness [transfer_rule]:<br>
+    shows "bi_unique curry_relation"<br>
+    by (simp add: bi_unique_def) (metis case_prod_curry)</p>
+<p>lemma uncurry_transfer [transfer_rule]:<br>
+    shows "rel_fun curry_relation (=) curry (λg. g)"<br>
+    by (simp add: rel_fun_def)</p>
+<p>As an example, I’m trying to transfer the fact stated as follows:</p>
+<p>lemma triviality:<br>
+      shows "curry f = curry f"<br>
+      using refl .</p>
+<p>I would expect <code>triviality [transferred]</code> to yield <code>?g = ?g</code>, but it<br>
+actually yields <code>curry ?f = curry ?f</code>.</p>
+<p>What am I missing?</p>
+<p>All the best,<br>
+Wolfgang</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

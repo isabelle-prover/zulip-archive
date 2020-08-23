@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Handmade transfer rules not invoked](76861isabelleHandmadetransferrulesnotinvoked.html) (1 message, latest: Aug 23 2020 at 18:55)
+
+* [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (12 messages, latest: Aug 23 2020 at 18:40)
+
 * [\[isabelle\] 16‑inch MacBook Pro](55715isabelle16inchMacBookPro.html) (1 message, latest: Aug 23 2020 at 11:00)
 
 * [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (2 messages, latest: Aug 21 2020 at 21:02)
@@ -48,8 +52,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Unbound schematic variable: ?thesis](35317isabelleUnboundschematicvariablethesis.html) (4 messages, latest: Aug 08 2020 at 10:10)
 
 * [\[isabelle\] Accessing the proof context from ML](48355isabelleAccessingtheproofcontextfromML.html) (4 messages, latest: Aug 07 2020 at 17:04)
-
-* [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (11 messages, latest: Aug 05 2020 at 15:15)
 
 * [\[isabelle\] How to edit the Isabelle sources?](56566isabelleHowtoedittheIsabellesources.html) (2 messages, latest: Aug 05 2020 at 14:40)
 

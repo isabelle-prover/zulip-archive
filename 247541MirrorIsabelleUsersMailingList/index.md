@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Postdocs available in formal analysis of code ...](62720isabellePostdocsavailableinformalanalysisofcode.html) (1 message, latest: Aug 23 2020 at 20:17)
+
 * [\[isabelle\] 16‑inch MacBook Pro](55715isabelle16inchMacBookPro.html) (2 messages, latest: Aug 23 2020 at 19:32)
 
 * [\[isabelle\] Handmade transfer rules not invoked](76861isabelleHandmadetransferrulesnotinvoked.html) (1 message, latest: Aug 23 2020 at 18:55)

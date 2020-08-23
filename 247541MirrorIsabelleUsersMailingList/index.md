@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 16‑inch MacBook Pro](55715isabelle16inchMacBookPro.html) (1 message, latest: Aug 23 2020 at 11:00)
+
 * [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (2 messages, latest: Aug 21 2020 at 21:02)
 
 * [\[isabelle\] A question about an article about Isabelle/HOL/ZF](77982isabelleAquestionaboutanarticleaboutIsabelleHOLZF.html) (3 messages, latest: Aug 21 2020 at 20:56)

@@ -224,6 +224,15 @@ for correctness. Is this the case, or did I misunderstand something?</p>
 <p>All the best,<br>
 Wolfgang</p>
 
+<a name="207819334"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unfold%20short%20tactics%20in%20Isar.%20%28blast%2C%20etc%29/near/207819334" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82720isabelleUnfoldshorttacticsinIsarblastetc.html#207819334">Email Gateway (Aug 24 2020 at 08:39)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+No proof objects are created. Soundness is enforced through the abstract type discipline.</p>
+<p>Here is an analogy: imagine a programming project that requires a dictionary datatype. Somebody implements the dictionary￼￼ using red-black trees, hash tables or whatever, and provides an interface with abstract operations such as the empty dictionary, insert, lookup, update, delete. Those operations are the only means available to work with dictionaries outside the data structure definition itself, and in that way the integrity of the internal representation is protected￼. Provided that the code implementing the representation is correct, and assuming of course a type-safe programming language, all dictionary operations are guaranteed to deliver the correct results regardless of how many errors there may be in other parts of the program.</p>
+<p>Maintaining a separate audit trail for each dictionary would provide a means of checking the dictionary operations at runtime (in particular to verify that lookup delivers correct results), but it's unnecessary and would cause the program to quickly run out of memory.</p>
+<p>Proof objects are precisely such audit trails. That they are unnecessary (and indeed unaffordable) was Robin Milner's insight, around 1975. It is noteworthy that in proof assistants such as Coq that represent propositions by types, great efforts are made to use Bool or Prop rather than Type in order to keep proof objects to a minimum.</p>
+<p>Larry</p>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (13 messages, latest: Aug 24 2020 at 08:39)
+* [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (14 messages, latest: Aug 24 2020 at 12:57)
 
 * [\[isabelle\] Postdocs available in formal analysis of code ...](62720isabellePostdocsavailableinformalanalysisofcode.html) (1 message, latest: Aug 23 2020 at 20:17)
 

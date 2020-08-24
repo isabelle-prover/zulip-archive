@@ -252,6 +252,64 @@ small kernel you have to trust.</p>
 <p>All the best,<br>
 Wolfgang</p>
 
+<a name="207839946"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unfold%20short%20tactics%20in%20Isar.%20%28blast%2C%20etc%29/near/207839946" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82720isabelleUnfoldshorttacticsinIsarblastetc.html#207839946">Email Gateway (Aug 24 2020 at 13:04)</a>:</h4>
+<p>From: Freek Wiedijk &lt;<a href="mailto:freek@cs.ru.nl">freek@cs.ru.nl</a>&gt;<br>
+Dear all,</p>
+<p>Larry wrote:</p>
+<blockquote>
+<p>No proof objects are created. Soundness is enforced<br>
+through the abstract type discipline.</p>
+</blockquote>
+<p>Henk Barendregt calls what is implemented in the HOL family<br>
+of systems _ephemeral_ proof objects.  His image is of<br>
+someone writing a proof with a stick in the sand at the sea,<br>
+and the sea washing away the writing all the time.  At the<br>
+end the full proof has been written but nothing remains.</p>
+<p>Freek</p>
+
+<a name="207840424"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unfold%20short%20tactics%20in%20Isar.%20%28blast%2C%20etc%29/near/207840424" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82720isabelleUnfoldshorttacticsinIsarblastetc.html#207840424">Email Gateway (Aug 24 2020 at 13:08)</a>:</h4>
+<p>From: Wolfgang Jeltsch &lt;<a href="mailto:wolfgang-it@jeltsch.info">wolfgang-it@jeltsch.info</a>&gt;<br>
+Interesting analogy!</p>
+<p>From what I understand, the invocations of the functions you use for<br>
+constructing a new fact collectively form a proof of this fact, but no<br>
+actual data resembling the proof is ever constructed by these functions.</p>
+<p>All the best,<br>
+Wolfgang</p>
+
+<a name="207841785"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unfold%20short%20tactics%20in%20Isar.%20%28blast%2C%20etc%29/near/207841785" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82720isabelleUnfoldshorttacticsinIsarblastetc.html#207841785">Email Gateway (Aug 24 2020 at 13:20)</a>:</h4>
+<p>From: Freek Wiedijk &lt;<a href="mailto:freek@cs.ru.nl">freek@cs.ru.nl</a>&gt;<br>
+Dear Wolfgang,</p>
+<p>In most systems (at least in Isabelle and HOL Light) there<br>
+is a switch that you can turn on/off to allow you to store<br>
+the proof object in memory, but in normal operation this<br>
+switch is always off.</p>
+<p>Freek</p>
+
+<a name="207842141"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unfold%20short%20tactics%20in%20Isar.%20%28blast%2C%20etc%29/near/207842141" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82720isabelleUnfoldshorttacticsinIsarblastetc.html#207842141">Email Gateway (Aug 24 2020 at 13:23)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>On 24 Aug 2020, at 14:03, Freek Wiedijk &lt;<a href="mailto:freek@cs.ru.nl">freek@cs.ru.nl</a>&gt; wrote:</p>
+<p>Henk Barendregt calls what is implemented in the HOL family<br>
+of systems _ephemeral_ proof objects.  His image is of<br>
+someone writing a proof with a stick in the sand at the sea,<br>
+and the sea washing away the writing all the time.  At the<br>
+end the full proof has been written but nothing remains.</p>
+</blockquote>
+<p>That image is evocative but doesn’t indicate how you prevent the “someone” from writing a faulty proof. Here is Milner himself:</p>
+<blockquote>
+<p>we’re not so concerned with checking or generating proofs as with performing proofs. Thus, we don’t normally store or display proofs but only the results of them - i.e. theorems. These form an abstract type on which the only allowed operations are the inference rules …; this ensures that a well-typed program cannot perform faulty proofs (it may not prove the theorem expected but the result will be a theorem!). If extra security or formal proof-checking is desired, full proofs are easily generated -- only minor changes in the implementation of the abstract type for theorems would be required. The principal aims then in designing ML were to make it impossible to prove non-theorems yet easy to program strategies for performing proofs.</p>
+</blockquote>
+<p>Gordon, Milner, Morris, Newey, and Wadsworth<br>
+A Metalanguage for interactive proof in LCF<br>
+POPL '78: Proceedings of the 5th ACM SIGACT-SIGPLAN symposium on Principles of programming languages<br>
+January 1978 Pages 119–130<br>
+<a href="https://doi.org/10.1145/512760.512773">https://doi.org/10.1145/512760.512773</a><br>
+<a href="http://www-public.imtbs-tsp.eu/~gibson/Teaching/CSC4504/ReadingMaterial/GordonMMNW78.pdf">http://www-public.imtbs-tsp.eu/~gibson/Teaching/CSC4504/ReadingMaterial/GordonMMNW78.pdf</a></p>
+
 
 {% endraw %}
 

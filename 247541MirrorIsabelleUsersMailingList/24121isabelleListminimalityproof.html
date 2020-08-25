@@ -1,0 +1,63 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/24121isabelleListminimalityproof.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24121isabelleListminimalityproof.html">[isabelle] List minimality proof</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="207937792"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20minimality%20proof/near/207937792" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24121isabelleListminimalityproof.html#207937792">Email Gateway (Aug 25 2020 at 08:49)</a>:</h4>
+<p>From: Michael Foster &lt;<a href="mailto:jmafoster1@sheffield.ac.uk">jmafoster1@sheffield.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>As part of a larger project, I have proved what I am calling for want of <br>
+a better name "list minimality". That is, if there exists a list l which <br>
+satisfies a property P, then there exists a shortest list which <br>
+satisfies that property. This particular proof is very useful to me, and <br>
+I was somewhat surprised that it had not already been proven. I <br>
+therefore thought that it might be of use generally, and wondered <br>
+whether there was any possibility of it being included into List.thy? <br>
+The proof is quite short (less than 100 lines including all sub-lemmas)  <br>
+and I am happy to send it to whoever may be interested.</p>
+<p>As an aside, I think I could extend the minimality property to ordered <br>
+datatypes reasonably easily and prove that, if there exists an element <br>
+which satisfies a given property, there exists a minimal element. I <br>
+would be happy to have a go at this if people think this is worthwhile, <br>
+and make the proof generally available if I succeed.</p>
+<p>Best,</p>
+<p>Michael F.</p>
+
+<a name="207938080"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20minimality%20proof/near/207938080" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24121isabelleListminimalityproof.html#207938080">Email Gateway (Aug 25 2020 at 08:53)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Hello,</p>
+<p>this can be expressed fairly naturally with the "is_arg_min" construct<br>
+from the library, then you don't have to prove anything.</p>
+<p>lemma<br>
+  fixes P :: "'a list ⇒ bool"<br>
+  assumes "∃xs. P xs"<br>
+  shows   "∃xs. is_arg_min length P xs"<br>
+  using assms is_arg_min_arg_min_nat by metis</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+
+<a name="207938454"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20minimality%20proof/near/207938454" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24121isabelleListminimalityproof.html#207938454">Email Gateway (Aug 25 2020 at 08:58)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+The lemma</p>
+<p>lemma ex_has_least_nat: "P k ⟹ ∃x. P x ∧ (∀y. P y ⟶ m x ≤ m y)"<br>
+   for m :: "'a ⇒ nat"</p>
+<p>expresses this in greater generality. In your case, m is length.</p>
+<p>Tobias<br>
+<a href="/user_uploads/14278/AkuzNUc4Ix6OEFbZvYNcED3B/smime.p7s">smime.p7s</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

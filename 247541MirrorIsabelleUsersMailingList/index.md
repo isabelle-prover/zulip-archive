@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] List minimality proof](24121isabelleListminimalityproof.html) (3 messages, latest: Aug 25 2020 at 08:58)
+
 * [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (18 messages, latest: Aug 24 2020 at 13:23)
 
 * [\[isabelle\] Postdocs available in formal analysis of code ...](62720isabellePostdocsavailableinformalanalysisofcode.html) (1 message, latest: Aug 23 2020 at 20:17)

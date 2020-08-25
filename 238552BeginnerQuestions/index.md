@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [locale syntax](22360localesyntax.html) (6 messages, latest: Aug 25 2020 at 12:38)
+
 * [Automatic reordering of current facts to apply rule](62307Automaticreorderingofcurrentfactstoapplyrule.html) (10 messages, latest: Aug 19 2020 at 07:03)
 
 * [Certified terms](74331Certifiedterms.html) (7 messages, latest: Aug 18 2020 at 14:42)

@@ -33,6 +33,23 @@ proof (induct  rule: trc.induct) </p>
 <p>I used my own transitive closure definition as I was better able to refer to its parts than of the more professional HOL rtanclp predicate definition.</p>
 <p>I stuck at how to properly set up induction for the "c -&gt;&gt; e" goal. Do you have an advice?</p>
 
+<a name="207980371"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/cases%20of%20an%20inductive%20definition/near/207980371" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/68776casesofaninductivedefinition.html#207980371">Mathias Fleury (Aug 25 2020 at 15:46)</a>:</h4>
+<p>I can give you the answer:</p>
+<div class="codehilite"><pre><span></span><code>lemmas trcvm&#39;_induct =
+  trc.induct[of vm, unfolded trcvm&#39;_def[symmetric], consumes 1, case_names refl stop]
+
+lemma assumes &quot;c -&gt;&gt; d&quot;
+assumes &quot;d -&gt;&gt; e&quot;
+shows &quot;c -&gt;&gt; e&quot;
+  using assms
+proof (induct rule: trcvm&#39;_induct)
+</code></pre></div>
+
+
+<p>but it would be more interesting for you to follow the Isabelle part of the concrete semantics where you would learn that you have to unfold definition before doing induction or define your own induction principle (as I do here)</p>
+<p>EDIT: I forgot to name the cases</p>
+
 
 {% endraw %}
 

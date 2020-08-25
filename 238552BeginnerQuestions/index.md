@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [cases of an inductive definition](68776casesofaninductivedefinition.html) (1 message, latest: Aug 25 2020 at 14:28)
+* [cases of an inductive definition](68776casesofaninductivedefinition.html) (2 messages, latest: Aug 25 2020 at 15:46)
 
 * [definition of a constant](62506definitionofaconstant.html) (5 messages, latest: Aug 25 2020 at 13:44)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Handmade transfer rules not invoked](76861isabelleHandmadetransferrulesnotinvoked.html) (2 messages, latest: Aug 25 2020 at 17:24)
+
 * [\[isabelle\] List minimality proof](24121isabelleListminimalityproof.html) (3 messages, latest: Aug 25 2020 at 08:58)
 
 * [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (18 messages, latest: Aug 24 2020 at 13:23)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Postdocs available in formal analysis of code ...](62720isabellePostdocsavailableinformalanalysisofcode.html) (1 message, latest: Aug 23 2020 at 20:17)
 
 * [\[isabelle\] 16‑inch MacBook Pro](55715isabelle16inchMacBookPro.html) (2 messages, latest: Aug 23 2020 at 19:32)
-
-* [\[isabelle\] Handmade transfer rules not invoked](76861isabelleHandmadetransferrulesnotinvoked.html) (1 message, latest: Aug 23 2020 at 18:55)
 
 * [\[isabelle\] A suggestion: call eval with try0](45612isabelleAsuggestioncallevalwithtry0.html) (2 messages, latest: Aug 21 2020 at 21:02)
 

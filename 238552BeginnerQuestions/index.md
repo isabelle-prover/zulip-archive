@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [cases of an inductive definition](68776casesofaninductivedefinition.html) (1 message, latest: Aug 25 2020 at 14:28)
+
 * [definition of a constant](62506definitionofaconstant.html) (5 messages, latest: Aug 25 2020 at 13:44)
 
 * [locale syntax](22360localesyntax.html) (6 messages, latest: Aug 25 2020 at 12:38)

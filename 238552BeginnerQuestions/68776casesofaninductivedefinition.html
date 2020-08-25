@@ -1,0 +1,39 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/68776casesofaninductivedefinition.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/68776casesofaninductivedefinition.html">cases of an inductive definition</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="207969798"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/cases%20of%20an%20inductive%20definition/near/207969798" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/68776casesofaninductivedefinition.html#207969798">Gergely Buday (Aug 25 2020 at 14:28)</a>:</h4>
+<p>inductive trc :: "(conf ⇒ conf ⇒ bool) ⇒ (conf ⇒ conf ⇒ bool)" for virtm :: "conf ⇒ conf ⇒ bool"<br>
+  where<br>
+    refl: "trc virtm c c" |<br>
+    step: "virtm c d ⟹ (trc virtm) d e ⟹ (trc virtm) c e"</p>
+<p>definition trcvm where "trcvm = rtranclp vm"</p>
+<p>definition trcvm' where "trcvm' = trc vm"</p>
+<p>notation trcvm' (infix "-&gt;&gt;" 80) </p>
+<p>lemma assumes "(c -&gt; d)" shows "(c -&gt;&gt; d)" <br>
+proof -<br>
+  have "d -&gt;&gt; d" using trc.refl trcvm'_def by simp<br>
+  then show "?thesis" using assms trc.step trcvm'_def by simp<br>
+qed</p>
+<p>lemma assumes "c -&gt;&gt; d" <br>
+      assumes "d -&gt;&gt; e"<br>
+      shows "c -&gt;&gt; e"<br>
+proof (induct  rule: trc.induct) </p>
+<p>I used my own transitive closure definition as I was better able to refer to its parts than of the more professional HOL rtanclp predicate definition.</p>
+<p>I stuck at how to properly set up induction for the "c -&gt;&gt; e" goal. Do you have an advice?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

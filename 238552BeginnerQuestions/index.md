@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [cases of an inductive definition](68776casesofaninductivedefinition.html) (2 messages, latest: Aug 25 2020 at 15:46)
+* [Pale blue i](26068Palebluei.html) (1 message, latest: Aug 26 2020 at 06:48)
+
+* [cases of an inductive definition](68776casesofaninductivedefinition.html) (3 messages, latest: Aug 26 2020 at 06:09)
 
 * [definition of a constant](62506definitionofaconstant.html) (5 messages, latest: Aug 25 2020 at 13:44)
 

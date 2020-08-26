@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] List minimality proof](24121isabelleListminimalityproof.html) (4 messages, latest: Aug 26 2020 at 08:26)
+
 * [\[isabelle\] LFMTP 2020 Post-Proceedings: Call for Papers](02895isabelleLFMTP2020PostProceedingsCallforPapers.html) (1 message, latest: Aug 26 2020 at 01:19)
 
 * [\[isabelle\] Handmade transfer rules not invoked](76861isabelleHandmadetransferrulesnotinvoked.html) (2 messages, latest: Aug 25 2020 at 17:24)
-
-* [\[isabelle\] List minimality proof](24121isabelleListminimalityproof.html) (3 messages, latest: Aug 25 2020 at 08:58)
 
 * [\[isabelle\] Unfold short tactics in Isar. (blast, etc)](82720isabelleUnfoldshorttacticsinIsarblastetc.html) (18 messages, latest: Aug 24 2020 at 13:23)
 

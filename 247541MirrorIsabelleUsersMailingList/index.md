@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Relational Disjoint-Set Forests](13083isabelleNewintheAFPRelationalDisjointSetForests.html) (1 message, latest: Aug 26 2020 at 12:49)
+
 * [\[isabelle\] List minimality proof](24121isabelleListminimalityproof.html) (4 messages, latest: Aug 26 2020 at 08:26)
 
 * [\[isabelle\] LFMTP 2020 Post-Proceedings: Call for Papers](02895isabelleLFMTP2020PostProceedingsCallforPapers.html) (1 message, latest: Aug 26 2020 at 01:19)

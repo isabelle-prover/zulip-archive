@@ -54,6 +54,23 @@ proof (induct rule: trcvm&#39;_induct)
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/cases%20of%20an%20inductive%20definition/near/208055882" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/68776casesofaninductivedefinition.html#208055882">Gergely Buday (Aug 26 2020 at 06:09)</a>:</h4>
 <p>Thanks. From your solution it seems that this is far from trivial and so I better asked this.</p>
 
+<a name="208060854"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/cases%20of%20an%20inductive%20definition/near/208060854" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/68776casesofaninductivedefinition.html#208060854">Mathias Fleury (Aug 26 2020 at 07:36)</a>:</h4>
+<p>The easier solution is</p>
+<div class="codehilite"><pre><span></span><code>lemma assumes &quot;c -&gt;&gt; d&quot;
+assumes &quot;d -&gt;&gt; e&quot;
+shows &quot;c -&gt;&gt; e&quot;
+  using assms unfolding trcvm&#39;_def
+proof (induct rule: trc.induct)
+</code></pre></div>
+
+
+<p>(or variants with unfolding only one of the <code>-&gt;&gt;</code> symbols)</p>
+
+<a name="208061639"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/cases%20of%20an%20inductive%20definition/near/208061639" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/68776casesofaninductivedefinition.html#208061639">Gergely Buday (Aug 26 2020 at 07:47)</a>:</h4>
+<p>This is more close to what I thought I should do: "unpack the definition of -&gt;&gt; and prove by induction". I see that I should unpack, i.e. unfold the definition of trcvm' instead and then I can use trc's induction rule directly, without the square bracket magic.</p>
+
 
 {% endraw %}
 

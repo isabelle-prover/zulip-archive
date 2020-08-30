@@ -1,0 +1,66 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html">[isabelle] Strange behaviour of subst/EqSubst.eqsubst_tac</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="208487182"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Strange%20behaviour%20of%20subst/EqSubst.eqsubst_tac/near/208487182" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html#208487182">Email Gateway (Aug 30 2020 at 14:19)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Somebody asked a question of StackOverflow [1] about why the "subst"<br>
+method (which should only affect the first subgoal) implicitly<br>
+discharges duplicate subgoals. I checked the code and found that it<br>
+somehow calls "distinct_subgoals_tac" somewhere, although I find the<br>
+code very difficult to read:</p>
+<p>fun eqsubst_tac ctxt occs thms i st =<br>
+  let val nprems = Thm.nprems_of st in<br>
+    if nprems &lt; i then Seq.empty else<br>
+    let<br>
+      val thmseq = Seq.of_list thms;<br>
+      fun apply_occ occ st =<br>
+        thmseq |&gt; Seq.maps (fn r =&gt;<br>
+          eqsubst_tac' ctxt<br>
+            (skip_first_occs_search occ searchf_lr_unify_valid) r<br>
+            (i + (Thm.nprems_of st - nprems)) st);<br>
+      val sorted_occs = Library.sort (rev_order o int_ord) occs;<br>
+    in<br>
+      Seq.maps distinct_subgoals_tac (Seq.EVERY (map apply_occ<br>
+sorted_occs) st)<br>
+    end<br>
+  end;</p>
+<p>In any case, it seems to me that this violates the usual contract that a<br>
+tactic that takes a subgoal index should only affect that one subgoal.</p>
+<p>I have no idea why it calls distinct_subgoals_tac in the first place. A<br>
+simple solution would be to just wrap the entire thing in a<br>
+"SELECT_GOAL". The performance impact should be minimal since this<br>
+tactic is typically used very sparingly for single rewrite steps; any<br>
+heavy rewriting is done with the simplifier anyway.</p>
+<p>Any other opinions on this?</p>
+<p>Manuel</p>
+<p>[1]:<br>
+<a href="https://stackoverflow.com/questions/63657976/subst-refl-closing-duplicate-subgoals-whats-going-on/63658319#63658319">https://stackoverflow.com/questions/63657976/subst-refl-closing-duplicate-subgoals-whats-going-on/63658319#63658319</a></p>
+
+<a name="208487508"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Strange%20behaviour%20of%20subst/EqSubst.eqsubst_tac/near/208487508" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html#208487508">Email Gateway (Aug 30 2020 at 14:27)</a>:</h4>
+<p>From: Andreas Lochbihler &lt;<a href="mailto:mail@andreas-lochbihler.de">mail@andreas-lochbihler.de</a>&gt;<br>
+Hi Manuel,</p>
+<p>when you apply a conditional rewrite rule in several places with</p>
+<p>apply(subst (1 2 3) cond_rule)</p>
+<p>where the assumptions of the rule end up as the same subgoal, then the <br>
+distinct_subgoals_tac ensures that the user has to discharge the assumptions only once. So <br>
+there's a point in eliminating repeated goals. But I agree with you that this should be <br>
+confined to the subgoal on which subst is operating.</p>
+<p>Andreas</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

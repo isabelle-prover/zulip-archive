@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (3 messages, latest: Aug 31 2020 at 14:59)
+* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (4 messages, latest: Aug 31 2020 at 15:04)
 
-* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (3 messages, latest: Aug 31 2020 at 14:49)
+* [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (3 messages, latest: Aug 31 2020 at 14:59)
 
 * [\[isabelle\] New in the AFP: Practical Algebraic Calculus C...](57763isabelleNewintheAFPPracticalAlgebraicCalculusC.html) (1 message, latest: Aug 31 2020 at 13:01)
 

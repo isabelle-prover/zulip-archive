@@ -73,6 +73,55 @@ part of the program.</p>
 applications.</p>
 <p>Makarius</p>
 
+<a name="208590877"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Numbers%20reported%20in%20%22Timing%22%20panel/near/208590877" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06606isabelleNumbersreportedinTimingpanel.html#208590877">Email Gateway (Aug 31 2020 at 17:38)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+I could increase to 32GB on this hardware if I throw away some of the existing memory.<br>
+But that is certainly not my point.</p>
+<p>An operating system (such as Linux, which is what I am using) provides system calls (cf getrusage(2),<br>
+clock_gettime(2)) that an application can use to measure resource consumption in various ways:</p>
+<p>CPU time used in user mode<br>
+    CPU time used in kernel mode<br>
+    Wall clock time</p>
+<p>For Isabelle (using JEdit), CPU time is consumed by Java (to run JEdit) and CPU time is consumed by<br>
+Poly/ML (to do inferences).  The CPU time spent by Java, while potentially significant, has to do with<br>
+the manipulation of the annotated syntax tree of the theories being edited, depends primarily on the<br>
+size of that document and its annotations (not on the complexity of proof steps) and is not of interest<br>
+to me here.  In any case, I assume that this time is not intended to be included in the figures reported<br>
+in the "Timings" panel and the values one sees if one CTRL-hovers over "by", "apply", etc.</p>
+<p>I would expect that the times shown in the "Timings" panel are intended to reflect the actual CPU time<br>
+spent by ML in user mode.  CPU time spent in user mode by ML may be partitioned into time running ML code<br>
+and time spent doing garbage collection.  It does not include time spent with the CPU idle waiting for paging,<br>
+or CPU time spent running other unrelated processes.  It probably also ought not to include CPU time spent<br>
+in kernel mode.  As the page fault rate of the ML process increases to the point of saturating the paging<br>
+devices, the wall clock time taken to accomplish a particular task will increase dramatically.<br>
+The CPU time spent in system mode will also increase, though this will typically not be that significant.<br>
+In addition, once the heap size reaches its maximum value (as a result of actual hardware limitation or<br>
+artificial software limits placed on the ML process) the fraction of live data in the heap will become larger<br>
+and larger and consequently the garbage collector will consume more and more CPU time to perform the same<br>
+underlying computational task.  However, as far as I know, the ML implementation accounts separately for<br>
+CPU time used in garbage collection versus CPU time used to run ML code, so it is not necessarily the<br>
+case that garbage collection time should be a significant component of the "Timings" numbers.</p>
+<p>But you know all that.  Let me try again to make what I believe is a very simple point:  Empirical<br>
+observation shows that figures reported under "Timings" <em>do not</em> reflect only time spent by ML running<br>
+ML code in user mode: depending on the system conditions under which a task is run, they apparently also<br>
+include either CPU time spent in garbage collection, wall clock time spent waiting for paging,<br>
+or a combination of the two.  This is not desirable because it makes the timings not repeatable.<br>
+The timings would be more useful if they would more or less reflect the amount of user CPU time spent<br>
+in user mode to run ML code to accomplish a particular computational task.  These numbers ought to agree<br>
+closely with the amount of wall clock time it would take to accomplish that same task on a system in which<br>
+RAM size is large enough that there is an insignificant page fault rate, and on which there is no<br>
+competition for CPU with unrelated applications.  Under those conditions, one can expect the "Timings"<br>
+numbers to be repeatable across separate runs, and that optimizations that reduce the numbers reported<br>
+under "Timings" will reflect actual improvements in wall clock time when the task is run under conditions<br>
+where memory limitations are not significant.</p>
+<p>Well, that is the point I am trying to make.  Perhaps you are trying to say that one ought to be optimizing<br>
+memory consumption rather than CPU consumption.  Well that would certainly be a valid point, but to do that<br>
+that would require a "Memory usage" panel that reports the amount of allocation performed in conjunction with<br>
+each basic proof step.  I would expect this to be a more complex instrumentation task than recording CPU<br>
+usage associated with each basic proof step.  Since there is likely to be a tradeoff between memory utilization<br>
+and CPU consumption, it is not clear to me at the moment that this is primarily what one wants to do.</p>
+
 
 {% endraw %}
 

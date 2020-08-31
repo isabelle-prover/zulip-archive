@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (4 messages, latest: Aug 31 2020 at 15:04)
+* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (5 messages, latest: Aug 31 2020 at 17:38)
 
 * [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (3 messages, latest: Aug 31 2020 at 14:59)
 

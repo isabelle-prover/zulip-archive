@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Tracing resolution proofs](46063isabelleTracingresolutionproofs.html) (2 messages, latest: Aug 31 2020 at 09:07)
+* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (2 messages, latest: Aug 31 2020 at 12:30)
+
+* [\[isabelle\] Tracing resolution proofs](46063isabelleTracingresolutionproofs.html) (3 messages, latest: Aug 31 2020 at 12:22)
 
 * [\[isabelle\] Strange behaviour of subst/EqSubst.eqsubst_tac](97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html) (2 messages, latest: Aug 30 2020 at 14:27)
 
@@ -54,8 +56,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Issue with pattern_aliases and let](13782isabelleIssuewithpatternaliasesandlet.html) (3 messages, latest: Aug 17 2020 at 13:11)
 
 * [\[isabelle\] AFP/Containers, "HOL-Library.Numeral_Type", co...](16118isabelleAFPContainersHOLLibraryNumeralTypeco.html) (4 messages, latest: Aug 16 2020 at 13:57)
-
-* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (1 message, latest: Aug 15 2020 at 23:20)
 
 * [\[isabelle\] New AFP entry: Amicable Numbers](02481isabelleNewAFPentryAmicableNumbers.html) (1 message, latest: Aug 15 2020 at 08:18)
 

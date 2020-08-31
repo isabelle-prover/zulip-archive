@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Practical Algebraic Calculus C...](57763isabelleNewintheAFPPracticalAlgebraicCalculusC.html) (1 message, latest: Aug 31 2020 at 13:01)
+
 * [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (2 messages, latest: Aug 31 2020 at 12:30)
 
 * [\[isabelle\] Tracing resolution proofs](46063isabelleTracingresolutionproofs.html) (3 messages, latest: Aug 31 2020 at 12:22)

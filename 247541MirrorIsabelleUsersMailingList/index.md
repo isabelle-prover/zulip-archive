@@ -9,9 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] New in the AFP: Practical Algebraic Calculus C...](57763isabelleNewintheAFPPracticalAlgebraicCalculusC.html) (1 message, latest: Aug 31 2020 at 13:01)
+* [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (3 messages, latest: Aug 31 2020 at 14:59)
 
-* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (2 messages, latest: Aug 31 2020 at 12:30)
+* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (3 messages, latest: Aug 31 2020 at 14:49)
+
+* [\[isabelle\] New in the AFP: Practical Algebraic Calculus C...](57763isabelleNewintheAFPPracticalAlgebraicCalculusC.html) (1 message, latest: Aug 31 2020 at 13:01)
 
 * [\[isabelle\] Tracing resolution proofs](46063isabelleTracingresolutionproofs.html) (3 messages, latest: Aug 31 2020 at 12:22)
 
@@ -80,8 +82,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] \[Isabelle\] Isabelle proving theorem with trans...](77467isabelleIsabelleIsabelleprovingtheoremwithtrans.html) (1 message, latest: Aug 05 2020 at 09:43)
 
 * [\[isabelle\] New in the AFP: The Chandy--Lamport Distribute...](63943isabelleNewintheAFPTheChandyLamportDistribute.html) (1 message, latest: Aug 04 2020 at 11:49)
-
-* [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (2 messages, latest: Aug 03 2020 at 16:26)
 
 * [\[isabelle\] Record update syntax](56419isabelleRecordupdatesyntax.html) (8 messages, latest: Aug 03 2020 at 14:14)
 

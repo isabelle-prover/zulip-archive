@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Strange behaviour of subst/EqSubst.eqsubst_tac](97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html) (3 messages, latest: Aug 31 2020 at 20:35)
+* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (6 messages, latest: Sep 01 2020 at 10:44)
 
-* [\[isabelle\] Numbers reported in "Timing" panel](06606isabelleNumbersreportedinTimingpanel.html) (5 messages, latest: Aug 31 2020 at 17:38)
+* [\[isabelle\] Strange behaviour of subst/EqSubst.eqsubst_tac](97915isabelleStrangebehaviourofsubstEqSubsteqsubsttac.html) (3 messages, latest: Aug 31 2020 at 20:35)
 
 * [\[isabelle\] Isabelle document fails with non-descriptive e...](96078isabelleIsabelledocumentfailswithnondescriptivee.html) (3 messages, latest: Aug 31 2020 at 14:59)
 

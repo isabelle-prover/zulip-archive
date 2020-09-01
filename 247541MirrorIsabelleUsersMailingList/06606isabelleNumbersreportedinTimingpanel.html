@@ -122,6 +122,27 @@ each basic proof step.  I would expect this to be a more complex instrumentation
 usage associated with each basic proof step.  Since there is likely to be a tradeoff between memory utilization<br>
 and CPU consumption, it is not clear to me at the moment that this is primarily what one wants to do.</p>
 
+<a name="208670245"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Numbers%20reported%20in%20%22Timing%22%20panel/near/208670245" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06606isabelleNumbersreportedinTimingpanel.html#208670245">Email Gateway (Sep 01 2020 at 10:44)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+The Timing panel works with elapsed time. See also the general explanations in<br>
+section 6.1 of the "jedit" manual (Documentation panel).</p>
+<p>If you want repeatable results for a single proof command, you can approximate<br>
+it like this:</p>
+<p>* Use sufficient physical memory to avoid use of virtual memory by the<br>
+underlying OS (no disk thrashing while timing).</p>
+<p>* Avoid non-trivial applications running in parallel.</p>
+<p>* Disable Isabelle/ML multithreading by using system option threads=1 (e.g.<br>
+via the Isabelle/jEdit menu Plugins / Plugin Options / Isabelle / General /<br>
+Threads.</p>
+<p>* Use a well-defined initial state of the ML heap to minimize subsequent<br>
+garbage collection, e.g. via</p>
+<p>ML "ML_Heap.share_common_data ()"</p>
+<p>The latter is rather drastic: it is only required for substantial ML heap<br>
+usage, as in your own AFP/Bicategory<br>
+<a href="https://isabelle.sketis.net/devel/build_status/AFP_64bit_8_threads/index.html#session_Bicategory">https://isabelle.sketis.net/devel/build_status/AFP_64bit_8_threads/index.html#session_Bicategory</a></p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

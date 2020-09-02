@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New AFP entry: Putting the `K' into Bird's der...](66239isabelleNewAFPentryPuttingtheKintoBirdsder.html) (1 message, latest: Sep 02 2020 at 10:27)
+
 * [\[isabelle\] linarith_split_limit_exceeded (current value i...](98895isabellelinarithsplitlimitexceededcurrentvaluei.html) (4 messages, latest: Sep 01 2020 at 19:31)
 
 * [\[isabelle\] Isabelle proving theorem with translation](82911isabelleIsabelleprovingtheoremwithtranslation.html) (1 message, latest: Sep 01 2020 at 11:14)

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Set.filter vs Set comprehension](57840SetfiltervsSetcomprehension.html) (4 messages, latest: Sep 03 2020 at 12:16)
+
 * [cases of an inductive definition](68776casesofaninductivedefinition.html) (5 messages, latest: Aug 26 2020 at 07:47)
 
 * [Pale blue i](26068Palebluei.html) (2 messages, latest: Aug 26 2020 at 07:38)

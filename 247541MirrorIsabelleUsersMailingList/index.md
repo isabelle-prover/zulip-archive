@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] cartouches and outer syntax](66228isabellecartouchesandoutersyntax.html) (1 message, latest: Sep 05 2020 at 15:00)
+
 * [\[isabelle\] Postdoc position on Formal Methods and Testing...](36440isabellePostdocpositiononFormalMethodsandTesting.html) (1 message, latest: Sep 04 2020 at 09:14)
 
 * [\[isabelle\] New in the AFP: inductive inference of recursi...](44387isabelleNewintheAFPinductiveinferenceofrecursi.html) (1 message, latest: Sep 02 2020 at 11:29)

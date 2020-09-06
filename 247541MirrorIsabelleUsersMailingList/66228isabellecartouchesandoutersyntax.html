@@ -37,6 +37,49 @@ text antiquotation).</p>
 <p>Of course, you can use embedded cartouches in other languages as well.</p>
 <p>Makarius</p>
 
+<a name="209213004"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20cartouches%20and%20outer%20syntax/near/209213004" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/66228isabellecartouchesandoutersyntax.html#209213004">Email Gateway (Sep 06 2020 at 07:03)</a>:</h4>
+<p>From: Walther Neuper &lt;<a href="mailto:walther.neuper@jku.at">walther.neuper@jku.at</a>&gt;<br>
+On 05.09.20 23:03, Makarius wrote:</p>
+<blockquote>
+<p>On 05/09/2020 16:59, Walther Neuper wrote:</p>
+<blockquote>
+<p>reading isar-ref.pdf and src/Pure gives me the impression, that<br>
+cartouches are NOT designed to contain outer syntax.<br>
+[...]<br>
+Here is an example that contains outer syntax keywords:</p>
+</blockquote>
+<p>text ‹<br>
+  @{theory_text ‹term x›}<br>
+›</p>
+<p>You can use C-hover click on "theory_text" to see how it is implemented (as<br>
+text antiquotation).</p>
+<p>Of course, you can use embedded cartouches in other languages as well.</p>
+<p>Makarius</p>
+</blockquote>
+<p>Thank you!</p>
+<p>So it's next to find out, why</p>
+<blockquote>
+<p>text ‹ @{theory_text ‹ ISAC ‹ Problem ("Biegelinie", ["Biegelinien"])<br>
+"y x = q_0 * L ^ 2 / (4 * EI)" › ›} › </p>
+</blockquote>
+<p>does not render quoted text red the same way as it is done with<br>
+"immediate"  theory_text, e.g.</p>
+<blockquote>
+<p>ISAC ‹<br>
+      Problem ("Biegelinie", ["Biegelinien"])<br>
+      "y x = q_0 * L ^ 2 / (4 * EI)"<br>
+    ›</p>
+</blockquote>
+<p>in the theory body without further surroundings given the definition</p>
+<blockquote>
+<p>val _ = Outer_Syntax.command @{command_keyword ISAC} "embedded ISAC<br>
+language" ((Parse.input Parse.cartouche) &gt;&gt; (fn input =&gt; Toplevel.keep<br>
+(fn _ =&gt; ignore (ML_Lex.read_source input)))) </p>
+</blockquote>
+<p>Good training in how to read and investigate Isabelle code.</p>
+<p>Walther</p>
+
 
 {% endraw %}
 

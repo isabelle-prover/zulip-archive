@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] cartouches and outer syntax](66228isabellecartouchesandoutersyntax.html) (3 messages, latest: Sep 06 2020 at 07:03)
+* [\[isabelle\] cartouches and outer syntax](66228isabellecartouchesandoutersyntax.html) (4 messages, latest: Sep 06 2020 at 20:57)
 
 * [\[isabelle\] Postdoc position on Formal Methods and Testing...](36440isabellePostdocpositiononFormalMethodsandTesting.html) (1 message, latest: Sep 04 2020 at 09:14)
 

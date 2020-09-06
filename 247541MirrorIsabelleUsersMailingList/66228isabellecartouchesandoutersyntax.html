@@ -80,6 +80,20 @@ language" ((Parse.input Parse.cartouche) &gt;&gt; (fn input =&gt; Toplevel.keep<
 <p>Good training in how to read and investigate Isabelle code.</p>
 <p>Walther</p>
 
+<a name="209241318"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20cartouches%20and%20outer%20syntax/near/209241318" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/66228isabellecartouchesandoutersyntax.html#209241318">Email Gateway (Sep 06 2020 at 20:57)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+This is because the @{theory_text} document antiquotation only takes the outer<br>
+syntax tokens into account; there is no evaluation of commands, and thus no<br>
+markup from the command semantics.</p>
+<p>The included definition of @{theory_commands} improves on this in an adhoc<br>
+manner, using Outer_Syntax.parse_text and Toplevel.command_exception --- this<br>
+basically works, but causes some duplication of markup.</p>
+<p>Before I do the usual fine-tuning to get PIDE markup to the point, without<br>
+duplicates: Can you say what your actual application is? Do you need a<br>
+document antiquotation at all, or something else?</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

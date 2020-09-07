@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] More on "References about mistakes and gaps in...](20041isabelleMoreonReferencesaboutmistakesandgapsin.html) (1 message, latest: Sep 07 2020 at 14:50)
+
 * [\[isabelle\] cartouches and outer syntax](66228isabellecartouchesandoutersyntax.html) (5 messages, latest: Sep 07 2020 at 10:32)
 
 * [\[isabelle\] Postdoc position on Formal Methods and Testing...](36440isabellePostdocpositiononFormalMethodsandTesting.html) (1 message, latest: Sep 04 2020 at 09:14)

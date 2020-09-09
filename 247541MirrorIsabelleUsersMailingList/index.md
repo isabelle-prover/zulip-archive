@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FMCAD'20 (Sept 21 to 24) - Call for Participation](33246isabelleFMCAD20Sept21to24CallforParticipation.html) (1 message, latest: Sep 09 2020 at 08:28)
+
 * [\[isabelle\] cartouches and outer syntax](66228isabellecartouchesandoutersyntax.html) (7 messages, latest: Sep 08 2020 at 10:10)
 
 * [\[isabelle\] More on "References about mistakes and gaps in...](20041isabelleMoreonReferencesaboutmistakesandgapsin.html) (2 messages, latest: Sep 08 2020 at 09:11)

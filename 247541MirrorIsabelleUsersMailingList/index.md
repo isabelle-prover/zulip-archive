@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] A question about the submission guidelines for...](50101isabelleAquestionaboutthesubmissionguidelinesfor.html) (1 message, latest: Sep 14 2020 at 20:59)
+* [\[isabelle\] A question about the submission guidelines for...](50101isabelleAquestionaboutthesubmissionguidelinesfor.html) (2 messages, latest: Sep 15 2020 at 06:48)
 
 * [\[isabelle\] FMCAD'20 (Sept 21 to 24) - Call for Participation](33246isabelleFMCAD20Sept21to24CallforParticipation.html) (1 message, latest: Sep 09 2020 at 08:28)
 

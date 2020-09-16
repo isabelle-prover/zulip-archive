@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CPP 2021 abstract deadline due very soon](64783isabelleCPP2021abstractdeadlinedueverysoon.html) (1 message, latest: Sep 16 2020 at 17:45)
+
 * [\[isabelle\] A question about the submission guidelines for...](50101isabelleAquestionaboutthesubmissionguidelinesfor.html) (3 messages, latest: Sep 15 2020 at 15:53)
 
 * [\[isabelle\] FMCAD'20 (Sept 21 to 24) - Call for Participation](33246isabelleFMCAD20Sept21to24CallforParticipation.html) (1 message, latest: Sep 09 2020 at 08:28)

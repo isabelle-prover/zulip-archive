@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Bits and Words – Current matter of affairs](83120isabelledevBitsandWordsCurrentmatterofaffairs.html) (1 message, latest: Sep 17 2020 at 12:40)
+
 * [\[isabelle-dev\] NEWS: Nitpick/Kodkod may be invoked in the...](05594isabelledevNEWSNitpickKodkodmaybeinvokedinthe.html) (1 message, latest: Aug 25 2020 at 20:06)
 
 * [\[isabelle-dev\] lex_prod changes](45436isabelledevlexprodchanges.html) (13 messages, latest: Aug 22 2020 at 02:37)

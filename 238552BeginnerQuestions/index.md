@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [cite antiquotation](37366citeantiquotation.html) (1 message, latest: Sep 17 2020 at 14:59)
+
 * [Set.filter vs Set comprehension](57840SetfiltervsSetcomprehension.html) (4 messages, latest: Sep 03 2020 at 12:16)
 
 * [cases of an inductive definition](68776casesofaninductivedefinition.html) (5 messages, latest: Aug 26 2020 at 07:47)

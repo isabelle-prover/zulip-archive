@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] A bundle of ATP entries](82633isabelleAbundleofATPentries.html) (1 message, latest: Sep 18 2020 at 14:45)
+
 * [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (1 message, latest: Sep 17 2020 at 17:01)
 
 * [\[isabelle\] CPP 2021 abstract deadline due very soon](64783isabelleCPP2021abstractdeadlinedueverysoon.html) (1 message, latest: Sep 16 2020 at 17:45)

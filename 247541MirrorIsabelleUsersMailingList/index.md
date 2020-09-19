@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Extended Finite State Machines](39750isabelleNewintheAFPExtendedFiniteStateMachines.html) (1 message, latest: Sep 19 2020 at 06:22)
+
 * [\[isabelle\] A bundle of ATP entries](82633isabelleAbundleofATPentries.html) (1 message, latest: Sep 18 2020 at 14:45)
 
 * [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (1 message, latest: Sep 17 2020 at 17:01)

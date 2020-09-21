@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Continuous integration](65308Continuousintegration.html) (61 messages, latest: Sep 21 2020 at 04:48)
+
 * [Visual Studio Code Remote + Isabelle](79328VisualStudioCodeRemoteIsabelle.html) (6 messages, latest: Aug 16 2020 at 12:08)
 
 * [Generalising to subset](65426Generalisingtosubset.html) (19 messages, latest: Aug 13 2020 at 12:09)
@@ -26,8 +28,6 @@ permalink: ./202961general/index.html
 * [Obtaining properly localised terms](39508Obtainingproperlylocalisedterms.html) (1 message, latest: Jul 28 2020 at 09:41)
 
 * [Thm.assume: undeclared hyps](44891Thmassumeundeclaredhyps.html) (10 messages, latest: Jul 23 2020 at 09:23)
-
-* [Continuous integration](65308Continuousintegration.html) (60 messages, latest: Jul 21 2020 at 08:33)
 
 * [Automatically contracted abbreviations](05386Automaticallycontractedabbreviations.html) (11 messages, latest: Jul 17 2020 at 15:12)
 

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] A question about the submission guidelines for...](50101isabelleAquestionaboutthesubmissionguidelinesfor.html) (5 messages, latest: Sep 20 2020 at 22:37)
+* [\[isabelle\] A question about the submission guidelines for...](50101isabelleAquestionaboutthesubmissionguidelinesfor.html) (6 messages, latest: Sep 20 2020 at 23:40)
 
 * [\[isabelle\] New in the AFP: Extended Finite State Machines](39750isabelleNewintheAFPExtendedFiniteStateMachines.html) (1 message, latest: Sep 19 2020 at 06:22)
 

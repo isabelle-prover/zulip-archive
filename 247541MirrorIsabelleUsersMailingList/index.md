@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] update Isabelle2019->20, session](48519isabelleupdateIsabelle201920session.html) (1 message, latest: Sep 24 2020 at 13:29)
+
 * [\[isabelle\] A question about the submission guidelines for...](50101isabelleAquestionaboutthesubmissionguidelinesfor.html) (7 messages, latest: Sep 22 2020 at 02:15)
 
 * [\[isabelle\] New in the AFP: Extended Finite State Machines](39750isabelleNewintheAFPExtendedFiniteStateMachines.html) (1 message, latest: Sep 19 2020 at 06:22)

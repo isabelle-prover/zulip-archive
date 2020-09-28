@@ -9,9 +9,9 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] NEWS: Document preparation engine updates](61037isabelledevNEWSDocumentpreparationengineupdates.html) (1 message, latest: Sep 27 2020 at 19:26)
+* [\[isabelle-dev\] Plan for Isabelle2021 release](39135isabelledevPlanforIsabelle2021release.html) (2 messages, latest: Sep 28 2020 at 08:25)
 
-* [\[isabelle-dev\] Plan for Isabelle2021 release](39135isabelledevPlanforIsabelle2021release.html) (1 message, latest: Sep 25 2020 at 14:22)
+* [\[isabelle-dev\] NEWS: Document preparation engine updates](61037isabelledevNEWSDocumentpreparationengineupdates.html) (1 message, latest: Sep 27 2020 at 19:26)
 
 * [\[isabelle-dev\] NEWS: Nitpick/Kodkod may be invoked in the...](05594isabelledevNEWSNitpickKodkodmaybeinvokedinthe.html) (2 messages, latest: Sep 25 2020 at 14:10)
 

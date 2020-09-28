@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] NASA Formal Methods 2021 - First Call for Papers](75226isabelleNASAFormalMethods2021FirstCallforPapers.html) (1 message, latest: Sep 25 2020 at 09:33)
+* [\[isabelle\] Minimal system requirements for Isabelle?](22897isabelleMinimalsystemrequirementsforIsabelle.html) (3 messages, latest: Sep 28 2020 at 10:49)
 
-* [\[isabelle\] Minimal system requirements for Isabelle?](22897isabelleMinimalsystemrequirementsforIsabelle.html) (2 messages, latest: Sep 25 2020 at 09:32)
+* [\[isabelle\] NASA Formal Methods 2021 - First Call for Papers](75226isabelleNASAFormalMethods2021FirstCallforPapers.html) (1 message, latest: Sep 25 2020 at 09:33)
 
 * [\[isabelle\] update Isabelle2019->20, session](48519isabelleupdateIsabelle201920session.html) (2 messages, latest: Sep 25 2020 at 08:44)
 

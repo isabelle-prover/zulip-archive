@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 16 inch MacBook Pro benchmarks](78830isabelle16inchMacBookProbenchmarks.html) (1 message, latest: Sep 28 2020 at 15:08)
+
 * [\[isabelle\] Minimal system requirements for Isabelle?](22897isabelleMinimalsystemrequirementsforIsabelle.html) (3 messages, latest: Sep 28 2020 at 10:49)
 
 * [\[isabelle\] NASA Formal Methods 2021 - First Call for Papers](75226isabelleNASAFormalMethods2021FirstCallforPapers.html) (1 message, latest: Sep 25 2020 at 09:33)

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] 16 inch MacBook Pro benchmarks](78830isabelle16inchMacBookProbenchmarks.html) (1 message, latest: Sep 28 2020 at 15:08)
+* [\[isabelle\] 16 inch MacBook Pro benchmarks](78830isabelle16inchMacBookProbenchmarks.html) (2 messages, latest: Sep 29 2020 at 18:44)
 
 * [\[isabelle\] Minimal system requirements for Isabelle?](22897isabelleMinimalsystemrequirementsforIsabelle.html) (3 messages, latest: Sep 28 2020 at 10:49)
 

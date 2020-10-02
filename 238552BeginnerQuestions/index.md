@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [code generation](45576codegeneration.html) (1 message, latest: Oct 02 2020 at 04:40)
+
 * [cite antiquotation](37366citeantiquotation.html) (2 messages, latest: Sep 17 2020 at 15:00)
 
 * [Set.filter vs Set comprehension](57840SetfiltervsSetcomprehension.html) (4 messages, latest: Sep 03 2020 at 12:16)

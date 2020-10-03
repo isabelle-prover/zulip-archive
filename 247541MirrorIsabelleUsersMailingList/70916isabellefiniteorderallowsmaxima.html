@@ -1,0 +1,61 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html">[isabelle] finite order allows maxima</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="212160920"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212160920" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212160920">Email Gateway (Oct 03 2020 at 08:38)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt;<br>
+Dear all,</p>
+<p>in need (of a particular instance of) the following obvious fact:</p>
+<p>lemma (in order) fin_max: "finite A ⟹ a ∈ A ⟹ ∃ s ∈ A. a ≤ s ∧  (∀ b ∈ <br>
+A. s ≤ b ⟶ s = b)"</p>
+<p>I have proved it for myself (see below). I wonder whether it can be <br>
+obtained somehow more directly from Main.</p>
+<p>Best regards</p>
+<p>Stepan</p>
+<p>proof (induct "card {b ∈ A. a &lt; b}" arbitrary: a rule: nat_less_induct)<br>
+   case 1<br>
+   have IH: "⋀ x. x ∈ A ⟹ card {b ∈ A. x &lt; b} &lt; card {b ∈ A. a &lt; b} ⟹ <br>
+∃s∈A. x ≤ s ∧ (∀b∈A. s ≤ b ⟶ s = b)"<br>
+     by (simp add: "1.hyps" ‹finite A›)<br>
+   then show ?case<br>
+   proof (cases "∀b∈A. a ≤ b ⟶ a = b")<br>
+     assume "∀b∈A. a ≤ b ⟶ a = b"<br>
+     thus ?thesis<br>
+       using ‹a ∈ A› by blast<br>
+   next<br>
+     assume "¬ (∀b∈A. a ≤ b ⟶ a = b)"<br>
+     then obtain a' where "a' ∈ A" and "a &lt; a'"<br>
+       using local.antisym_conv1 by blast<br>
+     have "{b ∈ A. a' &lt; b} ⊂ {b ∈ A. a &lt; b}" (is "?Ma' ⊂  ?Ma")<br>
+     proof-<br>
+       have "a' ∈ ?Ma" and "a' ∉ ?Ma'" and "⋀ c. c ∈ ?Ma' ⟹ c ∈ ?Ma"<br>
+         using ‹a &lt; a'› ‹a' ∈ A› by auto<br>
+       thus "?Ma' ⊂  ?Ma"<br>
+         by blast<br>
+     qed<br>
+     hence card: "card {b ∈ A. a' &lt; b} &lt; card {b ∈ A. a &lt; b}"<br>
+       by (simp add: ‹finite A› psubset_card_mono)<br>
+     then obtain s where "s ∈ A" "a' ≤ s ∧ (∀b∈A. s ≤ b ⟶ s = b)"<br>
+       using IH[OF ‹a' ∈ A› card] by blast<br>
+     hence "a ≤ s ∧ (∀b∈A. s ≤ b ⟶ s = b)"<br>
+       using ‹a &lt; a'› by auto<br>
+     thus ?thesis<br>
+       using ‹s ∈ A› by blast<br>
+   qed<br>
+qed</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

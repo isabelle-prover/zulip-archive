@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (1 message, latest: Oct 03 2020 at 14:43)
+* [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (2 messages, latest: Oct 03 2020 at 20:29)
 
 * [\[isabelle-dev\] NEWS: Document preparation engine updates](61037isabelledevNEWSDocumentpreparationengineupdates.html) (2 messages, latest: Sep 28 2020 at 11:01)
 

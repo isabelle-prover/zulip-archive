@@ -1,0 +1,56 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247542MirrorIsabelleDevelopmentMailingList/79199isabelledevExperimentalsupportforarm64linux.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/index.html">Mirror: Isabelle Development Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/79199isabelledevExperimentalsupportforarm64linux.html">[isabelle-dev] Experimental support for arm64-linux</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="212175385"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Experimental%20support%20for%20arm64-linux/near/212175385" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/79199isabelledevExperimentalsupportforarm64linux.html#212175385">Email Gateway (Oct 03 2020 at 14:43)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Here is an intermediate report on the state of support for the ARM64 platform,<br>
+according to Isabelle/694d0a315d0a.</p>
+<p>Presently, its main hardware representative is my new Raspberry Pi 4B (4 CPU<br>
+cores at 1.5 GHz, 8 GB RAM), running Ubuntu Linux 20.04 LTS. I've purchased<br>
+that for a bit less than 100 EUR; a suitable micro SD storage card needs to be<br>
+added (e.g. 128 GB for 20 EUR).</p>
+<p>The most relevant Isabelle components already include arm64-linux parts, but<br>
+jdk is still missing. This works e.g. via the Ubuntu package "openjdk-11-jdk"<br>
+and the following $ISABELLE_HOME_USER/etc/settings:</p>
+<p>ISABELLE_JDK_HOME="/usr/lib/jvm/java-11-openjdk-arm64"</p>
+<p>An alternative is to download/unpack JDK 11 from <a href="https://adoptopenjdk.net">https://adoptopenjdk.net</a><br>
+(platform aarch64) and point to that directory. I will include that in the<br>
+next official update of the jdk component, probably at the end of October.</p>
+<p>Now most Isabelle/Scala tools should work properly, as well as Isabelle/ML<br>
+based on the existing interpreter by David Matthews for that platform: it is<br>
+approx. 50-100 times slower than the standard code-generator for x86_64.</p>
+<p>Consequently, "isabelle jedit" might require some hours to build the Scala<br>
+jars + ML logic image for HOL (while ZF only requires minutes). To reduce<br>
+heat, it might require to disable the display and run "isabelle build -b HOL"<br>
+first via ssh.</p>
+<p>At this stage we can already use sledgehammer with prover "e", e.g. in<br>
+$ISABELLE_HOME/src/HOL/Metis_Examples/BigO.thy on many of the metis proofs.<br>
+This requires some patience, but it is fun to see it all work on this tiny<br>
+little device.</p>
+<p>Overall the experiment is not just for fun: Apple might ship fancy new ARM<br>
+MacBooks within a few months.</p>
+<p>So we need to think about collecting some money for David Mattews to produce a<br>
+proper code generator for Poly/ML eventually. People who have some ideas<br>
+should contact me or David via private mail.</p>
+<p>Makarius</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

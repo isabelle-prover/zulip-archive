@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (1 message, latest: Oct 03 2020 at 08:38)
+* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (2 messages, latest: Oct 04 2020 at 12:32)
 
 * [\[isabelle\] 16 inch MacBook Pro benchmarks](78830isabelle16inchMacBookProbenchmarks.html) (2 messages, latest: Sep 29 2020 at 18:44)
 

@@ -55,6 +55,23 @@ obtained somehow more directly from Main.</p>
    qed<br>
 qed</p>
 
+<a name="212221345"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212221345" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212221345">Email Gateway (Oct 04 2020 at 12:32)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Hi Stepan,</p>
+<p>an alternative is to use the well-foundedness of &gt; restricted to the finite set A. This gives one maximal elements via wf_eq_minimal. Not sure if this qualifies as “more direct”, but at least no explicit induction is needed.</p>
+<p>Dmitriy</p>
+<p>lemma (in order) fin_max:<br>
+  assumes "finite A" "a ∈ A"<br>
+  shows "∃s ∈ A. a ≤ s ∧ (∀b ∈ A. s ≤ b ⟶ s = b)"<br>
+proof -<br>
+  from ‹finite A› have "wf {(x,y). x ∈ A ∧ y ∈ A ∧ x &gt; y}"<br>
+    by (intro finite_acyclic_wf[OF finite_subset[of _ "A × A"]]) (auto intro!: acyclicI_order)<br>
+  with ‹a ∈ A› show ?thesis<br>
+    unfolding wf_eq_minimal using order.trans order.order_iff_strict<br>
+    by (elim allE[of _ "{x ∈ A. a ≤ x}"] allE[of _ a]) (auto 7 0)<br>
+qed</p>
+
 
 {% endraw %}
 

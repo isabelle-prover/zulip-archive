@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Lemma suggestion to Function_Algebras](16023isabelleLemmasuggestiontoFunctionAlgebras.html) (1 message, latest: Oct 05 2020 at 00:50)
+* [\[isabelle\] Lemma suggestion to Function_Algebras](16023isabelleLemmasuggestiontoFunctionAlgebras.html) (2 messages, latest: Oct 05 2020 at 01:05)
 
 * [\[isabelle\] How to make Eisbach's match functionality avai...](05587isabelleHowtomakeEisbachsmatchfunctionalityavai.html) (1 message, latest: Oct 04 2020 at 17:48)
 

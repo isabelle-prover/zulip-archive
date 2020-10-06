@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] How to make Eisbach's match functionality avai...](05587isabelleHowtomakeEisbachsmatchfunctionalityavai.html) (2 messages, latest: Oct 05 2020 at 22:42)
+* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (5 messages, latest: Oct 06 2020 at 07:03)
 
-* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (4 messages, latest: Oct 05 2020 at 16:30)
+* [\[isabelle\] How to make Eisbach's match functionality avai...](05587isabelleHowtomakeEisbachsmatchfunctionalityavai.html) (2 messages, latest: Oct 05 2020 at 22:42)
 
 * [\[isabelle\] Lemma suggestion to Function_Algebras](16023isabelleLemmasuggestiontoFunctionAlgebras.html) (2 messages, latest: Oct 05 2020 at 01:05)
 

@@ -1,0 +1,37 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/13418isabelleUnnecessaryassumptioninHOLAnalysisConvex.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/13418isabelleUnnecessaryassumptioninHOLAnalysisConvex.html">[isabelle] Unnecessary assumption in	HOL-Analysis.Convex....</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="212401285"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unnecessary%20assumption%20in%09HOL-Analysis.Convex..../near/212401285" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/13418isabelleUnnecessaryassumptioninHOLAnalysisConvex.html#212401285">Email Gateway (Oct 06 2020 at 09:03)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+Hello,</p>
+<p>I have stumbled upon this lemma in HOL-Analysis.Convex:</p>
+<p>lemma convex_on_alt:<br>
+fixes C :: "'a::real_vector set"<br>
+assumes "convex C"<br>
+shows "convex_on C f ⟷<br>
+(∀x ∈ C. ∀ y ∈ C. ∀ μ :: real. μ ≥ 0 ∧ μ ≤ 1 ⟶<br>
+f (μ *⇩R x + (1 - μ) *⇩R y) ≤ μ * f x + (1 - μ) * f y)"</p>
+<p>As this is a simple restatement of convex_on_def, I was somewhat puzzled<br>
+by the assumption of "convex C". As it turns out - it's not necessary.<br>
+I removed the assumes line and the proof succeeded without any<br>
+modification. I suppose it would be useful to reflect this in the<br>
+distribution?</p>
+<p>Kind regards,<br>
+Jakub Kądziołka</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

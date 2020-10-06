@@ -152,6 +152,53 @@ qed</p>
 <p><a href="/user_uploads/14278/68rLSJummeWq4WS-YilrzugM/smime.p7s">smime.p7s</a></p>
 </blockquote>
 
+<a name="212404438"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212404438" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212404438">Email Gateway (Oct 06 2020 at 09:38)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+The names should be “maximal” rather than “max”. The latter would suggest the Max function, which is only meaningful for linear orderings. </p>
+<p>Larry</p>
+
+<a name="212405754"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212405754" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212405754">Email Gateway (Oct 06 2020 at 09:53)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt;<br>
+Dear Tobias,</p>
+<p>the absence of the simpler lemma is even more surprising. It seems to me <br>
+moreover that the version for minimum is not easily obtained either.</p>
+<p>Nevertheless, I understood two things, thank to this mailing list:</p>
+<ol>
+<li>
+<p>Dmitriy pointed out that any acyclic relation on a finite list is <br>
+known to be wf, whence both maxima and minima are obtained. Which leads <br>
+much better proof (posted by Dmitriy up the thread) than the mine is.</p>
+</li>
+<li>
+<p>Manuel pointed out that arg_max/arg_min can be used. Indeed, for <br>
+minima we have ex_min_if_finite in Lattices_Big:<br>
+lemma "⟦ finite S; S ≠ {} ⟧ ⟹ ∃m∈S. ¬(∃x∈S. x &lt; (m::'a::order))"<br>
+(a side issue: I do not understand why I cannot get alternative<br>
+lemma (in order) "⟦ finite S; S ≠ {} ⟧ ⟹ ∃m∈S. ¬(∃x∈S. x &lt; m)"<br>
+)<br>
+while for maxima a similar claim is missing at the moment.</p>
+</li>
+</ol>
+<p>Altogether, it seems to me that a lacking synchronization between <br>
+"order" "relation" and possibly "Lattices_Big" is somehow at play here. <br>
+Therefore, I really cannot tell<br>
+whether adding the lemma is the cleanest solution strategically, <br>
+although, of course, it would be handy practically.</p>
+<p>Stepan</p>
+
+<a name="212406240"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212406240" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212406240">Email Gateway (Oct 06 2020 at 09:59)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;</p>
+<blockquote>
+<p>Maybe Min/Max (on finite sets) could be defined for arbitrary orders<br>
+instead of just linear orders as currently?</p>
+</blockquote>
+<p>See Manuel's answer.</p>
+<p>Florian<br>
+<a href="/user_uploads/14278/N7y82I_EFhlRgI4YtSY56fCe/signature.asc">signature.asc</a></p>
+
 
 {% endraw %}
 

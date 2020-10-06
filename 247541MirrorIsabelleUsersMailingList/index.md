@@ -9,9 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (1 message, latest: Oct 06 2020 at 08:05)
+* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (8 messages, latest: Oct 06 2020 at 09:59)
 
-* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (5 messages, latest: Oct 06 2020 at 07:03)
+* [\[isabelle\] Unnecessary assumption in HOL-Analysis.Convex....](89313isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:21)
+
+* [\[isabelle\] Unnecessary assumption in	HOL-Analysis.Convex....](13418isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:03)
+
+* [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (1 message, latest: Oct 06 2020 at 08:05)
 
 * [\[isabelle\] How to make Eisbach's match functionality avai...](05587isabelleHowtomakeEisbachsmatchfunctionalityavai.html) (2 messages, latest: Oct 05 2020 at 22:42)
 

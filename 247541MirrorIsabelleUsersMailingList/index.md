@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Error in Eisbach syntax diagram](06502isabelleErrorinEisbachsyntaxdiagram.html) (1 message, latest: Oct 06 2020 at 21:27)
+
 * [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (10 messages, latest: Oct 06 2020 at 19:47)
 
 * [\[isabelle\] Unnecessary assumption in HOL-Analysis.Convex....](89313isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:21)

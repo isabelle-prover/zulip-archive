@@ -199,6 +199,40 @@ instead of just linear orders as currently?</p>
 <p>Florian<br>
 <a href="/user_uploads/14278/N7y82I_EFhlRgI4YtSY56fCe/signature.asc">signature.asc</a></p>
 
+<a name="212411098"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212411098" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212411098">Email Gateway (Oct 06 2020 at 10:57)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;</p>
+<blockquote>
+<p>(a side issue: I do not understand why I cannot get alternative<br>
+lemma (in order) "⟦ finite S; S ≠ {} ⟧ ⟹ ∃m∈S. ¬(∃x∈S. x &lt; m)"<br>
+)</p>
+</blockquote>
+<p>Welcome to the wonderfully frustrating world of Isabelle typeclasses!<br>
+Unfortunately, arg_min etc. are defined with an "ord" sort constraint.<br>
+However, inside the context of the "ord" typeclass itself, you do not<br>
+yet have this sort "ord" attached to the type variable. Therefore, this<br>
+gives you a type error due to the missing sort.</p>
+<p>In this particular case, this issue could be fixed by defining the<br>
+constants inside the typeclass:</p>
+<blockquote>
+<p>definition (in ord) is_arg_min :: "('b ⇒ 'a) ⇒ ('b ⇒ bool) ⇒ 'b ⇒<br>
+bool" where<br>
+"is_arg_min f P x = (P x ∧ ¬(∃y. P y ∧ f y &lt; f x))"</p>
+<p>definition (in ord) arg_min :: "('b ⇒ 'a) ⇒ ('b ⇒ bool) ⇒ 'b" where<br>
+"arg_min f P = (SOME x. is_arg_min f P x)"</p>
+</blockquote>
+<p>Indeed I would suggest we do it that way.</p>
+<p>There are, however, cases where this does not work: for instance, any<br>
+definition of theorem involving two different types of that type class.</p>
+<p>This is a very annoying technical limitation of Isabelle's type classes.<br>
+Usually, there is no big downside to just defining/proving stuff outside<br>
+the typeclass using explicit sort constraints, but one situation where<br>
+it gets really annoying is when want to use constants defined outside<br>
+the typeclass in the assumptions of a new subclass (e.g. something<br>
+builting on top of euclidean_space that makes some assumptions about the<br>
+limit of some function. Limits are not defined in the type class.)</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

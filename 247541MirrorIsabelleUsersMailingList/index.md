@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Duplicate algebra tactic](34939isabelleDuplicatealgebratactic.html) (1 message, latest: Oct 07 2020 at 14:13)
+* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (12 messages, latest: Oct 07 2020 at 19:50)
 
-* [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (11 messages, latest: Oct 07 2020 at 09:00)
+* [\[isabelle\] Duplicate algebra tactic](34939isabelleDuplicatealgebratactic.html) (1 message, latest: Oct 07 2020 at 14:13)
 
 * [\[isabelle\] Questions on locales - structure keyword and l...](74033isabelleQuestionsonlocalesstructurekeywordandl.html) (1 message, latest: Oct 07 2020 at 09:00)
 

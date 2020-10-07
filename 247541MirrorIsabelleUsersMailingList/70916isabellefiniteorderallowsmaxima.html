@@ -252,6 +252,52 @@ Adding these facts to Fnite_Set already would be great!</p>
 <p>Benjamin Bisping<br>
 <a href="/user_uploads/14278/uffXjInkne9puMahIEJFOqmk/smime.p7s">smime.p7s</a></p>
 
+<a name="212610446"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20order%20allows%20maxima/near/212610446" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/70916isabellefiniteorderallowsmaxima.html#212610446">Email Gateway (Oct 07 2020 at 19:50)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+Are these lemmas missing for any other reason than "nobody bothered<br>
+yet"? I happened to need the arg_max variants of those today, so I<br>
+adjusted some proofs:</p>
+<p>theory Scratch<br>
+  imports<br>
+    HOL.Lattices_Big<br>
+begin</p>
+<p>lemma ex_max_if_finite:<br>
+  "⟦ finite S; S ≠ {} ⟧ ⟹ ∃m∈S. ¬(∃x∈S. x &gt; (m::'a::order))"<br>
+by(induction rule: finite.induct) (auto intro: order.strict_trans)</p>
+<p>lemma ex_is_arg_max_if_finite: fixes f :: "'a ⇒ 'b :: order"<br>
+shows "⟦ finite S; S ≠ {} ⟧ ⟹ ∃x. is_arg_max f (λx. x ∈ S) x"<br>
+unfolding is_arg_max_def<br>
+using ex_max_if_finite[of "f ` S"]<br>
+by auto</p>
+<p>lemma arg_max_SOME_Max:<br>
+  "finite S ⟹ arg_max_on f S = (SOME y. y ∈ S ∧ f y = Max(f ` S))"<br>
+unfolding arg_max_on_def arg_max_def is_arg_max_linorder<br>
+apply(rule arg_cong[where f = Eps])<br>
+apply (auto simp: fun_eq_iff intro: Max_eqI[symmetric])<br>
+done</p>
+<p>lemma arg_max_if_finite: fixes f :: "'a ⇒ 'b :: order"<br>
+assumes "finite S" "S ≠ {}"<br>
+shows  "arg_max_on f S ∈ S" and "¬(∃x∈S. f x &gt; f (arg_max_on f S))"<br>
+using ex_is_arg_max_if_finite[OF assms, of f]<br>
+unfolding arg_max_on_def arg_max_def is_arg_max_def<br>
+by(auto dest!: someI_ex)</p>
+<p>lemma arg_max_greatest: fixes f :: "'a ⇒ 'b :: linorder"<br>
+shows "⟦ finite S;  S ≠ {};  y ∈ S ⟧ ⟹ f(arg_max_on f S) ≥ f y"<br>
+by(simp add: arg_max_SOME_Max inv_into_def2[symmetric] f_inv_into_f)</p>
+<p>lemma arg_max_inj_eq: fixes f :: "'a ⇒ 'b :: order"<br>
+shows "⟦ inj_on f {x. P x}; P a; ∀y. P y ⟶ f a ≥ f y ⟧ ⟹ arg_max f P = a"<br>
+apply(simp add: arg_max_def is_arg_max_def)<br>
+apply(rule someI2[of _ a])<br>
+ apply (simp add: less_le_not_le)<br>
+by (metis inj_on_eq_iff less_le mem_Collect_eq)<br>
+end</p>
+<p>It might've been cleaner to prove these using the equivalent arg_min<br>
+theorems by defining an 'inverse' order, but I have no idea how to do<br>
+that...</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
 
 {% endraw %}
 

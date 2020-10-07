@@ -9,6 +9,8 @@ permalink: ./202968quantumcomputing/index.html
 
 ### Topics:
 
+* [AFP Submission](85284AFPSubmission.html) (1 message, latest: Oct 07 2020 at 20:09)
+
 * [quantum Fourier transform](89892quantumFouriertransform.html) (90 messages, latest: Oct 28 2019 at 20:24)
 
 * [project ideas](18270projectideas.html) (1 message, latest: Oct 17 2019 at 17:27)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CfP: AMAI Special Issue on Theoretical and Pra...](15264isabelleCfPAMAISpecialIssueonTheoreticalandPra.html) (1 message, latest: Oct 08 2020 at 10:44)
+
 * [\[isabelle\] finite order allows maxima](70916isabellefiniteorderallowsmaxima.html) (12 messages, latest: Oct 07 2020 at 19:50)
 
 * [\[isabelle\] Duplicate algebra tactic](34939isabelleDuplicatealgebratactic.html) (1 message, latest: Oct 07 2020 at 14:13)

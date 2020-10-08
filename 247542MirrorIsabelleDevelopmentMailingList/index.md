@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Word sessions and theories](30383isabelledevWordsessionsandtheories.html) (1 message, latest: Oct 08 2020 at 13:22)
+
 * [\[isabelle-dev\] LuaLaTeX compatibility improvements in AFP](67831isabelledevLuaLaTeXcompatibilityimprovementsinAFP.html) (1 message, latest: Oct 08 2020 at 09:17)
 
 * [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (3 messages, latest: Oct 04 2020 at 19:16)

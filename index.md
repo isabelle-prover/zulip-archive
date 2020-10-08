@@ -16,7 +16,7 @@ permalink: ./index.html
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (17 topics)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (18 topics)
 
 * [new projects](202967newprojects/index.html) (10 topics)
 

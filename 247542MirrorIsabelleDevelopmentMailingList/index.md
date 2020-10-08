@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] LuaLaTeX compatibility improvements in AFP](67831isabelledevLuaLaTeXcompatibilityimprovementsinAFP.html) (1 message, latest: Oct 08 2020 at 09:17)
+
 * [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (3 messages, latest: Oct 04 2020 at 19:16)
 
 * [\[isabelle-dev\] NEWS: Document preparation engine updates](61037isabelledevNEWSDocumentpreparationengineupdates.html) (2 messages, latest: Sep 28 2020 at 11:01)

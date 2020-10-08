@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] LuaLaTeX compatibility improvements in AFP](67831isabelledevLuaLaTeXcompatibilityimprovementsinAFP.html) (2 messages, latest: Oct 08 2020 at 14:57)
+* [\[isabelle-dev\] LuaLaTeX compatibility improvements in AFP](67831isabelledevLuaLaTeXcompatibilityimprovementsinAFP.html) (3 messages, latest: Oct 08 2020 at 15:25)
 
 * [\[isabelle-dev\] Word sessions and theories](30383isabelledevWordsessionsandtheories.html) (1 message, latest: Oct 08 2020 at 13:22)
 

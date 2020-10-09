@@ -73,6 +73,54 @@ Hi Florian,</p>
 Gerwin<br>
 <a href="/user_uploads/14278/b59QBRdTM8ii-_LPLTJ_g17P/signature.asc">signature.asc</a></p>
 
+<a name="212813434"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Word%20sessions%20and%20theories/near/212813434" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/30383isabelledevWordsessionsandtheories.html#212813434">Email Gateway (Oct 09 2020 at 11:41)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+I totally agree with this point.<br>
+Larry</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+<a name="212814122"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Word%20sessions%20and%20theories/near/212814122" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/30383isabelledevWordsessionsandtheories.html#212814122">Email Gateway (Oct 09 2020 at 11:47)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Hi Gerwin,</p>
+<blockquote>
+<p>There are a few bits I disagree with, though, in particular the desire to replace operations like lsb, msb, etc with existing operations. That would be counter productive. If they can be made abbreviations on the word type, that is fine, and should probably be done, but the names are important. Programmers know what “lsb" ist, but will have to really think about this being equivalent to “odd”. If you’re writing theorem statements or specifications that other people need to be able to understand, familiarity is important.</p>
+</blockquote>
+<p>I am happy to converge into that direction.  The critical question<br>
+remains whether they should be full or only input abbreviations.  In the<br>
+former cases, it would be better to have them restricted to word,<br>
+otherwise you would end up with ‹lsb (2 * k + 1)› for k :: int, which<br>
+will not do.  If restricted to word, ‹msb› might even remain a dedicated<br>
+operation.</p>
+<blockquote>
+<p>Minor points: the tagging for word types with signedness (or not) is useful in program verification where you sometimes want to track what the compiler understands the type to be, so that you can later pick corresponding transformations based on that understanding. It doesn’t have any relevance to theorems you’d prove manually.</p>
+</blockquote>
+<p>Thanks, that makes the situation clear.</p>
+<blockquote>
+<p>Misc_Typedef: not sure it deserves the attribute “invasive”. I haven’t checked how it has developed, but it used to be a simple constant definition. I remember Jeremy introducing it to get simpler isomorphism results or something along that line. If it is not necessary any more, it’d be perfectly fine to eliminate.</p>
+</blockquote>
+<p>The morphisms in general can be exploited using the transfer method<br>
+nowadays.  This should indeed be the core message about Misc_Typedef.</p>
+<blockquote>
+<p>Reversed_Bit_Lists: they are rarely used for algebraic properties, but they are useful for more complex append and slicing operations as you sometimes find in hardware specs. In general, I wouldn’t make too many comments on use in the overview. Takes too long to explain and is very dependent on application.</p>
+</blockquote>
+<p>Yes, but the reverse order makes it painful to prove anything about it,<br>
+ The definitions of append and slicing operations on word use the direct<br>
+formulation without any reversal already.</p>
+<blockquote>
+<p>As for location: I’d be fine with the overview living in Word_Lib. From there it can reference everything in Word_Lib and HOL-Word, and it can provide a few comments on + a pointer to the Native_Word entry, which could contain its own overview.</p>
+</blockquote>
+<p>OK.</p>
+<p>Cheers,<br>
+    Florian</p>
+<blockquote>
+<p><a href="/user_uploads/14278/p496ejGB2JgHOScc2ByogQrx/signature.asc">signature.asc</a></p>
+</blockquote>
+
 
 {% endraw %}
 

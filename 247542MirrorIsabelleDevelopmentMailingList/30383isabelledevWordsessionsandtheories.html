@@ -58,6 +58,21 @@ But this would be a precedence case.</p>
     Florian<br>
 <a href="/user_uploads/14278/7_bWnhv5qppRfLnO0nvfvwI4/signature.asc">signature.asc</a></p>
 
+<a name="212762767"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Word%20sessions%20and%20theories/near/212762767" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/30383isabelledevWordsessionsandtheories.html#212762767">Email Gateway (Oct 08 2020 at 23:39)</a>:</h4>
+<p>From: "Klein, Gerwin (Data61, Kensington NSW)" &lt;<a href="mailto:Gerwin.Klein@data61.csiro.au">Gerwin.Klein@data61.csiro.au</a>&gt;<br>
+Hi Florian,</p>
+<p>Thanks for making a start with this, an overview for the Word libraries is long overdue.</p>
+<p>I’m happy to add a bit of material and design rationale to the document for parts of Word_Lib that seem unclear. Is there a repo I should contribute to?</p>
+<p>There are a few bits I disagree with, though, in particular the desire to replace operations like lsb, msb, etc with existing operations. That would be counter productive. If they can be made abbreviations on the word type, that is fine, and should probably be done, but the names are important. Programmers know what “lsb" ist, but will have to really think about this being equivalent to “odd”. If you’re writing theorem statements or specifications that other people need to be able to understand, familiarity is important.</p>
+<p>Minor points: the tagging for word types with signedness (or not) is useful in program verification where you sometimes want to track what the compiler understands the type to be, so that you can later pick corresponding transformations based on that understanding. It doesn’t have any relevance to theorems you’d prove manually.</p>
+<p>Misc_Typedef: not sure it deserves the attribute “invasive”. I haven’t checked how it has developed, but it used to be a simple constant definition. I remember Jeremy introducing it to get simpler isomorphism results or something along that line. If it is not necessary any more, it’d be perfectly fine to eliminate.</p>
+<p>Reversed_Bit_Lists: they are rarely used for algebraic properties, but they are useful for more complex append and slicing operations as you sometimes find in hardware specs. In general, I wouldn’t make too many comments on use in the overview. Takes too long to explain and is very dependent on application.</p>
+<p>As for location: I’d be fine with the overview living in Word_Lib. From there it can reference everything in Word_Lib and HOL-Word, and it can provide a few comments on + a pointer to the Native_Word entry, which could contain its own overview.</p>
+<p>Cheers,<br>
+Gerwin<br>
+<a href="/user_uploads/14278/b59QBRdTM8ii-_LPLTJ_g17P/signature.asc">signature.asc</a></p>
+
 
 {% endraw %}
 

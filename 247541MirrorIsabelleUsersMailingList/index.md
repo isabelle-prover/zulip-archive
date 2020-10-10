@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (1 message, latest: Oct 10 2020 at 01:12)
+
 * [\[isabelle\] PhD and Postdoc positions at the University of...](25188isabellePhDandPostdocpositionsattheUniversityof.html) (1 message, latest: Oct 09 2020 at 20:13)
 
 * [\[isabelle\] CfP: AMAI Special Issue on Theoretical and Pra...](15264isabelleCfPAMAISpecialIssueonTheoreticalandPra.html) (1 message, latest: Oct 08 2020 at 10:44)

@@ -1,0 +1,60 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html">[isabelle] How do I set --maxheap greater than 16G on Linux?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="212892381"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20do%20I%20set%20--maxheap%20greater%20than%2016G%20on%20Linux%3F/near/212892381" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html#212892381">Email Gateway (Oct 10 2020 at 01:12)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+I am using Ubuntu 18.04.  I am finding that the ML heap seems to be limited to 16G and I need to use<br>
+a bit more.  I haven't really been able to find a comprehensible description of how to do this in<br>
+the documentation I have looked at, so I attempted to follow the settings reported in the Jenkins<br>
+nightly build logs, which seem to use --maxheap 20G.  I put the following in ~/.isabelle/etc/settings:</p>
+<p>ML_PLATFORM="x86_64-linux"<br>
+ML_SYSTEM="polyml-5.8.2"<br>
+ML_OPTIONS="-H 4000 --maxheap 20G"</p>
+<p>However, when I start Isabelle/JEdit I get the message shown below.  How can I get around this?<br>
+Thanks for any help.</p>
+<p>-- Gene Stark</p>
+<p>Value of --maxheap option must not exceeed 16Gbytes<br>
+-H &lt;Initial heap size (MB)&gt;<br>
+--minheap &lt;Minimum heap size (MB)&gt;<br>
+--maxheap &lt;Maximum heap size (MB)&gt;<br>
+--gcpercent &lt;Target percentage time in GC (1-99)&gt;<br>
+--stackspace &lt;Space to reserve for thread stacks and C++ heap(MB)&gt;<br>
+--gcthreads &lt;Number of threads to use for garbage collection&gt;<br>
+--debug &lt;Debug options: checkmem, gc, x&gt;<br>
+--logfile &lt;Logging file (default is to log to stdout)&gt;<br>
+--exportstats &lt;Enable another process to read the statistics&gt;<br>
+Debug options:<br>
+checkmem &lt;Perform additional debugging checks on memory&gt;<br>
+gc &lt;Log summary garbage-collector information&gt;<br>
+gcenhanced &lt;Log enhanced garbage-collector information&gt;<br>
+gcdetail &lt;Log detailed garbage-collector information&gt;<br>
+memmgr &lt;Memory manager information&gt;<br>
+threads &lt;Thread related information&gt;<br>
+gctasks &lt;Log multi-thread GC information&gt;<br>
+heapsize &lt;Log heap resizing data&gt;<br>
+x &lt;Log X-windows information&gt;<br>
+sharing &lt;Information from PolyML.shareCommonData&gt;<br>
+locks &lt;Information about contended locks&gt;<br>
+rts &lt;General run-time system calls&gt;<br>
+saving &lt;Saving and loading state; exporting&gt;<br>
+HOL CANCELLED<br>
+Unfinished session(s): HOL, Pure<br>
+Return code: 1</p>
+<p>Session build failed -- prover process remains inactive!</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

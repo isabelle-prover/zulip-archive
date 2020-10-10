@@ -1,0 +1,77 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/96863isabelleImprovementsuggestionforisabelleprocess.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96863isabelleImprovementsuggestionforisabelleprocess.html">[isabelle] Improvement suggestion for isabelle process</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="212906593"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Improvement%20suggestion%20for%20isabelle%20process/near/212906593" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96863isabelleImprovementsuggestionforisabelleprocess.html#212906593">Email Gateway (Oct 10 2020 at 09:03)</a>:</h4>
+<p>From: "Devant, Pascal" &lt;<a href="mailto:pascal.devant@rwth-aachen.de">pascal.devant@rwth-aachen.de</a>&gt;<br>
+Lately I have been working on a script that automatically runs sledgehammer on unproven lemmas in a given theory. The subcommand 'isabelle process' seemed to be sufficient for this purpose. And this is true if the only goal is to find proofs. However, when it comes to evaluating search times you quickly run into a problem with this approach because 'isabelle process' only returns the output of the underlaying poly process after its' termination.</p>
+<p>This "output-after-termination" behaviour has two unpleasant effects:</p>
+<ol>
+<li>There is no way to measure the actual search time of specific provers.</li>
+<li>A prover might find a proof fairly quick (e.g. after a few seconds) but the user will only get to see the proof ones all other provers have terminated. Since for most non-trivial lemmas there is almost always a prover that will run into a timeout. Hence the whole process is blocked for the set sledgehammer timeout.</li>
+</ol>
+<p>After some code inspection, I backtracked the described behaviour to the scala definition of 'result' in "Pure/System/bash.scala". In this definition Isabelle is waiting synchronously for the termination of the poly process by waiting for the result of "File.read_lines".</p>
+<p>To "solve" this behaviour I extended the given "Process" class in bash.scala by a modifed version of the existing "result()" method that reads the output stream of poly line by line and immediately redirects it to the console. After creating this method all that was left to do is using this method instead of "result()" in "ml_process.scala"<br>
+My modifed version of the result method it attached below. It's most likly not a clean implementation since this is my first scala code but it works. (And this is what matters, I guess)</p>
+<p>Is there a special resason why this whole procedure is not made async in the current implementation of Isabelle?<br>
+Is there a chance that isabelle process will redirect the output of poly async in future versions of Isabelle, so I don't need to use my own "patched" version?</p>
+<p>Thanks for reading!</p>
+<p>Best regards,<br>
+Pascal</p>
+<p>def logAsyncAndWaitForExit(<br>
+      progress_stdout: String =&gt; Unit = (_: String) =&gt; (),<br>
+      progress_stderr: String =&gt; Unit = (_: String) =&gt; (),<br>
+      progress_limit: Option[Long] = None,<br>
+      strict: Boolean = true): Process_Result =<br>
+    {<br>
+      stdin.close</p>
+<p>var out_lines = new ListBuffer[String]()<br>
+      Future.thread("async_stdout") {<br>
+        while(true)<br>
+        {<br>
+          val line = stdout.readLine()<br>
+          if (line != null)<br>
+          {<br>
+            Console.println(line)</p>
+<p>this.synchronized {<br>
+              out_lines += line<br>
+            }<br>
+          }<br>
+        }<br>
+      }</p>
+<p>var err_lines = new ListBuffer[String]()<br>
+      Future.thread("async_stderr") {<br>
+        while(true)<br>
+        {<br>
+          val line = stdout.readLine()<br>
+          if (line != null)<br>
+          {<br>
+            Console.println(line)</p>
+<p>this.synchronized {<br>
+              err_lines += line<br>
+            }<br>
+          }<br>
+        }<br>
+      }</p>
+<p>val rc =<br>
+        try { join }<br>
+        catch { case Exn.Interrupt() =&gt; terminate(); Exn.Interrupt.return_code }<br>
+      if (strict &amp;&amp; rc == Exn.Interrupt.return_code) throw Exn.Interrupt()</p>
+<p>Process_Result(rc, out_lines.toList, err_lines.toList, false, get_timing)<br>
+    }</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

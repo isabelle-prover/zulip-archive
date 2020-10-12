@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Undergraduate mathematics in Isabelle](10484UndergraduatemathematicsinIsabelle.html) (1 message, latest: Oct 12 2020 at 08:08)
+
 * [Continuous integration](65308Continuousintegration.html) (61 messages, latest: Sep 21 2020 at 04:48)
 
 * [Visual Studio Code Remote + Isabelle](79328VisualStudioCodeRemoteIsabelle.html) (6 messages, latest: Aug 16 2020 at 12:08)

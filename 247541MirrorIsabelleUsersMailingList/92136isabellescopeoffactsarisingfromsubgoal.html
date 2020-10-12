@@ -1,0 +1,37 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/92136isabellescopeoffactsarisingfromsubgoal.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/92136isabellescopeoffactsarisingfromsubgoal.html">[isabelle] scope of facts arising from `subgoal`</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="213088181"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20scope%20of%20facts%20arising%20from%20%60subgoal%60/near/213088181" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/92136isabellescopeoffactsarisingfromsubgoal.html#213088181">Email Gateway (Oct 12 2020 at 21:27)</a>:</h4>
+<p>From: Peter Gammie &lt;<a href="mailto:peteg42@gmail.com">peteg42@gmail.com</a>&gt;<br>
+Hi,</p>
+<p>I’m a bit surprised that the cartouches don’t seem to know about facts arising from the <code>subgoal</code> construct. Here’s an example:</p>
+<p>lemma "mono id"<br>
+apply (rule monoI)<br>
+subgoal for x y<br>
+using arg_cong[OF ‹x ≤ y›]</p>
+<p>Using a recent (unmentionable on this mailing list) version of Isabelle, I get:</p>
+<p>Failed to retrieve literal fact⌂:<br>
+x ≤ y</p>
+<p>The motivation for this is that a tool I’m using wants to have such facts passed in explicitly, i.e. it wants</p>
+<p>apply (method ‹x ≤ y›)</p>
+<p>I think this is the right UI for it; like <code>subst</code> it is a precise and low-level method, and so shouldn’t pick up arbitrary hypotheses from the goal or other contexts.</p>
+<p>Can we change the behavior of <code>subgoal</code> or log this behavior somewhere?</p>
+<p>cheers,<br>
+peter</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

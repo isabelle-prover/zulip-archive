@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] scope of facts arising from `subgoal`](92136isabellescopeoffactsarisingfromsubgoal.html) (1 message, latest: Oct 12 2020 at 21:27)
+
 * [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (2 messages, latest: Oct 10 2020 at 16:57)
 
 * [\[isabelle\] Improvement suggestion for isabelle process](96863isabelleImprovementsuggestionforisabelleprocess.html) (1 message, latest: Oct 10 2020 at 09:03)

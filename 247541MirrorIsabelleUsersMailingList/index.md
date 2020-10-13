@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Sledgehammer proof reconstruction failed](45365isabelleSledgehammerproofreconstructionfailed.html) (1 message, latest: Oct 13 2020 at 18:34)
+
 * [\[isabelle\] scope of facts arising from `subgoal`](92136isabellescopeoffactsarisingfromsubgoal.html) (2 messages, latest: Oct 13 2020 at 05:35)
 
 * [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (2 messages, latest: Oct 10 2020 at 16:57)

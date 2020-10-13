@@ -31,6 +31,19 @@ x ≤ y</p>
 <p>cheers,<br>
 peter</p>
 
+<a name="213113752"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20scope%20of%20facts%20arising%20from%20%60subgoal%60/near/213113752" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/92136isabellescopeoffactsarisingfromsubgoal.html#213113752">Email Gateway (Oct 13 2020 at 05:35)</a>:</h4>
+<p>From: Andreas Lochbihler &lt;<a href="mailto:mail@andreas-lochbihler.de">mail@andreas-lochbihler.de</a>&gt;<br>
+Hi Peter,</p>
+<p><code>subgoal for x y</code> only brings the universal quantifiers into the context, but it leaves <br>
+the premises in the goal state. Therefore, they're not available as facts to be referenced <br>
+from Isar. However, if you use <code>subgoal premises prems for x y</code> then all premises of the <br>
+goal state are assumed and you can retrieve them with cartouches. Accordingly, they <br>
+disappear from the goal state. If you still need them for your method calls to be there, <br>
+you can re-insert them with <code>using prems</code> as usual.</p>
+<p>Best,<br>
+Andreas</p>
+
 
 {% endraw %}
 

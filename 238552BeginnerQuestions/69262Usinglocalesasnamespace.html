@@ -97,6 +97,40 @@ thm H
 end
 </code></pre></div>
 
+<a name="213277915"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20locales%20as%20%22namespace%22%3F/near/213277915" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69262Usinglocalesasnamespace.html#213277915">Max Kirchmeier (Oct 14 2020 at 12:02)</a>:</h4>
+<p>Ah no, I'm not wrapping the <code>interpretation</code> in a locale:</p>
+<div class="codehilite"><pre><span></span><code>locale Id =
+  fixes t :: &#39;a
+begin
+definition id&#39; :: &quot;&#39;a ⇒ &#39;a&quot; where &quot;id&#39; ≡ id&quot;
+
+lemma id&#39;: &quot;id&#39; x = x&quot; unfolding id&#39;_def by simp
+end
+
+interpretation IdInt : Id &quot;0::int&quot;
+  done
+
+print_statement IdInt.id&#39;
+</code></pre></div>
+
+<a name="213277967"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20locales%20as%20%22namespace%22%3F/near/213277967" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69262Usinglocalesasnamespace.html#213277967">maximilian p.l. haslbeck (Oct 14 2020 at 12:03)</a>:</h4>
+<p>there is <code>global_interpretation</code></p>
+
+<a name="213278310"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20locales%20as%20%22namespace%22%3F/near/213278310" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69262Usinglocalesasnamespace.html#213278310">Max Kirchmeier (Oct 14 2020 at 12:06)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233151">maximilian p.l. haslbeck</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Using.20locales.20as.20.22namespace.22.3F/near/213277967">said</a>:</p>
+<blockquote>
+<p>there is <code>global_interpretation</code></p>
+</blockquote>
+<p>Yep, although <code>interpretation</code> seems to work the same when used at theory-level:</p>
+<blockquote>
+<p>When used on the level of a global theory, there is no end of a<br>
+current context block, hence interpretation behaves identically to<br>
+global_interpretation then.</p>
+</blockquote>
+
 
 {% endraw %}
 

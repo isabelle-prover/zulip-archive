@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Registering not available](55259isabelledevRegisteringnotavailable.html) (3 messages, latest: Oct 14 2020 at 12:44)
+* [\[isabelle-dev\] Registering not available](55259isabelledevRegisteringnotavailable.html) (4 messages, latest: Oct 14 2020 at 13:29)
 
 * [\[isabelle-dev\] NEWS: Consolidated terminology and functio...](94148isabelledevNEWSConsolidatedterminologyandfunctio.html) (1 message, latest: Oct 12 2020 at 17:46)
 

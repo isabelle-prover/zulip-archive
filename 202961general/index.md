@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Undergraduate mathematics in Isabelle](10484UndergraduatemathematicsinIsabelle.html) (16 messages, latest: Oct 13 2020 at 19:28)
+* [Undergraduate mathematics in Isabelle](10484UndergraduatemathematicsinIsabelle.html) (17 messages, latest: Oct 14 2020 at 08:49)
 
 * [Continuous integration](65308Continuousintegration.html) (61 messages, latest: Sep 21 2020 at 04:48)
 

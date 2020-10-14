@@ -1,0 +1,44 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/74319isabellelistallvssetmembership.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/74319isabellelistallvssetmembership.html">[isabelle] list_all vs set membership</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="213356084"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20list_all%20vs%20set%20membership/near/213356084" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/74319isabellelistallvssetmembership.html#213356084">Email Gateway (Oct 14 2020 at 22:04)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+Hello,</p>
+<p>many theorems in Main express a condition on all elements of a list with<br>
+"⋀x. x ∈ set xs ⟹ P x". However, one could also say that with<br>
+"list_all P xs". I am quite surprised that there is no lemma allowing to<br>
+freely convert between the two (or, at least, I couldn't find it).</p>
+<p>I'd therefore like to suggest the following addition:</p>
+<p>lemma list_all_iff_forall_set [iff]:<br>
+  "list_all P xs ⟷ (∀x. x ∈ set xs ⟶ P x)"<br>
+  by (induction xs) auto</p>
+<p>Kind regards,<br>
+Jakub Kądziołka</p>
+
+<a name="213358400"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20list_all%20vs%20set%20membership/near/213358400" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/74319isabellelistallvssetmembership.html#213358400">Email Gateway (Oct 14 2020 at 22:32)</a>:</h4>
+<p>From: Andrei Popescu &lt;<a href="mailto:andrei.h.popescu@gmail.com">andrei.h.popescu@gmail.com</a>&gt;<br>
+Hi Jakub,</p>
+<p>The definition of list_all already expresses something very similar:</p>
+<p>lemma list_all_iff_forall_set [iff]:<br>
+  "list_all P xs ⟷ (∀x. x ∈ set xs ⟶ P x)"<br>
+unfolding list_all_def Ball_def ..</p>
+<p>Best wishes,<br>
+Andrei</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

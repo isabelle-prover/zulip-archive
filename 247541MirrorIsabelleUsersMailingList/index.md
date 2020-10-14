@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (2 messages, latest: Oct 14 2020 at 22:32)
+
 * [\[isabelle\] Sledgehammer proof reconstruction failed](45365isabelleSledgehammerproofreconstructionfailed.html) (1 message, latest: Oct 13 2020 at 18:34)
 
 * [\[isabelle\] scope of facts arising from `subgoal`](92136isabellescopeoffactsarisingfromsubgoal.html) (2 messages, latest: Oct 13 2020 at 05:35)

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (2 messages, latest: Oct 14 2020 at 22:32)
+* [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (3 messages, latest: Oct 15 2020 at 07:59)
 
 * [\[isabelle\] Sledgehammer proof reconstruction failed](45365isabelleSledgehammerproofreconstructionfailed.html) (1 message, latest: Oct 13 2020 at 18:34)
 

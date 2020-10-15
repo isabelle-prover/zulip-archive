@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Degree of an almost everywhere constant function](35856isabelleDegreeofanalmosteverywhereconstantfunction.html) (2 messages, latest: Oct 15 2020 at 14:47)
+
 * [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (4 messages, latest: Oct 15 2020 at 08:20)
 
 * [\[isabelle\] Sledgehammer proof reconstruction failed](45365isabelleSledgehammerproofreconstructionfailed.html) (1 message, latest: Oct 13 2020 at 18:34)

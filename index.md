@@ -12,7 +12,7 @@ permalink: ./index.html
 
 * [general](202961general/index.html) (70 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (31 topics)
+* [Beginner Questions](238552BeginnerQuestions/index.html) (32 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 

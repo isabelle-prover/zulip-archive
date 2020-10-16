@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Proof methods for software verification](11824Proofmethodsforsoftwareverification.html) (11 messages, latest: Oct 16 2020 at 10:44)
+
 * [Using locales as "namespace"?](69262Usinglocalesasnamespace.html) (14 messages, latest: Oct 14 2020 at 12:06)
 
 * [For beginners: A review article on Isabelle](42228ForbeginnersAreviewarticleonIsabelle.html) (1 message, latest: Oct 13 2020 at 07:34)

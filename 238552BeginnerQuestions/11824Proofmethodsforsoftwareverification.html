@@ -1,0 +1,204 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html">Proof methods for software verification</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="213541471"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213541471" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213541471">Trinh Le Khanh (Oct 16 2020 at 10:15)</a>:</h4>
+<p>Hello everyone,</p>
+<p>I'm working in the field of software verification and try to use Isabelle to prove the equivalence between two formulas. I tried three lemmas and have some questions as follows:</p>
+<ol>
+<li>
+<p>lemma test1: "(P 0 ⟶ ~P 1) ∧ (P 1 ⟶ ~P 0)  ⟹ ~P 0∨~P 1"<br>
+  apply(auto)<br>
+  done<br>
+It worked perfectly as I want.</p>
+</li>
+<li>
+<p>lemma test2: "(P 0 --&gt; (~P 1 &amp; ~P 2)) &amp; (P 1 --&gt; (~P 0 &amp; ~P 2)) &amp; (P 2 --&gt; (~P 1 &amp; ~P 0))<br>
+==&gt; ((~P 1 &amp; ~P 2) | (~P 0 &amp; ~P 2) | (~P 1 &amp; ~P 0))"<br>
+  apply(auto)<br>
+  done<br>
+When I added one more predicate "P 2", it run until out of memory. I don't think that the lemma is big enough unprovable like this.</p>
+</li>
+<li>
+<p>lemma test3: "⋀i∈I.(P i ⟶ (⋀j∈I-{i}. ¬P j)) ⟹ ⋁i∈I.(⋀j∈I-{i}. ¬P j)"<br>
+  apply (auto)<br>
+  done<br>
+I tested a generic case and the Isabelle showed that "Failed to apply proof method". I tried to add "apply (induction)" and the result is "Failed to finish proof". So I guess the problem is about applying the right proof method, right? Then, I tried some other like "simp" or "rules" but they didn't work.</p>
+</li>
+</ol>
+<p>P.s: the symbol "bigvee" and "bigwedge" are redefined as follows (<span class="user-mention" data-user-id="233198">@Mathias Fleury</span> re-defined it)<br>
+<a href="/user_uploads/14278/iyqQNX41jywBf1-1f7f3p5N0/Screenshot-2020-10-16-at-12.13.52.png">Screenshot-2020-10-16-at-12.13.52.png</a> <br>
+Could you explain those questions, please? Thank you very much.</p>
+<div class="message_inline_image"><a href="/user_uploads/14278/iyqQNX41jywBf1-1f7f3p5N0/Screenshot-2020-10-16-at-12.13.52.png" title="Screenshot-2020-10-16-at-12.13.52.png"><img src="/user_uploads/14278/iyqQNX41jywBf1-1f7f3p5N0/Screenshot-2020-10-16-at-12.13.52.png"></a></div>
+
+<a name="213542523"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213542523" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213542523">Manuel Eberl (Oct 16 2020 at 10:29)</a>:</h4>
+<p>As for 2, <code>auto</code> is not always the best way to go. In this particular case, it seems that the simplifier loops (no idea why). More specialised methods for logic/set theory like <code>blast</code> and <code>metis</code> and <code>smt</code> solve this almost instantly. There are also more obscure ones (<code>argo</code>, <code>sat</code>, <code>satx</code>) that do a good job here.</p>
+<p>As for the bigvee thing, please post the actual source could and not just a screenshot. It's a lot of text to copy from a screenshot by hand. I don't really understand what the advantage of <code>bigvee</code> and <code>bigwedge</code> are over <code>Bex</code> and <code>Ball</code>, i.e. <code>∃x∈A. P x</code> instead of <code>⋁x∈A. P x</code>.</p>
+
+<a name="213542782"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213542782" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213542782">Lukas Stevens (Oct 16 2020 at 10:32)</a>:</h4>
+<p>Zulip uses markdown as markup so you can use triple backticks for code like this:</p>
+<div class="codehilite"><pre><span></span><code>f x = x
+</code></pre></div>
+
+<a name="213542802"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213542802" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213542802">Manuel Eberl (Oct 16 2020 at 10:33)</a>:</h4>
+<p>Also, I don't think 3 holds if <code>I</code> is the empty set. The following can easily be proven by blast:</p>
+<div class="codehilite"><pre><span></span><code>∀i∈I. P i ⟶ (∀j∈I-{i}. ¬P j) ⟹ I ≠ {} ⟹ ∃i∈I. ∀j∈I-{i}. ¬P j
+</code></pre></div>
+
+<a name="213542837"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213542837" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213542837">Trinh Le Khanh (Oct 16 2020 at 10:33)</a>:</h4>
+<p>This is the source code:</p>
+<div class="codehilite"><pre><span></span><code>theory test1
+imports Main
+begin
+
+context comm_monoid_add (*commutative monoid with addition*)
+begin
+sublocale bigvee: comm_monoid_set HOL.disj False
+  defines bigvee = bigvee.F and bigvee&#39; = bigvee.G
+  by standard auto
+
+abbreviation bigvee&#39;&#39; :: ‹bool set ⇒ bool› (&quot;⋁&quot;)
+  where &quot;⋁ ≡ bigvee (λx. x)&quot;
+
+sublocale bigwedge: comm_monoid_set HOL.conj True
+  defines bigwedge = bigwedge.F and bigwedge&#39; = bigwedge.G
+  by standard auto
+
+abbreviation bigwedge&#39;&#39; :: ‹bool set ⇒ bool› (&quot;⋀&quot;)
+  where &quot;⋀ ≡ bigwedge (λx. x)&quot;
+
+end
+syntax (*Define pattern of bigwedge and bigvee*)
+  &quot;_bigwedge&quot; :: &quot;pttrn ⇒ &#39;a set ⇒ &#39;b ⇒ &#39;b::comm_monoid_add&quot;  (&quot;(2⋀(_/∈_)./ _)&quot; [0, 51, 10] 10)
+translations ― ‹Beware of argument permutation!›
+  &quot;⋀i∈A. b&quot; ⇌ &quot;CONST bigwedge (λi. b) A&quot;
+
+syntax
+  &quot;_bigvee&quot; :: &quot;pttrn ⇒ &#39;a set ⇒ &#39;b ⇒ &#39;b::comm_monoid_add&quot;  (&quot;(2⋁(_/∈_)./ _)&quot; [0, 51, 10] 10)
+translations ― ‹Beware of argument permutation!› (*translation between parse rules or print rules*)
+  &quot;⋁i∈A. b&quot; ⇌ &quot;CONST bigvee (λi. b) A&quot;
+(*CONST ensures that the given identifier is treated as constant term*)
+
+instantiation bool :: comm_monoid_add
+begin
+definition zero_bool where
+[simp]: ‹zero_bool = False›
+definition plus_bool where
+[simp]: ‹plus_bool = (∨)›
+instance
+  by standard auto
+end
+thm bigvee_def
+thm bigwedge_def
+
+(*meaningful name*)
+definition J :: &quot;nat set&quot; where
+&quot;J = {n . n &gt; 0}&quot;
+definition U :: &quot;nat set&quot; where
+&quot;U = {n . n &gt; 0}&quot;
+definition T :: &quot;nat set&quot; where
+&quot;T = {n . n &gt; 0}&quot;
+definition I :: &quot;nat set&quot; where
+&quot;I = {n . n &gt; 0}&quot;
+definition V :: &quot;nat set&quot; where
+&quot;V = {n . n &gt; 0}&quot;
+definition K :: &quot;nat set&quot; where
+&quot;K = {n . n &gt; 0}&quot;
+definition H :: &quot;nat set&quot; where
+&quot;H = {n . n &gt; 0}&quot;
+definition L :: &quot;nat set&quot; where
+&quot;L = {n . n &gt; 0}&quot;
+definition B :: &quot;nat set&quot; where
+  &quot;B = {1, 2, 3, 4}&quot;
+
+lemma ‹finite A ⟹ (⋁i∈A. f i) ⟷ (∃i ∈ A. f i)›
+  apply (induction rule: finite_induct)
+  apply (auto simp: )
+  done
+
+lemma ‹finite A ⟹ (⋀i∈A. f i) ⟷ A = {} ∨ (∀i ∈ A. f i)›
+  apply (induction rule: finite_induct)
+  apply (auto simp: )
+  done
+
+lemma ‹infinite A ⟹ (⋀i∈A. f i) ⟷ True›
+  by auto
+
+lemma test0:
+  ‹(⋀j∈J. ⋀u∈U. ⋀t∈T. ⋀l∈L. ⋀l⇩1∈L-{l}. ¬P j u t l⇩1) ∨
+   (⋁i∈I. ⋁v∈V. ⋀k∈K. ⋁h∈H. Q i v k h) ⟹
+   (⋁i∈I. ⋁v∈V. ⋀k∈K. ⋁h∈H. Q i v k h) ∨ (⋀j∈J. ⋀u∈U. ⋀t∈T. ⋀l⇩1∈-{l}. ¬P j u t l⇩1)›
+  apply auto
+  done
+
+lemma &quot;∀ x. P x ⟶ P x&quot;
+apply (auto)
+  done
+
+lemma test1: &quot;(P 0 ⟶ ~P 1) ∧ (P 1 ⟶ ~P 0)  ⟹ ~P 0∨~P 1&quot;
+  apply(auto)
+  done
+
+(*
+lemma test2: &quot;(P 0 --&gt; (~P 1 &amp; ~P 2)) &amp; (P 1 --&gt; (~P 0 &amp; ~P 2)) &amp; (P 2 --&gt; (~P 1 &amp; ~P 0))
+==&gt; ((~P 1 &amp; ~P 2) | (~P 0 &amp; ~P 2) | (~P 1 &amp; ~P 0))&quot;
+  apply(auto)
+  done *)
+
+lemma test3: &quot;⋀i∈I.(P i ⟶ (⋀j∈I-{i}. ¬P j)) ⟹ ⋁i∈I.(⋀j∈I-{i}. ¬P j)&quot;
+  apply (induction)
+  apply (auto)
+  done
+</code></pre></div>
+
+<a name="213542930"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213542930" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213542930">Manuel Eberl (Oct 16 2020 at 10:34)</a>:</h4>
+<p>If you want to do induction, you should specify what you want to do induction over.</p>
+
+<a name="213543007"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213543007" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213543007">Trinh Le Khanh (Oct 16 2020 at 10:35)</a>:</h4>
+<p>I defined the set B with 4 elements and used it but the 3rd lemma returned the same result.</p>
+
+<a name="213543248"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213543248" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213543248">Manuel Eberl (Oct 16 2020 at 10:38)</a>:</h4>
+<p>Also note that <code>bigwedge</code> over an infinite set is always true and <code>bigvee</code> over an infinite set is always false. So 3 is trivially false because <code>I</code> is infinite.</p>
+
+<a name="213543280"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213543280" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213543280">Manuel Eberl (Oct 16 2020 at 10:38)</a>:</h4>
+<p>I think you really want to use <code>∀x∈I</code> etc.</p>
+
+<a name="213543307"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213543307" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213543307">Manuel Eberl (Oct 16 2020 at 10:39)</a>:</h4>
+<p>then you don't need induction either, it's straightforward set theory and <code>blast</code> can do it (as long as you feed in the fact that <code>I ≠ {}</code>).</p>
+
+<a name="213543730"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213543730" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213543730">Trinh Le Khanh (Oct 16 2020 at 10:44)</a>:</h4>
+<p>So if I have </p>
+<div class="codehilite"><pre><span></span><code>I = {1, 2, 3, 4}
+</code></pre></div>
+
+
+<p>I can use this directly, right?</p>
+<div class="codehilite"><pre><span></span><code>∀i∈I.⋀P i = P 1 ∧ P 2 ∧ P 3 ∧ P 4
+∀i∈I.⋁P i = P 1 ∨ P 2 ∨ P 3 ∨ P 4
+</code></pre></div>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

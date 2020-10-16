@@ -264,6 +264,57 @@ lemma test3: &quot;∀i∈I. P i ⟶ (∀j∈I-{i}. ¬P j) ⟹ ∃i∈I. ∀j∈
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213549978" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213549978">Trinh Le Khanh (Oct 16 2020 at 11:58)</a>:</h4>
 <p>Wow, that's awesome. Thank you very much.</p>
 
+<a name="213551883"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213551883" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213551883">Manuel Eberl (Oct 16 2020 at 12:17)</a>:</h4>
+<p>If you want to learn Isabelle systematically, I suggest you work through the first half of the ‘Concrete Semantics’ books. It's online for free: <a href="http://www.concrete-semantics.org/">http://www.concrete-semantics.org/</a></p>
+
+<a name="213552579"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213552579" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213552579">Trinh Le Khanh (Oct 16 2020 at 12:24)</a>:</h4>
+<p>Thank you for your suggestion. After putting my lemma and choosing to prove them using <code>metis</code>, the <code>metis</code> is highlighted in purple (and my computer's fans are running so hard). Do you know the meaning of this color? (I just know that red for error). <a href="/user_uploads/14278/us188qQszth-oJMFItzzS055/Screenshot-2020-10-16-at-14.19.08.png">Screenshot-2020-10-16-at-14.19.08.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/us188qQszth-oJMFItzzS055/Screenshot-2020-10-16-at-14.19.08.png" title="Screenshot-2020-10-16-at-14.19.08.png"><img src="/user_uploads/14278/us188qQszth-oJMFItzzS055/Screenshot-2020-10-16-at-14.19.08.png"></a></div>
+
+<a name="213553445"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213553445" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213553445">Manuel Eberl (Oct 16 2020 at 12:32)</a>:</h4>
+<p>It means that the command is still running. Metis might not be good enough to do something this big. Other methods might be. If you paste the full example in here, I can have a look at it.</p>
+
+<a name="213553768"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213553768" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213553768">Trinh Le Khanh (Oct 16 2020 at 12:36)</a>:</h4>
+<p>Here you are. I tried blast first but it couldn't prove. Thus, I changed to metis.</p>
+<div class="codehilite"><pre><span></span><code>theory MyMaths
+  imports Main
+begin
+definition xor :: &quot;bool ⇒ bool ⇒ bool&quot; where
+&quot;xor A B ≡ (A &amp; ~B) | (~A &amp; B)&quot;
+
+definition J :: &quot;nat set&quot; where
+&quot;J = {n . n &gt; 0}&quot;
+definition U :: &quot;nat set&quot; where
+&quot;U = {n . n &gt; 0}&quot;
+definition T :: &quot;nat set&quot; where
+&quot;T = {n . n &gt; 0}&quot;
+definition I :: &quot;nat set&quot; where
+&quot;I = {n . n &gt; 0}&quot;
+definition V :: &quot;nat set&quot; where
+&quot;V = {n . n &gt; 0}&quot;
+definition K :: &quot;nat set&quot; where
+&quot;K = {n . n &gt; 0}&quot;
+definition H :: &quot;nat set&quot; where
+&quot;H = {n . n &gt; 0}&quot;
+definition L :: &quot;nat set&quot; where
+&quot;L = {n . n &gt; 0}&quot;
+
+
+lemma &quot;((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∨ (∃h∈H.∃i∈I.∃v∈V.∀k∈K. (Q i v k h ∧ (∀h⇩1∈H-{h}. ¬Q i v k h⇩1))))
+∧ (∃l∈L.∃h∈H.((∀j∈J.∀u∈U.∀t∈T.∀l⇩1∈L-{l}. ¬P j u t l⇩1) ∧ (∃i∈I.∃v∈V.∀k∈K.∀h⇩1∈H-{h}. ¬Q i v k h⇩1)))
+⟹ (∃h∈H.((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∧ (∀i∈I.∀v∈V.∀k∈K.∀h⇩1∈H-{h}.¬Q i v k h⇩1)))
+∨ (∃l∈L.∃h∈H.(∀j∈J.∀u∈U.∀t∈T.∀l⇩1∈L-{l}. ¬P j u t l⇩1) ∧ (∃i∈I.∃v∈V.∀k∈K.(Q i v k h ∧ (∀h⇩1∈H-{h}. ¬Q i v k h⇩1))))&quot;
+  unfolding I_def and V_def and K_def and H_def and J_def and U_def and T_def and L_def
+  using [[simp_trace]]
+  by metis
+
+end
+</code></pre></div>
+
 
 {% endraw %}
 

@@ -1,0 +1,80 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/82499isabelleWeaklemmasinHOLAnalysisAffine.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82499isabelleWeaklemmasinHOLAnalysisAffine.html">[isabelle] Weak lemmas in HOL-Analysis.Affine</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="213565663"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Weak%20lemmas%20in%20HOL-Analysis.Affine/near/213565663" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82499isabelleWeaklemmasinHOLAnalysisAffine.html#213565663">Email Gateway (Oct 16 2020 at 14:17)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+Dear Isabelle maintainers,</p>
+<p>(which mailinglist should this go on? I'm not sure)</p>
+<p>I have encountered some weak theorems in HOL-Analysis.Affine, where a<br>
+type is constrained to an euclidean space while any real vector space<br>
+suffices. Please consider the following diff.</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+<p>@@ -1008,7 +1008,7 @@<br>
+   using affine_hull_span_gen[of "0" S] assms by auto</p>
+<p>lemma extend_to_affine_basis_nonempty:</p>
+<ul>
+<li>fixes S V :: "'n::euclidean_space set"</li>
+<li>fixes S V :: "'n::real_vector set"<br>
+   assumes "\&lt;not&gt; affine_dependent S" "S \&lt;subseteq&gt; V" "S \&lt;noteq&gt; {}"<br>
+   shows "\&lt;exists&gt;T. \&lt;not&gt; affine_dependent T \&lt;and&gt; S \&lt;subseteq&gt; T \&lt;and&gt; T \&lt;subseteq&gt; V \&lt;and&gt; affine hull T = affine hull V"<br>
+ proof -<br>
+@@ -1044,7 +1044,7 @@<br>
+ qed</li>
+</ul>
+<p>lemma affine_basis_exists:</p>
+<ul>
+<li>fixes V :: "'n::euclidean_space set"</li>
+<li>fixes V :: "'n::real_vector set"<br>
+   shows "\&lt;exists&gt;B. B \&lt;subseteq&gt; V \&lt;and&gt; \&lt;not&gt; affine_dependent B \&lt;and&gt; affine hull V = affine hull B"<br>
+ proof (cases "V = {}")<br>
+   case True<br>
+@@ -1059,7 +1059,7 @@<br>
+ qed</li>
+</ul>
+<p>proposition extend_to_affine_basis:</p>
+<ul>
+<li>fixes S V :: "'n::euclidean_space set"</li>
+<li>fixes S V :: "'n::real_vector set"<br>
+   assumes "\&lt;not&gt; affine_dependent S" "S \&lt;subseteq&gt; V"<br>
+   obtains T where "\&lt;not&gt; affine_dependent T" "S \&lt;subseteq&gt; T" "T \&lt;subseteq&gt; V" "affine hull T = affine hull V"<br>
+ proof (cases "S = {}")<br>
+@@ -1073,13 +1073,13 @@</li>
+</ul>
+<p>subsection \&lt;open&gt;Affine Dimension of a Set\&lt;close&gt;</p>
+<p>-definition\&lt;^marker&gt;\&lt;open&gt;tag important\&lt;close&gt; aff_dim :: "('a::euclidean_space) set \&lt;Rightarrow&gt; int"<br>
++definition\&lt;^marker&gt;\&lt;open&gt;tag important\&lt;close&gt; aff_dim :: "('a::real_vector) set \&lt;Rightarrow&gt; int"<br>
+   where "aff_dim V =<br>
+   (SOME d :: int.<br>
+     \&lt;exists&gt;B. affine hull B = affine hull V \&lt;and&gt; \&lt;not&gt; affine_dependent B \&lt;and&gt; of_nat (card B) = d + 1)"</p>
+<p>lemma aff_dim_basis_exists:</p>
+<ul>
+<li>fixes V :: "('n::euclidean_space) set"</li>
+<li>fixes V :: "('n::real_vector) set"<br>
+   shows "\&lt;exists&gt;B. affine hull B = affine hull V \&lt;and&gt; \&lt;not&gt; affine_dependent B \&lt;and&gt; of_nat (card B) = aff_dim V + 1"<br>
+ proof -<br>
+   obtain B where "\&lt;not&gt; affine_dependent B \&lt;and&gt; affine hull B = affine hull V"</li>
+</ul>
+
+<a name="213567603"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Weak%20lemmas%20in%20HOL-Analysis.Affine/near/213567603" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/82499isabelleWeaklemmasinHOLAnalysisAffine.html#213567603">Email Gateway (Oct 16 2020 at 14:31)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+I will take a look. Many thanks indeed for these! There must be hundreds more, so we need to keep looking.</p>
+<p>Larry</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

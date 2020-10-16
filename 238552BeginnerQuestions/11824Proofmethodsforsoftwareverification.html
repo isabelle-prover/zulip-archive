@@ -315,6 +315,104 @@ lemma &quot;((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∨ (∃h∈H.�
 end
 </code></pre></div>
 
+<a name="213565052"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213565052" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213565052">Manuel Eberl (Oct 16 2020 at 14:12)</a>:</h4>
+<p>Okay, now you're back to infinite sets again. That means things like SAT solvers cannot be used. The definitions of your sets don't really make the problem any easier either, so I don't think unfolding helps.</p>
+
+<a name="213565580"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213565580" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213565580">Manuel Eberl (Oct 16 2020 at 14:16)</a>:</h4>
+<p>Normally, I would say to tackle something like this with an SMT solver like Z3 or CVC4, but it seems this is too difficult for them.</p>
+
+<a name="213565622"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213565622" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213565622">Manuel Eberl (Oct 16 2020 at 14:16)</a>:</h4>
+<p>(then again, I am not sure if this holds in the first place)</p>
+
+<a name="213567250"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213567250" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213567250">Manuel Eberl (Oct 16 2020 at 14:28)</a>:</h4>
+<p>For two particular values of <code>P</code> and <code>Q</code>, I was able to prove the negation of your goal, so apparently it doesn't hold:</p>
+<div class="codehilite"><pre><span></span><code>definition &quot;P = (λa b c d. False)&quot;
+definition &quot;Q = (λa b c d. a ≠ 1 ∧ (b = 1 ∧ c = 1 ∧ d = 1 ∨ b ≠ 1 ∧ c = 1 ∧ d ≠ 1))&quot;
+
+lemma &quot;¬(((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∨ (∃h∈H.∃i∈I.∃v∈V.∀k∈K. (Q i v k h ∧ (∀h⇩1∈H-{h}. ¬Q i v k h⇩1))))
+∧ (∃l∈L.∃h∈H.((∀j∈J.∀u∈U.∀t∈T.∀l⇩1∈L-{l}. ¬P j u t l⇩1) ∧ (∃i∈I.∃v∈V.∀k∈K.∀h⇩1∈H-{h}. ¬Q i v k h⇩1)))
+⟶ (∃h∈H.((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∧ (∀i∈I.∀v∈V.∀k∈K.∀h⇩1∈H-{h}.¬Q i v k h⇩1)))
+∨ (∃l∈L.∃h∈H.(∀j∈J.∀u∈U.∀t∈T.∀l⇩1∈L-{l}. ¬P j u t l⇩1) ∧ (∃i∈I.∃v∈V.∀k∈K.(Q i v k h ∧ (∀h⇩1∈H-{h}. ¬Q i v k h⇩1)))))&quot;
+  unfolding I_def and V_def and K_def and H_def and J_def and U_def and T_def and L_def P_def Q_def
+  apply auto
+  apply (rule exI[of _ 2])
+  apply auto
+  subgoal for h
+    apply (rule bexI[of _ &quot;h + 2&quot;])
+     apply auto
+    done
+</code></pre></div>
+
+
+<p>The proof isn't pretty, but it gets the point across. I found that particular counterexample for <code>P</code> and <code>Q</code> using the <code>nitpick</code> command.</p>
+
+<a name="213569596"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213569596" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213569596">Trinh Le Khanh (Oct 16 2020 at 14:44)</a>:</h4>
+<p>I might make something wrong when typing the formulas. I'll check it again.<br>
+To make sure that they're not infinite sets. I re-defined as follows (each set has 99 elements): </p>
+<div class="codehilite"><pre><span></span><code>definition J :: &quot;nat set&quot; where
+&quot;J = {n . n &lt; 100}&quot;
+definition U :: &quot;nat set&quot; where
+&quot;U = {n . n &lt; 100}&quot;
+definition T :: &quot;nat set&quot; where
+&quot;T = {n . n &lt; 100}&quot;
+definition I :: &quot;nat set&quot; where
+&quot;I = {n . n &lt; 100}&quot;
+definition V :: &quot;nat set&quot; where
+&quot;V = {n . n &lt; 100}&quot;
+definition K :: &quot;nat set&quot; where
+&quot;K = {n . n &lt; 100}&quot;
+definition H :: &quot;nat set&quot; where
+&quot;H = {n . n &lt; 100}&quot;
+definition L :: &quot;nat set&quot; where
+&quot;L = {n . n &lt; 100}&quot;
+</code></pre></div>
+
+<a name="213570600"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213570600" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213570600">Manuel Eberl (Oct 16 2020 at 14:51)</a>:</h4>
+<p>Nope.</p>
+<div class="codehilite"><pre><span></span><code>definition J :: &quot;nat set&quot; where
+&quot;J = {n . n &lt; 100}&quot;
+definition U :: &quot;nat set&quot; where
+&quot;U = {n . n &lt; 100}&quot;
+definition T :: &quot;nat set&quot; where
+&quot;T = {n . n &lt; 100}&quot;
+definition I :: &quot;nat set&quot; where
+&quot;I = {n . n &lt; 100}&quot;
+definition V :: &quot;nat set&quot; where
+&quot;V = {n . n &lt; 100}&quot;
+definition K :: &quot;nat set&quot; where
+&quot;K = {n . n &lt; 100}&quot;
+definition H :: &quot;nat set&quot; where
+&quot;H = {n . n &lt; 100}&quot;
+definition L :: &quot;nat set&quot; where
+&quot;L = {n . n &lt; 100}&quot;
+
+definition &quot;P = (λa b c d. False)&quot;
+definition &quot;Q = (λa b c d. a ≠ 1 ∧ (b = 1 ∧ c = 1 ∧ d = 1 ∨ b ≠ 1 ∧ c = 1 ∧ d ≠ 1))&quot;
+
+lemma *: &quot;(∃x∈A - B. R x) ⟷ (∃x. x ∈ A ∧ x ∉ B ∧ R x)&quot;
+         &quot;(∀x∈A - B. R x) ⟷ (∀x. x ∉ A ∨ x ∈ B ∨ R x)&quot;
+  by auto
+
+lemma &quot;¬(((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∨ (∃h∈H.∃i∈I.∃v∈V.∀k∈K. (Q i v k h ∧ (∀h⇩1∈H-{h}. ¬Q i v k h⇩1))))
+∧ (∃l∈L.∃h∈H.((∀j∈J.∀u∈U.∀t∈T.∀l⇩1∈L-{l}. ¬P j u t l⇩1) ∧ (∃i∈I.∃v∈V.∀k∈K.∀h⇩1∈H-{h}. ¬Q i v k h⇩1)))
+⟶ (∃h∈H.((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∧ (∀i∈I.∀v∈V.∀k∈K.∀h⇩1∈H-{h}.¬Q i v k h⇩1)))
+∨ (∃l∈L.∃h∈H.(∀j∈J.∀u∈U.∀t∈T.∀l⇩1∈L-{l}. ¬P j u t l⇩1) ∧ (∃i∈I.∃v∈V.∀k∈K.(Q i v k h ∧ (∀h⇩1∈H-{h}. ¬Q i v k h⇩1)))))&quot;
+  unfolding I_def and V_def and K_def and H_def and J_def and U_def and T_def and L_def P_def Q_def
+  apply (auto simp: *)
+     apply presburger+
+  done
+</code></pre></div>
+
+<a name="213570755"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213570755" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213570755">Manuel Eberl (Oct 16 2020 at 14:52)</a>:</h4>
+<p>(<code>presburger</code> is a decision procedure for Presburger logic, i.e. linear arithmetic on integers plus quantifiers. It has pretty terrible performance, but in this case, it works pretty well.)</p>
+
 
 {% endraw %}
 

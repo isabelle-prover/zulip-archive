@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] LuaLaTeX compatibility improvements in AFP](67831isabelledevLuaLaTeXcompatibilityimprovementsinAFP.html) (5 messages, latest: Oct 16 2020 at 13:57)
+
 * [\[isabelle-dev\] Benchmark suite for Isabelle's `rewrite` t...](27325isabelledevBenchmarksuiteforIsabellesrewritet.html) (2 messages, latest: Oct 15 2020 at 11:28)
 
 * [\[isabelle-dev\] Registering not available](55259isabelledevRegisteringnotavailable.html) (4 messages, latest: Oct 14 2020 at 13:29)
@@ -16,8 +18,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] NEWS: Consolidated terminology and functio...](94148isabelledevNEWSConsolidatedterminologyandfunctio.html) (1 message, latest: Oct 12 2020 at 17:46)
 
 * [\[isabelle-dev\] Word sessions and theories](30383isabelledevWordsessionsandtheories.html) (4 messages, latest: Oct 09 2020 at 11:47)
-
-* [\[isabelle-dev\] LuaLaTeX compatibility improvements in AFP](67831isabelledevLuaLaTeXcompatibilityimprovementsinAFP.html) (4 messages, latest: Oct 08 2020 at 19:36)
 
 * [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (3 messages, latest: Oct 04 2020 at 19:16)
 

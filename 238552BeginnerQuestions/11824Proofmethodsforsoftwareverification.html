@@ -413,6 +413,41 @@ lemma &quot;¬(((∀l∈L.∀j∈J.∀u∈U.∀t∈T. ¬P j u t l) ∨ (∃h∈H
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213570755" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213570755">Manuel Eberl (Oct 16 2020 at 14:52)</a>:</h4>
 <p>(<code>presburger</code> is a decision procedure for Presburger logic, i.e. linear arithmetic on integers plus quantifiers. It has pretty terrible performance, but in this case, it works pretty well.)</p>
 
+<a name="213572904"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213572904" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213572904">Trinh Le Khanh (Oct 16 2020 at 15:10)</a>:</h4>
+<p>Can you explain why did you define P and Q like this?</p>
+<div class="codehilite"><pre><span></span><code>definition &quot;P = (λa b c d. False)&quot;
+definition &quot;Q = (λa b c d. a ≠ 1 ∧ (b = 1 ∧ c = 1 ∧ d = 1 ∨ b ≠ 1 ∧ c = 1 ∧ d ≠ 1))&quot;
+</code></pre></div>
+
+<a name="213573004"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213573004" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213573004">Manuel Eberl (Oct 16 2020 at 15:10)</a>:</h4>
+<p>Because it leads to a counterexample?</p>
+
+<a name="213573063"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213573063" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213573063">Manuel Eberl (Oct 16 2020 at 15:11)</a>:</h4>
+<p>The way you stated your lemma, <code>P</code> and <code>Q</code> were free variables, i.e. you claimed that it holds for all values of <code>P</code> and <code>Q</code>. I showed that there are two particular values for which it does not hold.</p>
+
+<a name="213573346"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213573346" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213573346">Trinh Le Khanh (Oct 16 2020 at 15:12)</a>:</h4>
+<p>But when you applied presburger+, it's solved, right?</p>
+
+<a name="213573726"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213573726" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213573726">Trinh Le Khanh (Oct 16 2020 at 15:14)</a>:</h4>
+<p>Ah, when I remove your definition of P and Q, it's unsolvable.</p>
+
+<a name="213573754"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213573754" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213573754">Manuel Eberl (Oct 16 2020 at 15:14)</a>:</h4>
+<p>I proved the <em>negation</em> of your lemma.</p>
+
+<a name="213573881"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213573881" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213573881">Manuel Eberl (Oct 16 2020 at 15:15)</a>:</h4>
+<p>If we call the statement of your lemma <code>foo(P,Q)</code>, you essentially claimed <code>∀P Q. foo(P,Q)</code>. I showed <code>∃P Q. ¬foo(P,Q)</code>.</p>
+
+<a name="213574033"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213574033" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213574033">Trinh Le Khanh (Oct 16 2020 at 15:16)</a>:</h4>
+<p>Yes, I see. So the problem is the correctness of my lemma, not the definition.</p>
+
 
 {% endraw %}
 

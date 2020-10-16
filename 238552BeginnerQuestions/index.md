@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Proof methods for software verification](11824Proofmethodsforsoftwareverification.html) (11 messages, latest: Oct 16 2020 at 10:44)
+* [Proof methods for software verification](11824Proofmethodsforsoftwareverification.html) (16 messages, latest: Oct 16 2020 at 11:58)
 
 * [Using locales as "namespace"?](69262Usinglocalesasnamespace.html) (14 messages, latest: Oct 14 2020 at 12:06)
 

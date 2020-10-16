@@ -198,6 +198,72 @@ lemma test3: &quot;⋀i∈I.(P i ⟶ (⋀j∈I-{i}. ¬P j)) ⟹ ⋁i∈I.(⋀j�
 ∀i∈I.⋁P i = P 1 ∨ P 2 ∨ P 3 ∨ P 4
 </code></pre></div>
 
+<a name="213545444"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213545444" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213545444">Manuel Eberl (Oct 16 2020 at 11:05)</a>:</h4>
+<p>You probably mean</p>
+<div class="codehilite"><pre><span></span><code>(∀i∈I. P i) = P 1 ∧ P 2 ∧ P 3 ∧ P 4
+(∃i∈I. P i) = P 1 ∨ P 2 ∨ P 3 ∨ P 4
+</code></pre></div>
+
+
+<p>right?</p>
+<p>In that case: Yes. You just have to unfold the definition of <code>I</code> and then it simplifies to that.</p>
+
+<a name="213546533"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213546533" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213546533">Trinh Le Khanh (Oct 16 2020 at 11:18)</a>:</h4>
+<p>(deleted)</p>
+
+<a name="213547617"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213547617" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213547617">Trinh Le Khanh (Oct 16 2020 at 11:31)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Proof.20methods.20for.20software.20verification/near/213542802">said</a>:</p>
+<blockquote>
+<p>Also, I don't think 3 holds if <code>I</code> is the empty set. The following can easily be proven by blast:</p>
+<div class="codehilite"><pre><span></span><code>∀i∈I. P i ⟶ (∀j∈I-{i}. ¬P j) ⟹ I ≠ {} ⟹ ∃i∈I. ∀j∈I-{i}. ¬P j
+</code></pre></div>
+
+
+</blockquote>
+<p>Thank you. I tried this with <code>blast</code> and it worked.<br>
+I also tried that:</p>
+<ol>
+<li>I define set I = {1, 2, 3, 4}</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>definition I :: &quot;nat set&quot; where
+  &quot;I = {1, 2, 3, 4}&quot;
+</code></pre></div>
+
+
+<ol start="2">
+<li>Then,  I write the lemma but remove the part <code>I ≠ {} </code></li>
+</ol>
+<div class="codehilite"><pre><span></span><code>lemma test3: &quot;∀i∈I. P i ⟶ (∀j∈I-{i}. ¬P j) ⟹ ∃i∈I. ∀j∈I-{i}. ¬P j&quot;
+  apply (blast)
+  done
+</code></pre></div>
+
+
+<p>It's failed to prove. So <code>I ≠ {} </code>seems mandatory despite we define set I or not, right?</p>
+
+<a name="213548994"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213548994" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213548994">Manuel Eberl (Oct 16 2020 at 11:47)</a>:</h4>
+<p><code>blast</code> doesn't know how you defined the set.  You can e.g. unfold the definition like this:</p>
+<div class="codehilite"><pre><span></span><code>lemma test3: &quot;∀i∈I. P i ⟶ (∀j∈I-{i}. ¬P j) ⟹ ∃i∈I. ∀j∈I-{i}. ¬P j&quot;
+  unfolding I_def by blast
+</code></pre></div>
+
+
+<p>Or you can prove that <code>I</code> is nonempty first and then supply that fact to blast:</p>
+<div class="codehilite"><pre><span></span><code>lemma I_not_empty: &quot;I ≠ {}&quot;
+  by (auto simp: I_def)
+
+lemma test3: &quot;∀i∈I. P i ⟶ (∀j∈I-{i}. ¬P j) ⟹ ∃i∈I. ∀j∈I-{i}. ¬P j&quot;
+  using I_not_empty by blast
+</code></pre></div>
+
+<a name="213549978"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213549978" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213549978">Trinh Le Khanh (Oct 16 2020 at 11:58)</a>:</h4>
+<p>Wow, that's awesome. Thank you very much.</p>
+
 
 {% endraw %}
 

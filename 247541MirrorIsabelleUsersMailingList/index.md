@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] scope of facts arising from `subgoal`](92136isabellescopeoffactsarisingfromsubgoal.html) (3 messages, latest: Oct 17 2020 at 22:19)
+
 * [\[isabelle\] Weak lemmas in HOL-Analysis.Affine](82499isabelleWeaklemmasinHOLAnalysisAffine.html) (6 messages, latest: Oct 17 2020 at 13:29)
 
 * [\[isabelle\] Benchmark suite for Isabelle's `rewrite` tactic](55115isabelleBenchmarksuiteforIsabellesrewritetactic.html) (1 message, latest: Oct 16 2020 at 08:46)
@@ -20,8 +22,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (4 messages, latest: Oct 15 2020 at 08:20)
 
 * [\[isabelle\] Sledgehammer proof reconstruction failed](45365isabelleSledgehammerproofreconstructionfailed.html) (1 message, latest: Oct 13 2020 at 18:34)
-
-* [\[isabelle\] scope of facts arising from `subgoal`](92136isabellescopeoffactsarisingfromsubgoal.html) (2 messages, latest: Oct 13 2020 at 05:35)
 
 * [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (2 messages, latest: Oct 10 2020 at 16:57)
 

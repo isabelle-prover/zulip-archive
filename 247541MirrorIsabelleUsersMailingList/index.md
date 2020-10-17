@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Weak lemmas in HOL-Analysis.Affine](82499isabelleWeaklemmasinHOLAnalysisAffine.html) (2 messages, latest: Oct 16 2020 at 14:31)
+* [\[isabelle\] Weak lemmas in HOL-Analysis.Affine](82499isabelleWeaklemmasinHOLAnalysisAffine.html) (3 messages, latest: Oct 17 2020 at 10:22)
 
 * [\[isabelle\] Benchmark suite for Isabelle's `rewrite` tactic](55115isabelleBenchmarksuiteforIsabellesrewritetactic.html) (1 message, latest: Oct 16 2020 at 08:46)
 

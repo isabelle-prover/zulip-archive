@@ -155,6 +155,49 @@ my proposal would be:</p>
     Florian<br>
 <a href="/user_uploads/14278/h-bg70Ijv-Wp9K5AIdedYArT/signature.asc">signature.asc</a></p>
 
+<a name="213730020"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Word%20sessions%20and%20theories/near/213730020" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/30383isabelledevWordsessionsandtheories.html#213730020">Email Gateway (Oct 18 2020 at 22:44)</a>:</h4>
+<p>From: "Klein, Gerwin (Data61, Kensington NSW)" &lt;<a href="mailto:Gerwin.Klein@data61.csiro.au">Gerwin.Klein@data61.csiro.au</a>&gt;</p>
+<blockquote>
+<p>On 18 Oct 2020, at 03:35, Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt; wrote:</p>
+<blockquote>
+<p>I’m happy to add a bit of material and design rationale to the document for parts of Word_Lib that seem unclear. Is there a repo I should contribute to?</p>
+</blockquote>
+<p>I forgot to answer: Guide.thy resides just in the regular AFP<br>
+development repository, session Word_Lib.</p>
+</blockquote>
+<p>Thanks, I should have another look at it this week. (Sorry for the slowness, my employer has found it opportune to majorly distract me from proof work these past months)</p>
+<blockquote>
+<blockquote>
+<p>There are a few bits I disagree with, though, in particular the desire to replace operations like lsb, msb, etc with existing operations. That would be counter productive. If they can be made abbreviations on the word type, that is fine, and should probably be done, but the names are important. Programmers know what “lsb" ist, but will have to really think about this being equivalent to “odd”. If you’re writing theorem statements or specifications that other people need to be able to understand, familiarity is important.</p>
+<p>Minor points: the tagging for word types with signedness (or not) is useful in program verification where you sometimes want to track what the compiler understands the type to be, so that you can later pick corresponding transformations based on that understanding. It doesn’t have any relevance to theorems you’d prove manually.</p>
+<p>Misc_Typedef: not sure it deserves the attribute “invasive”. I haven’t checked how it has developed, but it used to be a simple constant definition. I remember Jeremy introducing it to get simpler isomorphism results or something along that line. If it is not necessary any more, it’d be perfectly fine to eliminate.</p>
+<p>Reversed_Bit_Lists: they are rarely used for algebraic properties, but they are useful for more complex append and slicing operations as you sometimes find in hardware specs. In general, I wouldn’t make too many comments on use in the overview. Takes too long to explain and is very dependent on application.</p>
+</blockquote>
+<p>I updated the guide with recent feedback.</p>
+</blockquote>
+<p>Cool, thanks.</p>
+<blockquote>
+<p>What seems worth further discussion is the lsb / msb issue.  Since there<br>
+are strong arguments / desires to keep them in the long run, currently<br>
+my proposal would be:</p>
+<ul>
+<li>
+<p>Restrict lsb and msb to word type.</p>
+</li>
+<li>
+<p>lsb as regular abbreviation for odd.</p>
+</li>
+<li>
+<p>msb as dedicated operation.</p>
+</li>
+</ul>
+</blockquote>
+<p>I’d be happy with that, yes.</p>
+<p>Cheers,<br>
+Gerwin<br>
+<a href="/user_uploads/14278/qahUIyGWrlDBW0ZeZrbKJBF3/signature.asc">signature.asc</a></p>
+
 
 {% endraw %}
 

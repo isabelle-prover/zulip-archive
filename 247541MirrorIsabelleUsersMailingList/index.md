@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] make Isabelle accessible?](54630isabellemakeIsabelleaccessible.html) (1 message, latest: Oct 19 2020 at 08:28)
+
 * [\[isabelle\] Survey Paper](40320isabelleSurveyPaper.html) (1 message, latest: Oct 19 2020 at 05:56)
 
 * [\[isabelle\] Error in Eisbach syntax diagram](06502isabelleErrorinEisbachsyntaxdiagram.html) (2 messages, latest: Oct 19 2020 at 00:57)

@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] \[Spam\]  NEWS: update of external provers](74898isabelledevSpamNEWSupdateofexternalprovers.html) (1 message, latest: Oct 19 2020 at 16:26)
+
 * [\[isabelle-dev\] NEWS: update of external provers](02153isabelledevNEWSupdateofexternalprovers.html) (3 messages, latest: Oct 19 2020 at 15:50)
 
 * [\[isabelle-dev\] NEWS: Consolidated terminology and functio...](94148isabelledevNEWSConsolidatedterminologyandfunctio.html) (2 messages, latest: Oct 19 2020 at 15:36)

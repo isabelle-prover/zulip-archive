@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Error in Eisbach syntax diagram](06502isabelleErrorinEisbachsyntaxdiagram.html) (2 messages, latest: Oct 19 2020 at 00:57)
+
 * [\[isabelle\] scope of facts arising from `subgoal`](92136isabellescopeoffactsarisingfromsubgoal.html) (3 messages, latest: Oct 17 2020 at 22:19)
 
 * [\[isabelle\] Weak lemmas in HOL-Analysis.Affine](82499isabelleWeaklemmasinHOLAnalysisAffine.html) (6 messages, latest: Oct 17 2020 at 13:29)
@@ -36,8 +38,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Duplicate algebra tactic](34939isabelleDuplicatealgebratactic.html) (1 message, latest: Oct 07 2020 at 14:13)
 
 * [\[isabelle\] Questions on locales - structure keyword and l...](74033isabelleQuestionsonlocalesstructurekeywordandl.html) (1 message, latest: Oct 07 2020 at 09:00)
-
-* [\[isabelle\] Error in Eisbach syntax diagram](06502isabelleErrorinEisbachsyntaxdiagram.html) (1 message, latest: Oct 06 2020 at 21:27)
 
 * [\[isabelle\] Unnecessary assumption in HOL-Analysis.Convex....](89313isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:21)
 

@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] \[Isabelle-ci\] Build failure in AFP](46878isabelledevIsabelleciBuildfailureinAFP.html) (5 messages, latest: Oct 20 2020 at 10:55)
+* [\[isabelle-dev\] \[Isabelle-ci\] Build failure in AFP](46878isabelledevIsabelleciBuildfailureinAFP.html) (6 messages, latest: Oct 20 2020 at 11:03)
 
 * [\[isabelle-dev\] \[Spam\]  NEWS: update of external provers](74898isabelledevSpamNEWSupdateofexternalprovers.html) (2 messages, latest: Oct 20 2020 at 10:47)
 

@@ -552,6 +552,26 @@ end
   done
 </code></pre></div>
 
+<a name="213894182"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213894182" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213894182">Trinh Le Khanh (Oct 20 2020 at 09:29)</a>:</h4>
+<blockquote>
+<p>I think that you are confusing \forall \exists∀∃ and \exists\forall∃∀. You version is equivalent to putting the \exists∃ inside the implication symbol</p>
+</blockquote>
+<p>Thank you. I know that but this is a small piece of my code. I need something like</p>
+<div class="codehilite"><pre><span></span><code>((P 0 0 0 0 ⟶ Q 0 0 0 0 ∨ Q 1 0 0 0) ∧ ¬(all the others))
+∨ ((P 0 0 0 0 ⟶ Q 0 0 0 1 ∨ Q 1 0 0 1) ∧ ¬(all the others))
+∨ ((P 0 0 0 0 ⟶ Q 0 0 0 0 ∨ Q 1 0 0 1) ∧ ¬(all the others))
+∨ ((P 0 0 0 0 ⟶ Q 0 0 0 1 ∨ Q 1 0 0 0) ∧ ¬(all the others))
+</code></pre></div>
+
+
+<p>So if I put the \exists inside, it looks like:</p>
+<div class="codehilite"><pre><span></span><code>((P 0 0 0 0 ⟶ (Q 0 0 0 0 ∨ Q 1 0 0 0) ∨ Q 0 0 0 1 ∨ Q 1 0 0 1) ∧ ¬(all the others))
+</code></pre></div>
+
+
+<p>The two things are different.</p>
+
 
 {% endraw %}
 

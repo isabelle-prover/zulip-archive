@@ -9,7 +9,9 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] \[Spam\]  NEWS: update of external provers](74898isabelledevSpamNEWSupdateofexternalprovers.html) (1 message, latest: Oct 19 2020 at 16:26)
+* [\[isabelle-dev\] \[Isabelle-ci\] Build failure in AFP](46878isabelledevIsabelleciBuildfailureinAFP.html) (5 messages, latest: Oct 20 2020 at 10:55)
+
+* [\[isabelle-dev\] \[Spam\]  NEWS: update of external provers](74898isabelledevSpamNEWSupdateofexternalprovers.html) (2 messages, latest: Oct 20 2020 at 10:47)
 
 * [\[isabelle-dev\] NEWS: update of external provers](02153isabelledevNEWSupdateofexternalprovers.html) (3 messages, latest: Oct 19 2020 at 15:50)
 
@@ -38,8 +40,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] A suggestion: call eval with try0](86616isabelledevAsuggestioncallevalwithtry0.html) (6 messages, latest: Aug 17 2020 at 17:28)
 
 * [\[isabelle-dev\] NEWS: Improved monitoring for Isabelle/ML ...](39299isabelledevNEWSImprovedmonitoringforIsabelleML.html) (1 message, latest: Aug 13 2020 at 17:15)
-
-* [\[isabelle-dev\] \[Isabelle-ci\] Build failure in AFP](46878isabelledevIsabelleciBuildfailureinAFP.html) (4 messages, latest: Aug 11 2020 at 19:54)
 
 * [\[isabelle-dev\] Debugging help: Hacking the kernel for pro...](35822isabelledevDebugginghelpHackingthekernelforpro.html) (6 messages, latest: Aug 08 2020 at 20:55)
 

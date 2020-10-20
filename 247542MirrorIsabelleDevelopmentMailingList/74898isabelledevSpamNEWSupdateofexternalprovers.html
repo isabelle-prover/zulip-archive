@@ -35,6 +35,19 @@ This sounds terrific. With smt at the moment being essentially forbidden anywher
 <a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
 <a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
 
+<a name="213926939"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20%5BSpam%5D%20%20NEWS%3A%20update%20of%20external%20provers/near/213926939" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/74898isabelledevSpamNEWSupdateofexternalprovers.html#213926939">Email Gateway (Oct 20 2020 at 14:27)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:j.c.blanchette@vu.nl">j.c.blanchette@vu.nl</a>&gt;<br>
+Let me clarify. veriT is still, just like Z3, an external tool. Whether proofs reconstructed using veriT (via the syntax "by (smt (verit) ...)") should be allowed in the distribution or not, and similarly in the AFP, is a political decision I cannot make. veriT has a much smaller and more stable code base and is developed by close colleagues in Liège and Nancy, but we might still prefer not to rely on it for the distribution. Or we might say that the presence of two solvers with the same input format (Z3 and veriT) confers a certain robustness, although this is not entirely true regarding quantifier instantiation.</p>
+<p>On the positive side, veriT outputs detailed proofs (like Z3 but unlike CVC4), which are parsed by Isabelle and yield these "semi-intelligible Isar monsters". Some users find that they can fish out useful bits from them, if not use them as is; others find them too broken or ugly. Improving the situation here is high on my agenda for Sledgehammer, because it's generally the key to proof reconstruction for stronger ATPs (e.g. HO).</p>
+<p>Finally, there has been a lot of work by the CVC4 developers lately on proof production. They conveniently adopted the veriT file format, which means we might have Isar proofs for them soon (finally), and perhaps even an integration in the smt method ("by (smt (cvc4) ...)").</p>
+<p>We'll try to remember to update the NEWS as we go. For the next release, just having properly tested up-to-date binaries of the latest and greatest ATPs would be a nice target.</p>
+<p>Jasmin</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
 
 {% endraw %}
 

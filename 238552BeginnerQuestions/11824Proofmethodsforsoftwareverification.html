@@ -531,6 +531,27 @@ end
 
 <p>I know that because I put <code>∃h∈H</code> out of the first open bracket, so the result has the same value at the <code>h</code> position. I tried to move <code>∃h∈H</code> inside or use another variable like h1 but the result is not what I expected. Do you have any suggestion?</p>
 
+<a name="213890001"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213890001" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213890001">Trinh Le Khanh (Oct 20 2020 at 08:46)</a>:</h4>
+<p>My solution is that I added the formula for the different <code>h</code> like this</p>
+<div class="codehilite"><pre><span></span><code>value &quot;∃l∈L.∃h∈H.(∀j∈J.∀u∈U.(∀t∈T. P j u t l ⟶ (∃i∈I.∃v∈V.∀k∈K.∃h1∈H-{h}. Q i v k h1))
+∨ (∀t∈T. P j u t l ⟶ (∃i∈I.∃v∈V.∀k∈K. Q i v k h)))&quot;
+</code></pre></div>
+
+
+<p>It works. It seems not the smart way, though.</p>
+
+<a name="213890989"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Proof%20methods%20for%20software%20verification/near/213890989" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/11824Proofmethodsforsoftwareverification.html#213890989">Mathias Fleury (Oct 20 2020 at 08:56)</a>:</h4>
+<p>I think that you are confusing <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∀</mi><mi mathvariant="normal">∃</mi></mrow><annotation encoding="application/x-tex">\forall \exists</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">∀</span><span class="mord">∃</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∃</mi><mi mathvariant="normal">∀</mi></mrow><annotation encoding="application/x-tex">\exists\forall</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">∃</span><span class="mord">∀</span></span></span></span>. You version is equivalent to putting the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∃</mi></mrow><annotation encoding="application/x-tex">\exists</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">∃</span></span></span></span> inside the implication symbol:</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;(∃l∈L. (∀j∈J. ∀u∈U. (∀t∈T. (P j u t l ⟶ (∃h∈H. ∃i∈I.∃v∈V.∀k∈K. Q i v k h))))) ⟷
+(∃l∈L.∃h∈H.(∀j∈J.∀u∈U.(∀t∈T. P j u t l ⟶ (∃i∈I.∃v∈V.∀k∈K.∃h1∈H-{h}. Q i v k h1))
+∨ (∀t∈T. P j u t l ⟶ (∃i∈I.∃v∈V.∀k∈K. Q i v k h))))&quot;
+  unfolding L_def I_def J_def V_def H_def T_def K_def
+  apply auto
+  done
+</code></pre></div>
+
 
 {% endraw %}
 

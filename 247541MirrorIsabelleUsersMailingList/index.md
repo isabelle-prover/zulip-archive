@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Survey Paper](40320isabelleSurveyPaper.html) (3 messages, latest: Oct 20 2020 at 12:34)
+* [\[isabelle\] Survey Paper](40320isabelleSurveyPaper.html) (4 messages, latest: Oct 20 2020 at 13:09)
 
 * [\[isabelle\] Research position in Formal Verification (m/f/...](26650isabelleResearchpositioninFormalVerificationmf.html) (1 message, latest: Oct 20 2020 at 12:08)
 

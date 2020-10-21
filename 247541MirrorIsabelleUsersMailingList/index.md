@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CADE-28: Call for Papers, Workshops,	Tutorials...](94152isabelleCADE28CallforPapersWorkshopsTutorials.html) (1 message, latest: Oct 21 2020 at 11:32)
+
 * [\[isabelle\] Survey Paper](40320isabelleSurveyPaper.html) (4 messages, latest: Oct 20 2020 at 13:09)
 
 * [\[isabelle\] Research position in Formal Verification (m/f/...](26650isabelleResearchpositioninFormalVerificationmf.html) (1 message, latest: Oct 20 2020 at 12:08)

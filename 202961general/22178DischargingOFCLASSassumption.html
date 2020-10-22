@@ -1,0 +1,31 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/22178DischargingOFCLASSassumption.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/22178DischargingOFCLASSassumption.html">Discharging OFCLASS assumption</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="214169145"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Discharging%20OFCLASS%20assumption/near/214169145" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/22178DischargingOFCLASSassumption.html#214169145">Lukas Stevens (Oct 22 2020 at 10:39)</a>:</h4>
+<p>Suppose I have a theorem <code>OFCLASS(?'a::order, preorder_class) ⟹ (?y::?'a::order) ≤ (?z::?'a::order) ⟹ ?y ≤ ?z</code>. Using Isabelle/ML, how can I obtain the theorem <code>(?y::?'a::order) ≤ (?z::?'a::order) ⟹ ?y ≤ ?z</code>?</p>
+
+<a name="214170227"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Discharging%20OFCLASS%20assumption/near/214170227" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/22178DischargingOFCLASSassumption.html#214170227">Lukas Stevens (Oct 22 2020 at 10:51)</a>:</h4>
+<p>Ok, if the former theorem is bound to <code>thm</code> then I can do:</p>
+<div class="codehilite"><pre><span></span><code>thm OF [@{lemma ‹OFCLASS(&#39;a::order, preorder_class)› by intro_classes}]
+</code></pre></div>
+
+
+<p>But what If I don't know how x and y in <code>OFCLASS(x, y)</code> look like?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

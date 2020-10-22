@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Discharging OFCLASS assumption](22178DischargingOFCLASSassumption.html) (2 messages, latest: Oct 22 2020 at 10:51)
+
 * [proofterm.ML](19462prooftermML.html) (1 message, latest: Oct 22 2020 at 08:42)
 
 * [Undergraduate mathematics in Isabelle](10484UndergraduatemathematicsinIsabelle.html) (17 messages, latest: Oct 14 2020 at 08:49)

@@ -25,6 +25,14 @@ permalink: ./202961general/22178DischargingOFCLASSassumption.html
 
 <p>But what If I don't know how x and y in <code>OFCLASS(x, y)</code> look like?</p>
 
+<a name="214184979"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Discharging%20OFCLASS%20assumption/near/214184979" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/22178DischargingOFCLASSassumption.html#214184979">Lukas Stevens (Oct 22 2020 at 13:16)</a>:</h4>
+<p>The solution I found is the following:</p>
+<div class="codehilite"><pre><span></span><code>val thm = ...
+val assm = Goal.prove @{context} [] [] (hd (Thm.prems_of thm1)) (K (Class.intro_classes_tac @{context} []))
+val thm&#39; = thm OF [assm]
+</code></pre></div>
+
 
 {% endraw %}
 

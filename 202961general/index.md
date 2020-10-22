@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Discharging OFCLASS assumption](22178DischargingOFCLASSassumption.html) (2 messages, latest: Oct 22 2020 at 10:51)
+* [Discharging OFCLASS assumption](22178DischargingOFCLASSassumption.html) (3 messages, latest: Oct 22 2020 at 13:16)
 
 * [proofterm.ML](19462prooftermML.html) (1 message, latest: Oct 22 2020 at 08:42)
 

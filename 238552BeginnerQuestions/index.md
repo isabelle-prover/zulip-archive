@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (5 messages, latest: Oct 22 2020 at 09:52)
+
 * [Proof methods for software verification](11824Proofmethodsforsoftwareverification.html) (44 messages, latest: Oct 20 2020 at 09:29)
 
 * [Using locales as "namespace"?](69262Usinglocalesasnamespace.html) (14 messages, latest: Oct 14 2020 at 12:06)

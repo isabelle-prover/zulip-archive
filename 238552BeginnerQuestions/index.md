@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [plugins for a faster editing](70900pluginsforafasterediting.html) (2 messages, latest: Oct 23 2020 at 04:48)
+* [plugins for a faster editing](70900pluginsforafasterediting.html) (12 messages, latest: Oct 23 2020 at 11:57)
 
 * [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (8 messages, latest: Oct 22 2020 at 22:33)
 

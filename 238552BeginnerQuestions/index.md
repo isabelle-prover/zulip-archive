@@ -9,9 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (8 messages, latest: Oct 22 2020 at 22:33)
+* [plugins for a faster editing](70900pluginsforafasterediting.html) (2 messages, latest: Oct 23 2020 at 04:48)
 
-* [plugins for a faster editing](70900pluginsforafasterediting.html) (1 message, latest: Oct 22 2020 at 20:15)
+* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (8 messages, latest: Oct 22 2020 at 22:33)
 
 * [Proof methods for software verification](11824Proofmethodsforsoftwareverification.html) (44 messages, latest: Oct 20 2020 at 09:29)
 

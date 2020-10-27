@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Document preparation: bad parent session](96692Documentpreparationbadparentsession.html) (1 message, latest: Oct 27 2020 at 01:06)
+
 * [plugins for a faster editing](70900pluginsforafasterediting.html) (20 messages, latest: Oct 26 2020 at 08:02)
 
 * [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (8 messages, latest: Oct 22 2020 at 22:33)

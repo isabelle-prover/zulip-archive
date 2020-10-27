@@ -31,6 +31,40 @@ permalink: ./238552BeginnerQuestions/96692Documentpreparationbadparentsession.ht
 
 <p>Even if I use HOL instead of the parent directory Jordan_Normal_Form and move it to sessions, I get a Bad imports session error.</p>
 
+<a name="214662973"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Document%20preparation%3A%20bad%20parent%20session/near/214662973" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96692Documentpreparationbadparentsession.html#214662973">Mathias Fleury (Oct 27 2020 at 05:37)</a>:</h4>
+<p>Can you check with <code>isabelle build -v -D . </code> that the AFP theories are really found? The verbose option<code>-v</code>  lists all sessions.</p>
+
+<a name="214663192"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Document%20preparation%3A%20bad%20parent%20session/near/214663192" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96692Documentpreparationbadparentsession.html#214663192">Mathias Fleury (Oct 27 2020 at 05:43)</a>:</h4>
+<p>In my case, I get</p>
+<div class="codehilite"><pre><span></span><code>$ isabelle build -v -D .
+Started at Tue Oct 27 06:41:42 GMT+1 2020 (polyml-5.8.1_x86_64_32-linux on archlinux)
+ISABELLE_BUILD_OPTIONS=&quot;&quot;
+
+ML_PLATFORM=&quot;x86_64_32-linux&quot;
+ML_HOME=&quot;/home/&lt;redacted_user_name&gt;/.isabelle/contrib/polyml-5.8.1-20200228/x86_64_32-linux&quot;
+ML_SYSTEM=&quot;polyml-5.8.1&quot;
+ML_OPTIONS=&quot;--minheap 500&quot;
+
+Session Pure/Pure
+Session FOL/FOL
+Session Tools/Tools
+Session HOL/HOL (main)
+Session HOL/HOL-Cardinals (timing)
+Session HOL/HOL-Library (main timing)
+Session AFP/Binomial-Heaps (AFP)
+Session AFP/Finger-Trees (AFP)
+...
+</code></pre></div>
+
+
+<p>showing that the AFP is found.</p>
+
+<a name="214663653"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Document%20preparation%3A%20bad%20parent%20session/near/214663653" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96692Documentpreparationbadparentsession.html#214663653">Mathias Fleury (Oct 27 2020 at 05:57)</a>:</h4>
+<p>The path <code>Isabelle_marries_Dirac</code> looks a bit suspicious too. The more standard Isabelle way is <code>Isabelle_Marries_Dirac</code> (this matters only if you file names are case-sensitive...)</p>
+
 
 {% endraw %}
 

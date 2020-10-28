@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Call for Workshop Proposals](75484isabelleFSCD2021CallforWorkshopProposals.html) (1 message, latest: Oct 28 2020 at 11:35)
+
+* [\[isabelle\] New in the AFP: A Sound Type System for Physic...](90431isabelleNewintheAFPASoundTypeSystemforPhysic.html) (1 message, latest: Oct 28 2020 at 11:29)
+
 * [\[isabelle\] writing a proof method after "qed"](10550isabellewritingaproofmethodafterqed.html) (4 messages, latest: Oct 28 2020 at 10:54)
 
 * [\[isabelle\] Second Call for Presentations: PriSC 2021 @ PO...](84241isabelleSecondCallforPresentationsPriSC2021PO.html) (1 message, latest: Oct 28 2020 at 09:23)

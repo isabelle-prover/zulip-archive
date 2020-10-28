@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] writing a proof method after "qed"](10550isabellewritingaproofmethodafterqed.html) (1 message, latest: Oct 28 2020 at 09:55)
+
+* [\[isabelle\] Second Call for Presentations: PriSC 2021 @ PO...](84241isabelleSecondCallforPresentationsPriSC2021PO.html) (1 message, latest: Oct 28 2020 at 09:23)
+
 * [\[isabelle\] Research position at fortiss, Munich](95435isabelleResearchpositionatfortissMunich.html) (1 message, latest: Oct 27 2020 at 09:31)
 
 * [\[isabelle\] Faculty position at Portland State University](81123isabelleFacultypositionatPortlandStateUniversity.html) (1 message, latest: Oct 26 2020 at 11:18)

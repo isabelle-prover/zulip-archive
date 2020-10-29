@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Document preparation: bad parent session](96692Documentpreparationbadparentsession.html) (4 messages, latest: Oct 27 2020 at 05:57)
+* [Document preparation: bad parent session](96692Documentpreparationbadparentsession.html) (5 messages, latest: Oct 29 2020 at 18:39)
 
 * [plugins for a faster editing](70900pluginsforafasterediting.html) (20 messages, latest: Oct 26 2020 at 08:02)
 

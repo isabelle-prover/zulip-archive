@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: update of external provers](02153isabelledevNEWSupdateofexternalprovers.html) (4 messages, latest: Oct 29 2020 at 16:51)
+
 * [\[isabelle-dev\] NEWS](90179isabelledevNEWS.html) (1 message, latest: Oct 29 2020 at 13:49)
 
 * [\[isabelle-dev\] Update to jdk-11.0.9+11 with arm64-linux](00297isabelledevUpdatetojdk110911witharm64linux.html) (1 message, latest: Oct 26 2020 at 20:58)
@@ -16,8 +18,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] \[Spam\]  NEWS: update of external provers](74898isabelledevSpamNEWSupdateofexternalprovers.html) (5 messages, latest: Oct 21 2020 at 04:48)
 
 * [\[isabelle-dev\] \[Isabelle-ci\] Build failure in AFP](46878isabelledevIsabelleciBuildfailureinAFP.html) (6 messages, latest: Oct 20 2020 at 11:03)
-
-* [\[isabelle-dev\] NEWS: update of external provers](02153isabelledevNEWSupdateofexternalprovers.html) (3 messages, latest: Oct 19 2020 at 15:50)
 
 * [\[isabelle-dev\] NEWS: Consolidated terminology and functio...](94148isabelledevNEWSConsolidatedterminologyandfunctio.html) (2 messages, latest: Oct 19 2020 at 15:36)
 

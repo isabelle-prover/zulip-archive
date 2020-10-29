@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Name clash in "let" definitions](61602isabelleNameclashinletdefinitions.html) (2 messages, latest: Oct 29 2020 at 09:50)
+
 * [\[isabelle\] FSCD 2021: Call for Workshop Proposals](75484isabelleFSCD2021CallforWorkshopProposals.html) (1 message, latest: Oct 28 2020 at 11:35)
 
 * [\[isabelle\] New in the AFP: A Sound Type System for Physic...](90431isabelleNewintheAFPASoundTypeSystemforPhysic.html) (1 message, latest: Oct 28 2020 at 11:29)

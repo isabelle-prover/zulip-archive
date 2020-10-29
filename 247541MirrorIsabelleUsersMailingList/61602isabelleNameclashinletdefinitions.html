@@ -1,0 +1,56 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/61602isabelleNameclashinletdefinitions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/61602isabelleNameclashinletdefinitions.html">[isabelle] Name clash in "let" definitions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="214943294"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Name%20clash%20in%20%22let%22%20definitions/near/214943294" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/61602isabelleNameclashinletdefinitions.html#214943294">Email Gateway (Oct 29 2020 at 09:31)</a>:</h4>
+<p>From: Martin Desharnais &lt;<a href="mailto:martin.desharnais@posteo.de">martin.desharnais@posteo.de</a>&gt;<br>
+Dear Isabelle developers,</p>
+<p>I just discovered what seems to be a name clash when using "let" <br>
+definitions in the following, minimized lemma.</p>
+<p>lemma<br>
+   fixes xs :: "('a × 'b) list" and P :: "'a × 'b ⇒ bool"<br>
+   shows False<br>
+proof -<br>
+   let ?x0 = "takeWhile P xs"<br>
+   let ?x = "map fst ?x0"<br>
+   let ?y = "map snd ?x0"<br>
+(*<br>
+Type unification failed</p>
+<p>Type error in application: incompatible operand type</p>
+<p>Operator:  map snd :: (??'a × ??'b) list ⇒ ??'b list<br>
+Operand:   ?x :: 'a list<br>
+*)<br>
+   oops</p>
+<p>The name ?x0 seems to be a synonym for ?x. My expectation was that ?x0 <br>
+and ?x would be two different names for different constants, with <br>
+possibly different types).</p>
+<p>I confirmed this behaviour with Isabelle/a9aaef9fcf86+ and Isabelle 2020.</p>
+<p>Regards,<br>
+Martin Desharnais</p>
+
+<a name="214945395"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Name%20clash%20in%20%22let%22%20definitions/near/214945395" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/61602isabelleNameclashinletdefinitions.html#214945395">Email Gateway (Oct 29 2020 at 09:50)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi Martin,</p>
+<p>This behaviour is documented and intended that way. From the Isar-ref<br>
+document, Section 3.2:</p>
+<p>» ?x and ?x0 and ?x.0 all refer to the same unknown, with basename x and<br>
+index 0.«</p>
+<p>Regards,<br>
+Mathias</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

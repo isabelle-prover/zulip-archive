@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Name clash in "let" definitions](61602isabelleNameclashinletdefinitions.html) (3 messages, latest: Oct 29 2020 at 10:19)
+* [\[isabelle\] Name clash in "let" definitions](61602isabelleNameclashinletdefinitions.html) (4 messages, latest: Oct 29 2020 at 11:02)
 
 * [\[isabelle\] FSCD 2021: Call for Workshop Proposals](75484isabelleFSCD2021CallforWorkshopProposals.html) (1 message, latest: Oct 28 2020 at 11:35)
 

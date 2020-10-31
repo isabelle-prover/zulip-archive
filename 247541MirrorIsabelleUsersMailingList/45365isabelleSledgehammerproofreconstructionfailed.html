@@ -35,6 +35,30 @@ end</p>
 <p>Regards,<br>
 Jakub Kądziołka</p>
 
+<a name="215181418"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sledgehammer%20proof%20reconstruction%20failed/near/215181418" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/45365isabelleSledgehammerproofreconstructionfailed.html#215181418">Email Gateway (Oct 31 2020 at 08:50)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi Jakub,</p>
+<p>I had a look at that and it is a bug in the proof produced by Z3.</p>
+<p>One proof step (modus ponens) is:</p>
+<p>1 &lt; n      real n + - 1 * real 1 ≤ 0 &lt;--&gt; 1 &lt; n<br>
+================================================ mp<br>
+         real n + - 1 * real 1 ≤ 0</p>
+<p>The problem is that the rule mp is specified to have the form:</p>
+<p>P      P&lt;--&gt;Q<br>
+============== mp<br>
+     Q</p>
+<p>However, in this proof step produced by Z3, the terms P and Q of the <br>
+equivalence are swapped. So, this is an issue in the proof.</p>
+<p>The bad news is: it makes no sense to report the issue, because our Z3 <br>
+version is too old -- and the proof format has changed compared to the <br>
+version that is currently used, so it is not only about updating the <br>
+binary shipped with Isabelle.</p>
+<p>The second bad news: using veriT (the new alternative backend for smt) <br>
+works but it takes 7s, so no chance here either...</p>
+<p>Thanks for reporting,</p>
+<p>Mathias</p>
+
 
 {% endraw %}
 

@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Towards localized syntax: bundle mixins fo...](39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html) (1 message, latest: Nov 01 2020 at 16:52)
+
 * [\[isabelle-dev\] NEWS: update of external provers](02153isabelledevNEWSupdateofexternalprovers.html) (4 messages, latest: Oct 29 2020 at 16:51)
 
 * [\[isabelle-dev\] NEWS](90179isabelledevNEWS.html) (1 message, latest: Oct 29 2020 at 13:49)

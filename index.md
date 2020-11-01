@@ -14,7 +14,7 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (35 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (26 topics)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (27 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 

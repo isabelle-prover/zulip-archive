@@ -1,0 +1,69 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247542MirrorIsabelleDevelopmentMailingList/39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/index.html">Mirror: Isabelle Development Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html">[isabelle-dev] Towards localized syntax: bundle mixins fo...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="215252113"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Towards%20localized%20syntax%3A%20bundle%20mixins%20fo.../near/215252113" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html#215252113">Email Gateway (Nov 01 2020 at 16:52)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Dear all,</p>
+<p>my recent re-working of parts of the local theory infrastructure has<br>
+inspired me to close a long-standing gap in our module system: the<br>
+ability to organize syntax declarations into bundles and use them in<br>
+confined nested blocks</p>
+<p>context<br>
+    includes bundles<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>so far did not extend to class and locale specifications, which by their<br>
+very nature are always given at the outermost specification layer.</p>
+<p>Taking the existing »includes« syntax as a base, the result looks as<br>
+follows:</p>
+<p>locale / class foo = import +<br>
+    includes bundles<br>
+    fixes …<br>
+    assumes …<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>The declarations from the given bundle(s) are active for the locale /<br>
+class specification itself and the optional following context block.</p>
+<p>For consistency, also the syntax for re-opening of named contexts is<br>
+extended:</p>
+<p>context foo<br>
+    includes bundles<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>This is effectively equal to</p>
+<p>context foo<br>
+  begin</p>
+<p>context<br>
+    includes bundles<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>end</p>
+<p>See src/HOL/ex/Specifications_with_bundle_mixins.thy for examples.</p>
+<p>This refers to rev. 589645894305.</p>
+<p>NEWS entries and documentation updates have still to be written, but I<br>
+want to discuss possible alternative syntactic notations in a separate<br>
+thread.</p>
+<p>Cheers,<br>
+    Florian<br>
+<a href="/user_uploads/14278/Tw9JKVIzwcFUUzX6TXAfyNTZ/signature.asc">signature.asc</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

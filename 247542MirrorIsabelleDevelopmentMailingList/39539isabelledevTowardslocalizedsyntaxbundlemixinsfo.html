@@ -63,6 +63,49 @@ thread.</p>
     Florian<br>
 <a href="/user_uploads/14278/Tw9JKVIzwcFUUzX6TXAfyNTZ/signature.asc">signature.asc</a></p>
 
+<a name="215252797"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Towards%20localized%20syntax%3A%20bundle%20mixins%20fo.../near/215252797" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html#215252797">Email Gateway (Nov 01 2020 at 17:09)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Dear all,</p>
+<p>currently the syntax for bundle mixins for locale / class specifications<br>
+looks as follows:</p>
+<p>locale / class foo = import +<br>
+    includes bundles<br>
+    fixes …<br>
+    assumes …<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>While this use of »includes« rests firmly on established traditions, it<br>
+is a little bit unsatisfactory since it also applies to the »import«<br>
+expression, but is notated <em>after</em> it.</p>
+<p>I had thought about something like</p>
+<p>context<br>
+    includes bundles<br>
+  begin</p>
+<p>locale foo = import +<br>
+    fixes …<br>
+    assumes …<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>end</p>
+<p>instead but this would require an artificial construction identifying<br>
+nested contexts as »morally being global« internally.</p>
+<p>A more inspiring solution could be to abandon the existing »includes«<br>
+syntax entirely and replace it by a specific toplevel construct, e.g.</p>
+<p>including bundles lemma foo: ‹…› if ‹…› for …</p>
+<p>including bundles context group<br>
+  begin</p>
+<p>…</p>
+<p>end</p>
+<p>including bundles locale bar = …</p>
+<p>This looks charming but the progressive participle is reserved for<br>
+proofs.  For the same reason »with« won't do.</p>
+<p>Cheers,<br>
+    Florian<br>
+<a href="/user_uploads/14278/BWIRjA0z7vREMvbAD7TRDAYI/signature.asc">signature.asc</a></p>
+
 
 {% endraw %}
 

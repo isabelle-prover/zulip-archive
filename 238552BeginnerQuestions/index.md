@@ -9,11 +9,11 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (10 messages, latest: Nov 01 2020 at 20:13)
+
 * [Document preparation: bad parent session](96692Documentpreparationbadparentsession.html) (5 messages, latest: Oct 29 2020 at 18:39)
 
 * [plugins for a faster editing](70900pluginsforafasterediting.html) (20 messages, latest: Oct 26 2020 at 08:02)
-
-* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (8 messages, latest: Oct 22 2020 at 22:33)
 
 * [Proof methods for software verification](11824Proofmethodsforsoftwareverification.html) (44 messages, latest: Oct 20 2020 at 09:29)
 

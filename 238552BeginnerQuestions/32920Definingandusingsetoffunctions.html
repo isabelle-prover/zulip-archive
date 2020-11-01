@@ -92,6 +92,57 @@ x = 0: create Y_0 = {3,4,5}
 x = 1: create Y_1 = {6,7}
 </code></pre></div>
 
+<a name="215259577"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215259577" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215259577">Trinh Le Khanh (Nov 01 2020 at 20:01)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20and.20using.20set.20of.20functions/near/214166296">said</a>:</p>
+<blockquote>
+<p>The question is probably if you really need to have an explicit mapping. There should be a theorem somewhere that states that there is an injection between two sets of the same cardinality.</p>
+</blockquote>
+<p>Hi Mathias, I got a problem defining a set of functions.  I defined <code>alphaSet</code> (a set of <code>alpha</code> function) as follows:</p>
+<div class="codehilite"><pre><span></span><code>definition SyncExport :: &quot;nat set&quot; (* Export*)
+  where &quot;SyncExport = {1, 2}&quot;
+
+definition SyncElemExport :: &quot;nat set&quot; (*element Export*)
+  where &quot;SyncElemExport = {1, 2}&quot;
+
+definition TypeSync :: &quot;nat set&quot; (*port types*)
+  where &quot;TypeSync = {1, 2}&quot;
+
+definition IncSync :: &quot;nat set set&quot; (*port instances of each port type TypeSync*)
+  where &quot;IncSync = {{5,6}, {7,8,9}}&quot;
+
+definition mapin :: &quot;nat ⇒ nat set&quot; where (*mapin 1 = {5,6}; mapin 2 = {7,8,9}*)
+&quot;mapin pt = (if pt ∈ TypeSync then (SOME pIn. pIn ∈ IncSync) else {})&quot;
+
+definition alphaSet :: &quot;(nat ⇒ nat) set &quot; where (*set of functions alpha*)
+ &quot;alphaSet = {f. ∀x∈TypeSync. (f x) ∈ (mapin x)}&quot;
+
+definition alpha :: &quot;nat ⇒ nat&quot; where (*alpha 1= 5 or alpha 1 = 6*)
+&quot;alpha pt = (if pt ∈ TypeSync then (SOME y. y ∈ (mapin pt)) else 0)&quot;
+</code></pre></div>
+<p>Then, I test the cardinality of <code>TypeSync</code> and <code>IncSync</code>. They are equal.</p>
+<div class="codehilite"><pre><span></span><code>value &quot;card TypeSync&quot;
+value &quot;card IncSync&quot;
+</code></pre></div>
+<p>But when I want to show the value of the below predicate:</p>
+<div class="codehilite"><pre><span></span><code>value &quot;(∀t∈TypeSync.∀alp∈alphaSet.(P t (alp t)))&quot;
+</code></pre></div>
+<p>It caused the error:</p>
+<div class="codehilite"><pre><span></span><code>Wellsortedness error
+(in code equation alphaSet ≡ {f. ∀x∈TypeSync. f x ∈ mapin x},
+with dependency &quot;Pure.dummy_pattern&quot; -&gt; &quot;alphaSet&quot;):
+Type nat ⇒ nat not of sort enum
+No type arity nat :: enum
+</code></pre></div>
+<p>As I understand, this error is from the infinite set but I defined <code>TypeSync</code> and <code>IncSync</code> are finite sets. Do you have any suggestions?</p>
+
+<a name="215260112"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215260112" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215260112">Mathias Fleury (Nov 01 2020 at 20:13)</a>:</h4>
+<ul>
+<li>This is <em>not</em> an explicit construction (you cannot use SOME for that!) and <code>mapin</code> cannot be calculated</li>
+<li>The error message hints that <code>alphaSet</code> cannot be calculated. Without code setup, it requires enumerating constructing all functions <code>f</code> and then filtering them.</li>
+</ul>
+
 
 {% endraw %}
 

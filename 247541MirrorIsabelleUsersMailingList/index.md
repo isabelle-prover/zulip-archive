@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Performance problem with Simpl and Isabelle si...](48504isabellePerformanceproblemwithSimplandIsabellesi.html) (1 message, latest: Nov 01 2020 at 11:46)
+
 * [\[isabelle\] Sledgehammer proof reconstruction failed](45365isabelleSledgehammerproofreconstructionfailed.html) (2 messages, latest: Oct 31 2020 at 08:50)
 
 * [\[isabelle\] Name clash in "let" definitions](61602isabelleNameclashinletdefinitions.html) (4 messages, latest: Oct 29 2020 at 11:02)

@@ -225,6 +225,45 @@ lemma
 </code></pre></div>
 <p>No, using SOME means you cannot compute it, so <code>value</code> cannot work. If you don't need the concrete mapping and don't need value, you can use some.</p>
 
+<a name="215321615"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215321615" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215321615">Trinh Le Khanh (Nov 02 2020 at 14:02)</a>:</h4>
+<p>So, I keep my definition as follows:</p>
+<div class="codehilite"><pre><span></span><code>definition PType :: &quot;nat set&quot; (*port types*)
+  where &quot;PType = {1, 2}&quot;
+
+definition PIns :: &quot;nat set set&quot; (*port instances of each port type PType*)
+  where &quot;PIns = {{5,6}, {7,8,9}}&quot;
+
+definition mapin :: &quot;nat ⇒ nat set&quot; where (*mapin 1 = {5,6}; mapin 2 = {7,8,9}*)
+&quot;mapin pt = (if pt ∈ PType then (SOME pIn. pIn ∈ PIns) else {})&quot;
+
+definition alphaSet :: &quot;(nat ⇒ nat) set &quot; where (*set of functions alpha*)
+ &quot;alphaSet = {f. ∀x∈PType. (f x) ∈ (mapin x)}&quot;
+</code></pre></div>
+<p>Then, I create a lemma using <code>finite_same_card_bij</code> but it unprovable (it stayed in proving forever)</p>
+<div class="codehilite"><pre><span></span><code>lemma test31: &quot;(∀t∈PType.(∀alp∈alphaSet.(P t (alp t) ⟶ (∀l1∈(mapin t)-{alp t}.¬P t l1))))
+  ⟹ (∀t∈PType.(∃alp∈alphaSet.∀l1∈(mapin t)-{alp t}. ¬P t l1))&quot;
+  unfolding PType_def mapin_def PIns_def alpha_def alphaSet_def
+  using finite_same_card_bij
+  apply blast
+  done
+</code></pre></div>
+<p>In Math, it should be equal because</p>
+<div class="codehilite"><pre><span></span><code>(P 2 7 ⟶ ¬P 2 8 ∧ ¬P 2 9) ∧ (P 2 8 ⟶ ¬P 2 7 ∧ ¬P 2 9) ∧ (P 2 9 ⟶ ¬P 2 8 ∧ ¬P 2 7)
+⟷ (¬P 2 8 ∧ ¬P 2 9)∨(¬P 2 7 ∧ ¬P 2 9)∨(¬P 2 8 ∧ ¬P 2 7)
+</code></pre></div>
+
+<a name="215327627"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215327627" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215327627">Mathias Fleury (Nov 02 2020 at 14:47)</a>:</h4>
+<p>You misunderstand what <code>SOME</code> means. It is an arbitrary choice. Unless that choice is unique, you _cannot say anything_ about its value. In particular <code>mapin 1 = {5, 6}</code> might be true but might also be false. </p>
+<p>You are in exactly one of those cases:</p>
+<div class="codehilite"><pre><span></span><code>      mapin 1 = {5, 6} and mapin 2 = {7, 8, 9}
+or mapin 1 = {5, 6}  and mapin 2 = {5, 6}
+or mapin 1 = {7, 8, 9}  and mapin 2 = {5, 6}
+or mapin 1 = {7, 8, 9}  and mapin 2 = {7, 8, 9}
+</code></pre></div>
+<p>YOU HAVE NO WAY TO KNOW WHICH OF THOSE CASES IS TRUE.</p>
+
 
 {% endraw %}
 

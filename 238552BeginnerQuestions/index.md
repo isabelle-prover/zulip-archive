@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (16 messages, latest: Nov 02 2020 at 09:36)
+* [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (18 messages, latest: Nov 02 2020 at 10:33)
 
 * [Document preparation: bad parent session](96692Documentpreparationbadparentsession.html) (5 messages, latest: Oct 29 2020 at 18:39)
 

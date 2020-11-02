@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (1 message, latest: Nov 02 2020 at 15:37)
+
 * [\[isabelle-dev\] https://isabelle.in.tum.de/components is down](91707isabelledevhttpsisabelleintumdecomponentsisdown.html) (1 message, latest: Nov 01 2020 at 17:26)
 
 * [\[isabelle-dev\] Towards localized syntax: bundle mixins fo...](39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html) (2 messages, latest: Nov 01 2020 at 17:09)

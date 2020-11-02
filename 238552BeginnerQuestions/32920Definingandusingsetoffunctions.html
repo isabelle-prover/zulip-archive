@@ -148,6 +148,51 @@ No type arity nat :: enum
 <p>In the <code>mapin</code>, I want that from the <code>i element</code> of set A, we take the corresponding element in the set B.<br>
 I read the <code>set</code> library in Isabelle but they just provide operators <code>insert</code> or <code>empty</code>. Is there any chance to make an explicit mapping between two sets' elements?</p>
 
+<a name="215280669"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215280669" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215280669">Mathias Fleury (Nov 02 2020 at 05:28)</a>:</h4>
+<p>By definition there is <em>no order</em> of elements of sets, but:</p>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20and.20using.20set.20of.20functions/near/214164876">said</a>:</p>
+<blockquote>
+<p>A constructive way for alpha can involve <code>sorted_list_of_set</code> to convert a set to a list and build the mapping explicitly.</p>
+</blockquote>
+<p>allows you to build a list containing the same elements (if the set is finite). Then there is an order on the elements.</p>
+
+<a name="215281063"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215281063" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215281063">Mathias Fleury (Nov 02 2020 at 05:40)</a>:</h4>
+<p>Along that line (don't name the function <code>t</code> in your development!):</p>
+<div class="codehilite"><pre><span></span><code>fun t where
+‹t (x # xs) (y # ys) = (t xs ys) (x := y)› |
+‹t _ _ = (λx. 0)›
+
+definition explicit_mapping :: ‹nat set ⇒ nat set ⇒ (nat ⇒ nat)› where
+‹explicit_mapping xs ys = t (sorted_list_of_set xs) (sorted_list_of_set ys)›
+
+value ‹explicit_mapping {1, 2, 3} {4, 5, 6}›
+</code></pre></div>
+<p>And here a completely random lemma:</p>
+<div class="codehilite"><pre><span></span><code>lemma t_maps_to_existing:
+  ‹length xs = length ys ⟹ x ∈ set xs ⟹ (t xs ys) x ∈ set ys›
+  by (induction xs ys rule: list_induct2) auto
+
+(*why is that not in the library?*)
+lemma length_sorted_list_of_set[simp]:
+   ‹finite xs ⟹ length (sorted_list_of_set xs) = card xs›
+  by (metis distinct_card distinct_sorted_list_of_set set_sorted_list_of_set)
+
+lemma
+  ‹finite xs ⟹ finite ys ⟹ card xs = card ys ⟹ x ∈ xs ⟹ explicit_mapping xs ys x ∈ ys›
+  using t_maps_to_existing[of ‹sorted_list_of_set xs› ‹sorted_list_of_set ys› x]
+  by (auto simp: explicit_mapping_def)
+</code></pre></div>
+
+<a name="215281133"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215281133" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215281133">Mathias Fleury (Nov 02 2020 at 05:42)</a>:</h4>
+<p>But again: do you need to build the mapping explicitly or is it sufficient for you to show that one exists?</p>
+
+<a name="215281207"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20and%20using%20set%20of%20functions/near/215281207" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/32920Definingandusingsetoffunctions.html#215281207">Mathias Fleury (Nov 02 2020 at 05:44)</a>:</h4>
+<p>In the latter case, you can use the function <code>finite_same_card_bij</code>.</p>
+
 
 {% endraw %}
 

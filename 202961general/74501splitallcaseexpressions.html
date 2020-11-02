@@ -1,0 +1,42 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/74501splitallcaseexpressions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html">split all case expressions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="215338168"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215338168" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215338168">Max W. Haslbeck (Nov 02 2020 at 16:01)</a>:</h4>
+<p>I have a lemma/code with lots of case expressions. To split each one of them I have to add the corresponding <code>splits</code> rule for every type that appears. For example:</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;(case xs of [] ⇒ (case n of 0 ⇒ True | Suc x ⇒ True) | (x#xs) ⇒ True) = True&quot;
+  by (auto split: list.splits nat.splits)
+</code></pre></div>
+<p>Does someone know of a way to do this automatically? I want a method that does:  Split all case expression in the current subgoal.</p>
+
+<a name="215339173"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215339173" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215339173">Mathias Fleury (Nov 02 2020 at 16:08)</a>:</h4>
+<p>If you can live with declaring the splitting rules once:</p>
+<div class="codehilite"><pre><span></span><code>named_theorems mysplit &quot;Theorems used by mysplit&quot;
+declare list.splits[mysplit] nat.splits[mysplit]
+method mysplit = (split list.splits nat.splits)+
+
+lemma &quot;(case xs of [] ⇒ (case n of 0 ⇒ True | Suc x ⇒ True) | (x#xs) ⇒ True) = True&quot;
+   apply mysplit
+</code></pre></div>
+
+<a name="215343946"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215343946" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215343946">Max W. Haslbeck (Nov 02 2020 at 16:38)</a>:</h4>
+<p>Yes, thanks. Already doing that.</p>
+<p>I still would like to know if such a method is generally possible.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -36,6 +36,56 @@ lemma &quot;(case xs of [] ⇒ (case n of 0 ⇒ True | Suc x ⇒ True) | (x#xs) 
 <p>Yes, thanks. Already doing that.</p>
 <p>I still would like to know if such a method is generally possible.</p>
 
+<a name="215347567"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215347567" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215347567">Mathias Fleury (Nov 02 2020 at 17:03)</a>:</h4>
+<p>A very low-tech: find all constants that contain the name <code>case_</code>. The part after the <code>_</code> of the name contains the type name. Therefore the theorem <code>[stuff_after_the_underscore].splits</code> will give the theorem you want to use.</p>
+
+<a name="215351335"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215351335" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215351335">Mathias Fleury (Nov 02 2020 at 17:30)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>ML ‹
+fun split_thms ctxt t =
+  (case first_field &quot;case_&quot; t of
+    NONE =&gt; []
+  | SOME (_, stuff) =&gt;
+     (Proof_Context.get_thms ctxt (stuff ^ &quot;.splits&quot;) handle _ =&gt; [])
+  )
+
+fun find_split_rules ctxt (a $ b) = find_split_rules ctxt a @ find_split_rules ctxt b
+  | find_split_rules _ (Free (_, _)) = []
+  | find_split_rules ctxt (Const (name, _)) = split_thms ctxt name
+  | find_split_rules ctxt (Abs (_, _, a)) = find_split_rules ctxt a
+  | find_split_rules _ (Bound _) = []
+  | find_split_rules _ (Var _) = []
+
+(*taken from the definition of the split tactic*)
+fun gen_split_tac _ [] = K no_tac
+  | gen_split_tac ctxt (split::splits) =
+      split_tac ctxt [split] ORELSE&#39;
+         gen_split_tac ctxt splits;
+
+fun splitter ctxt i thm =
+   (CHANGED_PROP o gen_split_tac ctxt (@{thms if_splits} @ find_split_rules ctxt (Thm.prop_of thm))) i thm
+›
+
+method_setup mysplit = ‹
+  Scan.optional Attrib.thms [] &gt;&gt;
+    (fn thms =&gt; fn ctxt =&gt;
+      METHOD (fn facts =&gt; REPEAT (HEADGOAL (splitter ctxt))))
+› &quot;apply splits the goal&quot;
+
+
+lemma &quot;(case case_xs of [] ⇒ (case n of 0 ⇒ True | Suc x ⇒ True) | (x#xs) ⇒ True) = True&quot;
+  apply mysplit
+</code></pre></div>
+
+<a name="215353525"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215353525" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215353525">Mathias Fleury (Nov 02 2020 at 17:47)</a>:</h4>
+<p>(some clean-up is required: I copy-pasted the setup for smt to define the <code>mysplit</code> tactic, but I am too lazy to do it)</p>
+
+<a name="215354055"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/split%20all%20case%20expressions/near/215354055" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/74501splitallcaseexpressions.html#215354055">Max W. Haslbeck (Nov 02 2020 at 17:50)</a>:</h4>
+<p>Thanks, I'll play around with that :)</p>
+
 
 {% endraw %}
 

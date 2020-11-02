@@ -9,7 +9,7 @@ permalink: ./202967newprojects/index.html
 
 ### Topics:
 
-* [HoTT/dependent types in Isabelle](59987HoTTdependenttypesinIsabelle.html) (4 messages, latest: Nov 02 2020 at 16:58)
+* [HoTT/dependent types in Isabelle](59987HoTTdependenttypesinIsabelle.html) (5 messages, latest: Nov 02 2020 at 17:12)
 
 * [diagrammatic reasoning](92650diagrammaticreasoning.html) (16 messages, latest: Sep 22 2019 at 19:42)
 

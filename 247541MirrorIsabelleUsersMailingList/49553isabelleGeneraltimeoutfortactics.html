@@ -145,6 +145,60 @@ m</p>
 <p>Kind Regards,<br>
 Mikhail Chekhov</p>
 
+<a name="215502939"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20General%20timeout%20for%20tactics/near/215502939" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/49553isabelleGeneraltimeoutfortactics.html#215502939">Email Gateway (Nov 03 2020 at 19:58)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear All,</p>
+<p>I have to admit that my previous replies were slightly rushed: I was trying<br>
+to do too many things at the same time after consuming a substantial amount<br>
+of caffeine :). Having had a look at my own replies, I noticed a few<br>
+typographical/style errors.</p>
+<ol>
+<li>
+<p>The first sentence of the second paragraph of the first email should<br>
+read "Also, I would like to make a note on the subject of debugging of the<br>
+rules for certain proof methods for classical reasoning."</p>
+</li>
+<li>
+<p>The ML part of the code in the second email was meant to look like the<br>
+code shown below (more specifically, I noticed that a wrong naming<br>
+convention was used for the function for the specification of the method<br>
+and there were a few redundancies). Keep in mind, this is still only a<br>
+sketch.</p>
+</li>
+</ol>
+<p>ML‹</p>
+<p>val timeout_cfg = Attrib.setup_config_int \&lt;^binding&gt;‹mtime› (K 0)</p>
+<p>(* copied from HOL/TPTP/atp_problem_import.ML with minor amendments *)<br>
+fun SOLVE_TIMEOUT mseconds tac st =<br>
+  let<br>
+    val result =<br>
+      Timeout.apply<br>
+        (Time.fromMilliseconds mseconds) (fn () =&gt; SINGLE (SOLVE tac) st) ()<br>
+      handle Timeout.TIMEOUT _ =&gt; NONE | ERROR _ =&gt; NONE<br>
+  in<br>
+    (<br>
+      case result of<br>
+        NONE =&gt; Seq.empty<br>
+      | SOME st' =&gt; Seq.single st'<br>
+    )<br>
+  end</p>
+<p>fun timeout_tac ctxt t m = Method.evaluate m ctxt []<br>
+  |&gt; Context_Tactic.NO_CONTEXT_TACTIC ctxt<br>
+  |&gt; SOLVE_TIMEOUT t;</p>
+<p>fun process_timeout m ctxt =<br>
+  SIMPLE_METHOD (timeout_tac ctxt (Config.get ctxt timeout_cfg) m);</p>
+<p>val _ = Theory.setup<br>
+  (<br>
+    Method.setup<br>
+      \&lt;^binding&gt;‹timeout›<br>
+      (Method.text_closure &gt;&gt; process_timeout)<br>
+      "higher order timeout method"<br>
+  );</p>
+<p>›</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+
 
 {% endraw %}
 

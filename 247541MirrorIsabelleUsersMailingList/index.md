@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] pat_completeness exception](02239isabellepatcompletenessexception.html) (1 message, latest: Nov 03 2020 at 12:50)
+* [\[isabelle\] General timeout for tactics](49553isabelleGeneraltimeoutfortactics.html) (4 messages, latest: Nov 03 2020 at 13:44)
 
-* [\[isabelle\] General timeout for tactics](49553isabelleGeneraltimeoutfortactics.html) (3 messages, latest: Nov 03 2020 at 12:48)
+* [\[isabelle\] pat_completeness exception](02239isabellepatcompletenessexception.html) (1 message, latest: Nov 03 2020 at 12:50)
 
 * [\[isabelle\] Performance problem with Simpl and Isabelle si...](48504isabellePerformanceproblemwithSimplandIsabellesi.html) (1 message, latest: Nov 01 2020 at 11:46)
 

@@ -59,6 +59,28 @@ recovers eventually, but most of the time it's faster to just kill it<br>
 and restart everything.</p>
 <p>Manuel</p>
 
+<a name="215454358"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20General%20timeout%20for%20tactics/near/215454358" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/49553isabelleGeneraltimeoutfortactics.html#215454358">Email Gateway (Nov 03 2020 at 13:44)</a>:</h4>
+<p>From: Freek Wiedijk &lt;<a href="mailto:freek@cs.ru.nl">freek@cs.ru.nl</a>&gt;<br>
+Dear all,</p>
+<p>It's not really relevant for this list, but in HOL Light<br>
+it is trivial to hack something like this together:</p>
+<p>exception Timeout;;</p>
+<p>Sys.set_signal Sys.sigalrm (Sys.Signal_handle (fun _ -&gt; raise Timeout));;</p>
+<p>let TIMED_TAC n tac g =<br>
+  let _ = Unix.alarm n in<br>
+  try<br>
+    let gs = tac g in<br>
+    let _ = Unix.alarm 0 in<br>
+    gs<br>
+  with x -&gt;<br>
+    let _ = Unix.alarm 0 in<br>
+    raise x;;</p>
+<p>If you do (TIMED_TAC 3 (MESON_TAC[...])), it will run<br>
+(MESON_TAC[...]) but if that doesn't succeed in 3 seconds,<br>
+it will fail with a Timeout exception.</p>
+<p>Freek</p>
+
 
 {% endraw %}
 

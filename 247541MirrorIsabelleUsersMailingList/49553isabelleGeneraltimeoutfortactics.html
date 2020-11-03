@@ -81,6 +81,70 @@ it is trivial to hack something like this together:</p>
 it will fail with a Timeout exception.</p>
 <p>Freek</p>
 
+<a name="215464771"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20General%20timeout%20for%20tactics/near/215464771" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/49553isabelleGeneraltimeoutfortactics.html#215464771">Email Gateway (Nov 03 2020 at 15:04)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear All,</p>
+<p>I had a little bit more time now and implemented a rough sketch of a<br>
+plausible solution based on my own suggestion (its only purpose is to<br>
+demonstrate that the functionality that you seek can be implemented<br>
+easily). Of course, it will need to be refined for any<br>
+serious applications. Also, with some further work, it can be integrated in<br>
+the apply/by infrastructure:</p>
+<p>theory Scratch<br>
+  imports<br>
+    Main<br>
+begin</p>
+<p>ML‹</p>
+<p>val timeout_parser = Method.text_closure</p>
+<p>fun process_timeout ctxt m = ctxt</p>
+<p>(* timeout configuration *)<br>
+val timeout_cfg = Attrib.setup_config_int \&lt;^binding&gt;‹mtime› (K 0)</p>
+<p>(* copied from HOL/TPTP/atp_problem_import.ML with minor amendments *)<br>
+fun SOLVE_TIMEOUT mseconds tac st =<br>
+  let<br>
+    val result =<br>
+      Timeout.apply<br>
+        (Time.fromMilliseconds mseconds) (fn () =&gt; SINGLE (SOLVE tac) st) ()<br>
+      handle Timeout.TIMEOUT _ =&gt; NONE | ERROR _ =&gt; NONE<br>
+  in<br>
+    (<br>
+      case result of<br>
+        NONE =&gt; Seq.empty<br>
+      | SOME st' =&gt; Seq.single st'<br>
+    )<br>
+  end</p>
+<p>fun timeout_tac ctxt t m =<br>
+  let<br>
+    val tac = (Method.evaluate m ctxt) []<br>
+      |&gt; Context_Tactic.NO_CONTEXT_TACTIC ctxt<br>
+      |&gt; SOLVE_TIMEOUT t<br>
+  in SIMPLE_METHOD tac end;</p>
+<p>fun process_timeout m ctxt = timeout_tac ctxt (Config.get ctxt timeout_cfg)<br>
+m</p>
+<p>val _ = Theory.setup<br>
+  (<br>
+    Method.setup<br>
+      \&lt;^binding&gt;‹timeout›<br>
+      (timeout_parser &gt;&gt; process_timeout)<br>
+      "higher order timeout method"<br>
+  );</p>
+<p>›</p>
+<p>declare[[mtime=1]]</p>
+<p>lemma<br>
+  assumes A: "x = z"<br>
+  shows "x = z"<br>
+  apply(timeout‹simp add: A›)<br>
+  done</p>
+<p>lemma<br>
+  assumes A: "x = y" "y = x"<br>
+  shows "x = z"<br>
+  apply(timeout‹fastforce simp add: A›)<br>
+  oops</p>
+<p>end</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+
 
 {% endraw %}
 

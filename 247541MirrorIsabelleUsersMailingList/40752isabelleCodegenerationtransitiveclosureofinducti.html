@@ -1,0 +1,49 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/40752isabelleCodegenerationtransitiveclosureofinducti.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/40752isabelleCodegenerationtransitiveclosureofinducti.html">[isabelle] Code generation: transitive closure of inducti...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="215564180"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Code%20generation%3A%20transitive%20closure%20of%20inducti.../near/215564180" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/40752isabelleCodegenerationtransitiveclosureofinducti.html#215564180">Email Gateway (Nov 04 2020 at 10:35)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+Hi all,</p>
+<p>I have defined the transitive closure of an inductive predicate as follows:</p>
+<p>inductive less_equal_step :: "nat ⇒ nat ⇒ bool"  where<br>
+    "a + 1 = b ⟹ less_equal_step a b"</p>
+<p>definition less_equal :: "nat ⇒ nat ⇒ bool" where<br>
+    (* Define the transitive closure using the provided <code>rtranclp</code> *)<br>
+    "less_equal a b ≡ (rtranclp less_equal_step) a b"</p>
+<p>code_pred(modes: i ⇒ i ⇒ bool, i ⇒ o ⇒ bool) less_equal_step .</p>
+<p>code_pred<br>
+    (modes: i ⇒ i ⇒ bool, i ⇒ o ⇒ bool)<br>
+    [inductify]<br>
+    less_equal .</p>
+<p>(* Terminates *)<br>
+  value "less_equal 1 2"</p>
+<p>(* Does not terminate *)<br>
+  value "less_equal 2 1"</p>
+<p>Whenever <code>less_equal</code> does not hold execution does not terminate.</p>
+<p>In an older email<br>
+(<a href="https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2009-April/msg00051.html">https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2009-April/msg00051.html</a>)<br>
+I read that this is being worked on. Then in Section 2.3 of the paper<br>
+"Animating the Formalised Semanticsof a Java-like Language"<br>
+(<a href="https://pp.ipd.kit.edu/uploads/publikationen/lochbihler11itp.pdf">https://pp.ipd.kit.edu/uploads/publikationen/lochbihler11itp.pdf</a>) it<br>
+sounds like a tabled version has already been implemented. Do I have to<br>
+activate this feature somehow? Or are there other problems with the<br>
+above inductive predicate?</p>
+<p>Best regards,<br>
+David</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

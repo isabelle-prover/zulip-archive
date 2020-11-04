@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Code generation: transitive closure of inducti...](40752isabelleCodegenerationtransitiveclosureofinducti.html) (1 message, latest: Nov 04 2020 at 10:35)
+
 * [\[isabelle\] General timeout for tactics](49553isabelleGeneraltimeoutfortactics.html) (6 messages, latest: Nov 03 2020 at 19:58)
 
 * [\[isabelle\] pat_completeness exception](02239isabellepatcompletenessexception.html) (1 message, latest: Nov 03 2020 at 12:50)

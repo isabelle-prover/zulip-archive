@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (14 messages, latest: Nov 03 2020 at 20:15)
+* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (15 messages, latest: Nov 04 2020 at 04:13)
 
 * [\[isabelle-dev\] https://isabelle.in.tum.de/components is down](91707isabelledevhttpsisabelleintumdecomponentsisdown.html) (1 message, latest: Nov 01 2020 at 17:26)
 

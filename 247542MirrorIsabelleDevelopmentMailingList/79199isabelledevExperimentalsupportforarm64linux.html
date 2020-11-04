@@ -114,6 +114,52 @@ confirms that it can work.</p>
 <a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
 <a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
 
+<a name="215614791"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Experimental%20support%20for%20arm64-linux/near/215614791" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/79199isabelledevExperimentalsupportforarm64linux.html#215614791">Email Gateway (Nov 04 2020 at 17:29)</a>:</h4>
+<p>From: Florian Märkl &lt;<a href="mailto:isabelle-dev@florianmaerkl.de">isabelle-dev@florianmaerkl.de</a>&gt;<br>
+Hello,</p>
+<p>I am planning to write my Master's thesis at TUM in the coming summer<br>
+semester and I wonder whether implementing this backend for Poly/ML<br>
+would be a fitting topic for this.</p>
+<p>I have recently bought myself a PineBook Pro, which is a small aarch64<br>
+laptop, maybe slightly faster than a Raspberry Pi 4, and I have actually<br>
+been using this as my main laptop for a few months now.<br>
+I use it mostly for programming C and Haskell, but could also play<br>
+around with Isabelle a bit and can confirm that the only blocker there<br>
+seems to be that it is just unbearably slow, so I do have some<br>
+motivation to fix this.</p>
+<p>About GHC's llvm backend, I can also confirm that it indeed works very<br>
+well, with the main issue being the fact that llvm is generally quite<br>
+big and resource-hungry.<br>
+In fact, while compiling GHC itself and many other Haskell libraries<br>
+(which I had to do all by myself because Arch Linux ARM, which I use,<br>
+does not provide any Haskell packages), I ran out of memory multiple<br>
+times, had to reduce concurrency and eventually set up a Raspberry Pi 4<br>
+with 8GB of RAM and a lot of swap space as an external build server for<br>
+this. For reference, a build of GHC takes about one full night.<br>
+This blog post also mentions that it would still be desirable to have a<br>
+native arm backend in GHC:<br>
+<a href="https://www.haskell.org/ghc/blog/20200515-ghc-on-arm.html">https://www.haskell.org/ghc/blog/20200515-ghc-on-arm.html</a></p>
+<p>So I think this is an important aspect, especially considering that<br>
+Isabelle compiles code on the fly while using it. However I don't know<br>
+how much ML code is actually being compiled during a usual Isabelle<br>
+session, so I can't say how strongly this will affect the experience in<br>
+the end.</p>
+<p>On the other hand, there are of course the obvious benefits of llvm,<br>
+including that it already has a huge set of well-tested optimization<br>
+passes, and even if these optimizations won't fit as well to ML as they<br>
+do to classic imperative languages, in the worst case, it would be<br>
+degraded to a simple code generator for arbitrary architectures and some<br>
+language-specific optimization could be done before translating to LLVM IR.</p>
+<p>It would be nice if someone from Prof. Nipkow's or related chairs could<br>
+give me some feedback whether this could theoretically fit for a<br>
+Master's thesis.</p>
+<p>Florian</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
 
 {% endraw %}
 

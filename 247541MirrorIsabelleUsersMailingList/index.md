@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Code generation: transitive closure of inducti...](40752isabelleCodegenerationtransitiveclosureofinducti.html) (4 messages, latest: Nov 04 2020 at 19:56)
+* [\[isabelle\] Code generation: transitive closure of inducti...](40752isabelleCodegenerationtransitiveclosureofinducti.html) (5 messages, latest: Nov 04 2020 at 20:21)
 
 * [\[isabelle\] General timeout for tactics](49553isabelleGeneraltimeoutfortactics.html) (9 messages, latest: Nov 04 2020 at 19:18)
 

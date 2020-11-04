@@ -199,6 +199,29 @@ fun SOLVE_TIMEOUT mseconds tac st =<br>
 <p>Kind Regards,<br>
 Mikhail Chekhov</p>
 
+<a name="215571134"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20General%20timeout%20for%20tactics/near/215571134" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/49553isabelleGeneraltimeoutfortactics.html#215571134">Email Gateway (Nov 04 2020 at 12:00)</a>:</h4>
+<p>From: Thomas Sewell &lt;<a href="mailto:tals4@cam.ac.uk">tals4@cam.ac.uk</a>&gt;<br>
+I just want to make sure that somebody points out the obvious issue.</p>
+<p>Wrapping a timeout around fastforce, metis etc sounds like a good thing.<br>
+Failures are easier to find and address than divergence. However, it<br>
+would be a disaster if there were lots of proofs that mostly worked<br>
+but failed outright if some machine was running particularly slowly for<br>
+whatever reason.</p>
+<p>So, it's easy enough to implement a timeout mechanism on a tactic or <br>
+method,<br>
+but it's probably not useful for the purpose you really want, which is <br>
+to<br>
+set timeouts throughout your theories by default.</p>
+<p>Years ago I spent some time wondering whether there was some kind of <br>
+objective<br>
+timing that would make sense, e.g. the number of classical steps in a<br>
+fastforce/auto proof. Limiting those would be safer. I never got around <br>
+to<br>
+implementing anything though.</p>
+<p>Best regards,<br>
+     Thomas.</p>
+
 
 {% endraw %}
 

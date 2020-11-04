@@ -61,6 +61,47 @@ principles to get a program that is reasonable executable.</p>
 <p>I hope that helps.</p>
 <p>Lukas</p>
 
+<a name="215590552"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Code%20generation%3A%20transitive%20closure%20of%20inducti.../near/215590552" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/40752isabelleCodegenerationtransitiveclosureofinducti.html#215590552">Email Gateway (Nov 04 2020 at 14:50)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+Thanks, good to know! The example I gave apparently doesn't really<br>
+capture my use case, which is defining a subclass relation for a<br>
+programming language (slightly simplified version below). Since there<br>
+exists a top-most class from which all other classes derive the problem<br>
+of infinite sequences should not arise, I think.</p>
+<p>Do you know what one has to do to get tabled execution?</p>
+<div class="codehilite"><pre><span></span><code>  type_synonym class_name = string
+
+  record class_def =
+    cname :: class_name
+    super :: &quot;class_name option&quot;
+
+  type_synonym program = &quot;class_def list&quot;
+
+  definition lookup_class :: &quot;program ⇒ class_name ⇒ class_def option&quot; where
+    &quot;lookup_class P C ≡ find (λcl. (class_def.cname cl) = C) P&quot;
+
+  inductive is_subclass1 :: &quot;program ⇒ class_name ⇒ class_name ⇒ bool&quot;
+where
+    &quot;⟦
+      Some cl = lookup_class P C;
+      (class_def.super cl) = Some C&#39;
+    ⟧ ⟹ is_subclass1 P C C&#39;&quot;
+
+
+  definition is_subclass_rtc :: &quot;program ⇒ class_name ⇒ class_name ⇒
+bool&quot; where
+    &quot;is_subclass_rtc P C C&#39; ≡ (is_subclass1 P)⇧*⇧* C C&#39;&quot;
+
+
+  code_pred(modes: i ⇒ i ⇒ i ⇒ bool, i ⇒ i ⇒ o ⇒ bool) is_subclass1 .
+
+  code_pred
+    (modes: i ⇒ i ⇒ i ⇒ bool, i ⇒ i ⇒ o ⇒ bool)
+    [inductify]
+    is_subclass_rtc .
+</code></pre></div>
+
 
 {% endraw %}
 

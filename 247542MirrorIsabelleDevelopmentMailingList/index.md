@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (4 messages, latest: Nov 04 2020 at 14:52)
+
 * [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (16 messages, latest: Nov 04 2020 at 11:56)
 
 * [\[isabelle-dev\] https://isabelle.in.tum.de/components is down](91707isabelledevhttpsisabelleintumdecomponentsisdown.html) (1 message, latest: Nov 01 2020 at 17:26)
@@ -34,8 +36,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] Benchmark suite for Isabelle's `rewrite` t...](27325isabelledevBenchmarksuiteforIsabellesrewritet.html) (2 messages, latest: Oct 15 2020 at 11:28)
 
 * [\[isabelle-dev\] Registering not available](55259isabelledevRegisteringnotavailable.html) (4 messages, latest: Oct 14 2020 at 13:29)
-
-* [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (3 messages, latest: Oct 04 2020 at 19:16)
 
 * [\[isabelle-dev\] NEWS: Document preparation engine updates](61037isabelledevNEWSDocumentpreparationengineupdates.html) (2 messages, latest: Sep 28 2020 at 11:01)
 

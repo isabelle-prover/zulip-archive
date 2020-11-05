@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Issues with unnamed top-level facts in Isa...](98061isabelledevIssueswithunnamedtoplevelfactsinIsa.html) (4 messages, latest: Nov 05 2020 at 15:56)
+* [\[isabelle-dev\] Issues with unnamed top-level facts in Isa...](98061isabelledevIssueswithunnamedtoplevelfactsinIsa.html) (6 messages, latest: Nov 05 2020 at 16:06)
 
 * [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (6 messages, latest: Nov 05 2020 at 11:48)
 

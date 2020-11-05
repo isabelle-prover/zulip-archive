@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Using rule in isar proofs to setup assumptions](17656Usingruleinisarproofstosetupassumptions.html) (5 messages, latest: Nov 05 2020 at 11:25)
+
 * [Defining and using set of functions](32920Definingandusingsetoffunctions.html) (20 messages, latest: Nov 02 2020 at 14:47)
 
 * [Document preparation: bad parent session](96692Documentpreparationbadparentsession.html) (5 messages, latest: Oct 29 2020 at 18:39)

@@ -160,6 +160,34 @@ Master's thesis.</p>
 <a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
 <a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
 
+<a name="215700924"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Experimental%20support%20for%20arm64-linux/near/215700924" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/79199isabelledevExperimentalsupportforarm64linux.html#215700924">Email Gateway (Nov 05 2020 at 11:48)</a>:</h4>
+<p>From: David Matthews &lt;<a href="mailto:dm@prolingua.co.uk">dm@prolingua.co.uk</a>&gt;<br>
+Llvm has come up as a suggestion a number of times.  I did look at it <br>
+some years ago as a possible back-end for Poly/ML and came to the <br>
+conclusion that it wouldn't work in the way that was needed.  I read the <br>
+blog post about GHC and thought it was interesting that they still felt <br>
+the need to have their own back-end as well.</p>
+<p>The problem I could see was that Llvm seems to have its own ideas about <br>
+data representation and that wouldn't fit with the way Poly/ML works <br>
+especially in Isabelle.  I could see a possible use for it as a back-end <br>
+when Poly/ML was batch-compiling some ML code to be executed as a <br>
+separate program.</p>
+<p>However, interactive theorem proving in Isabelle is more like <br>
+manipulating data structures some of whose elements happen to be blobs <br>
+of executable code.  This fits with the view of a functional language in <br>
+which functions are just another kind of value.  The Poly/ML compiler, <br>
+just another function in the environment, builds code in the heap and if <br>
+the heap is saved to disc only then will the code be written out.  That <br>
+is quite different from the conventional view of a compiler.</p>
+<p>I'm quite happy to provide any information needed if someone wants to <br>
+look at an Llvm back-end but I don't see it working with Isabelle.</p>
+<p>David</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
 
 {% endraw %}
 

@@ -1,0 +1,62 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html">Using rule in isar proofs to setup assumptions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="215698079"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20rule%20in%20isar%20proofs%20to%20setup%20assumptions/near/215698079" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html#215698079">Joshua von Mutius (Nov 05 2020 at 11:15)</a>:</h4>
+<p>Is there a way to use rule in an isar proof</p>
+<div class="codehilite"><pre><span></span><code>proof(rule myrule)
+assume &quot;P&quot;
+show &quot;Q&quot;
+qed
+</code></pre></div>
+<p>such that one has not to specify  <code>P</code> and  <code>Q</code> explicitly?</p>
+<p>E.g. when using the proof pattern for a proof by contradiction </p>
+<div class="codehilite"><pre><span></span><code>proof(rule ccontr)
+assume &quot;foo&quot;
+show &quot;False&quot; ...
+qed
+</code></pre></div>
+<p>I would like something like:</p>
+<div class="codehilite"><pre><span></span><code>proof(rule ccontr)
+assume  ?bot_assm
+show &quot;False&quot; ...
+qed
+</code></pre></div>
+<p>where <code>?bot_assm = "foo"</code> is automatically specified.<br>
+At best i would like to also switch out <code>show "False" ...</code> with something like <code>show ?thesis ...</code>.</p>
+
+<a name="215698301"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20rule%20in%20isar%20proofs%20to%20setup%20assumptions/near/215698301" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html#215698301">Mathias Fleury (Nov 05 2020 at 11:17)</a>:</h4>
+<p>for rule ccontr , you can use<code>\&lt;not&gt; ?thesis</code></p>
+
+<a name="215698530"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20rule%20in%20isar%20proofs%20to%20setup%20assumptions/near/215698530" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html#215698530">Mathias Fleury (Nov 05 2020 at 11:20)</a>:</h4>
+<p>Is <code>goal_cases</code> the tactic you want?</p>
+
+<a name="215698573"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20rule%20in%20isar%20proofs%20to%20setup%20assumptions/near/215698573" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html#215698573">Mathias Fleury (Nov 05 2020 at 11:20)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>proof(rule ccontr, goal_cases)
+case 1
+show &quot;?thesis&quot; ...
+qed
+</code></pre></div>
+
+<a name="215698946"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20rule%20in%20isar%20proofs%20to%20setup%20assumptions/near/215698946" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17656Usingruleinisarproofstosetupassumptions.html#215698946">Joshua von Mutius (Nov 05 2020 at 11:25)</a>:</h4>
+<p>Yes that is exactly what i was searching for thank you very much!</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

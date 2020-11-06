@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: First Call for Papers](39823isabelleFSCD2021FirstCallforPapers.html) (1 message, latest: Nov 06 2020 at 13:32)
+
 * [\[isabelle\] Code generation: transitive closure of inducti...](40752isabelleCodegenerationtransitiveclosureofinducti.html) (5 messages, latest: Nov 04 2020 at 20:21)
 
 * [\[isabelle\] General timeout for tactics](49553isabelleGeneraltimeoutfortactics.html) (9 messages, latest: Nov 04 2020 at 19:18)

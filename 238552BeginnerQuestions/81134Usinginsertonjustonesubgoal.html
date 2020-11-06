@@ -1,0 +1,38 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/81134Usinginsertonjustonesubgoal.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81134Usinginsertonjustonesubgoal.html">Using insert on just one subgoal</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="215837465"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20insert%20on%20just%20one%20subgoal/near/215837465" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81134Usinginsertonjustonesubgoal.html#215837465">Mark Wassell (Nov 06 2020 at 12:14)</a>:</h4>
+<p>Hi,</p>
+<p>I am proving one of my subgoals with </p>
+<div class="codehilite"><pre><span></span><code>using my_inductive_case apply fast
+</code></pre></div>
+<p>however I would like to be able to do this without 'using', so that I can incorporate it into an Eisbach proof method.</p>
+<p>It seems that the fast proof method doesn't allow you to add facts like simp/auto do, and using the insert proof method does the insert to all subgoals, which makes solving later subgoals messy. Is there a way to make insert operate only on the first subgoal, or another way  to get this subgoal proof into an Eisbach method?</p>
+<p>Thanks</p>
+<p>Mark</p>
+
+<a name="215840292"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Using%20insert%20on%20just%20one%20subgoal/near/215840292" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81134Usinginsertonjustonesubgoal.html#215840292">Mathias Fleury (Nov 06 2020 at 12:42)</a>:</h4>
+<p>IIRC <code>use</code> works in Eisbach. In general:</p>
+<div class="codehilite"><pre><span></span><code>apply (use fact* in \&lt;open&gt;tactic\&lt;close&gt;)
+</code></pre></div>
+<p>so in your case:</p>
+<div class="codehilite"><pre><span></span><code>apply (use my_inductive_case in fast)
+</code></pre></div>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

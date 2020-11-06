@@ -43,6 +43,57 @@ and the mapping of command-line options to arguments here:<br>
 <a href="https://isabelle.sketis.net/repos/isabelle/file/Isabelle2020/src/Pure/Tools/build.scala#l726">https://isabelle.sketis.net/repos/isabelle/file/Isabelle2020/src/Pure/Tools/build.scala#l726</a></p>
 <p>Makarius</p>
 
+<a name="215910839"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Document%20preparation%20from%20within%20Isabelle/jEdit/near/215910839" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/78181isabelleDocumentpreparationfromwithinIsabellejEdit.html#215910839">Email Gateway (Nov 06 2020 at 22:17)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+Hello Makarius,</p>
+<p>thanks, it's still tight, but it does seem to just fit into main memory.<br>
+When I saw the -P option for <code>isabelle build</code> I had hoped that this<br>
+would somehow reuse the current session from Isabelle/jEdit, but this<br>
+does not seem to be the case.</p>
+<p>Anyway, thanks for the help!</p>
+<p>Best regards,<br>
+David</p>
+
+<a name="215911853"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Document%20preparation%20from%20within%20Isabelle/jEdit/near/215911853" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/78181isabelleDocumentpreparationfromwithinIsabellejEdit.html#215911853">Email Gateway (Nov 06 2020 at 22:29)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+In Isabelle2020, "isabelle build -P" will make a batch-build with a PIDE<br>
+session for that process --- it was somewhat experimental and unused back then.</p>
+<p>In Isabelle2021 (presumably Feb-2021), "isabelle build" will always do this<br>
+and generally require more resources.</p>
+<p>So you might run into resource problems again. How much memory do you actually<br>
+have?</p>
+<p>As a spin-off from this unification --- PIDE sessions always used in<br>
+batch-mode and interaction --- it has now become more feasible to integrate<br>
+document preparation into Isabelle/jEdit. I was considering to do it some<br>
+weeks ago, but it is still a bit unclear if I manage for the coming release.</p>
+<p>Makarius</p>
+
+<a name="215913902"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Document%20preparation%20from%20within%20Isabelle/jEdit/near/215913902" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/78181isabelleDocumentpreparationfromwithinIsabellejEdit.html#215913902">Email Gateway (Nov 06 2020 at 22:50)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+On 06.11.20 23:29, Makarius wrote:&gt; In Isabelle2021 (presumably<br>
+Feb-2021), "isabelle build" will always do this</p>
+<blockquote>
+<p>and generally require more resources.</p>
+<p>So you might run into resource problems again. How much memory do you actually<br>
+have?</p>
+</blockquote>
+<p>I have 12GB in total, where roughly 2/3 are used when running<br>
+<code>Build.build(...)</code> in the Scala console inside Isabelle/jEdit, and 1/3<br>
+are used by other applications. So if I close some of the other<br>
+applications I still have some breathing room.</p>
+<blockquote>
+<p>As a spin-off from this unification --- PIDE sessions always used in<br>
+batch-mode and interaction --- it has now become more feasible to integrate<br>
+document preparation into Isabelle/jEdit. I was considering to do it some<br>
+weeks ago, but it is still a bit unclear if I manage for the coming release.</p>
+</blockquote>
+<p>If that becomes possible it would definitely be great!</p>
+<p>Best regards,<br>
+David</p>
+
 
 {% endraw %}
 

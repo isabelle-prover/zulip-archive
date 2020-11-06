@@ -24,6 +24,25 @@ have to close Isabelle/jEdit because I don't have enough RAM for both.</p>
 <p>Best regards,<br>
 David</p>
 
+<a name="215903102"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Document%20preparation%20from%20within%20Isabelle/jEdit/near/215903102" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/78181isabelleDocumentpreparationfromwithinIsabellejEdit.html#215903102">Email Gateway (Nov 06 2020 at 20:59)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+This is certainly desirable, but still not supported. For now you can save<br>
+some time and space like this:</p>
+<p>* Edit $ISABELLE_HOME_USER/etc/settings and restrict the ML heap, depending<br>
+on your total RAM and the size of your Isabelle/HOL application:</p>
+<p>ML_OPTIONS="--minheap 500 --maxheap 2g"</p>
+<p>(Restart the Isabelle/jEdit afterwards.)</p>
+<p>* Open the Console/Scala plugin in Isabelle/jEdit and run the Isabelle build<br>
+tool within the Java process of Isabelle/jEdit:</p>
+<p>Build.build(PIDE.options.value, progress = new Console_Progress, select_dirs<br>
+= List(Path.explode("~/tmp/Test")))</p>
+<p>The arguments for <a href="http://Build.build">Build.build</a> may be seen here:<br>
+<a href="https://isabelle.sketis.net/repos/isabelle/file/Isabelle2020/src/Pure/Tools/build.scala#l392">https://isabelle.sketis.net/repos/isabelle/file/Isabelle2020/src/Pure/Tools/build.scala#l392</a><br>
+and the mapping of command-line options to arguments here:<br>
+<a href="https://isabelle.sketis.net/repos/isabelle/file/Isabelle2020/src/Pure/Tools/build.scala#l726">https://isabelle.sketis.net/repos/isabelle/file/Isabelle2020/src/Pure/Tools/build.scala#l726</a></p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

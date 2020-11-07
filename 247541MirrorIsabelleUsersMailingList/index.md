@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Call for Papers - SPIN 2021](56596isabelleCallforPapersSPIN2021.html) (1 message, latest: Nov 07 2020 at 10:32)
+
 * [\[isabelle\] Document preparation from within Isabelle/jEdit](78181isabelleDocumentpreparationfromwithinIsabellejEdit.html) (5 messages, latest: Nov 06 2020 at 22:50)
 
 * [\[isabelle\] FSCD 2021: First Call for Papers](39823isabelleFSCD2021FirstCallforPapers.html) (1 message, latest: Nov 06 2020 at 13:32)

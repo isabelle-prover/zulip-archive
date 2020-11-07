@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Improvement suggestion for isabelle process](96863isabelleImprovementsuggestionforisabelleprocess.html) (2 messages, latest: Nov 07 2020 at 16:31)
+
 * [\[isabelle\] Call for Papers - SPIN 2021](56596isabelleCallforPapersSPIN2021.html) (1 message, latest: Nov 07 2020 at 10:32)
 
 * [\[isabelle\] Document preparation from within Isabelle/jEdit](78181isabelleDocumentpreparationfromwithinIsabellejEdit.html) (5 messages, latest: Nov 06 2020 at 22:50)
@@ -62,8 +64,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (4 messages, latest: Oct 15 2020 at 08:20)
 
 * [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (2 messages, latest: Oct 10 2020 at 16:57)
-
-* [\[isabelle\] Improvement suggestion for isabelle process](96863isabelleImprovementsuggestionforisabelleprocess.html) (1 message, latest: Oct 10 2020 at 09:03)
 
 * [\[isabelle\] PhD and Postdoc positions at the University of...](25188isabellePhDandPostdocpositionsattheUniversityof.html) (1 message, latest: Oct 09 2020 at 20:13)
 

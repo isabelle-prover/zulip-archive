@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (3 messages, latest: Nov 07 2020 at 21:14)
+
+* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (2 messages, latest: Nov 07 2020 at 21:09)
+
 * [\[isabelle\] Definitional axioms in Isabelle/ML?](64768isabelleDefinitionalaxiomsinIsabelleML.html) (2 messages, latest: Nov 07 2020 at 19:12)
 
 * [\[isabelle\] Improvement suggestion for isabelle process](96863isabelleImprovementsuggestionforisabelleprocess.html) (2 messages, latest: Nov 07 2020 at 16:31)
@@ -65,8 +69,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] list_all vs set membership](74319isabellelistallvssetmembership.html) (4 messages, latest: Oct 15 2020 at 08:20)
 
-* [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (2 messages, latest: Oct 10 2020 at 16:57)
-
 * [\[isabelle\] PhD and Postdoc positions at the University of...](25188isabellePhDandPostdocpositionsattheUniversityof.html) (1 message, latest: Oct 09 2020 at 20:13)
 
 * [\[isabelle\] CfP: AMAI Special Issue on Theoretical and Pra...](15264isabelleCfPAMAISpecialIssueonTheoreticalandPra.html) (1 message, latest: Oct 08 2020 at 10:44)
@@ -100,8 +102,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] New in the AFP: Extended Finite State Machines](39750isabelleNewintheAFPExtendedFiniteStateMachines.html) (1 message, latest: Sep 19 2020 at 06:22)
 
 * [\[isabelle\] A bundle of ATP entries](82633isabelleAbundleofATPentries.html) (1 message, latest: Sep 18 2020 at 14:45)
-
-* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (1 message, latest: Sep 17 2020 at 17:01)
 
 * [\[isabelle\] CPP 2021 abstract deadline due very soon](64783isabelleCPP2021abstractdeadlinedueverysoon.html) (1 message, latest: Sep 16 2020 at 17:45)
 

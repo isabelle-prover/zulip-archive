@@ -35,6 +35,38 @@ a pragmatic constraint</p>
 <p>Regards, Mikhail<br>
 <a href="/user_uploads/14278/Xf94rpXnfifd6fUP031etvnq/Bug.thy">Bug.thy</a></p>
 
+<a name="215973640"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Implicit%20exporting%20of%20goal%20state%20by%20different%20.../near/215973640" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36586isabelleImplicitexportingofgoalstatebydifferent.html#215973640">Email Gateway (Nov 07 2020 at 21:09)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/09/2020 19:00, Mikhail Mandrykin wrote:</p>
+<blockquote>
+<p>Recently, I experimented with implementation of Isabelle proof methods,<br>
+commands and proof elements to learn Isabelle internals more deeply as we plan<br>
+to implement Isabelle commands and methods for our program verification<br>
+framework. At some point, I encountered quite puzzling behavior of commands<br>
+<code>done</code>, <code>by</code> and <code>qed</code> with respect to implicit exporting of the resulting<br>
+goal state (actually, the protected initial statement as a theorem) into the<br>
+outer context. I attached an example exposing the various behaviors. The<br>
+question is whether these various differences in behavior are expected,<br>
+especially the situation when the proof is successfully finished inside jEdit,<br>
+but then fails during build by <code>isabelle build</code> command.</p>
+<p>I understand that&gt; normally Isabelle methods do not introduce local<br>
+assumptions or fixed<br>
+variables, so this seems not really critical (no intent to actually implement<br>
+such methods for the users), but it would help with the general understanding<br>
+to know whether this is totally unspecified to introduce those assumptions or<br>
+is merely a pragmatic constraint</p>
+</blockquote>
+<p>Yes, proof methods cannot extend the logical context and expect to work properly.</p>
+<p>There are certain principles how proof contexts are constructed/deconstructed<br>
+by the Isar language, according to its structure. Some of this is explained in<br>
+the "implementation" manual, but the general principle of survival is to do<br>
+this in the "usual way", e.g. by looking at existing implementations in the<br>
+sources.</p>
+<p>Your theory "Bug" looks very non-standard in various respects. Can you say,<br>
+what you are actually trying to do?</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

@@ -65,6 +65,20 @@ ML_OPTIONS="--maxheap 20G"<br>
 ML_PLATFORM="x86_64-linux"</p>
 <p>I don't have any idea whether this is the "right" way of doing it, though.</p>
 
+<a name="215973829"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20do%20I%20set%20--maxheap%20greater%20than%2016G%20on%20Linux%3F/near/215973829" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html#215973829">Email Gateway (Nov 07 2020 at 21:14)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Did it work out for you? 20G for x86_64 is not so much, compared to 16G for<br>
+x86_64_32 (where everything is more compact).</p>
+<p>Note that the minimum setup works like this:</p>
+<p>* $ISABELLE_HOME_USER/etc/settings:<br>
+      ML_OPTIONS="--maxheap 20G"</p>
+<p>* $ISABELLE_HOME_USER/etc/preferences:<br>
+      ML_system_64 = true</p>
+<p>If you have Isabelle/jEdit running, you can edit ML_system_64 in the Plugin<br>
+Options dialog; on shutdown the preferences will be saved/overwritten.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

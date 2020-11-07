@@ -67,6 +67,227 @@ sources.</p>
 what you are actually trying to do?</p>
 <p>Makarius</p>
 
+<a name="215976861"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Implicit%20exporting%20of%20goal%20state%20by%20different%20.../near/215976861" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36586isabelleImplicitexportingofgoalstatebydifferent.html#215976861">Email Gateway (Nov 07 2020 at 22:34)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;<br>
+Hello,</p>
+<blockquote>
+<p>Your theory "Bug" looks very non-standard in various respects. Can you <br>
+say,<br>
+what you are actually trying to do?</p>
+</blockquote>
+<p>Actually, I was preparing a small Isabelle/ML programing tutorial for <br>
+relatively experienced functional programmers (in Haskell and OCaml), <br>
+primarily for internal use, to emphasize the features that are needed to <br>
+implement custom proof methods. The tutorial was meant to be very <br>
+practically-oriented and so consisted of a set of example <br>
+implementations that would use only the interfaces from a documented set <br>
+of ML interfaces. So I proceeded in the following way: I just came up <br>
+with a problem, implemented a solution and then documented all the <br>
+interfaces used in the solution using the available documentation as <br>
+well as the knowledge obtained from inspection of the sources during the <br>
+implementation. As one of the final, more complex examples, I decided to <br>
+implement a sample triple of a proof method, an Isar command and a local <br>
+context command to support introduction of obtained facts into the local <br>
+context that would also support goal refinement with obtained variables. <br>
+This is not possible in Pure, but in HOL the Hilbert epsilon operator <br>
+can be used to extract the corresponding witness. I actually implemented <br>
+the tactic and the commands (attached the resulting sample theory as <br>
+Proof_Context.thy) and they seem to work as expected, the simplest way <br>
+to observe them in action is in the schematic_goal wf_min'' that <br>
+directly refines the statement using the obtained epsilon-expressions. <br>
+However, I myself did not fully understand the limitations of the proof <br>
+methods since they are actually context-tactics and can return a <br>
+modified context as a result, but I had not found any real examples of <br>
+methods that would alter the context in any way other than by <br>
+introduction of cases. So indeed, the logical context is never modified, <br>
+only the extra-logical part is changed. The sample method <br>
+<code>hilbert_guess</code> (in Proof_Context.thy) thus is not a proper method as it <br>
+breaks this convention by introducing obtained facts into the logical <br>
+context. So when I tried to compile the resulting tutorial document I <br>
+experienced the problems I described and decided to clarify whether this <br>
+is an intended limitation of proof methods, because in practice in many <br>
+cases extending the logical context with assumptions actually works (the <br>
+assumptions are exported by the <code>done</code>/<code>qed</code> commands). So because this <br>
+method is only intended as experimental exploratory code, this is not a <br>
+real issue, the real methods we implemented so far (those that work in <br>
+auxiliary local contexts) all perform the export internally and only <br>
+alter the context for extra-logical purposes e.g. remembering a <br>
+counterexample model extracted from an SMT solver (Z3). The repository <br>
+with the tutorial is available at <br>
+<a href="https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks">https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks</a> <br>
+. Currently, we switched to different parts of our framework <br>
+(implementing the shallow embedding and the translator), so the tutorial <br>
+is currently not actively used, but may soon be needed as constructing <br>
+the embedding also requires the use of custom automated proofs.</p>
+<p>Regards, Mikhail</p>
+<p>Makarius писал 2020-11-08 00:09:</p>
+<blockquote>
+<p>On 17/09/2020 19:00, Mikhail Mandrykin wrote:</p>
+<blockquote>
+<p>Recently, I experimented with implementation of Isabelle proof <br>
+methods,<br>
+commands and proof elements to learn Isabelle internals more deeply as <br>
+we plan<br>
+to implement Isabelle commands and methods for our program <br>
+verification<br>
+framework. At some point, I encountered quite puzzling behavior of <br>
+commands<br>
+<code>done</code>, <code>by</code> and <code>qed</code> with respect to implicit exporting of the <br>
+resulting<br>
+goal state (actually, the protected initial statement as a theorem) <br>
+into the<br>
+outer context. I attached an example exposing the various behaviors. <br>
+The<br>
+question is whether these various differences in behavior are <br>
+expected,<br>
+especially the situation when the proof is successfully finished <br>
+inside jEdit,<br>
+but then fails during build by <code>isabelle build</code> command.</p>
+<p>I understand that&gt; normally Isabelle methods do not introduce local<br>
+assumptions or fixed<br>
+variables, so this seems not really critical (no intent to actually <br>
+implement<br>
+such methods for the users), but it would help with the general <br>
+understanding<br>
+to know whether this is totally unspecified to introduce those <br>
+assumptions or<br>
+is merely a pragmatic constraint</p>
+</blockquote>
+<p>Yes, proof methods cannot extend the logical context and expect to<br>
+work properly.</p>
+<p>There are certain principles how proof contexts are <br>
+constructed/deconstructed<br>
+by the Isar language, according to its structure. Some of this is <br>
+explained in<br>
+the "implementation" manual, but the general principle of survival is <br>
+to do<br>
+this in the "usual way", e.g. by looking at existing implementations in <br>
+the<br>
+sources.</p>
+<p>Your theory "Bug" looks very non-standard in various respects. Can you <br>
+say,<br>
+what you are actually trying to do?</p>
+<p>Makarius<br>
+<a href="/user_uploads/14278/JMBjNFiHQnQTjBOmAn4tnEUs/Proof_Context.thy">Proof_Context.thy</a></p>
+</blockquote>
+
+<a name="215977463"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Implicit%20exporting%20of%20goal%20state%20by%20different%20.../near/215977463" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36586isabelleImplicitexportingofgoalstatebydifferent.html#215977463">Email Gateway (Nov 07 2020 at 22:54)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;<br>
+Mikhail Mandrykin писал 2020-11-08 01:33:</p>
+<blockquote>
+<p>The repository with the tutorial is available at<br>
+<a href="https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks">https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks</a><br>
+Sorry, it seems this link won't work, if anyone is interested I uploaded <br>
+a mirror on GitHub at <a href="https://github.com/schrodibear/isabelle-tasks">https://github.com/schrodibear/isabelle-tasks</a></p>
+</blockquote>
+<p>Mikhail</p>
+<blockquote>
+<p>Hello,</p>
+<blockquote>
+<p>Your theory "Bug" looks very non-standard in various respects. Can you <br>
+say,<br>
+what you are actually trying to do?</p>
+</blockquote>
+<p>Actually, I was preparing a small Isabelle/ML programing tutorial for<br>
+relatively experienced functional programmers (in Haskell and OCaml),<br>
+primarily for internal use, to emphasize the features that are needed<br>
+to implement custom proof methods. The tutorial was meant to be very<br>
+practically-oriented and so consisted of a set of example<br>
+implementations that would use only the interfaces from a documented<br>
+set of ML interfaces. So I proceeded in the following way: I just came<br>
+up with a problem, implemented a solution and then documented all the<br>
+interfaces used in the solution using the available documentation as<br>
+well as the knowledge obtained from inspection of the sources during<br>
+the implementation. As one of the final, more complex examples, I<br>
+decided to implement a sample triple of a proof method, an Isar<br>
+command and a local context command to support introduction of<br>
+obtained facts into the local context that would also support goal<br>
+refinement with obtained variables. This is not possible in Pure, but<br>
+in HOL the Hilbert epsilon operator can be used to extract the<br>
+corresponding witness. I actually implemented the tactic and the<br>
+commands (attached the resulting sample theory as Proof_Context.thy)<br>
+and they seem to work as expected, the simplest way to observe them in<br>
+action is in the schematic_goal wf_min'' that directly refines the<br>
+statement using the obtained epsilon-expressions. However, I myself<br>
+did not fully understand the limitations of the proof methods since<br>
+they are actually context-tactics and can return a modified context as<br>
+a result, but I had not found any real examples of methods that would<br>
+alter the context in any way other than by introduction of cases. So<br>
+indeed, the logical context is never modified, only the extra-logical<br>
+part is changed. The sample method <code>hilbert_guess</code> (in<br>
+Proof_Context.thy) thus is not a proper method as it breaks this<br>
+convention by introducing obtained facts into the logical context. So<br>
+when I tried to compile the resulting tutorial document I experienced<br>
+the problems I described and decided to clarify whether this is an<br>
+intended limitation of proof methods, because in practice in many<br>
+cases extending the logical context with assumptions actually works<br>
+(the assumptions are exported by the <code>done</code>/<code>qed</code> commands). So<br>
+because this method is only intended as experimental exploratory code,<br>
+this is not a real issue, the real methods we implemented so far<br>
+(those that work in auxiliary local contexts) all perform the export<br>
+internally and only alter the context for extra-logical purposes e.g.<br>
+remembering a counterexample model extracted from an SMT solver (Z3).<br>
+The repository with the tutorial is available at<br>
+<a href="https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks">https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks</a><br>
+. Currently, we switched to different parts of our framework<br>
+(implementing the shallow embedding and the translator), so the<br>
+tutorial is currently not actively used, but may soon be needed as<br>
+constructing the embedding also requires the use of custom automated<br>
+proofs.</p>
+<p>Regards, Mikhail</p>
+<p>Makarius писал 2020-11-08 00:09:</p>
+<p>On 17/09/2020 19:00, Mikhail Mandrykin wrote:</p>
+<blockquote>
+<blockquote>
+<p>Recently, I experimented with implementation of Isabelle proof <br>
+methods,<br>
+commands and proof elements to learn Isabelle internals more deeply <br>
+as we plan<br>
+to implement Isabelle commands and methods for our program <br>
+verification<br>
+framework. At some point, I encountered quite puzzling behavior of <br>
+commands<br>
+<code>done</code>, <code>by</code> and <code>qed</code> with respect to implicit exporting of the <br>
+resulting<br>
+goal state (actually, the protected initial statement as a theorem) <br>
+into the<br>
+outer context. I attached an example exposing the various behaviors. <br>
+The<br>
+question is whether these various differences in behavior are <br>
+expected,<br>
+especially the situation when the proof is successfully finished <br>
+inside jEdit,<br>
+but then fails during build by <code>isabelle build</code> command.</p>
+<p>I understand that&gt; normally Isabelle methods do not introduce local<br>
+assumptions or fixed<br>
+variables, so this seems not really critical (no intent to actually <br>
+implement<br>
+such methods for the users), but it would help with the general <br>
+understanding<br>
+to know whether this is totally unspecified to introduce those <br>
+assumptions or<br>
+is merely a pragmatic constraint</p>
+</blockquote>
+<p>Yes, proof methods cannot extend the logical context and expect to<br>
+work properly.</p>
+<p>There are certain principles how proof contexts are <br>
+constructed/deconstructed<br>
+by the Isar language, according to its structure. Some of this is <br>
+explained in<br>
+the "implementation" manual, but the general principle of survival is <br>
+to do<br>
+this in the "usual way", e.g. by looking at existing implementations <br>
+in the<br>
+sources.</p>
+<p>Your theory "Bug" looks very non-standard in various respects. Can you <br>
+say,<br>
+what you are actually trying to do?</p>
+<p>Makarius</p>
+</blockquote>
+</blockquote>
+
 
 {% endraw %}
 

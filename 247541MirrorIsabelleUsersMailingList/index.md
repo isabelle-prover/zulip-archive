@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (3 messages, latest: Nov 07 2020 at 21:14)
+* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (4 messages, latest: Nov 07 2020 at 22:54)
 
-* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (2 messages, latest: Nov 07 2020 at 21:09)
+* [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (4 messages, latest: Nov 07 2020 at 22:14)
 
 * [\[isabelle\] Definitional axioms in Isabelle/ML?](64768isabelleDefinitionalaxiomsinIsabelleML.html) (2 messages, latest: Nov 07 2020 at 19:12)
 

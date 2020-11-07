@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Definitional axioms in Isabelle/ML?](64768isabelleDefinitionalaxiomsinIsabelleML.html) (1 message, latest: Nov 07 2020 at 18:10)
+* [\[isabelle\] Definitional axioms in Isabelle/ML?](64768isabelleDefinitionalaxiomsinIsabelleML.html) (2 messages, latest: Nov 07 2020 at 19:12)
 
 * [\[isabelle\] Improvement suggestion for isabelle process](96863isabelleImprovementsuggestionforisabelleprocess.html) (2 messages, latest: Nov 07 2020 at 16:31)
 

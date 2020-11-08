@@ -288,6 +288,34 @@ what you are actually trying to do?</p>
 </blockquote>
 </blockquote>
 
+<a name="215977729"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Implicit%20exporting%20of%20goal%20state%20by%20different%20.../near/215977729" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36586isabelleImplicitexportingofgoalstatebydifferent.html#215977729">Email Gateway (Nov 07 2020 at 23:03)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 07/11/2020 23:33, Mikhail Mandrykin wrote:</p>
+<blockquote>
+<p>However, I myself did<br>
+not fully understand the limitations of the proof methods since they are<br>
+actually context-tactics and can return a modified context as a result, but I<br>
+had not found any real examples of methods that would alter the context in any<br>
+way other than by introduction of cases. So indeed, the logical context is<br>
+never modified, only the extra-logical part is changed.</p>
+</blockquote>
+<p>That is indeed an important observation, both for this concrete situation and<br>
+as a general principle in Isabelle: things that are never done (or only in odd<br>
+exceptional situations) can lead to undefined behaviour.</p>
+<p>Put to the extreme, you can do almost arbitrary non-sense with Isabelle,<br>
+especially in conjunction with logical operations where the programming<br>
+interfaces cannot guarantee the structural integrity of the concepts behind<br>
+it: A theorem might be a theorem, but it could be non-sense or break other<br>
+tools or infrastructure (like Isar proof language elements).</p>
+<blockquote>
+<p>The<br>
+repository with the tutorial is available at<br>
+<a href="https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks">https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks</a></p>
+</blockquote>
+<p>That seems to be non-public.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (4 messages, latest: Nov 07 2020 at 22:54)
+* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (5 messages, latest: Nov 07 2020 at 23:03)
 
 * [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (4 messages, latest: Nov 07 2020 at 22:14)
 

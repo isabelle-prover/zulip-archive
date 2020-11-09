@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [archive of formal proofs](72274archiveofformalproofs.html) (6 messages, latest: Nov 09 2020 at 19:53)
+
 * [Defining partial functions](07211Definingpartialfunctions.html) (44 messages, latest: Nov 09 2020 at 13:41)
 
 * [Using insert on just one subgoal](81134Usinginsertonjustonesubgoal.html) (3 messages, latest: Nov 06 2020 at 13:16)

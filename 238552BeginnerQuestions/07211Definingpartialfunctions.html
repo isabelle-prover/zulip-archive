@@ -1,0 +1,42 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/07211Definingpartialfunctions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html">Defining partial functions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="216035506"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216035506" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216035506">Trinh Le Khanh (Nov 09 2020 at 01:17)</a>:</h4>
+<p>Hi,<br>
+I wanna define a partial function. It works if I define: </p>
+<div class="codehilite"><pre><span></span><code>definition f :: &quot;nat ⇒ nat option&quot;
+where
+&quot;f x = (if x ∈ {1, 2, 3} then Some 0 else None)&quot;
+</code></pre></div>
+<p>But I want to specify the range of the function <code>f</code> is <code>{5,6}</code>, so I defined:</p>
+<div class="codehilite"><pre><span></span><code>definition f :: &quot;nat ⇒ nat option&quot;
+where
+&quot;f x = (if x ∈ {1, 2, 3} then (Some y ∈ {5,6}) else None)&quot;
+</code></pre></div>
+<p>It caused the error:</p>
+<div class="codehilite"><pre><span></span><code>Type unification failed: No type arity option :: numeral
+
+Type error in application: incompatible operand type
+
+Operator:  (∈) (Some y) :: ??&#39;a option set ⇒ bool
+Operand:   {5, 6} :: ??&#39;b set
+</code></pre></div>
+<p>I understand that it considers the return value of <code>Some y ∈ {5,6} </code> is bool, right?<br>
+So, how to specify the range of the function <code>f</code>?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

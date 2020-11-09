@@ -49,6 +49,30 @@ So, how to specify the range of the function <code>f</code>?</p>
 </code></pre></div>
 <p>And again, you cannot know if <code>f(1)</code> is equal to 5 or 6. You cannot distinguish this in Isabelle. However, <code>f(1)</code>, <code>f(2)</code>, and <code>f(3)</code> are equal to the same value.</p>
 
+<a name="216055420"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216055420" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216055420">Trinh Le Khanh (Nov 09 2020 at 08:41)</a>:</h4>
+<p>As I understand, <code>SOME y. y ∈ {5, 6}</code> means that the value is 5 or 6. So why we have to put <code>Some</code> before <code>SOME y. y ∈ {5, 6}</code>?</p>
+
+<a name="216055644"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216055644" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216055644">Fabian Huch (Nov 09 2020 at 08:43)</a>:</h4>
+<p><code>Some</code> is the <code>option</code> constructor for your <code>nat option</code> return value.</p>
+
+<a name="216055845"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216055845" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216055845">Mathias Fleury (Nov 09 2020 at 08:45)</a>:</h4>
+<p>In<br>
+<code>if x ∈ {1, 2, 3} then PLACEHOLDER else None</code></p>
+<p>None has type <code>nat option</code>. So <code>PLACEHOLDER</code> must have the same type. <code>SOME y. y ∈ {5, 6}</code> has type <code>nat</code>. You need either to convert the <code>nat</code> to <code>nat option</code> by <code>Some</code>. Or change None to something of type <code>nat</code> (like <code>undefined</code> or a default value)</p>
+
+<a name="216056027"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216056027" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216056027">Trinh Le Khanh (Nov 09 2020 at 08:46)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20partial.20functions/near/216055845">said</a>:</p>
+<blockquote>
+<p>In<br>
+<code>if x ∈ {1, 2, 3} then PLACEHOLDER else None</code></p>
+<p>None has type <code>nat option</code>. So <code>PLACEHOLDER</code> must have the same type. <code>SOME y. y ∈ {5, 6}</code> has type <code>nat</code>. You need either to convert the <code>nat</code> to <code>nat option</code> by <code>Some</code>. Or change None to something of type <code>nat</code> (like <code>undefined</code> or a default value)</p>
+</blockquote>
+<p>It's very clear. Thank you for your explanation.</p>
+
 
 {% endraw %}
 

@@ -73,6 +73,64 @@ So, how to specify the range of the function <code>f</code>?</p>
 </blockquote>
 <p>It's very clear. Thank you for your explanation.</p>
 
+<a name="216058445"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216058445" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216058445">Trinh Le Khanh (Nov 09 2020 at 09:13)</a>:</h4>
+<p>For the function:</p>
+<div class="codehilite"><pre><span></span><code>definition f :: &quot;nat ⇒ nat option&quot;
+where
+&quot;f x = (if x ∈ {1, 2, 3} then Some(SOME y. y ∈ {5, 6}) else None)&quot;
+</code></pre></div>
+<p>I check the range of it like this:</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;ran f = {5,6}&quot;
+  unfolding f_def ran_def
+  apply auto
+  done
+</code></pre></div>
+<p>And the result is:</p>
+<div class="codehilite"><pre><span></span><code>proof (prove)
+goal (14 subgoals):
+ 1. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 2. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 3. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 4. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 5. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 6. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 7. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 8. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 9. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+ 10. (SOME y. y = 5 ∨ y = 6) ≠ 5 ⟹ (SOME y. y = 5 ∨ y = 6) = 6
+A total of 14 subgoals...
+</code></pre></div>
+<p>I think that subgoals should be proved by <code>simp</code> because </p>
+<div class="codehilite"><pre><span></span><code>P ⟹ Q ≡ ¬P ∨ Q ≡
+(SOME y. y = 5 ∨ y = 6) = 5 ∨ (SOME y. y = 5 ∨ y = 6) = 6
+</code></pre></div>
+<p>So why this lemma cannot be proved?</p>
+
+<a name="216058960"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216058960" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216058960">Mathias Fleury (Nov 09 2020 at 09:18)</a>:</h4>
+<ol>
+<li>you need to help simp, for example with <code> using someI[of \&lt;open&gt;%y. y \&lt;in&gt; {5,6}\&lt;close&gt;, of 5]</code></li>
+<li>your realize that your lemma is wrong, right?</li>
+</ol>
+
+<a name="216058995"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216058995" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216058995">Mathias Fleury (Nov 09 2020 at 09:19)</a>:</h4>
+<p>It is wrong due to:</p>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20partial.20functions/near/216046293">said</a>:</p>
+<blockquote>
+<p><code>f(1)</code>, <code>f(2)</code>, and <code>f(3)</code> are equal to the same value.</p>
+</blockquote>
+
+<a name="216061472"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216061472" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216061472">Mathias Fleury (Nov 09 2020 at 09:45)</a>:</h4>
+<p>I think most of the conversion comes from the fact that you don't understand some. You are confusing it with non-determinism, which is the wrong way of seeing it.</p>
+<p>Hilbert choice takes a predicate as argument. If there is no way to make the predicate true, some non-specified constant is returned. Otherwise, it returns some non-specified constant fulfilling the predicate.</p>
+<p>What does non-specified mean? It means that you cannot know which elements is returned and the element changes every time Isabelle is restarted (roughly speaking).</p>
+<p>What is the difference with non-determinism? Well, the returned is _always_ the same within one Isabelle execution. That means that <code>(SOME y::nat. y = 5 ∨ y = 6)</code> will return the same element as <code>(SOME y::nat. y = 5 ∨ y = 6)</code>, <code>(SOME y::nat. y = 5 ∨ y = 6)</code>, and <code>(SOME y::nat. y = 5 ∨ y = 6)</code>. This is not the same as non-determinsm, where <code>rand()</code>, <code>rand()</code>, <code>rand()</code>,  and <code>rand()</code>, can return different values [1].</p>
+<p>What does that mean for your use case? It means that you need to do recursion to be construct the mapping and _exclude the elements mapped so far_. This is also entails that your current approach does not work.</p>
+<p>[1] other examples include file parsing, reading environment values, looking at a thermometer, ...</p>
+
 
 {% endraw %}
 

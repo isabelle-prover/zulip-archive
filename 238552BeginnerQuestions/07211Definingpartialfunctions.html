@@ -239,6 +239,122 @@ If so, it's true for the command:</p>
 <p>So <code>ran f = {N}</code>. Either <code>ran f = {5}</code> or <code>ran f = {6}</code> holds. That is all you can say.</p>
 <p>But many things don't hold:  <code>ran f = {5,6}</code> <em>never</em> holds. Same for <code>ran f = {4}</code>.</p>
 
+<a name="216074838"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216074838" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216074838">Mathias Fleury (Nov 09 2020 at 12:01)</a>:</h4>
+<p>Maybe this view helps you more: <code>SOME y. y ∈ {5, 6}</code> is a constant. But it is constant only I (technically, the model) knows. But it is only a constant.</p>
+
+<a name="216075714"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216075714" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216075714">Trinh Le Khanh (Nov 09 2020 at 12:11)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20partial.20functions/near/216074251">said</a>:</p>
+<blockquote>
+<p>So <code>ran f = {N}</code>. Either <code>ran f = {5}</code> or <code>ran f = {6}</code> holds. That is all you can say.</p>
+<p>But many things don't hold:  <code>ran f = {5,6}</code> <em>never</em> holds. Same for <code>ran f = {4}</code>.</p>
+</blockquote>
+<p>Following your explanation, I changed the lemma to:</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;ran f = {5} ∨ ran f = {6}&quot;
+  unfolding f_def ran_def
+  apply simp
+  done
+</code></pre></div>
+<p>and it's still unprovable</p>
+<div class="codehilite"><pre><span></span><code>Failed to finish proof:
+goal (1 subgoal):
+ 1. {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {5} ∨
+    {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {6}
+</code></pre></div>
+
+<a name="216076055"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216076055" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216076055">Mathias Fleury (Nov 09 2020 at 12:15)</a>:</h4>
+<p>In that case, it is provable. simp is not strong enough…</p>
+
+<a name="216076065"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216076065" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216076065">Mathias Fleury (Nov 09 2020 at 12:15)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>lemma
+  defines  ‹N == (SOME y :: nat. y = 5 ∨ y = 6)›
+  shows
+‹{b::nat. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {5} ∨
+    {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {6::nat}
+›
+  using someI[of \&lt;open&gt;%y::nat. y = 5 ∨ y = 6\&lt;close&gt;, of 5]
+  unfolding N_def[symmetric]
+  by auto
+</code></pre></div>
+
+<a name="216076563"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216076563" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216076563">Trinh Le Khanh (Nov 09 2020 at 12:21)</a>:</h4>
+<p>But it seems went too far from my purpose. I intend to check the range of the function <code>f x = (if x ∈ {1, 2, 3} then Some(SOME y. y ∈ {5, 6}) else None)</code>.<br>
+I mean that if <code>y</code> is either <code>5</code> or <code>6</code>, the range is <code>{5,6}</code></p>
+
+<a name="216078016"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216078016" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216078016">Mathias Fleury (Nov 09 2020 at 12:36)</a>:</h4>
+<p>Thee range is the set of all possible values from f</p>
+
+<a name="216078037"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216078037" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216078037">Mathias Fleury (Nov 09 2020 at 12:36)</a>:</h4>
+<p>you have either 5 or 6, but not both</p>
+
+<a name="216078385"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216078385" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216078385">Mathias Fleury (Nov 09 2020 at 12:40)</a>:</h4>
+<p>let's try to be more formal, maybe that helps.</p>
+<p>There is a model of HOL where N is 5. In that world, <code>ran f = {5}</code>.</p>
+<p>There is another model of HOL where N is 6. In that world, <code>ran f = {6}</code>.</p>
+<p>In Isabelle you are in one of those two models (and you don't know which).</p>
+
+<a name="216078639"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216078639" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216078639">Trinh Le Khanh (Nov 09 2020 at 12:44)</a>:</h4>
+<p>Yes, that's why I tried this lemma: </p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;ran f = {5} ∨ ran f = {6}&quot;
+  unfolding f_def ran_def
+  apply auto
+  done
+</code></pre></div>
+<p>It should be proved without adding <code>defines</code> and <code>shows</code> parts.</p>
+
+<a name="216078861"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216078861" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216078861">Mathias Fleury (Nov 09 2020 at 12:46)</a>:</h4>
+<p>Generally, <code>SOME</code> tends to confuse auto and make thinks more complicated</p>
+
+<a name="216078907"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216078907" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216078907">Mathias Fleury (Nov 09 2020 at 12:47)</a>:</h4>
+<p>Therefore I replaced the <code>SOME...</code> by <code>N</code> and called auto. The defines just makes that possible</p>
+
+<a name="216079005"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216079005" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216079005">Mathias Fleury (Nov 09 2020 at 12:48)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="353155">Trinh Le Khanh</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20partial.20functions/near/216078639">said</a>:</p>
+<blockquote>
+<p>It should be proved without adding <code>defines</code> and <code>shows</code> parts.</p>
+</blockquote>
+<p>There is no guarantee on what auto can and cannot ...</p>
+
+<a name="216079114"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216079114" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216079114">Mathias Fleury (Nov 09 2020 at 12:50)</a>:</h4>
+<p>Actually you don't need the defines:</p>
+<div class="codehilite"><pre><span></span><code>lemma
+‹{b::nat. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {5} ∨
+    {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {6::nat}
+›
+  using someI[of \&lt;open&gt;%y::nat. y = 5 ∨ y = 6\&lt;close&gt;, of 5]
+  by auto
+</code></pre></div>
+
 
 {% endraw %}
 

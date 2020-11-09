@@ -316,6 +316,161 @@ repository with the tutorial is available at<br>
 <p>That seems to be non-public.</p>
 <p>Makarius</p>
 
+<a name="216107835"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Implicit%20exporting%20of%20goal%20state%20by%20different%20.../near/216107835" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36586isabelleImplicitexportingofgoalstatebydifferent.html#216107835">Email Gateway (Nov 09 2020 at 16:23)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;</p>
+<blockquote>
+<p>Could you please fix your Isabelle theory?</p>
+</blockquote>
+<p>In Isabelle2020 it seems to be slight incompatibility in the definition <br>
+of <code>asym</code> inductive predicate in <code>Relation.thy</code>: it was simplified in <br>
+the development version (would-be 2021) by removing an extra premise <br>
+<code>irrefl R</code>, which causes the failure. I pushed a fix into <code>Isabelle2020</code> <br>
+compatibility branch</p>
+<p>Mikhail</p>
+<p>Buday Gergely писал 2020-11-09 12:29:</p>
+<blockquote>
+<p>I cloned your github repository and ran</p>
+<p>isabelle build -D .</p>
+<p>to get</p>
+<p>Running Tasks ...<br>
+Tasks FAILED<br>
+(see also<br>
+C:\Users\EKE\.isabelle\Isabelle2020\heaps\polyml-5.8.1_x86_64_32-windows\log\Tasks)<br>
+\&lt;Longrightarrow&gt; ?thesis<br>
+\&lt;lbrakk&gt;bij ?f;<br>
+ \&lt;And&gt;x.<br>
+    \&lt;lbrakk&gt;?y = ?f x;<br>
+     \&lt;And&gt;x'. ?y = ?f x' \&lt;Longrightarrow&gt; x' = x\&lt;rbrakk&gt;<br>
+    \&lt;Longrightarrow&gt; ?thesis\&lt;rbrakk&gt;<br>
+\&lt;Longrightarrow&gt; ?thesis</p>
+<p>Could you please fix your Isabelle theory?</p>
+<ul>
+<li>Gergely</li>
+</ul>
+<p>11/7/2020 11:53 PM keltezéssel, Mikhail Mandrykin írta:</p>
+<blockquote>
+<p>Mikhail Mandrykin писал 2020-11-08 01:33:</p>
+<blockquote>
+<p>The repository with the tutorial is available at<br>
+<a href="https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks">https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks</a><br>
+Sorry, it seems this link won't work, if anyone is interested I <br>
+uploaded a mirror on GitHub at <br>
+<a href="https://github.com/schrodibear/isabelle-tasks">https://github.com/schrodibear/isabelle-tasks</a></p>
+</blockquote>
+<p>Mikhail</p>
+<blockquote>
+<p>Hello,</p>
+<blockquote>
+<p>Your theory "Bug" looks very non-standard in various respects. Can <br>
+you say,<br>
+what you are actually trying to do?</p>
+</blockquote>
+<p>Actually, I was preparing a small Isabelle/ML programing tutorial for<br>
+relatively experienced functional programmers (in Haskell and OCaml),<br>
+primarily for internal use, to emphasize the features that are needed<br>
+to implement custom proof methods. The tutorial was meant to be very<br>
+practically-oriented and so consisted of a set of example<br>
+implementations that would use only the interfaces from a documented<br>
+set of ML interfaces. So I proceeded in the following way: I just <br>
+came<br>
+up with a problem, implemented a solution and then documented all the<br>
+interfaces used in the solution using the available documentation as<br>
+well as the knowledge obtained from inspection of the sources during<br>
+the implementation. As one of the final, more complex examples, I<br>
+decided to implement a sample triple of a proof method, an Isar<br>
+command and a local context command to support introduction of<br>
+obtained facts into the local context that would also support goal<br>
+refinement with obtained variables. This is not possible in Pure, but<br>
+in HOL the Hilbert epsilon operator can be used to extract the<br>
+corresponding witness. I actually implemented the tactic and the<br>
+commands (attached the resulting sample theory as Proof_Context.thy)<br>
+and they seem to work as expected, the simplest way to observe them <br>
+in<br>
+action is in the schematic_goal wf_min'' that directly refines the<br>
+statement using the obtained epsilon-expressions. However, I myself<br>
+did not fully understand the limitations of the proof methods since<br>
+they are actually context-tactics and can return a modified context <br>
+as<br>
+a result, but I had not found any real examples of methods that would<br>
+alter the context in any way other than by introduction of cases. So<br>
+indeed, the logical context is never modified, only the extra-logical<br>
+part is changed. The sample method <code>hilbert_guess</code> (in<br>
+Proof_Context.thy) thus is not a proper method as it breaks this<br>
+convention by introducing obtained facts into the logical context. So<br>
+when I tried to compile the resulting tutorial document I experienced<br>
+the problems I described and decided to clarify whether this is an<br>
+intended limitation of proof methods, because in practice in many<br>
+cases extending the logical context with assumptions actually works<br>
+(the assumptions are exported by the <code>done</code>/<code>qed</code> commands). So<br>
+because this method is only intended as experimental exploratory <br>
+code,<br>
+this is not a real issue, the real methods we implemented so far<br>
+(those that work in auxiliary local contexts) all perform the export<br>
+internally and only alter the context for extra-logical purposes e.g.<br>
+remembering a counterexample model extracted from an SMT solver (Z3).<br>
+The repository with the tutorial is available at<br>
+<a href="https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks">https://forge.ispras.ru/projects/isabelle-tutorial/repository/isabelle-tasks</a> <br>
+. Currently, we switched to different parts of our framework<br>
+(implementing the shallow embedding and the translator), so the<br>
+tutorial is currently not actively used, but may soon be needed as<br>
+constructing the embedding also requires the use of custom automated<br>
+proofs.</p>
+<p>Regards, Mikhail</p>
+<p>Makarius писал 2020-11-08 00:09:</p>
+<p>On 17/09/2020 19:00, Mikhail Mandrykin wrote:</p>
+<blockquote>
+<blockquote>
+<p>Recently, I experimented with implementation of Isabelle proof <br>
+methods,<br>
+commands and proof elements to learn Isabelle internals more deeply <br>
+as we plan<br>
+to implement Isabelle commands and methods for our program <br>
+verification<br>
+framework. At some point, I encountered quite puzzling behavior of <br>
+commands<br>
+<code>done</code>, <code>by</code> and <code>qed</code> with respect to implicit exporting of the <br>
+resulting<br>
+goal state (actually, the protected initial statement as a theorem) <br>
+into the<br>
+outer context. I attached an example exposing the various <br>
+behaviors. The<br>
+question is whether these various differences in behavior are <br>
+expected,<br>
+especially the situation when the proof is successfully finished <br>
+inside jEdit,<br>
+but then fails during build by <code>isabelle build</code> command.</p>
+<p>I understand that&gt; normally Isabelle methods do not introduce local<br>
+assumptions or fixed<br>
+variables, so this seems not really critical (no intent to actually <br>
+implement<br>
+such methods for the users), but it would help with the general <br>
+understanding<br>
+to know whether this is totally unspecified to introduce those <br>
+assumptions or<br>
+is merely a pragmatic constraint</p>
+</blockquote>
+<p>Yes, proof methods cannot extend the logical context and expect to<br>
+work properly.</p>
+<p>There are certain principles how proof contexts are <br>
+constructed/deconstructed<br>
+by the Isar language, according to its structure. Some of this is <br>
+explained in<br>
+the "implementation" manual, but the general principle of survival <br>
+is to do<br>
+this in the "usual way", e.g. by looking at existing implementations <br>
+in the<br>
+sources.</p>
+<p>Your theory "Bug" looks very non-standard in various respects. Can <br>
+you say,<br>
+what you are actually trying to do?</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
 
 {% endraw %}
 

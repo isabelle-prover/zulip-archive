@@ -131,6 +131,41 @@ A total of 14 subgoals...
 <p>What does that mean for your use case? It means that you need to do recursion to be construct the mapping and _exclude the elements mapped so far_. This is also entails that your current approach does not work.</p>
 <p>[1] other examples include file parsing, reading environment values, looking at a thermometer, ...</p>
 
+<a name="216064453"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216064453" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216064453">Trinh Le Khanh (Nov 09 2020 at 10:16)</a>:</h4>
+<p>So, when I use <code>Some</code>, the return values of each running time are different, right?</p>
+
+<a name="216065027"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216065027" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216065027">Mathias Fleury (Nov 09 2020 at 10:23)</a>:</h4>
+<p><code>(SOME y::nat. y = 5 ∨ y = 6) = (SOME y::nat. y = 5 ∨ y = 6)</code> is always true, so no.</p>
+
+<a name="216065077"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216065077" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216065077">Mathias Fleury (Nov 09 2020 at 10:23)</a>:</h4>
+<p>Unlike a C version like<code>rand() == rand()</code>.</p>
+
+<a name="216067809"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216067809" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216067809">Trinh Le Khanh (Nov 09 2020 at 10:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Defining.20partial.20functions/near/216058960">said</a>:</p>
+<blockquote>
+<ol>
+<li>you need to help simp, for example with <code> using someI[of \&lt;open&gt;%y. y \&lt;in&gt; {5,6}\&lt;close&gt;, of 5]</code></li>
+<li>your realize that your lemma is wrong, right?</li>
+</ol>
+</blockquote>
+<p>After applying it, the output is:</p>
+<div class="codehilite"><pre><span></span><code>proof (prove)
+using this:
+  5 ∈ {5, 6} ⟹ (SOME y. y ∈ {5, 6}) ∈ {5, 6}
+
+goal (1 subgoal):
+ 1. {b. ∃a. (if a ∈ {1, 2, 3} then Some (SOME y. y ∈ {5, 6}) else None) = Some b} = {5, 6}
+</code></pre></div>
+<p>Actually, I don't know what's wrong. Can you explain it?</p>
+
+<a name="216067920"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216067920" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216067920">Mathias Fleury (Nov 09 2020 at 10:51)</a>:</h4>
+<p><code>using someI[of \&lt;open&gt;%y. y \&lt;in&gt; {5,6}\&lt;close&gt;, of 5]  apply simp</code></p>
+
 
 {% endraw %}
 

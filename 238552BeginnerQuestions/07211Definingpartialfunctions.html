@@ -36,6 +36,19 @@ Operand:   {5, 6} :: ??&#39;b set
 <p>I understand that it considers the return value of <code>Some y ∈ {5,6} </code> is bool, right?<br>
 So, how to specify the range of the function <code>f</code>?</p>
 
+<a name="216046138"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216046138" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216046138">Mathias Fleury (Nov 09 2020 at 05:51)</a>:</h4>
+<p>On syntax level, you are confusing <code>Some</code> and <code>SOME y. y ∈ {5,6}</code>. What you have should type for <code>Some (SOME y. y ∈ {5,6})</code>.</p>
+
+<a name="216046293"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216046293" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216046293">Mathias Fleury (Nov 09 2020 at 05:55)</a>:</h4>
+<p>On the conceptual level, you are not defining what you intend to.</p>
+<p>Assume you fix your definition with <code>Some (SOME y. y ∈ {5,6})</code>. Your function f will be defined by:</p>
+<div class="codehilite"><pre><span></span><code>  f: 1,2, or 3 -&gt; some value of {5, 6}, the same for 1, 2, and 3
+     _               -&gt; None
+</code></pre></div>
+<p>And again, you cannot know if <code>f(1)</code> is equal to 5 or 6. You cannot distinguish this in Isabelle. However, <code>f(1)</code>, <code>f(2)</code>, and <code>f(3)</code> are equal to the same value.</p>
+
 
 {% endraw %}
 

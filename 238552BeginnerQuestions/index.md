@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Defining partial functions](07211Definingpartialfunctions.html) (16 messages, latest: Nov 09 2020 at 10:51)
+* [Defining partial functions](07211Definingpartialfunctions.html) (28 messages, latest: Nov 09 2020 at 11:55)
 
 * [Using insert on just one subgoal](81134Usinginsertonjustonesubgoal.html) (3 messages, latest: Nov 06 2020 at 13:16)
 

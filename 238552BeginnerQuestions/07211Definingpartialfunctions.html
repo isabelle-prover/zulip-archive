@@ -166,6 +166,79 @@ goal (1 subgoal):
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216067920" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216067920">Mathias Fleury (Nov 09 2020 at 10:51)</a>:</h4>
 <p><code>using someI[of \&lt;open&gt;%y. y \&lt;in&gt; {5,6}\&lt;close&gt;, of 5]  apply simp</code></p>
 
+<a name="216072245"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216072245" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216072245">Trinh Le Khanh (Nov 09 2020 at 11:35)</a>:</h4>
+<p>The output is:</p>
+<div class="codehilite"><pre><span></span><code>proof (prove)
+goal (1 subgoal):
+ 1. (SOME y. y = 5 ∨ y = 6) = 5 ∨ (SOME y. y = 5 ∨ y = 6) = 6 ⟹
+    {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {5, 6}
+</code></pre></div>
+<p>it equals to</p>
+<div class="codehilite"><pre><span></span><code> {b. ∃a.(a = Suc 0 ∨ a = 2 ∨ a = 3) ∧ (SOME y. y = 5 ∨ y = 6) = b)} = {5,6}
+</code></pre></div>
+<p>I think it's TRUE.</p>
+
+<a name="216072597"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216072597" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216072597">Mathias Fleury (Nov 09 2020 at 11:39)</a>:</h4>
+<p>No it is not.</p>
+
+<a name="216072716"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216072716" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216072716">Mathias Fleury (Nov 09 2020 at 11:40)</a>:</h4>
+<p>We know that <code>(SOME y. y = 5 ∨ y = 6)</code> is either 5 or 6, but let's call it <code>N</code>.</p>
+
+<a name="216072903"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216072903" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216072903">Mathias Fleury (Nov 09 2020 at 11:42)</a>:</h4>
+<p>your set is:</p>
+<p><code> {b. ∃a.(a = Suc 0 ∨ a = 2 ∨ a = 3) ∧ N = b}</code></p>
+<p>By miniscoping this is the same as:</p>
+<p><code> {b. (∃a.(a = Suc 0 ∨ a = 2 ∨ a = 3) )∧ N = b}</code></p>
+<p>Now, <code>∃a.(a = Suc 0 ∨ a = 2 ∨ a = 3) </code> is true. So we can simplify the set to:</p>
+<p><code> {b. True ∧ N = b}</code></p>
+<p>Therefore, the set is equal to</p>
+<p><code>{N}</code></p>
+
+<a name="216072955"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216072955" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216072955">Mathias Fleury (Nov 09 2020 at 11:42)</a>:</h4>
+<p>And <code>{N}</code> is not equal to <code>{5,6}</code></p>
+
+<a name="216073037"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216073037" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216073037">Mathias Fleury (Nov 09 2020 at 11:43)</a>:</h4>
+<p>As I said before, the choice value does <em>not change</em>. It is always the same.</p>
+
+<a name="216073798"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216073798" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216073798">Trinh Le Khanh (Nov 09 2020 at 11:50)</a>:</h4>
+<p>As I understand your explanation, <code>y</code> should be <code>{5}</code> or <code>{6}</code> not <code>{5,6}</code> right?<br>
+If so, it's true for the command:</p>
+<div class="codehilite"><pre><span></span><code>&quot;f x = (if x ∈ {1, 2, 3} then Some(SOME y. y ∈ {5, 6}) else None)&quot;
+</code></pre></div>
+<p>but in the lemma, I check the range of the function. So if <code>y = {5} or {6}</code> so the <code>ran f = {5, 6}</code> right?</p>
+
+<a name="216073882"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216073882" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216073882">Mathias Fleury (Nov 09 2020 at 11:51)</a>:</h4>
+<p>Let's be precise first: <code>y</code> is <code>5</code> or <code>6</code>, not <code>{5}</code> or <code>{6}</code></p>
+
+<a name="216073989"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216073989" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216073989">Trinh Le Khanh (Nov 09 2020 at 11:52)</a>:</h4>
+<p>ah yes, my bad, I'm following the set then made this mistake.</p>
+
+<a name="216073999"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216073999" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216073999">Mathias Fleury (Nov 09 2020 at 11:52)</a>:</h4>
+<p>Your definition is equivalent to:</p>
+<p><code>f x = (if x ∈ {1, 2, 3} then Some N else None)</code></p>
+
+<a name="216074083"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216074083" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216074083">Mathias Fleury (Nov 09 2020 at 11:53)</a>:</h4>
+<p>The <code>N</code> is constant. It has a single value. It does not change never. NEVER.</p>
+
+<a name="216074251"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216074251" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216074251">Mathias Fleury (Nov 09 2020 at 11:55)</a>:</h4>
+<p>So <code>ran f = {N}</code>. Either <code>ran f = {5}</code> or <code>ran f = {6}</code> holds. That is all you can say.</p>
+<p>But many things don't hold:  <code>ran f = {5,6}</code> <em>never</em> holds. Same for <code>ran f = {4}</code>.</p>
+
 
 {% endraw %}
 

@@ -355,6 +355,39 @@ I mean that if <code>y</code> is either <code>5</code> or <code>6</code>, the ra
   by auto
 </code></pre></div>
 
+<a name="216080999"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216080999" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216080999">Trinh Le Khanh (Nov 09 2020 at 13:07)</a>:</h4>
+<p>Maybe I still confuse about the proving process. I summary that, from the lemma:</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;ran f = {5} ∨ ran f = {6}&quot;
+  unfolding f_def ran_def
+  apply simp
+</code></pre></div>
+<p>I got the subgoal:</p>
+<div class="codehilite"><pre><span></span><code>goal (1 subgoal):
+ 1. {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {5} ∨
+    {b. ∃a. (a = Suc 0 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 2 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧
+            (a = 3 ⟶ (SOME y. y = 5 ∨ y = 6) = b) ∧ (a = Suc 0 ∨ a = 2 ∨ a = 3)} =
+    {6}
+</code></pre></div>
+<p>Then, I remove my lemma and create a lemma for this subgoal as you presented. Right?<br>
+If so, we just prove the subgoal, it doesn't mean that the lemma is proved.</p>
+
+<a name="216081201"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216081201" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216081201">Mathias Fleury (Nov 09 2020 at 13:09)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>lemma &quot;ran f = {5} ∨ ran f = {6}&quot;
+  unfolding f_def ran_def
+  using someI[of ‹λy::nat. y = 5 ∨ y = 6›, of 5]
+  by auto
+</code></pre></div>
+
+<a name="216084546"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Defining%20partial%20functions/near/216084546" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/07211Definingpartialfunctions.html#216084546">Trinh Le Khanh (Nov 09 2020 at 13:41)</a>:</h4>
+<p>Thank you. I also try <code>using someI[of ‹λy::nat. y ∈ {5,6}›]</code> and it worked. I have one more question, how do you know what rule should be applied for the proving? For instance, <code>someI</code> in this lemma.</p>
+
 
 {% endraw %}
 

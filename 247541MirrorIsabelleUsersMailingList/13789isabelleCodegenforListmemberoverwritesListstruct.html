@@ -1,0 +1,45 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/13789isabelleCodegenforListmemberoverwritesListstruct.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/13789isabelleCodegenforListmemberoverwritesListstruct.html">[isabelle] Codegen for List.member overwrites List struct...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="216190902"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Codegen%20for%20List.member%20overwrites%20List%20struct.../near/216190902" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/13789isabelleCodegenforListmemberoverwritesListstruct.html#216190902">Email Gateway (Nov 10 2020 at 10:01)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+Dear all,</p>
+<p>it seems that the special code generation setup for List.member in<br>
+theory "HOL-Library.Predicate_Compile_Alternative_Defs" overwrites SML's<br>
+List structure, which means you cannot access any of the standard List<br>
+functions after including the generated code.</p>
+<p>Minimal code:</p>
+<div class="codehilite"><pre><span></span><code>theory Scratch
+  imports Main &quot;HOL-Library.Predicate_Compile_Alternative_Defs&quot;
+begin
+
+inductive is_member :: &quot;&#39;a list ⇒ &#39;a ⇒ bool&quot; where
+  &quot;List.member xs x ⟹ is_member xs x&quot;
+
+code_pred is_member .
+
+export_code is_member in SML
+
+end
+</code></pre></div>
+<p>My current fix is to assign the original List structure to another<br>
+structure before importing the generated SML code.</p>
+<p>Best regards,<br>
+David Kretzmer</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

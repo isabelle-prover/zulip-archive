@@ -9,9 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] AutoCorres 1.7 and CParser 1.17 for Isabelle2020](05325isabelleAutoCorres17andCParser117forIsabelle2020.html) (1 message, latest: Nov 10 2020 at 02:20)
+* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (7 messages, latest: Nov 10 2020 at 10:11)
 
-* [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (6 messages, latest: Nov 09 2020 at 16:23)
+* [\[isabelle\] Codegen for List.member overwrites List struct...](13789isabelleCodegenforListmemberoverwritesListstruct.html) (1 message, latest: Nov 10 2020 at 10:01)
+
+* [\[isabelle\] AutoCorres 1.7 and CParser 1.17 for Isabelle2020](05325isabelleAutoCorres17andCParser117forIsabelle2020.html) (1 message, latest: Nov 10 2020 at 02:20)
 
 * [\[isabelle\] How do I set --maxheap greater than 16G on Linux?](98589isabelleHowdoIsetmaxheapgreaterthan16GonLinux.html) (4 messages, latest: Nov 07 2020 at 22:14)
 

@@ -39,6 +39,28 @@ structure before importing the generated SML code.</p>
 <p>Best regards,<br>
 David Kretzmer</p>
 
+<a name="216265511"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Codegen%20for%20List.member%20overwrites%20List%20struct.../near/216265511" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/13789isabelleCodegenforListmemberoverwritesListstruct.html#216265511">Email Gateway (Nov 10 2020 at 19:58)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+Hi Florian,</p>
+<p>ah, you are right. I was a bit confused because the theory<br>
+"HOL-Library.Predicate_Compile_Alternative_Defs" already contains the<br>
+following code_identifier:</p>
+<p>code_identifier constant member_i_i<br>
+   ⇀ (SML) "List.member_i_i"<br>
+  and (OCaml) "List.member_i_i"<br>
+  and (Haskell) "List.member_i_i"<br>
+  and (Scala) "List.member_i_i"</p>
+<p>Here, "List.member_i_i" for SML was the problem. But you are right, one<br>
+can simply add another code_identifier later, which then overwrites the<br>
+previous one.</p>
+<p>However, this feels more like a hack. Other List functions (fold etc)<br>
+are put into a "Lista" structure so as to not collide with the standard<br>
+"List" structure of SML. Why is this different for member_i_i?</p>
+<p>Anyway, thank you for this fix!</p>
+<p>Best regards,<br>
+David</p>
+
 
 {% endraw %}
 

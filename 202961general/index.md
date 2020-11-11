@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Change ISABELLE_HOME_USER](22958ChangeISABELLEHOMEUSER.html) (2 messages, latest: Nov 11 2020 at 10:53)
+* [Change ISABELLE_HOME_USER](22958ChangeISABELLEHOMEUSER.html) (3 messages, latest: Nov 11 2020 at 11:29)
 
 * [split all case expressions](74501splitallcaseexpressions.html) (7 messages, latest: Nov 02 2020 at 17:50)
 

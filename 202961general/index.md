@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Change ISABELLE_HOME_USER](22958ChangeISABELLEHOMEUSER.html) (2 messages, latest: Nov 11 2020 at 10:53)
+
 * [split all case expressions](74501splitallcaseexpressions.html) (7 messages, latest: Nov 02 2020 at 17:50)
 
 * [Discharging OFCLASS assumption](22178DischargingOFCLASSassumption.html) (3 messages, latest: Oct 22 2020 at 13:16)

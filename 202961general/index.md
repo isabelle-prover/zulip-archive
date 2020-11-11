@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Debugging output in a tactic](70446Debuggingoutputinatactic.html) (2 messages, latest: Nov 11 2020 at 16:59)
+* [Debugging output in a tactic](70446Debuggingoutputinatactic.html) (5 messages, latest: Nov 11 2020 at 17:06)
 
 * [Change ISABELLE_HOME_USER](22958ChangeISABELLEHOMEUSER.html) (3 messages, latest: Nov 11 2020 at 11:29)
 

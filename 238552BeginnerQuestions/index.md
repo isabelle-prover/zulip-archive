@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [referring to a definition](91346referringtoadefinition.html) (10 messages, latest: Nov 11 2020 at 09:50)
+
 * [archive of formal proofs](72274archiveofformalproofs.html) (6 messages, latest: Nov 09 2020 at 19:53)
 
 * [Defining partial functions](07211Definingpartialfunctions.html) (44 messages, latest: Nov 09 2020 at 13:41)

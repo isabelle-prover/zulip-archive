@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Survey on the AFP](15517isabelleSurveyontheAFP.html) (1 message, latest: Nov 11 2020 at 09:59)
+
 * [\[isabelle\] Codegen for List.member overwrites List struct...](13789isabelleCodegenforListmemberoverwritesListstruct.html) (2 messages, latest: Nov 10 2020 at 19:58)
 
 * [\[isabelle\] Implicit exporting of goal state by different ...](36586isabelleImplicitexportingofgoalstatebydifferent.html) (7 messages, latest: Nov 10 2020 at 10:11)

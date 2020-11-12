@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] scala-isabelle: A library for interfacing with...](23507isabellescalaisabelleAlibraryforinterfacingwith.html) (1 message, latest: Nov 12 2020 at 13:23)
+
 * [\[isabelle\] Codegen for List.member overwrites List struct...](13789isabelleCodegenforListmemberoverwritesListstruct.html) (3 messages, latest: Nov 12 2020 at 08:28)
 
 * [\[isabelle\] Survey on the AFP](15517isabelleSurveyontheAFP.html) (1 message, latest: Nov 11 2020 at 09:59)

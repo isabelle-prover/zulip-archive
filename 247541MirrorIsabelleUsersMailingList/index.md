@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] ROOT file for imported theory](50628isabelleROOTfileforimportedtheory.html) (2 messages, latest: Nov 12 2020 at 14:37)
+
 * [\[isabelle\] scala-isabelle: A library for interfacing with...](23507isabellescalaisabelleAlibraryforinterfacingwith.html) (1 message, latest: Nov 12 2020 at 13:23)
 
 * [\[isabelle\] Codegen for List.member overwrites List struct...](13789isabelleCodegenforListmemberoverwritesListstruct.html) (3 messages, latest: Nov 12 2020 at 08:28)

@@ -1,0 +1,69 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/50628isabelleROOTfileforimportedtheory.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/50628isabelleROOTfileforimportedtheory.html">[isabelle] ROOT file for imported theory</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="216472764"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ROOT%20file%20for%20imported%20theory/near/216472764" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/50628isabelleROOTfileforimportedtheory.html#216472764">Email Gateway (Nov 12 2020 at 14:12)</a>:</h4>
+<p>From: Buday Gergely via Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi,</p>
+<p>I import a theory from the HOL directory:</p>
+<p>imports "~~/src/HOL/IMP/Big_Step"</p>
+<p>and name it in the ROOT file:</p>
+<p>session induction = HOL +<br>
+   options [document = pdf, document_output = "output"]<br>
+   theories [document = false]<br>
+     "~~/src/HOL/IMP/Big_Step"<br>
+   theories<br>
+     "Induction"<br>
+   document_files<br>
+     "root.tex" "build"</p>
+<p>but then I get:</p>
+<p>$ isabelle build -D .<br>
+*** Implicit use of directory <br>
+"/cygdrive/d/isabelle/Isabelle2020/src/HOL/IMP" for theory "induction.AExp"<br>
+*** Implicit use of directory <br>
+"/cygdrive/d/isabelle/Isabelle2020/src/HOL/IMP" for theory "induction.BExp"<br>
+*** Implicit use of directory <br>
+"/cygdrive/d/isabelle/Isabelle2020/src/HOL/IMP" for theory "induction.Com"<br>
+*** Implicit use of directory <br>
+"/cygdrive/d/isabelle/Isabelle2020/src/HOL/IMP" for theory <br>
+"induction.Big_Step"<br>
+*** Implicit use of session directories: <br>
+"/cygdrive/d/isabelle/Isabelle2020/src/HOL/IMP"</p>
+<p>I get this even without mentioning the imported theory file in ROOT.</p>
+<p>What shall I do?</p>
+<p>I use Isabelle 2020.</p>
+<ul>
+<li>Gergely</li>
+</ul>
+
+<a name="216475922"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ROOT%20file%20for%20imported%20theory/near/216475922" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/50628isabelleROOTfileforimportedtheory.html#216475922">Email Gateway (Nov 12 2020 at 14:37)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+If I understand correctly, the correct way to include a dependency<br>
+outside of your session would be to do this:</p>
+<p>sessions<br>
+  "HOL-IMP"<br>
+theories [document = false]<br>
+  "HOL-IMP.Big-step"</p>
+<p>However, you might want to base your entire session on HOL-IMP instead<br>
+of just HOL. This will result in better caching;</p>
+<p>session induction = "HOL-IMP" +<br>
+...</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

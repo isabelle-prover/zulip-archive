@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Implicit use of directory](74227Implicituseofdirectory.html) (2 messages, latest: Nov 12 2020 at 12:58)
+
 * [referring to a definition](91346referringtoadefinition.html) (11 messages, latest: Nov 11 2020 at 10:09)
 
 * [archive of formal proofs](72274archiveofformalproofs.html) (6 messages, latest: Nov 09 2020 at 19:53)

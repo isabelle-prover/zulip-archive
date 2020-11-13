@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: AI planning](90830isabelleNewintheAFPAIplanning.html) (1 message, latest: Nov 13 2020 at 13:24)
+
 * [\[isabelle\] ROOT file for imported theory](50628isabelleROOTfileforimportedtheory.html) (3 messages, latest: Nov 13 2020 at 07:17)
 
 * [\[isabelle\] scala-isabelle: A library for interfacing with...](23507isabellescalaisabelleAlibraryforinterfacingwith.html) (1 message, latest: Nov 12 2020 at 13:23)

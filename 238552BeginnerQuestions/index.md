@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [typesetting a former definition](85366typesettingaformerdefinition.html) (1 message, latest: Nov 13 2020 at 08:40)
+
 * [Implicit use of directory](74227Implicituseofdirectory.html) (6 messages, latest: Nov 13 2020 at 07:51)
 
 * [referring to a definition](91346referringtoadefinition.html) (11 messages, latest: Nov 11 2020 at 10:09)

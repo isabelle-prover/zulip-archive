@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Implicit use of directory](74227Implicituseofdirectory.html) (4 messages, latest: Nov 12 2020 at 14:32)
+* [Implicit use of directory](74227Implicituseofdirectory.html) (6 messages, latest: Nov 13 2020 at 07:51)
 
 * [referring to a definition](91346referringtoadefinition.html) (11 messages, latest: Nov 11 2020 at 10:09)
 

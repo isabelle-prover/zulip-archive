@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (1 message, latest: Nov 13 2020 at 18:36)
+
+* [\[isabelle\] Weak lemma:	HOL-Algebra.Multiplicative_Group.g...](80180isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (1 message, latest: Nov 13 2020 at 18:30)
+
 * [\[isabelle\] New in the AFP: AI planning](90830isabelleNewintheAFPAIplanning.html) (1 message, latest: Nov 13 2020 at 13:24)
 
 * [\[isabelle\] ROOT file for imported theory](50628isabelleROOTfileforimportedtheory.html) (3 messages, latest: Nov 13 2020 at 07:17)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Counting lines of code/definition vs proof?](06354isabelleCountinglinesofcodedefinitionvsproof.html) (1 message, latest: Nov 14 2020 at 04:11)
+
 * [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (1 message, latest: Nov 13 2020 at 18:36)
 
 * [\[isabelle\] Weak lemma:	HOL-Algebra.Multiplicative_Group.g...](80180isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (1 message, latest: Nov 13 2020 at 18:30)

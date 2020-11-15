@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] NFM2021 - Second Call for Papers](19351isabelleNFM2021SecondCallforPapers.html) (1 message, latest: Nov 14 2020 at 11:50)
+* [\[isabelle\] Typos in lemma names](62288isabelleTyposinlemmanames.html) (2 messages, latest: Nov 15 2020 at 14:02)
 
-* [\[isabelle\] Typos in lemma names](62288isabelleTyposinlemmanames.html) (1 message, latest: Nov 14 2020 at 11:41)
+* [\[isabelle\] NFM2021 - Second Call for Papers](19351isabelleNFM2021SecondCallforPapers.html) (1 message, latest: Nov 14 2020 at 11:50)
 
 * [\[isabelle\] Counting lines of code/definition vs proof?](06354isabelleCountinglinesofcodedefinitionvsproof.html) (1 message, latest: Nov 14 2020 at 04:11)
 

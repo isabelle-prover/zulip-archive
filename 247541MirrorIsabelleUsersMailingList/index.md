@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (1 message, latest: Nov 16 2020 at 07:59)
+
 * [\[isabelle\] Typos in lemma names](62288isabelleTyposinlemmanames.html) (2 messages, latest: Nov 15 2020 at 14:02)
 
 * [\[isabelle\] NFM2021 - Second Call for Papers](19351isabelleNFM2021SecondCallforPapers.html) (1 message, latest: Nov 14 2020 at 11:50)

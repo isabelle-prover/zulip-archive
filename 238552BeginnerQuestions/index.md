@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (1 message, latest: Nov 16 2020 at 16:32)
+
 * [typesetting a former definition](85366typesettingaformerdefinition.html) (1 message, latest: Nov 13 2020 at 08:40)
 
 * [Implicit use of directory](74227Implicituseofdirectory.html) (6 messages, latest: Nov 13 2020 at 07:51)

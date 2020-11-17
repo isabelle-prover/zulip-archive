@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (1 message, latest: Nov 16 2020 at 16:32)
+* [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (2 messages, latest: Nov 17 2020 at 06:09)
 
 * [typesetting a former definition](85366typesettingaformerdefinition.html) (1 message, latest: Nov 13 2020 at 08:40)
 

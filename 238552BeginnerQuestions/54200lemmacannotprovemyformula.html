@@ -138,6 +138,10 @@ lemma &quot;(¬ P 0 14 ∧ ¬ P 1 12 ∧ ¬ P 1 13 ∨
 </code></pre></div>
 <p>It worked. Could you explain why Isabelle cannot prove my first formula, please?</p>
 
+<a name="216969448"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/216969448" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#216969448">Mathias Fleury (Nov 17 2020 at 06:09)</a>:</h4>
+<p>Tracing the simplifier shows that simp is already looping, but it is not immediately clear to me why (<code>P 0 14 ⟹ ?x1 ∈ {10, 14} - {14} ⟹ P 0 ?x1</code> is generated and repeatedly rewritten, whatever the reason).</p>
+
 
 {% endraw %}
 

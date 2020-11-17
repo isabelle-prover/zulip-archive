@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Code generation for non-terminating functions](56411isabelleCodegenerationfornonterminatingfunctions.html) (2 messages, latest: Nov 17 2020 at 18:47)
+
 * [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (1 message, latest: Nov 16 2020 at 07:59)
 
 * [\[isabelle\] Typos in lemma names](62288isabelleTyposinlemmanames.html) (2 messages, latest: Nov 15 2020 at 14:02)

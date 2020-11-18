@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Manually using a SideKick parser](62424isabelleManuallyusingaSideKickparser.html) (1 message, latest: Nov 18 2020 at 12:29)
+
 * [\[isabelle\] Local varification/unvarification in Isabelle/ML?](53684isabelleLocalvarificationunvarificationinIsabelleML.html) (1 message, latest: Nov 18 2020 at 00:09)
 
 * [\[isabelle\] Code generation for non-terminating functions](56411isabelleCodegenerationfornonterminatingfunctions.html) (3 messages, latest: Nov 17 2020 at 19:57)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Local varification/unvarification in Isabelle/ML?](53684isabelleLocalvarificationunvarificationinIsabelleML.html) (1 message, latest: Nov 18 2020 at 00:09)
+
 * [\[isabelle\] Code generation for non-terminating functions](56411isabelleCodegenerationfornonterminatingfunctions.html) (3 messages, latest: Nov 17 2020 at 19:57)
 
 * [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (1 message, latest: Nov 16 2020 at 07:59)

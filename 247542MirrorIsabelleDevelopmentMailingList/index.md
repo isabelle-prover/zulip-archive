@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Manually using a SideKick parser](48324isabelledevManuallyusingaSideKickparser.html) (1 message, latest: Nov 17 2020 at 21:02)
+* [\[isabelle-dev\] Manually using a SideKick parser](48324isabelledevManuallyusingaSideKickparser.html) (2 messages, latest: Nov 18 2020 at 07:00)
 
 * [\[isabelle-dev\] Issues with unnamed top-level facts in Isa...](98061isabelledevIssueswithunnamedtoplevelfactsinIsa.html) (7 messages, latest: Nov 09 2020 at 13:40)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Question about "try" and future tasks](49028isabelleQuestionabouttryandfuturetasks.html) (1 message, latest: Nov 19 2020 at 00:49)
+
 * [\[isabelle\] Manually using a SideKick parser](62424isabelleManuallyusingaSideKickparser.html) (1 message, latest: Nov 18 2020 at 12:29)
 
 * [\[isabelle\] Local varification/unvarification in Isabelle/ML?](53684isabelleLocalvarificationunvarificationinIsabelleML.html) (1 message, latest: Nov 18 2020 at 00:09)

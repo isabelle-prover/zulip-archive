@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [polynomials](62584polynomials.html) (15 messages, latest: Nov 19 2020 at 12:37)
+* [polynomials](62584polynomials.html) (16 messages, latest: Nov 19 2020 at 16:20)
 
 * [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (2 messages, latest: Nov 17 2020 at 06:09)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Another Issue with Isabelle/jEdit with macOS B...](00683isabelleAnotherIssuewithIsabellejEditwithmacOSB.html) (3 messages, latest: Nov 19 2020 at 16:42)
+
 * [\[isabelle\] Counting lines of code/definition vs proof?](06354isabelleCountinglinesofcodedefinitionvsproof.html) (2 messages, latest: Nov 19 2020 at 13:55)
 
 * [\[isabelle\] Manually using a SideKick parser](62424isabelleManuallyusingaSideKickparser.html) (2 messages, latest: Nov 19 2020 at 11:47)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] two proof-assistant friendly posts of Lecturer...](83868isabelletwoproofassistantfriendlypostsofLecturer.html) (1 message, latest: Nov 20 2020 at 13:11)
+
 * [\[isabelle\] Another Issue with Isabelle/jEdit with macOS B...](00683isabelleAnotherIssuewithIsabellejEditwithmacOSB.html) (5 messages, latest: Nov 20 2020 at 11:07)
 
 * [\[isabelle\] Counting lines of code/definition vs proof?](06354isabelleCountinglinesofcodedefinitionvsproof.html) (2 messages, latest: Nov 19 2020 at 13:55)

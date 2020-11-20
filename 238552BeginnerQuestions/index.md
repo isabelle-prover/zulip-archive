@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [polynomials](62584polynomials.html) (16 messages, latest: Nov 19 2020 at 16:20)
+* [Using LaTeXsugar](41447UsingLaTeXsugar.html) (3 messages, latest: Nov 20 2020 at 11:50)
+
+* [polynomials](62584polynomials.html) (17 messages, latest: Nov 20 2020 at 11:49)
 
 * [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (2 messages, latest: Nov 17 2020 at 06:09)
 

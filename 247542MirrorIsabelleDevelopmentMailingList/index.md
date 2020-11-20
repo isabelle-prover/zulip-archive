@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Bug in Isabelle 2019/2020](39035isabelledevBuginIsabelle20192020.html) (1 message, latest: Nov 20 2020 at 08:38)
+* [\[isabelle-dev\] Bug in Isabelle 2019/2020](39035isabelledevBuginIsabelle20192020.html) (3 messages, latest: Nov 20 2020 at 09:39)
 
 * [\[isabelle-dev\] Manually using a SideKick parser](48324isabelledevManuallyusingaSideKickparser.html) (3 messages, latest: Nov 18 2020 at 12:26)
 

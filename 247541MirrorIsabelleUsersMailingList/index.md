@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (1 message, latest: Nov 21 2020 at 05:56)
+
+* [\[isabelle\] Bug? Or still just confusing correct behavior?](37267isabelleBugOrstilljustconfusingcorrectbehavior.html) (1 message, latest: Nov 21 2020 at 05:25)
+
 * [\[isabelle\] two proof-assistant friendly posts of Lecturer...](83868isabelletwoproofassistantfriendlypostsofLecturer.html) (1 message, latest: Nov 20 2020 at 13:11)
 
 * [\[isabelle\] Another Issue with Isabelle/jEdit with macOS B...](00683isabelleAnotherIssuewithIsabellejEditwithmacOSB.html) (5 messages, latest: Nov 20 2020 at 11:07)

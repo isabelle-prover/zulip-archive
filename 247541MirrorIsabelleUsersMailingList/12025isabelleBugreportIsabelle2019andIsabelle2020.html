@@ -31,6 +31,37 @@ Peter Reitinger<br>
 <a href="/user_uploads/14278/2q4cNAbUktf_F_LnoJ2WuVjk/Show_bug2.thy">Show_bug2.thy</a></p>
 <div class="message_inline_image"><a href="/user_uploads/14278/4j3DzjEPqn6eMYOedd5kiTl-/image.png" title="image.png"><img src="/user_uploads/14278/4j3DzjEPqn6eMYOedd5kiTl-/image.png"></a></div>
 
+<a name="217498957"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Bug%20report%20Isabelle%202019%20and%20Isabelle%202020/near/217498957" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/12025isabelleBugreportIsabelle2019andIsabelle2020.html#217498957">Email Gateway (Nov 21 2020 at 12:03)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/11/2020 06:56, Peter Reitinger wrote:</p>
+<blockquote>
+<p>sorry for recently reporting just confusing behavior because of<br>
+polymorphism as a bug.</p>
+<p>But this time, I am very sure to have observed a bug, if creation of a memory<br>
+dump characterizes a bug. ;-)</p>
+</blockquote>
+<p>The "bug" terminology does not make much sense beyond a certain complexity of<br>
+systems (or rather a multi-system compound like the Isabelle ecosystem). You<br>
+do have a large space that is "inhabitable", but you also have uncharted areas<br>
+where things don't work.</p>
+<blockquote>
+<p>First the screenshot:</p>
+<p>image.png</p>
+</blockquote>
+<p>I recommend to copy paste actual source text and output, unless this is a<br>
+problem of GUI rendering or interaction.</p>
+<p>The relevant part of the error is this:</p>
+<p>/home/makarius/lib/Isabelle2020/contrib/z3-4.4.0pre-3/x86_64-linux/z3<br>
+smt.random_seed\=1 smt.refine_inj_axioms\=false -T:10 -smt2<br>
+/tmp/isabelle-makarius/process1270985018603270244/cache-io-3287480 &gt;<br>
+/tmp/isabelle-makarius/process1270985018603270244/cache-io-3287482 2&gt;&amp;1</p>
+<p>So this is a hard crash of the (rather old) version of z3 that we are using.</p>
+<p>There have been other z3 inconveniences before, but I guess we can't upgrade<br>
+it easily.</p>
+<p>Maybe an expert on the Isabelle/z3 can say more about the situation.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

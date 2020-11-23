@@ -142,6 +142,34 @@ lemma &quot;(¬ P 0 14 ∧ ¬ P 1 12 ∧ ¬ P 1 13 ∨
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/216969448" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#216969448">Mathias Fleury (Nov 17 2020 at 06:09)</a>:</h4>
 <p>Tracing the simplifier shows that simp is already looping, but it is not immediately clear to me why (<code>P 0 14 ⟹ ?x1 ∈ {10, 14} - {14} ⟹ P 0 ?x1</code> is generated and repeatedly rewritten, whatever the reason).</p>
 
+<a name="217578587"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/217578587" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#217578587">Trinh Le Khanh (Nov 23 2020 at 00:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/lemma.20cannot.20prove.20my.20formula/near/216969448">said</a>:</p>
+<blockquote>
+<p>Tracing the simplifier shows that simp is already looping, but it is not immediately clear to me why (<code>P 0 14 ⟹ ?x1 ∈ {10, 14} - {14} ⟹ P 0 ?x1</code> is generated and repeatedly rewritten, whatever the reason).</p>
+</blockquote>
+<p>Hi Mathias,<br>
+What is the difference between <code>⟹</code> and  <code>≡</code> in lemma?<br>
+As I understand, <code>⟹</code> is considered as <em>imply</em> (but <code>P ⟹ Q ⟹ R</code> means <code>(P &amp; Q) --&gt; R</code><br>
+Meanwhile,  <code>≡</code> is to present the equivalence between two formulas (e.g. <code>P ≡ Q</code>)<br>
+Is that right?<br>
+I tested these two lemmas and both of them are provable. I think in this case,  <code>⟹</code> and  <code>≡</code> are the same</p>
+<div class="codehilite"><pre><span></span><code>lemma: &quot;∀x ∈ {0, 1}. P x ⟹ P 0 ∧ P 1&quot;
+  by auto
+</code></pre></div>
+<div class="codehilite"><pre><span></span><code>lemma: &quot;∀x ∈ {0, 1}. P x ≡ P 0 ∧ P 1&quot;
+  by auto
+</code></pre></div>
+<p>Then, I tested a concrete example that is</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;((P 1 ⟶ ¬ P 2) ∧ (P 2 ⟶ ¬ P 1)) ⟹ (¬ P 1 ∨ ¬ P 2)&quot;
+by auto
+</code></pre></div>
+<p>It is provable.</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;((P 1 ⟶ ¬ P 2) ∧ (P 2 ⟶ ¬ P 1)) ≡ (¬ P 1 ∨ ¬ P 2)&quot;
+by auto
+</code></pre></div>
+<p>It's unprovable. However, if I use <code>argo</code> instead of  <code>auto</code>, both of them are provable. Could you explain and confirm my understanding, please?</p>
+
 
 {% endraw %}
 

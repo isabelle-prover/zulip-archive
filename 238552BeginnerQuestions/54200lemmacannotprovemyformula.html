@@ -187,6 +187,31 @@ I asked this because when I used <code>==</code> instead of <code>==&gt;</code>,
   done
 </code></pre></div>
 
+<a name="217603138"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/217603138" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#217603138">Mathias Fleury (Nov 23 2020 at 09:08)</a>:</h4>
+<p><code>≡</code> is equal on the Pure level, not implication.</p>
+
+<a name="217603200"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/217603200" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#217603200">Mathias Fleury (Nov 23 2020 at 09:08)</a>:</h4>
+<p>I believe in your case it works because the LHS and the RHS are simplified separately, instead of being simplified together..</p>
+
+<a name="217603643"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/217603643" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#217603643">Trinh Le Khanh (Nov 23 2020 at 09:13)</a>:</h4>
+<p>I'm clear. Thank you for your explanation.</p>
+
+<a name="217607679"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/lemma%20cannot%20prove%20my%20formula/near/217607679" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/54200lemmacannotprovemyformula.html#217607679">Trinh Le Khanh (Nov 23 2020 at 09:54)</a>:</h4>
+<p>I made a mistake, the lemma could not be proved directly. It has a subgoal. However,  the subgoal can be proved using <code>smt</code>. </p>
+<div class="codehilite"><pre><span></span><code>lemma test_f:  &quot;((P (Suc 0) 11 ⟶ ¬ P (Suc 0) 12 ∧ ¬ P (Suc 0) 13) ∧
+    (P (Suc 0) 12 ⟶ (∀h1∈{11, 12, 13} - {12}. ¬ P (Suc 0) h1)) ∧
+    (P (Suc 0) 13 ⟶ (∀h1∈{11, 12, 13} - {13}. ¬ P (Suc 0) h1))) ⟹
+    (¬ P (Suc 0) 12 ∧ ¬ P (Suc 0) 13 ∨
+    (∀h1∈{11, 12, 13} - {12}. ¬ P (Suc 0) h1) ∨ (∀h1∈{11, 12, 13} - {13}. ¬ P (Suc 0) h1))&quot;
+  apply smt
+  done
+</code></pre></div>
+<p>is that possible to integrate the subgoals to the main goal lemma? I tried to name the lemma for the subgoal as "test_f" and <code>using test_f</code> in the main goal but didn't work.</p>
+
 
 {% endraw %}
 

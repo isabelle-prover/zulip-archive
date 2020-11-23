@@ -136,6 +136,21 @@ have asked experts to see which solver is wrong.</p>
 <p>Thanks for reporting,</p>
 <p>Mathias</p>
 
+<a name="217609539"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Bug%20report%20Isabelle%202019%20and%20Isabelle%202020/near/217609539" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/12025isabelleBugreportIsabelle2019andIsabelle2020.html#217609539">Email Gateway (Nov 23 2020 at 10:13)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi all,</p>
+<p>Some explanation on the bug. The SMT-Lib format makes it possible to <br>
+write (_ bv4 9) to mean 4 :: 9 word. However, if the word does not fit, <br>
+like for 3 :: 1 word, it is not clear what this means.</p>
+<p>If the solver accepts it, it has to discard the leftover bits <br>
+(truncating the number). But the SMT-Lib format is not explicit about <br>
+that and CVC4 rejects the problem file.</p>
+<p>The solution is to generate 1:: 1 word (corresponding to _bv1 1) instead <br>
+of <code>3 :: 1 word</code> (corresponding to _bv3 1).</p>
+<p>I am currently testing a fix for that.</p>
+<p>Mathias</p>
+
 
 {% endraw %}
 

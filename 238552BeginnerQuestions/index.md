@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (3 messages, latest: Nov 23 2020 at 00:28)
+* [lemma cannot prove my formula](54200lemmacannotprovemyformula.html) (4 messages, latest: Nov 23 2020 at 05:49)
 
 * [Using LaTeXsugar](41447UsingLaTeXsugar.html) (3 messages, latest: Nov 20 2020 at 11:50)
 

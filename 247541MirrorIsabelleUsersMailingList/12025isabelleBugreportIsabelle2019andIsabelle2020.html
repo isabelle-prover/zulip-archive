@@ -62,6 +62,60 @@ it easily.</p>
 <p>Maybe an expert on the Isabelle/z3 can say more about the situation.</p>
 <p>Makarius</p>
 
+<a name="217585651"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Bug%20report%20Isabelle%202019%20and%20Isabelle%202020/near/217585651" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/12025isabelleBugreportIsabelle2019andIsabelle2020.html#217585651">Email Gateway (Nov 23 2020 at 03:23)</a>:</h4>
+<p>From: Peter Reitinger &lt;<a href="mailto:peter.reitinger@gmail.com">peter.reitinger@gmail.com</a>&gt;<br>
+Hi again,</p>
+<p>maybe this helps...</p>
+<p>Here I could produce a crash in "cvc4" with modified Word_Examples:</p>
+<p>theory Word_Examples<br>
+  imports Word_Bitwise<br>
+begin<br>
+(* commented previous lemmas out *)<br>
+lemma "slice 3 (0b101111::6 word) = (0b101::3 word)" by simp<br>
+(* BEGIN preitinger *)<br>
+declare [[show_sorts]]<br>
+lemma "takefill False (size (1::6 word) - (3::nat)) (to_bl (1::6 word)) =<br>
+[False, False, False]"<br>
+  apply sledgehammer</p>
+<p>Sledgehammering...<br>
+/tmp/isabelle-peter/process3745657003709610034/bash_script3287864: Zeile 1:<br>
+ 6505 Abgebrochen             (Speicherabzug geschrieben)<br>
+/home/peter/isabelle/Isabelle2020/contrib/cvc4-1.5-5/x86_64-linux/cvc4<br>
+--full-saturate-quant --inst-when\=full-last-call --inst-no-entail<br>
+--term-db-mode\=relevant --multi-trigger-linear --no-statistics<br>
+--random-seed\=1 --lang\=smt2 --continued-execution --tlimit 9990<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3287858 &gt;<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3287860 2&gt;&amp;1<br>
+/tmp/isabelle-peter/process3745657003709610034/bash_script3292002: Zeile 1:<br>
+ 6520 Abgebrochen             (Speicherabzug geschrieben)<br>
+/home/peter/isabelle/Isabelle2020/contrib/cvc4-1.5-5/x86_64-linux/cvc4<br>
+--full-saturate-quant --inst-when\=full-last-call --inst-no-entail<br>
+--term-db-mode\=relevant --multi-trigger-linear --no-statistics<br>
+--random-seed\=1 --lang\=smt2 --continued-execution --tlimit 9845<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3291998 &gt;<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3292000 2&gt;&amp;1<br>
+/tmp/isabelle-peter/process3745657003709610034/bash_script3298144: Zeile 1:<br>
+ 6618 Abgebrochen             (Speicherabzug geschrieben)<br>
+/home/peter/isabelle/Isabelle2020/contrib/cvc4-1.5-5/x86_64-linux/cvc4<br>
+--full-saturate-quant --inst-when\=full-last-call --inst-no-entail<br>
+--term-db-mode\=relevant --multi-trigger-linear --no-statistics<br>
+--random-seed\=1 --lang\=smt2 --continued-execution --tlimit 3923<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3298140 &gt;<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3298142 2&gt;&amp;1<br>
+/tmp/isabelle-peter/process3745657003709610034/bash_script3298666: Zeile 1:<br>
+ 6626 Abgebrochen             (Speicherabzug geschrieben)<br>
+/home/peter/isabelle/Isabelle2020/contrib/cvc4-1.5-5/x86_64-linux/cvc4<br>
+--full-saturate-quant --inst-when\=full-last-call --inst-no-entail<br>
+--term-db-mode\=relevant --multi-trigger-linear --no-statistics<br>
+--random-seed\=1 --lang\=smt2 --continued-execution --tlimit 3827<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3298662 &gt;<br>
+/tmp/isabelle-peter/process3745657003709610034/cache-io-3298664 2&gt;&amp;1<br>
+"e": Timed out<br>
+"cvc4": The prover crashed<br>
+"z3": Timed out<br>
+"vampire": Timed out</p>
+
 
 {% endraw %}
 

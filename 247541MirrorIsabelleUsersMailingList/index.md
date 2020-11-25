@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Looking for partner to teach course on Isabell...](91692isabelleLookingforpartnertoteachcourseonIsabell.html) (1 message, latest: Nov 25 2020 at 10:02)
+
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (6 messages, latest: Nov 23 2020 at 10:13)
 
 * [\[isabelle\] Bug? Or still just confusing correct behavior?](37267isabelleBugOrstilljustconfusingcorrectbehavior.html) (1 message, latest: Nov 21 2020 at 05:25)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Pretty-printing primed identifiers](11121isabellePrettyprintingprimedidentifiers.html) (1 message, latest: Nov 26 2020 at 11:28)
+
 * [\[isabelle\] Looking for partner to teach course on Isabell...](91692isabelleLookingforpartnertoteachcourseonIsabell.html) (1 message, latest: Nov 25 2020 at 10:02)
 
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (6 messages, latest: Nov 23 2020 at 10:13)

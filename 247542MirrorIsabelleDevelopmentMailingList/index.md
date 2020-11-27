@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\]  Towards localized syntax: bundle mixins f...](55748isabelledevTowardslocalizedsyntaxbundlemixinsf.html) (1 message, latest: Nov 21 2020 at 08:01)
+* [\[isabelle-dev\]  Towards localized syntax: bundle mixins f...](55748isabelledevTowardslocalizedsyntaxbundlemixinsf.html) (2 messages, latest: Nov 27 2020 at 17:46)
 
 * [\[isabelle-dev\] Bug in Isabelle 2019/2020](39035isabelledevBuginIsabelle20192020.html) (3 messages, latest: Nov 20 2020 at 09:39)
 

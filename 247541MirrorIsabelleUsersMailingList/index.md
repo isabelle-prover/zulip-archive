@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] new in the AFP](10483isabellenewintheAFP.html) (1 message, latest: Nov 27 2020 at 14:10)
+
 * [\[isabelle\] superfluous assumptions in comm_append_are_rep...](51982isabellesuperfluousassumptionsincommappendarerep.html) (3 messages, latest: Nov 26 2020 at 18:31)
 
 * [\[isabelle\] Pretty-printing primed identifiers](11121isabellePrettyprintingprimedidentifiers.html) (1 message, latest: Nov 26 2020 at 11:28)

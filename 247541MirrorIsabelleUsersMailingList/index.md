@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] NASA Formal Methods Symposium (NFM2021) -- Fin...](22720isabelleNASAFormalMethodsSymposiumNFM2021Fin.html) (1 message, latest: Nov 28 2020 at 09:22)
+
 * [\[isabelle\] new in the AFP](10483isabellenewintheAFP.html) (1 message, latest: Nov 27 2020 at 14:10)
 
 * [\[isabelle\] superfluous assumptions in comm_append_are_rep...](51982isabellesuperfluousassumptionsincommappendarerep.html) (3 messages, latest: Nov 26 2020 at 18:31)

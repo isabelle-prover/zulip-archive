@@ -1,0 +1,104 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/33942isabelleObservationsonZF.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/33942isabelleObservationsonZF.html">[isabelle] Observations on ZF</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="218181891"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Observations%20on%20ZF/near/218181891" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/33942isabelleObservationsonZF.html#218181891">Email Gateway (Nov 28 2020 at 21:29)</a>:</h4>
+<p>From: Pedro Sánchez Terraf &lt;<a href="mailto:sterraf@famaf.unc.edu.ar">sterraf@famaf.unc.edu.ar</a>&gt;<br>
+Hope everyone is doing fine, and that this email is not much too long <br>
+for the list standards.</p>
+<p>I've gathered some minor observations/suggestions concerning the logic <br>
+ZF and the ZF-Constructible session. I hope they are of some use to make <br>
+the sources more coherent, especially since we are getting closer to RCs <br>
+season.</p>
+<hr>
+<p><em>ZF</em></p>
+<ol>
+<li>There is a duplicate hypothesis in "InfCard_csquare_eq".</li>
+<li>
+<p>The names "lepoll_imp_Card_le" and "well_ord_lepoll_imp_Card_le"<br>
+    seem to be a slight typo, since the relevant term is "cardinal", not<br>
+    "Card".</p>
+</li>
+<li>
+<p>I noted that the precedence of some binders that output a set (big<br>
+    union "UN", big intersection "INT" and "Lamda") is too low to work<br>
+    well with equality (for instance,<br>
+    "Z=⋃i∈J. X(i)"<br>
+    does not parse).</p>
+</li>
+<li>
+<p>Very early in the development, some alternative names were set for<br>
+    the definitions of some terms (notably "The", "Image", "If", which<br>
+    are called "the_def", "image_def", "if_def", resp., instead of the<br>
+    default capitalized versions). This is a bit misleading. The<br>
+    associated lemmas are also stated in lower case.</p>
+</li>
+</ol>
+<hr>
+<p><em>ZF-Constructible</em></p>
+<ol>
+<li>
+<p>A better name for "separation_closed" would be "Collect_closed" (as<br>
+    other similar closure lemmas; in this case, it states that the model<br>
+    M is closed under the term "Collect").</p>
+</li>
+<li>
+<p>Two nameless lemmas in ZF-Constructible.Formula are declared [simp].<br>
+    Appropriate names could be "sats_Member_iff" and "sats_Equal_iff".</p>
+</li>
+<li>
+<p>In the same spirit, I would suggest "obase_exists" --&gt;<br>
+    "obase_closed" in theory Rank. In the same file, some text comments<br>
+    refer to undefined terms "oB" and "om" that might be "obase" and<br>
+    "omap", instead.</p>
+</li>
+<li>
+<p>One of the main results in Rank.thy (right after well_ord_abs) does<br>
+    not have a name. It is not quite an "ordertype_abs", because it<br>
+    doesn't relate the absolute and relative versions of that concept. A<br>
+    possible name follows from the text comments right before its<br>
+    statement: "ordertypes_are_absolute". (Incidentally, I have a proof<br>
+    of a proper "ordertype_abs", but it is not in good shape right now.)</p>
+</li>
+<li>
+<p>"pred_set_abs" in ZF-Constructible.Wellorderings holds in the weaker<br>
+    locale M_trans.</p>
+</li>
+<li>
+<p>The theorem name "L_axioms.range_type" clashes with a similar<br>
+    "func.range_type". Perhaps it would be better to have<br>
+    "L_axioms.range_fm_type" (since we are typing the term "range_fm").<br>
+    However, there are great many theorems that seem to follow the same<br>
+    naming convention.</p>
+</li>
+<li>
+<p>Perhaps there is a better name for "Relative.M_trans.nonempty" (like<br>
+    "M_zero" or "zero_into_M").</p>
+</li>
+</ol>
+<hr>
+<p>I'm including a patch (output of "hg diff") with most of the suggested <br>
+changes, except the last items in each list (applying them would have <br>
+global consequences in both sessions). The changes seem not to affect <br>
+any theory below ZF (builds are all successful).</p>
+<p>Best wishes,</p>
+<p>PST.-<br>
+<a href="http://cs.famaf.unc.edu.ar/~pedro/home_en">cs.famaf.unc.edu.ar/~pedro/home_en</a> <br>
+&lt;<a href="https://cs.famaf.unc.edu.ar/~pedro/home_en.html">https://cs.famaf.unc.edu.ar/~pedro/home_en.html</a>&gt;<br>
+<a href="/user_uploads/14278/5ueJ23SAxjMb3FGNzLsHS0ng/patch">patch</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

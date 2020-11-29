@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Observations on ZF](33942isabelleObservationsonZF.html) (1 message, latest: Nov 28 2020 at 21:29)
+* [\[isabelle\] Observations on ZF](33942isabelleObservationsonZF.html) (4 messages, latest: Nov 29 2020 at 12:49)
 
 * [\[isabelle\] NASA Formal Methods Symposium (NFM2021) -- Fin...](22720isabelleNASAFormalMethodsSymposiumNFM2021Fin.html) (1 message, latest: Nov 28 2020 at 09:22)
 

@@ -60,6 +60,27 @@ This library isn't supported anymore?</p>
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218278105" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218278105">Mathias Fleury (Nov 30 2020 at 12:03)</a>:</h4>
 <p>For executable set: the theory does not exist anymore in <code>HOL/Library</code>. I don't know what changed, but most likely you don't need that import anyway.</p>
 
+<a name="218282928"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218282928" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218282928">Trinh Le Khanh (Nov 30 2020 at 13:00)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Import.20Executable_Set/near/218277821">said</a>:</p>
+<blockquote>
+<p>To convert a set to a list in an <em>executable</em> way you need a way to make the conversion <em>deterministic</em>. <code>sorted_list_of_set</code> does it by using the natural order relation.</p>
+</blockquote>
+<p>I'm not clear about <code>making the conversion *deterministic*</code> much. Can you give me some hints, please?</p>
+
+<a name="218288352"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218288352" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218288352">Mathias Fleury (Nov 30 2020 at 13:53)</a>:</h4>
+<p>take the set {2,3,4} and the lists: </p>
+<div class="codehilite"><pre><span></span><code>[2,3,4]
+[4,2,3]
+[2,2,3,3,4]
+</code></pre></div>
+<p>all these lists  (and many others) respect the conditions <code>set xs = {2,3,4}</code>. Which one do you pick?</p>
+
+<a name="218288713"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218288713" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218288713">Mathias Fleury (Nov 30 2020 at 13:56)</a>:</h4>
+<p>What you tried to write is <code>SPEC(%xs. set xs = {2,3,4})</code>. Now you also expect to see a lists such that you do computations on it. Therefore, you want to restrict <code>(%xs. set xs = {2,3,4})</code> to return a <em>single</em> result.</p>
+
 
 {% endraw %}
 

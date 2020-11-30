@@ -1,0 +1,41 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/94121ImportExecutableSet.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html">Import Executable_Set</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="218266190"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218266190" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218266190">Trinh Le Khanh (Nov 30 2020 at 09:50)</a>:</h4>
+<p>Hi everybody,</p>
+<p>I wrote a function to convert a set to a list</p>
+<div class="codehilite"><pre><span></span><code>fun convert_set_to_list :: &quot;&#39;a set ⇒ &#39;a list&quot; where
+  &quot;convert_set_to_list {} =  []&quot; |
+  &quot;convert_set_to_list (insert x A) = [x] @ convert_set_to_list A&quot;
+</code></pre></div>
+<p>the output showed: </p>
+<div class="codehilite"><pre><span></span><code>Non-constructor pattern not allowed in sequential mode.
+convert_set_to_list {} = []
+</code></pre></div>
+<p>I found a solution that I should import <code>Executable_Set</code> to use <code>{}</code> directly in this forum: <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2008-January/msg00035.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2008-January/msg00035.html</a><br>
+However, when I type <code>imports Main "~~/src/HOL/Library/Executable_Set"</code>, Isabelle said that <code>Bad theory import "Draft.Executable_Set"</code><br>
+This library isn't supported anymore?</p>
+
+<a name="218266449"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218266449" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218266449">Mathias Fleury (Nov 30 2020 at 09:53)</a>:</h4>
+<ul>
+<li>the function does not make sense (sets are not ordered: which element do you take first)</li>
+<li><code>"HOL-Library.Executable_Set"</code> for the import</li>
+</ul>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

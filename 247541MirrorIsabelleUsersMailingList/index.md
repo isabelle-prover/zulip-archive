@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Isabelle Marries Dirac: a Libr...](91634isabelleNewintheAFPIsabelleMarriesDiracaLibr.html) (1 message, latest: Nov 30 2020 at 09:09)
+
 * [\[isabelle\] ITP 2021 : Second Call for Papers](81136isabelleITP2021SecondCallforPapers.html) (1 message, latest: Nov 30 2020 at 08:54)
 
 * [\[isabelle\] Observations on ZF](33942isabelleObservationsonZF.html) (4 messages, latest: Nov 29 2020 at 12:49)

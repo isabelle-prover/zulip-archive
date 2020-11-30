@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] State of affairs with words](09143isabelleStateofaffairswithwords.html) (1 message, latest: Nov 30 2020 at 18:57)
+
 * [\[isabelle\] Sub/superscripts in document preparation](69253isabelleSubsuperscriptsindocumentpreparation.html) (1 message, latest: Nov 30 2020 at 14:24)
 
 * [\[isabelle\] Unknown JAVA_HOME -- Java unavailable](06900isabelleUnknownJAVAHOMEJavaunavailable.html) (2 messages, latest: Nov 30 2020 at 13:06)

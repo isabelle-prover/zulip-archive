@@ -115,6 +115,51 @@ value &quot;hd (sorted_list_of_set (SPEC (%xs. set xs = Ptype × Ptype1)))&quot;
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218323113" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218323113">Trinh Le Khanh (Nov 30 2020 at 18:08)</a>:</h4>
 <p>I'm trying to convert a set to a list. For example, we have <code>A = {{1,2}, {3,4}}</code> after converting, it will be the list <code>B = [{1,2}, {3,4}]</code>. Thus, when I call <code>hd B</code> the result is <code>{1, 2}</code>. <code>sorted_list_of_set</code> only works for primary types like <code>nat</code> or <code>int</code> but doesn't work for structed types like <code>set set</code>, <code>list set</code> or <code>(nat * nat)</code>.</p>
 
+<a name="218333587"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218333587" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218333587">Mathias Fleury (Nov 30 2020 at 19:27)</a>:</h4>
+<p>I believe that you can instantiate lists with an (lin)order to make sorted_list_of_set work on "nat list list" (something like lenlex?), but I don't see how to make anything work for "set set"</p>
+
+<a name="218334150"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218334150" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218334150">Trinh Le Khanh (Nov 30 2020 at 19:32)</a>:</h4>
+<p>Yes, <code>nat list list</code> is no problem. That's why I want to know is whether any library to convert a general set to a list? But it seems doesn't exist.</p>
+
+<a name="218334211"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218334211" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218334211">Mathias Fleury (Nov 30 2020 at 19:33)</a>:</h4>
+<p>sorry I meant "nat list set", not "nat list list"</p>
+
+<a name="218334331"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218334331" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218334331">Mathias Fleury (Nov 30 2020 at 19:34)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="353155">Trinh Le Khanh</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Import.20Executable_Set/near/218334150">said</a>:</p>
+<blockquote>
+<p>Yes, <code>nat list list</code> is no problem. That's why I want to know is whether any library to convert a general set to a list? But it seems doesn't exist.</p>
+</blockquote>
+<p>No, because it cannot work in HOL.</p>
+
+<a name="218334491"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218334491" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218334491">Lukas Stevens (Nov 30 2020 at 19:35)</a>:</h4>
+<p>I have a question: why don't you use lists directly? The automation for them is quite good and you can use <code>set</code> to convert them to a set.</p>
+
+<a name="218334643"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218334643" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218334643">Lukas Stevens (Nov 30 2020 at 19:36)</a>:</h4>
+<p>Lists also have induction rules that are more convenient to work with compared to finite sets.</p>
+
+<a name="218335543"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218335543" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218335543">Trinh Le Khanh (Nov 30 2020 at 19:43)</a>:</h4>
+<p>Ah, it depends on my problem. Suppose we have some <em>Type</em> (e.g. Windows, Mac OS) and each of them have a set of concrete <em>Instances</em> (e.g. {w98, xp, w7}, {Catalina, Big Sur}). <br>
+Firstly, I defined them as lists and it works. Then, I run to a general case, in which we define <em>Type</em> and <em>Instances</em> in an abstract view. For example:</p>
+<div class="codehilite"><pre><span></span><code>lemma  test_smt:
+  assumes &quot;finite Types&quot;
+</code></pre></div>
+<p>I mean, Types and Instances are finite sets (we don't care about concrete values). We seem cannot define a <code>finite list</code> like this.</p>
+
+<a name="218335770"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218335770" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218335770">Lukas Stevens (Nov 30 2020 at 19:45)</a>:</h4>
+<p>Lists are always finite</p>
+
+<a name="218336202"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218336202" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218336202">Trinh Le Khanh (Nov 30 2020 at 19:49)</a>:</h4>
+<p>wow, I thought we have to define <code>finite</code> to determine it. Thank you very much.</p>
+
 
 {% endraw %}
 

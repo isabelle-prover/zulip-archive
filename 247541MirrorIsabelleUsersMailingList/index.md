@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC0 available for early experiments](06187isabelleIsabelle2021RC0availableforearlyexperiments.html) (1 message, latest: Nov 30 2020 at 12:53)
+
+* [\[isabelle\] Unknown JAVA_HOME -- Java unavailable](06900isabelleUnknownJAVAHOMEJavaunavailable.html) (1 message, latest: Nov 30 2020 at 12:12)
+
 * [\[isabelle\] Final Deadline - Survey on the AFP](97514isabelleFinalDeadlineSurveyontheAFP.html) (1 message, latest: Nov 30 2020 at 11:30)
 
 * [\[isabelle\] Observations on ZF](33942isabelleObservationsonZF.html) (5 messages, latest: Nov 30 2020 at 10:32)

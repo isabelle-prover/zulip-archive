@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Final Deadline - Survey on the AFP](97514isabelleFinalDeadlineSurveyontheAFP.html) (1 message, latest: Nov 30 2020 at 11:30)
+
 * [\[isabelle\] Observations on ZF](33942isabelleObservationsonZF.html) (5 messages, latest: Nov 30 2020 at 10:32)
 
 * [\[isabelle\] fully funded PhD position at University of She...](37411isabellefullyfundedPhDpositionatUniversityofShe.html) (1 message, latest: Nov 30 2020 at 10:01)

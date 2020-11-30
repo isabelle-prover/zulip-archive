@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Sub/superscripts in document preparation](69253isabelleSubsuperscriptsindocumentpreparation.html) (1 message, latest: Nov 30 2020 at 14:24)
+
 * [\[isabelle\] Unknown JAVA_HOME -- Java unavailable](06900isabelleUnknownJAVAHOMEJavaunavailable.html) (2 messages, latest: Nov 30 2020 at 13:06)
 
 * [\[isabelle\] Isabelle2021-RC0 available for early experiments](06187isabelleIsabelle2021RC0availableforearlyexperiments.html) (1 message, latest: Nov 30 2020 at 12:53)

@@ -160,6 +160,51 @@ Firstly, I defined them as lists and it works. Then, I run to a general case, in
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218336202" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218336202">Trinh Le Khanh (Nov 30 2020 at 19:49)</a>:</h4>
 <p>wow, I thought we have to define <code>finite</code> to determine it. Thank you very much.</p>
 
+<a name="218362393"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218362393" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218362393">Trinh Le Khanh (Nov 30 2020 at 23:44)</a>:</h4>
+<p>I wrote this lemma but it unprovable, can you check it a little bit?</p>
+<div class="codehilite"><pre><span></span><code>fun pair_mapping :: &quot;&#39;a list ⇒ &#39;b list list ⇒ (&#39;a * &#39;b) list&quot; where
+&quot;pair_mapping [] [] = []&quot; |
+&quot;pair_mapping (x # xs) [] = []&quot; |
+&quot;pair_mapping [] (y # ys)  = []&quot; |
+&quot;pair_mapping (x # xs) (y # ys) = pair_ns x y @ pair_mapping xs ys&quot;
+
+fun set_ins_of_type :: &quot;&#39;a ⇒ &#39;a list ⇒ &#39;a list list ⇒ &#39;a set&quot; where
+&quot;set_ins_of_type k PT PI = (if k ∈ (set PT) then set (lookup k (pair_mapping PT PI)) else {})&quot;
+(*---------more complex------------*)
+lemma test_complex:
+  assumes &quot;(Pt :: &#39;a list) ≠ []&quot;
+  assumes &quot;(PIns :: &#39;a list list) ≠ []&quot;
+  assumes &quot;length Pt = length PIns&quot;
+  assumes &quot;∀x ∈ set PIns. x ≠ []&quot;
+  shows &quot;(∀k ∈ set Pt.∀h∈ (set_ins_of_type k Pt PIns). P k h ⟶ (∀h1∈ (set_ins_of_type k Pt PIns)-{h}. ¬P k h1)) ⟹
+  (∀k ∈ set Pt.∃h∈ (set_ins_of_type k Pt PIns).∀h1∈ (set_ins_of_type k Pt PIns)-{h}. ¬P k h1)&quot;
+  using [[simp_trace]] assms
+  sledgehammer (*all the provers timed out*)
+</code></pre></div>
+<p>Then, I back to a concrete example but this lemma is also unprovable.</p>
+<div class="codehilite"><pre><span></span><code>(*---------test types------------*)
+definition Pt0 :: &quot;nat list&quot;
+  where &quot;Pt0 = [0, 1]&quot;
+
+definition Pi0 :: &quot;nat list list&quot;
+  where &quot;Pi0 = [[2,3], [4,5]]&quot;
+
+lemma &quot;∀k ∈ set Pt0.∀h∈ (set_ins_of_type k Pt0 Pi0). P k h ⟶ (∀h1∈ (set_ins_of_type k Pt0 Pi0)-{h}. ¬P k h1)
+⟹ ∀k ∈ set Pt0.∃h∈ (set_ins_of_type k Pt0 Pi0).∀h1∈ (set_ins_of_type k Pt0 Pi0)-{h}. ¬P k h1&quot;
+  unfolding Pt0_def Pi0_def
+  using [[simp_trace]]
+  sledgehammer
+</code></pre></div>
+<p>Then I used <code>value</code> to compute the LHS and RHS of the lemma separately and make a new lemma for them. It worked</p>
+<div class="codehilite"><pre><span></span><code>value &quot;∀k ∈ set Pt0.∀h∈ (set_ins_of_type k Pt0 Pi0). P k h ⟶ (∀h1∈ (set_ins_of_type k Pt0 Pi0)-{h}. ¬P k h1)&quot;
+value &quot;∀k ∈ set Pt0.∃h∈ (set_ins_of_type k Pt0 Pi0).∀h1∈ (set_ins_of_type k Pt0 Pi0)-{h}. ¬P k h1&quot;
+
+lemma concrete: &quot;(((P 0 2 ⟶ ¬ P 0 3) ∧ (P 0 3 ⟶ ¬ P 0 2)) ∧ (P 1 4 ⟶ ¬ P 1 5) ∧ (P 1 5 ⟶ ¬ P 1 4)) ⟹ ((¬ P 0 3 ∨ ¬ P 0 2) ∧ (¬ P 1 5 ∨ ¬ P 1 4))&quot;
+  by blast
+</code></pre></div>
+<p>I don't know why the lemma using variables doesn't work but the concrete once does. (I also made a large number of each element in the list <code>Pi0</code>and the concrete once worked.)</p>
+
 
 {% endraw %}
 

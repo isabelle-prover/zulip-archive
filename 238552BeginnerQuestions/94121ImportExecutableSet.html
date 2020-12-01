@@ -236,6 +236,26 @@ lemma concrete: &quot;(((P 0 2 ⟶ ¬ P 0 3) ∧ (P 0 3 ⟶ ¬ P 0 2)) ∧ (P 1 
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218411813" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218411813">Mathias Fleury (Dec 01 2020 at 11:59)</a>:</h4>
 <p>Usually the simpler steps hint as lemmas you have to prove. Maybe those steps will allow to have a proof like <code>by (auto ...)</code>. Maybe not.</p>
 
+<a name="218412500"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218412500" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218412500">Trinh Le Khanh (Dec 01 2020 at 12:05)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Import.20Executable_Set/near/218411391">said</a>:</p>
+<blockquote>
+<p>Let me answer with another question: why would any tactic be able to solve your goal?</p>
+</blockquote>
+<p>because it's small enough to be proved by provers, right?<br>
+As I understand, I should split the lemma into small cases and prove them manually, right? looks like this:</p>
+<div class="codehilite"><pre><span></span><code>proof (induct xs arbitrary: ys zs)
+  case Nil then show ?case by simp
+next
+  case (Cons x xs ys zs) then show ?case by (cases ys, simp_all)
+    (cases zs, simp_all)
+qed
+</code></pre></div>
+
+<a name="218412971"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218412971" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218412971">Mathias Fleury (Dec 01 2020 at 12:10)</a>:</h4>
+<p>I would not have started by an induction, but I also spent less than 2s of thinking about it.</p>
+
 
 {% endraw %}
 

@@ -289,6 +289,18 @@ If the predicate has a single parameter like <code>P x, Q y</code>, I can prove 
 </code></pre></div>
 <p>My case is a little bit more complex with two or more parameters like <code>P x y</code> or <code>Q x y z</code> and the value of the latter one is depended on the value of the previous (e.g. <code>z</code> depends on <code>y</code>, and <code>y</code> depends on <code>x</code>)</p>
 
+<a name="218452952"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218452952" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218452952">Mark Wassell (Dec 01 2020 at 17:14)</a>:</h4>
+<p>Mathematically you are working with a set of indexed sets: your list Pt is providing the index and PIns the elements of the indexed set. Here is a more complicated lemma that is closer to what you need.  Here the predicate takes two parameters</p>
+<div class="codehilite"><pre><span></span><code>lemma test_simplest3:
+  fixes S:: &quot;(&#39;a * (&#39;b set)) set&quot;
+  assumes &quot;S ∉ {}&quot; and &quot;∀X ∈ S. snd X ≠ {}&quot;
+  assumes &quot;∀X ∈ S. ∀x ∈ snd X. P (fst X) x ⟶ (∀y ∈ (snd X - { x }). ¬ P (fst X) y)&quot;
+  shows &quot;∀X ∈ S. ∃x ∈ snd X. ∀y ∈ snd X - { x }. ¬ P (fst X) y&quot;
+  using assms
+  by (metis Diff_iff equals0I)
+</code></pre></div>
+
 
 {% endraw %}
 

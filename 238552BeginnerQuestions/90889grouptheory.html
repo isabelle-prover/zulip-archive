@@ -21,6 +21,34 @@ permalink: ./238552BeginnerQuestions/90889grouptheory.html
 <p>The ‘canonical’ formalisation of group theory is HOL-Algebra. Groups are written multiplicatively in HOL-Algebra, and the concept you are looking for is called <code>finprod</code> in <code>HOL-Algebra.Finite_Product</code>: <code>⨂⇘G⇙ i∈I. g i</code></p>
 <p>This is defined for any commutative monoid.</p>
 
+<a name="218444402"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444402" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444402">Anthony Bordg (Dec 01 2020 at 16:16)</a>:</h4>
+<p>I tried to parse their code but I don't immediately see why they require the index set (named <code>A</code> there) to be finite. What does prevent <code>A</code> from being infinite?</p>
+
+<a name="218444485"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444485" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444485">Manuel Eberl (Dec 01 2020 at 16:17)</a>:</h4>
+<p>If it's infinite, it might not even be well-defined.</p>
+
+<a name="218444518"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444518" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444518">Manuel Eberl (Dec 01 2020 at 16:17)</a>:</h4>
+<p>You would need a topological group for that to even make sense</p>
+
+<a name="218444548"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444548" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444548">Manuel Eberl (Dec 01 2020 at 16:17)</a>:</h4>
+<p>I don't think we have topological groups in HOL-Algebra</p>
+
+<a name="218444667"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444667" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444667">Manuel Eberl (Dec 01 2020 at 16:18)</a>:</h4>
+<p>If you're not interested in abstract algebra but your groups are very "concrete", it might make more sense to define a type for them and just use the "normal" operations for indexed sums and products.</p>
+
+<a name="218444803"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444803" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444803">Manuel Eberl (Dec 01 2020 at 16:19)</a>:</h4>
+<p>For infinite sums, it depends a bit on what kind of summation you want. If the summation order is fixed, there's <code>suminf</code>. Otherwise I don't think we have terribly much, unfortunately.</p>
+
+<a name="218444835"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/group%20theory/near/218444835" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/90889grouptheory.html#218444835">Manuel Eberl (Dec 01 2020 at 16:19)</a>:</h4>
+<p>But let's not get ahead of ourselves, what kind of objects are you trying to sum?</p>
+
 
 {% endraw %}
 

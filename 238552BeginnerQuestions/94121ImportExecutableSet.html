@@ -256,6 +256,16 @@ qed
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218412971" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218412971">Mathias Fleury (Dec 01 2020 at 12:10)</a>:</h4>
 <p>I would not have started by an induction, but I also spent less than 2s of thinking about it.</p>
 
+<a name="218428826"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Import%20Executable_Set/near/218428826" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94121ImportExecutableSet.html#218428826">Mark Wassell (Dec 01 2020 at 14:31)</a>:</h4>
+<p>I could be wrong but it would seem that you are trying to prove a specific case of this:</p>
+<div class="codehilite"><pre><span></span><code>lemma
+  assumes &quot;S ∉ {}&quot; and &quot;∀X ∈ S. X ≠ {}&quot;
+  assumes &quot;∀X ∈ S. ∀x ∈ X. P x ⟶ (∀y ∈ X - { x }. ¬ P y)&quot;
+  shows &quot;∀X ∈ S. ∃x ∈ X. ∀y ∈ X - { x }. ¬ P y&quot;
+</code></pre></div>
+<p>which is easily provable.</p>
+
 
 {% endraw %}
 

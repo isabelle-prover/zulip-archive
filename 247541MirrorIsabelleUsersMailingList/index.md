@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Finite Map Extras](05377isabelleNewintheAFPFiniteMapExtras.html) (1 message, latest: Dec 01 2020 at 21:32)
+
 * [\[isabelle\] Formalising Ordinal Partition Relations](99849isabelleFormalisingOrdinalPartitionRelations.html) (1 message, latest: Dec 01 2020 at 16:07)
 
 * [\[isabelle\] FSCD 2021: Second Call for Workshop Proposals ...](14082isabelleFSCD2021SecondCallforWorkshopProposals.html) (1 message, latest: Dec 01 2020 at 13:16)

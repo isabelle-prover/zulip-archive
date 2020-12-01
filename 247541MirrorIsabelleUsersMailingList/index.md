@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Second Call for Workshop Proposals ...](14082isabelleFSCD2021SecondCallforWorkshopProposals.html) (1 message, latest: Dec 01 2020 at 13:16)
+
 * [\[isabelle\] State of affairs with words](09143isabelleStateofaffairswithwords.html) (1 message, latest: Nov 30 2020 at 18:57)
 
 * [\[isabelle\] Sub/superscripts in document preparation](69253isabelleSubsuperscriptsindocumentpreparation.html) (1 message, latest: Nov 30 2020 at 14:24)

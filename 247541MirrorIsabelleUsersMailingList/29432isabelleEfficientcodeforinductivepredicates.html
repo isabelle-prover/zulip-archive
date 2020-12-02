@@ -1,0 +1,47 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/29432isabelleEfficientcodeforinductivepredicates.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/29432isabelleEfficientcodeforinductivepredicates.html">[isabelle] Efficient code for inductive predicates</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="218575068"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Efficient%20code%20for%20inductive%20predicates/near/218575068" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/29432isabelleEfficientcodeforinductivepredicates.html#218575068">Email Gateway (Dec 02 2020 at 15:46)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+Dear all,</p>
+<p>I have formalized a virtual machine roughly in the following way:</p>
+<p>(* Executes a single instruction in the given state and returns the new<br>
+   state. Returns <code>None</code> if the end of the program has been reached. *)<br>
+fun exec_instr :: "state ⇒ state option" where<br>
+  "exec_instr s = ..."</p>
+<p>(* Now define the transitive closure for <code>exec_instr</code> *)<br>
+inductive exec :: "state ⇒ state ⇒ bool" where<br>
+  refl: "exec s s" |<br>
+  trans: "⟦Some s'' = exec_instr s; exec s'' s'⟧ ⟹ exec s s'"</p>
+<p>The semantics for individual instructions is implemented by<br>
+<code>exec_instr</code>, and complete executions can be performed by the inductive<br>
+predicate <code>exec</code>.</p>
+<p>Code generation works, but execution of <code>exec</code> becomes increasingly<br>
+slower the more instructions are executed. If in the generated code I<br>
+call <code>exec_instr</code> directly, execution time for one example dropped from<br>
+roughly 10s to 0.2s.</p>
+<p>I use the inductive predicate in the formalization because I don't want<br>
+to specify an upper bound on the number of steps to execute. Is there a<br>
+way to instruct the code generator to generate code for <code>exec</code> that<br>
+calls <code>exec_instr</code> directly without the indirection caused by<br>
+<code>Predicate.bind</code> and <code>Predicate.apply</code>, which seem to be responsible for<br>
+most of the slowdown?</p>
+<p>Best regards,<br>
+David</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

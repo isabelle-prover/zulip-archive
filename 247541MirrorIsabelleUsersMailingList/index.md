@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Efficient code for inductive predicates](29432isabelleEfficientcodeforinductivepredicates.html) (1 message, latest: Dec 02 2020 at 15:46)
+* [\[isabelle\] Efficient code for inductive predicates](29432isabelleEfficientcodeforinductivepredicates.html) (3 messages, latest: Dec 02 2020 at 16:37)
 
 * [\[isabelle\] 2nd CfP: AMAI Special Issue on Theoretical and...](20961isabelle2ndCfPAMAISpecialIssueonTheoreticaland.html) (1 message, latest: Dec 02 2020 at 09:40)
 

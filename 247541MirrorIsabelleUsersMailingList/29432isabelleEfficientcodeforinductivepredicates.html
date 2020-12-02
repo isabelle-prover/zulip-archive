@@ -41,6 +41,28 @@ most of the slowdown?</p>
 <p>Best regards,<br>
 David</p>
 
+<a name="218582489"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Efficient%20code%20for%20inductive%20predicates/near/218582489" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/29432isabelleEfficientcodeforinductivepredicates.html#218582489">Email Gateway (Dec 02 2020 at 16:34)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+You could use a tail-recursive function</p>
+<p>partial_function (tailrec) execf where<br>
+  "execf s = (case exec_instr s of None ⇒ s | Some s' ⇒ execf s')" </p>
+<p>thm execf.simps<br>
+declare execf.simps[code]</p>
+<p>execf will execute the program until it terminates.</p>
+
+<a name="218582947"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Efficient%20code%20for%20inductive%20predicates/near/218582947" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/29432isabelleEfficientcodeforinductivepredicates.html#218582947">Email Gateway (Dec 02 2020 at 16:37)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+and that's the relation of execf to your exec relation:</p>
+<p>lemma "exec s s' ⟹ exec_instr s' = None ⟹ execf s = s'"<br>
+  apply (induction rule: exec.induct)<br>
+  apply (subst execf.simps)<br>
+  apply (auto split: option.split)<br>
+  apply (subst execf.simps)<br>
+  apply (auto split: option.split)<br>
+  done</p>
+
 
 {% endraw %}
 

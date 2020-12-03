@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Sub/superscripts in document preparation](69253isabelleSubsuperscriptsindocumentpreparation.html) (4 messages, latest: Dec 02 2020 at 18:49)
+* [\[isabelle\] Efficient code for inductive predicates](29432isabelleEfficientcodeforinductivepredicates.html) (4 messages, latest: Dec 03 2020 at 10:10)
 
-* [\[isabelle\] Efficient code for inductive predicates](29432isabelleEfficientcodeforinductivepredicates.html) (3 messages, latest: Dec 02 2020 at 16:37)
+* [\[isabelle\] Sub/superscripts in document preparation](69253isabelleSubsuperscriptsindocumentpreparation.html) (4 messages, latest: Dec 02 2020 at 18:49)
 
 * [\[isabelle\] 2nd CfP: AMAI Special Issue on Theoretical and...](20961isabelle2ndCfPAMAISpecialIssueonTheoreticaland.html) (1 message, latest: Dec 02 2020 at 09:40)
 

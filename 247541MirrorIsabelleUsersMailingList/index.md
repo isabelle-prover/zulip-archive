@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] PriSC 2021: call for participation and short t...](37973isabellePriSC2021callforparticipationandshortt.html) (1 message, latest: Dec 04 2020 at 10:18)
+
+* [\[isabelle\] ITP2021: Call for Workshops](47577isabelleITP2021CallforWorkshops.html) (1 message, latest: Dec 04 2020 at 10:18)
+
 * [\[isabelle\] Efficient code for inductive predicates](29432isabelleEfficientcodeforinductivepredicates.html) (4 messages, latest: Dec 03 2020 at 10:10)
 
 * [\[isabelle\] Sub/superscripts in document preparation](69253isabelleSubsuperscriptsindocumentpreparation.html) (4 messages, latest: Dec 02 2020 at 18:49)

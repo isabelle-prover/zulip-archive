@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC0 available for early experiments](06187isabelleIsabelle2021RC0availableforearlyexperiments.html) (2 messages, latest: Dec 04 2020 at 12:50)
+
 * [\[isabelle\] PriSC 2021: call for participation and short t...](37973isabellePriSC2021callforparticipationandshortt.html) (1 message, latest: Dec 04 2020 at 10:18)
 
 * [\[isabelle\] ITP2021: Call for Workshops](47577isabelleITP2021CallforWorkshops.html) (1 message, latest: Dec 04 2020 at 10:18)
@@ -28,8 +30,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] State of affairs with words](09143isabelleStateofaffairswithwords.html) (1 message, latest: Nov 30 2020 at 18:57)
 
 * [\[isabelle\] Unknown JAVA_HOME -- Java unavailable](06900isabelleUnknownJAVAHOMEJavaunavailable.html) (2 messages, latest: Nov 30 2020 at 13:06)
-
-* [\[isabelle\] Isabelle2021-RC0 available for early experiments](06187isabelleIsabelle2021RC0availableforearlyexperiments.html) (1 message, latest: Nov 30 2020 at 12:53)
 
 * [\[isabelle\] Final Deadline - Survey on the AFP](97514isabelleFinalDeadlineSurveyontheAFP.html) (1 message, latest: Nov 30 2020 at 11:30)
 

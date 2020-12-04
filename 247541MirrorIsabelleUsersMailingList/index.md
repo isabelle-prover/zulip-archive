@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (1 message, latest: Dec 04 2020 at 22:57)
+
 * [\[isabelle\] Isabelle2021-RC0 available for early experiments](06187isabelleIsabelle2021RC0availableforearlyexperiments.html) (2 messages, latest: Dec 04 2020 at 12:50)
 
 * [\[isabelle\] PriSC 2021: call for participation and short t...](37973isabellePriSC2021callforparticipationandshortt.html) (1 message, latest: Dec 04 2020 at 10:18)

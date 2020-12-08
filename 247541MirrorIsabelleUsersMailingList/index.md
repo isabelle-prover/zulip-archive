@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] take_all is equivalence](97029isabelletakeallisequivalence.html) (1 message, latest: Dec 08 2020 at 13:31)
+
 * [\[isabelle\] New AFP entry: Full name: Relational Minimum S...](73465isabelleNewAFPentryFullnameRelationalMinimumS.html) (1 message, latest: Dec 08 2020 at 12:15)
 
 * [\[isabelle\] new in the AFP: The Verification of Cryptograp...](41979isabellenewintheAFPTheVerificationofCryptograp.html) (1 message, latest: Dec 07 2020 at 12:18)

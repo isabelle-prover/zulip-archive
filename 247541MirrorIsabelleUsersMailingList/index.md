@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] take_all is equivalence](97029isabelletakeallisequivalence.html) (1 message, latest: Dec 08 2020 at 13:31)
+* [\[isabelle\] take_all is equivalence](97029isabelletakeallisequivalence.html) (2 messages, latest: Dec 08 2020 at 21:06)
 
 * [\[isabelle\] New AFP entry: Full name: Relational Minimum S...](73465isabelleNewAFPentryFullnameRelationalMinimumS.html) (1 message, latest: Dec 08 2020 at 12:15)
 

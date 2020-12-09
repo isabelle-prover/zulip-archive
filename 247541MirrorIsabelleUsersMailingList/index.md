@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Postdoc and research engineer positions in Sem...](15857isabellePostdocandresearchengineerpositionsinSem.html) (1 message, latest: Dec 09 2020 at 18:13)
+
 * [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (1 message, latest: Dec 09 2020 at 16:36)
 
 * [\[isabelle\] \[TFP'21\] second call for papers: Trends in Fun...](38660isabelleTFP21secondcallforpapersTrendsinFun.html) (1 message, latest: Dec 09 2020 at 11:15)

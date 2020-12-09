@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (1 message, latest: Dec 09 2020 at 16:36)
+
 * [\[isabelle\] \[TFP'21\] second call for papers: Trends in Fun...](38660isabelleTFP21secondcallforpapersTrendsinFun.html) (1 message, latest: Dec 09 2020 at 11:15)
 
 * [\[isabelle\] take_all is equivalence](97029isabelletakeallisequivalence.html) (2 messages, latest: Dec 08 2020 at 21:06)

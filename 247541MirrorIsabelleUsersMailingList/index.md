@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Third Call for Workshop Proposals -...](18766isabelleFSCD2021ThirdCallforWorkshopProposals.html) (1 message, latest: Dec 10 2020 at 11:53)
+
 * [\[isabelle\] Postdoc and research engineer positions in Sem...](15857isabellePostdocandresearchengineerpositionsinSem.html) (1 message, latest: Dec 09 2020 at 18:13)
 
 * [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (1 message, latest: Dec 09 2020 at 16:36)

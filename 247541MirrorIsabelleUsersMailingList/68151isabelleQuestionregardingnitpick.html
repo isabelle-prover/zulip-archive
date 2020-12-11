@@ -1,0 +1,54 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html">[isabelle] Question regarding nitpick</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="219580976"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20nitpick/near/219580976" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html#219580976">Email Gateway (Dec 11 2020 at 09:24)</a>:</h4>
+<p>From: Leon Hansen &lt;<a href="mailto:lhansen@uni-bremen.de">lhansen@uni-bremen.de</a>&gt;<br>
+Hello everybody,</p>
+<p>I am currently writing my master thesis and I am trying to fetch entries <br>
+from a list that fulfil some properties. Similar to a query on a <br>
+database or an ontology.</p>
+<p>My first approach looked like this:</p>
+<p>datatype room = LivingRoom | Kitchen | SleepingRoom<br>
+consts connectedRooms:: "room ⇒ room ⇒ bool"<br>
+axiomatization where<br>
+  a1: "connectedRooms LivingRoom Kitchen"</p>
+<p>lemma patheval2: "connectedRooms X SleepingRoom" <br>
+nitpick[satisfy,show_consts,user_axioms] oops</p>
+<p>In this case nitpick answers "X = LivingRoom" even though that is not <br>
+correct.</p>
+<p>What can i do about that?</p>
+<p>My other approach was to avoid axiomatisation completely and use <br>
+datatypes like this:</p>
+<p>datatype ID = NewID nat<br>
+datatype Thing = Bed (height: nat) ID<br>
+definition bed1 where<br>
+"bed1 ≡ Bed 2 (NewID 1)"<br>
+definition bed2 where<br>
+"bed2 ≡ Bed 8 (NewID 3)"<br>
+definition bed3 where<br>
+"bed3 ≡ Bed 2 (NewID 5)"<br>
+definition bedList where<br>
+"bedList ≡ [bed1, bed2, bed3]"<br>
+lemma "List.filter (%c::Thing. ∃x. c = (Bed 2 (NewName x))) bedList = <br>
+res" nitpick sorry</p>
+<p>However this becomes very slow for larger lists. Is there a way to do <br>
+this more efficiently?</p>
+<p>Kind regards</p>
+<p>Leon Hansen</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

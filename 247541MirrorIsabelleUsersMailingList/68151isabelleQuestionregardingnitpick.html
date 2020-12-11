@@ -48,6 +48,36 @@ this more efficiently?</p>
 <p>Kind regards</p>
 <p>Leon Hansen</p>
 
+<a name="219597829"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20nitpick/near/219597829" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html#219597829">Email Gateway (Dec 11 2020 at 12:11)</a>:</h4>
+<p>From: "John F. Hughes" &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt;<br>
+I believe that the problem here is that you've specified what<br>
+"connectedRooms" does <em>only</em> when applied to LivingRoom and Kitchen, but<br>
+have not specified its value on any other pair of rooms. Nitpick says "Hey,<br>
+assigning "connectedRooms LivingRoom SleepingRoom" to be "true" is<br>
+consistent with all the axioms. I guess I'm done!"</p>
+<p>So axiom 1 needs to be much richer --- either a complete enumeration of the<br>
+9 possibilities, or something with an "if" that says "if we're in this one<br>
+special case, then true; otherwise false."</p>
+<p>NB: You could additionally specify a symmetry axiom ---</p>
+<p>connectedRooms a b =&gt; connectedRooms b a   [I'm forgetting the correct<br>
+syntax here]</p>
+<p>and then safely have an enumeration of only 6 items instead of all 9.</p>
+<p>-John</p>
+
+<a name="219599196"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20nitpick/near/219599196" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html#219599196">Email Gateway (Dec 11 2020 at 12:24)</a>:</h4>
+<p>From: Leon Hansen &lt;<a href="mailto:lhansen@uni-bremen.de">lhansen@uni-bremen.de</a>&gt;<br>
+I do have the reflexivity and transitivity in there already:</p>
+<p>axiomatization where<br>
+   refl: "connectedRooms x x" and<br>
+   trans: "connectedRooms x y ∧ connectedRooms y z ⟶ connectedRooms x z"</p>
+<p>I just shortend the example by a lot. For that reason it is not possible <br>
+to list every possibility as well.</p>
+<p>I would need to add something like the "connectedRooms _ _ = False" that <br>
+would work if it were a function and not an axiomatisation.</p>
+<p>-Leon</p>
+
 
 {% endraw %}
 

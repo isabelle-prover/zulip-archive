@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Invitation to celebrate the World Logic Day di...](22837isabelleInvitationtocelebratetheWorldLogicDaydi.html) (1 message, latest: Dec 11 2020 at 09:24)
+* [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (3 messages, latest: Dec 11 2020 at 12:24)
 
-* [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (1 message, latest: Dec 11 2020 at 09:24)
+* [\[isabelle\] Invitation to celebrate the World Logic Day di...](22837isabelleInvitationtocelebratetheWorldLogicDaydi.html) (1 message, latest: Dec 11 2020 at 09:24)
 
 * [\[isabelle\] FSCD 2021: Third Call for Workshop Proposals -...](18766isabelleFSCD2021ThirdCallforWorkshopProposals.html) (1 message, latest: Dec 10 2020 at 11:53)
 

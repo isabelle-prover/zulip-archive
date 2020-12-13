@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [disjoint union of sets](56066disjointunionofsets.html) (2 messages, latest: Dec 13 2020 at 13:58)
+* [disjoint union of sets](56066disjointunionofsets.html) (3 messages, latest: Dec 13 2020 at 15:33)
 
 * [Import Executable_Set](94121ImportExecutableSet.html) (34 messages, latest: Dec 01 2020 at 19:41)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Debug facilities of locales](65462isabelleDebugfacilitiesoflocales.html) (1 message, latest: Dec 14 2020 at 20:37)
+
 * [\[isabelle\] Deadline extension: AMAI Special Issue on Theo...](76224isabelleDeadlineextensionAMAISpecialIssueonTheo.html) (1 message, latest: Dec 14 2020 at 11:01)
 
 * [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (3 messages, latest: Dec 11 2020 at 12:24)

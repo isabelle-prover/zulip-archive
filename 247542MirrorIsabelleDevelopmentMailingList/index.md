@@ -9,7 +9,9 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] NEWS: Isabelle/jEdit action "isabelle.goto...](41327isabelledevNEWSIsabellejEditactionisabellegoto.html) (1 message, latest: Dec 18 2020 at 10:40)
+* [\[isabelle-dev\] Isabelle/Phabricator project tags](17707isabelledevIsabellePhabricatorprojecttags.html) (1 message, latest: Dec 18 2020 at 11:19)
+
+* [\[isabelle-dev\] NEWS: Isabelle/jEdit action "isabelle.goto...](41327isabelledevNEWSIsabellejEditactionisabellegoto.html) (3 messages, latest: Dec 18 2020 at 11:11)
 
 * [\[isabelle-dev\] NEWS: Message logs from session build data...](75651isabelledevNEWSMessagelogsfromsessionbuilddata.html) (1 message, latest: Dec 10 2020 at 23:22)
 

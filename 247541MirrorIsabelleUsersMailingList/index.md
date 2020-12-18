@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (4 messages, latest: Dec 18 2020 at 14:55)
+
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (7 messages, latest: Dec 16 2020 at 08:53)
 
 * [\[isabelle\] Debug facilities of locales](65462isabelleDebugfacilitiesoflocales.html) (1 message, latest: Dec 14 2020 at 20:37)
 
 * [\[isabelle\] Deadline extension: AMAI Special Issue on Theo...](76224isabelleDeadlineextensionAMAISpecialIssueonTheo.html) (1 message, latest: Dec 14 2020 at 11:01)
-
-* [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (3 messages, latest: Dec 11 2020 at 12:24)
 
 * [\[isabelle\] Invitation to celebrate the World Logic Day di...](22837isabelleInvitationtocelebratetheWorldLogicDaydi.html) (1 message, latest: Dec 11 2020 at 09:24)
 

@@ -78,6 +78,30 @@ to list every possibility as well.</p>
 would work if it were a function and not an axiomatisation.</p>
 <p>-Leon</p>
 
+<a name="220380837"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20nitpick/near/220380837" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html#220380837">Email Gateway (Dec 18 2020 at 14:55)</a>:</h4>
+<p>From: Jasmin Blanchette via Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear Leon,</p>
+<blockquote>
+<p>My first approach looked like this:</p>
+<p>datatype room = LivingRoom | Kitchen | SleepingRoom<br>
+consts connectedRooms:: "room ⇒ room ⇒ bool"<br>
+axiomatization where<br>
+ a1: "connectedRooms LivingRoom Kitchen"</p>
+<p>lemma patheval2: "connectedRooms X SleepingRoom" nitpick[satisfy,show_consts,user_axioms] oops</p>
+<p>In this case nitpick answers "X = LivingRoom" even though that is not correct.</p>
+</blockquote>
+<p>Although it doesn't correspond to your expectations, Nitpick's behavior is correct. Your "nitpick" command is asking for a model of the formula. Nitpick finds one. In that model, "connectedRooms LivingRoom SleepingRoom" is true. This is perfectly consistent with your axiomatization. It is not <em>entailed</em> by the axiomatization, but it is clearly consistent with it.</p>
+<p>If you want to find a value X such that "connectedRooms X SleepingRoom" is provable -- in other words, a witness for X in "EX X. connectedRooms X SleepingRoom", I'm afraid there's no tool that will reliably give you that in Isabelle. The existential formula would be a candidate for Sledgehammer, but in general you wouldn't get the witness out of the proof.</p>
+<blockquote>
+<p>Is there a way to do this more efficiently?</p>
+</blockquote>
+<p>The problem is that I don't clearly understand what "this" refers to. I'm starting to suspect that your axiomatization above is wrong; you probably also want to say "~ connectedRooms LivingRoom SleepingRoom" etc., if you mean that these are not connected. (Otherwise, they'll be connected in some models of the formulas and not in others.)</p>
+<p>Typically a better approach is to avoid low-level mechanisms such as "consts" and "axiomatization" and instead rely on the definitional mechanisms, like "inductive" (which is probably your best option here), "fun", and "definition". With "inductive", what you don't explicitly make true is automatically false, which is very convenient. You also don't need to worry about models; there's only one model.</p>
+<p>I hope this helps.</p>
+<p>Cheers,</p>
+<p>Jasmin</p>
+
 
 {% endraw %}
 

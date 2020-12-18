@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: Isabelle/jEdit action "isabelle.goto...](41327isabelledevNEWSIsabellejEditactionisabellegoto.html) (1 message, latest: Dec 18 2020 at 10:40)
+
 * [\[isabelle-dev\] NEWS: Message logs from session build data...](75651isabelledevNEWSMessagelogsfromsessionbuilddata.html) (1 message, latest: Dec 10 2020 at 23:22)
 
 * [\[isabelle-dev\]  Towards localized syntax: bundle mixins f...](55748isabelledevTowardslocalizedsyntaxbundlemixinsf.html) (4 messages, latest: Dec 04 2020 at 14:11)

@@ -102,6 +102,30 @@ axiomatization where<br>
 <p>Cheers,</p>
 <p>Jasmin</p>
 
+<a name="220463116"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20nitpick/near/220463116" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68151isabelleQuestionregardingnitpick.html#220463116">Email Gateway (Dec 19 2020 at 10:03)</a>:</h4>
+<p>From: Leon Hansen &lt;<a href="mailto:lhansen@uni-bremen.de">lhansen@uni-bremen.de</a>&gt;<br>
+Dear Jasmin,</p>
+<p>thank you for your detailed response.</p>
+<blockquote>
+<p>If you want to find a value X such that "connectedRooms X SleepingRoom" is provable -- in other words, a witness for X in "EX X. connectedRooms X SleepingRoom", I'm afraid there's no tool that will reliably give you that in Isabelle. The existential formula would be a candidate for Sledgehammer, but in general you wouldn't get the witness out of the proof.<br>
+That confirmation is very helpful for me. I thought I was just doing it <br>
+completely wrong.<br>
+The problem is that I don't clearly understand what "this" refers to.<br>
+My goal is to embed knowledge from an owl ontology in an Isabelle theory <br>
+and be able to retrieve it again in reasonable time.<br>
+Typically a better approach is to avoid low-level mechanisms such as "consts" and "axiomatization" and instead rely on the definitional mechanisms, like "inductive" (which is probably your best option here), "fun", and "definition". With "inductive", what you don't explicitly make true is automatically false, which is very convenient. You also don't need to worry about models; there's only one model.</p>
+</blockquote>
+<p>That is more or less what i did in my second approach where i used <br>
+"datatype" and "definition" only. Thank you for the tip with <br>
+"inductive". For small theories nitpick returns the requested <br>
+information reliably and fast. For theories with a few hundred lines it <br>
+was taking way to much time. I hoped there was a simple way to limit <br>
+nitpicks search space and speed up the search for witnesses for X in "EX <br>
+X. connectedRooms X SleepingRoom" for example.</p>
+<p>Kind regards,</p>
+<p>Leon</p>
+
 
 {% endraw %}
 

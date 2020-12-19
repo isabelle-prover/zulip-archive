@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (4 messages, latest: Dec 18 2020 at 14:55)
+* [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (5 messages, latest: Dec 19 2020 at 10:03)
 
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (7 messages, latest: Dec 16 2020 at 08:53)
 

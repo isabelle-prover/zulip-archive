@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Numeric literals](62452Numericliterals.html) (1 message, latest: Dec 22 2020 at 07:47)
+* [Numeric literals](62452Numericliterals.html) (2 messages, latest: Dec 22 2020 at 08:53)
 
 * [disjoint union of sets](56066disjointunionofsets.html) (3 messages, latest: Dec 13 2020 at 15:33)
 

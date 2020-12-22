@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Topological semantics for para...](38246isabelleNewintheAFPTopologicalsemanticsforpara.html) (1 message, latest: Dec 22 2020 at 13:12)
+
 * [\[isabelle\] \[TFPIE'21\] Second Call For Papers: Trends in F...](14063isabelleTFPIE21SecondCallForPapersTrendsinF.html) (1 message, latest: Dec 19 2020 at 11:07)
 
 * [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (5 messages, latest: Dec 19 2020 at 10:03)

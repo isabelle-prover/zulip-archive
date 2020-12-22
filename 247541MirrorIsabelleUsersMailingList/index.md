@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CPP 2021: Call for Participation and Lightning...](91991isabelleCPP2021CallforParticipationandLightning.html) (1 message, latest: Dec 22 2020 at 18:37)
+
 * [\[isabelle\] New in the AFP: Topological semantics for para...](38246isabelleNewintheAFPTopologicalsemanticsforpara.html) (1 message, latest: Dec 22 2020 at 13:12)
 
 * [\[isabelle\] \[TFPIE'21\] Second Call For Papers: Trends in F...](14063isabelleTFPIE21SecondCallForPapersTrendsinF.html) (1 message, latest: Dec 19 2020 at 11:07)

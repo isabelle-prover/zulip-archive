@@ -12,7 +12,7 @@ permalink: ./index.html
 
 * [general](202961general/index.html) (78 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (48 topics)
+* [Beginner Questions](238552BeginnerQuestions/index.html) (49 topics)
 
 * [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (36 topics)
 

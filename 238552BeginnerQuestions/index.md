@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Cardinality of powerset of a multiset](80784Cardinalityofpowersetofamultiset.html) (1 message, latest: Dec 23 2020 at 20:32)
+
 * [Numeric literals](62452Numericliterals.html) (2 messages, latest: Dec 22 2020 at 08:53)
 
 * [disjoint union of sets](56066disjointunionofsets.html) (3 messages, latest: Dec 13 2020 at 15:33)

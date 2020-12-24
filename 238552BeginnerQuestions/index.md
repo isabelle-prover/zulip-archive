@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Cardinality of powerset of a multiset](80784Cardinalityofpowersetofamultiset.html) (3 messages, latest: Dec 23 2020 at 22:17)
+* [Cardinality of powerset of a multiset](80784Cardinalityofpowersetofamultiset.html) (4 messages, latest: Dec 24 2020 at 06:42)
 
 * [Numeric literals](62452Numericliterals.html) (2 messages, latest: Dec 22 2020 at 08:53)
 

@@ -1,0 +1,79 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/22229isabelleSeveralquestionsabouttheavailabilityofce.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22229isabelleSeveralquestionsabouttheavailabilityofce.html">[isabelle] Several questions about the availability of ce...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="221013422"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Several%20questions%20about%20the%20availability%20of%20ce.../near/221013422" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22229isabelleSeveralquestionsabouttheavailabilityofce.html#221013422">Email Gateway (Dec 27 2020 at 15:58)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear All,</p>
+<p>I have several questions about the availability of certain types of proof<br>
+methods for Isabelle (I guess, these questions can also be seen as<br>
+reference requests).</p>
+<p>I am working on a certain applied formalization study. This work is carried<br>
+out in the object logic ZFC in HOL. The type of reasoning that it requires<br>
+is very similar to the type of reasoning that is used in HOL-Algebra. When<br>
+I started my work on this project, I relied, primarily, on the tools that<br>
+combine classical reasoning with simplification, such as <em>auto</em>. However, I<br>
+found myself struggling more and more in my attempts to provide appropriate<br>
+sets of simp/intro/dest/elim rules that would not cause significant delays<br>
+and loops when solving typical set-based goals. Besides, my proof code<br>
+seemed to be unnecessarily verbose. However, please do not view this as a<br>
+criticism of the aforementioned proof tools: I can hardly claim to have an<br>
+extensive knowledge of the analytical properties of the involved algorithms.</p>
+<hr>
+<p>Problem 1</p>
+<p>From the manual of the simplifier: "conditions in conditional rewrite rules<br>
+are solved recursively before the rewrite rule is applied". Empirically, I<br>
+have established that it could be useful to be able to treat rewriting in<br>
+the same manner as intro-resolution, allowing the side conditions of the<br>
+rewrite rules to be resolved both using rewriting or intro-resolution after<br>
+the application of the rewrite rule to a given goal (of course, this is<br>
+also meant to be done recursively). I devised a prototype method based on<br>
+this algorithm (CS in<br>
+<a href="https://gitlab.com/user9716869/Isabelle-Complement-Library">https://gitlab.com/user9716869/Isabelle-Complement-Library</a>). For my own<br>
+needs, practically, I found this type of 'coupling' of rewriting and<br>
+intro-resolution to be exceptionally capable at solving complex goals in<br>
+comparison with some of the existing tools that seem to combine<br>
+simplification and classical reasoning that I tried before (by now, for my<br>
+own needs, I rely on the methods provided by CS almost exclusively in a<br>
+reasonably sizeable development).</p>
+<p>Unfortunately, my formal background in the area of the algorithms that are<br>
+used in the common proof tools is, somewhat, limited (I have always been<br>
+far more interested in the applications of the proof assistants to the<br>
+development of formally verified software and applied formalization of<br>
+mathematics, rather than the technology behind them). Thus, I have little<br>
+doubt that I have reinvented the wheel. My primary question is whether any<br>
+of the existing proof tools already provide access to the algorithm that I<br>
+have described.</p>
+<hr>
+<p>Problem 2</p>
+<p>I would like to know if there exist any reasonably generic proof tools for<br>
+Isabelle that would take into account associativity implicitly. Somehow,<br>
+when performing rewriting, I would like to be able to treat ((ab)c)d,<br>
+(ab)(cd), ... as members of the same equivalence class with respect to the<br>
+relation induced by the associativity. Therefore, if there is an additional<br>
+rewrite rule b(cd)=e (again, treated with respect to the same equivalence<br>
+relation), it would be immediately applicable to any form of abcd,<br>
+immediately yielding ae. Intuitively, it seems that this strategy could<br>
+work rather well for the types of problems that I am facing regularly, and<br>
+I am considering implementing it within the scope of the aforementioned<br>
+proof tools. However, I am slightly concerned about whether there already<br>
+exist canonical implementations or better alternative solutions (please<br>
+note, however, that my setting is, effectively, a partial semigroup).</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

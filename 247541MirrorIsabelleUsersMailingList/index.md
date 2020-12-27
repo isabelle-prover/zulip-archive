@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (1 message, latest: Dec 27 2020 at 15:58)
+
 * [\[isabelle\] CPP 2021: Call for Participation and Lightning...](91991isabelleCPP2021CallforParticipationandLightning.html) (1 message, latest: Dec 22 2020 at 18:37)
 
 * [\[isabelle\] New in the AFP: Topological semantics for para...](38246isabelleNewintheAFPTopologicalsemanticsforpara.html) (1 message, latest: Dec 22 2020 at 13:12)

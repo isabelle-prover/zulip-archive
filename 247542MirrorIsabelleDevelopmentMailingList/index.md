@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (1 message, latest: Dec 27 2020 at 19:23)
+
 * [\[isabelle-dev\] Incoherent use of file name "hoare_syntax.ML"](90552isabelledevIncoherentuseoffilenamehoaresyntaxML.html) (3 messages, latest: Dec 23 2020 at 23:11)
 
 * [\[isabelle-dev\] Isabelle/Phabricator project tags](17707isabelledevIsabellePhabricatorprojecttags.html) (1 message, latest: Dec 18 2020 at 11:19)

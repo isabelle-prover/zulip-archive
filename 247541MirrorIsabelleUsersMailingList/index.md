@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Another ZF entry for the AFP](59612isabelleAnotherZFentryfortheAFP.html) (1 message, latest: Dec 28 2020 at 10:54)
+
 * [\[isabelle\] Isabelle2021-RC1 available for testing](47417isabelleIsabelle2021RC1availablefortesting.html) (1 message, latest: Dec 27 2020 at 19:15)
 
 * [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (1 message, latest: Dec 27 2020 at 15:58)

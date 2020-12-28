@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (2 messages, latest: Dec 28 2020 at 11:07)
+* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (3 messages, latest: Dec 28 2020 at 16:06)
 
 * [\[isabelle\] Another ZF entry for the AFP](59612isabelleAnotherZFentryfortheAFP.html) (1 message, latest: Dec 28 2020 at 10:54)
 

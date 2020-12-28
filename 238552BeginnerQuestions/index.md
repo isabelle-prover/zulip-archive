@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Proving lemma with abstract lists](85681Provinglemmawithabstractlists.html) (1 message, latest: Dec 28 2020 at 01:00)
+
 * [Cardinality of powerset of a multiset](80784Cardinalityofpowersetofamultiset.html) (6 messages, latest: Dec 24 2020 at 15:20)
 
 * [Numeric literals](62452Numericliterals.html) (2 messages, latest: Dec 22 2020 at 08:53)

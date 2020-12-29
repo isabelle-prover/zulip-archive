@@ -9,6 +9,8 @@ permalink: ./214136announcements/index.html
 
 ### Topics:
 
+* [quantum computing](56226quantumcomputing.html) (1 message, latest: Dec 29 2020 at 10:43)
+
 * [For beginners: A review article on Isabelle](42228ForbeginnersAreviewarticleonIsabelle.html) (1 message, latest: Oct 13 2020 at 07:34)
 
 * [quantum game theory](04929quantumgametheory.html) (1 message, latest: Nov 27 2019 at 08:53)

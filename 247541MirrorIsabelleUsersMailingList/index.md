@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (3 messages, latest: Jan 01 2021 at 09:39)
+
 * [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (4 messages, latest: Dec 29 2020 at 12:38)
 
 * [\[isabelle\] Another ZF entry for the AFP](59612isabelleAnotherZFentryfortheAFP.html) (1 message, latest: Dec 28 2020 at 10:54)
@@ -48,8 +50,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Lean Together 2021: January 4-7, Call for Part...](48413isabelleLeanTogether2021January47CallforPart.html) (1 message, latest: Dec 07 2020 at 10:22)
 
 * [\[isabelle\] Postdoc and PhD Positions @ Iowa State University](42944isabellePostdocandPhDPositionsIowaStateUniversity.html) (1 message, latest: Dec 06 2020 at 11:37)
-
-* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (2 messages, latest: Dec 04 2020 at 23:04)
 
 * [\[isabelle\] Isabelle2021-RC0 available for early experiments](06187isabelleIsabelle2021RC0availableforearlyexperiments.html) (2 messages, latest: Dec 04 2020 at 12:50)
 

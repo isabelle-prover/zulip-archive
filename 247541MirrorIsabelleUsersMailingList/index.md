@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (3 messages, latest: Jan 01 2021 at 09:39)
+* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (5 messages, latest: Jan 01 2021 at 16:29)
 
-* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (4 messages, latest: Dec 29 2020 at 12:38)
+* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (3 messages, latest: Jan 01 2021 at 09:39)
 
 * [\[isabelle\] Another ZF entry for the AFP](59612isabelleAnotherZFentryfortheAFP.html) (1 message, latest: Dec 28 2020 at 10:54)
 

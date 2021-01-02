@@ -35,6 +35,39 @@ Kawin<br>
 <a href="/user_uploads/14278/ruiPmcrPaG075kmDQeohvWOX/Screenshot-2021-01-02-at-08.12.53.png">Screenshot 2021-01-02 at 08.12.53.png</a></p>
 <div class="message_inline_image"><a href="/user_uploads/14278/ruiPmcrPaG075kmDQeohvWOX/Screenshot-2021-01-02-at-08.12.53.png" title="Screenshot 2021-01-02 at 08.12.53.png"><img src="/user_uploads/14278/ruiPmcrPaG075kmDQeohvWOX/Screenshot-2021-01-02-at-08.12.53.png"></a></div>
 
+<a name="221393202"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Cannot%20load%20theory%20when%20building/near/221393202" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/13112isabelleCannotloadtheorywhenbuilding.html#221393202">Email Gateway (Jan 02 2021 at 10:04)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 02/01/2021 09:23, Kawin Worrasangasilpa wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>I am having a problem using Isabelle document preparation and curious if this<br>
+is common. One of the theories in this directory I want to create a document<br>
+for imports "HOL-Probability.Probability_Mass_Function". When I used  command<br>
+isabelle build -D, there is a following error message:</p>
+<p>Screenshot 2021-01-02 at 08.12.53.png</p>
+<p>This is Root file:</p>
+<p>session alltheories = HOL +<br>
+  options [document = pdf, document_output = "output"]<br>
+theories [quick_and_dirty]<br>
+Forkable_Strings_Are_Rare<br>
+  document_files<br>
+    "root.tex"</p>
+</blockquote>
+<p>Just try this before 'theories':</p>
+<p>sessions "HOL-Probability"</p>
+<blockquote>
+<p>I have checked on other theories that import other theories,<br>
+e.g., "~~/src/HOL/Library/Multiset", and the command works just fine. </p>
+</blockquote>
+<p>You should not "steal" theory files from other sessions like that. The proper<br>
+way is to import "HOL-Library.Multiset" and ensure that the cumulative import<br>
+session graph contains "HOL-Library".</p>
+<p>NB: Isabelle2018 (August 2018) is really old, Isabelle2020 (April 2020) is<br>
+current, and we are approaching Isabelle2021 (February 2021).</p>
+<p>Makarius</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

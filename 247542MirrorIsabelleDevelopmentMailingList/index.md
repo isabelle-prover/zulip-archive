@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (17 messages, latest: Jan 02 2021 at 10:20)
+
 * [\[isabelle-dev\] Incoherent use of file name "hoare_syntax.ML"](90552isabelledevIncoherentuseoffilenamehoaresyntaxML.html) (7 messages, latest: Jan 01 2021 at 23:12)
 
 * [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (1 message, latest: Dec 27 2020 at 19:23)
@@ -28,8 +30,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] Issues with unnamed top-level facts in Isa...](98061isabelledevIssueswithunnamedtoplevelfactsinIsa.html) (7 messages, latest: Nov 09 2020 at 13:40)
 
 * [\[isabelle-dev\] Experimental support for arm64-linux](79199isabelledevExperimentalsupportforarm64linux.html) (6 messages, latest: Nov 05 2020 at 11:48)
-
-* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (16 messages, latest: Nov 04 2020 at 11:56)
 
 * [\[isabelle-dev\] https://isabelle.in.tum.de/components is down](91707isabelledevhttpsisabelleintumdecomponentsisdown.html) (1 message, latest: Nov 01 2020 at 17:26)
 

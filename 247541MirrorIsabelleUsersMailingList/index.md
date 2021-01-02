@@ -9,7 +9,17 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Cannot load theory when building](13112isabelleCannotloadtheorywhenbuilding.html) (1 message, latest: Jan 02 2021 at 08:23)
+* [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (2 messages, latest: Jan 02 2021 at 10:48)
+
+* [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (8 messages, latest: Jan 02 2021 at 10:40)
+
+* [\[isabelle\] Question about "try" and future tasks](49028isabelleQuestionabouttryandfuturetasks.html) (2 messages, latest: Jan 02 2021 at 10:36)
+
+* [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (2 messages, latest: Jan 02 2021 at 10:26)
+
+* [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (2 messages, latest: Jan 02 2021 at 10:11)
+
+* [\[isabelle\] Cannot load theory when building](13112isabelleCannotloadtheorywhenbuilding.html) (2 messages, latest: Jan 02 2021 at 10:04)
 
 * [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (7 messages, latest: Jan 01 2021 at 21:45)
 
@@ -27,8 +37,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (5 messages, latest: Dec 19 2020 at 10:03)
 
-* [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (7 messages, latest: Dec 16 2020 at 08:53)
-
 * [\[isabelle\] Debug facilities of locales](65462isabelleDebugfacilitiesoflocales.html) (1 message, latest: Dec 14 2020 at 20:37)
 
 * [\[isabelle\] Deadline extension: AMAI Special Issue on Theo...](76224isabelleDeadlineextensionAMAISpecialIssueonTheo.html) (1 message, latest: Dec 14 2020 at 11:01)
@@ -38,8 +46,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] FSCD 2021: Third Call for Workshop Proposals -...](18766isabelleFSCD2021ThirdCallforWorkshopProposals.html) (1 message, latest: Dec 10 2020 at 11:53)
 
 * [\[isabelle\] Postdoc and research engineer positions in Sem...](15857isabellePostdocandresearchengineerpositionsinSem.html) (1 message, latest: Dec 09 2020 at 18:13)
-
-* [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (1 message, latest: Dec 09 2020 at 16:36)
 
 * [\[isabelle\] \[TFP'21\] second call for papers: Trends in Fun...](38660isabelleTFP21secondcallforpapersTrendsinFun.html) (1 message, latest: Dec 09 2020 at 11:15)
 
@@ -105,13 +111,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Manually using a SideKick parser](62424isabelleManuallyusingaSideKickparser.html) (2 messages, latest: Nov 19 2020 at 11:47)
 
-* [\[isabelle\] Question about "try" and future tasks](49028isabelleQuestionabouttryandfuturetasks.html) (1 message, latest: Nov 19 2020 at 00:49)
-
 * [\[isabelle\] Local varification/unvarification in Isabelle/ML?](53684isabelleLocalvarificationunvarificationinIsabelleML.html) (1 message, latest: Nov 18 2020 at 00:09)
 
 * [\[isabelle\] Code generation for non-terminating functions](56411isabelleCodegenerationfornonterminatingfunctions.html) (3 messages, latest: Nov 17 2020 at 19:57)
-
-* [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (1 message, latest: Nov 16 2020 at 07:59)
 
 * [\[isabelle\] Typos in lemma names](62288isabelleTyposinlemmanames.html) (2 messages, latest: Nov 15 2020 at 14:02)
 
@@ -206,8 +208,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Unnecessary assumption in HOL-Analysis.Convex....](89313isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:21)
 
 * [\[isabelle\] Unnecessary assumption in	HOL-Analysis.Convex....](13418isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:03)
-
-* [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (1 message, latest: Oct 06 2020 at 08:05)
 
 * [\[isabelle\] How to make Eisbach's match functionality avai...](05587isabelleHowtomakeEisbachsmatchfunctionalityavai.html) (2 messages, latest: Oct 05 2020 at 22:42)
 

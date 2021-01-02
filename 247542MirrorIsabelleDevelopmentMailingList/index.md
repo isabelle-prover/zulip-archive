@@ -9,9 +9,9 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (17 messages, latest: Jan 02 2021 at 10:20)
+* [\[isabelle-dev\] Incoherent use of file name "hoare_syntax.ML"](90552isabelledevIncoherentuseoffilenamehoaresyntaxML.html) (9 messages, latest: Jan 02 2021 at 11:17)
 
-* [\[isabelle-dev\] Incoherent use of file name "hoare_syntax.ML"](90552isabelledevIncoherentuseoffilenamehoaresyntaxML.html) (7 messages, latest: Jan 01 2021 at 23:12)
+* [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (17 messages, latest: Jan 02 2021 at 10:20)
 
 * [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (1 message, latest: Dec 27 2020 at 19:23)
 

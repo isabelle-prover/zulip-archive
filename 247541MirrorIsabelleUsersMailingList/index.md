@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (8 messages, latest: Jan 02 2021 at 11:14)
+
 * [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (2 messages, latest: Jan 02 2021 at 10:48)
 
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (8 messages, latest: Jan 02 2021 at 10:40)
@@ -20,8 +22,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (2 messages, latest: Jan 02 2021 at 10:11)
 
 * [\[isabelle\] Cannot load theory when building](13112isabelleCannotloadtheorywhenbuilding.html) (2 messages, latest: Jan 02 2021 at 10:04)
-
-* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (7 messages, latest: Jan 01 2021 at 21:45)
 
 * [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (3 messages, latest: Jan 01 2021 at 09:39)
 

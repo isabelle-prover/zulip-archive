@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Sledgehammer errors (Isabelle 2020)](11611isabelleSledgehammererrorsIsabelle2020.html) (1 message, latest: Jan 03 2021 at 14:43)
+
 * [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (1 message, latest: Jan 03 2021 at 12:03)
 
 * [\[isabelle\] sledgehammer (or Z3) internal error](09006isabellesledgehammerorZ3internalerror.html) (1 message, latest: Jan 03 2021 at 12:00)

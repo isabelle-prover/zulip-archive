@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Sledgehammer errors (Isabelle 2020)](11611isabelleSledgehammererrorsIsabelle2020.html) (2 messages, latest: Jan 03 2021 at 17:19)
+
 * [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (4 messages, latest: Jan 03 2021 at 16:35)
 
 * [\[isabelle\] CfP Theorem Proving Components for Educational...](12236isabelleCfPTheoremProvingComponentsforEducational.html) (1 message, latest: Jan 03 2021 at 16:34)
-
-* [\[isabelle\] Sledgehammer errors (Isabelle 2020)](11611isabelleSledgehammererrorsIsabelle2020.html) (1 message, latest: Jan 03 2021 at 14:43)
 
 * [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (1 message, latest: Jan 03 2021 at 12:03)
 

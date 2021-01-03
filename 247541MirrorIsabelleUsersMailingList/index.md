@@ -9,7 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Bootstrap problem in Isabelle2021-RC1: Consume...](27767isabelleBootstrapprobleminIsabelle2021RC1Consume.html) (1 message, latest: Jan 03 2021 at 09:45)
+* [\[isabelle\] Any fans of "try"?](11777isabelleAnyfansoftry.html) (1 message, latest: Jan 03 2021 at 11:53)
+
+* [\[isabelle\] Apple switching to ARM](44223isabelleAppleswitchingtoARM.html) (1 message, latest: Jan 03 2021 at 11:38)
+
+* [\[isabelle\] Bootstrap problem in Isabelle2021-RC1: Consume...](27767isabelleBootstrapprobleminIsabelle2021RC1Consume.html) (2 messages, latest: Jan 03 2021 at 11:27)
 
 * [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (8 messages, latest: Jan 02 2021 at 11:14)
 

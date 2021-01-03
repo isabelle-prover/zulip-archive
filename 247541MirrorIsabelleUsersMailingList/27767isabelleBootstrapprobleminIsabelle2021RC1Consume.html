@@ -32,6 +32,25 @@ $ isabelle build -b Pure</p>
     Florian<br>
 <a href="/user_uploads/14278/yU-v2xP3mp6GrCpevRjnHLFU/signature.asc">signature.asc</a></p>
 
+<a name="221446711"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Bootstrap%20problem%20in%20Isabelle2021-RC1%3A%20Consume.../near/221446711" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27767isabelleBootstrapprobleminIsabelle2021RC1Consume.html#221446711">Email Gateway (Jan 03 2021 at 11:27)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+OK, I have made it more robust here:<br>
+<a href="https://isabelle-dev.sketis.net/rISABELLE03e78b35ebbc">https://isabelle-dev.sketis.net/rISABELLE03e78b35ebbc</a></p>
+<p>Thus it will be in Isabelle2021-RC2, presumably to be published within 1 week.</p>
+<p>Behind that is a funny trick to get Isabelle/Scala source positions into PIDE<br>
+markup produced by Isabelle/ML. For example:</p>
+<p>ML ‹<br>
+  @{scala echo} "abc"<br>
+›</p>
+<p>Now C-hover-click on "echo" will jump to the implementation of that registered<br>
+Isabelle/Scala function.</p>
+<p>Registration of such functions works in user-space, using a suitable<br>
+invocation of "isabelle_scala_service" in etc/settings (e.g. of an add-on<br>
+component). For Isabelle/Pure it happens in $ISABELLE_HOME/etc/settings like this:</p>
+<p>isabelle_scala_service 'isabelle.Scala_Functions'</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

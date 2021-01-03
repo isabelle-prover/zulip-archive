@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Bootstrap problem in Isabelle2021-RC1: Consume...](27767isabelleBootstrapprobleminIsabelle2021RC1Consume.html) (1 message, latest: Jan 03 2021 at 09:45)
+
 * [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (8 messages, latest: Jan 02 2021 at 11:14)
 
 * [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (2 messages, latest: Jan 02 2021 at 10:48)

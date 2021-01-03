@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (4 messages, latest: Jan 03 2021 at 16:35)
+
+* [\[isabelle\] CfP Theorem Proving Components for Educational...](12236isabelleCfPTheoremProvingComponentsforEducational.html) (1 message, latest: Jan 03 2021 at 16:34)
+
 * [\[isabelle\] Sledgehammer errors (Isabelle 2020)](11611isabelleSledgehammererrorsIsabelle2020.html) (1 message, latest: Jan 03 2021 at 14:43)
 
 * [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (1 message, latest: Jan 03 2021 at 12:03)
@@ -34,8 +38,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (2 messages, latest: Jan 02 2021 at 10:11)
 
 * [\[isabelle\] Cannot load theory when building](13112isabelleCannotloadtheorywhenbuilding.html) (2 messages, latest: Jan 02 2021 at 10:04)
-
-* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (3 messages, latest: Jan 01 2021 at 09:39)
 
 * [\[isabelle\] Another ZF entry for the AFP](59612isabelleAnotherZFentryfortheAFP.html) (1 message, latest: Dec 28 2020 at 10:54)
 

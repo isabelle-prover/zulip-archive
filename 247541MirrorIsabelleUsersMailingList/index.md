@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Go-to-definition doesn't work when exploring l...](64429isabelleGotodefinitiondoesntworkwhenexploringl.html) (1 message, latest: Jan 03 2021 at 23:58)
+
 * [\[isabelle\] Sledgehammer errors (Isabelle 2020)](11611isabelleSledgehammererrorsIsabelle2020.html) (2 messages, latest: Jan 03 2021 at 17:19)
 
 * [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (4 messages, latest: Jan 03 2021 at 16:35)

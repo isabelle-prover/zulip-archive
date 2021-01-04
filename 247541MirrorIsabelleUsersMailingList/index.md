@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] low-level code formalisations in Isabelle](90767isabellelowlevelcodeformalisationsinIsabelle.html) (1 message, latest: Jan 04 2021 at 08:46)
+
 * [\[isabelle\] Go-to-definition doesn't work when exploring l...](64429isabelleGotodefinitiondoesntworkwhenexploringl.html) (1 message, latest: Jan 03 2021 at 23:58)
 
 * [\[isabelle\] Sledgehammer errors (Isabelle 2020)](11611isabelleSledgehammererrorsIsabelle2020.html) (2 messages, latest: Jan 03 2021 at 17:19)

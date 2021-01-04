@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Building a session document](45459Buildingasessiondocument.html) (5 messages, latest: Jan 04 2021 at 08:40)
+
 * [Installing Isabelle](41911InstallingIsabelle.html) (5 messages, latest: Jan 02 2021 at 17:34)
 
 * [Proving lemma with abstract lists](85681Provinglemmawithabstractlists.html) (1 message, latest: Dec 28 2020 at 01:00)

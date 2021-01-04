@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Building a session document](45459Buildingasessiondocument.html) (5 messages, latest: Jan 04 2021 at 08:40)
+* [Building a session document](45459Buildingasessiondocument.html) (6 messages, latest: Jan 04 2021 at 10:16)
 
 * [Installing Isabelle](41911InstallingIsabelle.html) (5 messages, latest: Jan 02 2021 at 17:34)
 

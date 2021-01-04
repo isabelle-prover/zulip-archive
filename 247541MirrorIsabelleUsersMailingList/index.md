@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (9 messages, latest: Jan 04 2021 at 17:23)
+
 * [\[isabelle\] Go-to-definition doesn't work when exploring l...](64429isabelleGotodefinitiondoesntworkwhenexploringl.html) (2 messages, latest: Jan 04 2021 at 12:37)
 
 * [\[isabelle\] low-level code formalisations in Isabelle](90767isabellelowlevelcodeformalisationsinIsabelle.html) (1 message, latest: Jan 04 2021 at 08:46)
@@ -28,8 +30,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Apple switching to ARM](44223isabelleAppleswitchingtoARM.html) (1 message, latest: Jan 03 2021 at 11:38)
 
 * [\[isabelle\] Bootstrap problem in Isabelle2021-RC1: Consume...](27767isabelleBootstrapprobleminIsabelle2021RC1Consume.html) (2 messages, latest: Jan 03 2021 at 11:27)
-
-* [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (8 messages, latest: Jan 02 2021 at 11:14)
 
 * [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (2 messages, latest: Jan 02 2021 at 10:48)
 

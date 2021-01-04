@@ -273,6 +273,50 @@ Mikhail Chekhov</p>
 Well, obviously auto and force combine rewriting and introduction, but not as I think you intend (to support conditional rewriting).</p>
 <p>Larry</p>
 
+<a name="221553032"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Several%20questions%20about%20the%20availability%20of%20ce.../near/221553032" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22229isabelleSeveralquestionsabouttheavailabilityofce.html#221553032">Email Gateway (Jan 04 2021 at 17:23)</a>:</h4>
+<p>From: Thomas Sewell &lt;<a href="mailto:tals4@cam.ac.uk">tals4@cam.ac.uk</a>&gt;<br>
+Hi Mikhail.</p>
+<p>I think it's worth mentioning a simple trick relevant to associativity.</p>
+<p>As you say, the problem is, how do you apply a rewrite of the form<br>
+"b . c = r" to a goal "a . b . c . d"? It's annoying to have to instruct<br>
+Isabelle to somehow gather the b and c together. Let's suppose "." is<br>
+associative and that "a . b . c . d" is syntax for "a . (b . (c . d))".<br>
+The simple trick is to also derive the rule "b . c . x = r . x".<br>
+This modified rule will apply to the original goal in normal form <br>
+without<br>
+having to first gather "(b . c)" together.</p>
+<p>The variant form of each rule can usually be derived as a one-liner, <br>
+since<br>
+it just amounts to generalising via some congruence and then rewriting <br>
+into<br>
+normal form. Here's a worked example for conjunction, which works in <br>
+Isabelle/HOL:</p>
+<p>lemma less_and_greater:<br>
+   fixes x :: nat<br>
+   shows "(x &lt; y ∧ x &gt; y) = False"<br>
+   by auto</p>
+<p>lemmas conj_left_cong = conj_cong[OF _ refl]</p>
+<p>lemmas less_and_greater2 = less_and_greater[THEN conj_left_cong, <br>
+simplified conj_assoc]</p>
+<p>lemma<br>
+   fixes x :: nat<br>
+   shows<br>
+   "~ (A ∧ (B ∧ x &lt; y) ∧ (x &gt; y ∧ x ≤ Suc 12) ∧ C)"<br>
+   apply (simp only: conj_assoc)<br>
+   apply (simp only: less_and_greater2)<br>
+   apply simp<br>
+   done</p>
+<p>From time to time somebody asks about rewriting modulo associativity<br>
+and commutativity, which might sometimes be really useful. My <br>
+understanding<br>
+is that this problem has been studied in other tools, that solutions <br>
+exist,<br>
+that performance is a major issue, and that no implementation for<br>
+Isabelle currently exists.</p>
+<p>Cheers,<br>
+     Thomas.</p>
+
 
 {% endraw %}
 

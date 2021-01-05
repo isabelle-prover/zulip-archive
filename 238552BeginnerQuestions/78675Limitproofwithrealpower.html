@@ -74,6 +74,30 @@ permalink: ./238552BeginnerQuestions/78675Limitproofwithrealpower.html
 </code></pre></div>
 <p>There is also documentation for <code>real_asymp</code> in <code>~~/Doc/Real_Asymp</code>. And you can of course always ask me if you have any questions!</p>
 
+<a name="221638627"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Limit%20proof%20with%20real%20power/near/221638627" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/78675Limitproofwithrealpower.html#221638627">Manuel Eberl (Jan 05 2021 at 12:02)</a>:</h4>
+<p>Addendum: here is a proof of your initial question without <code>real_asymp</code>, using the continuity of <code>powr</code> at <code>0</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+  <span class="kp">fixes</span> <span class="n">a</span><span class="o">::</span><span class="n">real</span>
+  <span class="kp">assumes</span> <span class="s">"a &gt; 0"</span>
+  <span class="kp">shows</span> <span class="s">"((λx. a powr x) ⤏ 1) (at_right 0)"</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">from</span> <span class="n">assms</span> <span class="k">have</span> <span class="s">"((λx. a powr x) ⤏ a powr 0) (nhds 0)"</span>
+    <span class="k">by</span> <span class="o">(</span><span class="n">intro</span> <span class="n">tendsto_intros</span> <span class="n">filterlim_ident</span><span class="o">)</span> <span class="n">auto</span>
+  <span class="k">hence</span> <span class="s">"((λx. a powr x) ⤏ a powr 0) (at_right 0)"</span>
+    <span class="k">by</span> <span class="o">(</span><span class="n">rule</span> <span class="n">filterlim_mono</span><span class="o">)</span> <span class="o">(</span><span class="n">auto</span> <span class="n">simp</span><span class="o">:</span> <span class="n">at_within_le_nhds</span><span class="o">)</span>
+  <span class="k">thus</span> <span class="o">?</span><span class="n">thesis</span> <span class="k">using</span> <span class="n">assms</span> <span class="k">by</span> <span class="n">simp</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+<a name="221638782"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Limit%20proof%20with%20real%20power/near/221638782" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/78675Limitproofwithrealpower.html#221638782">Manuel Eberl (Jan 05 2021 at 12:04)</a>:</h4>
+<p>This uses the rule <code>tendsto_powr'</code>, which is in the <code>tendsto_intros</code> collection:</p>
+<div class="codehilite"><pre><span></span><code>(f ⤏ a) F ⟹ (g ⤏ b) F ⟹ a ≠ 0 ∨ 0 &lt; b ∧ (∀⇩F x in F. 0 ≤ f x)
+⟹ ((λx. f x powr g x) ⤏ a powr b) F
+</code></pre></div>
+<p>These proofs get fairly tedious for more complicated limits though – which is why I made <code>real_asymp</code>. See <a href="https://www21.in.tum.de/~eberlm/pubs/real_asymp.html">this paper</a> for a description of how it works if you're curious (but for instructions on how to use it, look at the documentation instead or ask me).</p>
+
 
 {% endraw %}
 

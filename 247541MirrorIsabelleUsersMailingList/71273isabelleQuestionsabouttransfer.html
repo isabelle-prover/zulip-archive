@@ -1,0 +1,119 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/71273isabelleQuestionsabouttransfer.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/71273isabelleQuestionsabouttransfer.html">[isabelle] Questions about "transfer"</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="221641577"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Questions%20about%20%22transfer%22/near/221641577" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/71273isabelleQuestionsabouttransfer.html#221641577">Email Gateway (Jan 05 2021 at 12:41)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Hello,</p>
+<p>I recently did some experiments with the "transfer" command, but there<br>
+are a few things that I don't quite understand, so here are a few questions:</p>
+<ol>
+<li>
+<p>It seems to me that "transfer" always transfers theorems<br>
+"left-to-right". For the "transferred" attribute, there is<br>
+"untransferred" – is there a similar thing for "transfer" as well?</p>
+</li>
+<li>
+<p>Relatedly, is there an easy idiomatic way to use "flipped" relators?<br>
+The following does not work:</p>
+</li>
+</ol>
+<p>lemma<br>
+  assumes [transfer_rule]: "rel_set r X Y"<br>
+  shows   "rel_set (λy x. r x y) Y X"<br>
+  by transfer_prover</p>
+<ol start="3">
+<li>Sometimes, it is more convenient to prove transfer rules for<br>
+functions following the pattern</li>
+</ol>
+<p>lemma<br>
+  assumes [transfer_rule]: "r1 a b" "r2 c d"<br>
+  shows   "r3 (f a c) (f' b d)"</p>
+<p>but if I declare that lemmas as a transfer_rule, it is not used. I have<br>
+to explicitly prove "(r1 ===&gt; r2 ===&gt; r3) f f'" from this for it to be<br>
+used. Is there some way around this?</p>
+<ol start="4">
+<li>There is currently no relator for measures. I came up with the<br>
+following one, which works well for my purposes, but I think it is not a<br>
+good relator because it only makes sense for bi-unique relators on the<br>
+values.</li>
+</ol>
+<p>definition rel_measure :: "('a ⇒ 'b ⇒ bool) ⇒ ('a measure ⇒ 'b measure ⇒<br>
+bool)" where<br>
+  "rel_measure r M1 M2 ⟷<br>
+     rel_set r (space M1) (space M2) ∧<br>
+     rel_set (rel_set r) (sets M1) (sets M2) ∧<br>
+     (rel_set r ===&gt; (=)) (emeasure M1) (emeasure M2)"</p>
+<p>The definition of rel_pmf suggests something involving product measures<br>
+would be the right way to go.</p>
+<p>On a related note: suppose I defined my simple relator and then later on<br>
+someone else defines another relator for measures. Would the rules then<br>
+clash? Would one have to remove all the rules for my relator for things<br>
+to still work smoothly?</p>
+<ol start="5">
+<li>
+<p>Is there any trick for proving transfer rules for constants defined<br>
+by "inductive" or "fun" that I am unaware of? Doing the induction proofs<br>
+manually is very tedious.</p>
+</li>
+<li>
+<p>The constant "has_derivative" is not parametric (I think) because<br>
+e.g. for "(f has_derivative D) at_top" you get "Lim (λx. x)", which<br>
+equal to "THE x. False". However, in practice, F is always of the form<br>
+"at x within A" and then has_derivative is parametric. But if I prove<br>
+the transfer rule</p>
+<p>(r ===&gt; r) ===&gt; (r ===&gt; r) ===&gt; r ===&gt; rel_set r ===&gt; (=))<br>
+(λf D x A. (f has_derivative D) (at x within A))<br>
+(λf D x A. (f has_derivative D) (at x within A))</p>
+</li>
+</ol>
+<p>for some suitable relator r, it does not get used. The transfer package<br>
+insists on a relator for "has_derivative". Of course, if I do an<br>
+auxiliary definition for this and fold it before applying transfer, it<br>
+works, but then I have a useless auxiliary function cluttering the<br>
+namespace.</p>
+<ol start="7">
+<li>
+<p>In measure theory, there is the definition</p>
+<p>nn_integral :: 'a measure ⇒ ('a ⇒ ennreal) ⇒ ennreal<br>
+nn_integral M f =<br>
+  Sup (simple_integral M `<br>
+  {g. simple_function M g ∧ g ≤ f})</p>
+</li>
+</ol>
+<p>I was able to prove</p>
+<p>lemma transfer_nn_integral [transfer_rule]:<br>
+  assumes [transfer_rule]: "bi_unique r"<br>
+  shows "(rel_measure r ===&gt; (r ===&gt; (=)) ===&gt; (=))<br>
+         nn_integral nn_integral"</p>
+<p>but I needed some trickery to avoid "bi_total r" due to the use of<br>
+"Collect". The reason why it works is that "simple_integral" only<br>
+evaluates the function on values from "space M", so we can replace the<br>
+set in question by</p>
+<p>{g. simple_function M g ∧ (∀x. x ∉ space M ⟶ f x = 0) ∧<br>
+      ∀x∈space M. g x ≤ f x}</p>
+<p>which can be shown (with quite a bit of pain!) to be parametric.</p>
+<p>Is there some trick to make any of this easier?</p>
+<ol start="8">
+<li>Is there any way of telling the transfer package that some rules have<br>
+higher priority than others?</li>
+</ol>
+<p>Cheers,</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/hKPuCIz1IRTHQ_hjbu1gZaD0/smime.p7s">smime.p7s</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

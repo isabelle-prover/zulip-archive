@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (1 message, latest: Jan 05 2021 at 12:41)
+
+* [\[isabelle\] Questionnaire on deployed verified systems](74106isabelleQuestionnaireondeployedverifiedsystems.html) (1 message, latest: Jan 05 2021 at 12:24)
+
 * [\[isabelle\] FSCD 2021: Second Call for Papers](41827isabelleFSCD2021SecondCallforPapers.html) (1 message, latest: Jan 05 2021 at 10:11)
 
 * [\[isabelle\] Research assistant/associate position at Imper...](19773isabelleResearchassistantassociatepositionatImper.html) (1 message, latest: Jan 05 2021 at 10:11)

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Limit proof with real power](78675Limitproofwithrealpower.html) (6 messages, latest: Jan 05 2021 at 11:55)
+* [Limit proof with real power](78675Limitproofwithrealpower.html) (8 messages, latest: Jan 05 2021 at 12:04)
 
 * [Copying theorem output into e-mail](12238Copyingtheoremoutputintoemail.html) (3 messages, latest: Jan 05 2021 at 09:27)
 

@@ -9,6 +9,10 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Copying theorem output into e-mail](12238Copyingtheoremoutputintoemail.html) (1 message, latest: Jan 05 2021 at 08:52)
+
+* [Limit proof with real power](78675Limitproofwithrealpower.html) (1 message, latest: Jan 05 2021 at 08:36)
+
 * [Building a session document](45459Buildingasessiondocument.html) (6 messages, latest: Jan 04 2021 at 10:16)
 
 * [Installing Isabelle](41911InstallingIsabelle.html) (5 messages, latest: Jan 02 2021 at 17:34)

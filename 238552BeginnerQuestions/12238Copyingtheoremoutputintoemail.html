@@ -37,6 +37,37 @@ V c<br>
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Copying%20theorem%20output%20into%20e-mail/near/221626790" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/12238Copyingtheoremoutputintoemail.html#221626790">Gergely Buday (Jan 05 2021 at 09:27)</a>:</h4>
 <p>This is a generated theorem that is not present in the HTML preview.</p>
 
+<a name="221644543"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Copying%20theorem%20output%20into%20e-mail/near/221644543" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/12238Copyingtheoremoutputintoemail.html#221644543">Gergely Buday (Jan 05 2021 at 13:18)</a>:</h4>
+<p>#!/bin/bash</p>
+<p>sed -e $'s/⇩1/\u2081/g' &lt;$1 | \<br>
+  sed -e $'s/⇩2/\u2082/g' | \<br>
+  sed -e $'s/⇩3/\u2083/g' | \<br>
+  sed -e $'s/⇩4/\u2084/g' | \<br>
+  sed -e $'s/⇩5/\u2085/g' | \<br>
+  sed -e 's/?//'g</p>
+<p>Creates proper subscript numbers up to 5 and removes question marks for schematic variables. This processes theorems in the Output window of Isabelle/JEdit.</p>
+<p>Notice the leading $ that enables shell escapes for unicode characters:</p>
+<p><a href="https://stackoverflow.com/questions/27140408/bash-replacing-a-number-with-unicode-character-using-sed/27141959#27141959">https://stackoverflow.com/questions/27140408/bash-replacing-a-number-with-unicode-character-using-sed/27141959#27141959</a></p>
+
+<a name="221646440"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Copying%20theorem%20output%20into%20e-mail/near/221646440" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/12238Copyingtheoremoutputintoemail.html#221646440">Manuel Eberl (Jan 05 2021 at 13:40)</a>:</h4>
+<p>you can also do <code>thm [no_vars]</code> to get rid of schematic variables.</p>
+
+<a name="221647626"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Copying%20theorem%20output%20into%20e-mail/near/221647626" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/12238Copyingtheoremoutputintoemail.html#221647626">Gergely Buday (Jan 05 2021 at 13:51)</a>:</h4>
+<p><span class="user-mention" data-user-id="232736">@Manuel Eberl</span> Does that work only in document preparation's @{thm } sequence or also in Isabelle/JEdit Output window?</p>
+<p>I could not add [no_vars] anyhow into </p>
+<p>lemmas big_step_induct = big_step.induct [split_format(complete)]</p>
+
+<a name="221647949"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Copying%20theorem%20output%20into%20e-mail/near/221647949" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/12238Copyingtheoremoutputintoemail.html#221647949">Manuel Eberl (Jan 05 2021 at 13:55)</a>:</h4>
+<p>Well you should only use this for presentation, really. You know, when you want to copy-paste stuff into an email or something.</p>
+
+<a name="221647984"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Copying%20theorem%20output%20into%20e-mail/near/221647984" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/12238Copyingtheoremoutputintoemail.html#221647984">Manuel Eberl (Jan 05 2021 at 13:55)</a>:</h4>
+<p>But yes, <code>no_vars</code> is just an attribute. You can do <code>thm foo[no_avsrs]</code> or <code>lemmas bar = foo[no_vars]</code>.</p>
+
 
 {% endraw %}
 

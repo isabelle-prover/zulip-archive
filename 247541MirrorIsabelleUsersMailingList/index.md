@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Second Call for Papers](41827isabelleFSCD2021SecondCallforPapers.html) (1 message, latest: Jan 05 2021 at 10:11)
+
+* [\[isabelle\] Research assistant/associate position at Imper...](19773isabelleResearchassistantassociatepositionatImper.html) (1 message, latest: Jan 05 2021 at 10:11)
+
 * [\[isabelle\] Several questions about the availability of ce...](22229isabelleSeveralquestionsabouttheavailabilityofce.html) (9 messages, latest: Jan 04 2021 at 17:23)
 
 * [\[isabelle\] Go-to-definition doesn't work when exploring l...](64429isabelleGotodefinitiondoesntworkwhenexploringl.html) (2 messages, latest: Jan 04 2021 at 12:37)

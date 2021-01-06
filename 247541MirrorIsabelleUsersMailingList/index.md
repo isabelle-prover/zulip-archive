@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (3 messages, latest: Jan 06 2021 at 20:46)
+
 * [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (1 message, latest: Jan 06 2021 at 14:43)
 
 * [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (1 message, latest: Jan 06 2021 at 14:34)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Call for Papers: Tests and Proofs 2021 (TAP 2021)](16705isabelleCallforPapersTestsandProofs2021TAP2021.html) (1 message, latest: Jan 06 2021 at 10:08)
 
 * [\[isabelle\] ITP2021: Second Call for Workshops (Deadline 1...](93934isabelleITP2021SecondCallforWorkshopsDeadline1.html) (1 message, latest: Jan 06 2021 at 10:08)
-
-* [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (2 messages, latest: Jan 05 2021 at 23:21)
 
 * [\[isabelle\] Questionnaire on deployed verified systems](74106isabelleQuestionnaireondeployedverifiedsystems.html) (1 message, latest: Jan 05 2021 at 12:24)
 

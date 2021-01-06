@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (1 message, latest: Jan 05 2021 at 12:41)
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (1 message, latest: Jan 05 2021 at 23:29)
+
+* [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (2 messages, latest: Jan 05 2021 at 23:21)
 
 * [\[isabelle\] Questionnaire on deployed verified systems](74106isabelleQuestionnaireondeployedverifiedsystems.html) (1 message, latest: Jan 05 2021 at 12:24)
 

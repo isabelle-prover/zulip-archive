@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Isar: Fix with restriction](38755IsarFixwithrestriction.html) (8 messages, latest: Jan 06 2021 at 10:59)
+* [Isar: Fix with restriction](38755IsarFixwithrestriction.html) (9 messages, latest: Jan 06 2021 at 11:04)
 
 * [Limit proof with real power](78675Limitproofwithrealpower.html) (9 messages, latest: Jan 05 2021 at 15:44)
 

@@ -78,6 +78,95 @@ all but one veriT strategy in sledgehammer, by adding:<p>ML ‹<br>
 <p>Thanks,</p>
 <p>Mathias</p>
 
+<a name="221755081"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC1%20-%20Any%20way%20to%20limit%20%22veriT%22%20me.../near/221755081" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html#221755081">Email Gateway (Jan 06 2021 at 11:03)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+On 1/6/21 3:29 AM, Mathias Fleury wrote:</p>
+<blockquote>
+<p>Hi Eugene,</p>
+<p>I never use "try", so I need some more information:</p>
+<ul>
+<li>Are you talking about one veriT thread  that used so much memory or more than one veriT thread?</li>
+</ul>
+</blockquote>
+<p>I am not sure that I understand this question.  Threads share a single address space, so the amount of memory used<br>
+is not a property of a single thread, but of a process.  If you are asking about processes, then it was one veriT<br>
+process.  I did not check how many threads were part of that process.</p>
+<blockquote>
+<ul>
+<li>on what theory was this? I would like to reproduce that.</li>
+</ul>
+</blockquote>
+<p>It is not easy for me to supply any kind of simple theory with straightforward instructions for reproducing,<br>
+but the next time it happens I will see if I can reproduce by using the same "try" in the same context.</p>
+<blockquote>
+<ul>
+<li>What was the real memory usage? Virtual memory is pretty meaningless: I have a program that has a virtual memory usage<br>
+of 256G but uses only 9M...<br>
+</li>
+</ul>
+</blockquote>
+<p>Again, I don't know what you mean by "real memory usage".  Unless a program uses some tricks such as sparse<br>
+address spaces (which can be useful in some kind of in-memory database situations), the virtual memory will be the<br>
+sum of the code, data, heap and stack sizes.  Code and read-only data can be shared between processes, but this is<br>
+not an issue here because there is only one veriT process, and I don't think any shared libraries used would be<br>
+contributing to the issue.  The usage in question is almost certainly dynamic memory usage; i.e. heap.</p>
+<p>Linux utilities such as "top" and "ps" do report "virtual size" and "resident-set size".  The resident-set size<br>
+would be the amount of actual RAM currently in use by the process.  This number is obviously limited by the<br>
+amount of installed RAM and once it reaches a certain level there can essentially not be any further increases,<br>
+though the size of the virtual address space can continue to increase if there is available swap.<br>
+In the case of the example I cited, the RSS reached about 26GB, which took up enough of the system RAM so that<br>
+there was severe thrashing.</p>
+<blockquote>
+<p>If the trashing is not too hard to reproduce:</p>
+<ul>
+<li>Does it still happen if you deactivate veriT in sledgehammer by adding:<p>ML ‹<br>
+  fun verit_rm_stgy f stgy thy =<br>
+    let<br>
+      val ctxt' = f (Proof_Context.init_global thy);<br>
+      val thy' = Proof_Context.theory_of ctxt';<br>
+    in Context.theory_map (Verit_Proof.verit_rm_stgy stgy) thy' end;<br>
+  ›</p>
+<p>setup ‹fold (verit_rm_stgy (fn x=&gt; x)) ["del_insts", "ccfv_SIG", "ccfv_threshold", "default", "best"]›</p>
+<p>ML ‹Verit_Proof.all_veriT_stgies (Context.Proof @{context})›<br>
+  (<em>should print: val it = []: string list</em>)</p>
+</li>
+</ul>
+<p>at the top of the file?</p>
+<ul>
+<li>If the previous point works, does it still happen if you deactivate all but one veriT strategy in sledgehammer, by adding:<p>ML ‹<br>
+  fun verit_rm_stgy f stgy thy =<br>
+    let<br>
+      val ctxt' = f (Proof_Context.init_global thy);<br>
+      val thy' = Proof_Context.theory_of ctxt';<br>
+    in Context.theory_map (Verit_Proof.verit_rm_stgy stgy) thy' end;<br>
+  ›</p>
+<p>setup ‹fold (verit_rm_stgy (fn x=&gt; x)) ["del_insts", "ccfv_SIG", "ccfv_threshold", "default"]›</p>
+<p>ML ‹Verit_Proof.all_veriT_stgies (Context.Proof @{context})›<br>
+  (<em>should print: val it = ["best"]: string list</em>)</p>
+</li>
+</ul>
+<p>at the top of the file?</p>
+</blockquote>
+<p>I can try this, but do not know if/when I will be able to report on results, since the situation is not<br>
+deterministically reproducible at this time.</p>
+<blockquote>
+<p>Thanks,</p>
+<p>Mathias</p>
+<p>On 06/01/2021 00:28, Eugene W. Stark wrote:</p>
+<blockquote>
+<p>I am running Isabelle2021-RC1 under Ubuntu 20.04.  Is there any way to limit the memory use<br>
+of the "veriT" prover?  It seems not to be a very good citizen in this respect: when it is<br>
+run from the "try" command it seems willing to grow its address space even to significantly<br>
+exceed the total amount of system RAM.  For example, I just observed a virtual address space<br>
+of 37.8GB on a system with 32GB total RAM and of course Java, poly, and various other things<br>
+were also running, so this is unsupportable.  When this occurs, the system is sent into a<br>
+thrashing mode, from which it is difficult even to get back control of the desktop so that<br>
+the offending process can be identified and killed.  So some ability to impose a limit is<br>
+needed here.</p>
+</blockquote>
+</blockquote>
+
 
 {% endraw %}
 

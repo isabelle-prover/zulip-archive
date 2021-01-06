@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (1 message, latest: Jan 05 2021 at 23:29)
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (2 messages, latest: Jan 06 2021 at 08:30)
 
 * [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (2 messages, latest: Jan 05 2021 at 23:21)
 

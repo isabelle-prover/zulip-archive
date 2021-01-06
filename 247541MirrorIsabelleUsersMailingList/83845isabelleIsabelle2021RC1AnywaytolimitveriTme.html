@@ -25,6 +25,59 @@ thrashing mode, from which it is difficult even to get back control of the deskt
 the offending process can be identified and killed.  So some ability to impose a limit is<br>
 needed here.</p>
 
+<a name="221743907"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC1%20-%20Any%20way%20to%20limit%20%22veriT%22%20me.../near/221743907" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html#221743907">Email Gateway (Jan 06 2021 at 08:30)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi Eugene,</p>
+<p>I never use "try", so I need some more information:</p>
+<ul>
+<li>
+<p>Are you talking about one veriT thread  that used so much memory or <br>
+more than one veriT thread?</p>
+</li>
+<li>
+<p>on what theory was this? I would like to reproduce that.</p>
+</li>
+<li>
+<p>What was the real memory usage? Virtual memory is pretty meaningless: <br>
+I have a program that has a virtual memory usage of 256G but uses only 9M...</p>
+</li>
+</ul>
+<p>If the trashing is not too hard to reproduce:</p>
+<ul>
+<li>Does it still happen if you deactivate veriT in sledgehammer by adding:<p>ML ‹<br>
+  fun verit_rm_stgy f stgy thy =<br>
+     let<br>
+       val ctxt' = f (Proof_Context.init_global thy);<br>
+       val thy' = Proof_Context.theory_of ctxt';<br>
+     in Context.theory_map (Verit_Proof.verit_rm_stgy stgy) thy' end;<br>
+  ›</p>
+<p>setup ‹fold (verit_rm_stgy (fn x=&gt; x)) ["del_insts", "ccfv_SIG",<br>
+  "ccfv_threshold", "default", "best"]›</p>
+<p>ML ‹Verit_Proof.all_veriT_stgies (Context.Proof @{context})›<br>
+  (<em>should print: val it = []: string list</em>)</p>
+</li>
+</ul>
+<p>at the top of the file?</p>
+<ul>
+<li>If the previous point works, does it still happen if you deactivate <br>
+all but one veriT strategy in sledgehammer, by adding:<p>ML ‹<br>
+  fun verit_rm_stgy f stgy thy =<br>
+     let<br>
+       val ctxt' = f (Proof_Context.init_global thy);<br>
+       val thy' = Proof_Context.theory_of ctxt';<br>
+     in Context.theory_map (Verit_Proof.verit_rm_stgy stgy) thy' end;<br>
+  ›</p>
+<p>setup ‹fold (verit_rm_stgy (fn x=&gt; x)) ["del_insts", "ccfv_SIG",<br>
+  "ccfv_threshold", "default"]›</p>
+<p>ML ‹Verit_Proof.all_veriT_stgies (Context.Proof @{context})›<br>
+  (<em>should print: val it = ["best"]: string list</em>)</p>
+</li>
+</ul>
+<p>at the top of the file?</p>
+<p>Thanks,</p>
+<p>Mathias</p>
+
 
 {% endraw %}
 

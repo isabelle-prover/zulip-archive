@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (1 message, latest: Jan 06 2021 at 14:43)
+
+* [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (1 message, latest: Jan 06 2021 at 14:34)
+
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (3 messages, latest: Jan 06 2021 at 11:03)
 
 * [\[isabelle\] Call for Papers: Tests and Proofs 2021 (TAP 2021)](16705isabelleCallforPapersTestsandProofs2021TAP2021.html) (1 message, latest: Jan 06 2021 at 10:08)

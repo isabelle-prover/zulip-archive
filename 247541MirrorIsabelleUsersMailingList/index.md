@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (2 messages, latest: Jan 07 2021 at 13:58)
+
 * [\[isabelle\] fully funded PhD position on verification of i...](92405isabellefullyfundedPhDpositiononverificationofi.html) (1 message, latest: Jan 07 2021 at 10:19)
 
 * [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (4 messages, latest: Jan 06 2021 at 23:31)
-
-* [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (1 message, latest: Jan 06 2021 at 14:43)
 
 * [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (1 message, latest: Jan 06 2021 at 14:34)
 

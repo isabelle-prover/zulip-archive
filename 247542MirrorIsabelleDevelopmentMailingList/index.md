@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (2 messages, latest: Jan 08 2021 at 13:11)
+* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (4 messages, latest: Jan 08 2021 at 15:11)
 
 * [\[isabelle-dev\] Java 15 ("zulu")](42099isabelledevJava15zulu.html) (1 message, latest: Jan 07 2021 at 13:43)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (2 messages, latest: Jan 08 2021 at 04:10)
+
 * [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (3 messages, latest: Jan 07 2021 at 15:40)
 
 * [\[isabelle\] fully funded PhD position on verification of i...](92405isabellefullyfundedPhDpositiononverificationofi.html) (1 message, latest: Jan 07 2021 at 10:19)
@@ -40,8 +42,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (4 messages, latest: Jan 03 2021 at 16:35)
 
 * [\[isabelle\] CfP Theorem Proving Components for Educational...](12236isabelleCfPTheoremProvingComponentsforEducational.html) (1 message, latest: Jan 03 2021 at 16:34)
-
-* [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (1 message, latest: Jan 03 2021 at 12:03)
 
 * [\[isabelle\] sledgehammer (or Z3) internal error](09006isabellesledgehammerorZ3internalerror.html) (1 message, latest: Jan 03 2021 at 12:00)
 

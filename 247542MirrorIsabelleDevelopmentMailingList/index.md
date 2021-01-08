@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (2 messages, latest: Jan 08 2021 at 13:11)
+
 * [\[isabelle-dev\] Java 15 ("zulu")](42099isabelledevJava15zulu.html) (1 message, latest: Jan 07 2021 at 13:43)
 
 * [\[isabelle-dev\] HOL-ex](41395isabelledevHOLex.html) (1 message, latest: Jan 03 2021 at 11:42)
@@ -16,8 +18,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] Incoherent use of file name "hoare_syntax.ML"](90552isabelledevIncoherentuseoffilenamehoaresyntaxML.html) (10 messages, latest: Jan 02 2021 at 23:51)
 
 * [\[isabelle-dev\] A proposal for the website](63730isabelledevAproposalforthewebsite.html) (17 messages, latest: Jan 02 2021 at 10:20)
-
-* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (1 message, latest: Dec 27 2020 at 19:23)
 
 * [\[isabelle-dev\] Isabelle/Phabricator project tags](17707isabelledevIsabellePhabricatorprojecttags.html) (1 message, latest: Dec 18 2020 at 11:19)
 

@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (3 messages, latest: Jan 08 2021 at 15:29)
+* [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (4 messages, latest: Jan 08 2021 at 20:18)
 
-* [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (3 messages, latest: Jan 07 2021 at 15:40)
+* [\[isabelle\] Custom fonts in browser_info html?](50681isabelleCustomfontsinbrowserinfohtml.html) (3 messages, latest: Jan 08 2021 at 15:29)
 
 * [\[isabelle\] fully funded PhD position on verification of i...](92405isabellefullyfundedPhDpositiononverificationofi.html) (1 message, latest: Jan 07 2021 at 10:19)
 

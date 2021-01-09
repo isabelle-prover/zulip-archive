@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - sledgehammer suggestion "by...](37053isabelleIsabelle2021RC1sledgehammersuggestionby.html) (1 message, latest: Jan 09 2021 at 15:21)
+
 * [\[isabelle\] \[TFP'21\] final call for papers: Trends in Func...](15541isabelleTFP21finalcallforpapersTrendsinFunc.html) (1 message, latest: Jan 09 2021 at 12:36)
 
 * [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (2 messages, latest: Jan 09 2021 at 12:36)

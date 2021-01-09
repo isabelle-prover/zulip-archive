@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[TFP'21\] final call for papers: Trends in Func...](15541isabelleTFP21finalcallforpapersTrendsinFunc.html) (1 message, latest: Jan 09 2021 at 12:36)
+
+* [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (2 messages, latest: Jan 09 2021 at 12:36)
+
 * [\[isabelle\] Variable both free and bound?!](34458isabelleVariablebothfreeandbound.html) (1 message, latest: Jan 08 2021 at 22:34)
 
 * [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (4 messages, latest: Jan 08 2021 at 20:18)
@@ -18,8 +22,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] fully funded PhD position on verification of i...](92405isabellefullyfundedPhDpositiononverificationofi.html) (1 message, latest: Jan 07 2021 at 10:19)
 
 * [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (4 messages, latest: Jan 06 2021 at 23:31)
-
-* [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (1 message, latest: Jan 06 2021 at 14:34)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (3 messages, latest: Jan 06 2021 at 11:03)
 

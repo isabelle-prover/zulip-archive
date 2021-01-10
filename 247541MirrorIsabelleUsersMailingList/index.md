@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (1 message, latest: Jan 10 2021 at 11:16)
+
 * [\[isabelle\] Strange "Tactic failed" error in lift_definiti...](68916isabelleStrangeTacticfailederrorinliftdefiniti.html) (1 message, latest: Jan 10 2021 at 10:38)
 
 * [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (1 message, latest: Jan 09 2021 at 19:32)

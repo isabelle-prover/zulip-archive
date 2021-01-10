@@ -9,9 +9,9 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (5 messages, latest: Jan 09 2021 at 09:06)
+* [\[isabelle-dev\] NEWS: Improved GUI look-and-feel](59494isabelledevNEWSImprovedGUIlookandfeel.html) (3 messages, latest: Jan 10 2021 at 11:41)
 
-* [\[isabelle-dev\] NEWS: Improved GUI look-and-feel](59494isabelledevNEWSImprovedGUIlookandfeel.html) (1 message, latest: Jan 09 2021 at 00:25)
+* [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (6 messages, latest: Jan 10 2021 at 11:32)
 
 * [\[isabelle-dev\] Java 15 ("zulu")](42099isabelledevJava15zulu.html) (1 message, latest: Jan 07 2021 at 13:43)
 

@@ -9,13 +9,17 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Variable both free and bound?!](34458isabelleVariablebothfreeandbound.html) (3 messages, latest: Jan 10 2021 at 16:39)
+
+* [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (3 messages, latest: Jan 10 2021 at 16:09)
+
+* [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (2 messages, latest: Jan 10 2021 at 16:05)
+
 * [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (4 messages, latest: Jan 10 2021 at 15:58)
 
 * [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (5 messages, latest: Jan 10 2021 at 15:56)
 
 * [\[isabelle\] Isabelle2021-RC2 available for testing](54746isabelleIsabelle2021RC2availablefortesting.html) (1 message, latest: Jan 10 2021 at 15:53)
-
-* [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (1 message, latest: Jan 10 2021 at 13:29)
 
 * [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (1 message, latest: Jan 10 2021 at 11:16)
 
@@ -26,8 +30,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC1 - sledgehammer suggestion "by...](37053isabelleIsabelle2021RC1sledgehammersuggestionby.html) (1 message, latest: Jan 09 2021 at 15:21)
 
 * [\[isabelle\] \[TFP'21\] final call for papers: Trends in Func...](15541isabelleTFP21finalcallforpapersTrendsinFunc.html) (1 message, latest: Jan 09 2021 at 12:36)
-
-* [\[isabelle\] Variable both free and bound?!](34458isabelleVariablebothfreeandbound.html) (1 message, latest: Jan 08 2021 at 22:34)
 
 * [\[isabelle\] Isabelle2021-RC1 - error highlighting](07648isabelleIsabelle2021RC1errorhighlighting.html) (4 messages, latest: Jan 08 2021 at 20:18)
 
@@ -72,8 +74,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (8 messages, latest: Jan 02 2021 at 10:40)
 
 * [\[isabelle\] Question about "try" and future tasks](49028isabelleQuestionabouttryandfuturetasks.html) (2 messages, latest: Jan 02 2021 at 10:36)
-
-* [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (2 messages, latest: Jan 02 2021 at 10:26)
 
 * [\[isabelle\] quote in mixfix annotation](10447isabellequoteinmixfixannotation.html) (2 messages, latest: Jan 02 2021 at 10:11)
 

@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] NEWS: Improved GUI look-and-feel](59494isabelledevNEWSImprovedGUIlookandfeel.html) (3 messages, latest: Jan 10 2021 at 11:41)
+* [\[isabelle-dev\] NEWS: Improved GUI look-and-feel](59494isabelledevNEWSImprovedGUIlookandfeel.html) (4 messages, latest: Jan 10 2021 at 14:28)
 
 * [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (6 messages, latest: Jan 10 2021 at 11:32)
 

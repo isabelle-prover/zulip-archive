@@ -32,6 +32,83 @@ mathematical text (not "code"). This requires suitable web-technology that<br>
 lasts more than just 6 months as a "cool" or "hot" thing.</p>
 <p>Makarius</p>
 
+<a name="222244917"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC2%3A%20improved%20HTML%20presentation/near/222244917" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/98085isabelleIsabelle2021RC2improvedHTMLpresentation.html#222244917">Email Gateway (Jan 10 2021 at 22:13)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+On Sun Jan 10, 2021 at 7:47 PM CET, Makarius wrote:</p>
+<blockquote>
+<p>On 10/01/2021 16:52, Makarius wrote:</p>
+<blockquote>
+<p>The current release candidate website is<br>
+<a href="https://isabelle.in.tum.de/website-Isabelle2021-RC2">https://isabelle.in.tum.de/website-Isabelle2021-RC2</a></p>
+</blockquote>
+<p>As usual, the "Documentation" section of the website refers to "Theory<br>
+libraries" in HTML, e.g. see<br>
+<a href="https://isabelle.in.tum.de/website-Isabelle2021-RC2/dist/library/HOL/HOL/index.html">https://isabelle.in.tum.de/website-Isabelle2021-RC2/dist/library/HOL/HOL/index.html</a></p>
+<p>This is now based on formal PIDE markup produced in batch-builds; so<br>
+there is<br>
+much more fancy coloring and a few more hyperlinks. Further presentation<br>
+of<br>
+markup will come eventually, after this release.</p>
+</blockquote>
+<p>Ah, what a coincidence! Just three days ago I started developing a tool<br>
+to do this based on the output of 'isabelle dump'.</p>
+<p>Some remarks:</p>
+<p>The generated files seem to lack a closing &lt;/html&gt; tag</p>
+<p>The semi-transparent background color on .quoted is a bit inconsistent,<br>
+as sometimes (indeed, most of the time) Isabelle generates two nested<br>
+quoted tags. Thus, when only a single tag is generated (see for example<br>
+the line "code_datatype holds" in Tools/Code_Generator), the highlight<br>
+is very faint.</p>
+<p>In my case, I resolved this by pre-baking the transparency, i.e.<br>
+  background-color: #f3f3f3;</p>
+<blockquote>
+<p>Moreover, formally included Isabelle/ML files get proper attention:<br>
+Isabelle/HOL consists of theory specifications and ML tool<br>
+implementations in<br>
+a complex bootstrap process that winds itself towards theory "Main" (or<br>
+"Complex_Main").</p>
+</blockquote>
+<p>Interesting! Does the PIDE markup for included ML files get included in<br>
+the output of 'isabelle dump' somewhere?</p>
+<blockquote>
+<p>The overall HTML presentation style is still somewhat crude: like<br>
+syntax/semantics highlighting in Isabelle/jEdit.</p>
+<p>Eventually, I would like to see journal-quality rendering of formal<br>
+mathematical text (not "code"). This requires suitable web-technology<br>
+that<br>
+lasts more than just 6 months as a "cool" or "hot" thing.</p>
+<p>Makarius</p>
+</blockquote>
+<p>I suppose I should also say something about my own implementation. The<br>
+end goal is to integrate it into a blog authoring tool, so I'm going to<br>
+continue my out-of-tree efforts.</p>
+<p>As I've mentioned, I get my semantic information from the output of<br>
+'isabelle dump'. I have found two small deficiencies in this command:</p>
+<ul>
+<li>there is no way to render PIDE markup for Pure</li>
+<li>it always starts by processing all the dependencies, even if they are<br>
+   already included in the image specified with -b</li>
+</ul>
+<p>The root causes of both seem to be very similar - the pure_base and<br>
+skip_base arguments to Context in src/Pure/Tools/dump.scala are both<br>
+hardcoded as false, with no commandline flag to control them.</p>
+<p>I'm currently halfway through duplicating the tooltips mechanism of<br>
+Isabelle/jEdit, and go-to-definition is next on the list. When that is<br>
+ready, I will make a proper announcement on this mailing list.</p>
+<p>One feature I'm particularily fond of is not even present in<br>
+Isabelle/jEdit: when you hover over a non-ASCII symbol, a tooltip will<br>
+tell you its name, as well as any abbreviations - as far as I am aware,<br>
+the only ways to learn the name of a symbol when you first encounter it,<br>
+is to either open a .thy file with Notepad to see the escape code, or a<br>
+game of where's waldo in the Symbols tab of jEdit.</p>
+<p>Though it's nothing particularily flashy yet, you can see a preview here:<br>
+<a href="https://niedzejkob.github.io/isabelle-markup/HOL/HOL.html">https://niedzejkob.github.io/isabelle-markup/HOL/HOL.html</a></p>
+<p>The corresponding code is available here:<br>
+<a href="https://github.com/NieDzejkob/isabelle-markup">https://github.com/NieDzejkob/isabelle-markup</a></p>
+<p>Kind regards,<br>
+Jakub Kądziołka</p>
+
 
 {% endraw %}
 

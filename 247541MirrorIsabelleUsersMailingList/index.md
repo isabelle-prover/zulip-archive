@@ -9,7 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Variable both free and bound?!](34458isabelleVariablebothfreeandbound.html) (3 messages, latest: Jan 10 2021 at 16:39)
+* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (1 message, latest: Jan 10 2021 at 18:48)
+
+* [\[isabelle\] Variable both free and bound?!](34458isabelleVariablebothfreeandbound.html) (5 messages, latest: Jan 10 2021 at 18:34)
+
+* [\[isabelle\] Debug facilities of locales](65462isabelleDebugfacilitiesoflocales.html) (2 messages, latest: Jan 10 2021 at 18:27)
+
+* [\[isabelle\] F-IDE 2021 - 2nd Call for Papers](12707isabelleFIDE20212ndCallforPapers.html) (1 message, latest: Jan 10 2021 at 18:24)
 
 * [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (3 messages, latest: Jan 10 2021 at 16:09)
 
@@ -90,8 +96,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] \[TFPIE'21\] Second Call For Papers: Trends in F...](14063isabelleTFPIE21SecondCallForPapersTrendsinF.html) (1 message, latest: Dec 19 2020 at 11:07)
 
 * [\[isabelle\] Question regarding nitpick](68151isabelleQuestionregardingnitpick.html) (5 messages, latest: Dec 19 2020 at 10:03)
-
-* [\[isabelle\] Debug facilities of locales](65462isabelleDebugfacilitiesoflocales.html) (1 message, latest: Dec 14 2020 at 20:37)
 
 * [\[isabelle\] Deadline extension: AMAI Special Issue on Theo...](76224isabelleDeadlineextensionAMAISpecialIssueonTheo.html) (1 message, latest: Dec 14 2020 at 11:01)
 

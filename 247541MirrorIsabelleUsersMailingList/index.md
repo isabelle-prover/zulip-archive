@@ -9,9 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (4 messages, latest: Jan 11 2021 at 15:26)
+* [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (3 messages, latest: Jan 11 2021 at 17:53)
 
-* [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (5 messages, latest: Jan 11 2021 at 14:21)
+* [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (6 messages, latest: Jan 11 2021 at 17:48)
+
+* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (4 messages, latest: Jan 11 2021 at 15:26)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (6 messages, latest: Jan 11 2021 at 13:53)
 
@@ -26,8 +28,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] F-IDE 2021 - 2nd Call for Papers](12707isabelleFIDE20212ndCallforPapers.html) (1 message, latest: Jan 10 2021 at 18:24)
 
 * [\[isabelle\] Issue with Isabelle/jEdit in fullscreen mode i...](90241isabelleIssuewithIsabellejEditinfullscreenmodei.html) (3 messages, latest: Jan 10 2021 at 16:09)
-
-* [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (2 messages, latest: Jan 10 2021 at 16:05)
 
 * [\[isabelle\] Isabelle2021-RC1 - editing below sometimes cau...](47446isabelleIsabelle2021RC1editingbelowsometimescau.html) (4 messages, latest: Jan 10 2021 at 15:58)
 

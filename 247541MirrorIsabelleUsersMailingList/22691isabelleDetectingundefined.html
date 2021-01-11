@@ -75,6 +75,35 @@ example as big as yours is likely to be.</p>
 <p>Manuel<br>
 <a href="/user_uploads/14278/rUoCMpwaOmdiIm4UDn7ZgIxE/smime.p7s">smime.p7s</a></p>
 
+<a name="222301529"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Detecting%20undefined/near/222301529" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22691isabelleDetectingundefined.html#222301529">Email Gateway (Jan 11 2021 at 14:14)</a>:</h4>
+<p>From: David Kretzmer &lt;<a href="mailto:david.k@posteo.de">david.k@posteo.de</a>&gt;<br>
+It is true that I'm currently using Isabelle/HOL with a mindset based on<br>
+executable programming languages, and in this context "undefined" feels<br>
+a bit like the danger of dereferencing an invalid pointer. However,<br>
+since the exceptional behavior of "undefined" is only part of the target<br>
+language it makes sense that you cannot reason about it in Isabelle/HOL.</p>
+<p>Also, without code generation, I guess the only thing you care about a<br>
+(function) definition is what you can prove about it. If the property<br>
+you want to prove uses parts of the definition that unexpectedly depend<br>
+on "undefined", then the proof may fail and you have to fix the<br>
+definition. On the other hand, if "undefined" occurs only in parts of<br>
+the definition that are irrelevant for the proof, then you don't care.</p>
+<p>So the difference between the proof language perspective and the<br>
+programming language perspective seems to be that in the former, you<br>
+deal with "undefined" when you encounter it (in this sense "undefined"<br>
+may just indicates an error in the definition, no different from other<br>
+possible definition errors), while in the programming language<br>
+perspective you want to ensure from the start that you <em>never</em> encounter<br>
+"undefined".</p>
+<p>Anyway, thanks for the detailed responses!</p>
+
+<a name="222302364"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Detecting%20undefined/near/222302364" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22691isabelleDetectingundefined.html#222302364">Email Gateway (Jan 11 2021 at 14:21)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Perhaps it would work better if you formalised a more traditional operational semantics, making explicit the idea of an execution becoming stuck (due to either an error in the semantics or a runtime error). Presumably an evaluation function could be refined from that.</p>
+<p>Larry</p>
+
 
 {% endraw %}
 

@@ -36,6 +36,50 @@ are some existing examples of similar tasks.</p>
 <p>Thanks.</p>
 <p>Stepan Holub</p>
 
+<a name="222268825"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20brute%20force%20search%20in%20lists/near/222268825" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/40551isabellebruteforcesearchinlists.html#222268825">Email Gateway (Jan 11 2021 at 08:11)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Dear Stepan,</p>
+<p>in principle, that sounds quite reasonable. However, let me show you an<br>
+alternative:</p>
+<p>A simple way to check something like this would be to use the code<br>
+generator, using either the "eval" tactic or a specialised "code<br>
+conversion" similar to what e.g. the AFP entry on Pratt certificates does.</p>
+<p>This is typically orders of magnitude faster than evaluating things with<br>
+simp_all. On the down side, it does not go through the Isabelle kernel<br>
+but relies on computational reflection (i.e. the code generator)<br>
+instead, and the code generator is a fairly big chunk of trusted code.<br>
+So purists might object.</p>
+<p>However, this approach is widely used and people usually don't complain<br>
+about it.</p>
+<p>Even the "naïve" brute force approach should work fine for simple examples:</p>
+<p>primrec lists_of_length where<br>
+    "lists_of_length A 0 = {[]}"<br>
+  | "lists_of_length A (Suc n) = (λ(x,xs). x # xs) ` (A ×<br>
+lists_of_length A n)"</p>
+<p>lemma lists_of_length_altdef: "lists_of_length A n = {xs. xs ∈ lists A ∧<br>
+length xs = n}"<br>
+  sorry</p>
+<p>notepad<br>
+begin<br>
+  define A :: "int list set" where<br>
+    "A ≡ Set.bind (concat ` lists_of_length {[0,1],[1,0,1]} 4) (set ∘<br>
+sublists)"<br>
+  have "∀w∈A. length w ≤ 13"<br>
+    unfolding A_def by eval<br>
+end</p>
+<p>For bigger examples where performance becomes an issue, one could trie a<br>
+more sophisticated approach (using a trie, perhaps?)</p>
+<p>One down side of this, however, is that it only works for concrete types<br>
+(like "int" above), not for free type variables. However, I think<br>
+theorems and operations in the field of combinatorics on words are<br>
+typically of a nature where if it works for a sufficiently large set of<br>
+symbols (e.g. some subset of the natural numbers), it works everywhere<br>
+else as well, so one could just run it on "nat" and then lift the result.</p>
+<p>Cheers,</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/KkaBxj6Sm6o_ti-PCv6yTT7I/smime.p7s">smime.p7s</a></p>
+
 
 {% endraw %}
 

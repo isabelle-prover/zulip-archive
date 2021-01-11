@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [fun _def or .simps?](40722fundeforsimps.html) (5 messages, latest: Jan 11 2021 at 11:36)
+
 * [Isar: Fix with restriction](38755IsarFixwithrestriction.html) (9 messages, latest: Jan 06 2021 at 11:04)
 
 * [Limit proof with real power](78675Limitproofwithrealpower.html) (9 messages, latest: Jan 05 2021 at 15:44)

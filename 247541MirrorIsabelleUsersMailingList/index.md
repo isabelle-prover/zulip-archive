@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (3 messages, latest: Jan 11 2021 at 11:48)
+
 * [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (2 messages, latest: Jan 11 2021 at 08:11)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (5 messages, latest: Jan 11 2021 at 07:28)
@@ -32,8 +34,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC2 available for testing](54746isabelleIsabelle2021RC2availablefortesting.html) (1 message, latest: Jan 10 2021 at 15:53)
 
 * [\[isabelle\] Strange "Tactic failed" error in lift_definiti...](68916isabelleStrangeTacticfailederrorinliftdefiniti.html) (1 message, latest: Jan 10 2021 at 10:38)
-
-* [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (1 message, latest: Jan 09 2021 at 19:32)
 
 * [\[isabelle\] Isabelle2021-RC1 - sledgehammer suggestion "by...](37053isabelleIsabelle2021RC1sledgehammersuggestionby.html) (1 message, latest: Jan 09 2021 at 15:21)
 

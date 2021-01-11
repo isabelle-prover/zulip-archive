@@ -1,0 +1,55 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/40722fundeforsimps.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/40722fundeforsimps.html">fun _def or .simps?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="222283377"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/fun%20_def%20or%20.simps%3F/near/222283377" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/40722fundeforsimps.html#222283377">Gergely Buday (Jan 11 2021 at 11:03)</a>:</h4>
+<p>This might occurred previously. Isabelle seems not to know about myfunc_def anymore, only myfunc.simps .</p>
+<p>Is that the standard way of using its definition with keyword unfolding?</p>
+<p>theorem skip_implies_SKIP: <br>
+  assumes "skip c"<br>
+  shows   "c ∼ SKIP"<br>
+  using assms<br>
+  unfolding skip.simps</p>
+
+<a name="222285275"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/fun%20_def%20or%20.simps%3F/near/222285275" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/40722fundeforsimps.html#222285275">Gergely Buday (Jan 11 2021 at 11:25)</a>:</h4>
+<p>Only definition-s have _def? What about abbreviations? How can I refer to them in unfolding?</p>
+
+<a name="222285908"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/fun%20_def%20or%20.simps%3F/near/222285908" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/40722fundeforsimps.html#222285908">Mathias Fleury (Jan 11 2021 at 11:31)</a>:</h4>
+<p>Indeed only definitions have a _def.  Primrec and fun don't have one. [1]</p>
+<p>Abbreviations only exists at pretty-printing. So unfolding the content of the abbreviation works.</p>
+<p>[1] the definition exists internally, but you should never use it.</p>
+
+<a name="222286243"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/fun%20_def%20or%20.simps%3F/near/222286243" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/40722fundeforsimps.html#222286243">Mathias Fleury (Jan 11 2021 at 11:35)</a>:</h4>
+<p>An example:</p>
+<div class="codehilite"><pre><span></span><code>definition f :: ‹nat ⇒ nat ⇒ nat› where
+  ‹f x  y = x + 3 + y›
+
+abbreviation add4 :: ‹nat ⇒ nat› where
+  ‹add4 ≡ f 1›
+
+lemma ‹add4 x = x + 4›
+  unfolding f_def by auto
+</code></pre></div>
+
+<a name="222286354"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/fun%20_def%20or%20.simps%3F/near/222286354" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/40722fundeforsimps.html#222286354">Manuel Eberl (Jan 11 2021 at 11:36)</a>:</h4>
+<p><code>primrec</code> does produce an accessible <code>_def</code> theorem in terms of the primitive recursor and can <em>very occasionally</em> be useful (e.g. when you want to show measurability, parametricity, etc.)</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

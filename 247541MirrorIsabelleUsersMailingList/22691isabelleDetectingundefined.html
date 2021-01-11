@@ -31,6 +31,50 @@ simpler property (i.e., no <code>undefined</code>). Is this possible?</p>
 <p>Best regards,<br>
 David</p>
 
+<a name="222286286"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Detecting%20undefined/near/222286286" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22691isabelleDetectingundefined.html#222286286">Email Gateway (Jan 11 2021 at 11:35)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Undefined means "underdefined" - it is some value, but we don't know which one. <br>
+Proving that something is different from undefined is not very meaningful. For <br>
+example, you can prove "Suc undefined ~= undefined", but what good does that do? <br>
+You have to prove the "stronger property" you talk about.</p>
+<p>Tobias<br>
+<a href="/user_uploads/14278/IzP3lGnFuEdlLODL4s4qJEb3/smime.p7s">smime.p7s</a></p>
+
+<a name="222287215"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Detecting%20undefined/near/222287215" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22691isabelleDetectingundefined.html#222287215">Email Gateway (Jan 11 2021 at 11:48)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+For polymorphic functions, one can at least prove parametricity, which<br>
+(by some extra-logical meta argument) should imply that the function<br>
+does not produce any "undefined"s unless they were already present in<br>
+the input.</p>
+<p>I don't think that is very applicable in your case though. And it might<br>
+not be any more useful than just going through the definitions by hand<br>
+and checking that they don't call any partial functions like "hd" (there<br>
+are not /that/ many operations that can crash in the standard code setup<br>
+for HOL, I think).</p>
+<p>In any case, HOL is a logic, not a programming language. It doesn't have<br>
+any notion of "execution". I therefore think that anything you do inside<br>
+the logic will never be able to capture statements about what happens<br>
+during execution faithfully.</p>
+<p>Even if your definition logically does not produce "undefined", even if<br>
+you prove that it always retuns "42", you could still have a code<br>
+equation somewhere that does something silly like "if undefined =<br>
+(undefined :: nat) then … else …" that crashes at run time. Or<br>
+non-termination.</p>
+<p>I think the only way to get any real guarantees would be to have a<br>
+semantics of the target language (that you export your code into) and<br>
+then reason about execution with that. Or do the opposite: take an<br>
+implementation of your algorithm and prove it equivalent to the HOL<br>
+definition through some verification framework.</p>
+<p>Something like a verified code generator that certifies termination and<br>
+exception-freedom would also work. I think Lars Hupel's verified code<br>
+generator to CakeML went into that direction, but I don't know if he<br>
+proved these properties. Plus it would probably not be able to handle an<br>
+example as big as yours is likely to be.</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/rUoCMpwaOmdiIm4UDn7ZgIxE/smime.p7s">smime.p7s</a></p>
+
 
 {% endraw %}
 

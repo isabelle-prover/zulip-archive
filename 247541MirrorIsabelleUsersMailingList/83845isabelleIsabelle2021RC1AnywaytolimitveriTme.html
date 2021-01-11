@@ -208,6 +208,18 @@ Hi Eugene,</p>
 <p>For 2, can you give me the ouput of the sledgehammer_params command?</p>
 <p>Mathias</p>
 
+<a name="222298968"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC1%20-%20Any%20way%20to%20limit%20%22veriT%22%20me.../near/222298968" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html#222298968">Email Gateway (Jan 11 2021 at 13:53)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+Metis and blast run in ML, so are limited by the size of the ML heap.  Poly accepts a parameter that allows<br>
+you to limit the size of the ML heap.  Similarly, Java accepts a parameter that allows you to limit the size<br>
+of its heap.  The problem here is that now there are additional processes getting fired off that can consume<br>
+memory voraciously, and there is no way to limit it.  There is only a certain amount of RAM on the system,<br>
+and if each process uses as much as it wants with no limitation, then the RAM will become overcommitted and<br>
+the system unstable.  It would be best if there were a single limit to the total amount of memory used by<br>
+all Isabelle-related processes, but that is a more complex thing to implement and a fallback is to make it<br>
+possible to place limits on the less-essential tools (e.g. smt solvers) that can cause trouble.</p>
+
 
 {% endraw %}
 

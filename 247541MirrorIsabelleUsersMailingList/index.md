@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (6 messages, latest: Jan 11 2021 at 13:53)
+
 * [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (3 messages, latest: Jan 11 2021 at 11:48)
 
 * [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (2 messages, latest: Jan 11 2021 at 08:11)
-
-* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (5 messages, latest: Jan 11 2021 at 07:28)
 
 * [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (2 messages, latest: Jan 10 2021 at 22:13)
 

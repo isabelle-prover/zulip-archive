@@ -109,6 +109,77 @@ game of where's waldo in the Symbols tab of jEdit.</p>
 <p>Kind regards,<br>
 Jakub Kądziołka</p>
 
+<a name="222309884"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC2%3A%20improved%20HTML%20presentation/near/222309884" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/98085isabelleIsabelle2021RC2improvedHTMLpresentation.html#222309884">Email Gateway (Jan 11 2021 at 15:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 10/01/2021 21:39, Jakub Kądziołka wrote:</p>
+<blockquote>
+<p>The generated files seem to lack a closing &lt;/html&gt; tag</p>
+</blockquote>
+<p>Oops, I have now changed that in<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/rev/ff9cd62d2d20">https://isabelle.sketis.net/repos/isabelle-release/rev/ff9cd62d2d20</a></p>
+<blockquote>
+<p>The semi-transparent background color on .quoted is a bit inconsistent,<br>
+as sometimes (indeed, most of the time) Isabelle generates two nested<br>
+quoted tags. Thus, when only a single tag is generated (see for example<br>
+the line "code_datatype holds" in Tools/Code_Generator), the highlight<br>
+is very faint.</p>
+<p>In my case, I resolved this by pre-baking the transparency, i.e.<br>
+  background-color: #f3f3f3;</p>
+</blockquote>
+<p>That is an interesting fine-point.</p>
+<p>In Isabelle/jEdit the underlying PIDE rendering works differently:<br>
+<a href="http://snapshot.select">snapshot.select</a> in<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/src/Pure/PIDE/rendering.scala#l495">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/src/Pure/PIDE/rendering.scala#l495</a><br>
+traverses the markup tree, such that only one markup element per text interval<br>
+take precedence. So there is no stacking-up of markups of the same kind (here<br>
+"foreground" color).</p>
+<p>I wonder if CSS can imitate the <a href="http://snapshot.select">snapshot.select</a> traversal. Otherwise one could<br>
+try to generate "flat" HTML markup from rendering.foreground (and other<br>
+rendering selectors), instead of taking the full XML document.</p>
+<p>Yet another possibility: quite different HTML presentation with less colors<br>
+and more typography (high-quality math fonts). It could be a combination of<br>
+parsing in the context of PIDE rendering results. (I will pursue this later,<br>
+to see how far we can approximate actual math journal quality, e.g. via<br>
+MathJax 3).</p>
+<blockquote>
+<blockquote>
+<p>Moreover, formally included Isabelle/ML files get proper attention:<br>
+Isabelle/HOL consists of theory specifications and ML tool<br>
+implementations in<br>
+a complex bootstrap process that winds itself towards theory "Main" (or<br>
+"Complex_Main").</p>
+</blockquote>
+<p>Interesting! Does the PIDE markup for included ML files get included in<br>
+the output of 'isabelle dump' somewhere?</p>
+</blockquote>
+<p>Probably not. Behind "isabelle dump" is a rather complex "headless PIDE"<br>
+session with its own rules what works well and what doesn't.</p>
+<p>It is better to switch your application to plain "isabelle build" + retrieval<br>
+of the PIDE markup from the build database.</p>
+<p>See also the implementation of the new "isabelle document" tool:<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/src/Pure/Thy/presentation.scala#l699">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/src/Pure/Thy/presentation.scala#l699</a><br>
+--- it first makes a regular <a href="http://Build.build">Build.build</a> (the Scala function behind "isabelle<br>
+build) to ensure that the sources are consistent with the session databases;<br>
+then it accesses the build artefacts (exported tex sources) via<br>
+db_context.get_export.</p>
+<p>For your application, the database access can work via Build_Job.read_theory,<br>
+just like Presentation.session_html, which is the implementation behind<br>
+"isabelle build -P:".</p>
+<p>Makarius</p>
+
+<a name="222311091"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC2%3A%20improved%20HTML%20presentation/near/222311091" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/98085isabelleIsabelle2021RC2improvedHTMLpresentation.html#222311091">Email Gateway (Jan 11 2021 at 15:26)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Side-remark: reading Isabelle/Scala sources works best with IntelliJ IDEA. See<br>
+the Isabelle "system" manual about the "isabelle scala_project" tool, with<br>
+links and hints about Gradle and IntelliJ.</p>
+<p>Maybe "isabelle scala_project" should eventually support user-space projects<br>
+as well. Right now you have to tinker manually, and then use suitable<br>
+"isabelle_scala_service" invocations in your etc/settings: e.g. see<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/etc/settings#l23">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/etc/settings#l23</a></p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

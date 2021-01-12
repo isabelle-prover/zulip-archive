@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Updating AFP entry](85247isabelleUpdatingAFPentry.html) (1 message, latest: Jan 11 2021 at 18:15)
+* [\[isabelle\] Updating AFP entry](85247isabelleUpdatingAFPentry.html) (2 messages, latest: Jan 12 2021 at 07:36)
 
 * [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (3 messages, latest: Jan 11 2021 at 17:53)
 

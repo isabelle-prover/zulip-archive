@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Isabelle2021-RC1/2: broken tar balls for L...](41773isabelledevIsabelle2021RC12brokentarballsforL.html) (1 message, latest: Jan 12 2021 at 10:04)
+* [\[isabelle-dev\] Isabelle2021-RC1/2: broken tar balls for L...](41773isabelledevIsabelle2021RC12brokentarballsforL.html) (2 messages, latest: Jan 12 2021 at 12:40)
 
 * [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (8 messages, latest: Jan 12 2021 at 08:10)
 

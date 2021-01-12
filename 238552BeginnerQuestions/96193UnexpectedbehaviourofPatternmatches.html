@@ -48,6 +48,24 @@ else @{print} (&quot;not matching&quot;, t)
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Unexpected%20behaviour%20of%20Pattern.matches/near/222451543" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96193UnexpectedbehaviourofPatternmatches.html#222451543">Lukas Stevens (Jan 12 2021 at 15:59)</a>:</h4>
 <p>I was hoping that there may be a glaring oversight by me which can be easily explained :D. I will investigate what the term is now.</p>
 
+<a name="222451848"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Unexpected%20behaviour%20of%20Pattern.matches/near/222451848" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96193UnexpectedbehaviourofPatternmatches.html#222451848">Mathias Fleury (Jan 12 2021 at 16:01)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>(@{print} t; raise Fail &quot;&quot;)
+</code></pre></div>
+<p>is very useful for such cases</p>
+
+<a name="222454329"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Unexpected%20behaviour%20of%20Pattern.matches/near/222454329" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96193UnexpectedbehaviourofPatternmatches.html#222454329">Simon Roßkopf (Jan 12 2021 at 16:15)</a>:</h4>
+<p><code>@{term "λx. f y z x"}</code> should match your pattern</p>
+
+<a name="222455544"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Unexpected%20behaviour%20of%20Pattern.matches/near/222455544" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96193UnexpectedbehaviourofPatternmatches.html#222455544">Lukas Stevens (Jan 12 2021 at 16:23)</a>:</h4>
+<p>This means that I should eta-contract <code>t</code> before destructuring it, I guess?</p>
+
+<a name="222459573"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Unexpected%20behaviour%20of%20Pattern.matches/near/222459573" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/96193UnexpectedbehaviourofPatternmatches.html#222459573">Lukas Stevens (Jan 12 2021 at 16:49)</a>:</h4>
+<p>Thanks, that seems to work.</p>
+
 
 {% endraw %}
 

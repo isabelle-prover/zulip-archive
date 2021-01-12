@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Unexpected behaviour of Pattern.matches](96193UnexpectedbehaviourofPatternmatches.html) (4 messages, latest: Jan 12 2021 at 15:59)
+* [Unexpected behaviour of Pattern.matches](96193UnexpectedbehaviourofPatternmatches.html) (8 messages, latest: Jan 12 2021 at 16:49)
 
 * [fun _def or .simps?](40722fundeforsimps.html) (11 messages, latest: Jan 11 2021 at 15:55)
 

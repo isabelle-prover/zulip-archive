@@ -9,9 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] New in the AFP: The HOL-CSP Refinement Toolkit](53719isabelleNewintheAFPTheHOLCSPRefinementToolkit.html) (1 message, latest: Jan 12 2021 at 12:10)
+* [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (1 message, latest: Jan 12 2021 at 23:39)
 
-* [\[isabelle\] Updating AFP entry](85247isabelleUpdatingAFPentry.html) (2 messages, latest: Jan 12 2021 at 07:36)
+* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (1 message, latest: Jan 12 2021 at 23:34)
+
+* [\[isabelle\] Updating AFP entry](85247isabelleUpdatingAFPentry.html) (3 messages, latest: Jan 12 2021 at 23:27)
+
+* [\[isabelle\] New in the AFP: The HOL-CSP Refinement Toolkit](53719isabelleNewintheAFPTheHOLCSPRefinementToolkit.html) (1 message, latest: Jan 12 2021 at 12:10)
 
 * [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (3 messages, latest: Jan 11 2021 at 17:53)
 

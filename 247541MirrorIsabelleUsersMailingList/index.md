@@ -9,11 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (2 messages, latest: Jan 14 2021 at 15:28)
+
+* [\[isabelle\] Lemma suggestion to Function_Algebras](16023isabelleLemmasuggestiontoFunctionAlgebras.html) (3 messages, latest: Jan 14 2021 at 15:21)
+
 * [\[isabelle\] SMT 2021 Workshop: Call for Papers](57400isabelleSMT2021WorkshopCallforPapers.html) (1 message, latest: Jan 14 2021 at 10:50)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (7 messages, latest: Jan 14 2021 at 06:24)
-
-* [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (1 message, latest: Jan 13 2021 at 23:21)
 
 * [\[isabelle\] New AFP entry: JinjaDCI: a Java semantics with...](14893isabelleNewAFPentryJinjaDCIaJavasemanticswith.html) (1 message, latest: Jan 13 2021 at 09:37)
 
@@ -282,8 +284,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Unnecessary assumption in	HOL-Analysis.Convex....](13418isabelleUnnecessaryassumptioninHOLAnalysisConvex.html) (1 message, latest: Oct 06 2020 at 09:03)
 
 * [\[isabelle\] How to make Eisbach's match functionality avai...](05587isabelleHowtomakeEisbachsmatchfunctionalityavai.html) (2 messages, latest: Oct 05 2020 at 22:42)
-
-* [\[isabelle\] Lemma suggestion to Function_Algebras](16023isabelleLemmasuggestiontoFunctionAlgebras.html) (2 messages, latest: Oct 05 2020 at 01:05)
 
 * [\[isabelle\] 16 inch MacBook Pro benchmarks](78830isabelle16inchMacBookProbenchmarks.html) (2 messages, latest: Sep 29 2020 at 18:44)
 

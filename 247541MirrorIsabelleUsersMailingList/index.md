@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] SMT 2021 Workshop: Call for Papers](57400isabelleSMT2021WorkshopCallforPapers.html) (1 message, latest: Jan 14 2021 at 10:50)
+
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (7 messages, latest: Jan 14 2021 at 06:24)
 
 * [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (1 message, latest: Jan 13 2021 at 23:21)

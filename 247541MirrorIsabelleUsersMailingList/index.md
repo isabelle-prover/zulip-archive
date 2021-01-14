@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (7 messages, latest: Jan 14 2021 at 06:24)
+
 * [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (1 message, latest: Jan 13 2021 at 23:21)
 
 * [\[isabelle\] New AFP entry: JinjaDCI: a Java semantics with...](14893isabelleNewAFPentryJinjaDCIaJavasemanticswith.html) (1 message, latest: Jan 13 2021 at 09:37)
@@ -26,8 +28,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (6 messages, latest: Jan 11 2021 at 17:48)
 
 * [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (4 messages, latest: Jan 11 2021 at 15:26)
-
-* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (6 messages, latest: Jan 11 2021 at 13:53)
 
 * [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (2 messages, latest: Jan 11 2021 at 08:11)
 

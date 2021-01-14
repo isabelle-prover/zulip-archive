@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (1 message, latest: Jan 13 2021 at 23:21)
+
 * [\[isabelle\] New AFP entry: JinjaDCI: a Java semantics with...](14893isabelleNewAFPentryJinjaDCIaJavasemanticswith.html) (1 message, latest: Jan 13 2021 at 09:37)
 
 * [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (1 message, latest: Jan 12 2021 at 23:39)

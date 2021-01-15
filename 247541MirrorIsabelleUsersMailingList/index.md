@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (1 message, latest: Jan 15 2021 at 21:47)
+
 * [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (2 messages, latest: Jan 15 2021 at 10:24)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (8 messages, latest: Jan 14 2021 at 16:28)

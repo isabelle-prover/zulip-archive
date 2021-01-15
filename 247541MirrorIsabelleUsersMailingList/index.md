@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (2 messages, latest: Jan 15 2021 at 10:24)
+
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (8 messages, latest: Jan 14 2021 at 16:28)
 
 * [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (2 messages, latest: Jan 14 2021 at 15:28)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] SMT 2021 Workshop: Call for Papers](57400isabelleSMT2021WorkshopCallforPapers.html) (1 message, latest: Jan 14 2021 at 10:50)
 
 * [\[isabelle\] New AFP entry: JinjaDCI: a Java semantics with...](14893isabelleNewAFPentryJinjaDCIaJavasemanticswith.html) (1 message, latest: Jan 13 2021 at 09:37)
-
-* [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (1 message, latest: Jan 12 2021 at 23:39)
 
 * [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (1 message, latest: Jan 12 2021 at 23:34)
 

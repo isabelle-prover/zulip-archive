@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] ITP 2021: Third Call for Papers](84815isabelleITP2021ThirdCallforPapers.html) (1 message, latest: Jan 16 2021 at 16:10)
+
 * [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (3 messages, latest: Jan 16 2021 at 14:15)
 
 * [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (2 messages, latest: Jan 16 2021 at 13:03)

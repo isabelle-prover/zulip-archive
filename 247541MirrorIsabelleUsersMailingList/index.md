@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (3 messages, latest: Jan 16 2021 at 14:15)
+
 * [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (2 messages, latest: Jan 16 2021 at 13:03)
 
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (1 message, latest: Jan 16 2021 at 11:52)
-
-* [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (2 messages, latest: Jan 16 2021 at 09:21)
 
 * [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (2 messages, latest: Jan 15 2021 at 10:24)
 

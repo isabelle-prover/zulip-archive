@@ -21,6 +21,31 @@ Dear list,</p>
 <p>Thanks,<br>
 Stephan</p>
 
+<a name="222980249"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20keywords/near/222980249" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/12627isabelleIsabellekeywords.html#222980249">Email Gateway (Jan 16 2021 at 13:03)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+The short answer: simply use double quotes around your generated identifiers,<br>
+e.g. like this for Isabelle BibTeX support:<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/src/Pure/Thy/bibtex.scala#l29">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC2/src/Pure/Thy/bibtex.scala#l29</a></p>
+<p>Thus you don't need to care about the keywords.</p>
+<p>Alternative long answer:</p>
+<p>The ancient static elisp tables are now Isabelle/Scala operations to produce<br>
+proper data structures from the theory and session source tree.</p>
+<p>The included Isabelle/Scala tool works with Isabelle2021-RC2: it inspects the<br>
+overall source dependencies to access Outer_Syntax keywords. You can put the<br>
+.scala file e.g. in a directory $ISABELLE_HOME_USER/Tools and add this to<br>
+$ISABELLE_HOME_USER/etc/settings:</p>
+<p>ISABELLE_TOOLS="$ISABELLE_TOOLS:$ISABELLE_HOME_USER/Tools"</p>
+<p>Now the following example invocations work:</p>
+<p>isabelle outer_keywords Pure</p>
+<p>isabelle outer_keywords HOL-Library.Multiset</p>
+<p>isabelle outer_keywords -d '$AFP' Akra_Bazzi.Master_Theorem</p>
+<p>If you actually need inner keywords for the term language: it is possible to<br>
+inspect the global theory syntax in Isabelle/ML and retrieve keywords in a<br>
+similar manner. (This won't cover local theory syntax, of course.)</p>
+<p>Makarius<br>
+<a href="/user_uploads/14278/z4VCXNxCZFzmaltL4BCkCL79/outer_keywords.scala">outer_keywords.scala</a></p>
+
 
 {% endraw %}
 

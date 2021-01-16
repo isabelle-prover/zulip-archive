@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [How to deal with name shadowing?](85128Howtodealwithnameshadowing.html) (1 message, latest: Jan 16 2021 at 20:18)
+* [How to deal with name shadowing?](85128Howtodealwithnameshadowing.html) (5 messages, latest: Jan 16 2021 at 21:10)
 
 * [Unexpected behaviour of Pattern.matches](96193UnexpectedbehaviourofPatternmatches.html) (8 messages, latest: Jan 12 2021 at 16:49)
 

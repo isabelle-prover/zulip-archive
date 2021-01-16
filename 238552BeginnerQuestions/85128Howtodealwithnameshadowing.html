@@ -16,6 +16,22 @@ permalink: ./238552BeginnerQuestions/85128Howtodealwithnameshadowing.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20deal%20with%20name%20shadowing%3F/near/223003950" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/85128Howtodealwithnameshadowing.html#223003950">Jakub Kądziołka (Jan 16 2021 at 20:18)</a>:</h4>
 <p>There are two definitions for prime - one in <code>HOL-Computational_Algebra.Factorial_Ring</code>, and one in <code>HOL-Algebra.Divisibility</code>. When I import both <code>HOL-Number_Theory</code> and <code>HOL-Algebra</code> into a theory (regardless of the order), the latter shadows the former. Thus, if I want to refer to primality of integers, I need to use the full <code>Factorial_Ring.prime</code>. What's the best way to instruct Isabelle to default to <code>Factorial_Ring.prime</code> in my theory?</p>
 
+<a name="223006420"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20deal%20with%20name%20shadowing%3F/near/223006420" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/85128Howtodealwithnameshadowing.html#223006420">Manuel Eberl (Jan 16 2021 at 21:08)</a>:</h4>
+<p>no idea if there is one</p>
+
+<a name="223006423"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20deal%20with%20name%20shadowing%3F/near/223006423" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/85128Howtodealwithnameshadowing.html#223006423">Manuel Eberl (Jan 16 2021 at 21:09)</a>:</h4>
+<p>that is a long-standing problem with a number of things</p>
+
+<a name="223006436"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20deal%20with%20name%20shadowing%3F/near/223006436" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/85128Howtodealwithnameshadowing.html#223006436">Manuel Eberl (Jan 16 2021 at 21:09)</a>:</h4>
+<p>I guess you can do <code>hide_const (open) Divisibility.prime</code></p>
+
+<a name="223006447"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20deal%20with%20name%20shadowing%3F/near/223006447" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/85128Howtodealwithnameshadowing.html#223006447">Manuel Eberl (Jan 16 2021 at 21:10)</a>:</h4>
+<p>then you have to spell out <code>Divisibility.prime</code> whenever you want to refer to that</p>
+
 
 {% endraw %}
 

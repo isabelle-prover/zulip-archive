@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (1 message, latest: Jan 16 2021 at 11:52)
+
 * [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (1 message, latest: Jan 16 2021 at 09:56)
 
 * [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (2 messages, latest: Jan 16 2021 at 09:21)

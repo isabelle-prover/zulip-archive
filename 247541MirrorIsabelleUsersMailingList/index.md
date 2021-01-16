@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (1 message, latest: Jan 15 2021 at 21:47)
+* [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (1 message, latest: Jan 16 2021 at 09:56)
+
+* [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (2 messages, latest: Jan 16 2021 at 09:21)
 
 * [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (2 messages, latest: Jan 15 2021 at 10:24)
 

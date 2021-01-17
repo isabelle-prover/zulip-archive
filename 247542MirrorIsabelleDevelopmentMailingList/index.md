@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] scala-2.13.4](00413isabelledevscala2134.html) (1 message, latest: Jan 17 2021 at 11:39)
+
 * [\[isabelle-dev\] Isabelle2021-RC1/2: broken tar balls for L...](41773isabelledevIsabelle2021RC12brokentarballsforL.html) (4 messages, latest: Jan 13 2021 at 08:53)
 
 * [\[isabelle-dev\] Isabelle2021 release process](89324isabelledevIsabelle2021releaseprocess.html) (8 messages, latest: Jan 12 2021 at 08:10)

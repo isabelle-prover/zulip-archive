@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (5 messages, latest: Jan 18 2021 at 16:14)
+* [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (3 messages, latest: Jan 18 2021 at 22:06)
 
-* [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (2 messages, latest: Jan 18 2021 at 10:25)
+* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (5 messages, latest: Jan 18 2021 at 16:14)
 
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (1 message, latest: Jan 17 2021 at 23:23)
 

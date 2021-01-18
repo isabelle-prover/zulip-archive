@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (5 messages, latest: Jan 18 2021 at 16:14)
+
 * [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (2 messages, latest: Jan 18 2021 at 10:25)
 
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (1 message, latest: Jan 17 2021 at 23:23)
@@ -44,8 +46,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle 2021-RC1: Problem with fonts in jEdit](96427isabelleIsabelle2021RC1ProblemwithfontsinjEdit.html) (3 messages, latest: Jan 11 2021 at 17:53)
 
 * [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (6 messages, latest: Jan 11 2021 at 17:48)
-
-* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (4 messages, latest: Jan 11 2021 at 15:26)
 
 * [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (2 messages, latest: Jan 11 2021 at 08:11)
 

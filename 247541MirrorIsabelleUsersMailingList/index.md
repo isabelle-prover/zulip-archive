@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (2 messages, latest: Jan 18 2021 at 10:25)
+
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (1 message, latest: Jan 17 2021 at 23:23)
 
 * [\[isabelle\] Epigenetics and similar Phenomena](02185isabelleEpigeneticsandsimilarPhenomena.html) (1 message, latest: Jan 17 2021 at 11:57)

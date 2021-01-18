@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Using bound type variables in a type_synonym](89168Usingboundtypevariablesinatypesynonym.html) (5 messages, latest: Jan 18 2021 at 11:59)
+* [Using bound type variables in a type_synonym](89168Usingboundtypevariablesinatypesynonym.html) (7 messages, latest: Jan 18 2021 at 12:01)
 
 * [How to deal with name shadowing?](85128Howtodealwithnameshadowing.html) (6 messages, latest: Jan 16 2021 at 23:01)
 

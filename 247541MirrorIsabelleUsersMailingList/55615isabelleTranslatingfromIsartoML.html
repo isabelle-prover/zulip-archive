@@ -98,6 +98,131 @@ interprets it faithfully. But what would be the purpose of that?</p>
 <p>Many thanks,<br>
 Albert</p>
 
+<a name="223231047"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Translating%20from%20Isar%20to%20ML%3F/near/223231047" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/55615isabelleTranslatingfromIsartoML.html#223231047">Email Gateway (Jan 19 2021 at 14:12)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+Hi,</p>
+<p>if I understand right, you want to do the following (from the python side):</p>
+<p>* Create a new theory.<br>
+  * Apply Isar commands one-by-one (where the commands are given as<br>
+    strings, same as they would be in actual Isabelle source code).</p>
+<p>* After each command, get access to the "state" of the Isar system<br>
+    (which could be the toplevel theory, or the current proof state,<br>
+    depending what the commands so far where).</p>
+<p>* Inspect that state in various ways</p>
+<p>If this is the case, then you might be interested in <br>
+<a href="https://github.com/dominique-unruh/scala-isabelle/blob/master/src/test/scala/de/unruh/isabelle/experiments/ExecuteIsar.scala">https://github.com/dominique-unruh/scala-isabelle/blob/master/src/test/scala/de/unruh/isabelle/experiments/ExecuteIsar.scala</a></p>
+<p>This is an experiment where I did more or less the above. This code is <br>
+uncommented and maybe a bit chaotic (it's me doing experiments, not part <br>
+of the distributed library) but I'd be happy to walk you through it on <br>
+the scala-isabelle gitter chat.</p>
+<p>I also have code fragments that parse a method description (the ... in <br>
+apply (...)) and allow you to apply it to a goal. If you need that one, <br>
+I can have a look where I put it...</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
+<a name="223232980"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Translating%20from%20Isar%20to%20ML%3F/near/223232980" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/55615isabelleTranslatingfromIsartoML.html#223232980">Email Gateway (Jan 19 2021 at 14:26)</a>:</h4>
+<p>From: Albert Jiang &lt;<a href="mailto:albert594250@gmail.com">albert594250@gmail.com</a>&gt;<br>
+Hi Dominique,</p>
+<p>On Tue, Jan 19, 2021 at 2:12 PM Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>if I understand right, you want to do the following (from the python side):</p>
+<p>- Create a new theory.<br>
+   - Apply Isar commands one-by-one (where the commands are given as<br>
+   strings, same as they would be in actual Isabelle source code).<br>
+   - After each command, get access to the "state" of the Isar system<br>
+   (which could be the toplevel theory, or the current proof state, depending<br>
+   what the commands so far where).<br>
+   - Inspect that state in various ways</p>
+<p>If this is the case, then you might be interested in<br>
+<a href="https://github.com/dominique-unruh/scala-isabelle/blob/master/src/test/scala/de/unruh/isabelle/experiments/ExecuteIsar.scala">https://github.com/dominique-unruh/scala-isabelle/blob/master/src/test/scala/de/unruh/isabelle/experiments/ExecuteIsar.scala</a></p>
+<p>Yes this is exactly what I need. Thank you for the pointer!</p>
+</blockquote>
+<blockquote>
+<p>This is an experiment where I did more or less the above. This code is<br>
+uncommented and maybe a bit chaotic (it's me doing experiments, not part of<br>
+the distributed library) but I'd be happy to walk you through it on the<br>
+scala-isabelle gitter chat.</p>
+<p>I also have code fragments that parse a method description (the ... in<br>
+apply (...)) and allow you to apply it to a goal. If you need that one, I<br>
+can have a look where I put it...</p>
+<p>I'll be very grateful if you can take a look at where the relevant code<br>
+fragments are.</p>
+</blockquote>
+<blockquote>
+<p>Best wishes,<br>
+Dominique.</p>
+<p>Many thanks,<br>
+Albert</p>
+</blockquote>
+<blockquote>
+<p>On 1/19/21 3:40 PM, Albert Jiang wrote:</p>
+<p>Hi Makarius,</p>
+<p>Thank you for your answer!</p>
+<p>The actual application is an Isabelle theorem proving environment that's<br>
+able to interact with a Python client. The client will send the<br>
+step-by-step proof as strings and receive the proof state info at each<br>
+step. I'm basing this on the scala-isabelle library and gRPC. The library<br>
+allows the compilation of ML code. So I thought if I could translate Isar<br>
+strings into ML code, the Python client can send in Isar commands line by<br>
+line. And then the commands can be translated into ML code, compiled, and<br>
+executed.</p>
+<blockquote>
+<p>An easy way would be to make a function that uses Isar source text and<br>
+interprets it faithfully. But what would be the purpose of that?</p>
+</blockquote>
+<p>I wonder if you could give some pointers as to how to make such a function?</p>
+<p>Many thanks,<br>
+Albert</p>
+<p>On Tue, Jan 19, 2021 at 11:55 AM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>On 18/01/2021 22:12, Albert Jiang wrote:</p>
+<blockquote>
+<p>I'm working on a system that allows the communication between Isabelle<br>
+and<br>
+outside agents. I wonder if there is an easy way to<br>
+automatically translate<br>
+the proof in Isar to ML? For example, is there an automatic way that<br>
+allows<br>
+the following proof</p>
+<p>lemma bar:"(1::nat)=1"<br>
+  apply (rule refl)<br>
+  done</p>
+<p>to be translated into something like this:</p>
+<p>ML ‹<br>
+val ctxt = @{context};val bar' =<br>
+@{term "(1::nat) = 1"}<br>
+|&gt; HOLogic.mk_Trueprop<br>
+|&gt; Thm.cterm_of ctxt<br>
+|&gt; Goal.init<br>
+|&gt; Tactic.rule_by_tactic ctxt (Classical.rule_tac ctxt @{thms refl} []<br>
+1)<br>
+|&gt; Goal.finish ctxt<br>
+|&gt; Thm.close_derivation ⌂<br>
+;ML_Thms.bind_thm ("bar'",bar');<br>
+›</p>
+</blockquote>
+<p>From where did you get this proposal for the translation? It is actually<br>
+quite<br>
+far from the reality of how Isar really works. So the translation would<br>
+break<br>
+down in nontrivial cases.</p>
+<blockquote>
+<p>I only got into Isar/ML recently so I'm sorry if this is a trivial<br>
+question.</p>
+</blockquote>
+<p>An easy way would be to make a function that uses Isar source text and<br>
+interprets it faithfully. But what would be the purpose of that?</p>
+<p>Just the usual meta-questions: What is your actual application? What are<br>
+your<br>
+actual needs?</p>
+<p>Makarius</p>
+</blockquote>
+</blockquote>
+
 
 {% endraw %}
 

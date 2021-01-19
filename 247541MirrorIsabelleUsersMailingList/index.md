@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (2 messages, latest: Jan 19 2021 at 11:55)
+* [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (3 messages, latest: Jan 19 2021 at 13:41)
+
+* [\[isabelle\] Isabelle2021-RC2: Problems downloading](82152isabelleIsabelle2021RC2Problemsdownloading.html) (3 messages, latest: Jan 19 2021 at 13:41)
 
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (2 messages, latest: Jan 19 2021 at 10:30)
 

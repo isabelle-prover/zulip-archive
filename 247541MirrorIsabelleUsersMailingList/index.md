@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (2 messages, latest: Jan 19 2021 at 10:30)
+* [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (2 messages, latest: Jan 19 2021 at 11:55)
 
-* [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (1 message, latest: Jan 19 2021 at 09:37)
+* [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (2 messages, latest: Jan 19 2021 at 10:30)
 
 * [\[isabelle\] ATVA 2021 - Call for Papers](26982isabelleATVA2021CallforPapers.html) (1 message, latest: Jan 19 2021 at 08:13)
 

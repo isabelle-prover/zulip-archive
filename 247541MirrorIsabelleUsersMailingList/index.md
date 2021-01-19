@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (1 message, latest: Jan 19 2021 at 09:37)
+
 * [\[isabelle\] ATVA 2021 - Call for Papers](26982isabelleATVA2021CallforPapers.html) (1 message, latest: Jan 19 2021 at 08:13)
 
 * [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (3 messages, latest: Jan 18 2021 at 22:06)

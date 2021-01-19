@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (1 message, latest: Jan 19 2021 at 16:56)
+
 * [\[isabelle\] Isabelle2021-RC2: Problems downloading](82152isabelleIsabelle2021RC2Problemsdownloading.html) (8 messages, latest: Jan 19 2021 at 15:56)
 
 * [\[isabelle\] Blog entry: Release Candidates for Isabelle2021](54664isabelleBlogentryReleaseCandidatesforIsabelle2021.html) (1 message, latest: Jan 19 2021 at 15:44)

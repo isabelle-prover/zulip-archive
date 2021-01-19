@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Console errors in AFP build after push](99674isabelleConsoleerrorsinAFPbuildafterpush.html) (3 messages, latest: Jan 19 2021 at 18:00)
+
 * [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (2 messages, latest: Jan 19 2021 at 17:36)
 
 * [\[isabelle\] Isabelle2021-RC2: Problems downloading](82152isabelleIsabelle2021RC2Problemsdownloading.html) (8 messages, latest: Jan 19 2021 at 15:56)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Blog entry: Release Candidates for Isabelle2021](54664isabelleBlogentryReleaseCandidatesforIsabelle2021.html) (1 message, latest: Jan 19 2021 at 15:44)
 
 * [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (6 messages, latest: Jan 19 2021 at 15:19)
-
-* [\[isabelle\] Console errors in AFP build after push](99674isabelleConsoleerrorsinAFPbuildafterpush.html) (2 messages, latest: Jan 19 2021 at 14:41)
 
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (2 messages, latest: Jan 19 2021 at 10:30)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (2 messages, latest: Jan 19 2021 at 10:30)
+
 * [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (1 message, latest: Jan 19 2021 at 09:37)
 
 * [\[isabelle\] ATVA 2021 - Call for Papers](26982isabelleATVA2021CallforPapers.html) (1 message, latest: Jan 19 2021 at 08:13)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (3 messages, latest: Jan 18 2021 at 22:06)
 
 * [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (5 messages, latest: Jan 18 2021 at 16:14)
-
-* [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (1 message, latest: Jan 17 2021 at 23:23)
 
 * [\[isabelle\] Epigenetics and similar Phenomena](02185isabelleEpigeneticsandsimilarPhenomena.html) (1 message, latest: Jan 17 2021 at 11:57)
 

@@ -9,13 +9,15 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [mixed messages](14096mixedmessages.html) (3 messages, latest: Jan 20 2021 at 08:58)
+
+* [fun _def or .simps?](40722fundeforsimps.html) (12 messages, latest: Jan 20 2021 at 08:52)
+
 * [Using bound type variables in a type_synonym](89168Usingboundtypevariablesinatypesynonym.html) (7 messages, latest: Jan 18 2021 at 12:01)
 
 * [How to deal with name shadowing?](85128Howtodealwithnameshadowing.html) (6 messages, latest: Jan 16 2021 at 23:01)
 
 * [Unexpected behaviour of Pattern.matches](96193UnexpectedbehaviourofPatternmatches.html) (8 messages, latest: Jan 12 2021 at 16:49)
-
-* [fun _def or .simps?](40722fundeforsimps.html) (11 messages, latest: Jan 11 2021 at 15:55)
 
 * [Isar: Fix with restriction](38755IsarFixwithrestriction.html) (9 messages, latest: Jan 06 2021 at 11:04)
 

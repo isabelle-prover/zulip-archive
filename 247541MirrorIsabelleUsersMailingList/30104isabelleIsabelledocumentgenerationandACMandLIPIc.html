@@ -1,0 +1,55 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/30104isabelleIsabelledocumentgenerationandACMandLIPIc.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/30104isabelleIsabelledocumentgenerationandACMandLIPIc.html">[isabelle] Isabelle document generation and ACM and LIPIc...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="223340086"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20document%20generation%20and%20ACM%20and%20LIPIc.../near/223340086" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/30104isabelleIsabelledocumentgenerationandACMandLIPIc.html#223340086">Email Gateway (Jan 20 2021 at 07:37)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+This is an experience report that highlights problems when preparing an <br>
+Isabelle-based document with LaTeX style files provided by the ACM and by LIPIcs.</p>
+<ol>
+<li>Isabelle style files use the plain tex comment package (for speed). This <br>
+apperas to clash with ACM and LIPIcs. My crude solution is to disable the <br>
+offending macros:</li>
+</ol>
+<p>\usepackage{isabelle,isabellesym}<br>
+\def\isadelimtheory{}\def\endisadelimtheory{}<br>
+\def\isatagtheory{}\def\endisatagtheory{}<br>
+\def\isadelimML{}\def\endisadelimML{}<br>
+\def\isatagML{}\def\endisatagML{}<br>
+\def\isafoldML{}<br>
+\def\isadelimproof{}\def\endisadelimproof{}<br>
+\def\isatagproof{}\def\endisatagproof{}<br>
+\def\isafoldproof{}<br>
+\isabellestyle{it}</p>
+<p>I am sure there is a better solution.</p>
+<ol start="2">
+<li>Luatex does not work for LIPIcs:</li>
+</ol>
+<p>Latex error (line 7 of <br>
+"/usr/local/texlive/2020/texmf-dist/tex/generic/pdftex/glyphtounicode.tex"):<br>
+   Unde<br>
+   fined control sequence.<br>
+   \pdfglyphtounicode</p>
+<p>The combination of luatex and \pdfglyphtounicode is discussed a little here: <br>
+<a href="https://tex.stackexchange.com/questions/404566/is-glyphtounicode-useful-with-lualatex-or-not-useful">https://tex.stackexchange.com/questions/404566/is-glyphtounicode-useful-with-lualatex-or-not-useful</a></p>
+<p>It works without problem with pdflatex. In fact, it would be nice if one could <br>
+tell Isabelle easily to use a specific latex instead of having to write a build <br>
+file.</p>
+<p>Tobias<br>
+<a href="/user_uploads/14278/EtDJACKyd_LIFUKRHCpAi_hn/smime.p7s">smime.p7s</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

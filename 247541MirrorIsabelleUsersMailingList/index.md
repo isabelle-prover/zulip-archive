@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (1 message, latest: Jan 20 2021 at 07:37)
+
 * [\[isabelle\] Console errors in AFP build after push](99674isabelleConsoleerrorsinAFPbuildafterpush.html) (3 messages, latest: Jan 19 2021 at 18:00)
 
 * [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (2 messages, latest: Jan 19 2021 at 17:36)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (3 messages, latest: Jan 20 2021 at 12:51)
+
 * [\[isabelle\] CFP: HCSS 2021 - High Confidence Software and ...](19590isabelleCFPHCSS2021HighConfidenceSoftwareand.html) (1 message, latest: Jan 20 2021 at 10:11)
 
 * [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (1 message, latest: Jan 20 2021 at 07:37)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Blog entry: Release Candidates for Isabelle2021](54664isabelleBlogentryReleaseCandidatesforIsabelle2021.html) (1 message, latest: Jan 19 2021 at 15:44)
 
 * [\[isabelle\] Translating from Isar to ML?](55615isabelleTranslatingfromIsartoML.html) (6 messages, latest: Jan 19 2021 at 15:19)
-
-* [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (2 messages, latest: Jan 19 2021 at 10:30)
 
 * [\[isabelle\] ATVA 2021 - Call for Papers](26982isabelleATVA2021CallforPapers.html) (1 message, latest: Jan 19 2021 at 08:13)
 

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Proof method in purple](74967Proofmethodinpurple.html) (2 messages, latest: Jan 20 2021 at 11:00)
+* [Proof method in purple](74967Proofmethodinpurple.html) (8 messages, latest: Jan 20 2021 at 11:15)
 
 * [something better than auto](17017somethingbetterthanauto.html) (7 messages, latest: Jan 20 2021 at 10:24)
 

@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [mixed messages](14096mixedmessages.html) (3 messages, latest: Jan 20 2021 at 08:58)
+* [something better than auto](17017somethingbetterthanauto.html) (1 message, latest: Jan 20 2021 at 09:57)
+
+* [mixed messages](14096mixedmessages.html) (6 messages, latest: Jan 20 2021 at 09:41)
 
 * [fun _def or .simps?](40722fundeforsimps.html) (12 messages, latest: Jan 20 2021 at 08:52)
 

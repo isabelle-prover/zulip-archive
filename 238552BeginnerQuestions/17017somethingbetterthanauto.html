@@ -1,0 +1,45 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/17017somethingbetterthanauto.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17017somethingbetterthanauto.html">something better than auto</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="223351565"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/something%20better%20than%20auto/near/223351565" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/17017somethingbetterthanauto.html#223351565">Gergely Buday (Jan 20 2021 at 09:57)</a>:</h4>
+<p><code>Define a function count :: 'a ⇒ 'a list ⇒ nat that counts the number of occurrences of an element in a list. Prove count x xs ≤ length xs.</code></p>
+<div class="codehilite" data-code-language="fun"><pre><span></span><code>  "count x [] = 0"
+| "count x (y#xs) = (if (x=y) then (1 + count x xs) else (count x xs))"
+
+lemma count_cons: "count x (y#xs) ≤ 1 + count x xs"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons a xs)
+  then show ?case by simp
+qed
+
+lemma count_less: "count x xs ≤ length xs"
+proof (induction xs)
+  case Nil
+  then show ?case by simp
+next
+  case (Cons a xs)
+  then show ?case by (simp add:count_cons)
+qed
+</code></pre></div>
+<p>This does not work on the Cons case. by auto works but that is not very readable or elegant.</p>
+<p>Can you give me a hint what is missing? Not a solution.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

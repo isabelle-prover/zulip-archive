@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (2 messages, latest: Jan 23 2021 at 14:26)
+
 * [\[isabelle\] \[Lambda Days + TFP + TFPIE 2021\] call for part...](22085isabelleLambdaDaysTFPTFPIE2021callforpart.html) (1 message, latest: Jan 23 2021 at 10:53)
 
 * [\[isabelle\] CADE-28: $n$th call for papers](53208isabelleCADE28nthcallforpapers.html) (1 message, latest: Jan 22 2021 at 20:05)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (3 messages, latest: Jan 20 2021 at 12:51)
 
 * [\[isabelle\] CFP: HCSS 2021 - High Confidence Software and ...](19590isabelleCFPHCSS2021HighConfidenceSoftwareand.html) (1 message, latest: Jan 20 2021 at 10:11)
-
-* [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (1 message, latest: Jan 20 2021 at 07:37)
 
 * [\[isabelle\] Console errors in AFP build after push](99674isabelleConsoleerrorsinAFPbuildafterpush.html) (3 messages, latest: Jan 19 2021 at 18:00)
 

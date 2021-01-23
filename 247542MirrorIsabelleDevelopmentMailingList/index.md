@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Potential HTML generation bug](06869isabelledevPotentialHTMLgenerationbug.html) (1 message, latest: Jan 23 2021 at 18:31)
+
 * [\[isabelle-dev\] Build of session JEdit requires previous b...](32600isabelledevBuildofsessionJEditrequirespreviousb.html) (2 messages, latest: Jan 23 2021 at 12:51)
 
 * [\[isabelle-dev\] scala-2.13.4](00413isabelledevscala2134.html) (1 message, latest: Jan 17 2021 at 11:39)

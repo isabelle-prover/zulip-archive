@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[Lambda Days + TFP + TFPIE 2021\] call for part...](22085isabelleLambdaDaysTFPTFPIE2021callforpart.html) (1 message, latest: Jan 23 2021 at 10:53)
+
 * [\[isabelle\] CADE-28: $n$th call for papers](53208isabelleCADE28nthcallforpapers.html) (1 message, latest: Jan 22 2021 at 20:05)
 
 * [\[isabelle\] Some lemmas with a combinatoric flavor](80206isabelleSomelemmaswithacombinatoricflavor.html) (3 messages, latest: Jan 20 2021 at 12:51)

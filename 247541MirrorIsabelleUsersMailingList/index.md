@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (9 messages, latest: Jan 24 2021 at 19:29)
+
+* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (2 messages, latest: Jan 24 2021 at 19:08)
+
+* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (6 messages, latest: Jan 24 2021 at 19:06)
+
 * [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (3 messages, latest: Jan 24 2021 at 18:59)
 
 * [\[isabelle\] Isabelle2021-RC3: update of Scala, but not Ope...](09889isabelleIsabelle2021RC3updateofScalabutnotOpe.html) (1 message, latest: Jan 24 2021 at 18:57)
@@ -37,8 +43,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Derive bounded sets from extended nat](04769isabelleDeriveboundedsetsfromextendednat.html) (3 messages, latest: Jan 18 2021 at 22:06)
 
-* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (5 messages, latest: Jan 18 2021 at 16:14)
-
 * [\[isabelle\] Epigenetics and similar Phenomena](02185isabelleEpigeneticsandsimilarPhenomena.html) (1 message, latest: Jan 17 2021 at 11:57)
 
 * [\[isabelle\] ITP 2021: Third Call for Papers](84815isabelleITP2021ThirdCallforPapers.html) (1 message, latest: Jan 16 2021 at 16:10)
@@ -60,8 +64,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] SMT 2021 Workshop: Call for Papers](57400isabelleSMT2021WorkshopCallforPapers.html) (1 message, latest: Jan 14 2021 at 10:50)
 
 * [\[isabelle\] New AFP entry: JinjaDCI: a Java semantics with...](14893isabelleNewAFPentryJinjaDCIaJavasemanticswith.html) (1 message, latest: Jan 13 2021 at 09:37)
-
-* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (1 message, latest: Jan 12 2021 at 23:34)
 
 * [\[isabelle\] Updating AFP entry](85247isabelleUpdatingAFPentry.html) (3 messages, latest: Jan 12 2021 at 23:27)
 
@@ -130,8 +132,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Bootstrap problem in Isabelle2021-RC1: Consume...](27767isabelleBootstrapprobleminIsabelle2021RC1Consume.html) (2 messages, latest: Jan 03 2021 at 11:27)
 
 * [\[isabelle\] Using LaTeX output print mode for source text](74462isabelleUsingLaTeXoutputprintmodeforsourcetext.html) (2 messages, latest: Jan 02 2021 at 10:48)
-
-* [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (8 messages, latest: Jan 02 2021 at 10:40)
 
 * [\[isabelle\] Question about "try" and future tasks](49028isabelleQuestionabouttryandfuturetasks.html) (2 messages, latest: Jan 02 2021 at 10:36)
 

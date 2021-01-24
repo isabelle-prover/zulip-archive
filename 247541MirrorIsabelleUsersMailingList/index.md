@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (3 messages, latest: Jan 24 2021 at 22:22)
+
 * [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (1 message, latest: Jan 24 2021 at 21:37)
 
 * [\[isabelle\] Isabelle2021-RC3: update of Scala, but not Ope...](09889isabelleIsabelle2021RC3updateofScalabutnotOpe.html) (2 messages, latest: Jan 24 2021 at 21:00)
 
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (9 messages, latest: Jan 24 2021 at 19:29)
-
-* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (2 messages, latest: Jan 24 2021 at 19:08)
 
 * [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (6 messages, latest: Jan 24 2021 at 19:06)
 

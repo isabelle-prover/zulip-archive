@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (3 messages, latest: Jan 24 2021 at 18:59)
+
+* [\[isabelle\] Isabelle2021-RC3: update of Scala, but not Ope...](09889isabelleIsabelle2021RC3updateofScalabutnotOpe.html) (1 message, latest: Jan 24 2021 at 18:57)
+
+* [\[isabelle\] Isabelle2021-RC3 available for testing](62075isabelleIsabelle2021RC3availablefortesting.html) (1 message, latest: Jan 24 2021 at 18:39)
+
 * [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (2 messages, latest: Jan 23 2021 at 14:26)
 
 * [\[isabelle\] \[Lambda Days + TFP + TFPIE 2021\] call for part...](22085isabelleLambdaDaysTFPTFPIE2021callforpart.html) (1 message, latest: Jan 23 2021 at 10:53)
@@ -20,8 +26,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] CFP: HCSS 2021 - High Confidence Software and ...](19590isabelleCFPHCSS2021HighConfidenceSoftwareand.html) (1 message, latest: Jan 20 2021 at 10:11)
 
 * [\[isabelle\] Console errors in AFP build after push](99674isabelleConsoleerrorsinAFPbuildafterpush.html) (3 messages, latest: Jan 19 2021 at 18:00)
-
-* [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (2 messages, latest: Jan 19 2021 at 17:36)
 
 * [\[isabelle\] Isabelle2021-RC2: Problems downloading](82152isabelleIsabelle2021RC2Problemsdownloading.html) (8 messages, latest: Jan 19 2021 at 15:56)
 

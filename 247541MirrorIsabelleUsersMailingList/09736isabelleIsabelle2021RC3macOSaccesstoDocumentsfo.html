@@ -60,6 +60,45 @@ giant on the planet).</p>
 Interesting. What I am finding is different: I can read files on the Desktop and Downloads folders without granting permission. However, even if I use the System Preferences &gt; Security &amp; Privacy &gt; Privacy panel to grant “full disk access”, the app seems unable to see any files in the Documents folder. Weird but not a serious problem, if documented.</p>
 <p>Larry</p>
 
+<a name="223924183"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC3%3A%20macOS%20access%20to%20Documents%20fo.../near/223924183" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html#223924183">Email Gateway (Jan 25 2021 at 16:39)</a>:</h4>
+<p>From: Frédéric Boulanger &lt;<a href="mailto:frederic.boulanger@lri.fr">frederic.boulanger@lri.fr</a>&gt;<br>
+I am not sure if this could solve the M1/Big Sur issue, but I just tried to use an AppleScript exported as an Application to launch Isabelle, and the first time I try to open a file under "Documents", I am asked if I want to allow that, and the setting is remembered when I quit Isabelle and launch it again through the AppleScript App. The "applet" binary inside the exported Application has both x86_64 and arm64 architectures.</p>
+<p>Here is the (simple) code I wrote to launch Isabelle :</p>
+<p>on run do<br>
+    set isabelle to the quoted form of POSIX path of "/Applications/Isabelle2021-RC3.app/Contents/Resources/Isabelle2021-RC3/bin/isabelle"<br>
+    do shell script isabelle &amp; " jedit"<br>
+end run</p>
+<p>on open (dropedItems)<br>
+    set isabelle to the quoted form of POSIX path of "/Applications/Isabelle2021-RC3.app/Contents/Resources/Isabelle2021-RC3/bin/isabelle"<br>
+    set myFiles to " "<br>
+    repeat with f in dropedItems<br>
+        set myFiles to myFiles &amp; " " &amp; the quoted form of POSIX path of f<br>
+    end repeat<br>
+    do shell script isabelle &amp; " jedit" &amp; myFiles<br>
+end open</p>
+<p>The "open" handler is useful for opening files when launching Isabelle, but this is too basic to handle files dropped on the application while Isabelle is already running.</p>
+<p>Frédéric</p>
+<p>Frédéric Boulanger<br>
+CentraleSupélec - Département Informatique  Laboratoire Méthodes Formelles (LMF)<br>
+3 rue Joliot-Curie, 91192 Gif-sur-Yvette cedex  Bât. 650 - 1 rue Raimond Castaing, 91190 Gif-sur-Yvette<br>
++33 [0]1 69 85 14 84</p>
+
+<a name="223924910"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC3%3A%20macOS%20access%20to%20Documents%20fo.../near/223924910" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html#223924910">Email Gateway (Jan 25 2021 at 16:44)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Remark: The existing Isabelle Mac App already provides some basic Mac-like functionality, but it would be great to see it upgraded with code such as this. Though maybe not in time for 2021 :-(</p>
+<p>Larry</p>
+
+<a name="223926408"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC3%3A%20macOS%20access%20to%20Documents%20fo.../near/223926408" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html#223926408">Email Gateway (Jan 25 2021 at 16:54)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+The formal task is now <a href="https://isabelle-dev.sketis.net/T37">https://isabelle-dev.sketis.net/T37</a> --- I have also<br>
+added some links to discussions about this problems for Fontforge, Gimp, Inkscape.</p>
+<p>This was first reported almost 1 year ago, so there is an indication that<br>
+Apple does not care about Unix-style shell script apps.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

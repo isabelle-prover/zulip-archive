@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (4 messages, latest: Jan 25 2021 at 15:42)
+* [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (7 messages, latest: Jan 25 2021 at 16:54)
 
 * [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (4 messages, latest: Jan 25 2021 at 09:04)
 

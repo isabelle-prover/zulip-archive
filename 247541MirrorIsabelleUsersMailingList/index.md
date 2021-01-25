@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (3 messages, latest: Jan 24 2021 at 23:57)
+
+* [\[isabelle\] rewrite, subst,	uses and sequential compositio...](74892isabellerewritesubstusesandsequentialcompositio.html) (1 message, latest: Jan 24 2021 at 23:13)
+
 * [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (3 messages, latest: Jan 24 2021 at 22:22)
 
 * [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (1 message, latest: Jan 24 2021 at 21:37)
@@ -54,8 +58,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (2 messages, latest: Jan 16 2021 at 13:03)
 
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (1 message, latest: Jan 16 2021 at 11:52)
-
-* [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (2 messages, latest: Jan 15 2021 at 10:24)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (8 messages, latest: Jan 14 2021 at 16:28)
 

@@ -1,0 +1,49 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/74892isabellerewritesubstusesandsequentialcompositio.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/74892isabellerewritesubstusesandsequentialcompositio.html">[isabelle] rewrite, subst,	uses and sequential compositio...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="223841353"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20rewrite%2C%20subst%2C%09uses%20and%20sequential%20compositio.../near/223841353" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/74892isabellerewritesubstusesandsequentialcompositio.html#223841353">Email Gateway (Jan 24 2021 at 23:13)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear All,</p>
+<p>I observed the following behavior on Isabelle2021-RC2:</p>
+<p>lemma<br>
+  assumes P and "a = b" and "c = d" and "e = f"<br>
+  shows "R a c e"<br>
+  using assms(1)<br>
+  apply(subst assms(2), subst assms(3), subst assms(4))<br>
+  (<em>P ⟹ P ⟹ P ⟹ R b d f</em>)<br>
+  oops</p>
+<p>lemma<br>
+  assumes P and "a = b" and "c = d" and "e = f"<br>
+  shows "R a c e"<br>
+  using assms(1)<br>
+  apply(rewrite assms(2), rewrite assms(3), rewrite assms(4))<br>
+  (<em>P ⟹ P ⟹ P ⟹ R b d f</em>)<br>
+  oops</p>
+<p>As you can see, the premises are duplicated with every substitution using<br>
+either subst or rewrite from HOL-Library.Rewrite.</p>
+<p>I am posting this as an explicit new thread, as I am not certain whether<br>
+this is desired/expected, whether it is unique to Isabelle2021-RC2 or<br>
+whether this is a regression.</p>
+<p>If this behavior is desired/expected, how can the duplication be avoided<br>
+when designing methods using Eisbach, apart from using an additional method<br>
+to remove the duplicate premises explicitly after every invocation of<br>
+subst/rewrite?</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

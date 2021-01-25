@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] rewrite, subst, uses and sequential compositio...](24067isabellerewritesubstusesandsequentialcompositio.html) (3 messages, latest: Jan 25 2021 at 19:58)
+* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (7 messages, latest: Jan 25 2021 at 20:50)
+
+* [\[isabelle\] rewrite, subst, uses and sequential compositio...](24067isabellerewritesubstusesandsequentialcompositio.html) (4 messages, latest: Jan 25 2021 at 20:07)
 
 * [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (7 messages, latest: Jan 25 2021 at 16:54)
 
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC3: update of Scala, but not Ope...](09889isabelleIsabelle2021RC3updateofScalabutnotOpe.html) (2 messages, latest: Jan 24 2021 at 21:00)
 
 * [\[isabelle\] Bug report Isabelle 2019 and Isabelle 2020](12025isabelleBugreportIsabelle2019andIsabelle2020.html) (9 messages, latest: Jan 24 2021 at 19:29)
-
-* [\[isabelle\] Isabelle2021-RC2: improved HTML presentation](98085isabelleIsabelle2021RC2improvedHTMLpresentation.html) (6 messages, latest: Jan 24 2021 at 19:06)
 
 * [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (3 messages, latest: Jan 24 2021 at 18:59)
 

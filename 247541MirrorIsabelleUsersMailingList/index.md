@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] rewrite, subst, uses and sequential compositio...](24067isabellerewritesubstusesandsequentialcompositio.html) (2 messages, latest: Jan 25 2021 at 18:51)
+* [\[isabelle\] rewrite, subst, uses and sequential compositio...](24067isabellerewritesubstusesandsequentialcompositio.html) (3 messages, latest: Jan 25 2021 at 19:58)
 
 * [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (7 messages, latest: Jan 25 2021 at 16:54)
 

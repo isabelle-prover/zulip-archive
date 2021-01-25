@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Termination of a complex recursive function](02551Terminationofacomplexrecursivefunction.html) (5 messages, latest: Jan 25 2021 at 12:47)
+
 * [split vs cases](35621splitvscases.html) (7 messages, latest: Jan 22 2021 at 08:57)
 
 * [plugins for a faster editing](70900pluginsforafasterediting.html) (21 messages, latest: Jan 22 2021 at 08:35)

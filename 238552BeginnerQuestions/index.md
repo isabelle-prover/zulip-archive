@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Feeding knowledge about functions](43623Feedingknowledgeaboutfunctions.html) (19 messages, latest: Jan 26 2021 at 11:32)
+* [Feeding knowledge about functions](43623Feedingknowledgeaboutfunctions.html) (21 messages, latest: Jan 26 2021 at 12:52)
+
+* [Automation-friendly distinctness constraint](29516Automationfriendlydistinctnessconstraint.html) (4 messages, latest: Jan 26 2021 at 12:22)
 
 * [Termination of a complex recursive function](02551Terminationofacomplexrecursivefunction.html) (5 messages, latest: Jan 25 2021 at 12:47)
 

@@ -118,6 +118,35 @@ permalink: ./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224033773" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224033773">Gergely Buday (Jan 26 2021 at 12:52)</a>:</h4>
 <p>Also, an answer to my original question on how to feed knowledge about functions into a proof: for "fun" functions this knowledge is automatically transferred into simplification, for "definition" functions they should be named as _defs, and the real question is the combination of functions for which the rules should be proven explicitly. Am I right?</p>
 
+<a name="224048869"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224048869" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224048869">Jakub Kądziołka (Jan 26 2021 at 14:48)</a>:</h4>
+<p>Yes, some_function.simps is automatically included in the simplifier rule set and is thus used automatically by <code>simp</code>, <code>auto</code>, <code>force</code>, and <code>fastforce</code>; for definitions you need to use <code>unfolding some_definition_def</code> or <code>apply (auto simp: some_definition_def)</code> (the former will inline the definition within your goal, the latter will tell the simplifier to unfold it even if it arises after some simplification was already done).</p>
+<p>There's nothing special about "combinations of functions", it's just that the auxiliary properties required an induction in their proof.</p>
+
+<a name="224049269"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224049269" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224049269">Jakub Kądziołka (Jan 26 2021 at 14:50)</a>:</h4>
+<p>like, if you have <code>aval (asimp a) s</code>, there aren't any rules in the definition of asimp that apply to an arbitrary term <code>a</code>, so the simplifier can't do anything with that until you prove some lemma that has <code>asimp a</code> or <code>aval (asimp a) s</code> on the left-hand side of an equality</p>
+
+<a name="224049446"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224049446" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224049446">Jakub Kądziołka (Jan 26 2021 at 14:51)</a>:</h4>
+<p>that lemma would then have to be named explicitly in the general case (<code>apply (simp add: some_fact)</code>), but you can also tag your theorems as simplification rules with <code>lemma foo[simp]: "..."</code></p>
+
+<a name="224049580"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224049580" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224049580">Jakub Kądziołka (Jan 26 2021 at 14:52)</a>:</h4>
+<p>when you do that, the right-hand side of the equality should be 'simpler' in some way than the left-hand side</p>
+
+<a name="224049793"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224049793" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224049793">Jakub Kądziołka (Jan 26 2021 at 14:54)</a>:</h4>
+<p>when a lemma is already in the simpset, you can remove it for a one-off proof with <code>simp del: some_fact</code> (or <code>auto simp del: ...</code>). However, if you find yourself doing that too often, then that fact probably shouldn't be <code>[simp]</code> in the first place</p>
+
+<a name="224050073"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224050073" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224050073">Jakub Kądziołka (Jan 26 2021 at 14:55)</a>:</h4>
+<p>also, if you aren't careful, the simplifier may not terminate on some terms. <code>using [[simp_trace]] apply simp</code> is a useful way to debug that (there's also <code>using [[simp_trace_new]]</code>, which I find easier to read, but it doesn't tell you the names of the facts it uses to rewrite)</p>
+
+<a name="224050174"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224050174" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224050174">Jakub Kądziołka (Jan 26 2021 at 14:56)</a>:</h4>
+<p>FWIW, this is also useful to get an intuition for how the simplifier works</p>
+
 
 {% endraw %}
 

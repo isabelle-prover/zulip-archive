@@ -32,6 +32,80 @@ permalink: ./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html
 <p>Here is a minimal version of the file:</p>
 <p><a href="/user_uploads/14278/f3o4Qq7wm9r_yYPmGUqniGQX/AvalPlus.thy">AvalPlus.thy</a></p>
 
+<a name="224024683"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224024683" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224024683">Jakub Kądziołka (Jan 26 2021 at 11:15)</a>:</h4>
+<p>your theory file doesn't define <code>asimp</code>, so Isabelle wants you to prove this for all possible functions <code>asimp</code> (as can be seen by the name being blue)</p>
+
+<a name="224024777"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224024777" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224024777">Jakub Kądziołka (Jan 26 2021 at 11:16)</a>:</h4>
+<p>I assume the lemma you actually want to prove left you with this monstrosity after <code>simp</code>...</p>
+
+<a name="224024820"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224024820" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224024820">Jakub Kądziołka (Jan 26 2021 at 11:16)</a>:</h4>
+<p>could you post what you actually want to prove?</p>
+
+<a name="224025222"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025222" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025222">Mathias Fleury (Jan 26 2021 at 11:20)</a>:</h4>
+<p>My teaching intuition says that after simp, you are left with something that is calling for a <code>aval (asimp (zeronN t1)) = t1</code>theorem</p>
+
+<a name="224025303"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025303" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025303">Jakub Kądziołka (Jan 26 2021 at 11:21)</a>:</h4>
+<p>also, I don't think it's necessary to remove lemmas you've already proven about these definitions</p>
+
+<a name="224025388"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025388" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025388">Jakub Kądziołka (Jan 26 2021 at 11:22)</a>:</h4>
+<p>more like <code>aval (asimp (zeroN t1)) + sumN t1 = aval t1</code></p>
+
+<a name="224025551"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025551" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025551">Gergely Buday (Jan 26 2021 at 11:24)</a>:</h4>
+<p><span class="user-mention" data-user-id="380931">@Jakub Kądziołka</span> here is a theory file with asimp's definition:</p>
+<p><a href="/user_uploads/14278/NVC_5aVbSx49qHtYb9BbJcFf/AvalPlus.thy">AvalPlus.thy</a></p>
+
+<a name="224025617"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025617" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025617">Mathias Fleury (Jan 26 2021 at 11:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="380931">Jakub Kądziołka</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Feeding.20knowledge.20about.20functions/near/224025388">said</a>:</p>
+<blockquote>
+<p>more like <code>aval (asimp (zeroN t1)) + sumN t1 = aval t1</code></p>
+</blockquote>
+<p>Good point, reading the theory files helps <span aria-label="grinning" class="emoji emoji-1f600" role="img" title="grinning">:grinning:</span></p>
+
+<a name="224025887"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025887" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025887">Gergely Buday (Jan 26 2021 at 11:27)</a>:</h4>
+<p>Now with the final theorem and its definitions included:</p>
+<p><a href="/user_uploads/14278/StE7jzc51_mT958XB7ryGRA9/AvalPlus.thy">AvalPlus.thy</a></p>
+
+<a name="224025942"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025942" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025942">Gergely Buday (Jan 26 2021 at 11:28)</a>:</h4>
+<p><span class="user-mention" data-user-id="233198">@Mathias Fleury</span> yes reading helps but I am lost now and don't know what to look for.</p>
+
+<a name="224025950"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224025950" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224025950">Mathias Fleury (Jan 26 2021 at 11:28)</a>:</h4>
+<p><span class="user-mention" data-user-id="234198">@Gergely Buday</span> I opened the file, called <code>auto</code> and was like: "why on earth is <code>aval (plus ... ....)</code> not simplified to <code>aval ... + aval ...</code>?"</p>
+
+<a name="224026118"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224026118" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224026118">Jakub Kądziołka (Jan 26 2021 at 11:30)</a>:</h4>
+<p>do you have a lemma that says <code>aval (asimp a) s = aval a s</code>?</p>
+
+<a name="224026148"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224026148" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224026148">Mathias Fleury (Jan 26 2021 at 11:30)</a>:</h4>
+<p>You should really add the lemma on aval plus.</p>
+
+<a name="224026161"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224026161" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224026161">Jakub Kądziołka (Jan 26 2021 at 11:30)</a>:</h4>
+<p>it would compose with aval_sepN wonderfully</p>
+
+<a name="224026349"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224026349" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224026349">Mathias Fleury (Jan 26 2021 at 11:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="380931">Jakub Kądziołka</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Feeding.20knowledge.20about.20functions/near/224026161">said</a>:</p>
+<blockquote>
+<p>it would compose with aval_sepN wonderfully</p>
+</blockquote>
+<p>both lemmas even deserve to be [simp] rules!</p>
+
+<a name="224026362"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Feeding%20knowledge%20about%20functions/near/224026362" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43623Feedingknowledgeaboutfunctions.html#224026362">Gergely Buday (Jan 26 2021 at 11:32)</a>:</h4>
+<p><span class="user-mention" data-user-id="380931">@Jakub Kądziołka</span> not yet but I go for it</p>
+
 
 {% endraw %}
 

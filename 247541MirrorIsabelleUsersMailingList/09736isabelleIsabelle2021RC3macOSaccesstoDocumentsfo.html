@@ -117,6 +117,32 @@ CentraleSupélec - Département Informatique  Laboratoire Méthodes Formelles (L
 3 rue Joliot-Curie, 91192 Gif-sur-Yvette cedex  Bât. 650 - 1 rue Raimond Castaing, 91190 Gif-sur-Yvette<br>
 +33 [0]1 69 85 14 84</p>
 
+<a name="224024038"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC3%3A%20macOS%20access%20to%20Documents%20fo.../near/224024038" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html#224024038">Email Gateway (Jan 26 2021 at 11:08)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+On Mon Jan 25, 2021 at 5:38 PM CET, Frédéric Boulanger wrote:</p>
+<blockquote>
+<p>Here is the (simple) code I wrote to launch Isabelle :</p>
+<p>on run do<br>
+  set isabelle to the quoted form of POSIX path of "/Applications/Isabelle2021-RC3.app/Contents/Resources/Isabelle2021-RC3/bin/isabelle"<br>
+  do shell script isabelle &amp; " jedit"<br>
+end run</p>
+<p>on open (dropedItems)</p>
+</blockquote>
+<p>Is this typo (droped with a single p) a part of the Apple API, or would<br>
+it be possible to correct it?</p>
+<blockquote>
+<p>set isabelle to the quoted form of POSIX path of "/Applications/Isabelle2021-RC3.app/Contents/Resources/Isabelle2021-RC3/bin/isabelle"<br>
+  set myFiles to " "<br>
+  repeat with f in dropedItems<br>
+      set myFiles to myFiles &amp; " " &amp; the quoted form of POSIX path of f<br>
+  end repeat<br>
+  do shell script isabelle &amp; " jedit" &amp; myFiles<br>
+end open</p>
+</blockquote>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
 
 {% endraw %}
 

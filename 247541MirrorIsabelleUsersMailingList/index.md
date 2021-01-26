@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle C wrapper \[was Isabelle2021-RC3: macO...](94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html) (3 messages, latest: Jan 26 2021 at 20:25)
+* [\[isabelle\] Isabelle C wrapper \[was Isabelle2021-RC3: macO...](94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html) (5 messages, latest: Jan 26 2021 at 21:08)
 
 * [\[isabelle\] Isabelle2021-RC2: Problems downloading](82152isabelleIsabelle2021RC2Problemsdownloading.html) (9 messages, latest: Jan 26 2021 at 17:50)
 

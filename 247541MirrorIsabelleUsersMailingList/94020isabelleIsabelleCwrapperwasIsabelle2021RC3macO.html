@@ -45,6 +45,27 @@ book "ML for the working programmer".</p>
 <p>Maybe I should have done it in Go or Rust.</p>
 <p>Makarius</p>
 
+<a name="224097720"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20C%20wrapper%20%5Bwas%20Isabelle2021-RC3%3A%20macO.../near/224097720" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html#224097720">Email Gateway (Jan 26 2021 at 20:25)</a>:</h4>
+<p>From: Frédéric Boulanger &lt;<a href="mailto:frederic.boulanger@lri.fr">frederic.boulanger@lri.fr</a>&gt;<br>
+I have setup a very simple wrapper that just invokes sh on the original shell script.</p>
+<p><a href="https://github.com/Frederic-Boulanger-UPS/FatIsabelleLauncher">https://github.com/Frederic-Boulanger-UPS/FatIsabelleLauncher</a> &lt;<a href="https://github.com/Frederic-Boulanger-UPS/FatIsabelleLauncher">https://github.com/Frederic-Boulanger-UPS/FatIsabelleLauncher</a>&gt;</p>
+<p>The first time you try to open a file in the "Documents" folder after patching Isabelle2021-RC3 is a bit long, but you are finally asked if you want to allow the access, and the authorization is then remembered between launches.</p>
+<p>The patch consists in renaming the Isabelle2021-RC3 script to <a href="http://Isabelle2021-RC3.sh">Isabelle2021-RC3.sh</a>, and replacing the original script with the fat binary.</p>
+<p>The C++ program simply finds the application bundle directory from argv[0] and then invokes sh on the <a href="http://Isabelle2021-RC3.sh">Isabelle2021-RC3.sh</a> file in the bundle directory.<br>
+I used C++ to avoid the awkwardness of handling memory buffers to copy and join strings the old plain C way...<br>
+It is necessary to use c++17 to benefit from std::filesystem::path for finding the bundle directory path.</p>
+<p>The C++ source is compiled to both the x86_64 and arm64 targets, and the two executables are combined with lipo into a:</p>
+<p>Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [arm64:Mach-O 64-bit executable arm64]</p>
+<p>as revealed by a call to the file command.<br>
+The Makefile takes care of building and combining the executables.</p>
+<p>I hope this can make Isabelle more usable on Big Sur with the next release candidate.</p>
+<p>Frédéric</p>
+<p>Frédéric Boulanger<br>
+CentraleSupélec - Département Informatique  Laboratoire Méthodes Formelles (LMF)<br>
+3 rue Joliot-Curie, 91192 Gif-sur-Yvette cedex  Bât. 650 - 1 rue Raimond Castaing, 91190 Gif-sur-Yvette<br>
++33 [0]1 69 85 14 84</p>
+
 
 {% endraw %}
 

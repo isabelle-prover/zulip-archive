@@ -1,0 +1,51 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html">[isabelle] Isabelle C wrapper [was Isabelle2021-RC3: macO...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="224063265"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20C%20wrapper%20%5Bwas%20Isabelle2021-RC3%3A%20macO.../near/224063265" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html#224063265">Email Gateway (Jan 26 2021 at 16:19)</a>:</h4>
+<p>From: "Fernandez, Matthew" &lt;<a href="mailto:matthew.fernandez@intel.com">matthew.fernandez@intel.com</a>&gt;<br>
+A bit OT, but it looks like there's an unchecked allocation and a dead store in this code. HTH.</p>
+<p>--- Isabelle.c  2021-01-26 08:06:45.916458951 -0800<br>
++++ Isabelle1.c 2021-01-26 08:07:31.720458189 -0800<br>
+@@ -24,12 +24,12 @@ int main(int argc, char *argv[])<br>
+   int i = 0;</p>
+<p>dcmd = strdup(argv[0]);</p>
+<ul>
+<li>
+<p>if (dcmd == NULL) fail("Failed to allocate command line");<br>
+   dname = dirname(dcmd);</p>
+<p>cmd_line = malloc(sizeof(char *) * (argc + 1));<br>
+ if (cmd_line == NULL) fail("Failed to allocate command line");</p>
+</li>
+<li>
+<p>cmd = cmd_line[0];<br>
+   cmd = malloc(strlen(dname) + strlen("/lib/scripts/Isabelle_app") + 1);<br>
+   if (cmd == NULL) fail("Failed to allocate command name");<br>
+   sprintf(cmd, "%s/lib/scripts/Isabelle_app", dname);</p>
+</li>
+</ul>
+
+<a name="224066286"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20C%20wrapper%20%5Bwas%20Isabelle2021-RC3%3A%20macO.../near/224066286" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html#224066286">Email Gateway (Jan 26 2021 at 16:39)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Thanks. I will take it into account when reworking it once again.</p>
+<p>I actually stopped using C in 1992, after reading the first edition of Larry's<br>
+book "ML for the working programmer".</p>
+<p>Maybe I should have done it in Go or Rust.</p>
+<p>Makarius</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

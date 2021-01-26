@@ -155,6 +155,25 @@ CentraleSupélec - Département Informatique  Laboratoire Méthodes Formelles (L
 3 rue Joliot-Curie, 91192 Gif-sur-Yvette cedex  Bât. 650 - 1 rue Raimond Castaing, 91190 Gif-sur-Yvette<br>
 +33 [0]1 69 85 14 84</p>
 
+<a name="224061273"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC3%3A%20macOS%20access%20to%20Documents%20fo.../near/224061273" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html#224061273">Email Gateway (Jan 26 2021 at 16:06)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Yes, the new shell script is an indirect consequence of of supporting both<br>
+arm64-darwin and x86_64-darwin while replacing Adopt OpenJDK by Zulu OpenJDK.</p>
+<p>Afterwards the old JavaAppLauncher stopped working: it refers to a particular<br>
+shared library of Java, which is unlikely to be able to change from x86_64 to<br>
+arm64 on the spot.</p>
+<p>In contrast, the Rosetta 2 system is able to run x86_64 Java, but it is one<br>
+level of extra indirection: JVM-bytecode translation followed by x86_64<br>
+machine code translation. I wanted to reduce this insanity a bit by using<br>
+native arm64 JDK.</p>
+<p>In the space of possibilities there are surely other points of stability ---<br>
+like the Apple Script app or maybe just a plain C app wrapper like we have for<br>
+Linux:<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC3/Admin/Linux/Isabelle.c">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC3/Admin/Linux/Isabelle.c</a></p>
+<p>I will continue the experiments.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

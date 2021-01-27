@@ -1,0 +1,62 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/67301Debuggingheaprebuilds.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html">Debugging heap rebuilds</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="224227776"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224227776" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224227776">Jakub Kądziołka (Jan 27 2021 at 18:41)</a>:</h4>
+<p>I'm managing my Isabelle installation with the Nix package manager. Each time I update, Isabelle decides to rebuild the heap images for Pure and HOL. I suspect that this might be because the path to the isabelle installation changes each time, but I don't understand why that would affect this - Isabelle ships with heap images in the tarball, and they get picked up regardless of the installation directory. How can I debug this?</p>
+
+<a name="224228037"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224228037" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224228037">Jakub Kądziołka (Jan 27 2021 at 18:43)</a>:</h4>
+<p>(the reason this is quite annoying for me is that the build takes so much RAM that I cannot simply run it in the background. Is the required RAM an intrinsic property of the process, or could it be reduced by, for example, reducing the parallelism or something?)</p>
+
+<a name="224229291"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224229291" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224229291">Mathias Fleury (Jan 27 2021 at 18:49)</a>:</h4>
+<p><a href="https://arxiv.org/pdf/1805.07195.pdf">https://arxiv.org/pdf/1805.07195.pdf</a> the remote_build tools makes it possible to compile remotely. So I don't believe that the path is important</p>
+
+<a name="224229511"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224229511" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224229511">Mathias Fleury (Jan 27 2021 at 18:50)</a>:</h4>
+<p>How drastic is your nix setup? Do you use the default components or do you also use the nix-provided version of the components?</p>
+
+<a name="224229586"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224229586" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224229586">Mathias Fleury (Jan 27 2021 at 18:51)</a>:</h4>
+<p>(I believe that at least the polyml version is included in the heap, so a change in that wll cause a new compilation)</p>
+
+<a name="224229793"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224229793" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224229793">Jakub Kądziołka (Jan 27 2021 at 18:52)</a>:</h4>
+<p>re: <code>remote_build</code> - interesting, is it possible to set up jedit so that the heap builds it starts use <code>remote_build</code> too?</p>
+
+<a name="224229880"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224229880" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224229880">Jakub Kądziołka (Jan 27 2021 at 18:53)</a>:</h4>
+<p>I'm using the package from nixpkgs, not sure whether they pin the polyml</p>
+
+<a name="224229886"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224229886" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224229886">Mathias Fleury (Jan 27 2021 at 18:53)</a>:</h4>
+<p>I don't think so, but I have never used remote_build</p>
+
+<a name="224230078"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224230078" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224230078">Mathias Fleury (Jan 27 2021 at 18:54)</a>:</h4>
+<p>but usually you know what sessions you use (because you start the session every day)</p>
+
+<a name="224230099"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224230099" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224230099">Jakub Kądziołka (Jan 27 2021 at 18:54)</a>:</h4>
+<p>however, both the old and new heaps are in <code>~/.isabelle/Isabelle2020/heaps/polyml-5.8.1_x86_64-linux</code>, so the polyml version seems to match</p>
+
+<a name="224230634"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Debugging%20heap%20rebuilds/near/224230634" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/67301Debuggingheaprebuilds.html#224230634">Mathias Fleury (Jan 27 2021 at 18:58)</a>:</h4>
+<p>Sadly, I don't use nix. Could you try <code>isabelle env</code> before and after your next update and see if there is any difference (for example by <code>git diff --no-index old new</code>)?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CFP: Workshop on the Role of Mathematical Reas...](96366isabelleCFPWorkshopontheRoleofMathematicalReas.html) (1 message, latest: Jan 26 2021 at 23:15)
+
 * [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (13 messages, latest: Jan 26 2021 at 22:19)
 
 * [\[isabelle\] Isabelle C wrapper \[was Isabelle2021-RC3: macO...](94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html) (5 messages, latest: Jan 26 2021 at 21:08)

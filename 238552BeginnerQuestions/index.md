@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (11 messages, latest: Jan 27 2021 at 18:58)
+* [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (43 messages, latest: Jan 27 2021 at 19:58)
 
 * [Doing induction on two variables](76559Doinginductionontwovariables.html) (2 messages, latest: Jan 27 2021 at 11:22)
 

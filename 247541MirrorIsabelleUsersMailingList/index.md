@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC3: Java 11 (LTS) vs. Java 15 (MTS)](21371isabelleIsabelle2021RC3Java11LTSvsJava15MTS.html) (2 messages, latest: Jan 27 2021 at 19:17)
+
 * [\[isabelle\] CFP: Workshop on the Role of Mathematical Reas...](96366isabelleCFPWorkshopontheRoleofMathematicalReas.html) (1 message, latest: Jan 26 2021 at 23:15)
 
 * [\[isabelle\] Isabelle2021-RC3: macOS access to Documents fo...](09736isabelleIsabelle2021RC3macOSaccesstoDocumentsfo.html) (13 messages, latest: Jan 26 2021 at 22:19)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle C wrapper \[was Isabelle2021-RC3: macO...](94020isabelleIsabelleCwrapperwasIsabelle2021RC3macO.html) (5 messages, latest: Jan 26 2021 at 21:08)
 
 * [\[isabelle\] Isabelle2021-RC2: Problems downloading](82152isabelleIsabelle2021RC2Problemsdownloading.html) (9 messages, latest: Jan 26 2021 at 17:50)
-
-* [\[isabelle\] Isabelle2021-RC3: Java 11 (LTS) vs. Java 15 (MTS)](21371isabelleIsabelle2021RC3Java11LTSvsJava15MTS.html) (1 message, latest: Jan 26 2021 at 17:47)
 
 * [\[isabelle\] AFP 2021 preparations](14574isabelleAFP2021preparations.html) (5 messages, latest: Jan 25 2021 at 21:50)
 

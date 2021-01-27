@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Non-constructor pattern](44957Nonconstructorpattern.html) (1 message, latest: Jan 27 2021 at 10:27)
+* [Doing induction on two variables](76559Doinginductionontwovariables.html) (2 messages, latest: Jan 27 2021 at 11:22)
+
+* [Non-constructor pattern](44957Nonconstructorpattern.html) (28 messages, latest: Jan 27 2021 at 11:20)
 
 * [Feeding knowledge about functions](43623Feedingknowledgeaboutfunctions.html) (28 messages, latest: Jan 26 2021 at 14:56)
 

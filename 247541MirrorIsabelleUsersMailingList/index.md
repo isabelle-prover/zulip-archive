@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (10 messages, latest: Jan 27 2021 at 20:59)
+
 * [\[isabelle\] Isabelle2021-RC3: Java 11 (LTS) vs. Java 15 (MTS)](21371isabelleIsabelle2021RC3Java11LTSvsJava15MTS.html) (2 messages, latest: Jan 27 2021 at 19:17)
 
 * [\[isabelle\] CFP: Workshop on the Role of Mathematical Reas...](96366isabelleCFPWorkshopontheRoleofMathematicalReas.html) (1 message, latest: Jan 26 2021 at 23:15)
@@ -66,8 +68,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (2 messages, latest: Jan 16 2021 at 13:03)
 
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (1 message, latest: Jan 16 2021 at 11:52)
-
-* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (8 messages, latest: Jan 14 2021 at 16:28)
 
 * [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (2 messages, latest: Jan 14 2021 at 15:28)
 

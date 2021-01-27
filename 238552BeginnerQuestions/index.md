@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Non-constructor pattern](44957Nonconstructorpattern.html) (1 message, latest: Jan 27 2021 at 10:27)
+
 * [Feeding knowledge about functions](43623Feedingknowledgeaboutfunctions.html) (28 messages, latest: Jan 26 2021 at 14:56)
 
 * [Automation-friendly distinctness constraint](29516Automationfriendlydistinctnessconstraint.html) (4 messages, latest: Jan 26 2021 at 12:22)

@@ -1,0 +1,49 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/44957Nonconstructorpattern.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/44957Nonconstructorpattern.html">Non-constructor pattern</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="224162609"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Non-constructor%20pattern/near/224162609" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/44957Nonconstructorpattern.html#224162609">Gergely Buday (Jan 27 2021 at 10:27)</a>:</h4>
+<p>In order to simplify multiplicative expressions I wrote</p>
+<div class="codehilite"><pre><span></span><code>fun times :: &quot;aexp ⇒ aexp ⇒ aexp&quot; where
+  &quot;times (N i) (N j) = N(i*j)&quot;
+| &quot;times (N 0) a = (N 0)&quot;
+| &quot;times (N 1) a = a&quot;
+| &quot;times (N i) a = Times (N i) a&quot;
+| &quot;times a (N 0) = (N 0)&quot;
+| &quot;times a (N 1) = a&quot;
+| &quot;times a (N i) = Times (N i) a&quot;
+| &quot;times a1 a2   = Times a1 a2&quot;
+</code></pre></div>
+<p>for that I got</p>
+<div class="codehilite"><pre><span></span><code>Malformed definition:
+Non-constructor pattern not allowed in sequential mode.
+⋀a. times (N 0) a = N 0
+</code></pre></div>
+<p>According to </p>
+<p><a href="https://stackoverflow.com/questions/38975187/error-non-constructor-pattern-not-allowed-in-sequential-mode-isabelle">https://stackoverflow.com/questions/38975187/error-non-constructor-pattern-not-allowed-in-sequential-mode-isabelle</a></p>
+<p>this need not be a concern as 0 is a constant. Is N being int =&gt; aexp instead of nat =&gt; aexp the problem?</p>
+<p>Once I did this exercise and I vaguely remember that it is by no accident that this works only:</p>
+<div class="codehilite"><pre><span></span><code>fun plus :: &quot;aexp ⇒ aexp ⇒ aexp&quot; where
+&quot;plus (N i⇩1) (N i⇩2) = N(i⇩1+i⇩2)&quot; |
+&quot;plus (N i) a = (if i=0 then a else Plus (N i) a)&quot; |
+&quot;plus a (N i) = (if i=0 then a else Plus a (N i))&quot; |
+&quot;plus a⇩1 a⇩2 = Plus a⇩1 a⇩2&quot;
+</code></pre></div>
+<p>with an if. From my ML intuition that might not be carried to HOL, constructor + constant is a neat idea in a pattern. Why is it not here?</p>
+<p>The full file is <a href="/user_uploads/14278/22p8JZhasil1mdbD0CqgU1RU/Ex_3_4.thy">Ex_3_4.thy</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -1,0 +1,48 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/16034isabelleUTF8charsbehavior.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/16034isabelleUTF8charsbehavior.html">[isabelle] UTF8 chars behavior</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="224281847"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20UTF8%20chars%20behavior/near/224281847" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/16034isabelleUTF8charsbehavior.html#224281847">Email Gateway (Jan 28 2021 at 03:58)</a>:</h4>
+<p>From: Pedro Sánchez Terraf &lt;<a href="mailto:sterraf@famaf.unc.edu.ar">sterraf@famaf.unc.edu.ar</a>&gt;<br>
+Dear Makarius/All,</p>
+<p>I've been using UTF8 chars in my last project on my old Linux laptop. <br>
+The session did build without errors under Isabelle2020 but it fails (at <br>
+the document preparation stage) in all release candidates (I'm sorry for <br>
+the late notice).</p>
+<p>The command I'm using to build is<br>
+$ ~/bin/Isabelle2021-RC3/bin/isabelle build  -v -c -d . UTF8_Test</p>
+<p>I'm attaching a minimal session directory (to try) to reproduce the failure:</p>
+<p>*** Latex error (line 4 of <br>
+"/mnt/93fd06e5-877d-4514-a81f-769dbfb90089/pedro/tmp/hola/UTF8_Test/UTF8_Test.thy"):<br>
+***   Package inputenc Error: Keyboard character used is undefine<br>
+***   d<br>
+***   (inputenc)                in inputencoding `utf8'.</p>
+<hr>
+<p>***   See the inputenc package documentation for explanation.<br>
+***    ...</p>
+<hr>
+<p>***   Erdö<br>
+*** Failed to build document "document"</p>
+<p>One further thing to notice is that after failure, a standard LaTeX <br>
+compilation (using pdflatex) of the files created at ./output/document <br>
+succeeds without complaining about the utf8 chars.</p>
+<p>By checking the logs I realized the document preparation is through <br>
+LuaTeX. Might that be the reason?</p>
+<p>Thanks for any help.<br>
+<a href="/user_uploads/14278/R5ccAFlvkRXryqm_R_JgGs8X/utf8_test.tar.gz">utf8_test.tar.gz</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [semiring_modulo for a factorial_semiring + comm_ring](65614semiringmoduloforafactorialsemiringcommring.html) (4 messages, latest: Jan 28 2021 at 13:48)
+* [semiring_modulo for a factorial_semiring + comm_ring](65614semiringmoduloforafactorialsemiringcommring.html) (11 messages, latest: Jan 28 2021 at 14:59)
 
 * [Pure.cong?](79601Purecong.html) (3 messages, latest: Jan 28 2021 at 13:12)
 

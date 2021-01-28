@@ -28,6 +28,34 @@ permalink: ./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcom
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224327356" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224327356">Jakub Kądziołka (Jan 28 2021 at 13:48)</a>:</h4>
 <p>I just want to prove some theorems for an arbitrary UFD</p>
 
+<a name="224337119"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337119" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337119">Manuel Eberl (Jan 28 2021 at 14:57)</a>:</h4>
+<p>Yeah then you probably have to assume a type class that has modulo if you want modulo to be available.</p>
+
+<a name="224337200"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337200" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337200">Manuel Eberl (Jan 28 2021 at 14:57)</a>:</h4>
+<p>The only other way I can think of is to define a type <code>'a ufdmod</code> that is basically a copy of <code>'a</code> except that it also has a modulo operation defined the way you just said.</p>
+
+<a name="224337293"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337293" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337293">Manuel Eberl (Jan 28 2021 at 14:58)</a>:</h4>
+<p>Then you can pull all the results that don't use <code>mod</code> over from <code>'a ufdmod</code> to <code>'a</code> using e.g. the transfer tool.</p>
+
+<a name="224337312"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337312" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337312">Manuel Eberl (Jan 28 2021 at 14:58)</a>:</h4>
+<p>Might not be worth it though.</p>
+
+<a name="224337383"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337383" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337383">Manuel Eberl (Jan 28 2021 at 14:58)</a>:</h4>
+<p>Might be easier to just not use <code>mod</code>.</p>
+
+<a name="224337437"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337437" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337437">Manuel Eberl (Jan 28 2021 at 14:59)</a>:</h4>
+<p>What you <em>could</em> also do is interpret the <code>semiring_modulo</code> locale with that particular definition of <code>mod</code>.</p>
+
+<a name="224337459"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/semiring_modulo%20for%20a%20factorial_semiring%20%2B%20comm_ring/near/224337459" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65614semiringmoduloforafactorialsemiringcommring.html#224337459">Manuel Eberl (Jan 28 2021 at 14:59)</a>:</h4>
+<p>I've done that sort of thing before. It's a little bit messy, but it does the job.</p>
+
 
 {% endraw %}
 

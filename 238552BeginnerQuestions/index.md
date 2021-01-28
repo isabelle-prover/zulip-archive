@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Pure.cong?](79601Purecong.html) (1 message, latest: Jan 28 2021 at 12:34)
+* [semiring_modulo for a factorial_semiring + comm_ring](65614semiringmoduloforafactorialsemiringcommring.html) (4 messages, latest: Jan 28 2021 at 13:48)
+
+* [Pure.cong?](79601Purecong.html) (3 messages, latest: Jan 28 2021 at 13:12)
 
 * [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (44 messages, latest: Jan 27 2021 at 20:00)
 

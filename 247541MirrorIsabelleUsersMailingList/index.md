@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (12 messages, latest: Jan 28 2021 at 12:31)
+
 * [\[isabelle\] "Files and Folders" permissions cannot be granted](36190isabelleFilesandFolderspermissionscannotbegranted.html) (2 messages, latest: Jan 28 2021 at 11:19)
 
 * [\[isabelle\] UTF8 chars behavior](16034isabelleUTF8charsbehavior.html) (2 messages, latest: Jan 28 2021 at 11:12)
 
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (1 message, latest: Jan 28 2021 at 11:08)
-
-* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (11 messages, latest: Jan 27 2021 at 21:24)
 
 * [\[isabelle\] Isabelle2021-RC3: Java 11 (LTS) vs. Java 15 (MTS)](21371isabelleIsabelle2021RC3Java11LTSvsJava15MTS.html) (2 messages, latest: Jan 27 2021 at 19:17)
 

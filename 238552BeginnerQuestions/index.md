@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Pure.cong?](79601Purecong.html) (1 message, latest: Jan 28 2021 at 12:34)
+
 * [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (44 messages, latest: Jan 27 2021 at 20:00)
 
 * [Doing induction on two variables](76559Doinginductionontwovariables.html) (2 messages, latest: Jan 27 2021 at 11:22)

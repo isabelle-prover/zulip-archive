@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Configurable proposition grammar root symbol f...](20418isabelleConfigurablepropositiongrammarrootsymbolf.html) (1 message, latest: Jan 28 2021 at 17:55)
+
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (12 messages, latest: Jan 28 2021 at 12:31)
 
 * [\[isabelle\] "Files and Folders" permissions cannot be granted](36190isabelleFilesandFolderspermissionscannotbegranted.html) (2 messages, latest: Jan 28 2021 at 11:19)

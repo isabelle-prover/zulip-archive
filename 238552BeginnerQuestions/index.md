@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [LaTeX cross-references in Isabelle documents](09890LaTeXcrossreferencesinIsabelledocuments.html) (1 message, latest: Jan 30 2021 at 17:40)
+* [LaTeX cross-references in Isabelle documents](09890LaTeXcrossreferencesinIsabelledocuments.html) (7 messages, latest: Jan 30 2021 at 18:14)
 
 * [semiring_modulo for a factorial_semiring + comm_ring](65614semiringmoduloforafactorialsemiringcommring.html) (11 messages, latest: Jan 28 2021 at 14:59)
 

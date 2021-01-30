@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] "Files and Folders" permissions cannot be granted](36190isabelleFilesandFolderspermissionscannotbegranted.html) (3 messages, latest: Jan 29 2021 at 07:44)
+* [\[isabelle\] "Files and Folders" permissions cannot be granted](36190isabelleFilesandFolderspermissionscannotbegranted.html) (4 messages, latest: Jan 30 2021 at 00:16)
 
 * [\[isabelle\] Configurable proposition grammar root symbol f...](20418isabelleConfigurablepropositiongrammarrootsymbolf.html) (1 message, latest: Jan 28 2021 at 17:55)
 

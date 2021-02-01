@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle logo terms of use](47961isabelleIsabellelogotermsofuse.html) (1 message, latest: Feb 01 2021 at 19:27)
+
 * [\[isabelle\] New in the AFP: Solution to the xkcd Blue Eyes...](26560isabelleNewintheAFPSolutiontothexkcdBlueEyes.html) (1 message, latest: Feb 01 2021 at 17:24)
 
 * [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (8 messages, latest: Feb 01 2021 at 15:34)

@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (4 messages, latest: Feb 01 2021 at 14:59)
+
+* [\[isabelle\] Isabelle2021-RC4: bundling of Naproche-SAD](94061isabelleIsabelle2021RC4bundlingofNaprocheSAD.html) (1 message, latest: Feb 01 2021 at 14:51)
+
+* [\[isabelle\] Isabelle2021-RC4 available for applications](21285isabelleIsabelle2021RC4availableforapplications.html) (1 message, latest: Feb 01 2021 at 14:46)
+
 * [\[isabelle\] New in the AFP: a port of GeoCoq](80070isabelleNewintheAFPaportofGeoCoq.html) (1 message, latest: Feb 01 2021 at 12:05)
 
 * [\[isabelle\]  Pārs.: Isabelle code for getting in-memory re...](83567isabellePrsIsabellecodeforgettinginmemoryre.html) (1 message, latest: Jan 31 2021 at 02:50)
@@ -44,8 +50,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] rewrite, subst, uses and sequential compositio...](24067isabellerewritesubstusesandsequentialcompositio.html) (4 messages, latest: Jan 25 2021 at 20:07)
 
 * [\[isabelle\] rewrite, subst,	uses and sequential compositio...](74892isabellerewritesubstusesandsequentialcompositio.html) (1 message, latest: Jan 24 2021 at 23:13)
-
-* [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (3 messages, latest: Jan 24 2021 at 22:22)
 
 * [\[isabelle\] Isabelle2021-RC3: update of Scala, but not Ope...](09889isabelleIsabelle2021RC3updateofScalabutnotOpe.html) (2 messages, latest: Jan 24 2021 at 21:00)
 

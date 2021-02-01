@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: a port of GeoCoq](80070isabelleNewintheAFPaportofGeoCoq.html) (1 message, latest: Feb 01 2021 at 12:05)
+
 * [\[isabelle\]  Pārs.: Isabelle code for getting in-memory re...](83567isabellePrsIsabellecodeforgettinginmemoryre.html) (1 message, latest: Jan 31 2021 at 02:50)
 
 * [\[isabelle\] Transfer Question](00567isabelleTransferQuestion.html) (1 message, latest: Jan 31 2021 at 01:55)

@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (8 messages, latest: Feb 01 2021 at 15:34)
+
+* [\[isabelle\] Isabelle2021-RC3: Java 11 (LTS) vs. Java 15 (MTS)](21371isabelleIsabelle2021RC3Java11LTSvsJava15MTS.html) (3 messages, latest: Feb 01 2021 at 15:09)
+
 * [\[isabelle\] Isabelle2021-RC2: slight regression in HTML ou...](68628isabelleIsabelle2021RC2slightregressioninHTMLou.html) (4 messages, latest: Feb 01 2021 at 14:59)
 
 * [\[isabelle\] Isabelle2021-RC4: bundling of Naproche-SAD](94061isabelleIsabelle2021RC4bundlingofNaprocheSAD.html) (1 message, latest: Feb 01 2021 at 14:51)
@@ -32,8 +36,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] UTF8 chars behavior](16034isabelleUTF8charsbehavior.html) (2 messages, latest: Jan 28 2021 at 11:12)
 
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (1 message, latest: Jan 28 2021 at 11:08)
-
-* [\[isabelle\] Isabelle2021-RC3: Java 11 (LTS) vs. Java 15 (MTS)](21371isabelleIsabelle2021RC3Java11LTSvsJava15MTS.html) (2 messages, latest: Jan 27 2021 at 19:17)
 
 * [\[isabelle\] CFP: Workshop on the Role of Mathematical Reas...](96366isabelleCFPWorkshopontheRoleofMathematicalReas.html) (1 message, latest: Jan 26 2021 at 23:15)
 
@@ -106,8 +108,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Detecting undefined](22691isabelleDetectingundefined.html) (6 messages, latest: Jan 11 2021 at 17:48)
 
 * [\[isabelle\] brute force search in lists](40551isabellebruteforcesearchinlists.html) (2 messages, latest: Jan 11 2021 at 08:11)
-
-* [\[isabelle\] Isabelle2021-RC0: Java/VM monitor](17032isabelleIsabelle2021RC0JavaVMmonitor.html) (6 messages, latest: Jan 10 2021 at 19:25)
 
 * [\[isabelle\] Variable both free and bound?!](34458isabelleVariablebothfreeandbound.html) (5 messages, latest: Jan 10 2021 at 18:34)
 

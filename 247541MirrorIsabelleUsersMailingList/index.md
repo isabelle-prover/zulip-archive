@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Call for Papers: Tests and Proofs 2021 (TAP 20...](64735isabelleCallforPapersTestsandProofs2021TAP20.html) (1 message, latest: Feb 02 2021 at 09:37)
+* [\[isabelle\] Isabelle logo terms of use](47961isabelleIsabellelogotermsofuse.html) (2 messages, latest: Feb 02 2021 at 19:55)
 
-* [\[isabelle\] Isabelle logo terms of use](47961isabelleIsabellelogotermsofuse.html) (1 message, latest: Feb 01 2021 at 19:27)
+* [\[isabelle\] Call for Papers: Tests and Proofs 2021 (TAP 20...](64735isabelleCallforPapersTestsandProofs2021TAP20.html) (1 message, latest: Feb 02 2021 at 09:37)
 
 * [\[isabelle\] New in the AFP: Solution to the xkcd Blue Eyes...](26560isabelleNewintheAFPSolutiontothexkcdBlueEyes.html) (1 message, latest: Feb 01 2021 at 17:24)
 

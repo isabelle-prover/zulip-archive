@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (2 messages, latest: Feb 03 2021 at 12:58)
+
 * [\[isabelle\] CfP: SCSS 2021](82414isabelleCfPSCSS2021.html) (1 message, latest: Feb 03 2021 at 09:54)
 
 * [\[isabelle\] Isabelle logo terms of use](47961isabelleIsabellelogotermsofuse.html) (2 messages, latest: Feb 02 2021 at 19:55)
@@ -32,8 +34,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\]  Pārs.: Isabelle code for getting in-memory re...](83567isabellePrsIsabellecodeforgettinginmemoryre.html) (1 message, latest: Jan 31 2021 at 02:50)
 
 * [\[isabelle\] Transfer Question](00567isabelleTransferQuestion.html) (1 message, latest: Jan 31 2021 at 01:55)
-
-* [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (1 message, latest: Jan 30 2021 at 02:01)
 
 * [\[isabelle\] "Files and Folders" permissions cannot be granted](36190isabelleFilesandFolderspermissionscannotbegranted.html) (4 messages, latest: Jan 30 2021 at 00:16)
 

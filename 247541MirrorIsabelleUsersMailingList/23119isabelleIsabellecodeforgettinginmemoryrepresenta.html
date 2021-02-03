@@ -38,6 +38,56 @@ But now - as I am looking on the Isabelle code - it seems to me that such parsin
 <p>Thanks,<br>
 Alex</p>
 
+<a name="225010753"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20code%20for%20getting%20in-memory%20representa.../near/225010753" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/23119isabelleIsabellecodeforgettinginmemoryrepresenta.html#225010753">Email Gateway (Feb 03 2021 at 12:58)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 30/01/2021 03:00, Alex Meyer wrote:</p>
+<blockquote>
+<p>My intention is to have full control over the representation and manipulation<br>
+of the code in theory files:<br>
+1) maybe I would like to parse or generate thy files with the grammatical<br>
+framework, e.g., translate the sentence in natural language into thy file<br>
+(similar efforts have been done in Coq). Just for the purposes of<br>
+representation and open-ended deduction, no need to have certified proofs.<br>
+2) maybe I would like to preprocess code of theory files for the processing<br>
+with neural networks in the style of <a href="https://arxiv.org/abs/2006.09265">https://arxiv.org/abs/2006.09265</a> I have<br>
+no clear thought yet, but I guess that this research can be extended if I can<br>
+have full controle for the in-memory structurs of theory files.</p>
+</blockquote>
+<p>This "full control" is not going to work: Isabelle cannot be put into a box<br>
+like that, it is far too flexible and powerful.</p>
+<p>The language of Isabelle is an open-ended framework for arbitrary semantic<br>
+embeddings, usually implemented in Isabelle/ML. Over the decades, I have<br>
+provided means to "tap" some aspects of the internal representation of<br>
+Isabelle languages, with external markup in Isabelle/PIDE.</p>
+<blockquote>
+<p>I had the question with similar ideas but with different technologies in mind<br>
+last summer:<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2020-July/msg00025.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2020-July/msg00025.html</a><br>
+and I was strongly discouraged from such parsing and in-memory manipulation of<br>
+theory files.</p>
+</blockquote>
+<p>That thread already provides good answers. In short: don't do it, but change<br>
+your perspective on the problem.</p>
+<blockquote>
+<p>So - it would be nice to have some pointers. Just pointers, all remaining I<br>
+will explore myself.</p>
+</blockquote>
+<p><a href="https://github.com/Deducteam/isabelle_dedukti">https://github.com/Deducteam/isabelle_dedukti</a><br>
+<a href="https://github.com/UniFormal/MMT">https://github.com/UniFormal/MMT</a><br>
+<a href="https://github.com/qaware/isabelle-afp-search">https://github.com/qaware/isabelle-afp-search</a></p>
+<p>At the bottom of these tools there are two different approaches:</p>
+<p>(1) heavy headless PIDE session (as in "isabelle dump"): one big<br>
+Isabelle/ML/Scala process to crunch everything and export certain aspects</p>
+<p>(2) session build + export database (as in "isabelle export" or<br>
+Isabelle/Dedukti above): this is a regular "isabelle build" with certain options</p>
+<p>Generally note that the proper language for "Isabelle systems programming" is<br>
+Isabelle/Scala: not funny scripting languages like Python.</p>
+<p>The Isabelle/Dedukti application shows how to wrap rather simple Scala modules<br>
+into Isabelle command line tools. That is for Isabelle2020, but it should be<br>
+easy to adapt to Isabelle2021 which will appear within approx. 2 weeks.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

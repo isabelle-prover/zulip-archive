@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (13 messages, latest: Feb 04 2021 at 08:09)
+
 * [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (2 messages, latest: Feb 03 2021 at 12:58)
 
 * [\[isabelle\] CfP: SCSS 2021](82414isabelleCfPSCSS2021.html) (1 message, latest: Feb 03 2021 at 09:54)
@@ -38,8 +40,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] "Files and Folders" permissions cannot be granted](36190isabelleFilesandFolderspermissionscannotbegranted.html) (4 messages, latest: Jan 30 2021 at 00:16)
 
 * [\[isabelle\] Configurable proposition grammar root symbol f...](20418isabelleConfigurablepropositiongrammarrootsymbolf.html) (1 message, latest: Jan 28 2021 at 17:55)
-
-* [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (12 messages, latest: Jan 28 2021 at 12:31)
 
 * [\[isabelle\] UTF8 chars behavior](16034isabelleUTF8charsbehavior.html) (2 messages, latest: Jan 28 2021 at 11:12)
 

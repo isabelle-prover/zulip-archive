@@ -135,6 +135,42 @@ Conceptually, I would like to prove the last lemma by applying the introduction 
 </blockquote>
 <p>Yeah, it's possible that you can't express that with locales.</p>
 
+<a name="225292725"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225292725" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225292725">Lukas Stevens (Feb 05 2021 at 12:33)</a>:</h4>
+<p>Hm, <code>rewrites "(A \&lt;subseteq&gt; UNIV ==&gt; PROP P) ≡ PROP P"</code> does not work.</p>
+
+<a name="225293517"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225293517" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225293517">Manuel Eberl (Feb 05 2021 at 12:43)</a>:</h4>
+<p>Seems to be a problem with the prop thing.</p>
+
+<a name="225293539"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225293539" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225293539">Manuel Eberl (Feb 05 2021 at 12:43)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">axiomatization</span> <span class="n">P</span> <span class="o">::</span> <span class="s">"'a ⇒ bool"</span>
+
+<span class="k">locale</span> <span class="n">foo</span> <span class="o">=</span>
+  <span class="kp">fixes</span> <span class="n">A</span> <span class="o">::</span> <span class="s">"'a set"</span>
+<span class="k">begin</span>
+
+<span class="kn">lemma</span> <span class="n">bar</span><span class="o">:</span> <span class="s">"X ⊆ A ⟹ P X"</span>
+  <span class="gr">sorry</span>
+
+<span class="k">end</span>
+
+<span class="k">locale</span> <span class="n">bar</span>
+<span class="k">begin</span>
+
+<span class="kn">sublocale</span> <span class="n">foo</span> <span class="n">UNIV</span> <span class="n">rewrites</span> <span class="s">"Y ⊆ UNIV ≡ True"</span> <span class="kp">and</span> <span class="s">"(True ⟹ PROP Q) ≡ PROP Q"</span>
+  <span class="k">by</span> <span class="n">auto</span>
+</code></pre></div>
+
+<a name="225293611"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225293611" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225293611">Manuel Eberl (Feb 05 2021 at 12:44)</a>:</h4>
+<p>If you replace the second <code>rewrites</code> rule with <code>(True ⟹ Q) ≡ Trueprop Q</code> it works. But of course that will not be enough for rules with several implications.</p>
+
+<a name="225293627"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225293627" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225293627">Manuel Eberl (Feb 05 2021 at 12:44)</a>:</h4>
+<p>No idea what's going on here. Might want to ask on the mailing list.</p>
+
 
 {% endraw %}
 

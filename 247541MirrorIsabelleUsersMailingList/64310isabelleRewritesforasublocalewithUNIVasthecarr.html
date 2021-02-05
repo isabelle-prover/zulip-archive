@@ -1,0 +1,45 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/64310isabelleRewritesforasublocalewithUNIVasthecarr.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64310isabelleRewritesforasublocalewithUNIVasthecarr.html">[isabelle] Rewrites for a sublocale with UNIV as the carr...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="225296655"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rewrites%20for%20a%20sublocale%20with%20UNIV%20as%20the%20carr.../near/225296655" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64310isabelleRewritesforasublocalewithUNIVasthecarr.html#225296655">Email Gateway (Feb 05 2021 at 13:16)</a>:</h4>
+<p>From: Lukas Stevens &lt;lukas.stevens+isabelle-users@in.tum.de&gt;<br>
+Hello,</p>
+<p>suppose I have a locale foo_on that assumes that some predicate P holds <br>
+on a carrier set A. Often, one wants to specialise this to a locale foo <br>
+where A is the UNIV. The problem is that theorems in foo_on often have <br>
+assumptions of the form "X ⊆ A" which are "X ⊆ UNIV" in the context of <br>
+foo. Those assumptions are trivial so I want to get rid of them using <br>
+rewrites but this doesn't seem to work as the example below shows:</p>
+<p>axiomatization P :: "'a ⇒ bool"</p>
+<p>locale foo =<br>
+   fixes A :: "'a set"<br>
+begin</p>
+<p>lemma bar: "X ⊆ A ⟹ P X"<br>
+   sorry</p>
+<p>end</p>
+<p>locale bar<br>
+begin</p>
+<p>(* (True ==&gt; Q) ≡ Trueprop Q works for the theorem bar but not for theorems with multiple assumptions. *)<br>
+sublocale foo UNIV rewrites "Y ⊆ UNIV ≡ True" and "(True ⟹ PROP Q) ≡ PROP Q"<br>
+   by auto</p>
+<p>end</p>
+<p>What is going wrong here?</p>
+<p>Cheers,</p>
+<p>Lukas</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Equivalent locales](81410Equivalentlocales.html) (1 message, latest: Feb 05 2021 at 10:33)
+* [Equivalent locales](81410Equivalentlocales.html) (17 messages, latest: Feb 05 2021 at 11:37)
 
 * [LaTeX cross-references in Isabelle documents](09890LaTeXcrossreferencesinIsabelledocuments.html) (7 messages, latest: Jan 30 2021 at 18:14)
 

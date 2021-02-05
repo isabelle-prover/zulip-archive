@@ -44,6 +44,97 @@ permalink: ./238552BeginnerQuestions/81410Equivalentlocales.html
 <p>As you can see the second locale is a specialised version of the first one where the carrier set is the universe. I want two separate locales since I can remove the assumptions of the form <code>S \&lt;subset&gt; UNIV</code> and <code>x ∈ UNIV</code> in <code>comp_fun_commute</code> and to maintain backwards compatability.<br>
 Conceptually, I would like to prove the last lemma by applying the introduction rule <code>comp_fun_commute_on UNIV f ==&gt; comp_fun_commute f</code>  but I don't have this lemma yet. Do I have to prove that or is there any way to structure the locales differently such that it reflects the fact that <code>comp_fun_commute_on UNIV f = comp_fun_commute f</code>?</p>
 
+<a name="225286094"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286094" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286094">Manuel Eberl (Feb 05 2021 at 11:14)</a>:</h4>
+<p>Hm, you can do <code>sublocale cfc_on: comp_fun_commute_on UNIV f</code> in <code>comp_fun_commute</code>.</p>
+
+<a name="225286132"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286132" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286132">Manuel Eberl (Feb 05 2021 at 11:14)</a>:</h4>
+<p>I think there's also the <code>rewrites</code> argument for <code>sublocale</code> that allows you to perform some simplifications on the theorems you get out of the interpretation to get rid of things like <code>x ∈ UNIV</code>.</p>
+
+<a name="225286234"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286234" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286234">Lukas Stevens (Feb 05 2021 at 11:16)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Equivalent.20locales/near/225286094">said</a>:</p>
+<blockquote>
+<p>Hm, you can do <code>sublocale cfc_on: comp_fun_commute_on UNIV f</code> in <code>comp_fun_commute</code>.</p>
+</blockquote>
+<p>That is already in the code sample <span aria-label="wink" class="emoji emoji-1f609" role="img" title="wink">:wink:</span></p>
+
+<a name="225286311"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286311" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286311">Lukas Stevens (Feb 05 2021 at 11:17)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Equivalent.20locales/near/225286132">said</a>:</p>
+<blockquote>
+<p>I think there's also the <code>rewrites</code> argument for <code>sublocale</code> that allows you to perform some simplifications on the theorems you get out of the interpretation to get rid of things like <code>x ∈ UNIV</code>.</p>
+</blockquote>
+<p>I am not really sure how that rewrites thing works. Is it just <code>rewrites "x ∈ UNIV ≡ True"</code>?</p>
+
+<a name="225286317"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286317" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286317">Mathias Fleury (Feb 05 2021 at 11:17)</a>:</h4>
+<p>isn't your problem a pure typing problem?</p>
+
+<a name="225286347"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286347" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286347">Mathias Fleury (Feb 05 2021 at 11:17)</a>:</h4>
+<p><code>g</code> has the wrong type in your second lemma</p>
+
+<a name="225286428"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286428" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286428">Lukas Stevens (Feb 05 2021 at 11:18)</a>:</h4>
+<p>Baring copy-and-paste mistakes, it typechecks</p>
+
+<a name="225286441"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286441" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286441">Mathias Fleury (Feb 05 2021 at 11:18)</a>:</h4>
+<p>Is that an option?</p>
+<div class="codehilite"><pre><span></span><code>locale comp_fun_commute = comp_fun_commute_on UNIV f
+ for f
+</code></pre></div>
+
+<a name="225286461"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286461" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286461">Lukas Stevens (Feb 05 2021 at 11:19)</a>:</h4>
+<p>Then you will have the assumptions of the form <code>x ∈ UNIV</code> in the locale conclusions.</p>
+
+<a name="225286541"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286541" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286541">Lukas Stevens (Feb 05 2021 at 11:20)</a>:</h4>
+<p>And the locale assumption is <code>x ∈ UNIV ==&gt; y ∈ UNIV ==&gt; f y o f x = f x o f y</code> instead of <code>f y o f x = f x o f y</code>.</p>
+
+<a name="225286586"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286586" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286586">Lukas Stevens (Feb 05 2021 at 11:20)</a>:</h4>
+<p>In this case that wouldn't be so bad but if the equivalence of the locales would be non-trivial then you wouldn't want to do that.</p>
+
+<a name="225286727"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225286727" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225286727">Lukas Stevens (Feb 05 2021 at 11:22)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233155">Lukas Stevens</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Equivalent.20locales/near/225286461">said</a>:</p>
+<blockquote>
+<p>Then you will have the assumptions of the form <code>x ∈ UNIV</code> in the locale conclusions.</p>
+</blockquote>
+<p>This would break backwards-compatability as well.</p>
+
+<a name="225287548"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225287548" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225287548">Manuel Eberl (Feb 05 2021 at 11:32)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233155">Lukas Stevens</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Equivalent.20locales/near/225286311">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Equivalent.20locales/near/225286132">said</a>:</p>
+<blockquote>
+<p>I think there's also the <code>rewrites</code> argument for <code>sublocale</code> that allows you to perform some simplifications on the theorems you get out of the interpretation to get rid of things like <code>x ∈ UNIV</code>.</p>
+</blockquote>
+<p>I am not really sure how that rewrites thing works. Is it just <code>rewrites "x ∈ UNIV ≡ True"</code>?</p>
+</blockquote>
+<p>No idea. It's probably documented somewhere. Or look at how it is used in the distribution. I never really used it myself.</p>
+
+<a name="225287761"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225287761" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225287761">Mathias Fleury (Feb 05 2021 at 11:34)</a>:</h4>
+<p>Isn't the problem that locales don't express what you want?</p>
+
+<a name="225287931"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225287931" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225287931">Mathias Fleury (Feb 05 2021 at 11:37)</a>:</h4>
+<p>From what I understand, locales instantiation is done in the metalogic, so there is no theorem corresponding to the sublocale.</p>
+
+<a name="225287937"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Equivalent%20locales/near/225287937" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/81410Equivalentlocales.html#225287937">Lukas Stevens (Feb 05 2021 at 11:37)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Equivalent.20locales/near/225287761">said</a>:</p>
+<blockquote>
+<p>Isn't the problem that locales don't express what you want?</p>
+</blockquote>
+<p>Yeah, it's possible that you can't express that with locales.</p>
+
 
 {% endraw %}
 

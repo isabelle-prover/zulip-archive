@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (4 messages, latest: Feb 05 2021 at 19:58)
+* [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (5 messages, latest: Feb 05 2021 at 20:56)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (15 messages, latest: Feb 05 2021 at 13:36)
 

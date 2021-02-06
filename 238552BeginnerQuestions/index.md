@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [unfold, but just once](64011unfoldbutjustonce.html) (1 message, latest: Feb 06 2021 at 00:01)
+
 * [Equivalent locales](81410Equivalentlocales.html) (22 messages, latest: Feb 05 2021 at 12:44)
 
 * [LaTeX cross-references in Isabelle documents](09890LaTeXcrossreferencesinIsabelledocuments.html) (7 messages, latest: Jan 30 2021 at 18:14)

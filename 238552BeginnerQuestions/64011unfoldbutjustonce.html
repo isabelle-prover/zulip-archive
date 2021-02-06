@@ -17,6 +17,23 @@ permalink: ./238552BeginnerQuestions/64011unfoldbutjustonce.html
 <p>I have the following fact in my proof: <code>"n = 2^multiplicity 2 n * k"</code></p>
 <p>Further down, I would like to replace <code>n</code> in a goal with <code>2^multiplicity 2 n * k</code>. However, both <code>unfolding n</code> and <code>apply (unfold n)</code> go into an infinite loop. How do I avoid that?</p>
 
+<a name="225389825"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/unfold%2C%20but%20just%20once/near/225389825" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/64011unfoldbutjustonce.html#225389825">Mathias Fleury (Feb 06 2021 at 06:20)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>apply (subst n)
+</code></pre></div>
+
+<a name="225389886"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/unfold%2C%20but%20just%20once/near/225389886" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/64011unfoldbutjustonce.html#225389886">Mathias Fleury (Feb 06 2021 at 06:22)</a>:</h4>
+<p>if you need to direct it more:</p>
+<div class="codehilite"><pre><span></span><code>apply (subst [(asm)][(position)] n)
+</code></pre></div>
+<p>(asm) = substitute in assumpition<br>
+(position) = substitute at position e.g. (1), (10), ...</p>
+
+<a name="225389892"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/unfold%2C%20but%20just%20once/near/225389892" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/64011unfoldbutjustonce.html#225389892">Mathias Fleury (Feb 06 2021 at 06:22)</a>:</h4>
+<p>Rewrite is nicer to use (you can write a pattern instead of referring to the position), but not part of Main. See <a href="https://isabelle.in.tum.de/dist/library/HOL/HOL-ex/Rewrite_Examples.html">https://isabelle.in.tum.de/dist/library/HOL/HOL-ex/Rewrite_Examples.html</a> for examples</p>
+
 
 {% endraw %}
 

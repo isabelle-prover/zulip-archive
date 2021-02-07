@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (2 messages, latest: Feb 07 2021 at 02:38)
+
 * [\[isabelle\] Atb.: Isabelle code for getting in-memory repr...](32334isabelleAtbIsabellecodeforgettinginmemoryrepr.html) (1 message, latest: Feb 05 2021 at 22:39)
 
 * [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (5 messages, latest: Feb 05 2021 at 20:56)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (15 messages, latest: Feb 05 2021 at 13:36)
 
 * [\[isabelle\] Incompatibility between code generation, HOL-L...](72302isabelleIncompatibilitybetweencodegenerationHOLL.html) (1 message, latest: Feb 05 2021 at 13:21)
-
-* [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (1 message, latest: Feb 05 2021 at 13:16)
 
 * [\[isabelle\] CfP: SCSS 2021](82414isabelleCfPSCSS2021.html) (1 message, latest: Feb 03 2021 at 09:54)
 

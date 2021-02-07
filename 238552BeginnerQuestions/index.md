@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [substituting into a congruence](41210substitutingintoacongruence.html) (1 message, latest: Feb 07 2021 at 11:58)
+
 * [unfold, but just once](64011unfoldbutjustonce.html) (4 messages, latest: Feb 06 2021 at 06:22)
 
 * [Equivalent locales](81410Equivalentlocales.html) (22 messages, latest: Feb 05 2021 at 12:44)

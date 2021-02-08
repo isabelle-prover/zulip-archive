@@ -90,6 +90,108 @@ as many as you need.</p>
 <p>Best,<br>
 Akihisa</p>
 
+<a name="225596373"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rewrites%20for%20a%20sublocale%20with%20UNIV%20as%20the%20carr.../near/225596373" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64310isabelleRewritesforasublocalewithUNIVasthecarr.html#225596373">Email Gateway (Feb 08 2021 at 19:38)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear Lukas Stevens and Akihisa Yamada/All,</p>
+<p>I would like to make a side remark with regard to the discussion and ask a<br>
+couple of related questions to the developers/maintainers of Isabelle.</p>
+<hr>
+<p>While I am also not certain whether and how one could construct a rewrite<br>
+system capable of coping with the problem outlined by Lukas Stevens<br>
+(although it seems like the application of the attribute "simplified" with<br>
+the default simpset can remove "True" in most cases, so it may be worth<br>
+trying to understand the principle employed), there is little that could<br>
+stop one from batch-processing the theorems after the locale<br>
+interpretation: see the code listing in the appendix. Potentially, one can<br>
+even override the theorems that were produced during the interpretation in<br>
+this manner. However, keep in mind that the code is merely a very rough<br>
+sketch of the idea, not a working implementation (e.g. one would need to<br>
+consider how to propagate the effects of the attributes that were applied<br>
+to the original theorems and several other issues).</p>
+<hr>
+<p>In this context, I would like to ask two questions to the developers of<br>
+Isabelle:</p>
+<ol>
+<li>
+<p>I am curious as to what exactly is preventing from allowing users to<br>
+provide more general/arbitrary theorem transformations during the locale<br>
+interpretation, instead of plain rewriting.</p>
+</li>
+<li>
+<p>I am curious if there is a way to allow for an application of a given<br>
+predefined rewrite system repeatedly to different distinct interpretations.<br>
+For example, if one was to develop a rewrite system for eliminating "True"<br>
+from theorems, it would be useful to allow for its repeated application<br>
+without code duplication. However, at the moment, it seems like one would<br>
+have to restate the relevant terms explicitly for every interpretation<br>
+(unless I am mistaken, and there already exists an implementation of this<br>
+functionality).</p>
+</li>
+</ol>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+<p>theory Scratch<br>
+  imports Main<br>
+  keywords "attributes_for_qual" :: thy_defn<br>
+begin</p>
+<p>ML‹</p>
+<p>(*copied with amendments from the file Proof_Context.ML<br>
+in the main distribution of Isabelle2021-RC2*)<br>
+fun get_local_facts verbose ctxt =<br>
+  let<br>
+    val facts = Proof_Context.facts_of ctxt<br>
+    val props = map #1 (Facts.props facts)<br>
+    val local_facts =<br>
+      (if null props then [] else [("&lt;unnamed&gt;", props)]) @<br>
+        Facts.dest_static<br>
+          verbose [Global_Theory.facts_of (Proof_Context.theory_of ctxt)]<br>
+facts<br>
+  in local_facts end;</p>
+<p>fun append_local c = "local." ^ c ^ ".";<br>
+fun remove_local c = String.extract (c, 6, NONE);</p>
+<p>fun prep_attrb_facts ctxt attrbs (b, thms)  =<br>
+  let<br>
+    val facts' =<br>
+      ((b, attrbs) ||&gt; map (Attrib.check_src ctxt), single (thms, []))<br>
+      |&gt; single<br>
+      |&gt; Attrib.partial_evaluation ctxt<br>
+  in facts' end;</p>
+<p>fun process_simplify (qualc, attrbs) ctxt =<br>
+  let<br>
+    val mk_name = remove_local<br>
+      #&gt; curry (swap #&gt; op^) "'"<br>
+      #&gt; Binding.qualified_name<br>
+    val thmss = get_local_facts false ctxt<br>
+      |&gt; filter (fn (c, _) =&gt; String.isPrefix (append_local qualc) c)<br>
+      |&gt; map (apfst mk_name)<br>
+    val factss = thmss |&gt; map (prep_attrb_facts ctxt attrbs)<br>
+  in fold (curry (uncurry Local_Theory.notes #&gt; snd)) factss ctxt end;</p>
+<p>val _ = Outer_Syntax.local_theory<br>
+  \&lt;^command_keyword&gt;‹attributes_for_qual›<br>
+    "apply attributes to a set of theorems in the local context"<br>
+  (Parse.string -- Parse.attribs &gt;&gt; process_simplify);</p>
+<p>›</p>
+<p>axiomatization P :: "'a ⇒ bool"<br>
+axiomatization Z :: "'a ⇒ bool"</p>
+<p>locale foo =<br>
+  fixes A :: "'a set"<br>
+begin</p>
+<p>lemma bar: "X ⊆ A ⟹ Z A ⟹ P X"<br>
+  sorry</p>
+<p>end</p>
+<p>locale bar<br>
+begin</p>
+<p>sublocale foo: foo UNIV<br>
+  rewrites "Y ⊆ UNIV ≡ True"<br>
+    and "⋀Q. (True ⟹ PROP Q) ≡ Q"<br>
+    and "⋀Q. (True ⟹ Q) ≡ Trueprop Q"<br>
+  by auto</p>
+<p>attributes_for_qual "foo" [simplified]</p>
+<p>thm <a href="http://foo.bar">foo.bar</a>'</p>
+<p>end</p>
+<p>end</p>
+
 
 {% endraw %}
 

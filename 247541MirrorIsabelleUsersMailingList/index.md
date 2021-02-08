@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (3 messages, latest: Feb 08 2021 at 10:50)
+* [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (4 messages, latest: Feb 08 2021 at 12:02)
 
 * [\[isabelle\] Atb.: Isabelle code for getting in-memory repr...](32334isabelleAtbIsabellecodeforgettinginmemoryrepr.html) (1 message, latest: Feb 05 2021 at 22:39)
 

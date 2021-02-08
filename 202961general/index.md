@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [dependent types and Isar](78511dependenttypesandIsar.html) (6 messages, latest: Feb 08 2021 at 10:13)
+* [dependent types and Isar](78511dependenttypesandIsar.html) (7 messages, latest: Feb 08 2021 at 12:34)
 
 * [Liquid tensor experiment](09157Liquidtensorexperiment.html) (5 messages, latest: Jan 06 2021 at 14:28)
 

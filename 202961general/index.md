@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [dependent types and Isar](78511dependenttypesandIsar.html) (1 message, latest: Feb 08 2021 at 01:54)
+
 * [Liquid tensor experiment](09157Liquidtensorexperiment.html) (5 messages, latest: Jan 06 2021 at 14:28)
 
 * [isabelle build: ignore timeout](60791isabellebuildignoretimeout.html) (7 messages, latest: Nov 25 2020 at 15:33)

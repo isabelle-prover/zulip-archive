@@ -1,0 +1,61 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/27384isabelleIsabelle2021RC5supportforAppleSilicon.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27384isabelleIsabelle2021RC5supportforAppleSilicon.html">[isabelle] Isabelle2021-RC5: support for Apple Silicon</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="225616495"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2021-RC5%3A%20support%20for%20Apple%20Silicon/near/225616495" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27384isabelleIsabelle2021RC5supportforAppleSilicon.html#225616495">Email Gateway (Feb 08 2021 at 22:09)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+The announcement now says:</p>
+<p>* Support for macOS Big Sur on Intel and Apple Silicon (ARM).</p>
+<p>For RC5 the main change is "Improved support for Apple Silicon (ARM): external<br>
+processes are managed by Isabelle/Scala instead of Apple's Rosetta (which does<br>
+not support multithreaded process fork)."</p>
+<p>Thus sledgehammer works properly, and as far as I can see everything else as well.</p>
+<p>I also managed to run complete Isabelle + AFP twice: it takes approx. 12h for<br>
+one run. Detailed timings are included for the following setup:</p>
+<ul>
+<li>
+<p>Hardware: Macmini9,1, Apple M1 CPU with 4 cores * 2 (hyperthreading), 16GB RAM</p>
+</li>
+<li>
+<p>macOS Big Sur 11.2</p>
+</li>
+<li>
+<p>Isabelle/da0ee7fbc068 (approx. Isabelle2021-RC5)</p>
+</li>
+<li>
+<p>AFP/07ea995a6665 from afp-2021 repository</p>
+</li>
+<li>
+<p>etc/settings:</p>
+<p>ISABELLE_TOOL_JAVA_OPTIONS="-Djava.awt.headless=true -Xms512m -Xmx4g -Xss16m"</p>
+<p>ML_PLATFORM="x86_64_32-darwin"<br>
+ML_OPTIONS="--minheap 1500 --maxheap=10g"</p>
+</li>
+<li>
+<p>isabelle build -o threads=4 -d '$AFP' -a -X very_slow</p>
+</li>
+</ul>
+<p>For comparison, here are timings for Isabelle on the last generation of Intel<br>
+Mac Mini (Macmini8,1, 6-Core Intel Core i7, 64 GB RAM):<br>
+<a href="https://isabelle.sketis.net/devel/build_status/macOS_11.1_Big_Sur_4_threads/index.html">https://isabelle.sketis.net/devel/build_status/macOS_11.1_Big_Sur_4_threads/index.html</a></p>
+<p>Overall the Apple Silicon machine is pretty impressive: slightly faster than<br>
+the Intel one. Note that 16 GB is presently the upper bound for that new<br>
+generation of Mac Minis, while the older generation supported 64 GB.</p>
+<p>Makarius<br>
+<a href="/user_uploads/14278/N-SPQFVJR4CuQYqHeqDm836z/nohup.out">nohup.out</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -50,6 +50,32 @@ of assumptions.</p>
 <p>Best regards,<br>
 Akihisa</p>
 
+<a name="225527050"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rewrites%20for%20a%20sublocale%20with%20UNIV%20as%20the%20carr.../near/225527050" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64310isabelleRewritesforasublocalewithUNIVasthecarr.html#225527050">Email Gateway (Feb 08 2021 at 10:50)</a>:</h4>
+<p>From: Lukas Stevens &lt;lukas.stevens+isabelle-users@in.tum.de&gt;<br>
+That does not seem to work. See the example below:</p>
+<p>theory Scratch imports Main<br>
+begin</p>
+<p>axiomatization P :: "'a ⇒ bool"<br>
+axiomatization Z :: "'a ⇒ bool"</p>
+<p>locale foo =<br>
+   fixes A :: "'a set"<br>
+begin</p>
+<p>lemma bar: "X ⊆ A ⟹ Z A  ⟹ P X"<br>
+   sorry</p>
+<p>end</p>
+<p>locale bar<br>
+begin</p>
+<p>sublocale foo UNIV<br>
+   rewrites "Y ⊆ UNIV ≡ True" and "⋀Q. (True ⟹ PROP Q) ≡ Q" and "⋀Q. (True ⟹ Q) ≡ Trueprop Q"<br>
+   by auto</p>
+<p>(* ⟦True; Z UNIV⟧ ⟹ P ?X<br>
+      instead of<br>
+    Z UNIV ⟹ P ?X *)<br>
+thm bar<br>
+end</p>
+<p>end</p>
+
 
 {% endraw %}
 

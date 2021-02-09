@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Comparing Isabelle/Scala with scala-isabelle. ...](06772isabelleComparingIsabelleScalawithscalaisabelle.html) (1 message, latest: Feb 09 2021 at 18:35)
+
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (1 message, latest: Feb 08 2021 at 22:09)
 
 * [\[isabelle\] Isabelle2021-RC5 available for applications](56294isabelleIsabelle2021RC5availableforapplications.html) (1 message, latest: Feb 08 2021 at 21:43)

@@ -1,0 +1,59 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html">[isabelle] Comparing Isabelle/Scala with scala-isabelle. ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="225735865"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Comparing%20Isabelle/Scala%20with%20scala-isabelle.%20.../near/225735865" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html#225735865">Email Gateway (Feb 09 2021 at 18:35)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+Hi,</p>
+<p>I cannot fully answer that question because I was not able to find the <br>
+documentation of Isabelle/Scala.</p>
+<p>(Only the one in the system manual, which did not make clear to me what <br>
+Isabelle/Scala supports.)</p>
+<p>My impression of Isabelle/Scala is that it focuses a lot on the <br>
+high-level operations (theory management, builds, etc.) but does not <br>
+have support for operating on lower-level data.</p>
+<p>For example, in scala-isabelle, you can directly and transparently work <br>
+on terms, cterms, thms, etc. (For example, I can do something like <br>
+"thm.proposition match { case Const("HOL.Trueprop", t) =&gt; do something <br>
+with term t }". (And references on the scala side to Isabelle values can <br>
+get automatically garbage collected etc.)</p>
+<p>(And of course, this is extensible by ML code fragments in the Scala <br>
+program.)</p>
+<p>Of course, assuming that Isabelle/Scala allows to transfer data (e.g., <br>
+XML trees) between Scala and Isabelle, and that it allows to execute ML <br>
+code, it would be possible to do all those things also with <br>
+Isabelle/Scala. But the question is whether that support is part of <br>
+Isabelle/Scala, or is something that can be hypothetically implemented. <br>
+The basic invocation and communication between Scala and Isabelle is <br>
+just 1k LOC in scala-isabelle, so that's the smallest part of it.</p>
+<p>In fact, I think that it would be easy to base scala-isabelle on a <br>
+different communication protocol, e.g., Isabelle/Scala. However, I opted <br>
+to make a simple lowlevel protocol instead because that way I got a <br>
+factor 1000 improvement in roundtrip time over what Lars Hupel's <br>
+libisabelle has. (And afaik, libisabelle was built on top of <br>
+Isabelle/PIDE, not sure how this relates to Isabelle/Scala.)</p>
+<p>That being said, I think it should not be hard to refactor <br>
+scala-isabelle so that one can choose whether to use Scala/Isabelle or <br>
+my own protocol for the communication.</p>
+<p>All of this, of course, is under the assumption that I my guesses are <br>
+right about what Isabelle/Scala does.</p>
+<p>I would be happy if you can elucidate me as to what the purpose of <br>
+Isabelle/Scala is, and what features it has.</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

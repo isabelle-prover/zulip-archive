@@ -53,6 +53,45 @@ Isabelle/Scala is, and what features it has.</p>
 <p>Best wishes,<br>
 Dominique.</p>
 
+<a name="225744586"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Comparing%20Isabelle/Scala%20with%20scala-isabelle.%20.../near/225744586" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html#225744586">Email Gateway (Feb 09 2021 at 19:33)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 09/02/2021 19:34, Dominique Unruh wrote:</p>
+<blockquote>
+<p>My impression of Isabelle/Scala is that it focuses a lot on the high-level<br>
+operations (theory management, builds, etc.) but does not have support for<br>
+operating on lower-level data.</p>
+</blockquote>
+<p>Exactly. Over 10 years I have given many talks and written many papers about<br>
+Isabelle/Scala in contrast to Isabelle/ML. The main idea:</p>
+<p>* Isabelle/Scala is for systems-programming / system integration</p>
+<p>* Isabelle/ML is for mathematical logic</p>
+<p>Sometimes there is a bit of overlap, and some freedom to decide where things<br>
+happen. But when you start to do term operations in Isabelle/Scala it is<br>
+probably wrong.</p>
+<blockquote>
+<p>For example, in scala-isabelle, you can directly and transparently work on<br>
+terms, cterms, thms, etc. (For example, I can do something like<br>
+"thm.proposition match { case Const("HOL.Trueprop", t) =&gt; do something with<br>
+term t }". (And references on the scala side to Isabelle values can get<br>
+automatically garbage collected etc.)</p>
+</blockquote>
+<p>So why not do this in Isabelle/ML? It works much better. E.g. you have proper<br>
+antiquotations for the const name "HOL.Trueprop" above --- without that it is<br>
+not going to last very long.</p>
+<p>Why give up static scopes and types by pretending that ML operations can<br>
+happen in Scala?</p>
+<blockquote>
+<p>(And of course, this is extensible by ML code fragments in the Scala program.)</p>
+</blockquote>
+<p>The proper way is to define Isabelle/Isar commands in Isabelle/ML, and let the<br>
+Isabelle/Scala front-end work in a high-level way with it.</p>
+<p>Chapter 4 of the "system" manual describes a fairly simple and declarative<br>
+server protocol to work with Isabelle documents: the socket-version works via<br>
+JSON (e.g. for Python), but it is easier to work with the same in<br>
+Isabelle/Scala (the Headless PIDE session).</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

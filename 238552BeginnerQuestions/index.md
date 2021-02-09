@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (45 messages, latest: Feb 09 2021 at 08:55)
+
 * [substituting into a congruence](41210substitutingintoacongruence.html) (2 messages, latest: Feb 07 2021 at 13:29)
 
 * [unfold, but just once](64011unfoldbutjustonce.html) (4 messages, latest: Feb 06 2021 at 06:22)
@@ -20,8 +22,6 @@ permalink: ./238552BeginnerQuestions/index.html
 * [semiring_modulo for a factorial_semiring + comm_ring](65614semiringmoduloforafactorialsemiringcommring.html) (11 messages, latest: Jan 28 2021 at 14:59)
 
 * [Pure.cong?](79601Purecong.html) (3 messages, latest: Jan 28 2021 at 13:12)
-
-* [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (44 messages, latest: Jan 27 2021 at 20:00)
 
 * [Doing induction on two variables](76559Doinginductionontwovariables.html) (2 messages, latest: Jan 27 2021 at 11:22)
 

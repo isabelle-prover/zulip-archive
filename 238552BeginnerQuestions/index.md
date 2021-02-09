@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (45 messages, latest: Feb 09 2021 at 08:55)
+* [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (46 messages, latest: Feb 09 2021 at 09:55)
 
 * [substituting into a congruence](41210substitutingintoacongruence.html) (2 messages, latest: Feb 07 2021 at 13:29)
 

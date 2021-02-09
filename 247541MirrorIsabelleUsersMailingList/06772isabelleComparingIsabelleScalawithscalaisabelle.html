@@ -92,6 +92,37 @@ JSON (e.g. for Python), but it is easier to work with the same in<br>
 Isabelle/Scala (the Headless PIDE session).</p>
 <p>Makarius</p>
 
+<a name="225751154"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Comparing%20Isabelle/Scala%20with%20scala-isabelle.%20.../near/225751154" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html#225751154">Email Gateway (Feb 09 2021 at 20:19)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Some further side-remarks specifically for Isabelle2021 (see NEWS):</p>
+<ul>
+<li>General support for Isabelle/Scala system services, configured via the<br>
+shell function "isabelle_scala_service" in etc/settings (e.g. of an<br>
+Isabelle component); see implementations of class<br>
+Isabelle_System.Service in Isabelle/Scala. This supersedes former<br>
+"isabelle_scala_tools" and "isabelle_file_format": minor<br>
+INCOMPATIBILITY.</li>
+</ul>
+<p>Various examples may be found by using Isabelle/jEdit hypersearch for the text<br>
+"isabelle_scala_service" within all "settings" files in the $ISABELLE_HOME<br>
+directory (and all subdirectories).</p>
+<p>An alternative is to search for class instances of "Isabelle_System.Service"<br>
+in *.scala files within $ISABELLE_HOME.</p>
+<p>As an abstract example, a user-defined Isabelle/Scala module could register<br>
+its own command-line tools or Isabelle server commands (for JSON access). The<br>
+Scala implementation does the main system integration; if some mathematical<br>
+logic is required, it will be done in an auxiliary theory context for the tool<br>
+(e.g. embedded ML files to define Isar commands).</p>
+<p>As a concrete example, consider Isabelle/Naproche in Isabelle2021-RC5. Follow<br>
+the Documentation pointer to $ISABELLE_NAPROCHE/Ex.thy --- it contains some<br>
+hints about the implementation at the bottom. Apart from Isabelle/ML and<br>
+Isabelle/Scala, this involves another program implemented in Haskell. The<br>
+latter uses Isabelle/Haskell library for basic communication with<br>
+Isabelle/PIDE (even with properly checked antiquotations instead of freely<br>
+invented string literals).</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

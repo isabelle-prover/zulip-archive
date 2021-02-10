@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (1 message, latest: Feb 10 2021 at 10:10)
+
+* [\[isabelle\] Boolos's Curious Inference (Speed-Up) in Isabe...](16212isabelleBoolossCuriousInferenceSpeedUpinIsabe.html) (1 message, latest: Feb 10 2021 at 10:10)
+
 * [\[isabelle\] Comparing Isabelle/Scala with scala-isabelle. ...](06772isabelleComparingIsabelleScalawithscalaisabelle.html) (3 messages, latest: Feb 09 2021 at 20:19)
 
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (1 message, latest: Feb 08 2021 at 22:09)

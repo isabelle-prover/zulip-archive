@@ -1,0 +1,37 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961general/62809Randomideamultiwayif.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961general/index.html">general</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961general/62809Randomideamultiwayif.html">Random idea: multiway if?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="225829318"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Random%20idea%3A%20multiway%20if%3F/near/225829318" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/62809Randomideamultiwayif.html#225829318">Manuel Eberl (Feb 10 2021 at 12:38)</a>:</h4>
+<p>There's a Haskell extention that allows multiway ifs:</p>
+<div class="codehilite" data-code-language="Haskell"><pre><span></span><code><span class="kr">if</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span>     <span class="ow">-&gt;</span> <span class="s">"small"</span>
+   <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">7</span>     <span class="ow">-&gt;</span> <span class="s">"medium"</span>
+   <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">-&gt;</span> <span class="s">"large"</span>
+</code></pre></div>
+<p>It might be nice to have something like that in Isabelle to avoid some of those clunky nested <code>if then else</code> constructs.</p>
+<p>Not sure if it's really worth it but one could try?</p>
+
+<a name="225829913"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Random%20idea%3A%20multiway%20if%3F/near/225829913" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/62809Randomideamultiwayif.html#225829913">Mathias Fleury (Feb 10 2021 at 12:43)</a>:</h4>
+<p>I tend to use case for that, even if it has a slightly different semantics…</p>
+<div class="codehilite"><pre><span></span><code>case (x &lt; 3, x &lt; 7) of
+   (True, _) =&gt; &quot;small&quot;
+| (_, True) =&gt; &quot;medium&quot;
+| _ =&gt; &quot;large&quot;
+</code></pre></div>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
+* [Random idea: multiway if?](62809Randomideamultiwayif.html) (2 messages, latest: Feb 10 2021 at 12:43)
+
 * [dependent types and Isar](78511dependenttypesandIsar.html) (8 messages, latest: Feb 08 2021 at 13:14)
 
 * [Liquid tensor experiment](09157Liquidtensorexperiment.html) (5 messages, latest: Jan 06 2021 at 14:28)

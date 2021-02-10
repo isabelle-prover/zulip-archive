@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (3 messages, latest: Feb 10 2021 at 15:54)
+* [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (4 messages, latest: Feb 10 2021 at 18:59)
 
 * [\[isabelle\] Boolos's Curious Inference (Speed-Up) in Isabe...](16212isabelleBoolossCuriousInferenceSpeedUpinIsabe.html) (2 messages, latest: Feb 10 2021 at 13:40)
 

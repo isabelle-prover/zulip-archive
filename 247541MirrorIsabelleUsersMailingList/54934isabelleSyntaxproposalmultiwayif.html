@@ -54,6 +54,46 @@ output, it is debatable).</p>
 <p>Manuel<br>
 <a href="/user_uploads/14278/wNaByEleRXsfmcru6pBgn4i3/smime.p7s">smime.p7s</a></p>
 
+<a name="225889727"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Syntax%20proposal%3A%20multiway%20if/near/225889727" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54934isabelleSyntaxproposalmultiwayif.html#225889727">Email Gateway (Feb 10 2021 at 18:59)</a>:</h4>
+<p>From: Christian Sternagel &lt;<a href="mailto:c.sternagel@gmail.com">c.sternagel@gmail.com</a>&gt;<br>
+On 2/10/21 4:07 PM, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Hello,</p>
+<p>there is a Haskell extension that allows writing nested ifs in the<br>
+following nice syntax:</p>
+<p>if | P -&gt; a<br>
+    | Q -&gt; b<br>
+    | R -&gt; c<br>
+    | otherwise -&gt; d</p>
+<p>I asked around and some people (e.g. Tobias Nipkow) agree that this<br>
+might be nice to have. My proposed syntax is inspired by the "case"<br>
+syntax and looks like this:</p>
+<p>if P ⇒ x | Q ⇒ y | R ⇒ z | otherwise ⇒ u</p>
+<p>One could also do</p>
+<p>if P ⇒ x | Q ⇒ y | R ⇒ z | _ ⇒ u</p>
+<p>instead.</p>
+<p>I attached a small theory that implements this.</p>
+<p>Not sure if this should be enabled for output by default as well –<br>
+probably not. One could switch it on only in a special "multi_if" print<br>
+mode, similarly to "do_notation" for monad syntax.</p>
+<p>The current implementation has the problem that "if b then x else y"<br>
+gets output as "if b ⇒ x | otherwise ⇒ y", which we clearly don't want.<br>
+Not sure how to fix that.</p>
+</blockquote>
+<p>Dear Manuel,</p>
+<p>Naive question: What if you would use your own dedicated constant</p>
+<p>definition "multi_if == If"</p>
+<p>together with some suitable simplification rules and/or other automation?</p>
+<p>Then users could decide on their own which syntax to use (for input and <br>
+output).</p>
+<p>cheers</p>
+<p>chris</p>
+<blockquote>
+<p>Manuel<br>
+</p>
+</blockquote>
+
 
 {% endraw %}
 

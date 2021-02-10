@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [machine word (morphisms)](71685machinewordmorphisms.html) (10 messages, latest: Feb 10 2021 at 14:50)
+* [machine word (morphisms)](71685machinewordmorphisms.html) (11 messages, latest: Feb 10 2021 at 15:08)
 
 * [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (47 messages, latest: Feb 09 2021 at 11:07)
 

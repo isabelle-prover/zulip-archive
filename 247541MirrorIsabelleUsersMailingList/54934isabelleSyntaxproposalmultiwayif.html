@@ -1,0 +1,60 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/54934isabelleSyntaxproposalmultiwayif.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54934isabelleSyntaxproposalmultiwayif.html">[isabelle] Syntax proposal: multiway if</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="225849319"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Syntax%20proposal%3A%20multiway%20if/near/225849319" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54934isabelleSyntaxproposalmultiwayif.html#225849319">Email Gateway (Feb 10 2021 at 15:07)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Hello,</p>
+<p>there is a Haskell extension that allows writing nested ifs in the<br>
+following nice syntax:</p>
+<p>if | P -&gt; a<br>
+   | Q -&gt; b<br>
+   | R -&gt; c<br>
+   | otherwise -&gt; d</p>
+<p>I asked around and some people (e.g. Tobias Nipkow) agree that this<br>
+might be nice to have. My proposed syntax is inspired by the "case"<br>
+syntax and looks like this:</p>
+<p>if P ⇒ x | Q ⇒ y | R ⇒ z | otherwise ⇒ u</p>
+<p>One could also do</p>
+<p>if P ⇒ x | Q ⇒ y | R ⇒ z | _ ⇒ u</p>
+<p>instead.</p>
+<p>I attached a small theory that implements this.</p>
+<p>Not sure if this should be enabled for output by default as well –<br>
+probably not. One could switch it on only in a special "multi_if" print<br>
+mode, similarly to "do_notation" for monad syntax.</p>
+<p>The current implementation has the problem that "if b then x else y"<br>
+gets output as "if b ⇒ x | otherwise ⇒ y", which we clearly don't want.<br>
+Not sure how to fix that.</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/h0M6auKhdr3dbfMvpvegyj5j/Multiway_If.thy">Multiway_If.thy</a><br>
+<a href="/user_uploads/14278/sCbMCzIL8tYpElFKNuVYouko/smime.p7s">smime.p7s</a></p>
+
+<a name="225854522"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Syntax%20proposal%3A%20multiway%20if/near/225854522" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54934isabelleSyntaxproposalmultiwayif.html#225854522">Email Gateway (Feb 10 2021 at 15:41)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Maybe could go to HOL-Library ?</p>
+
+<a name="225856534"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Syntax%20proposal%3A%20multiway%20if/near/225856534" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54934isabelleSyntaxproposalmultiwayif.html#225856534">Email Gateway (Feb 10 2021 at 15:54)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+It could, but I for one think something like this should either be<br>
+enabled by default or not exist at all (at least as input syntax – as<br>
+output, it is debatable).</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/wNaByEleRXsfmcru6pBgn4i3/smime.p7s">smime.p7s</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

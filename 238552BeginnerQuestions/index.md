@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [machine word (morphisms)](71685machinewordmorphisms.html) (10 messages, latest: Feb 10 2021 at 14:50)
+
 * [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (47 messages, latest: Feb 09 2021 at 11:07)
 
 * [substituting into a congruence](41210substitutingintoacongruence.html) (2 messages, latest: Feb 07 2021 at 13:29)

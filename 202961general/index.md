@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Random idea: multiway if?](62809Randomideamultiwayif.html) (3 messages, latest: Feb 10 2021 at 13:38)
+* [Random idea: multiway if?](62809Randomideamultiwayif.html) (4 messages, latest: Feb 10 2021 at 14:32)
 
 * [dependent types and Isar](78511dependenttypesandIsar.html) (8 messages, latest: Feb 08 2021 at 13:14)
 

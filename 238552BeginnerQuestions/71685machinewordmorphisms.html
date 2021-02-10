@@ -1,0 +1,68 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/71685machinewordmorphisms.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html">machine word (morphisms)</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="225842548"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225842548" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225842548">Bruno Reis (Feb 10 2021 at 14:23)</a>:</h4>
+<p>Hi, I'm new to Isabelle and I'm trying to understand a bit about the theory of machine words.</p>
+<p>The first definition in the file "HOL/Word/Word.thy" is the following:</p>
+<div class="codehilite"><pre><span></span><code>typedef (overloaded) &#39;a word = &quot;{(0::int) ..&lt; 2 ^ LENGTH(&#39;a::len0)}&quot;
+morphisms uint Abs_word by auto
+</code></pre></div>
+<p>Experimenting a bit I was able to conclude that uint is a function that receives a word and return the unsigned int encoded by that word.</p>
+<p>Can someone clarify to me what is happening here? What is overloaded and morphisms in this context?  What about uint / Abs_word? Where are they defined?</p>
+<p>Thanks!</p>
+
+<a name="225843220"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225843220" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225843220">Jakub Kądziołka (Feb 10 2021 at 14:27)</a>:</h4>
+<p><code>typedef</code> defines a new type <code>'a word</code> out of the specified <code>{(0::int) ..&lt; 2 ^ LENGTH('a::len0)}</code> set.  The morphisms are the functions that convert between the type of the elements in the set (true integers) and the newly-defined type</p>
+
+<a name="225844116"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225844116" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225844116">Bruno Reis (Feb 10 2021 at 14:32)</a>:</h4>
+<p>But where are the definitions of those functions that defines that this morphism is actually possible? Also, what (and where) is the definition of a morphism in Isabelle? Is it Just an injective function, or something more deep like an isomorphism?</p>
+
+<a name="225844766"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225844766" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225844766">Jakub Kądziołka (Feb 10 2021 at 14:36)</a>:</h4>
+<p>note that <code>Abs_word</code> will return the corresponding value only if the argument is actually in the set. In other cases, there is no corresponding <code>word</code> and the value of the function is unspecified</p>
+
+<a name="225844858"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225844858" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225844858">Jakub Kądziołka (Feb 10 2021 at 14:37)</a>:</h4>
+<p>Here's some more details on this kind of a partially-undefined function in Isabelle: <a href="https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total,_sometimes_undefined">https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total,_sometimes_undefined</a></p>
+
+<a name="225844913"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225844913" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225844913">Jakub Kądziołka (Feb 10 2021 at 14:37)</a>:</h4>
+<p>the <code>morphisms</code> here doesn't have any logical properties</p>
+
+<a name="225845147"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225845147" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225845147">Jakub Kądziołka (Feb 10 2021 at 14:39)</a>:</h4>
+<p>(you probably don't want to use Abs_word in your everyday formalizations, I suppose there is a function that takes the input integer modulo 2^n first)</p>
+
+<a name="225845301"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225845301" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225845301">Jakub Kądziołka (Feb 10 2021 at 14:40)</a>:</h4>
+<blockquote>
+<p>But where are the definitions of those functions that defines that this morphism is actually possible?</p>
+</blockquote>
+<p>AFAIK, subset type definitions are an axiom in Isabelle. They certainly are in HOL Light.</p>
+
+<a name="225846449"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225846449" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225846449">Bruno Reis (Feb 10 2021 at 14:48)</a>:</h4>
+<p><span class="user-mention" data-user-id="380931">@Jakub Kądziołka</span>  Thanks a lot. I'll read that blog post and think about what you wrote. After that, if I still have some questions, I'll continue writing in this topic! Thank you :)</p>
+
+<a name="225846765"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/machine%20word%20%28morphisms%29/near/225846765" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71685machinewordmorphisms.html#225846765">Jakub Kądziołka (Feb 10 2021 at 14:50)</a>:</h4>
+<p>See also section 11.7 of <a href="https://isabelle.in.tum.de/dist/Isabelle2020/doc/isar-ref.pdf">https://isabelle.in.tum.de/dist/Isabelle2020/doc/isar-ref.pdf</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

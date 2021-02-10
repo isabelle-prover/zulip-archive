@@ -31,6 +31,29 @@ permalink: ./202961general/62809Randomideamultiwayif.html
 | _ =&gt; &quot;large&quot;
 </code></pre></div>
 
+<a name="225836265"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Random%20idea%3A%20multiway%20if%3F/near/225836265" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/62809Randomideamultiwayif.html#225836265">Manuel Eberl (Feb 10 2021 at 13:38)</a>:</h4>
+<p>Possible solution:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">syntax</span>
+  <span class="s">"_multiway_if"</span> <span class="o">::</span> <span class="s">"multiway_if ⇒ 'a"</span> <span class="o">(</span><span class="s">"if {//(2 _)//}"</span> <span class="o">[</span><span class="n">12</span><span class="o">]</span> <span class="n">62</span><span class="o">)</span>
+  <span class="s">"_multiway_if_clause"</span> <span class="o">::</span> <span class="s">"bool ⇒ 'a ⇒ multiway_if_clause"</span> <span class="o">(</span><span class="s">"(2_ ⇒/ _)"</span> <span class="n">13</span><span class="o">)</span>
+  <span class="s">"_multiway_if_cons"</span> <span class="o">::</span> <span class="s">"multiway_if_clause ⇒ multiway_if ⇒ multiway_if"</span> <span class="o">(</span><span class="s">"_;//_"</span> <span class="o">[</span><span class="n">13</span><span class="o">,</span> <span class="n">12</span><span class="o">]</span> <span class="n">12</span><span class="o">)</span>
+  <span class="s">"_multiway_if_final"</span> <span class="o">::</span> <span class="s">"'a ⇒ multiway_if"</span> <span class="o">(</span><span class="s">"otherwise ⇒ _"</span><span class="o">)</span>
+
+<span class="k">translations</span>
+  <span class="s">"_multiway_if (_multiway_if_cons (_multiway_if_clause b x) y)"</span> <span class="o">==</span> <span class="s">"CONST If b x (_multiway_if y)"</span>
+  <span class="s">"_multiway_if (_multiway_if_final x)"</span> <span class="o">=</span><span class="err">&gt;</span> <span class="s">"x"</span>
+
+<span class="kt">term</span> <span class="s">"if {p ⇒ y; q ⇒ z; r ⇒ u; otherwise ⇒ x}"</span>
+</code></pre></div>
+<p>Possible other syntax:</p>
+<div class="codehilite"><pre><span></span><code>f x = if {x ≥ 0 ⇒ 1; x ≤ 0 ⇒ -1; otherwise ⇒ 0}
+f x = (if x ≥ 0 ⇒ 1 | x ≤ 0 ⇒ -1 | otherwise ⇒ 0)
+f x = (1 if x ≥ 0; -1 if x ≤ 0; 0 otherwise)
+</code></pre></div>
+<p>One could also replace <code>if</code> with <code>case</code> or drop it entirely, or replace <code>otherwise</code> with <code>else</code>, replace parentheses with bracets, semicolon with "|" etc.</p>
+<p>Not sure how to make the translations work for output as well.</p>
+
 
 {% endraw %}
 

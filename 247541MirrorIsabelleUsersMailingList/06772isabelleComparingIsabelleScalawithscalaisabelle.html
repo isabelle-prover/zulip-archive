@@ -123,6 +123,66 @@ Isabelle/PIDE (even with properly checked antiquotations instead of freely<br>
 invented string literals).</p>
 <p>Makarius</p>
 
+<a name="225979503"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Comparing%20Isabelle/Scala%20with%20scala-isabelle.%20.../near/225979503" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html#225979503">Email Gateway (Feb 11 2021 at 11:55)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;</p>
+<blockquote>
+<p>Exactly. Over 10 years I have given many talks and written many papers about<br>
+Isabelle/Scala in contrast to Isabelle/ML. The main idea:</p>
+<p>* Isabelle/Scala is for systems-programming / system integration</p>
+<p>* Isabelle/ML is for mathematical logic</p>
+<p>Sometimes there is a bit of overlap, and some freedom to decide where things<br>
+happen. But when you start to do term operations in Isabelle/Scala it is<br>
+probably wrong.</p>
+</blockquote>
+<p>Good. Then I got things right. So we have a clear separation of purposes <br>
+between Isabelle/Scala and scala-isabelle.</p>
+<p>*</p>
+<p>Isabelle/Scala is for systems-programming / system integration</p>
+<p>*</p>
+<p>Isabelle/ML is for mathematical logic</p>
+<p>* scala-isabelle is also for mathematical logic (and for any other<br>
+    more low-level inspection of Isabelle data)</p>
+<p>Anythings that can be done in scala-isabelle can also be done in <br>
+Isabelle/ML, of course. (And vice versa.) However, if due to the <br>
+constraints of the project, we want to use Scala (or any other JVM <br>
+language), then scala-isabelle would be the right choice.</p>
+<blockquote>
+<blockquote>
+<p>For example, in scala-isabelle, you can directly and transparently work on<br>
+terms, cterms, thms, etc. (For example, I can do something like<br>
+"thm.proposition match { case Const("HOL.Trueprop", t) =&gt; do something with<br>
+term t }". (And references on the scala side to Isabelle values can get<br>
+automatically garbage collected etc.)<br>
+So why not do this in Isabelle/ML? It works much better. E.g. you have proper<br>
+antiquotations for the const name "HOL.Trueprop" above --- without that it is<br>
+not going to last very long.</p>
+</blockquote>
+</blockquote>
+<p>There can be several reasons (it depends on the project):</p>
+<p>* We use Isabelle as part of a bigger application (e.g., I developed<br>
+    the qrhl-tool theorem prover in Scala, and it uses Isabelle as a<br>
+    component for reasoning about verification conditions).</p>
+<p>* Scala is easier to debug and edit with modern IDEs. Isabelle/ML has<br>
+    some support (e.g., ctrl-click is useful), but imho it does not come<br>
+    close to the tool support that we have in modern IDEs.</p>
+<p>* I want integration with GUI components. (E.g., I could imagine some<br>
+    tool to interactively explore the structure of terms. This would be<br>
+    possible with Isabelle/Scala, I think, but I would have to serialize<br>
+    all possibly relevant information about the terms, send them over in<br>
+    a bunch, and then deserialize them. Lots of boilerplate.)</p>
+<p>About the antiquotation: This was just an illustrative example. You can <br>
+also use antiquotations in Scala, so you could write something like <br>
+/term match { case term"?x ==&gt; Trueprop ?y" =&gt; print(x); print(y) }/.</p>
+<blockquote>
+<p>Why give up static scopes and types by pretending that ML operations can<br>
+happen in Scala?</p>
+</blockquote>
+<p>Since Scala has a rich type system on its own, there is no need to give <br>
+up on those things. ML types can be mirrored on the Scala side.</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

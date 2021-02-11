@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Extended deadline (Abstract: Februa...](33461isabelleFSCD2021ExtendeddeadlineAbstractFebrua.html) (1 message, latest: Feb 11 2021 at 10:05)
+
 * [\[isabelle\] New in the AFP: The Laws of Large Numbers](40705isabelleNewintheAFPTheLawsofLargeNumbers.html) (1 message, latest: Feb 11 2021 at 05:40)
 
 * [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (6 messages, latest: Feb 10 2021 at 21:38)

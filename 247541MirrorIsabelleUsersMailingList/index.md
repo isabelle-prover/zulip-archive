@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Comparing Isabelle/Scala with scala-isabelle. ...](06772isabelleComparingIsabelleScalawithscalaisabelle.html) (4 messages, latest: Feb 11 2021 at 11:55)
+* [\[isabelle\] isabelle scala_project and Gradle / IntelliJ s...](62558isabelleisabellescalaprojectandGradleIntelliJs.html) (1 message, latest: Feb 11 2021 at 13:44)
+
+* [\[isabelle\] Comparing Isabelle/Scala with scala-isabelle. ...](06772isabelleComparingIsabelleScalawithscalaisabelle.html) (5 messages, latest: Feb 11 2021 at 13:22)
 
 * [\[isabelle\] FSCD 2021: Extended deadline (Abstract: Februa...](33461isabelleFSCD2021ExtendeddeadlineAbstractFebrua.html) (1 message, latest: Feb 11 2021 at 10:05)
 

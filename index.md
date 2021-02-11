@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (260 topics)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (261 topics)
 
 * [general](202961general/index.html) (80 topics)
 

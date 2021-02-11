@@ -183,6 +183,81 @@ up on those things. ML types can be mirrored on the Scala side.</p>
 <p>Best wishes,<br>
 Dominique.</p>
 
+<a name="225988396"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Comparing%20Isabelle/Scala%20with%20scala-isabelle.%20.../near/225988396" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06772isabelleComparingIsabelleScalawithscalaisabelle.html#225988396">Email Gateway (Feb 11 2021 at 13:22)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 11/02/2021 12:53, Dominique Unruh wrote:</p>
+<blockquote>
+<blockquote>
+<p>Exactly. Over 10 years I have given many talks and written many papers about<br>
+Isabelle/Scala in contrast to Isabelle/ML. The main idea:</p>
+<p>* Isabelle/Scala is for systems-programming / system integration</p>
+<p>* Isabelle/ML is for mathematical logic</p>
+<p>Sometimes there is a bit of overlap, and some freedom to decide where things<br>
+happen. But when you start to do term operations in Isabelle/Scala it is<br>
+probably wrong.</p>
+</blockquote>
+<p>Good. Then I got things right. So we have a clear separation of purposes<br>
+between Isabelle/Scala and scala-isabelle.</p>
+<p>*</p>
+<p>Isabelle/Scala is for systems-programming / system integration</p>
+<p>*</p>
+<p>Isabelle/ML is for mathematical logic</p>
+<p>* scala-isabelle is also for mathematical logic (and for any other more<br>
+    low-level inspection of Isabelle data)</p>
+<p>Anythings that can be done in scala-isabelle can also be done in Isabelle/ML,<br>
+of course. (And vice versa.) However, if due to the constraints of the<br>
+project, we want to use Scala (or any other JVM language), then scala-isabelle<br>
+would be the right choice.</p>
+</blockquote>
+<p>The choice is up to you. Within the regular Isabelle ecosystem, the proper<br>
+language for heavy-duty symbolic logic is Isabelle/ML: it has been made<br>
+precisely for that over 35 years. We could not crunch the great things in AFP<br>
+without Isabelle/ML as it is today.</p>
+<p>To conclude this overview of possibilities, here is a further NEWS entry from<br>
+Isabelle2021:</p>
+<p><strong>* ML </strong>*</p>
+<ul>
+<li>Antiquotations @{scala_function}, @{scala}, @{scala_thread} refer to<br>
+registered Isabelle/Scala functions (of type String =&gt; String):<br>
+invocation works via the PIDE protocol.</li>
+</ul>
+<p>This means that Isabelle/ML programs can appeal to operations in Scala, if<br>
+that happens to be available on that side, e.g. for historical reaans or<br>
+existing Java implementations. Thus the order of control is straight-forward:<br>
+ML hands over to Scala like a regular function call, without any special<br>
+programming tricks exposed outside.</p>
+<p>An example application is Nitpick/Kodkod, which works either as a heavy JVM<br>
+process or light Scala thread (both invoked from Isabelle/ML):</p>
+<p><a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC5/src/HOL/Tools/Nitpick/kodkod.ML#l1003">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC5/src/HOL/Tools/Nitpick/kodkod.ML#l1003</a></p>
+<p><a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC5/src/HOL/Tools/Nitpick/kodkod.scala">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021-RC5/src/HOL/Tools/Nitpick/kodkod.scala</a></p>
+<p>Side-remark: Originally I wanted to get rid of the JVM process for<br>
+Isabelle2021, but this has to wait for the next release, due to remaining<br>
+assumptions in the Kodkod implementation concerning the Java context<br>
+(interrupts, threads, exit).</p>
+<blockquote>
+<p>Scala is easier to debug and edit with<br>
+modern IDEs. Isabelle/ML has some support<br>
+(e.g., ctrl-click is useful), but imho it<br>
+does not come close to the tool support<br>
+that we have in modern IDEs.</p>
+</blockquote>
+<p>The term "modern" sounds very old-fashioned to me. Modern times have ended<br>
+some decades ago; we now have the post-modern era.</p>
+<p>For Isabelle projects, the Isabelle Prover IDE has very good integration of<br>
+everything: Isar, ML, other sub-languages. I know this best and like this<br>
+best. It is also quite easy to integrate your own sub-languages with PIDE<br>
+support (implemented all in Isabelle/ML).</p>
+<p>Isabelle/Scala is an exception: it is not (yet?) integrated into<br>
+Isabelle/PIDE, but the "isabelle scala_project" tool allows to generate a<br>
+Gradle project for use in IntelliJ IDEA: I do like that IDE, but that alone<br>
+would never be a reason to disregard our fine Isabelle/ML working environment.</p>
+<p>VSCode is another popular quasi-IDE option: Isabelle/VSCode is a minimal<br>
+experiment, much more could be done. Generally, I see a lot of IDE concepts<br>
+retrofitted into the VSCode editor project, but it might require 5-10 more<br>
+years to become a proper IDE.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

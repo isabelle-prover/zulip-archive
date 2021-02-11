@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: The Laws of Large Numbers](40705isabelleNewintheAFPTheLawsofLargeNumbers.html) (1 message, latest: Feb 11 2021 at 05:40)
+
 * [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (6 messages, latest: Feb 10 2021 at 21:38)
 
 * [\[isabelle\] Boolos's Curious Inference (Speed-Up) in Isabe...](16212isabelleBoolossCuriousInferenceSpeedUpinIsabe.html) (2 messages, latest: Feb 10 2021 at 13:40)

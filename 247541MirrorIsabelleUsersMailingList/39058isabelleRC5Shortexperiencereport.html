@@ -1,0 +1,37 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/39058isabelleRC5Shortexperiencereport.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/39058isabelleRC5Shortexperiencereport.html">[isabelle] RC5: Short experience report</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="226177384"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC5%3A%20Short%20experience%20report/near/226177384" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/39058isabelleRC5Shortexperiencereport.html#226177384">Email Gateway (Feb 12 2021 at 18:29)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hi List.</p>
+<p>I have now ported a big chunk of Isabelle-LLVM to RC5. <br>
+Notably, Isabelle-LLVM extensively uses the Word library, and also<br>
+contains some lower-level Isabelle-ML code.</p>
+<p>First, Isabelle seems to run stable. I did not run into any<br>
+unrecoverable grey-out.<br>
+It was killed one time by my OOM killer, but I had two instances in<br>
+parallel on 32GB RAM.</p>
+<p>With the NEWS file, and a bit of guessing, the Isabelle-ML code was<br>
+easily ported, most severe problem was the undocumented change<br>
+Path.smart_implode -&gt; Path.implode_symbolic.</p>
+<p>Porting of lemmas using the word library was, as expected, more<br>
+difficult. With the help of sledgehammer, which feels really powerful,<br>
+I could force most lemmas through, even without a complete<br>
+understanding or overview of the changes to Word.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

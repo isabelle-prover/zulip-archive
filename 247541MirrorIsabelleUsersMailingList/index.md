@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] PhD position in Formal Methods/Decompilation a...](71481isabellePhDpositioninFormalMethodsDecompilationa.html) (1 message, latest: Feb 12 2021 at 10:45)
+
+* [\[isabelle\] CFP SAT-2021: Deadline March 19th](33358isabelleCFPSAT2021DeadlineMarch19th.html) (1 message, latest: Feb 12 2021 at 10:45)
+
 * [\[isabelle\] isabelle scala_project and Gradle / IntelliJ s...](62558isabelleisabellescalaprojectandGradleIntelliJs.html) (1 message, latest: Feb 11 2021 at 13:44)
 
 * [\[isabelle\] Comparing Isabelle/Scala with scala-isabelle. ...](06772isabelleComparingIsabelleScalawithscalaisabelle.html) (5 messages, latest: Feb 11 2021 at 13:22)

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Refer to theorems introduced by sublocale](65829Refertotheoremsintroducedbysublocale.html) (2 messages, latest: Feb 12 2021 at 10:40)
+
 * [machine word (morphisms)](71685machinewordmorphisms.html) (11 messages, latest: Feb 10 2021 at 15:08)
 
 * [Debugging heap rebuilds](67301Debuggingheaprebuilds.html) (47 messages, latest: Feb 09 2021 at 11:07)

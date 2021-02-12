@@ -1,0 +1,52 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/65829Refertotheoremsintroducedbysublocale.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65829Refertotheoremsintroducedbysublocale.html">Refer to theorems introduced by sublocale</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="226120397"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Refer%20to%20theorems%20introduced%20by%20sublocale/near/226120397" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65829Refertotheoremsintroducedbysublocale.html#226120397">Lukas Stevens (Feb 12 2021 at 10:30)</a>:</h4>
+<p>How does one refer to theorems introduced by sublocale, e.g. see the following example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span> <span class="n">Scratch</span> <span class="kp">imports</span> <span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">axiomatization</span> <span class="n">P</span> <span class="o">::</span> <span class="s">"'a ⇒ bool"</span>
+
+<span class="k">locale</span> <span class="n">foo</span> <span class="o">=</span>
+  <span class="kp">fixes</span> <span class="n">A</span> <span class="o">::</span> <span class="s">"'a set"</span>
+<span class="k">begin</span>
+
+<span class="kn">lemma</span> <span class="n">bar</span><span class="o">:</span> <span class="s">"X ⊆ A ⟹ P X"</span>
+  <span class="gr">sorry</span>
+
+<span class="k">end</span>
+
+<span class="k">locale</span> <span class="n">bar</span>
+<span class="k">begin</span>
+
+<span class="kn">sublocale</span> <span class="n">foo</span> <span class="n">UNIV</span> <span class="ow">.</span>
+
+<span class="kt">thm</span> <span class="n">bar</span>
+<span class="k">end</span>
+<span class="kt">print_locale</span><span class="o">!</span> <span class="n">bar</span> <span class="c">(* notes the theorem bar in the locale bar *)</span>
+<span class="kt">thm</span> <span class="n">bar.bar</span> <span class="c">(* Does not work *)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+<a name="226121237"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Refer%20to%20theorems%20introduced%20by%20sublocale/near/226121237" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/65829Refertotheoremsintroducedbysublocale.html#226121237">Lukas Stevens (Feb 12 2021 at 10:40)</a>:</h4>
+<p>Seems to be answered in this thread: <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2011-May/msg00067.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2011-May/msg00067.html</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -8,11 +8,11 @@ permalink: ./index.html
 
 ## Streams:
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (261 topics)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (263 topics)
 
 * [general](202961general/index.html) (80 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (77 topics)
+* [Beginner Questions](238552BeginnerQuestions/index.html) (78 topics)
 
 * [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (45 topics)
 

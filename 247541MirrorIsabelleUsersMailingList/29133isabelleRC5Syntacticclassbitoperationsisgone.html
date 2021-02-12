@@ -30,6 +30,88 @@ infix syntax first, and then add the axioms.</p>
 cannot define a mask function. However, I'd like to use the convenient<br>
 syntax, which is now somewhat blocked.</p>
 
+<a name="226190580"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC5%3A%20Syntactic%20class%20bit_operations%20is%20gone/near/226190580" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/29133isabelleRC5Syntacticclassbitoperationsisgone.html#226190580">Email Gateway (Feb 12 2021 at 20:17)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Hi Peter,</p>
+<blockquote>
+<p>In 2020, there used to be a purely syntactic class for bitwise<br>
+operations: </p>
+<p>HOL/Word/Bits.bit_operations</p>
+<p>This class is gone in RC5, and the closest match seems to be the class<br>
+semiring_bit_operations in Library/Bit_Operations.thy, but this has<br>
+axioms.</p>
+<p>This new class binds the infix syntax for (AND), (OR), (XOR) to these<br>
+axioms.</p>
+<p>In my application, I cannot use the semiring_bit_operations class, as I<br>
+cannot define a mask function. However, I'd like to use the convenient<br>
+syntax, which is now somewhat blocked.</p>
+</blockquote>
+<p>With Isabelle2021 you will be able to mixin bundles at every logically<br>
+relevant position, so the canonical solution for re-using mixfix syntax is</p>
+<p>bundle and_or_xor_syntax<br>
+begin</p>
+<p>no_notation "and" …<br>
+notation "and" …</p>
+<p>…</p>
+<p>end</p>
+<p>Beyond that, what is your particular instance such that a mask operation<br>
+would not be definable?</p>
+<blockquote>
+<p>I thought it would be standard to define syntactic type classes for<br>
+infix syntax first, and then add the axioms.</p>
+</blockquote>
+<p>No.  In ancient times this was the only possibility, and hence there are<br>
+many syntactic type classes in HOL like plus, minus, times etc.</p>
+<p>Sometimes they are necessary to accomplish a particular hierarchy, AFAIR<br>
+for gcd, lcm etc.</p>
+<p>Syntax type classes typically forces many manual type constraints.  You<br>
+can see the traces e.g. in the upcoming AFP, entry Word_Lib, theory<br>
+Word_Syntax.thy</p>
+<p>Cheers,<br>
+    Florian<br>
+<a href="/user_uploads/14278/hQA70cHvoSMskqnpO8IEivX4/signature.asc">signature.asc</a></p>
+
+<a name="226193510"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC5%3A%20Syntactic%20class%20bit_operations%20is%20gone/near/226193510" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/29133isabelleRC5Syntacticclassbitoperationsisgone.html#226193510">Email Gateway (Feb 12 2021 at 20:43)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hi Florian,</p>
+<p>thanks for the response and pointers to the AFP word developments.</p>
+<blockquote>
+<p>With Isabelle2021 you will be able to mixin bundles at every<br>
+logically<br>
+relevant position, so the canonical solution for re-using mixfix<br>
+syntax is</p>
+<p>bundle and_or_xor_syntax<br>
+begin</p>
+<p>no_notation "and" …<br>
+notation "and" …<br>
+</p>
+</blockquote>
+<p>So this will effectively build a linear stack that puts the syntax in<br>
+order. Such a bundle will only work if the conflicting theory that<br>
+fixes the syntax in the typeclass is also loaded. </p>
+<p>Another point against bundles is, that some notations like + or * are<br>
+overloaded many times, with different axioms holding on them.<br>
+For example, in our separation logic for IMP/HOL, we use * as<br>
+separating conjunction, that only fulfills the axioms when the two<br>
+operators are, additionally, disjoint, e.g.: a##b ==&gt; a<em>b=b</em>a</p>
+<blockquote>
+<p>…</p>
+<p>end</p>
+<p>Beyond that, what is your particular instance such that a mask<br>
+operation<br>
+would not be definable?</p>
+</blockquote>
+<p>My llvm formalization uses words of variable but fixed bit-length.<br>
+I have the operation width :: ll_word =&gt; nat, that gives the width, and<br>
+operations are only defined between words of the same width ... but<br>
+this is deeply embedded, rather than shallowly in the type system, such<br>
+that I can store those words in my deeply embedded LLVM value model.</p>
+<p>I had instantiated all the syntactic word classes, but now, I cannot<br>
+define mask :: nat =&gt; ll_word, as it would have to 'guess' a width.<br>
+Also, I doubt that the axioms hold unconditionally.</p>
+
 
 {% endraw %}
 

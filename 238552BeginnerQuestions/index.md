@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [short syntax for multiple ∀](01461shortsyntaxformultiple.html) (1 message, latest: Feb 12 2021 at 20:26)
+
 * [Refer to theorems introduced by sublocale](65829Refertotheoremsintroducedbysublocale.html) (2 messages, latest: Feb 12 2021 at 10:40)
 
 * [machine word (morphisms)](71685machinewordmorphisms.html) (11 messages, latest: Feb 10 2021 at 15:08)

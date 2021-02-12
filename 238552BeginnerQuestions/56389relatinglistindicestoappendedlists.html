@@ -1,0 +1,27 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/56389relatinglistindicestoappendedlists.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/56389relatinglistindicestoappendedlists.html">relating list indices to appended lists</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="226197957"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/relating%20list%20indices%20to%20appended%20lists/near/226197957" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/56389relatinglistindicestoappendedlists.html#226197957">Jakub Kądziołka (Feb 12 2021 at 21:23)</a>:</h4>
+<p>I have defined a property of lists:</p>
+<div class="codehilite"><pre><span></span><code>definition property :: &quot;color list ⇒ bool&quot; where
+  &quot;property clrs ⟷ (∀a &lt; length clrs. ∀b &lt; length clrs.
+    a &lt; b ∧ clrs ! a = clrs ! b ⟶ (∃m ∈ {a..b}. clrs ! m ≠ clrs ! a))&quot;
+</code></pre></div>
+<p>I would now like to show that <code>property (xs @ ys) ==&gt; property (ys @ zs) ==&gt; property (xs @ zs) ==&gt; property (xs @ ys @ zs)</code>. AFAICS, the proof would involve some unpleasant index arithmetic to distinguish the cases of which list <code>a</code> and <code>b</code> point into. Is there an easier way to express this? Maybe some way of manipulating sequences where "m is between a and b" is more of a first-class construct?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

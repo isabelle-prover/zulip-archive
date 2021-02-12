@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [relating list indices to appended lists](56389relatinglistindicestoappendedlists.html) (1 message, latest: Feb 12 2021 at 21:23)
+
 * [short syntax for multiple ∀](01461shortsyntaxformultiple.html) (1 message, latest: Feb 12 2021 at 20:26)
 
 * [Refer to theorems introduced by sublocale](65829Refertotheoremsintroducedbysublocale.html) (2 messages, latest: Feb 12 2021 at 10:40)

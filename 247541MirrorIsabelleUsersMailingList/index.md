@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (1 message, latest: Feb 12 2021 at 13:52)
+
 * [\[isabelle\] RC5: Sledgehammer and HOL-Library.Word problems](90930isabelleRC5SledgehammerandHOLLibraryWordproblems.html) (2 messages, latest: Feb 12 2021 at 12:53)
 
 * [\[isabelle\] PhD position in Formal Methods/Decompilation a...](71481isabellePhDpositioninFormalMethodsDecompilationa.html) (1 message, latest: Feb 12 2021 at 10:45)

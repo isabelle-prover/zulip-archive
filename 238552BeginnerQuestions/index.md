@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [relating list indices to appended lists](56389relatinglistindicestoappendedlists.html) (1 message, latest: Feb 12 2021 at 21:23)
+* [relating list indices to appended lists](56389relatinglistindicestoappendedlists.html) (3 messages, latest: Feb 13 2021 at 00:19)
 
 * [short syntax for multiple ∀](01461shortsyntaxformultiple.html) (1 message, latest: Feb 12 2021 at 20:26)
 

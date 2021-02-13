@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (2 messages, latest: Feb 13 2021 at 12:57)
+
 * [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (2 messages, latest: Feb 13 2021 at 10:44)
 
 * [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (5 messages, latest: Feb 13 2021 at 09:38)
@@ -34,8 +36,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Boolos's Curious Inference (Speed-Up) in Isabe...](16212isabelleBoolossCuriousInferenceSpeedUpinIsabe.html) (2 messages, latest: Feb 10 2021 at 13:40)
 
 * [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (1 message, latest: Feb 10 2021 at 10:10)
-
-* [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (1 message, latest: Feb 08 2021 at 22:09)
 
 * [\[isabelle\] Isabelle2021-RC5 available for applications](56294isabelleIsabelle2021RC5availableforapplications.html) (1 message, latest: Feb 08 2021 at 21:43)
 

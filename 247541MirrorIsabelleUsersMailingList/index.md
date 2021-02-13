@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (6 messages, latest: Feb 13 2021 at 16:53)
+
+* [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (1 message, latest: Feb 13 2021 at 16:20)
+
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (2 messages, latest: Feb 13 2021 at 12:57)
 
 * [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (2 messages, latest: Feb 13 2021 at 10:44)
@@ -38,8 +42,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (1 message, latest: Feb 10 2021 at 10:10)
 
 * [\[isabelle\] Isabelle2021-RC5 available for applications](56294isabelleIsabelle2021RC5availableforapplications.html) (1 message, latest: Feb 08 2021 at 21:43)
-
-* [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (5 messages, latest: Feb 08 2021 at 19:38)
 
 * [\[isabelle\] Atb.: Isabelle code for getting in-memory repr...](32334isabelleAtbIsabellecodeforgettinginmemoryrepr.html) (1 message, latest: Feb 05 2021 at 22:39)
 

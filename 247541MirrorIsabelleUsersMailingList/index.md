@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (1 message, latest: Feb 13 2021 at 09:51)
+* [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (2 messages, latest: Feb 13 2021 at 10:44)
 
 * [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (5 messages, latest: Feb 13 2021 at 09:38)
 

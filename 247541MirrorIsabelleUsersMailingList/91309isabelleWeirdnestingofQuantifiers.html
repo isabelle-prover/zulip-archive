@@ -1,0 +1,43 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/91309isabelleWeirdnestingofQuantifiers.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/91309isabelleWeirdnestingofQuantifiers.html">[isabelle] Weird nesting of Quantifiers</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="226310459"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Weird%20nesting%20of%20Quantifiers/near/226310459" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/91309isabelleWeirdnestingofQuantifiers.html#226310459">Email Gateway (Feb 14 2021 at 15:45)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hi List,</p>
+<p>in my current formalization, I frequently end up with goals that I feel<br>
+should be solvable by auto or blast, but they get stuck due to<br>
+containing a precondition similar to this:</p>
+<p>(∀a. (∃x y. a = f x y ∧ P x y) ⟶ Q a) </p>
+<p>The exact precondition can vary in the number of universal and<br>
+existential quantified variables, and the position and number of the<br>
+determining a = ... conjuncts, e.g.</p>
+<p>(∀a b. (∃x y. a = f x y ∧ P x y ∧ b=g x) ⟶ Q a b)</p>
+<p>Anyway, the above preconditions are, obviously, equal to the following<br>
+simpler ones:</p>
+<p>"∀x y. P x y ⟶ Q (f x y)"<br>
+"∀x y. P x y ⟶ Q (f x y) (g x)"</p>
+<p>currently, I have to manually prove these equivalences, for every<br>
+instance of quantified variables, etc, and then can solve the goal<br>
+easily by rewriting and auto.</p>
+<p>Is there any way, e.g. a simproc or so, to automate this process, or is<br>
+my only solution to bloat up the otherwise fully automatic proofs by<br>
+those weird auxiliary lemmas (of which I could, of course, prove<br>
+instances for the most common cases globally and add them to the<br>
+simpset)</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

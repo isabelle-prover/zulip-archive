@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Weird nesting of Quantifiers](91309isabelleWeirdnestingofQuantifiers.html) (1 message, latest: Feb 14 2021 at 15:45)
+
 * [\[isabelle\] Rewrites for a sublocale with UNIV as the carr...](64310isabelleRewritesforasublocalewithUNIVasthecarr.html) (6 messages, latest: Feb 13 2021 at 16:53)
 
 * [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (1 message, latest: Feb 13 2021 at 16:20)

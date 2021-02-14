@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Problem with the AFP repository at heptapod](78709isabelledevProblemwiththeAFPrepositoryatheptapod.html) (8 messages, latest: Feb 14 2021 at 08:13)
+* [\[isabelle-dev\] Problem with the AFP repository at heptapod](78709isabelledevProblemwiththeAFPrepositoryatheptapod.html) (9 messages, latest: Feb 14 2021 at 10:42)
 
 * [\[isabelle-dev\] Discontinued archive for devel mailing list](61509isabelledevDiscontinuedarchivefordevelmailinglist.html) (2 messages, latest: Feb 13 2021 at 11:27)
 

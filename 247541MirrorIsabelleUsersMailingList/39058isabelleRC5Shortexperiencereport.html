@@ -31,6 +31,23 @@ difficult. With the help of sledgehammer, which feels really powerful,<br>
 I could force most lemmas through, even without a complete<br>
 understanding or overview of the changes to Word.</p>
 
+<a name="226359829"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC5%3A%20Short%20experience%20report/near/226359829" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/39058isabelleRC5Shortexperiencereport.html#226359829">Email Gateway (Feb 15 2021 at 09:16)</a>:</h4>
+<p>From: Jasmin Blanchette via Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear Peter,</p>
+<p>You wrote:</p>
+<p>If Sledgehammer feels more powerful, it's because it is. Makarius has repackaged many of the provers, using the latest versions; this was long overdue. On the Sledgehammer side, Martin has been doing the necessary integration, testing, and evaluation work. I'm very grateful to both! The integration of veriT as a reconstruction method, by Hans-Jörg, Mathias, and Martin, also helps reduce reconstruction failures by half, they claim in their draft [*]. Two more highlights:</p>
+<ol>
+<li>
+<p>We now communicate with E in a lambda-free HOL logic with support for currying and Booleans. That helps the success rate a lot. (E should get lambdas and HO unification this year.)</p>
+</li>
+<li>
+<p>Sledgehammer now includes the Zipperposition higher-order prover that's developed largely by my team. It won last year CASC's higher-order division by a record margin. It's not enabled by default because we ran out of time to test it thoroughly, but you can add it to the Sledgehammer panel or "sledgehammer_params". It's good on HO things like p {x. q x | r x} ==&gt; p {x. r x | q x} (which should be trivial but are "lost in translation" to FOL). Reconstruction remains a challenge, though.</p>
+</li>
+</ol>
+<p>Jasmin</p>
+<p>[*] <a href="https://matryoshka-project.github.io/pubs/verit_isa_paper.pdf">https://matryoshka-project.github.io/pubs/verit_isa_paper.pdf</a></p>
+
 
 {% endraw %}
 

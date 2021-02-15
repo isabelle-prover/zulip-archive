@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] RC5: Sledgehammer and HOL-Library.Word problems](90930isabelleRC5SledgehammerandHOLLibraryWordproblems.html) (3 messages, latest: Feb 15 2021 at 09:57)
+
+* [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (2 messages, latest: Feb 15 2021 at 09:16)
+
 * [\[isabelle\] Isabelle2021-RC6 available for applications](91303isabelleIsabelle2021RC6availableforapplications.html) (1 message, latest: Feb 14 2021 at 18:43)
 
 * [\[isabelle\] Weird nesting of Quantifiers](91309isabelleWeirdnestingofQuantifiers.html) (2 messages, latest: Feb 14 2021 at 17:58)
@@ -22,10 +26,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (2 messages, latest: Feb 13 2021 at 12:57)
 
 * [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (5 messages, latest: Feb 13 2021 at 09:38)
-
-* [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (1 message, latest: Feb 12 2021 at 18:29)
-
-* [\[isabelle\] RC5: Sledgehammer and HOL-Library.Word problems](90930isabelleRC5SledgehammerandHOLLibraryWordproblems.html) (2 messages, latest: Feb 12 2021 at 12:53)
 
 * [\[isabelle\] PhD position in Formal Methods/Decompilation a...](71481isabellePhDpositioninFormalMethodsDecompilationa.html) (1 message, latest: Feb 12 2021 at 10:45)
 

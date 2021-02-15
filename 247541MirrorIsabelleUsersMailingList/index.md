@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (3 messages, latest: Feb 15 2021 at 12:20)
+
 * [\[isabelle\] Weird nesting of Quantifiers](91309isabelleWeirdnestingofQuantifiers.html) (4 messages, latest: Feb 15 2021 at 10:36)
 
 * [\[isabelle\] RC5: Sledgehammer and HOL-Library.Word problems](90930isabelleRC5SledgehammerandHOLLibraryWordproblems.html) (3 messages, latest: Feb 15 2021 at 09:57)
-
-* [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (2 messages, latest: Feb 15 2021 at 09:16)
 
 * [\[isabelle\] Isabelle2021-RC6 available for applications](91303isabelleIsabelle2021RC6availableforapplications.html) (1 message, latest: Feb 14 2021 at 18:43)
 

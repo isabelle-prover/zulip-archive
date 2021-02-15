@@ -48,6 +48,32 @@ it. I am happy to provide pointers...</p>
 <p>Tobias<br>
 <a href="/user_uploads/14278/ihUuE82sXJpAgFWo481MUkAV/smime.p7s">smime.p7s</a></p>
 
+<a name="226365677"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Weird%20nesting%20of%20Quantifiers/near/226365677" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/91309isabelleWeirdnestingofQuantifiers.html#226365677">Email Gateway (Feb 15 2021 at 10:16)</a>:</h4>
+<p>From: Thomas Sewell &lt;<a href="mailto:tals4@cam.ac.uk">tals4@cam.ac.uk</a>&gt;<br>
+You can pull the existentials up so that there are only foralls using<br>
+the symmetric versions of the all_simps rewrites.</p>
+<p>Try out<br>
+apply (simp only: all_simps[symmetric] cong: imp_cong)</p>
+<p>I'm not sure how consistently that will work, but that followed by<br>
+regular simplification got me the expected result in all the simple<br>
+test cases I typed.</p>
+<p>BTW, I have a dim recollection that I used to see goals like this more<br>
+often. The "a = .." and "b = .." looks like it came from "(a, b)" being<br>
+in the image of some projection, maybe. I think I managed to get more<br>
+image/map type constructions to simplify a bit before quantifiers <br>
+appeared.</p>
+<p>Best regards,<br>
+     Thomas.</p>
+
+<a name="226367558"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Weird%20nesting%20of%20Quantifiers/near/226367558" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/91309isabelleWeirdnestingofQuantifiers.html#226367558">Email Gateway (Feb 15 2021 at 10:36)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Try this:</p>
+<p>apply (simp flip: ex_simps all_simps)</p>
+<p>Your example is a rare case in which prenexing is actually a good idea.</p>
+<p>Larry</p>
+
 
 {% endraw %}
 

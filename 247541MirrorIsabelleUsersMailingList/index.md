@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (3 messages, latest: Feb 15 2021 at 12:20)
+* [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (4 messages, latest: Feb 15 2021 at 13:36)
 
 * [\[isabelle\] Weird nesting of Quantifiers](91309isabelleWeirdnestingofQuantifiers.html) (4 messages, latest: Feb 15 2021 at 10:36)
 

@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (5 messages, latest: Feb 16 2021 at 13:30)
+* [\[isabelle\] Conflict of type arities: What are the constra...](77855isabelleConflictoftypearitiesWhataretheconstra.html) (3 messages, latest: Feb 16 2021 at 14:56)
 
-* [\[isabelle\] Conflict of type arities: What are the constra...](77855isabelleConflictoftypearitiesWhataretheconstra.html) (2 messages, latest: Feb 16 2021 at 13:05)
+* [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (5 messages, latest: Feb 16 2021 at 13:30)
 
 * [\[isabelle\] Weird nesting of Quantifiers](91309isabelleWeirdnestingofQuantifiers.html) (5 messages, latest: Feb 16 2021 at 12:27)
 

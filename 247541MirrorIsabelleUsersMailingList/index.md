@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (2 messages, latest: Feb 16 2021 at 07:27)
+* [\[isabelle\] Open pdf files from Isabelle File Browser](35122isabelleOpenpdffilesfromIsabelleFileBrowser.html) (2 messages, latest: Feb 16 2021 at 09:56)
 
-* [\[isabelle\] Open pdf files from Isabelle File Browser](35122isabelleOpenpdffilesfromIsabelleFileBrowser.html) (1 message, latest: Feb 16 2021 at 07:18)
+* [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (2 messages, latest: Feb 16 2021 at 07:27)
 
 * [\[isabelle\] RC5: Short experience report](39058isabelleRC5Shortexperiencereport.html) (4 messages, latest: Feb 15 2021 at 13:36)
 

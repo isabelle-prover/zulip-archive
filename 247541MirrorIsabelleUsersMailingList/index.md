@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Conflict of type arities: What are the constra...](77855isabelleConflictoftypearitiesWhataretheconstra.html) (3 messages, latest: Feb 16 2021 at 14:56)
+* [\[isabelle\] Conflict of type arities: What are the constra...](77855isabelleConflictoftypearitiesWhataretheconstra.html) (4 messages, latest: Feb 17 2021 at 00:48)
 
 * [\[isabelle\] Isabelle2021-RC3 New failure mode for "try"/sl...](95470isabelleIsabelle2021RC3Newfailuremodefortrysl.html) (5 messages, latest: Feb 16 2021 at 13:30)
 

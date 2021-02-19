@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] lots of interesting lemmas in the AFP entr...](73018isabelledevlotsofinterestinglemmasintheAFPentr.html) (2 messages, latest: Feb 19 2021 at 13:51)
+* [\[isabelle-dev\] lots of interesting lemmas in the AFP entr...](73018isabelledevlotsofinterestinglemmasintheAFPentr.html) (3 messages, latest: Feb 19 2021 at 14:41)
 
 * [\[isabelle-dev\] Problem with the AFP repository at heptapod](78709isabelledevProblemwiththeAFPrepositoryatheptapod.html) (11 messages, latest: Feb 14 2021 at 23:32)
 

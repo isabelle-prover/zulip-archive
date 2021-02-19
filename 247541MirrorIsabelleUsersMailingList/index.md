@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] unused_thms in composed theorems](95617isabelleunusedthmsincomposedtheorems.html) (1 message, latest: Feb 19 2021 at 14:04)
+
+* [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (1 message, latest: Feb 19 2021 at 14:04)
+
 * [\[isabelle\] Assistant/Associate Professor positions in Edi...](55965isabelleAssistantAssociateProfessorpositionsinEdi.html) (1 message, latest: Feb 17 2021 at 09:59)
 
 * [\[isabelle\] Yet another Isabelle-Course available](90621isabelleYetanotherIsabelleCourseavailable.html) (1 message, latest: Feb 17 2021 at 09:02)

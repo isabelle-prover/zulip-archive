@@ -1,0 +1,56 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/44301isabellePredicateCompilerfailswithNospecificatio.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/44301isabellePredicateCompilerfailswithNospecificatio.html">[isabelle] Predicate Compiler fails with "No specificatio...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="226966805"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Predicate%20Compiler%20fails%20with%20%22No%20specificatio.../near/226966805" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/44301isabellePredicateCompilerfailswithNospecificatio.html#226966805">Email Gateway (Feb 19 2021 at 14:04)</a>:</h4>
+<p>From: Florian Märkl &lt;<a href="mailto:isabelle-users@florianmaerkl.de">isabelle-users@florianmaerkl.de</a>&gt;<br>
+Hello,</p>
+<p>I am trying to replicate something like discussed in<br>
+<a href="https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2020-November/msg00013.html">https://lists.cam.ac.uk/mailman/htdig/cl-isabelle-users/2020-November/msg00013.html</a><br>
+(the part of the JinjaThreads theory), i.e. generating code for a<br>
+reflexive transitive closure predicate, however the [inductify] option<br>
+that I have to use on code_pred currently seems to give me some headaches.</p>
+<p>In essence, what I have in my project is something like this:</p>
+<p>theory "Scratch"</p>
+<p>imports "HOL-Library.Transitive_Closure_Table" Main</p>
+<p>begin</p>
+<p>typedef mynat = "{n :: nat. True}" by auto</p>
+<p>setup_lifting type_definition_mynat</p>
+<p>definition P :: "mynat ⇒ mynat ⇒ bool" where</p>
+<p>"P a b ≡ Rep_mynat a = Suc (Rep_mynat b)"</p>
+<p>definition t where "t = (P)^**"</p>
+<p>(* Fails with: "No specification for Rep_mynat" *)</p>
+<p>code_pred (modes: i ⇒ i ⇒ bool, i ⇒ o ⇒ bool) [inductify] t .</p>
+<p>(* The final goal *)</p>
+<p>export_code t in SML</p>
+<p>end</p>
+<p>I have some executable predicate P over which I want to execute the<br>
+reflexive transitive closure t.</p>
+<p>Now from what I understand (please correct me if I am wrong), the<br>
+[inductify] option here is necessary so code_pred understands that this<br>
+is actually an inductive predicate by digging into the definitions.</p>
+<p>But that also means it will go even deeper and try to inspect Rep_mynat<br>
+for example, which fails.</p>
+<p>What I intuitively would want it to do is to only unfold the t, but then<br>
+consider P an opaque constant.</p>
+<p>I have seen that code_pred has quite a few more undocumented options,<br>
+but didn't find anything yet that did what I need. Is something like<br>
+this possible somehow or am I misunderstanding the inner workings of the<br>
+predicate compiler here?</p>
+<p>Florian</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

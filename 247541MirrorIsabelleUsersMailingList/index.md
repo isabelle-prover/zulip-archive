@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (8 messages, latest: Feb 19 2021 at 15:37)
+
 * [\[isabelle\] unused_thms in composed theorems](95617isabelleunusedthmsincomposedtheorems.html) (1 message, latest: Feb 19 2021 at 14:04)
 
 * [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (1 message, latest: Feb 19 2021 at 14:04)
@@ -50,8 +52,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] FSCD 2021: Extended deadline (Abstract: Februa...](33461isabelleFSCD2021ExtendeddeadlineAbstractFebrua.html) (1 message, latest: Feb 11 2021 at 10:05)
 
 * [\[isabelle\] New in the AFP: The Laws of Large Numbers](40705isabelleNewintheAFPTheLawsofLargeNumbers.html) (1 message, latest: Feb 11 2021 at 05:40)
-
-* [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (6 messages, latest: Feb 10 2021 at 21:38)
 
 * [\[isabelle\] Boolos's Curious Inference (Speed-Up) in Isabe...](16212isabelleBoolossCuriousInferenceSpeedUpinIsabe.html) (2 messages, latest: Feb 10 2021 at 13:40)
 

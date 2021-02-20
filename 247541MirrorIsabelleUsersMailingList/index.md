@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Relation of function absent from Main](13577isabelleRelationoffunctionabsentfromMain.html) (1 message, latest: Feb 20 2021 at 10:57)
+
 * [\[isabelle\] 2nd CfP ThEdu'21](01531isabelle2ndCfPThEdu21.html) (1 message, latest: Feb 19 2021 at 17:35)
 
 * [\[isabelle\] Syntax proposal: multiway if](54934isabelleSyntaxproposalmultiwayif.html) (8 messages, latest: Feb 19 2021 at 15:37)

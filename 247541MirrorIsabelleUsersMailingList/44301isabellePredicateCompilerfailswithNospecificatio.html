@@ -58,6 +58,40 @@ handle types specified by "typedef".</p>
 <p>Tobias<br>
 <a href="/user_uploads/14278/kpgjRZnmXYZ6CWmZuuD2uvWW/smime.p7s">smime.p7s</a></p>
 
+<a name="227109080"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Predicate%20Compiler%20fails%20with%20%22No%20specificatio.../near/227109080" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/44301isabellePredicateCompilerfailswithNospecificatio.html#227109080">Email Gateway (Feb 20 2021 at 18:32)</a>:</h4>
+<p>From: Florian Märkl &lt;<a href="mailto:isabelle-users@florianmaerkl.de">isabelle-users@florianmaerkl.de</a>&gt;<br>
+Hello Tobias,</p>
+<p>in my larger project I could probably get rid of the typdefd types in<br>
+this specific predicate by just duplicating the code of what is called P<br>
+here, operating directly on the underying type of the typedef.</p>
+<p>However after doing this, I end up with another issue that can be seen<br>
+in this example:</p>
+<p>theory "Scratch"<br>
+  imports "HOL-Library.Transitive_Closure_Table" Main<br>
+begin</p>
+<p>definition P :: "nat ⇒ nat ⇒ bool" where "P a b ≡ a ∈ set [b]"<br>
+definition t where "t ≡ (P)^**"</p>
+<p>(* Fails with:<br>
+exception TERM raised (line 80 of<br>
+"~~/src/HOL/Tools/Predicate_Compile/predicate_compile_data.ML"):<br>
+  defining_const_of_introrule failed: Not a constant<br>
+  {x. x ∈ ?z} ≡ ?z<br>
+*)<br>
+code_pred (modes: i ⇒ i ⇒ bool, i ⇒ o ⇒ bool) [inductify, show_steps,<br>
+show_intermediate_results] t .</p>
+<p>(* The final goal *)<br>
+export_code t in SML</p>
+<p>end</p>
+<p>So it seems there is an issue with the ∈ operator now, which might be<br>
+possible to eliminate too (here by operating on the list [b], probably<br>
+similar in the real project) but this also brings me back to the<br>
+original problem: Is it somehow possible to use code_pred on a<br>
+definition like "t ≡ (P)^**" that does not use the "inductive" command<br>
+at the top level, without code_pred having to recurse through every<br>
+little definition that it contains?</p>
+<p>Florian</p>
+
 
 {% endraw %}
 

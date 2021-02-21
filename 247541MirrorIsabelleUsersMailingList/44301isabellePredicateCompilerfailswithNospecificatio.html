@@ -92,6 +92,25 @@ at the top level, without code_pred having to recurse through every<br>
 little definition that it contains?</p>
 <p>Florian</p>
 
+<a name="227151871"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Predicate%20Compiler%20fails%20with%20%22No%20specificatio.../near/227151871" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/44301isabellePredicateCompilerfailswithNospecificatio.html#227151871">Email Gateway (Feb 21 2021 at 08:10)</a>:</h4>
+<p>From: Andreas Lochbihler &lt;<a href="mailto:mail@andreas-lochbihler.de">mail@andreas-lochbihler.de</a>&gt;<br>
+Hi Florian,</p>
+<p>code_pred's [inductify] option has its quirks and doesn't always work; in particular set <br>
+comprehensions and set membership are tricky (code_pred was developed when "'a set" was a <br>
+type abbreviation for "'a =&gt; bool"). What you can do is to do the inductification <br>
+manually. In your example with the typedef, the following makes code_pred generate the <br>
+right equations (of course, you should manually fill in the sorrys)</p>
+<p>lemma P_intro [code_pred_intro]: "P n m"<br>
+   if "Rep_mynat n ≠ 0" "m = Abs_mynat (Rep_mynat n - 1)" sorry</p>
+<p>code_pred (modes: i ⇒ i ⇒ bool, i ⇒ o ⇒ bool) P sorry</p>
+<p>code_pred (modes: i ⇒ i ⇒ bool, i ⇒ o ⇒ bool) [inductify] t .</p>
+<p>Now, however, export_code gives you a well-sortedness error that mynat isn't an instance <br>
+of equal. But that's something you probably want to provide anyway; I'm actually surprised <br>
+that the setup_lifting doesn't generate such an instance.</p>
+<p>Hope this helps,<br>
+Andreas</p>
+
 
 {% endraw %}
 

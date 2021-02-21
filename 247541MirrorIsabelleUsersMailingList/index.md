@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Relation of function absent from Main](13577isabelleRelationoffunctionabsentfromMain.html) (3 messages, latest: Feb 20 2021 at 21:57)
+* [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (4 messages, latest: Feb 21 2021 at 08:10)
 
-* [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (3 messages, latest: Feb 20 2021 at 18:32)
+* [\[isabelle\] Relation of function absent from Main](13577isabelleRelationoffunctionabsentfromMain.html) (3 messages, latest: Feb 20 2021 at 21:57)
 
 * [\[isabelle\] Request for TTP and PTT Interfaces](39889isabelleRequestforTTPandPTTInterfaces.html) (1 message, latest: Feb 20 2021 at 17:13)
 

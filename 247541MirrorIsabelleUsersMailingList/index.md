@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] First day with HOL/Isabelle](73679isabelleFirstdaywithHOLIsabelle.html) (3 messages, latest: Feb 21 2021 at 18:29)
+* [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (6 messages, latest: Feb 21 2021 at 19:21)
 
-* [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (5 messages, latest: Feb 21 2021 at 16:34)
+* [\[isabelle\] First day with HOL/Isabelle](73679isabelleFirstdaywithHOLIsabelle.html) (3 messages, latest: Feb 21 2021 at 18:29)
 
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (2 messages, latest: Feb 21 2021 at 11:05)
 

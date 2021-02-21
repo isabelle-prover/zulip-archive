@@ -149,6 +149,21 @@ What seems fishy to me is that the code_pred for t in this case does not<br>
 infer any modes at all, but I am not really sure what to make of this.</p>
 <p>Florian</p>
 
+<a name="227188120"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Predicate%20Compiler%20fails%20with%20%22No%20specificatio.../near/227188120" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/44301isabellePredicateCompilerfailswithNospecificatio.html#227188120">Email Gateway (Feb 21 2021 at 19:21)</a>:</h4>
+<p>From: Andreas Lochbihler &lt;<a href="mailto:mail@andreas-lochbihler.de">mail@andreas-lochbihler.de</a>&gt;<br>
+Hi Florian,</p>
+<p>For the predicate P, you've only inferred the mode i =&gt; i =&gt; bool, but that's not enough <br>
+to compute a transitive closure (as nat is infinite). If you add [show_mode] to the <br>
+code_pred rtranclp invocation in Transitive_Closure_Table, you'll see that the relation <br>
+must have mode i =&gt; o =&gt; bool. So you need to provide introduction rules for P that yield <br>
+such a mode. In your artificial example, you get this via</p>
+<p>lemma [code_pred_intro]: "P a b" if "a = b"</p>
+<p>Another example: If P was defined as "P a b = a : set [b, b + 1]", you'd get there via</p>
+<p>lemma [code_pred_intro]: "a = b ==&gt; P a b" "a = b + 1 ==&gt; P a b"</p>
+<p>Hope this helps,<br>
+Andreas</p>
+
 
 {% endraw %}
 

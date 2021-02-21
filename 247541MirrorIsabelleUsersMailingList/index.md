@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (2 messages, latest: Feb 21 2021 at 11:05)
+
+* [\[isabelle\] First day with HOL/Isabelle](73679isabelleFirstdaywithHOLIsabelle.html) (1 message, latest: Feb 21 2021 at 11:05)
+
 * [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (4 messages, latest: Feb 21 2021 at 08:10)
 
 * [\[isabelle\] Relation of function absent from Main](13577isabelleRelationoffunctionabsentfromMain.html) (3 messages, latest: Feb 20 2021 at 21:57)
@@ -102,8 +106,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Configurable proposition grammar root symbol f...](20418isabelleConfigurablepropositiongrammarrootsymbolf.html) (1 message, latest: Jan 28 2021 at 17:55)
 
 * [\[isabelle\] UTF8 chars behavior](16034isabelleUTF8charsbehavior.html) (2 messages, latest: Jan 28 2021 at 11:12)
-
-* [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (1 message, latest: Jan 28 2021 at 11:08)
 
 * [\[isabelle\] CFP: Workshop on the Role of Mathematical Reas...](96366isabelleCFPWorkshopontheRoleofMathematicalReas.html) (1 message, latest: Jan 26 2021 at 23:15)
 

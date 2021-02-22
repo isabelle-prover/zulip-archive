@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Unfixed variables in "define" command](61995isabelleUnfixedvariablesindefinecommand.html) (5 messages, latest: Feb 22 2021 at 12:29)
+* [\[isabelle\] Unfixed variables in "define" command](61995isabelleUnfixedvariablesindefinecommand.html) (6 messages, latest: Feb 22 2021 at 13:29)
 
 * [\[isabelle\] Announcing Isabelle2021](89200isabelleAnnouncingIsabelle2021.html) (1 message, latest: Feb 21 2021 at 20:50)
 

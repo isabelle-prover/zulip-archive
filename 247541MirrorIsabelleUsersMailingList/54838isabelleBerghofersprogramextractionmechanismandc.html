@@ -27,6 +27,43 @@ Isabelle/HOL.</p>
 <p>Many thanks in advance!<br>
 Angeliki</p>
 
+<a name="227476414"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Berghofer%27s%20program%20extraction%20mechanism%20and%20c.../near/227476414" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54838isabelleBerghofersprogramextractionmechanismandc.html#227476414">Email Gateway (Feb 23 2021 at 18:09)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+I don't know terribly much about Berghofer's work, but I'm fairly<br>
+certain it has absolutely nothing to do with how the code generator works.</p>
+<p>I think Berghofer's approach is closer to what people do e.g. in Coq:<br>
+using the Curry–Howard isomorphism to get code from the proof terms.</p>
+<p>My impression from a distance that Berghofer's implementation is a very<br>
+impressive accomplishment, but one that has not been used for anything<br>
+but small examples so far.</p>
+<p>One big problem is that (unless I misunderstood something) it only works<br>
+as long as you don't use any non-constructive reasoning (i.e. no axiom<br>
+of choice, no proof by contradiction).</p>
+<p>However, one of the big strengths of Isabelle/HOL is automation, and<br>
+none of the automation cares about constructive vs non-constructive, nor<br>
+does it care about keeping proof terms small (because normally proof<br>
+terms are not stored anyway). Thus, if you use automation, Berghofer's<br>
+approach will either not work at all (because the automation used<br>
+something non-constructive somewhere) or run into performance problems<br>
+or give you horribly bloated code (because the automation produced huge<br>
+and overly complicated proof terms).</p>
+<p>And these problems only become bigger if you apply it to bigger examples.</p>
+<p>The code generator, on the other hand, works by having very tight<br>
+control over what code is produced: things like equational and recursive<br>
+definitions work out of the box, anything else (quantifiers, choice,<br>
+inductive predicates, abstract types, quotient types) requires some<br>
+extra work (e.g. proving code equations, running "code_pred", …).</p>
+<p>Basically, the code generator works by translating equations in HOL into<br>
+"equations" in ML/Haskell/Scala/etc. and "pretending" that the meaning<br>
+is the same (which is somewhat justified). And anything constant that<br>
+isn't specified by a simple equation has to be brought into that form by<br>
+the user (by supplying code equations).</p>
+<p>Hope that helps – if I said anything wrong, I'm sure someone will<br>
+correct me.</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/ei538O5H-OpVhSltYjSec-jd/smime.p7s">smime.p7s</a></p>
+
 
 {% endraw %}
 

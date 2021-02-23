@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Berghofer's program extraction mechanism and c...](54838isabelleBerghofersprogramextractionmechanismandc.html) (1 message, latest: Feb 23 2021 at 17:57)
+* [\[isabelle\] Berghofer's program extraction mechanism and c...](54838isabelleBerghofersprogramextractionmechanismandc.html) (2 messages, latest: Feb 23 2021 at 18:09)
 
 * [\[isabelle\] Request for TTP and PTT Interfaces](39889isabelleRequestforTTPandPTTInterfaces.html) (2 messages, latest: Feb 23 2021 at 12:58)
 

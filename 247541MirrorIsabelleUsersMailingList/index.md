@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] AFP 2021](86230isabelleAFP2021.html) (1 message, latest: Feb 23 2021 at 10:19)
+* [\[isabelle\] AFP 2021](86230isabelleAFP2021.html) (2 messages, latest: Feb 23 2021 at 11:56)
 
 * [\[isabelle\] Unfixed variables in "define" command](61995isabelleUnfixedvariablesindefinecommand.html) (8 messages, latest: Feb 22 2021 at 14:39)
 

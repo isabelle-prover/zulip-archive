@@ -61,6 +61,43 @@ operations will move from ML to Scala soon.)</p>
 <a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
 <a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
 
+<a name="227514643"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20NEWS%3A%20External%20bash%20processes%20are%20always%20m.../near/227514643" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/68789isabelledevNEWSExternalbashprocessesarealwaysm.html#227514643">Email Gateway (Feb 23 2021 at 22:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Here is another fine point:</p>
+<p>- Just like any other Scala function invoked from ML,<br>
+    Isabelle_System.bash_process requires a proper PIDE session context.<br>
+    This could be a regular batch session (e.g. "isabelle build"), a<br>
+    PIDE editor session (e.g. "isabelle jedit"), or headless PIDE (e.g.<br>
+    "isabelle dump" or "isabelle server"). Note that old "isabelle<br>
+    console" or raw "isabelle process" don't have that.</p>
+<p>See also Isabelle/637e3e85cd6f.</p>
+<p>In principle the requirement of a proper PIDE session context is already<br>
+present in Isabelle2021, but there are hardly any relevant Scala functions<br>
+invoked from ML.</p>
+<p>From now on there will be more and more coming, to do the hardcore system<br>
+programming properly in the physical world (Scala) instead of mathematics<br>
+(ML). (To download a file, copy a directory hierarchy etc.)</p>
+<p>I am still unsure what to do about "isabelle console" and "isabelle process".</p>
+<p>My main use of the console is with option -r, to bootstrap Pure in case of<br>
+error, when the PIDE editing of Pure does not work. So it could be replaced by<br>
+"isabelle bootstrap" as administrative tool (unavailable in a regular Isabelle<br>
+release).</p>
+<p>The "isabelle process" was once our main "isabelle" script, e.g. for direct<br>
+TTY use or as inferior Emacs process. Now it is occasionally used for<br>
+generated code from the ML environment. So it could become another Scala<br>
+function from ML, using the ML_Process module in Isabelle/Scala. That would<br>
+make it much lighter, because the surrounding Scala/JVM is already running,<br>
+i.e. the one of the required PIDE session context.</p>
+<p>So are there other remaining uses of "isabelle console" or "isabelle process"<br>
+that don't fit into this picture? And that cannot be done more directly in<br>
+Isabelle/Scala, instead of old-fashioned scripting in bash/perl/python/...?</p>
+<p>Makarius</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
 
 {% endraw %}
 

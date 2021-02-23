@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Request for TTP and PTT Interfaces](39889isabelleRequestforTTPandPTTInterfaces.html) (2 messages, latest: Feb 23 2021 at 12:58)
+
 * [\[isabelle\] AFP 2021](86230isabelleAFP2021.html) (2 messages, latest: Feb 23 2021 at 11:56)
 
 * [\[isabelle\] Unfixed variables in "define" command](61995isabelleUnfixedvariablesindefinecommand.html) (8 messages, latest: Feb 22 2021 at 14:39)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (2 messages, latest: Feb 21 2021 at 11:05)
 
 * [\[isabelle\] Relation of function absent from Main](13577isabelleRelationoffunctionabsentfromMain.html) (3 messages, latest: Feb 20 2021 at 21:57)
-
-* [\[isabelle\] Request for TTP and PTT Interfaces](39889isabelleRequestforTTPandPTTInterfaces.html) (1 message, latest: Feb 20 2021 at 17:13)
 
 * [\[isabelle\] 2nd CfP ThEdu'21](01531isabelle2ndCfPThEdu21.html) (1 message, latest: Feb 19 2021 at 17:35)
 

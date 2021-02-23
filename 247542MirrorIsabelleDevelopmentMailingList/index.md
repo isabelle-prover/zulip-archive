@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: External bash processes are always m...](68789isabelledevNEWSExternalbashprocessesarealwaysm.html) (1 message, latest: Feb 22 2021 at 23:22)
+
 * [\[isabelle-dev\] lots of interesting lemmas in the AFP entr...](73018isabelledevlotsofinterestinglemmasintheAFPentr.html) (3 messages, latest: Feb 19 2021 at 14:41)
 
 * [\[isabelle-dev\] Problem with the AFP repository at heptapod](78709isabelledevProblemwiththeAFPrepositoryatheptapod.html) (11 messages, latest: Feb 14 2021 at 23:32)

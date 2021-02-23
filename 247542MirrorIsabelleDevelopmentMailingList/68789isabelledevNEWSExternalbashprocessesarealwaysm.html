@@ -1,0 +1,67 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247542MirrorIsabelleDevelopmentMailingList/68789isabelledevNEWSExternalbashprocessesarealwaysm.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/index.html">Mirror: Isabelle Development Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/68789isabelledevNEWSExternalbashprocessesarealwaysm.html">[isabelle-dev] NEWS: External bash processes are always m...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="227356755"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20NEWS%3A%20External%20bash%20processes%20are%20always%20m.../near/227356755" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/68789isabelledevNEWSExternalbashprocessesarealwaysm.html#227356755">Email Gateway (Feb 22 2021 at 23:22)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* ML </strong>*</p>
+<ul>
+<li>External bash processes are always managed by Isabelle/Scala, in<br>
+contrast to Isabelle2021 where this was only done for macOS on Apple<br>
+Silicon.</li>
+</ul>
+<p>The main Isabelle/ML interface is Isabelle_System.bash_process with<br>
+result type Process_Result.T (resembling class Process_Result in Scala);<br>
+derived operations Isabelle_System.bash and Isabelle_System.bash_output<br>
+provide similar functionality as before. Rare INCOMPATIBILITY due to<br>
+subtle semantic differences:</p>
+<p>- Processes invoked from Isabelle/ML actually run in the context of<br>
+    the Java VM of Isabelle/Scala. The settings environment and current<br>
+    working directory are usually the same on both sides, but there can be<br>
+    subtle corner cases (e.g. unexpected uses of "cd" or "putenv" in ML).</p>
+<p>- Output via stdout and stderr is line-oriented: Unix vs. Windows<br>
+    line-endings are normalized towards Unix; presence or absence of a<br>
+    final newline is irrelevant. The original lines are available as<br>
+    Process_Result.out_lines/err_lines; the concatenated versions<br>
+    Process_Result.out/err <em>omit</em> a trailing newline (using<br>
+    Library.trim_line, which was occasional seen in applications before,<br>
+    but is no longer necessary).</p>
+<p>- Output needs to be plain text encoded in UTF-8: Isabelle/Scala<br>
+    recodes it temporarily as UTF-16. This works for well-formed Unicode<br>
+    text, but not for arbitrary byte strings. In such cases, the bash<br>
+    script should write tempory files, managed by Isabelle/ML operations<br>
+    like Isabelle_System.with_tmp_file to create a file name and<br>
+<a href="http://File.read">File.read</a> to retrieve its content.</p>
+<p>New Process_Result.timing works as in Isabelle/Scala, based on direct<br>
+measurements of the bash_process wrapper in C: elapsed time is always<br>
+available, CPU time is only available on Linux and macOS, GC time is<br>
+unavailable.</p>
+<p>This refers to Isabelle/04c9a2cd7686, which provides these updated NEWS. A lot<br>
+of text for previously to adjust previous customs of weakly specified<br>
+behaviour, or mere customs. Also an interesting consequence of providing Scala<br>
+function invocation in ML, and using it on the spot to avoid macOS/Rosetto<br>
+problems with threads vs. processes (for Isabelle2021).</p>
+<p>There might be very fine points still to be sorted out, but conceptually it is<br>
+right to do the systems programming in Scala instead of ML. (A few more system<br>
+operations will move from ML to Scala soon.)</p>
+<p>Makarius</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

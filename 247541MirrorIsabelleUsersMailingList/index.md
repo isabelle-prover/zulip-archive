@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Berghofer's program extraction mechanism and c...](54838isabelleBerghofersprogramextractionmechanismandc.html) (4 messages, latest: Feb 25 2021 at 15:55)
+
 * [\[isabelle\] Postdoc/phd positions in ERC project "Certifie...](11944isabellePostdocphdpositionsinERCprojectCertifie.html) (1 message, latest: Feb 25 2021 at 12:43)
 
 * [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (10 messages, latest: Feb 25 2021 at 11:25)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (5 messages, latest: Feb 24 2021 at 16:39)
 
 * [\[isabelle\] Bill McCune PhD Award in Automated Reasoning,	...](87939isabelleBillMcCunePhDAwardinAutomatedReasoning.html) (1 message, latest: Feb 24 2021 at 14:40)
-
-* [\[isabelle\] Berghofer's program extraction mechanism and c...](54838isabelleBerghofersprogramextractionmechanismandc.html) (3 messages, latest: Feb 24 2021 at 01:00)
 
 * [\[isabelle\] Request for TTP and PTT Interfaces](39889isabelleRequestforTTPandPTTInterfaces.html) (2 messages, latest: Feb 23 2021 at 12:58)
 

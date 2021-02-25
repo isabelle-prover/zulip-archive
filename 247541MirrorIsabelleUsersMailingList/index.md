@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (11 messages, latest: Feb 25 2021 at 19:07)
+
 * [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (2 messages, latest: Feb 25 2021 at 16:50)
 
 * [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (6 messages, latest: Feb 25 2021 at 16:40)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Berghofer's program extraction mechanism and c...](54838isabelleBerghofersprogramextractionmechanismandc.html) (4 messages, latest: Feb 25 2021 at 15:55)
 
 * [\[isabelle\] Postdoc/phd positions in ERC project "Certifie...](11944isabellePostdocphdpositionsinERCprojectCertifie.html) (1 message, latest: Feb 25 2021 at 12:43)
-
-* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (10 messages, latest: Feb 25 2021 at 11:25)
 
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (5 messages, latest: Feb 25 2021 at 09:18)
 

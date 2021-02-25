@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (6 messages, latest: Feb 24 2021 at 23:47)
+* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (7 messages, latest: Feb 25 2021 at 08:03)
 
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (4 messages, latest: Feb 24 2021 at 19:53)
 

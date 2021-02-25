@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Postdoc/phd positions in ERC project "Certifie...](11944isabellePostdocphdpositionsinERCprojectCertifie.html) (1 message, latest: Feb 25 2021 at 12:43)
+
 * [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (10 messages, latest: Feb 25 2021 at 11:25)
 
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (5 messages, latest: Feb 25 2021 at 09:18)

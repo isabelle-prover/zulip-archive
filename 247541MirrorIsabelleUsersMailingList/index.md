@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (2 messages, latest: Feb 25 2021 at 16:50)
+
+* [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (6 messages, latest: Feb 25 2021 at 16:40)
+
 * [\[isabelle\] Berghofer's program extraction mechanism and c...](54838isabelleBerghofersprogramextractionmechanismandc.html) (4 messages, latest: Feb 25 2021 at 15:55)
 
 * [\[isabelle\] Postdoc/phd positions in ERC project "Certifie...](11944isabellePostdocphdpositionsinERCprojectCertifie.html) (1 message, latest: Feb 25 2021 at 12:43)
@@ -66,8 +70,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (3 messages, latest: Feb 14 2021 at 17:44)
 
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (2 messages, latest: Feb 13 2021 at 12:57)
-
-* [\[isabelle\] RC5: Syntactic class bit_operations is gone](29133isabelleRC5Syntacticclassbitoperationsisgone.html) (5 messages, latest: Feb 13 2021 at 09:38)
 
 * [\[isabelle\] PhD position in Formal Methods/Decompilation a...](71481isabellePhDpositioninFormalMethodsDecompilationa.html) (1 message, latest: Feb 12 2021 at 10:45)
 
@@ -350,8 +352,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Typos in lemma names](62288isabelleTyposinlemmanames.html) (2 messages, latest: Nov 15 2020 at 14:02)
 
 * [\[isabelle\] NFM2021 - Second Call for Papers](19351isabelleNFM2021SecondCallforPapers.html) (1 message, latest: Nov 14 2020 at 11:50)
-
-* [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (1 message, latest: Nov 13 2020 at 18:36)
 
 * [\[isabelle\] Weak lemma:	HOL-Algebra.Multiplicative_Group.g...](80180isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (1 message, latest: Nov 13 2020 at 18:30)
 

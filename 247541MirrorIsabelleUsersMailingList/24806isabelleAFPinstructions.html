@@ -184,6 +184,49 @@ Absolutely happy to add the Windows example now that I know what it should be.</
 <p>Cheers,<br>
 Gerwin</p>
 
+<a name="227751907"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20AFP%20instructions/near/227751907" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24806isabelleAFPinstructions.html#227751907">Email Gateway (Feb 25 2021 at 11:20)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Cygwin is already bundled with Isabelle. Using that increases chances that<br>
+terminal-tinkering actually works. But note that "~" ($HOME) outside of<br>
+Isabelle is not necessarily "~" ($USER_HOME) inside Isabelle, even worse<br>
+$ISABELLE_HOME_USER can be somewhere else.</p>
+<p>The proper way to refer to $ISABELLE_HOME_USER/etc/ROOTS is literally via that<br>
+symbolic name inside Isabelle (e.g. the desktop applocation on Windows, or any<br>
+other platform).</p>
+<p>BTW, even on macOS application-specific config directories should not be<br>
+directly in $HOME/.foobar but somewhere else (we don't do this yet).</p>
+<p>Makarius</p>
+
+<a name="227752401"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20AFP%20instructions/near/227752401" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24806isabelleAFPinstructions.html#227752401">Email Gateway (Feb 25 2021 at 11:25)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 24/02/2021 23:13, Gerwin Klein wrote:</p>
+<blockquote>
+<blockquote>
+<p>I find the instructions a bit strange, even for Linux. Why use "echo" to edit<br>
+a file --- with a somewhat accidental location ~/.isabelle/Isabelle2021/ROOTS?</p>
+</blockquote>
+<p>Because instructions for editing a file generated too many questions and failure. (What if it doesn't exist? What if it does exist? Adding it at the end or the beginning or the middle? None of that matters, but all of it generates questions and confusion).</p>
+</blockquote>
+<p>Here are again my points about that special ROOTS file again:</p>
+<blockquote>
+<blockquote>
+<p>In my own documentation, I usually refer symbolically to<br>
+$ISABELLE_USER_HOME/etc/ROOTS --- this can be used literally in Isabelle/jEdit<br>
+on all platforms, and the ROOTS file even has inlined explanations for that<br>
+situation.</p>
+</blockquote>
+</blockquote>
+<p>Here is the relevant repository reference from 31-Aug-2017 where the main<br>
+Isabelle entry point ensures that ROOTS is present:<br>
+<a href="https://isabelle-dev.sketis.net/rISABELLE6e35cf3ce869">https://isabelle-dev.sketis.net/rISABELLE6e35cf3ce869</a></p>
+<p>Note that in Isabelle2021 there is even some PIDE support for ROOTS files,<br>
+with C-hover-<br>
+click on the directory entries.</p>
+<p>Neither the 4-5 versions of "echo" nor 2-3 versions of "vi" can do that.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

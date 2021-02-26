@@ -1,0 +1,45 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/60396isabelleNitpickCodatatypeNoCounterexamplefound.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/60396isabelleNitpickCodatatypeNoCounterexamplefound.html">[isabelle] Nitpick Codatatype - No Counterexample found</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="227909342"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Nitpick%20Codatatype%20-%20No%20Counterexample%20found/near/227909342" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/60396isabelleNitpickCodatatypeNoCounterexamplefound.html#227909342">Email Gateway (Feb 26 2021 at 10:36)</a>:</h4>
+<p>From: "Stüber, Sebastian" &lt;<a href="mailto:stueber@se-rwth.de">stueber@se-rwth.de</a>&gt;<br>
+Dear all,<br>
+I am trying to use nitpick to find counterexample over (potentially) infinite lists. While playing with nitpick I encountered a strange behavior:<br>
+    Nitpick seems to be unable to find counterexamples, if a message occurs twice in the list</p>
+<p>An Example:</p>
+<p>codatatype 'a::type llist = LNil | LCons 'a "'a llist"</p>
+<p>(* Notice that "a" occurs twice *)<br>
+lemma "LCons (a::nat) (LCons a LNil) ≠ z"<br>
+  nitpick[expect=none]  (* Should find something! *)<br>
+  oops</p>
+<p>(* Allowing different messages, now nitpick can find something *)<br>
+lemma "LCons (a::nat) (LCons b LNil) ≠ z"<br>
+  nitpick[expect=genuine]   (* is working *)<br>
+  oops</p>
+<p>With the normal (finite) list datatype, this problem does not occur.</p>
+<p>Does anybody know the cause &amp; how to fix it?</p>
+<p>Sincerely,<br>
+Sebastian Stüber</p>
+<hr>
+<p>Sebastian Stüber, M.Sc.RWTH           |    Software Engineering<br>
+Lehrstuhl für Software Engineering    |  RWTH Aachen University<br>
+Ahornstr. 55, 52074 Aachen, Germany   |  <a href="https://www.se-rwth.de">https://www.se-rwth.de</a><br>
+Phone ++49 241 80-21352<br>
+<a href="/user_uploads/14278/bm2mnZJ8zEHOhpyouAogipYG/nitpick_test.thy">nitpick_test.thy</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

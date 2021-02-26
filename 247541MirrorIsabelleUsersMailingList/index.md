@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (13 messages, latest: Feb 25 2021 at 22:00)
+* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (14 messages, latest: Feb 26 2021 at 05:44)
 
 * [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (2 messages, latest: Feb 25 2021 at 16:50)
 

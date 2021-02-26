@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (1 message, latest: Feb 26 2021 at 15:56)
+* [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (12 messages, latest: Feb 26 2021 at 16:28)
 
-* [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (7 messages, latest: Feb 26 2021 at 15:52)
+* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (1 message, latest: Feb 26 2021 at 15:56)
 
 * [\[isabelle\] Nitpick Codatatype - No Counterexample found](60396isabelleNitpickCodatatypeNoCounterexamplefound.html) (1 message, latest: Feb 26 2021 at 10:36)
 

@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (1 message, latest: Feb 26 2021 at 15:56)
+
+* [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (7 messages, latest: Feb 26 2021 at 15:52)
+
 * [\[isabelle\] Nitpick Codatatype - No Counterexample found](60396isabelleNitpickCodatatypeNoCounterexamplefound.html) (1 message, latest: Feb 26 2021 at 10:36)
 
 * [\[isabelle\] FMCAD 2021: First Call for Papers](82890isabelleFMCAD2021FirstCallforPapers.html) (1 message, latest: Feb 26 2021 at 10:34)
@@ -26,8 +30,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Postdoc/phd positions in ERC project "Certifie...](11944isabellePostdocphdpositionsinERCprojectCertifie.html) (1 message, latest: Feb 25 2021 at 12:43)
 
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (5 messages, latest: Feb 25 2021 at 09:18)
-
-* [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (5 messages, latest: Feb 24 2021 at 16:39)
 
 * [\[isabelle\] Bill McCune PhD Award in Automated Reasoning,	...](87939isabelleBillMcCunePhDAwardinAutomatedReasoning.html) (1 message, latest: Feb 24 2021 at 14:40)
 

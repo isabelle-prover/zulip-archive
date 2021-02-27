@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (15 messages, latest: Feb 27 2021 at 09:28)
+
 * [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (12 messages, latest: Feb 26 2021 at 16:28)
 
 * [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (1 message, latest: Feb 26 2021 at 15:56)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] FMCAD 2021: First Call for Papers](82890isabelleFMCAD2021FirstCallforPapers.html) (1 message, latest: Feb 26 2021 at 10:34)
 
 * [\[isabelle\] New in the AFP: A Verified Imperative Implemen...](09299isabelleNewintheAFPAVerifiedImperativeImplemen.html) (1 message, latest: Feb 26 2021 at 06:27)
-
-* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (14 messages, latest: Feb 26 2021 at 05:44)
 
 * [\[isabelle\] Weak lemma: HOL-Algebra.Multiplicative_Group.g...](58667isabelleWeaklemmaHOLAlgebraMultiplicativeGroupg.html) (2 messages, latest: Feb 25 2021 at 16:50)
 

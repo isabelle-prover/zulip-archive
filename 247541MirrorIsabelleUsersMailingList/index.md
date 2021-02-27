@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (17 messages, latest: Feb 27 2021 at 11:34)
+* [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (19 messages, latest: Feb 27 2021 at 12:29)
 
 * [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (12 messages, latest: Feb 26 2021 at 16:28)
 

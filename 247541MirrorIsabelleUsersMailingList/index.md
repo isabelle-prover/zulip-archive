@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (1 message, latest: Feb 27 2021 at 15:27)
+
 * [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (19 messages, latest: Feb 27 2021 at 12:29)
 
 * [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (12 messages, latest: Feb 26 2021 at 16:28)

@@ -295,6 +295,74 @@ far from trivial piece of information.</p>
 <p>Best</p>
 <p>Stepan</p>
 
+<a name="228051659"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20AFP%20instructions/near/228051659" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24806isabelleAFPinstructions.html#228051659">Email Gateway (Feb 27 2021 at 11:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 27/02/2021 10:28, Stepan Holub wrote:</p>
+<blockquote>
+<p>Dear Gerwin,</p>
+<p>thank you. I believe that the current form is much clearer, almost as clear as<br>
+needed.</p>
+</blockquote>
+<p>... and still wrong. The text now says:</p>
+<p>"""<br>
+ For Windows, the idea is the same just the path is slightly different. If the<br>
+AFP is in C:\afp, you should be able to run the following in a Cygwin terminal.</p>
+<p>echo "/cygdrive/c/afp/thys" &gt;&gt; ~/.isabelle/Isabelle2021/ROOTS<br>
+"""</p>
+<p>but there are 2 paths in the command-line, and both deviate from Linux.</p>
+<p>Concerning "a Cygwin" terminal: it has an underlying Cygwin installation and<br>
+each has its own idea of "~" within its root file-system.</p>
+<p>In contrast, Isabelle expands "~" to $USER_HOME, which should be normally the<br>
+Windows user home directory.</p>
+<blockquote>
+<p>And then (at the latest) he or she has to figure out what "~" means (on<br>
+Windows something like "C:\Users\USERNAME") and edit the file anyway in some<br>
+other way. And this (again from my embarrassing point of view) is far from<br>
+trivial piece of information.</p>
+</blockquote>
+<p>Yes, and that "other" way should be Isabelle/jEdit: it tries its best to<br>
+provide a uniform cross-platform view that always works.</p>
+<p>Gerwin wrote:</p>
+<blockquote>
+<blockquote>
+<p>I do appreciate that (and use it myself), but for the instructions it<br>
+doesn't work: if, as a user, you don't know what $ISABELLE_USER_HOME refers<br>
+to, you will not know which file to change, or how to adjust the path if you<br>
+have put the AFP in a different location to what the instructions expect. If<br>
+you have the concrete example, you have more information.</p>
+</blockquote>
+</blockquote>
+<p>I usually don't even know myself what $ISABELLE_HOME and $ISABELLE_HOME_USER<br>
+refer to on an arbitrary Isabelle installations.</p>
+<p>This is why I added convenient "Favorites" to the Isabelle/jEdit file-dialog<br>
+some years ago: it tells explicitly what the expanded form of the directory is<br>
+(in native path notation understandable by every Windows user).</p>
+<p>Yet another proposal to approximate instructions that actually work:</p>
+<p>* Use "isabelle -u MY_RELATIVE_PATH_TO_AFP" to register the main AFP<br>
+directory as Isabelle component (there is also "isabelle -x ..." to remove it.<br>
+(These operations are idempotent.)</p>
+<p>* Use command-line options "isabelle build -d '$AFP' ..." or "isabelle jedit<br>
+-d '$AFP' ..."</p>
+<p>* Or make this persistent by adding $AFP literally as a line in<br>
+$ISABELLE_HOME_USER/ROOTS (I never do that myself).</p>
+<p>For Windows everything shoukd be done in the Cygwin-Terminal from the Isabelle<br>
+distribution, for reproducible results.</p>
+<p>Makarius</p>
+
+<a name="228052477"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20AFP%20instructions/near/228052477" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/24806isabelleAFPinstructions.html#228052477">Email Gateway (Feb 27 2021 at 11:34)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+This should be "isabelle components -u MY_RELATIVE_PATH_TO_AFP".</p>
+<p>See also the following Isabelle2021/NEWS entry:</p>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>The command-line tool "isabelle components" supports new options -u<br>
+and -x to manage $ISABELLE_HOME_USER/etc/components without manual<br>
+editing of Isabelle configuration files.<p>Makarius</p>
+</li>
+</ul>
+
 
 {% endraw %}
 

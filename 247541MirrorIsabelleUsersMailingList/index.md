@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] SMT 2021 Workshop: Second Call for Papers](64756isabelleSMT2021WorkshopSecondCallforPapers.html) (1 message, latest: Feb 28 2021 at 10:48)
+
+* [\[isabelle\] FMBC 2021: First Call for Papers](83495isabelleFMBC2021FirstCallforPapers.html) (1 message, latest: Feb 28 2021 at 10:48)
+
 * [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (1 message, latest: Feb 27 2021 at 15:27)
 
 * [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (19 messages, latest: Feb 27 2021 at 12:29)

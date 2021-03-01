@@ -38,6 +38,27 @@ the ML files to the ROOT directory?</p>
 <p>Thanks,</p>
 <p>Mathias</p>
 
+<a name="228241640"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Using%20ML%20files%20in%20subdirectories%20for%20code%20.../near/228241640" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/90882isabelledevUsingMLfilesinsubdirectoriesforcode.html#228241640">Email Gateway (Mar 01 2021 at 14:43)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 01/03/2021 09:11, Mathias Fleury wrote:</p>
+<blockquote>
+<p>MLton.thy uses compile_generated_files to generate ML files, includes<br>
+parser.sml, and compile all files with MLton. This pattern now produces the<br>
+error message</p>
+<p>Illegal path specification "&lt;absolute_path&gt;/PAC_Checker/code/parser.sml"<br>
+    beyond base directory</p>
+<p>I tried to declare the "code" directory in the ROOT file, but this does not<br>
+solve the error. Is there a solution that does /not/ involve moving the ML<br>
+files to the ROOT directory?</p>
+</blockquote>
+<p>There is actually something wrong on my side (after moving<br>
+Isabelle_System.copy_base_file from ML to Scala).</p>
+<p>It should work properly now:</p>
+<p>changeset:   73331:d045cdbdf243<br>
+tag:         tip<br>
+user:        wenzelm</p>
+
 
 {% endraw %}
 

@@ -36,6 +36,50 @@ possibilities, and I don't think that raw ML processes are still needed. Are<br>
 there genuine counter examples to this claim?</p>
 <p>Makarius</p>
 
+<a name="228214650"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Remaining%20uses%20of%20%22isabelle%20process%22%20and%20%22isab.../near/228214650" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96171isabelleRemainingusesofisabelleprocessandisab.html#228214650">Email Gateway (Mar 01 2021 at 11:29)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+My scala-isabelle library currently uses 'isabelle process'. It uses it <br>
+in the following way:</p>
+<p>*  From a Scala application, the Isabelle process is invoked with '-e<br>
+    somefile.ML' where somefile.ML contains a loop that reads commands<br>
+    from one named pipe (or socket in Windows) and writes responses<br>
+    asynchronously to another named pipe (or socket).</p>
+<p>I would be happy to use Isabelle/Scala for this (or some other builtin <br>
+method), but I would like to keep the following features:</p>
+<p>* It should be possible that the Scala application starts Isabelle.<br>
+    (As opposed to the Scala application being invoked as a component in<br>
+    Isabelle.)</p>
+<p>* I do not want to have to install any components inside the Isabelle<br>
+    home / user home.<br>
+    (Because I want that an application that uses scala-isabelle can run<br>
+    with an existing Isabelle installation without the user having to do<br>
+    anything but tell the Scala application where Isabelle is located.<br>
+    In particular, I don't want to potentially mess up an existing<br>
+    installation.)</p>
+<p>* I do not want to use the PIDE protocol for communication between the<br>
+    Scala application and scala-isabelle (but instead my own binary<br>
+    protocol).<br>
+    (Because I got a factor 1000 or so in round-trip time when switching<br>
+    to my own minimalistic RPC protocol compared to libisabelle that<br>
+    used PIDE.)</p>
+<p>It may very well be that this can be easily achieved without 'isabelle <br>
+process' or Isabelle/Scala. For example, one idea would be to simply <br>
+load a theory in a headless noninteractive session that contains a <br>
+(nonterminating) ML_file command which contains the communication loop. <br>
+(Of course, this theory would never be included in a heap because it <br>
+does not terminate.) Or an ML_file command that forks the loop into a <br>
+separate thread and then returns. But I would need some tips for that <br>
+because my experiments with these things has mainly lead to me getting <br>
+some messages like "invalid execution id" etc.</p>
+<p>On the long run, I want to support Isabelle/Scala in scala-isabelle in <br>
+the sense that the existing Isabelle/Scala infrastructure should be an <br>
+optional mechanism how an scala-isabelle application can interact with <br>
+Isabelle. But here also my initial attempts ran into "invalid execution <br>
+id" like problems.</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

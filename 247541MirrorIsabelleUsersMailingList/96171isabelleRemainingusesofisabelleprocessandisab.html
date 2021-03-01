@@ -80,6 +80,66 @@ id" like problems.</p>
 <p>Best wishes,<br>
 Dominique.</p>
 
+<a name="228223496"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Remaining%20uses%20of%20%22isabelle%20process%22%20and%20%22isab.../near/228223496" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96171isabelleRemainingusesofisabelleprocessandisab.html#228223496">Email Gateway (Mar 01 2021 at 12:45)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 01/03/2021 12:02, Dominique Unruh wrote:</p>
+<blockquote>
+<p>My scala-isabelle library currently uses 'isabelle process'. It uses it in the<br>
+following way:</p>
+<p>* From a Scala application, the Isabelle process is invoked with '-e<br>
+    somefile.ML' where somefile.ML contains a loop that reads commands from<br>
+    one named pipe (or socket in Windows) and writes responses asynchronously<br>
+    to another named pipe (or socket).</p>
+</blockquote>
+<p>The proper way to invoke an Isabelle ML process in Scala is is via<br>
+isabelle.ML_Process() --- it has a lot of flexibility. At the same time I<br>
+reckon that this approach will not do the job, because it is not connected<br>
+properly to Isabelle/Scala via the PIDE protocol.</p>
+<blockquote>
+<p>* I do not want to use the PIDE protocol for communication between the Scala<br>
+    application and scala-isabelle (but instead my own binary protocol).<br>
+    (Because I got a factor 1000 or so in round-trip time when switching to my<br>
+    own minimalistic RPC protocol compared to libisabelle that used PIDE.)</p>
+</blockquote>
+<p>The PIDE protocol is already very minimalistic and efficient. Maybe you have<br>
+just noticed the default delay that was there until recently (after<br>
+Isabelle2021):</p>
+<p>user:        wenzelm<br>
+date:        Sat Feb 20 21:38:23 2021 +0100<br>
+files:       src/Pure/System/message_channel.ML<br>
+description:<br>
+more reactive protocol messages, e.g. for Scala.function (relevant for<br>
+Bash.process);</p>
+<p>Afterwards, the measured roundtrip for Scala.function is approx. 0..2ms.</p>
+<p>If there are remaining inconveniences, we can try to sort it out, but<br>
+dismissing PIDE is not an option.</p>
+<blockquote>
+<p>It may very well be that this can be easily achieved without 'isabelle<br>
+process' or Isabelle/Scala. For example, one idea would be to simply load a<br>
+theory in a headless noninteractive session that contains a (nonterminating)<br>
+ML_file command which contains the communication loop. (Of course, this theory<br>
+would never be included in a heap because it does not terminate.) Or an<br>
+ML_file command that forks the loop into a separate thread and then returns.<br>
+But I would need some tips for that because my experiments with these things<br>
+has mainly lead to me getting some messages like "invalid execution id" etc.</p>
+</blockquote>
+<p>How about using "isabelle server" or Headless.Session directly in<br>
+Isabelle/Scala? The rest is done declaratively within the PIDE document model,<br>
+without any homegrown protocols around it.</p>
+<p>There are many possibilities to do it correctly within the Isabelle framework,<br>
+without disrupting it.</p>
+<blockquote>
+<p>On the long run, I want to support Isabelle/Scala in scala-isabelle in the<br>
+sense that the existing Isabelle/Scala infrastructure should be an optional<br>
+mechanism how an scala-isabelle application can interact with Isabelle. But<br>
+here also my initial attempts ran into "invalid execution id" like problems.</p>
+</blockquote>
+<p>Once more: Isabelle/Scala (with PIDE protocol) is non-optional for<br>
+Isabelle/ML. In the next release this will be even more noticeable in everyday<br>
+use.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Download Isabelle2020](66174DownloadIsabelle2020.html) (6 messages, latest: Feb 27 2021 at 07:57)
+* [Download Isabelle2020](66174DownloadIsabelle2020.html) (7 messages, latest: Mar 01 2021 at 12:46)
 
 * [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (8 messages, latest: Feb 18 2021 at 18:30)
 

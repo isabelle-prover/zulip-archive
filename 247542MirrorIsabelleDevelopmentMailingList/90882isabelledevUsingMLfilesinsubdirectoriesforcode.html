@@ -1,0 +1,44 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247542MirrorIsabelleDevelopmentMailingList/90882isabelledevUsingMLfilesinsubdirectoriesforcode.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/index.html">Mirror: Isabelle Development Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/90882isabelledevUsingMLfilesinsubdirectoriesforcode.html">[isabelle-dev] Using ML files in subdirectories for code ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="228193676"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Using%20ML%20files%20in%20subdirectories%20for%20code%20.../near/228193676" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/90882isabelledevUsingMLfilesinsubdirectoriesforcode.html#228193676">Email Gateway (Mar 01 2021 at 08:11)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi all,</p>
+<p>my AFP entry stopped compiling recently <br>
+(<a href="https://ci.isabelle.systems/jenkins/job/isabelle-all/2675/">https://ci.isabelle.systems/jenkins/job/isabelle-all/2675/</a>) due to the <br>
+inclusion of inclusion of ML files in subdirectories. This works in <br>
+Isabelle2021.</p>
+<p>The  simplified structure is the following:</p>
+<p>PAC_Checker</p>
+<p>|--- ROOT</p>
+<p>|--- ...</p>
+<p>|--- MLton.thy</p>
+<p>\--- code</p>
+<p>\--- parser.sml</p>
+<p>MLton.thy uses compile_generated_files to generate ML files, includes <br>
+parser.sml, and compile all files with MLton. This pattern now produces <br>
+the error message</p>
+<p>Illegal path specification<br>
+    "&lt;absolute_path&gt;/PAC_Checker/code/parser.sml" beyond base directory</p>
+<p>I tried to declare the "code" directory in the ROOT file, but this does <br>
+not solve the error. Is there a solution that does /not/ involve moving <br>
+the ML files to the ROOT directory?</p>
+<p>Thanks,</p>
+<p>Mathias</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

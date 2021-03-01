@@ -22,6 +22,34 @@ Hi, everyone,</p>
 <p>Regards,<br>
 Boris</p>
 
+<a name="228229276"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Python%20client%20to%20Isabelle%20server/near/228229276" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/59126isabellePythonclienttoIsabelleserver.html#228229276">Email Gateway (Mar 01 2021 at 13:29)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Great. I don't know Python myself and was hoping that someone else would start<br>
+connecting it systematically to the Isabelle server.</p>
+<p>Your implementation looks mostly clear and straightforward. Just a few<br>
+spontaneous comments on current version d28d72f2c69e:</p>
+<p>* examples/dummy.thy: Isabelle theories should have a capitalized name;<br>
+imports for Isabelle/HOL below the checkpoint "Main" should be avoided, to<br>
+avoid exposing the complexity of the theory/ML bootstrap to applications.</p>
+<p>* examples/example.py "isabelle server &gt; <a href="http://server.info">server.info</a>": Here you ask user to<br>
+start the server and provide its "info" to the Python function. Can this be<br>
+done by Python as well? There is a technical delicacy behind it due to the way<br>
+how the process is started and how it outputs the stdout message (this is not<br>
+a regular Unix "daemon", because of the surrounding JVM).</p>
+<p>* For the low-level message formats (plain line, or line with length<br>
+followed by that number of bytes), see also these reference implementations in<br>
+ML, Scala, Haskell --- it could make sense to follow the signatures more closely:</p>
+<p><a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/Pure/PIDE/byte_message.ML">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/Pure/PIDE/byte_message.ML</a></p>
+<p><a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/Pure/PIDE/byte_message.scala">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/Pure/PIDE/byte_message.scala</a></p>
+<p><a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/Tools/Haskell/Haskell.thy#l1682">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/Tools/Haskell/Haskell.thy#l1682</a></p>
+<p>* isabelle_client.use_theories: here the bulk of prover messages appear in<br>
+the response, but there is no way to "tap" into incremental message output as<br>
+it occurs. This will be probably one of the first "feature requests" (or<br>
+rather "pull requests) when some other Isabelle users discover your Python<br>
+project.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

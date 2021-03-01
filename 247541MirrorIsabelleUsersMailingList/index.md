@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (2 messages, latest: Mar 01 2021 at 13:29)
+
 * [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (3 messages, latest: Mar 01 2021 at 12:45)
 
 * [\[isabelle\] New in the AFP: The Sunflower Lemma of Erdős a...](19203isabelleNewintheAFPTheSunflowerLemmaofErdsa.html) (1 message, latest: Mar 01 2021 at 12:37)
@@ -24,8 +26,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] FMBC 2021: First Call for Papers](83495isabelleFMBC2021FirstCallforPapers.html) (1 message, latest: Feb 28 2021 at 10:48)
 
 * [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (12 messages, latest: Feb 26 2021 at 16:28)
-
-* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (1 message, latest: Feb 26 2021 at 15:56)
 
 * [\[isabelle\] Nitpick Codatatype - No Counterexample found](60396isabelleNitpickCodatatypeNoCounterexamplefound.html) (1 message, latest: Feb 26 2021 at 10:36)
 

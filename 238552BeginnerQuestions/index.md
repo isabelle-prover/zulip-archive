@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Nitpick and Sledgehammer both succesfull](81114NitpickandSledgehammerbothsuccesfull.html) (1 message, latest: Mar 02 2021 at 10:12)
+
 * [Numeric type conversion](74620Numerictypeconversion.html) (15 messages, latest: Feb 25 2021 at 23:51)
 
 * [Where is Isabelle/LK](10495WhereisIsabelleLK.html) (1 message, latest: Feb 23 2021 at 21:06)

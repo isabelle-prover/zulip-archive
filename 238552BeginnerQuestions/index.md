@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Nitpick and Sledgehammer both succesfull](81114NitpickandSledgehammerbothsuccesfull.html) (1 message, latest: Mar 02 2021 at 10:12)
+* [Nitpick and Sledgehammer both succesfull](81114NitpickandSledgehammerbothsuccesfull.html) (5 messages, latest: Mar 02 2021 at 12:03)
 
 * [Numeric type conversion](74620Numerictypeconversion.html) (15 messages, latest: Feb 25 2021 at 23:51)
 

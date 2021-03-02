@@ -1,0 +1,98 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/07028isabelleFixingtypevariablesinlocales.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/07028isabelleFixingtypevariablesinlocales.html">[isabelle] Fixing type variables in locales</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="228408139"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Fixing%20type%20variables%20in%20locales/near/228408139" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/07028isabelleFixingtypevariablesinlocales.html#228408139">Email Gateway (Mar 02 2021 at 13:23)</a>:</h4>
+<p>From: Wolfgang Jeltsch &lt;<a href="mailto:wolfgang-it@jeltsch.info">wolfgang-it@jeltsch.info</a>&gt;<br>
+Hello!</p>
+<p>I want to define a locale that (among other things) fixes a type <code>'a</code><br>
+and assumes that the type <code>'a</code> is infinite but doesn’t fix any variables<br>
+with types that include <code>'a</code>.</p>
+<p>I can write the following:</p>
+<p>locale l = assumes "infinite (UNIV :: 'a set)"</p>
+<p>This results in the following output:</p>
+<p>locale l<br>
+      assumes "l TYPE('a)" <br>
+    Additional type variable(s) in locale specification "l": 'a</p>
+<p>Unfortunately, it seems that I cannot really make use of this type<br>
+variable later. Let’s say I add the following declaration to the locale<br>
+context:</p>
+<p>type_synonym t = "'a ⇒ 'a"</p>
+<p>This results in the following output, of which the “Extra variables”<br>
+part is an error message:</p>
+<p>Ignoring sort constraints in type variables(s): "'a"<br>
+    in type abbreviation "t" <br>
+    Extra variables on rhs: "'a"<br>
+    The error(s) above occurred in type abbreviation "t"</p>
+<p>I can also try out the following declaration:</p>
+<p>type_synonym 'a t = "'a ⇒ 'a"</p>
+<p>However, this results in the following error message:</p>
+<p>Locally fixed type arguments "'a" in type declaration "t"</p>
+<p>How can I achieve what I want?</p>
+<p>All the best,<br>
+Wolfgang</p>
+
+<a name="228409863"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Fixing%20type%20variables%20in%20locales/near/228409863" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/07028isabelleFixingtypevariablesinlocales.html#228409863">Email Gateway (Mar 02 2021 at 13:36)</a>:</h4>
+<p>From: Christian Sternagel &lt;<a href="mailto:c.sternagel@gmail.com">c.sternagel@gmail.com</a>&gt;<br>
+Dear Wolfgang,</p>
+<p>On Tue, Mar 2, 2021, 14:25 Wolfgang Jeltsch &lt;<a href="mailto:wolfgang-it@jeltsch.info">wolfgang-it@jeltsch.info</a>&gt;<br>
+wrote:</p>
+<blockquote>
+<p>Hello!</p>
+<p>I want to define a locale that (among other things) fixes a type <code>'a</code><br>
+and assumes that the type <code>'a</code> is infinite but doesn’t fix any variables<br>
+with types that include <code>'a</code>.</p>
+<p>I can write the following:</p>
+<p>locale l = assumes "infinite (UNIV :: 'a set)"<br>
+</p>
+</blockquote>
+<p>I think this assumption is fine. The problems below result from incorrect<br>
+usage of type_synonym. But that is not really related to the initial<br>
+question of fixing a type variable for some infinite type.</p>
+<p>I don't think that type_synonym is localized (and I'm unsure whether it<br>
+could be made so). If that assumption is correct then type_synonym only<br>
+makes sense in a global context.</p>
+<p>cheers</p>
+<p>chris</p>
+<blockquote>
+<p>This results in the following output:</p>
+<p>locale l<br>
+      assumes "l TYPE('a)"<br>
+    Additional type variable(s) in locale specification "l": 'a</p>
+<p>Unfortunately, it seems that I cannot really make use of this type<br>
+variable later. Let’s say I add the following declaration to the locale<br>
+context:</p>
+<p>type_synonym t = "'a ⇒ 'a"</p>
+</blockquote>
+<blockquote>
+<p>This results in the following output, of which the “Extra variables”<br>
+part is an error message:</p>
+<p>Ignoring sort constraints in type variables(s): "'a"<br>
+    in type abbreviation "t"<br>
+    Extra variables on rhs: "'a"<br>
+    The error(s) above occurred in type abbreviation "t"</p>
+<p>I can also try out the following declaration:</p>
+<p>type_synonym 'a t = "'a ⇒ 'a"</p>
+<p>However, this results in the following error message:</p>
+<p>Locally fixed type arguments "'a" in type declaration "t"</p>
+<p>How can I achieve what I want?</p>
+<p>All the best,<br>
+Wolfgang</p>
+</blockquote>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

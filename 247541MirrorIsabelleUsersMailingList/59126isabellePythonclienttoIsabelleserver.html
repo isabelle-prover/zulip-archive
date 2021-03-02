@@ -50,6 +50,47 @@ rather "pull requests) when some other Isabelle users discover your Python<br>
 project.</p>
 <p>Makarius</p>
 
+<a name="228413198"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Python%20client%20to%20Isabelle%20server/near/228413198" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/59126isabellePythonclienttoIsabelleserver.html#228413198">Email Gateway (Mar 02 2021 at 13:59)</a>:</h4>
+<p>From: Boris Shminke via Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>Great. I don't know Python myself and was hoping that someone else would start<br>
+connecting it systematically to the Isabelle server.</p>
+</blockquote>
+<p>Thank you:)</p>
+<blockquote>
+<p>imports for Isabelle/HOL below the checkpoint "Main" should be avoided, to<br>
+    avoid exposing the complexity of the theory/ML bootstrap to applications.</p>
+</blockquote>
+<p>Do you mean one should change 'imports HOL.Nitpick' to 'imports Main'?</p>
+<blockquote>
+<p>Can this be done by Python as well? There is a technical delicacy behind it due to the way<br>
+how the process is started and how it outputs the stdout message (this is not<br>
+a regular Unix "daemon", because of the surrounding JVM).</p>
+</blockquote>
+<p>Do you mean one should add a function <code>start_isabelle_server</code> which, e.g. runs <code>isabelle server</code> command and returns 'info'?</p>
+<blockquote>
+<ul>
+<li>For the low-level message formats (plain line, or line with length<br>
+    followed by that number of bytes), see also these reference implementations in<br>
+    ML, Scala, Haskell --- it could make sense to follow the signatures more closely:</li>
+</ul>
+</blockquote>
+<p>Yes, that's good idea! I already look at the code and find it a bit primitive, so consulting some Scala code might be helpful to get some insights in doing it right.</p>
+<blockquote>
+<ul>
+<li>isabelle_client.use_theories: here the bulk of prover messages appear in<br>
+    the response, but there is no way to "tap" into incremental message output as<br>
+    it occurs. This will be probably one of the first "feature requests" (or<br>
+    rather "pull requests) when some other Isabelle users discover your Python<br>
+    project.</li>
+</ul>
+</blockquote>
+<p>Yes, I already thought about that. I've created several issues following this email here: <a href="https://github.com/inpefess/isabelle-client/issues">https://github.com/inpefess/isabelle-client/issues</a>.</p>
+<p>Thank you for helpful comments!</p>
+<p>Cheers,<br>
+Boris</p>
+
 
 {% endraw %}
 

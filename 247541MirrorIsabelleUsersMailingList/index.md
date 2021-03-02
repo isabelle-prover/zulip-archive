@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (4 messages, latest: Mar 02 2021 at 17:53)
+
 * [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (4 messages, latest: Mar 02 2021 at 14:34)
 
 * [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (3 messages, latest: Mar 02 2021 at 13:59)
@@ -16,8 +18,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Code generation for a subtype with free_constr...](50133isabelleCodegenerationforasubtypewithfreeconstr.html) (1 message, latest: Mar 02 2021 at 11:55)
 
 * [\[isabelle\] Working with list symmetry (Attributes for the...](83806isabelleWorkingwithlistsymmetryAttributesforthe.html) (1 message, latest: Mar 02 2021 at 10:33)
-
-* [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (2 messages, latest: Mar 02 2021 at 09:58)
 
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (8 messages, latest: Mar 01 2021 at 14:09)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (1 message, latest: Mar 02 2021 at 06:53)
+
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (8 messages, latest: Mar 01 2021 at 14:09)
 
 * [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (2 messages, latest: Mar 01 2021 at 13:29)

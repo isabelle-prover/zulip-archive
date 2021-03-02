@@ -92,6 +92,32 @@ part is an error message:</p>
 Wolfgang</p>
 </blockquote>
 
+<a name="228413436"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Fixing%20type%20variables%20in%20locales/near/228413436" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/07028isabelleFixingtypevariablesinlocales.html#228413436">Email Gateway (Mar 02 2021 at 14:00)</a>:</h4>
+<p>From: "Thiemann, René" &lt;<a href="mailto:Rene.Thiemann@uibk.ac.at">Rene.Thiemann@uibk.ac.at</a>&gt;<br>
+Dear Wolfgang,</p>
+<p>you can get rid of the warning of the locale declaration by added some dummy argument that<br>
+fixes the type. For example,</p>
+<p>locale l = <br>
+  fixes ty :: "'a itself” <br>
+  assumes "infinite (UNIV :: 'a set)”</p>
+<p>as for the type_synonym problem, I think that Chris already hit the point.</p>
+<p>Best,<br>
+René</p>
+
+<a name="228419195"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Fixing%20type%20variables%20in%20locales/near/228419195" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/07028isabelleFixingtypevariablesinlocales.html#228419195">Email Gateway (Mar 02 2021 at 14:34)</a>:</h4>
+<p>From: Wolfgang Jeltsch &lt;<a href="mailto:wolfgang-it@jeltsch.info">wolfgang-it@jeltsch.info</a>&gt;<br>
+Ah, that makes sense. Thanks for this explanation.</p>
+<p>Initially I thought that the impossibility of using <code>type_synonym</code> in<br>
+the way I wanted would pose a problem, but it seems that it can be<br>
+worked around. My solution is to leave the locale context immediately<br>
+after declaring the locale, declare the type synonym outside the locale<br>
+context, and add <code>(in l)</code> to every lemma that needs the infinity<br>
+constraint. This seems to work fine for me.</p>
+<p>All the best,<br>
+Wolfgang</p>
+
 
 {% endraw %}
 

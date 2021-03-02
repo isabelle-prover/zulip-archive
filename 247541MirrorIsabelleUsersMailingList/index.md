@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (3 messages, latest: Mar 02 2021 at 13:59)
+* [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (4 messages, latest: Mar 02 2021 at 14:34)
 
-* [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (2 messages, latest: Mar 02 2021 at 13:36)
+* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (3 messages, latest: Mar 02 2021 at 13:59)
 
 * [\[isabelle\] Code generation for a subtype with free_constr...](50133isabelleCodegenerationforasubtypewithfreeconstr.html) (1 message, latest: Mar 02 2021 at 11:55)
 

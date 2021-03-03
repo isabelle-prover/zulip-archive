@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (1 message, latest: Mar 03 2021 at 10:01)
+
 * [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (4 messages, latest: Mar 02 2021 at 17:53)
 
 * [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (4 messages, latest: Mar 02 2021 at 14:34)

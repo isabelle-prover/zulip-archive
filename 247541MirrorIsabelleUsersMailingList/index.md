@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Towards a formalization of elements of the fou...](97786isabelleTowardsaformalizationofelementsofthefou.html) (1 message, latest: Mar 03 2021 at 20:13)
+
 * [\[isabelle\] building the document in Windows from Isabelle...](49353isabellebuildingthedocumentinWindowsfromIsabelle.html) (1 message, latest: Mar 03 2021 at 18:10)
 
 * [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (6 messages, latest: Mar 03 2021 at 14:14)

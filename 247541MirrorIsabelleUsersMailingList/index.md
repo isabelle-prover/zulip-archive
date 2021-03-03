@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (5 messages, latest: Mar 03 2021 at 11:15)
+* [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (6 messages, latest: Mar 03 2021 at 14:14)
 
 * [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (1 message, latest: Mar 03 2021 at 10:01)
 

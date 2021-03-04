@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (4 messages, latest: Mar 04 2021 at 22:30)
+
 * [\[isabelle\] ATVA 2021 - Second Call for Papers](90946isabelleATVA2021SecondCallforPapers.html) (1 message, latest: Mar 04 2021 at 16:51)
 
 * [\[isabelle\] SPIN 2021 - Deadline extension to April 20](14390isabelleSPIN2021DeadlineextensiontoApril20.html) (1 message, latest: Mar 04 2021 at 10:24)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (1 message, latest: Mar 03 2021 at 10:01)
 
 * [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (4 messages, latest: Mar 02 2021 at 17:53)
-
-* [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (3 messages, latest: Mar 02 2021 at 13:59)
 
 * [\[isabelle\] Code generation for a subtype with free_constr...](50133isabelleCodegenerationforasubtypewithfreeconstr.html) (1 message, latest: Mar 02 2021 at 11:55)
 

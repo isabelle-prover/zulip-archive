@@ -91,6 +91,29 @@ a regular Unix "daemon", because of the surrounding JVM).</p>
 <p>Cheers,<br>
 Boris</p>
 
+<a name="228862635"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Python%20client%20to%20Isabelle%20server/near/228862635" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/59126isabellePythonclienttoIsabelleserver.html#228862635">Email Gateway (Mar 04 2021 at 22:30)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 02/03/2021 14:58, Boris Shminke wrote:</p>
+<blockquote>
+<blockquote>
+<p>imports for Isabelle/HOL below the checkpoint "Main" should be avoided, to<br>
+    avoid exposing the complexity of the theory/ML bootstrap to applications.</p>
+</blockquote>
+<p>Do you mean one should change 'imports HOL.Nitpick' to 'imports Main'?</p>
+</blockquote>
+<p>Yes, Main is the default import for Isabelle/HOL applications.</p>
+<blockquote>
+<blockquote>
+<p>Can this be done by Python as well? There is a technical delicacy behind it due to the way<br>
+how the process is started and how it outputs the stdout message (this is not<br>
+a regular Unix "daemon", because of the surrounding JVM).</p>
+</blockquote>
+<p>Do you mean one should add a function <code>start_isabelle_server</code> which, e.g. runs <code>isabelle server</code> command and returns 'info'?</p>
+</blockquote>
+<p>Yes.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

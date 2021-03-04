@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] ATVA 2021 - Second Call for Papers](90946isabelleATVA2021SecondCallforPapers.html) (1 message, latest: Mar 04 2021 at 16:51)
+
 * [\[isabelle\] SPIN 2021 - Deadline extension to April 20](14390isabelleSPIN2021DeadlineextensiontoApril20.html) (1 message, latest: Mar 04 2021 at 10:24)
 
 * [\[isabelle\] Towards a formalization of elements of the fou...](97786isabelleTowardsaformalizationofelementsofthefou.html) (1 message, latest: Mar 03 2021 at 20:13)

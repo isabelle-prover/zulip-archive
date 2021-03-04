@@ -57,6 +57,22 @@ permalink: ./202961general/16819Isabelle2021instability.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Isabelle2021%20instability/near/228722779" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/16819Isabelle2021instability.html#228722779">Mathias Fleury (Mar 04 2021 at 06:08)</a>:</h4>
 <p>When editing long proof and something breaks, I add a <code>oops</code> to make sure Isabelle is not running something (like metis or blast).</p>
 
+<a name="228750249"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Isabelle2021%20instability/near/228750249" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/16819Isabelle2021instability.html#228750249">Max Nowak (Mar 04 2021 at 10:44)</a>:</h4>
+<p>ML isn't the issue I think, it's got to be something else. Looking into the java monitoring console, I spotted a thread which seems to be running a solver all the time, even though there's nothing to do currently in my file, the stack trace is never in any waiting method, and instead always in <code>kodkod.engine.Solver.solve()</code> or deeper. And exactly one of my cores is currently fully loaded, so I assume it's just this thread too? Gut feeling tells me there's some issue killing the solvers once they're no longer needed and/or starting too many. Or maybe it's just an intended background task.</p>
+
+<a name="228750720"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Isabelle2021%20instability/near/228750720" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/16819Isabelle2021instability.html#228750720">Mathias Fleury (Mar 04 2021 at 10:48)</a>:</h4>
+<p>I know that some threads have moved from ML to Scala (aka java), like Kodkod. But I have no idea what happens in your case. You could try to deactivate auto_nitpick, but I don't know if this helps</p>
+
+<a name="228750836"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Isabelle2021%20instability/near/228750836" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/16819Isabelle2021instability.html#228750836">Lukas Stevens (Mar 04 2021 at 10:49)</a>:</h4>
+<p>I have a similar problem in Isabelle2020 when editing a file with two long proofs. After some time Isabelle greys out repeatedly but without Isabelle nor the system going out of memory. It is especially surprising since the file does not depend on other theories and the file itself is not too long (~700 lines).</p>
+
+<a name="228751187"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-general/topic/Isabelle2021%20instability/near/228751187" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961general/16819Isabelle2021instability.html#228751187">Max Nowak (Mar 04 2021 at 10:53)</a>:</h4>
+<p>Same theories, but isabelle2020 and everything is just fine for me.</p>
+
 
 {% endraw %}
 

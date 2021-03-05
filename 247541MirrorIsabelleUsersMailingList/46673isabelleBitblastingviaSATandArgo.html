@@ -1,0 +1,94 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/46673isabelleBitblastingviaSATandArgo.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/46673isabelleBitblastingviaSATandArgo.html">[isabelle] Bitblasting via SAT and Argo</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="228944697"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Bitblasting%20via%20SAT%20and%20Argo/near/228944697" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/46673isabelleBitblastingviaSATandArgo.html#228944697">Email Gateway (Mar 05 2021 at 12:29)</a>:</h4>
+<p>From: Thomas Sewell &lt;<a href="mailto:tals4@cam.ac.uk">tals4@cam.ac.uk</a>&gt;<br>
+Hi Isabelle users.</p>
+<p>I've been doing some proofs in Isabelle about operations of a CPU<br>
+architecture lately[1]. Sometimes this just requires bit-blasting, i.e.<br>
+reduction of a word/bitvector problem to a boolean problem for <br>
+sat-solving.<br>
+I've got some satisfactory results using an adjusted version of the old<br>
+Word_Bitwise and the Argo prover. I don't think there's currently a <br>
+better<br>
+approach in Isabelle, since replay of SMT word/bitvector proofs was <br>
+never<br>
+enabled. (Please tell me if I'm misinformed, I don't seem to be up to <br>
+date<br>
+about any of this, and there's a note about veriT and a session<br>
+HOL-Word-SMT_Examples in the Isabelle 2021 NEWS that I don't <br>
+understand.)</p>
+<p>I'll try to make an adjusted/improved Word_Bitwise available in the<br>
+future, but my version is still quite experimental.</p>
+<p>I have been pleasantly surprised how effective Argo was for SAT-like <br>
+problems.<br>
+Given that, I'd like to make some suggestions, mostly about <br>
+documentation.</p>
+<p>I think that some kind of note should be added to the SAT theory, or the<br>
+sat/satx methods and tactics, given that most users should just call <br>
+argo<br>
+directly. SAT is the logical place to look for a solver for sat-like <br>
+problems,<br>
+and the provided default SAT/CDCL solver used by the sat/satx methods is<br>
+just not as good as the equivalent implemented within argo. Meanwhile <br>
+there's<br>
+and unsolved problem with explosion of the problem size in satx <br>
+preprocessing.<br>
+In principle an external solver might have power that an inbuilt one <br>
+doesn't,<br>
+but my quick investigation suggests that most of the supported external <br>
+SAT<br>
+solvers are obscure or historical.</p>
+<p>Another minor documentation complaint is that Argo is pretty well <br>
+documented in<br>
+HOL/ex/Argo_Examples.thy, but it took me a while to think to look there. <br>
+In<br>
+particular, for medium-size SAT problems a user may have to increase <br>
+argo_timeout,<br>
+and it's not necessarily obvious where to find it. Perhaps a link to the <br>
+examples<br>
+in Argo.thy itself?</p>
+<p>Finally, some practical issues. While argo generally performs well, in <br>
+some<br>
+situations I've seen a big difference between the speed of "apply <br>
+(argo)" and<br>
+"apply (intro impI; argo)". Note that I don't want to just apply <br>
+clarsimp or<br>
+similar here for various performance reasons, which is probably unusual.<br>
+Anyway I don't really understand why an SMT/SAT tool would perform so <br>
+differently<br>
+for obviously similar goals. I've also discovered what is probably an <br>
+outright bug.<br>
+A particular kind of trivial premise seems to lead to ML exceptions of <br>
+the form<br>
+"Undeclared hyps: ..." or "forall_intr: variable .. free in <br>
+assumptions". I think<br>
+the second might be side-effect of the first. Again, simplification <br>
+prevents this<br>
+issue, but I have performance reasons to prefer to use the simplifier as <br>
+little as<br>
+possible.</p>
+<p>I've checked these issues still exists in Isabelle 2021, and I attach a <br>
+theory which<br>
+demonstrates them. Are there any experts who might be interested in <br>
+helping me debug<br>
+these?</p>
+<p>Cheers,<br>
+     Thomas.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

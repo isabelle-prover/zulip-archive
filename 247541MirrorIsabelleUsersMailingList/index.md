@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (1 message, latest: Mar 05 2021 at 12:35)
+
+* [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (1 message, latest: Mar 05 2021 at 12:29)
+
+* [\[isabelle\] New in the AFP: Mereology](21440isabelleNewintheAFPMereology.html) (1 message, latest: Mar 05 2021 at 12:09)
+
 * [\[isabelle\] Isabelle 2021 Word Library](03313isabelleIsabelle2021WordLibrary.html) (3 messages, latest: Mar 05 2021 at 11:12)
 
 * [\[isabelle\] Python client to Isabelle server](59126isabellePythonclienttoIsabelleserver.html) (4 messages, latest: Mar 04 2021 at 22:30)

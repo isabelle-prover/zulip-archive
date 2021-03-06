@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (2 messages, latest: Mar 06 2021 at 09:03)
+
 * [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (1 message, latest: Mar 06 2021 at 00:30)
 
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (1 message, latest: Mar 05 2021 at 12:35)
@@ -30,8 +32,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] building the document in Windows from Isabelle...](49353isabellebuildingthedocumentinWindowsfromIsabelle.html) (1 message, latest: Mar 03 2021 at 18:10)
 
 * [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (6 messages, latest: Mar 03 2021 at 14:14)
-
-* [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (1 message, latest: Mar 03 2021 at 10:01)
 
 * [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (4 messages, latest: Mar 02 2021 at 17:53)
 

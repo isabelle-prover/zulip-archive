@@ -33,6 +33,40 @@ b=2*)<br>
 <p>The thy file is attached.<br>
 <a href="/user_uploads/14278/ryIHGLnnGuO7sflQumsxtvGZ/question.thy">question.thy</a></p>
 
+<a name="229081355"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Nitpick%20finds%20counterexample%20to%20proven%20lemma/near/229081355" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/14933isabelleNitpickfindscounterexampletoprovenlemma.html#229081355">Email Gateway (Mar 06 2021 at 09:03)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt;<br>
+Hi,</p>
+<p>in order to understand what is happening in Nitpick you can add <br>
+parameters (see the User's Guide in the Isabelle documentation).<br>
+In your example, putting<br>
+nitpick[show_all, eval =  "rat_of_int a * Fract 1 b" "Fract  a b" "λ x <br>
+y. Fract x y"]<br>
+I obtain</p>
+<p>Nitpick found a counterexample:<br>
+   Free variables:<br>
+     a = 2<br>
+     b = 2<br>
+   Evaluated terms:<br>
+     rat_of_int a * Fract 1 b = 1<br>
+     Fract a b = _
+     Fract =<br>
+       (λx. _)<br>
+       (- 1 := (λx. _)(0 := 0), 0 := (λx. _)(0 := 0, 1 := 0),<br>
+        1 := (λx. _)(0 := 0, 1 := 1, 2 := 1 div 2), 2 := (λx. _)(0 := 0, <br>
+1 := 2))<br>
+   Types:<br>
+     nat = {0, 1, 2, 3, …}<br>
+     int = {- 1, 0, 1, 2, …}<br>
+     rat = {0, 1 / 2, 1, 2, …}</p>
+<p>You can see here that Nitpick approximates infinite types with a small <br>
+model, where ... represents a single additional element.<br>
+ From the output you see how Fract is defined in this model.  While <br>
+Fract 1 2 = 1 div 2,  Fract 2 2 is undefined. Whence the fake <br>
+counterexample.</p>
+<p>Best</p>
+<p>Stepan</p>
+
 
 {% endraw %}
 

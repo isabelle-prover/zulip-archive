@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (1 message, latest: Mar 06 2021 at 00:30)
+
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (1 message, latest: Mar 05 2021 at 12:35)
 
 * [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (1 message, latest: Mar 05 2021 at 12:29)

@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (2 messages, latest: Mar 06 2021 at 09:03)
+* [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (2 messages, latest: Mar 06 2021 at 23:16)
 
-* [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (1 message, latest: Mar 06 2021 at 00:30)
+* [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (2 messages, latest: Mar 06 2021 at 09:03)
 
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (1 message, latest: Mar 05 2021 at 12:35)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (1 message, latest: Mar 07 2021 at 11:01)
+
 * [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (2 messages, latest: Mar 06 2021 at 23:16)
 
 * [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (2 messages, latest: Mar 06 2021 at 09:03)

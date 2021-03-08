@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (4 messages, latest: Mar 08 2021 at 10:26)
+* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (5 messages, latest: Mar 08 2021 at 11:49)
 
 * [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (2 messages, latest: Mar 07 2021 at 18:27)
 

@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (3 messages, latest: Mar 08 2021 at 17:17)
+* [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (2 messages, latest: Mar 08 2021 at 18:56)
 
-* [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (1 message, latest: Mar 08 2021 at 13:36)
+* [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (3 messages, latest: Mar 08 2021 at 17:17)
 
 * [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (6 messages, latest: Mar 08 2021 at 12:41)
 

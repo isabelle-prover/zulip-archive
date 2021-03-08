@@ -228,6 +228,92 @@ are presently at Java 15, soon at Java 17), but I did not have time to<br>
 investigate (and no particular reason for doing it).</p>
 <p>Makarius</p>
 
+<a name="229291790"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Remaining%20uses%20of%20%22isabelle%20process%22%20and%20%22isab.../near/229291790" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96171isabelleRemainingusesofisabelleprocessandisab.html#229291790">Email Gateway (Mar 08 2021 at 12:41)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 08/03/2021 10:49, Dominique Unruh wrote:</p>
+<blockquote>
+<blockquote>
+<p>The proper way to invoke an Isabelle ML process in Scala is is via<br>
+isabelle.ML_Process() --- it has a lot of flexibility. At the same time I<br>
+reckon that this approach will not do the job, because it is not connected<br>
+properly to Isabelle/Scala via the PIDE protocol.</p>
+</blockquote>
+<p>I confirm that I got things to work this way. I am using the following code:</p>
+<p>override def startIsabelleProcess(cwd: Path, mlCode: String, logic: String,<br>
+                                        sessionRoots: Array[Path], build: Boolean,<br>
+                                        userDir: Optional[Path]): Process = {<br>
+    Isabelle_System.init(isabelle_root = isabelleRoot.toString)<br>
+        val channel = System_Channel()<br>
+        val options = Options.init()<br>
+        val channel_options = options.string.update("system_channel_address", channel.address).<br>
+          string.update("system_channel_password", channel.password)</p>
+<p>val sessionRoots2 = sessionRoots.map(p =&gt; isabelle.Path.explode(p.toString)).toList<br>
+        val sessions_structure = Sessions.load_structure(options = options, dirs = sessionRoots2)<br>
+        val store = Sessions.store(options)</p>
+<p>if (build) {<br>
+    Isabelle_Thread.fork(name = "Build Isabelle", daemon = true) {<br>
+            Build.build_logic(options = options, logic = logic, build_heap = true, dirs = sessionRoots2)<br>
+          }.join()<br>
+        }</p>
+<p>ML_Process(channel_options, sessions_structure, store, eval_main = mlCode, logic = logic, cwd = cwd.toFile)<br>
+      }</p>
+<p>Can you confirm that I am using the proper functions here? (Most of it is<br>
+guess work and try and error.)</p>
+</blockquote>
+<p>It looks fine as a start. Just a few side-remarks:</p>
+<p>* It is better to invoke Isabelle_System.init() only once at the start of<br>
+the application, not for each Isabelle process.</p>
+<p>* Likewise it is better to invoke Options.init() only once, and later pass<br>
+around (options: Options) in a purely functional manner.</p>
+<p>* sessionRoots: Array[Path] looks very strange. Are you trying to imitate<br>
+very old Java conventions (or Eclipse)? Array is the worst data structure<br>
+ever. In recent Java, I see more and more uses of java.util.List, together<br>
+with convenient List.of() functions to create adhoc instances. And Scala 2.13<br>
+has good conversions asJava / asScala --- not that I using that myself, unless<br>
+there is no way around it.</p>
+<p>* isabelle.Path.explode(p.toString) looks quite fragile; it is unlikely to<br>
+work on Windows. Assuming that your Path type is java.nio.file.Path you can<br>
+use isabelle.File.path(path.toFile)</p>
+<p>* cwd could be null (a rare exception in Isabelle/Scala signatures!) and<br>
+thus cwd.toFile could crash.</p>
+<p>* Instead of Isabelle_Thread.fork, I often use the more convenient<br>
+Future.thread.</p>
+<p>Anyway, the above would merely replace the external "isabelle process" by<br>
+internal Isabelle/Scala operations. It does not address the problem of a<br>
+missing PIDE session context for Isabelle/ML/Scala function invocations ---<br>
+the starting point of this thread.</p>
+<p>You can probably get through with isabelle.Isabelle_Process instead of<br>
+isabelle.ML_Process: that will also take care of the System_Channel.</p>
+<p>Note that a PIDE session/protocol context does not necessarily mean PIDE<br>
+document model: <a href="http://Build.build">Build.build</a> does a regular batch-build within that context,<br>
+without any Document.update.</p>
+<p>The point of the whole exercise is to have official protocol commands and<br>
+protocol messages, instead of low-level stream communication.</p>
+<blockquote>
+<p>And one additional question: Is there a way to set the Isabelle user home?</p>
+</blockquote>
+<p>You can do it indirectly by giving an alternative ISABELLE_IDENTIFIER, e.g.<br>
+like this on the command-line:</p>
+<p>env ISABELLE_IDENTIFIER=My_Great_App_for_Isabelle2021<br>
+Isabelle2011/bin/isabelle getenv ISABELLE_HOME_USER<br>
+ISABELLE_HOME_USER=/home/makarius/.isabelle/My_Great_App_for_Isabelle2021</p>
+<p>That environment needs to be present for Isabelle_System.init().</p>
+<blockquote>
+<p>One more question: I am passing the session root directories both to<br>
+Sessions.load_structure and to Build.build_logic. I am worried that this means<br>
+that the time-intensive scan of the session directories (especially if AFP is<br>
+loaded) happens twice. Is that correct? Can it be avoided?</p>
+</blockquote>
+<p>Sessions.load_structure alone is not very expensive: it merely traverses all<br>
+ROOT files. This takes approx. 0.1s for Isabelle + AFP, after the first run of<br>
+approx. 0.3s.</p>
+<p>Build.build_logic does a rather expensive up-to-date check of the specified<br>
+logic image (not other sessions). E.g. 1s for HOL, 3s for HOL-Analysis.</p>
+<p>The standard approach is to do it only once on application startup. (Existing<br>
+"isabelle process" or ML_Process(), Isabelle_Process() don't do a build either.)</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

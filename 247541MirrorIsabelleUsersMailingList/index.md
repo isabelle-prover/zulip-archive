@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (4 messages, latest: Mar 08 2021 at 10:26)
+
 * [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (2 messages, latest: Mar 07 2021 at 18:27)
 
 * [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (2 messages, latest: Mar 06 2021 at 23:16)
@@ -42,8 +44,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Working with list symmetry (Attributes for the...](83806isabelleWorkingwithlistsymmetryAttributesforthe.html) (1 message, latest: Mar 02 2021 at 10:33)
 
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (8 messages, latest: Mar 01 2021 at 14:09)
-
-* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (3 messages, latest: Mar 01 2021 at 12:45)
 
 * [\[isabelle\] New in the AFP: The Sunflower Lemma of Erdős a...](19203isabelleNewintheAFPTheSunflowerLemmaofErdsa.html) (1 message, latest: Mar 01 2021 at 12:37)
 

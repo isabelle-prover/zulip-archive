@@ -140,6 +140,83 @@ Isabelle/ML. In the next release this will be even more noticeable in everyday<b
 use.</p>
 <p>Makarius</p>
 
+<a name="229276475"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Remaining%20uses%20of%20%22isabelle%20process%22%20and%20%22isab.../near/229276475" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96171isabelleRemainingusesofisabelleprocessandisab.html#229276475">Email Gateway (Mar 08 2021 at 10:26)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p>My scala-isabelle library currently uses 'isabelle process'. It uses it in the<br>
+following way:</p>
+<p>* From a Scala application, the Isabelle process is invoked with '-e<br>
+     somefile.ML' where somefile.ML contains a loop that reads commands from<br>
+     one named pipe (or socket in Windows) and writes responses asynchronously<br>
+     to another named pipe (or socket).<br>
+The proper way to invoke an Isabelle ML process in Scala is is via<br>
+isabelle.ML_Process() --- it has a lot of flexibility. At the same time I<br>
+reckon that this approach will not do the job, because it is not connected<br>
+properly to Isabelle/Scala via the PIDE protocol.</p>
+</blockquote>
+</blockquote>
+<p>I confirm that I got things to work this way. I am using the following code:</p>
+<p>override def startIsabelleProcess(cwd: Path, mlCode: String, logic: String,<br>
+                                         sessionRoots: Array[Path], build: Boolean,<br>
+                                         userDir: Optional[Path]): Process = {<br>
+    Isabelle_System.init(isabelle_root = isabelleRoot.toString)<br>
+         val channel = System_Channel()<br>
+         val options = Options.init()<br>
+         val channel_options = options.string.update("system_channel_address", channel.address).<br>
+           string.update("system_channel_password", channel.password)</p>
+<p>val sessionRoots2 = sessionRoots.map(p =&gt; isabelle.Path.explode(p.toString)).toList<br>
+         val sessions_structure = Sessions.load_structure(options = options, dirs = sessionRoots2)<br>
+         val store = Sessions.store(options)</p>
+<p>if (build) {<br>
+    Isabelle_Thread.fork(name ="Build Isabelle", daemon =true) {<br>
+             Build.build_logic(options = options, logic = logic, build_heap =true, dirs = sessionRoots2)<br>
+           }.join()<br>
+         }</p>
+<p>ML_Process(channel_options, sessions_structure, store, eval_main = mlCode, logic = logic, cwd = cwd.toFile)<br>
+       }</p>
+<p>Can you confirm that I am using the proper functions here? (Most of it <br>
+is guess work and try and error.)</p>
+<p>And one additional question: Is there a way to set the Isabelle user <br>
+home? I tried the following code (inspired by some fragment I found in <br>
+the Isabelle source somewhere), but it has no effect. Maybe there is a <br>
+different way? (I do not want to require an environment variable to be <br>
+set outside the application. But I want to give Scala apps the <br>
+possibility to use a local setup that does not interfere with the <br>
+Isabelle config of the user, if needed.)</p>
+<p>val userDir2 = isabelle.File.standard_path(userDir.get().toString)<br>
+    val putenv = Class.forName("org.gjt.sp.jedit.MiscUtilities")<br>
+       .getMethod("putenv", classOf[String], classOf[String])<br>
+    putenv.invoke(null,"ISABELLE_HOME_USER", userDir2)<br>
+    putenv.invoke(null,"USER_HOME", userDir2)</p>
+<p>One more question: I am passing the session root directories both to <br>
+Sessions.load_structure and to Build.build_logic. I am worried that this <br>
+means that the time-intensive scan of the session directories <br>
+(especially if AFP is loaded) happens twice. Is that correct? Can it be <br>
+avoided?</p>
+<p>But these remaining questions notwithstanding, it seems that I will not <br>
+need the command line "isabelle process" as long as ML_Process will be <br>
+there.</p>
+<blockquote>
+<blockquote>
+<p>* I do not want to use the PIDE protocol for communication between the Scala<br>
+     application and scala-isabelle (but instead my own binary protocol).<br>
+     (Because I got a factor 1000 or so in round-trip time when switching to my<br>
+     own minimalistic RPC protocol compared to libisabelle that used PIDE.)</p>
+<p>Afterwards, the measured roundtrip for Scala.function is approx. 0..2ms.</p>
+</blockquote>
+</blockquote>
+<p>That is indeed better than what I experienced, but still is far from the <br>
+round-trip time of 0.03ms I measured with a minimalistic protocol. But I <br>
+will explore a possible transition to PIDE / Isabelle/Scala as a backend <br>
+further in the future, as soon as time permits.</p>
+<p>(Maybe switching to named pipes on Linux instead of network sockets is <br>
+the main reason for the speed difference. At least in my experiments, <br>
+the round trip time was much faster with named pipes.)</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

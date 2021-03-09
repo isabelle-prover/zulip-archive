@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (2 messages, latest: Mar 09 2021 at 16:38)
+
 * [\[isabelle\] New in the AFP: Quantum projective measurements](11052isabelleNewintheAFPQuantumprojectivemeasurements.html) (1 message, latest: Mar 09 2021 at 15:00)
 
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (1 message, latest: Mar 09 2021 at 10:26)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (2 messages, latest: Mar 06 2021 at 23:16)
 
 * [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (2 messages, latest: Mar 06 2021 at 09:03)
-
-* [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (1 message, latest: Mar 05 2021 at 12:35)
 
 * [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (1 message, latest: Mar 05 2021 at 12:29)
 

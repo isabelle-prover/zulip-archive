@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Isabelle2021 instability](16819Isabelle2021instability.html) (20 messages, latest: Mar 08 2021 at 18:28)
+* [Isabelle2021 instability](16819Isabelle2021instability.html) (21 messages, latest: Mar 09 2021 at 04:41)
 
 * [Download Isabelle2020](66174DownloadIsabelle2020.html) (7 messages, latest: Mar 01 2021 at 12:46)
 

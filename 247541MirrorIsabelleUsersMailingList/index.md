@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (1 message, latest: Mar 09 2021 at 10:26)
+
 * [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (2 messages, latest: Mar 08 2021 at 18:56)
 
 * [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (3 messages, latest: Mar 08 2021 at 17:17)

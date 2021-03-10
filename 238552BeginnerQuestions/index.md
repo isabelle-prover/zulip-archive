@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [finite_induct over sets](30977finiteinductoversets.html) (9 messages, latest: Mar 10 2021 at 14:55)
+
 * [ML memory usage goes up](21819MLmemoryusagegoesup.html) (4 messages, latest: Mar 06 2021 at 11:12)
 
 * [Nitpick and Sledgehammer both succesfull](81114NitpickandSledgehammerbothsuccesfull.html) (6 messages, latest: Mar 02 2021 at 14:29)

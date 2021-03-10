@@ -1,0 +1,57 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/30977finiteinductoversets.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html">finite_induct over sets</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="229669128"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229669128" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229669128">Max Nowak (Mar 10 2021 at 14:30)</a>:</h4>
+<p>I'm trying to lead an inductive proof over a finite set, and I found the <code>Finite_Set.finite_induct</code> lemma which seems to be what I want (though I may in future need to induct over the elements in a specified linear order, but not yet). But I can't figure out how to start the proof, other than just <code>proof (rule finite_induct)</code>, but it feels like there should be a more idiomatic way of using it?</p>
+
+<a name="229670712"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229670712" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229670712">Mathias Fleury (Mar 10 2021 at 14:38)</a>:</h4>
+<p>I assume that you just forgot to add the <code>finite S</code> fact to the context:</p>
+<div class="codehilite"><pre><span></span><code>  using `finite S`
+proof (induct rule: finite_induct)
+</code></pre></div>
+
+<a name="229670959"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229670959" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229670959">Max Nowak (Mar 10 2021 at 14:39)</a>:</h4>
+<p>Oh, yeap, that was it. Thanks!</p>
+
+<a name="229671815"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229671815" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229671815">Max Nowak (Mar 10 2021 at 14:44)</a>:</h4>
+<p>Is there a way to fold over elements in a finite set (with <code>Finite_Set.fold</code> or something similar) in a specified linear order? (And then that'll constrain the <code>finite_induct</code> proof as well I assume..)</p>
+
+<a name="229672133"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229672133" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229672133">Max Nowak (Mar 10 2021 at 14:45)</a>:</h4>
+<p>Though I guess at that point I might as well just use a list, but it'd be unhandy with the rest of my definitions &amp; lemmas..</p>
+
+<a name="229673616"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229673616" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229673616">Mathias Fleury (Mar 10 2021 at 14:53)</a>:</h4>
+<p>why would you want to do that?</p>
+
+<a name="229673763"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229673763" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229673763">Max Nowak (Mar 10 2021 at 14:54)</a>:</h4>
+<p>Yeah good question, guess that's a bad idea then.</p>
+
+<a name="229673874"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229673874" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229673874">Mathias Fleury (Mar 10 2021 at 14:55)</a>:</h4>
+<p>A set is by definitions unordered. If you need an order, then you don't have a set anymore…</p>
+
+<a name="229673980"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229673980" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229673980">Mathias Fleury (Mar 10 2021 at 14:55)</a>:</h4>
+<p>IIRC, there is a <code>sorted_list_of_list</code>or something like that to convert a set to an ordered list</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

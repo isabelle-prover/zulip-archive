@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (5 messages, latest: Mar 11 2021 at 10:50)
+
 * [\[isabelle\] ML questions](69054isabelleMLquestions.html) (1 message, latest: Mar 11 2021 at 07:47)
 
 * [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (4 messages, latest: Mar 10 2021 at 17:33)
@@ -122,8 +124,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] RC5: Sledgehammer and HOL-Library.Word problems](90930isabelleRC5SledgehammerandHOLLibraryWordproblems.html) (3 messages, latest: Feb 15 2021 at 09:57)
 
 * [\[isabelle\] Isabelle2021-RC6 available for applications](91303isabelleIsabelle2021RC6availableforapplications.html) (1 message, latest: Feb 14 2021 at 18:43)
-
-* [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (3 messages, latest: Feb 14 2021 at 17:44)
 
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (2 messages, latest: Feb 13 2021 at 12:57)
 

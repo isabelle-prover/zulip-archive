@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: Improved LaTeX typesetting of ‹...›](77559isabelledevNEWSImprovedLaTeXtypesettingof.html) (1 message, latest: Mar 11 2021 at 10:30)
+
 * [\[isabelle-dev\] Clarified timeouts for Isabelle/ML tools](63588isabelledevClarifiedtimeoutsforIsabelleMLtools.html) (1 message, latest: Mar 05 2021 at 21:32)
 
 * [\[isabelle-dev\] Using ML files in subdirectories for code ...](90882isabelledevUsingMLfilesinsubdirectoriesforcode.html) (3 messages, latest: Mar 02 2021 at 07:17)

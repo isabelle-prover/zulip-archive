@@ -107,6 +107,36 @@ proof (induct rule: finite_induct)
 </code></pre></div>
 <p>This is just a minimal example, something roughly like this is what I had in mind. (yes I know it's probably terribly wrong, please don't laugh :P)</p>
 
+<a name="229874883"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229874883" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229874883">Mathias Fleury (Mar 11 2021 at 16:06)</a>:</h4>
+<p>that is the whole point of the discussion: this is not possible.</p>
+
+<a name="229874920"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229874920" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229874920">Mathias Fleury (Mar 11 2021 at 16:06)</a>:</h4>
+<p>You cannot do that.</p>
+
+<a name="229875087"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229875087" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229875087">Mathias Fleury (Mar 11 2021 at 16:06)</a>:</h4>
+<p>The definition is not well defined</p>
+
+<a name="229876314"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229876314" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229876314">Mathias Fleury (Mar 11 2021 at 16:11)</a>:</h4>
+<p>What you can define is a fold-like predicate:</p>
+<div class="codehilite"><pre><span></span><code>inductive fold_set :: ‹_ ⇒ &#39;b ⇒ &#39;a set ⇒ bool›
+  for f :: ‹&#39;b ⇒ &#39;a ⇒ &#39;b›
+where
+   &quot;fold_set f dflt {}&quot; |
+   &quot;fold_set f a S ⟹ fold_set f (f a b) (insert b S)&quot;
+</code></pre></div>
+
+<a name="229877451"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229877451" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229877451">Mathias Fleury (Mar 11 2021 at 16:17)</a>:</h4>
+<p><code>dflt</code> must be a meaningfull constant in you case or another parameter</p>
+
+<a name="229881336"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229881336" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229881336">Jakub Kądziołka (Mar 11 2021 at 16:38)</a>:</h4>
+<p>This is available as <code>Finite_Set.fold_graph</code></p>
+
 
 {% endraw %}
 

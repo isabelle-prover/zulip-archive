@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [finite_induct over sets](30977finiteinductoversets.html) (19 messages, latest: Mar 11 2021 at 14:28)
+* [finite_induct over sets](30977finiteinductoversets.html) (22 messages, latest: Mar 11 2021 at 15:04)
 
 * [ML memory usage goes up](21819MLmemoryusagegoesup.html) (4 messages, latest: Mar 06 2021 at 11:12)
 

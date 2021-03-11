@@ -1,0 +1,54 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/69054isabelleMLquestions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/69054isabelleMLquestions.html">[isabelle] ML questions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="229807713"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ML%20questions/near/229807713" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/69054isabelleMLquestions.html#229807713">Email Gateway (Mar 11 2021 at 07:47)</a>:</h4>
+<p>From: Jaap Boender &lt;<a href="mailto:jaapb@kerguelen.org">jaapb@kerguelen.org</a>&gt;<br>
+Hi list,</p>
+<p>I've been playing around with ML and the Cookbook, trying to learn how to <br>
+write a definitional package. It's working out reasonably well, but I've got <br>
+two problems I'd like to ask for help on:</p>
+<p>1) At some point, I need to create an application of the form "s t", where tye <br>
+types of both s and t contain type variables. So I can't just get the terms <br>
+and use $, I need to unify the types first. At the moment, I'm doing it like <br>
+follows (this code is fragile and not very nice, of course, but it's a first <br>
+attempt):</p>
+<p>fun add_is_valid t thy =<br>
+let<br>
+    val Const (is_valid_c, tiv) = Proof_Context.read_term_pattern @{context} t<br>
+    val (no_wrap_c, Type ("fun", [tnw1, tnw2])) = Consts.the_const <br>
+(Proof_Context.consts_of @{context}) @{const_name is_valid_imp_no_wrap}<br>
+    val (tenv, _) = Sign.typ_unify @{theory} (tnw1, tiv) (Vartab.empty, 0)<br>
+    val tnw1' = Envir.norm_type tenv tnw1<br>
+    val tiv' = Envir.norm_type tenv tiv</p>
+<p>and then I can use (Const (no_wrap_c, tnw1' --&gt; tnw2) $ Const (is_valid_c, <br>
+tiv')) for the term I need.<br>
+This works, but I have the feeling it's needlessly complicated. Is there an <br>
+easier way to do this?</p>
+<p>2) After using Goal.prove to create a proof of the term created above, I'd <br>
+like to add it to the local theory; currently I'm doing this:</p>
+<p>Local_Theory.note (((<a href="http://Binding.name">Binding.name</a> (t ^ "_no_wrap")), []), [nw_proof]) </p>
+<p>which works, but then when I try to find the lemma, it turns out to have the <br>
+name<br>
+is_valid_int_element_record_C_no_wrapkind=factlocal.is_valid_int_element_record_C_no_wrap</p>
+<p>which isn't very useful. What am I doing wrong? The problem also occurs if I <br>
+do other things, like using the @binding antiquotation.</p>
+<p>(I am still using Isabelle2020, if that makes any difference).</p>
+<p>Thanks in advance for any advice!</p>
+<p>Jaap Boender</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

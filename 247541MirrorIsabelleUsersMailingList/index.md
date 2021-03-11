@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] ML questions](69054isabelleMLquestions.html) (1 message, latest: Mar 11 2021 at 07:47)
+
 * [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (4 messages, latest: Mar 10 2021 at 17:33)
 
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (2 messages, latest: Mar 09 2021 at 16:38)

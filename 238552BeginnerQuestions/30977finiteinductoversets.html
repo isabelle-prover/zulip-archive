@@ -67,6 +67,14 @@ proof (induct rule: finite_induct)
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229722184" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229722184">Mathias Fleury (Mar 10 2021 at 18:58)</a>:</h4>
 <p>but why do you need an order? For non-determinism, I would use an inductive predicate</p>
 
+<a name="229830557"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229830557" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229830557">Manuel Eberl (Mar 11 2021 at 11:02)</a>:</h4>
+<p>You can also always just "obtain" a list using the theorem <code>finite_list</code>. If you need this top-level for whatever reason (i.e. outside an Isar proof), you can use <code>SOME</code> in combination with that theorem (<code>SOME xs. set xs = A</code>). None of this is executable, of course (while <code>sorted_list_of_set</code>) ist.</p>
+
+<a name="229830581"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229830581" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229830581">Manuel Eberl (Mar 11 2021 at 11:02)</a>:</h4>
+<p>I would, however, generally avoid working with lists instead of finite sets unless you have a good reason for doing so.</p>
+
 
 {% endraw %}
 

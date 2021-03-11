@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (3 messages, latest: Mar 11 2021 at 11:41)
+
 * [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (5 messages, latest: Mar 11 2021 at 10:50)
 
 * [\[isabelle\] ML questions](69054isabelleMLquestions.html) (1 message, latest: Mar 11 2021 at 07:47)

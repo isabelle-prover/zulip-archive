@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [intro exI is overzealous](97806introexIisoverzealous.html) (4 messages, latest: Mar 12 2021 at 06:13)
+* [intro exI is overzealous](97806introexIisoverzealous.html) (6 messages, latest: Mar 12 2021 at 08:35)
 
 * [finite_induct over sets](30977finiteinductoversets.html) (30 messages, latest: Mar 11 2021 at 17:13)
 

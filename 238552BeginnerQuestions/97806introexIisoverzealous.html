@@ -47,6 +47,26 @@ permalink: ./238552BeginnerQuestions/97806introexIisoverzealous.html
 <span class="k">qed</span> <span class="n">simp</span>
 </code></pre></div>
 
+<a name="229981813"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/intro%20exI%20is%20overzealous/near/229981813" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97806introexIisoverzealous.html#229981813">Mathias Fleury (Mar 12 2021 at 06:11)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>      by (rule exI[of _ &quot;[]&quot;])
+        (use `x = a` in auto)
+...
+
+      by (rule exI[of _ &quot;x # l&quot;], rule exI[of _ r])
+        (use `x ≠ a` * in auto)
+</code></pre></div>
+
+<a name="229981965"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/intro%20exI%20is%20overzealous/near/229981965" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97806introexIisoverzealous.html#229981965">Mathias Fleury (Mar 12 2021 at 06:12)</a>:</h4>
+<p>Otherwise, you go for</p>
+<div class="codehilite"><pre><span></span><code>      apply  (use `x ≠ a` * in ‹auto intro: exI[of _ &quot;x # l&quot;] exI[of _ r]›)
+</code></pre></div>
+
+<a name="229982030"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/intro%20exI%20is%20overzealous/near/229982030" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/97806introexIisoverzealous.html#229982030">Mathias Fleury (Mar 12 2021 at 06:13)</a>:</h4>
+<p>However, I don't believe that there is a rule that applies the theorems one-by-one.</p>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Isabelle repository version, problems star...](08993isabelledevIsabellerepositoryversionproblemsstar.html) (6 messages, latest: Mar 12 2021 at 13:58)
+* [\[isabelle-dev\] Isabelle repository version, problems star...](08993isabelledevIsabellerepositoryversionproblemsstar.html) (8 messages, latest: Mar 12 2021 at 15:57)
 
 * [\[isabelle-dev\] \[RESOLVED\] Isabelle repository version, pr...](59681isabelledevRESOLVEDIsabellerepositoryversionpr.html) (4 messages, latest: Mar 12 2021 at 13:31)
 

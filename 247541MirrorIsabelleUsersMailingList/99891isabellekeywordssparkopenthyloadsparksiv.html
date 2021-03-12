@@ -95,6 +95,82 @@ scala_project" with some manual symlinks in the generated Gradle project.</p>
 Gradle to do this.</p>
 <p>Makarius</p>
 
+<a name="230056726"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20keywords%20%22spark_open%22%20%3A%3A%20thy_load%20%28spark_siv%29/near/230056726" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99891isabellekeywordssparkopenthyloadsparksiv.html#230056726">Email Gateway (Mar 12 2021 at 16:17)</a>:</h4>
+<p>From: Walther Neuper &lt;<a href="mailto:walther.neuper@jku.at">walther.neuper@jku.at</a>&gt;<br>
+On 08.03.21 19:56, Makarius wrote:</p>
+<blockquote>
+<p>On 08/03/2021 14:35, Walther Neuper wrote:</p>
+<blockquote>
+<p>... so the question: where / how is the constant spark_siv defined ?<br>
+You need to declare your add-ons to Isabelle/Scala formally via<br>
+isabelle_scala_service in etc/settings, e.g. see<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/HOL/SPARK/etc/settings">https://isabelle.sketis.net/repos/isabelle-release/file/Isabelle2021/src/HOL/SPARK/etc/settings</a><br>
+in a phase of development where we want to make a test example running<br>
+with least effort the following solution appears preferable:<br>
+An alternative is to ignore the whole thing and merely use literal file names<br>
+with explicit extension. E.g. see my change to 'boogie_file' for Isabelle2021:<br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release/rev/b808eddc83cf">https://isabelle.sketis.net/repos/isabelle-release/rev/b808eddc83cf</a></p>
+</blockquote>
+</blockquote>
+<p>Thus we have (in Calculation.thy):</p>
+<p>keywords "Example" :: thy_load</p>
+<p>and</p>
+<p>Example ‹/usr/local/isabisac/src/Tools/isac/Examples/exp_Statics_Biegel_Timischl_7-70.str›</p>
+<p>which nicely evaluates related code in Calculation.thy. However, we need<br>
+to create a session</p>
+<p>./bin/isabelle build -v -b Isac</p>
+<p>which causes the error message (see "*.str.str" ..)</p>
+<p>Isac FAILED<br>
+    (see also /home/wneuper/.isabelle/isabisac/heaps/polyml-5.8.2_x86_64_32-linux/log/Isac)<br>
+    *** Failed to load theory "Isac.BridgeJEdit" (unresolved "Isac.Calculation")<br>
+    *** Failed to load theory "Isac.Build_Isac" (unresolved "Isac.BridgeJEdit")<br>
+    *** No such file: "/usr/local/isabisac/src/Tools/isac/Examples/exp_Statics_Biegel_Timischl_7-70.str.str" (line 230 of "~~/src/Tools/isac/BridgeJEdit/Calculation.thy")<br>
+    *** At command "Example" (line 230 of "~~/src/Tools/isac/BridgeJEdit/Calculation.thy")<br>
+    Unfinished session(s): Isac</p>
+<p>Studying ~~/src/HOL/ROOT we found "dokument_files" (would require<br>
+<em>/document/</em>) and "export_files", but here we would need something like<br>
+"import_files".</p>
+<p>Is here a simple way out or should we go the long way via IntelliJ Idea?</p>
+<p>Walther</p>
+
+<a name="230058586"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20keywords%20%22spark_open%22%20%3A%3A%20thy_load%20%28spark_siv%29/near/230058586" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99891isabellekeywordssparkopenthyloadsparksiv.html#230058586">Email Gateway (Mar 12 2021 at 16:28)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 12/03/2021 17:17, Walther Neuper wrote:</p>
+<blockquote>
+<p>Thus we have (in Calculation.thy):</p>
+<p>keywords "Example" :: thy_load</p>
+<p>and</p>
+<p>Example ‹/usr/local/isabisac/src/Tools/isac/Examples/exp_Statics_Biegel_Timischl_7-70.str›</p>
+<p>which nicely evaluates related code in Calculation.thy. However, we need to<br>
+create a session</p>
+<p>./bin/isabelle build -v -b Isac</p>
+<p>which causes the error message (see "*.str.str" ..)</p>
+<p>Isac FAILED<br>
+    (see also /home/wneuper/.isabelle/isabisac/heaps/polyml-5.8.2_x86_64_32-linux/log/Isac)<br>
+    *** Failed to load theory "Isac.BridgeJEdit" (unresolved "Isac.Calculation")<br>
+    *** Failed to load theory "Isac.Build_Isac" (unresolved "Isac.BridgeJEdit")<br>
+    *** No such file: "/usr/local/isabisac/src/Tools/isac/Examples/exp_Statics_Biegel_Timischl_7-70.str.str" (line 230 of "~~/src/Tools/isac/BridgeJEdit/Calculation.thy")<br>
+    *** At command "Example" (line 230 of "~~/src/Tools/isac/BridgeJEdit/Calculation.thy")<br>
+    Unfinished session(s): Isac</p>
+</blockquote>
+<p>The error appears to stem from your Isabelle/ML implementation of the command:<br>
+it probably still adds another file extension.</p>
+<blockquote>
+<p>Studying ~~/src/HOL/ROOT we found "dokument_files" (would require<br>
+<em>/document/</em>) and "export_files", but here we would need something like<br>
+"import_files".</p>
+</blockquote>
+<p>Such declarations of imported files were required many years ago. Today we<br>
+have everything in "theory keywords ... :: thy_load" and "isabelle build"<br>
+picks the information from there.</p>
+<blockquote>
+<p>Is here a simple way out or should we go the long way via IntelliJ Idea?</p>
+</blockquote>
+<p>For Isabelle/ML problems you merely require Isabelle/jEdit as IDE.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

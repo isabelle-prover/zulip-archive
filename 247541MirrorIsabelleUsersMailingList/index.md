@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (6 messages, latest: Mar 12 2021 at 16:28)
+
 * [\[isabelle\] New in the AFP: The Hermite–Lindemann–Weierstr...](43355isabelleNewintheAFPTheHermiteLindemannWeierstr.html) (1 message, latest: Mar 12 2021 at 14:38)
 
 * [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (4 messages, latest: Mar 11 2021 at 19:06)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (5 messages, latest: Mar 11 2021 at 10:50)
 
 * [\[isabelle\] ML questions](69054isabelleMLquestions.html) (1 message, latest: Mar 11 2021 at 07:47)
-
-* [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (4 messages, latest: Mar 10 2021 at 17:33)
 
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (2 messages, latest: Mar 09 2021 at 16:38)
 

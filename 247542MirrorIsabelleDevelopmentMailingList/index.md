@@ -9,9 +9,9 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] \[RESOLVED\] Isabelle repository version, pr...](59681isabelledevRESOLVEDIsabellerepositoryversionpr.html) (2 messages, latest: Mar 12 2021 at 12:54)
+* [\[isabelle-dev\] Isabelle repository version, problems star...](08993isabelledevIsabellerepositoryversionproblemsstar.html) (6 messages, latest: Mar 12 2021 at 13:58)
 
-* [\[isabelle-dev\] Isabelle repository version, problems star...](08993isabelledevIsabellerepositoryversionproblemsstar.html) (4 messages, latest: Mar 12 2021 at 12:37)
+* [\[isabelle-dev\] \[RESOLVED\] Isabelle repository version, pr...](59681isabelledevRESOLVEDIsabellerepositoryversionpr.html) (4 messages, latest: Mar 12 2021 at 13:31)
 
 * [\[isabelle-dev\] NEWS: Improved LaTeX typesetting of ‹...›](77559isabelledevNEWSImprovedLaTeXtypesettingof.html) (1 message, latest: Mar 11 2021 at 10:30)
 

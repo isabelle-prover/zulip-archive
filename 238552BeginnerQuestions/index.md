@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [intro exI is overzealous](97806introexIisoverzealous.html) (1 message, latest: Mar 12 2021 at 02:45)
+
 * [finite_induct over sets](30977finiteinductoversets.html) (30 messages, latest: Mar 11 2021 at 17:13)
 
 * [ML memory usage goes up](21819MLmemoryusagegoesup.html) (4 messages, latest: Mar 06 2021 at 11:12)

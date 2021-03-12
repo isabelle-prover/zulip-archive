@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: The Hermite–Lindemann–Weierstr...](43355isabelleNewintheAFPTheHermiteLindemannWeierstr.html) (1 message, latest: Mar 12 2021 at 14:38)
+
 * [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (4 messages, latest: Mar 11 2021 at 19:06)
 
 * [\[isabelle\] Well-behaved MacOS application for Isabelle 2021](89438isabelleWellbehavedMacOSapplicationforIsabelle2021.html) (1 message, latest: Mar 11 2021 at 17:26)

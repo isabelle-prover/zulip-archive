@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] ML questions](69054isabelleMLquestions.html) (2 messages, latest: Mar 13 2021 at 10:26)
+
 * [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (5 messages, latest: Mar 13 2021 at 07:31)
 
 * [\[isabelle\] Lecturer in Verification position at Universit...](02839isabelleLecturerinVerificationpositionatUniversit.html) (1 message, latest: Mar 13 2021 at 01:23)
@@ -20,8 +22,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Well-behaved MacOS application for Isabelle 2021](89438isabelleWellbehavedMacOSapplicationforIsabelle2021.html) (1 message, latest: Mar 11 2021 at 17:26)
 
 * [\[isabelle\] Some more polishing of the multiset theory](43126isabelleSomemorepolishingofthemultisettheory.html) (5 messages, latest: Mar 11 2021 at 10:50)
-
-* [\[isabelle\] ML questions](69054isabelleMLquestions.html) (1 message, latest: Mar 11 2021 at 07:47)
 
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (2 messages, latest: Mar 09 2021 at 16:38)
 

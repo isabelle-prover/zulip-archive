@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (6 messages, latest: Mar 13 2021 at 13:46)
+
 * [\[isabelle\] ML questions](69054isabelleMLquestions.html) (3 messages, latest: Mar 13 2021 at 11:16)
 
 * [\[isabelle\] Research Programmer in HoTT and Cubical Type T...](71679isabelleResearchProgrammerinHoTTandCubicalTypeT.html) (1 message, latest: Mar 13 2021 at 11:12)
-
-* [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (5 messages, latest: Mar 13 2021 at 07:31)
 
 * [\[isabelle\] Lecturer in Verification position at Universit...](02839isabelleLecturerinVerificationpositionatUniversit.html) (1 message, latest: Mar 13 2021 at 01:23)
 

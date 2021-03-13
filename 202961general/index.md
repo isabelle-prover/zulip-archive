@@ -9,7 +9,7 @@ permalink: ./202961general/index.html
 
 ### Topics:
 
-* [Isabelle/HOL's proof-theoretic strength](20439IsabelleHOLsprooftheoreticstrength.html) (2 messages, latest: Mar 12 2021 at 21:32)
+* [Isabelle/HOL's proof-theoretic strength](20439IsabelleHOLsprooftheoreticstrength.html) (3 messages, latest: Mar 13 2021 at 15:02)
 
 * [Isabelle2021 instability](16819Isabelle2021instability.html) (23 messages, latest: Mar 09 2021 at 09:30)
 

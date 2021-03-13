@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Lecturer in Verification position at Universit...](02839isabelleLecturerinVerificationpositionatUniversit.html) (1 message, latest: Mar 13 2021 at 01:23)
+
 * [\[isabelle\] keywords "spark_open" :: thy_load (spark_siv)](99891isabellekeywordssparkopenthyloadsparksiv.html) (6 messages, latest: Mar 12 2021 at 16:28)
 
 * [\[isabelle\] New in the AFP: The Hermite–Lindemann–Weierstr...](43355isabelleNewintheAFPTheHermiteLindemannWeierstr.html) (1 message, latest: Mar 12 2021 at 14:38)

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Two algorithms based on modula...](20329isabelleNewintheAFPTwoalgorithmsbasedonmodula.html) (1 message, latest: Mar 14 2021 at 11:13)
+
 * [\[isabelle\] Request for feedback: dedicated session or AFP...](16390isabelleRequestforfeedbackdedicatedsessionorAFP.html) (6 messages, latest: Mar 13 2021 at 13:46)
 
 * [\[isabelle\] ML questions](69054isabelleMLquestions.html) (3 messages, latest: Mar 13 2021 at 11:16)

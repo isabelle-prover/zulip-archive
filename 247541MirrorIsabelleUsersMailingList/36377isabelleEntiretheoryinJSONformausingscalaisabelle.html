@@ -1,0 +1,40 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/36377isabelleEntiretheoryinJSONformausingscalaisabelle.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36377isabelleEntiretheoryinJSONformausingscalaisabelle.html">[isabelle] Entire theory in JSON forma using scala-isabelle?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="230252845"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Entire%20theory%20in%20JSON%20forma%20using%20scala-isabelle%3F/near/230252845" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/36377isabelleEntiretheoryinJSONformausingscalaisabelle.html#230252845">Email Gateway (Mar 14 2021 at 16:39)</a>:</h4>
+<p>From: Alex Meyer &lt;<a href="mailto:alex153@outlook.lv">alex153@outlook.lv</a>&gt;<br>
+I had this question <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-January/msg00187.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-January/msg00187.html</a> at the end of January, and there where some follow-up discussion in February and scala-isabelle emerged as fine library for this.</p>
+<p>I had quick idea to get theory (as isabelle AST) in JSON format and for that  tried the code:</p>
+<p>val ctxt = Context("HOL.Imperative_HOL.ex.Imperative_Quicksort")</p>
+<p>import net.liftweb.json._<br>
+import net.liftweb.json.Serialization.write</p>
+<p>implicit val formats = net.liftweb.json.DefaultFormatsval jsonString = write(ctxt)<br>
+println("before jsonString")<br>
+println(jsonString)<br>
+println("after jsonString")</p>
+<p>but the output it scarce (my full stackoverflow question is <a href="https://stackoverflow.com/questions/66626741/isabelle-hol-theory-hol-imperative-hol-ex-imperative-quicksort-as-json-with-sc">https://stackoverflow.com/questions/66626741/isabelle-hol-theory-hol-imperative-hol-ex-imperative-quicksort-as-json-with-sc</a>):</p>
+<p>before jsonString<br>
+{"mlValue":{"id":{"_fun":{},"_ec":{},"_arg":null,"_xform":2}}}<br>
+after jsonString</p>
+<p>Maybe I a overstretching the framework (error about which I have been extensively warned in the mentioned thread), but just quick qustion - is it possible to get AST JSON tree for the entire theory in scala-isabelle?</p>
+<p>The quick thought is that I can load theory in string and then try to load it like term in the conext that is preloaded by the same theory. But maybe it is not good ide.</p>
+<p>I am reading documentation, experimenting, doing some reasoning, etc.</p>
+<p>But maybe there is answer in couple of words that can shortcut my path?</p>
+<p>Alex</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

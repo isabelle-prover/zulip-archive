@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] building the document in Windows from Isabelle...](49353isabellebuildingthedocumentinWindowsfromIsabelle.html) (2 messages, latest: Mar 15 2021 at 16:14)
+
 * [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (2 messages, latest: Mar 15 2021 at 14:36)
 
 * [\[isabelle\] Entire theory in JSON forma using scala-isabelle?](36377isabelleEntiretheoryinJSONformausingscalaisabelle.html) (3 messages, latest: Mar 15 2021 at 12:17)
@@ -60,8 +62,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] SPIN 2021 - Deadline extension to April 20](14390isabelleSPIN2021DeadlineextensiontoApril20.html) (1 message, latest: Mar 04 2021 at 10:24)
 
 * [\[isabelle\] Towards a formalization of elements of the fou...](97786isabelleTowardsaformalizationofelementsofthefou.html) (1 message, latest: Mar 03 2021 at 20:13)
-
-* [\[isabelle\] building the document in Windows from Isabelle...](49353isabellebuildingthedocumentinWindowsfromIsabelle.html) (1 message, latest: Mar 03 2021 at 18:10)
 
 * [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (6 messages, latest: Mar 03 2021 at 14:14)
 

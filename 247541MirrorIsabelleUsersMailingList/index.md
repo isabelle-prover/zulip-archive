@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (1 message, latest: Mar 15 2021 at 13:37)
+* [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (2 messages, latest: Mar 15 2021 at 14:36)
 
 * [\[isabelle\] Entire theory in JSON forma using scala-isabelle?](36377isabelleEntiretheoryinJSONformausingscalaisabelle.html) (3 messages, latest: Mar 15 2021 at 12:17)
 

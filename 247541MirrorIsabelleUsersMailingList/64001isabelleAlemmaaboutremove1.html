@@ -46,6 +46,19 @@ qed simp</p>
 <p>Regards,<br>
 Jakub Kądziołka</p>
 
+<a name="230354532"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20A%20lemma%20about%20remove1/near/230354532" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64001isabelleAlemmaaboutremove1.html#230354532">Email Gateway (Mar 15 2021 at 14:36)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hello,</p>
+<p>the lemma remove1_append is actually very similar, and sledgehammer<br>
+finds a very simple proof of your lemma:</p>
+<p>lemma remove1_split:<br>
+  assumes "a ∈ set xs"<br>
+  shows "∃l r. xs = l @ a # r ∧ remove1 a xs = l @ r"<br>
+  by (metis assms remove1.simps(2) remove1_append split_list_first)</p>
+<p>This does not mean that this lemma is useless, as it may provide a<br>
+handier split than using remove1_append directly.</p>
+
 
 {% endraw %}
 

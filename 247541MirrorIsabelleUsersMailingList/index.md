@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\]  Pārs.: Entire theory in JSON forma using scal...](80567isabellePrsEntiretheoryinJSONformausingscal.html) (1 message, latest: Mar 14 2021 at 16:54)
+* [\[isabelle\] Entire theory in JSON forma using scala-isabelle?](36377isabelleEntiretheoryinJSONformausingscalaisabelle.html) (2 messages, latest: Mar 15 2021 at 11:50)
 
-* [\[isabelle\] Entire theory in JSON forma using scala-isabelle?](36377isabelleEntiretheoryinJSONformausingscalaisabelle.html) (1 message, latest: Mar 14 2021 at 16:39)
+* [\[isabelle\]  Pārs.: Entire theory in JSON forma using scal...](80567isabellePrsEntiretheoryinJSONformausingscal.html) (1 message, latest: Mar 14 2021 at 16:54)
 
 * [\[isabelle\] New in the AFP: Two algorithms based on modula...](20329isabelleNewintheAFPTwoalgorithmsbasedonmodula.html) (1 message, latest: Mar 14 2021 at 11:13)
 

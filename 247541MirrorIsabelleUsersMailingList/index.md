@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Specifying a Universal Property in a locale de...](40517isabelleSpecifyingaUniversalPropertyinalocalede.html) (1 message, latest: Mar 15 2021 at 19:36)
+
 * [\[isabelle\] building the document in Windows from Isabelle...](49353isabellebuildingthedocumentinWindowsfromIsabelle.html) (2 messages, latest: Mar 15 2021 at 16:14)
 
 * [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (2 messages, latest: Mar 15 2021 at 14:36)

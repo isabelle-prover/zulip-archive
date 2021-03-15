@@ -1,0 +1,52 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/64001isabelleAlemmaaboutremove1.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64001isabelleAlemmaaboutremove1.html">[isabelle] A lemma about remove1</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="230344800"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20A%20lemma%20about%20remove1/near/230344800" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/64001isabelleAlemmaaboutremove1.html#230344800">Email Gateway (Mar 15 2021 at 13:37)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+Hello,</p>
+<p>I have proven the following lemma, which splits the result of remove1<br>
+into the items before and after the removed element. I feel like it<br>
+might be generally useful.</p>
+<p>lemma remove1_split:<br>
+  assumes "a ∈ set xs"<br>
+  shows "∃l r. xs = l @ a # r ∧ remove1 a xs = l @ r"<br>
+using assms proof (induction xs)<br>
+  case (Cons x xs)<br>
+  show ?case<br>
+  proof cases<br>
+    assume "x = a"<br>
+    show ?thesis<br>
+      apply (rule exI[of _ "[]"])<br>
+      using <code>x = a</code> by simp<br>
+  next<br>
+    assume "x ≠ a"<br>
+    then have "a ∈ set xs"<br>
+      using <code>a ∈ set (x # xs)</code><br>
+      by simp<br>
+    then obtain l r where *: "xs = l @ a # r ∧ remove1 a xs = l @ r"<br>
+      using Cons.IH by auto<br>
+    show ?thesis<br>
+      apply (rule exI[of _ "x # l"])<br>
+      apply (rule exI[of _ r])<br>
+      using <code>x ≠ a</code> * by auto<br>
+  qed<br>
+qed simp</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

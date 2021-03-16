@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (2 messages, latest: Mar 16 2021 at 10:37)
+
 * [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (3 messages, latest: Mar 16 2021 at 07:18)
 
 * [\[isabelle\] Specifying a Universal Property in a locale de...](40517isabelleSpecifyingaUniversalPropertyinalocalede.html) (1 message, latest: Mar 15 2021 at 19:36)
@@ -254,8 +256,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Two questions about the availability of certai...](84365isabelleTwoquestionsabouttheavailabilityofcertai.html) (3 messages, latest: Jan 16 2021 at 14:15)
 
 * [\[isabelle\] Isabelle keywords](12627isabelleIsabellekeywords.html) (2 messages, latest: Jan 16 2021 at 13:03)
-
-* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (1 message, latest: Jan 16 2021 at 11:52)
 
 * [\[isabelle\] Some lemmas on factorial rings](59202isabelleSomelemmasonfactorialrings.html) (2 messages, latest: Jan 14 2021 at 15:28)
 

@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (3 messages, latest: Mar 16 2021 at 07:18)
+
 * [\[isabelle\] Specifying a Universal Property in a locale de...](40517isabelleSpecifyingaUniversalPropertyinalocalede.html) (1 message, latest: Mar 15 2021 at 19:36)
 
 * [\[isabelle\] building the document in Windows from Isabelle...](49353isabellebuildingthedocumentinWindowsfromIsabelle.html) (2 messages, latest: Mar 15 2021 at 16:14)
-
-* [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (2 messages, latest: Mar 15 2021 at 14:36)
 
 * [\[isabelle\] Entire theory in JSON forma using scala-isabelle?](36377isabelleEntiretheoryinJSONformausingscalaisabelle.html) (3 messages, latest: Mar 15 2021 at 12:17)
 

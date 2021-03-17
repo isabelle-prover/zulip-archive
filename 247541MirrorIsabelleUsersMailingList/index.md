@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (2 messages, latest: Mar 17 2021 at 11:04)
+
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (3 messages, latest: Mar 17 2021 at 10:02)
 
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (2 messages, latest: Mar 16 2021 at 10:37)
@@ -162,8 +164,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] New in the AFP: The Laws of Large Numbers](40705isabelleNewintheAFPTheLawsofLargeNumbers.html) (1 message, latest: Feb 11 2021 at 05:40)
 
 * [\[isabelle\] Boolos's Curious Inference (Speed-Up) in Isabe...](16212isabelleBoolossCuriousInferenceSpeedUpinIsabe.html) (2 messages, latest: Feb 10 2021 at 13:40)
-
-* [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (1 message, latest: Feb 10 2021 at 10:10)
 
 * [\[isabelle\] Isabelle2021-RC5 available for applications](56294isabelleIsabelle2021RC5availableforapplications.html) (1 message, latest: Feb 08 2021 at 21:43)
 

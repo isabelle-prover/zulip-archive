@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (7 messages, latest: Mar 17 2021 at 12:59)
+
 * [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (2 messages, latest: Mar 17 2021 at 11:04)
 
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (3 messages, latest: Mar 17 2021 at 10:02)
@@ -50,8 +52,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (1 message, latest: Mar 09 2021 at 10:26)
 
 * [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (3 messages, latest: Mar 08 2021 at 17:17)
-
-* [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (6 messages, latest: Mar 08 2021 at 12:41)
 
 * [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (2 messages, latest: Mar 06 2021 at 23:16)
 

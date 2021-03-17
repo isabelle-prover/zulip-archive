@@ -314,6 +314,34 @@ logic image (not other sessions). E.g. 1s for HOL, 3s for HOL-Analysis.</p>
 "isabelle process" or ML_Process(), Isabelle_Process() don't do a build either.)</p>
 <p>Makarius</p>
 
+<a name="230685253"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Remaining%20uses%20of%20%22isabelle%20process%22%20and%20%22isab.../near/230685253" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/96171isabelleRemainingusesofisabelleprocessandisab.html#230685253">Email Gateway (Mar 17 2021 at 12:59)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+Hi,</p>
+<p>thanks for your feedback.</p>
+<p>The issues about invoking .init() are covered in my specific context <br>
+because the code fragment I wrote to you will be invoked only once <br>
+(global instance). And I am aware that Array[...] is a somewhat <br>
+un-Scala-like datastructure. The reason is again very specific to my <br>
+application: Due to the fact that my library cannot guarantee that it <br>
+will be invoked under the same Scala version as Isabelle is compiled <br>
+for, I have to do some classloader trickery. The effect is that the <br>
+signature of the wrapper method I use needs to use pure Java. (I can <br>
+provide more details on that trick if desired.) Concerning <br>
+isabelle.File.path – I was prepared to do some manual conversion to <br>
+cygwin paths, but having a method that already takes care of this, great! :)</p>
+<blockquote>
+<p>Anyway, the above would merely replace the external "isabelle <br>
+process" by internal Isabelle/Scala operations. It does not address the <br>
+problem of a missing PIDE session context for Isabelle/ML/Scala function <br>
+invocations --- the starting point of this thread.</p>
+</blockquote>
+<p>True. Further transition is planned for the future, but time constraints <br>
+force me to stick to this approach for now, at least. Is the ML_Process <br>
+class that I am using planned to be discontinued soon?</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

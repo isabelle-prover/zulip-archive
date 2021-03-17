@@ -12,13 +12,19 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (86 topics)
 
+* [General](202961General/index.html) (85 topics)
+
 * [general](202961general/index.html) (84 topics)
 
 * [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (55 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 
+* [New Members & Projects](202967NewMembersProjects/index.html) (11 topics)
+
 * [new projects](202967newprojects/index.html) (10 topics)
+
+* [Announcements](214136Announcements/index.html) (8 topics)
 
 * [announcements](214136announcements/index.html) (7 topics)
 

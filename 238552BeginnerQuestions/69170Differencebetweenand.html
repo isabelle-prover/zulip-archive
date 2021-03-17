@@ -1,0 +1,52 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/69170Differencebetweenand.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69170Differencebetweenand.html">Difference between = and ≡</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="230755906"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Difference%20between%20%3D%20and%20%E2%89%A1/near/230755906" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69170Differencebetweenand.html#230755906">Benedikt Ahrens (Mar 17 2021 at 19:54)</a>:</h4>
+<p>Hi everyone,</p>
+<p>I am (re)learning Isabelle right now, and I have a question regarding the difference between = and ≡, and their uses in Isabelle/HOL.<br>
+Specifically, in the (allegedly outdated) Isabelle Tutorial, it says that ≡ should be used for constant definitions (see Section 2.7.2 Constant Definitions), and the following example is given:</p>
+<div class="codehilite"><pre><span></span><code>definition nand :: gate where &quot;nand A B ≡ ¬(A ∧ B)&quot;
+</code></pre></div>
+<p>In the more recent "Concrete Semantics" (Section 2.3.2 Definitions), definitions are said to use =, and the following example is given:</p>
+<div class="codehilite"><pre><span></span><code>definition sq :: &quot;nat ⇒ nat&quot; where
+&quot;sq n = n ∗ n&quot;
+</code></pre></div>
+<p>It is furthermore said that abbreviations (Section 2.3.3) should use ≡.</p>
+<p>My first idea was that maybe ≡ is a meta-theoretic notion, and behaves to = like ==&gt; behaves to --&gt;. But this is somewhat refuted by the fact that the following works (for a suitable definition of lists etc):</p>
+<div class="codehilite"><pre><span></span><code>lemma &quot;append_list xs [] ≡ xs&quot;
+  apply (induction xs)
+  apply (auto)
+  done
+</code></pre></div>
+<p>where the ≡ is used within a HOL statement (if I understand correctly). Here, interestingly, after the induction the subgoals are stated using = instead of ≡:</p>
+<div class="codehilite"><pre><span></span><code>goal (2 subgoals):
+ 1. append_list [] [] = []
+ 2. ⋀x1 xs. append_list xs [] = xs ⟹ append_list (x1 # xs) [] = x1 # xs
+</code></pre></div>
+<p>I would be grateful for any pointers to an explanation of = and ≡.</p>
+
+<a name="230756273"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Difference%20between%20%3D%20and%20%E2%89%A1/near/230756273" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69170Differencebetweenand.html#230756273">Manuel Eberl (Mar 17 2021 at 19:57)</a>:</h4>
+<p>No, you were right. <code>≡</code> is just the meta-logical equivalent of <code>=</code>. There is no real reason to use it as an Isabelle ‘user’, much less than using e.g. <code>⟹</code> (which does have its uses). This is probably explained somewhere in the Isabelle/Isar reference manual (isar-ref), but as I said, it's not really something you have to know about as a user.</p>
+<p>I think the only case in which is might crop up is that the <code>abbreviation</code> command insists on a specification with <code>≡</code>, not <code>=</code> (and will complain otherwise).</p>
+
+<a name="230756517"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Difference%20between%20%3D%20and%20%E2%89%A1/near/230756517" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/69170Differencebetweenand.html#230756517">Manuel Eberl (Mar 17 2021 at 19:59)</a>:</h4>
+<p>Referring to ‘where the ≡ is used within a HOL statement (if I understand correctly)’: where is the HOL statement there? Because no, you cannot write <code>≡</code> as a HOL statement, since <code>≡</code> returns a <code>prop</code> (the type of propositions, which you normally do not see as a HOL user and which you cannot use inside HOL terms).</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

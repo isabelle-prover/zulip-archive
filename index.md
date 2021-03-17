@@ -12,7 +12,7 @@ permalink: ./index.html
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (86 topics)
 
-* [General](202961General/index.html) (85 topics)
+* [General](202961General/index.html) (86 topics)
 
 * [general](202961general/index.html) (84 topics)
 
@@ -39,6 +39,8 @@ permalink: ./index.html
 * [Isabelle/ML](211483IsabelleML/index.html) (3 topics)
 
 * [Test](282445Test/index.html) (2 topics)
+
+* [IRC #isabelle](282466IRCisabelle/index.html) (2 topics)
 
 <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a> <a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>
 {% include archive_update.html %}

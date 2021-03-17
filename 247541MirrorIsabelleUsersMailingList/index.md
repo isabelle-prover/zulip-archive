@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (3 messages, latest: Mar 17 2021 at 10:02)
+
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (2 messages, latest: Mar 16 2021 at 10:37)
 
 * [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (3 messages, latest: Mar 16 2021 at 07:18)
@@ -116,8 +118,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] First day with HOL/Isabelle](73679isabelleFirstdaywithHOLIsabelle.html) (4 messages, latest: Feb 21 2021 at 20:04)
 
 * [\[isabelle\] Predicate Compiler fails with "No specificatio...](44301isabellePredicateCompilerfailswithNospecificatio.html) (6 messages, latest: Feb 21 2021 at 19:21)
-
-* [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (2 messages, latest: Feb 21 2021 at 11:05)
 
 * [\[isabelle\] Relation of function absent from Main](13577isabelleRelationoffunctionabsentfromMain.html) (3 messages, latest: Feb 20 2021 at 21:57)
 

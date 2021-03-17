@@ -38,5 +38,7 @@ permalink: ./index.html
 
 * [Isabelle/ML](211483IsabelleML/index.html) (3 topics)
 
+* [Test](282445Test/index.html) (1 topic)
+
 <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/index.html">Isabelle users e-mail archive</a> <a href="https://mailmanbroy.informatik.tu-muenchen.de/pipermail/isabelle-dev">Isabelle development e-mail archive</a>
 {% include archive_update.html %}

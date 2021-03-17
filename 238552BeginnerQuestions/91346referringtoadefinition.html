@@ -63,6 +63,9 @@ proof -</p>
 <p>Inductive predicates don't have a definition.</p>
 </blockquote>
 <p>Well, they do. It is simply hidden from users by default (for good reasons; the induction principle and the intro and elim rules should suffice in most cases).</p>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>Expert spoiler</p>
+</div><div class="spoiler-content" aria-hidden="true">
 <p>If the predicate is defined in a context where the flag <code>inductive_internals</code> is set, one gets access to the big_step_def theorem.</p>
 <div class="codehilite"><pre><span></span><code>theory Scratch
 imports &quot;~~/src/HOL/IMP/Big_Step&quot;
@@ -80,7 +83,7 @@ IfTrue: &quot;⟦ bval b s;  (c⇩1,s) ⇒ t ⟧ ⟹ (IF b THEN c⇩1 ELSE c⇩2
 IfFalse: &quot;⟦ ¬bval b s;  (c⇩2,s) ⇒ t ⟧ ⟹ (IF b THEN c⇩1 ELSE c⇩2, s) ⇒ t&quot; |
 WhileFalse: &quot;¬bval b s ⟹ (WHILE b DO c,s) ⇒ s&quot; |
 WhileTrue:
-&quot;⟦ bval b s⇩1;  (c,s⇩1) ⇒ s⇩2;  (WHILE b DO c, s⇩2) ⇒ s⇩3 ⟧
+&quot;⟦ bval b s⇩1;  (c,s⇩1) ⇒ s⇩2;  (WHILE b DO c, s⇩2) ⇒ s⇩3 ⟧ 
 ⟹ (WHILE b DO c, s⇩1) ⇒ s⇩3&quot;
 end
 
@@ -88,6 +91,8 @@ thm big_step_def
 
 end
 </code></pre></div>
+
+</div></div>
 
 <a name="216324738"></a>
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/referring%20to%20a%20definition/near/216324738" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/91346referringtoadefinition.html#216324738">Manuel Eberl (Nov 11 2020 at 09:44)</a>:</h4>
@@ -99,7 +104,7 @@ end
 
 <a name="216325114"></a>
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/referring%20to%20a%20definition/near/216325114" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/91346referringtoadefinition.html#216325114">Dmitriy Traytel (Nov 11 2020 at 09:49)</a>:</h4>
-<p>It is important for beginners to understand that in Isabelle/HOL everything except for <code>definition</code> and <code>typedef</code>)has a definition in terms of these lower-level primitives. Often these internal definitions are hidden, but they do exist.</p>
+<p>It is important for beginners to understand that in Isabelle/HOL everything (except for <code>definition</code> and <code>typedef</code>) has a definition in terms of these lower-level primitives. Often these internal definitions are hidden, but they do exist.</p>
 
 <a name="216325248"></a>
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/referring%20to%20a%20definition/near/216325248" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/91346referringtoadefinition.html#216325248">Dmitriy Traytel (Nov 11 2020 at 09:50)</a>:</h4>

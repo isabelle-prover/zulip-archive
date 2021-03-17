@@ -10,11 +10,9 @@ permalink: ./index.html
 
 * [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (327 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (86 topics)
+* [Beginner Questions](238552BeginnerQuestions/index.html) (85 topics)
 
-* [General](202961General/index.html) (86 topics)
-
-* [general](202961general/index.html) (84 topics)
+* [General](202961General/index.html) (85 topics)
 
 * [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (55 topics)
 
@@ -22,23 +20,15 @@ permalink: ./index.html
 
 * [New Members & Projects](202967NewMembersProjects/index.html) (11 topics)
 
-* [new projects](202967newprojects/index.html) (10 topics)
-
 * [Announcements](214136Announcements/index.html) (8 topics)
-
-* [announcements](214136announcements/index.html) (7 topics)
 
 * [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 
-* [ML for Isabelle](203204MLforIsabelle/index.html) (4 topics)
-
 * [Proof Ground](245944ProofGround/index.html) (4 topics)
-
-* [Lie](211306Lie/index.html) (3 topics)
 
 * [Isabelle/ML](211483IsabelleML/index.html) (3 topics)
 
-* [Test](282445Test/index.html) (2 topics)
+* [Lie](211306Lie/index.html) (3 topics)
 
 * [IRC #isabelle](282466IRCisabelle/index.html) (2 topics)
 

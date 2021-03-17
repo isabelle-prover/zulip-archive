@@ -11,8 +11,6 @@ permalink: ./202961General/index.html
 
 * [IRC](88031IRC.html) (2 messages, latest: Mar 17 2021 at 17:47)
 
-* [stream events](95106streamevents.html) (1 message, latest: Mar 17 2021 at 13:21)
-
 * [Isabelle/HOL's proof-theoretic strength](20439IsabelleHOLsprooftheoreticstrength.html) (4 messages, latest: Mar 13 2021 at 16:49)
 
 * [Isabelle2021 instability](16819Isabelle2021instability.html) (23 messages, latest: Mar 09 2021 at 09:30)
@@ -177,9 +175,9 @@ permalink: ./202961General/index.html
 
 * [GitHub](40964GitHub.html) (1 message, latest: Jul 04 2019 at 08:36)
 
-* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
-
 * [swimming turtles](48863swimmingturtles.html) (1 message, latest: Jul 02 2019 at 12:26)
+
+* [topic demonstration](51687topicdemonstration.html) (2 messages, latest: Jul 02 2019 at 12:26)
 
 
 {% include archive_update.html %}

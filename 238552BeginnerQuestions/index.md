@@ -121,8 +121,6 @@ permalink: ./238552BeginnerQuestions/index.html
 
 * [Using locales as "namespace"?](69262Usinglocalesasnamespace.html) (14 messages, latest: Oct 14 2020 at 12:06)
 
-* [For beginners: A review article on Isabelle](42228ForbeginnersAreviewarticleonIsabelle.html) (1 message, latest: Oct 13 2020 at 07:34)
-
 * [code generation](45576codegeneration.html) (2 messages, latest: Oct 12 2020 at 08:44)
 
 * [cite antiquotation](37366citeantiquotation.html) (2 messages, latest: Sep 17 2020 at 15:00)

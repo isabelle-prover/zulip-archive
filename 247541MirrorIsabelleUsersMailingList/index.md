@@ -87,9 +87,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (20 messages, latest: Feb 28 2021 at 21:25)
 
-* [\[isabelle\] SMT 2021 Workshop: Second Call for Papers](64756isabelleSMT2021WorkshopSecondCallforPapers.html) (1 message, latest: Feb 28 2021 at 10:48)
-
 * [\[isabelle\] FMBC 2021: First Call for Papers](83495isabelleFMBC2021FirstCallforPapers.html) (1 message, latest: Feb 28 2021 at 10:48)
+
+* [\[isabelle\] SMT 2021 Workshop: Second Call for Papers](64756isabelleSMT2021WorkshopSecondCallforPapers.html) (1 message, latest: Feb 28 2021 at 10:48)
 
 * [\[isabelle\] New in the AFP: Formal Puiseux Series](38476isabelleNewintheAFPFormalPuiseuxSeries.html) (12 messages, latest: Feb 26 2021 at 16:28)
 
@@ -151,9 +151,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Isabelle2021-RC5: support for Apple Silicon](27384isabelleIsabelle2021RC5supportforAppleSilicon.html) (2 messages, latest: Feb 13 2021 at 12:57)
 
-* [\[isabelle\] PhD position in Formal Methods/Decompilation a...](71481isabellePhDpositioninFormalMethodsDecompilationa.html) (1 message, latest: Feb 12 2021 at 10:45)
-
 * [\[isabelle\] CFP SAT-2021: Deadline March 19th](33358isabelleCFPSAT2021DeadlineMarch19th.html) (1 message, latest: Feb 12 2021 at 10:45)
+
+* [\[isabelle\] PhD position in Formal Methods/Decompilation a...](71481isabellePhDpositioninFormalMethodsDecompilationa.html) (1 message, latest: Feb 12 2021 at 10:45)
 
 * [\[isabelle\] isabelle scala_project and Gradle / IntelliJ s...](62558isabelleisabellescalaprojectandGradleIntelliJs.html) (1 message, latest: Feb 11 2021 at 13:44)
 
@@ -301,9 +301,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Questions about "transfer"](71273isabelleQuestionsabouttransfer.html) (4 messages, latest: Jan 06 2021 at 23:31)
 
-* [\[isabelle\] Call for Papers: Tests and Proofs 2021 (TAP 2021)](16705isabelleCallforPapersTestsandProofs2021TAP2021.html) (1 message, latest: Jan 06 2021 at 10:08)
-
 * [\[isabelle\] ITP2021: Second Call for Workshops (Deadline 1...](93934isabelleITP2021SecondCallforWorkshopsDeadline1.html) (1 message, latest: Jan 06 2021 at 10:08)
+
+* [\[isabelle\] Call for Papers: Tests and Proofs 2021 (TAP 2021)](16705isabelleCallforPapersTestsandProofs2021TAP2021.html) (1 message, latest: Jan 06 2021 at 10:08)
 
 * [\[isabelle\] Questionnaire on deployed verified systems](74106isabelleQuestionnaireondeployedverifiedsystems.html) (1 message, latest: Jan 05 2021 at 12:24)
 

@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (4 messages, latest: Mar 18 2021 at 12:14)
+
 * [IRC](88031IRC.html) (2 messages, latest: Mar 17 2021 at 17:47)
 
 * [Isabelle/HOL's proof-theoretic strength](20439IsabelleHOLsprooftheoreticstrength.html) (4 messages, latest: Mar 13 2021 at 16:49)

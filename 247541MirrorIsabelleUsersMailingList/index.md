@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Constructive Cryptography in H...](58379isabelleNewintheAFPConstructiveCryptographyinH.html) (1 message, latest: Mar 18 2021 at 07:52)
+
 * [\[isabelle\] Remaining uses of "isabelle process" and "isab...](96171isabelleRemainingusesofisabelleprocessandisab.html) (9 messages, latest: Mar 17 2021 at 15:03)
 
 * [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (2 messages, latest: Mar 17 2021 at 11:04)

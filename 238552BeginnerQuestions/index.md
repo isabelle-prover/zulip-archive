@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Go-to-definition for fancy syntax](94908Gotodefinitionforfancysyntax.html) (2 messages, latest: Mar 19 2021 at 00:09)
+
 * [@{const} antiquotation before definition](40684constantiquotationbeforedefinition.html) (1 message, latest: Mar 18 2021 at 23:59)
 
 * [Difference between = and ≡](69170Differencebetweenand.html) (8 messages, latest: Mar 17 2021 at 20:14)

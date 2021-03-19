@@ -1,0 +1,29 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/94908Gotodefinitionforfancysyntax.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94908Gotodefinitionforfancysyntax.html">Go-to-definition for fancy syntax</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="230955871"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Go-to-definition%20for%20fancy%20syntax/near/230955871" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94908Gotodefinitionforfancysyntax.html#230955871">Jakub Kądziołka (Mar 19 2021 at 00:07)</a>:</h4>
+<p>I have encountered the syntax <code>∑x∈#?A. ?f x</code>. Unlike simple infix operators or plain constant names, ctrl+clicking on this does not show me the definition of the relevant constant. How can I see the definition for more complex syntax?</p>
+
+<a name="230956027"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Go-to-definition%20for%20fancy%20syntax/near/230956027" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94908Gotodefinitionforfancysyntax.html#230956027">Jakub Kądziołka (Mar 19 2021 at 00:09)</a>:</h4>
+<p>In this case, some strategic grepping of HOL-Library allowed me to find</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code>  <span class="s">"∑i ∈# A. b"</span> <span class="err">⇌</span> <span class="s">"CONST sum_mset (CONST image_mset (λi. b) A)"</span>
+</code></pre></div>
+<p>However, I'd still like to know a general solution.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

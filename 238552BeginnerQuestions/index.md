@@ -9,9 +9,11 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Go-to-definition for fancy syntax](94908Gotodefinitionforfancysyntax.html) (3 messages, latest: Mar 19 2021 at 08:57)
+* [Introductory explanation of lifting and transfer](50388Introductoryexplanationofliftingandtransfer.html) (2 messages, latest: Mar 19 2021 at 12:33)
 
-* [@{const} antiquotation before definition](40684constantiquotationbeforedefinition.html) (1 message, latest: Mar 18 2021 at 23:59)
+* [@{const} antiquotation before definition](40684constantiquotationbeforedefinition.html) (2 messages, latest: Mar 19 2021 at 12:26)
+
+* [Go-to-definition for fancy syntax](94908Gotodefinitionforfancysyntax.html) (3 messages, latest: Mar 19 2021 at 08:57)
 
 * [Difference between = and ≡](69170Differencebetweenand.html) (8 messages, latest: Mar 17 2021 at 20:14)
 

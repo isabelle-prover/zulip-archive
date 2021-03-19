@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [@{const} antiquotation before definition](40684constantiquotationbeforedefinition.html) (1 message, latest: Mar 18 2021 at 23:59)
+
 * [Difference between = and ≡](69170Differencebetweenand.html) (8 messages, latest: Mar 17 2021 at 20:14)
 
 * [intro exI is overzealous](97806introexIisoverzealous.html) (6 messages, latest: Mar 12 2021 at 08:35)

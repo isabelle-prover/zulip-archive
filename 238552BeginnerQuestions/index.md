@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Go-to-definition for fancy syntax](94908Gotodefinitionforfancysyntax.html) (2 messages, latest: Mar 19 2021 at 00:09)
+* [Go-to-definition for fancy syntax](94908Gotodefinitionforfancysyntax.html) (3 messages, latest: Mar 19 2021 at 08:57)
 
 * [@{const} antiquotation before definition](40684constantiquotationbeforedefinition.html) (1 message, latest: Mar 18 2021 at 23:59)
 

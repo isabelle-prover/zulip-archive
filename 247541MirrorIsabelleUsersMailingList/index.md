@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Formal algorithms in Isabelle - is it OK to sp...](83805isabelleFormalalgorithmsinIsabelleisitOKtosp.html) (2 messages, latest: Mar 20 2021 at 19:46)
+
 * [\[isabelle\] \isakeyword in bold?](06063isabelleisakeywordinbold.html) (1 message, latest: Mar 18 2021 at 10:15)
 
 * [\[isabelle\] New in the AFP: Constructive Cryptography in H...](58379isabelleNewintheAFPConstructiveCryptographyinH.html) (1 message, latest: Mar 18 2021 at 07:52)

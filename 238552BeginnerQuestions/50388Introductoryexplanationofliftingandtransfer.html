@@ -57,6 +57,42 @@ permalink: ./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtra
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231144911" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231144911">Manuel Eberl (Mar 20 2021 at 12:58)</a>:</h4>
 <p>Sometimes <code>transfer'</code> does the trick in those cases, bot not here. I'm not even sure what <code>transfer'</code> does. Ondřej Kunčar told me it's bad and that I shouldn't use it.</p>
 
+<a name="231145439"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231145439" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231145439">Jakub Kądziołka (Mar 20 2021 at 13:06)</a>:</h4>
+<p>Hmm, I think it's trying to transfer through both uprod and multiset?</p>
+
+<a name="231145904"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231145904" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231145904">Manuel Eberl (Mar 20 2021 at 13:15)</a>:</h4>
+<p>That might be the problem, yes. I never really understood how to get around that.</p>
+
+<a name="231145915"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231145915" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231145915">Manuel Eberl (Mar 20 2021 at 13:15)</a>:</h4>
+<p>Maybe ask on the mailing list. I think the probability that someone knowledgeable on lifting and transfer will reply is higher there.</p>
+
+<a name="231147086"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231147086" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231147086">Lukas Stevens (Mar 20 2021 at 13:39)</a>:</h4>
+<p>If you haven't seen it already, there is also a file <code>HOL/ex/Transfer_Debug.thy</code> that goes through same cases where <code>transfer</code> fails and how to debug. (I have to add that I didn't find the file too illuminating)</p>
+
+<a name="231147875"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231147875" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231147875">Jakub Kądziołka (Mar 20 2021 at 13:55)</a>:</h4>
+<p>Yes, I've just noticed. I managed to craft the following proof with that method:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span> <span class="n">Upair_parametric</span><span class="o">[</span><span class="n">transfer_rule</span> <span class="n">del</span><span class="o">]</span>
+<span class="kn">lemma</span> <span class="o">[</span><span class="n">simp</span><span class="o">]:</span> <span class="s">"pair_content (Upair a b) = {# a, b #}"</span>
+  <span class="kp">apply</span> <span class="n">transfer_start</span>
+          <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">Rel_eq_refl</span><span class="o">)</span>
+         <span class="kp">apply</span> <span class="n">transfer_step</span><span class="o">+</span>
+  <span class="kp">apply</span> <span class="n">transfer_end</span>
+  <span class="k">by</span> <span class="n">simp</span>
+</code></pre></div>
+
+<a name="231148044"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Introductory%20explanation%20of%20lifting%20and%20transfer/near/231148044" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/50388Introductoryexplanationofliftingandtransfer.html#231148044">Jakub Kądziołka (Mar 20 2021 at 13:58)</a>:</h4>
+<p>oh, actually, this works:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span> <span class="n">Upair_parametric</span><span class="o">[</span><span class="n">transfer_rule</span> <span class="n">del</span><span class="o">]</span> <span class="n">zero_multiset.transfer</span><span class="o">[</span><span class="n">transfer_rule</span> <span class="n">del</span><span class="o">]</span>
+<span class="kn">lemma</span> <span class="o">[</span><span class="n">simp</span><span class="o">]:</span> <span class="s">"pair_content (Upair a b) = {# a, b #}"</span>
+  <span class="k">by</span> <span class="n">transfer</span> <span class="n">simp</span>
+</code></pre></div>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Introductory explanation of lifting and transfer](50388Introductoryexplanationofliftingandtransfer.html) (3 messages, latest: Mar 19 2021 at 21:36)
+* [Introductory explanation of lifting and transfer](50388Introductoryexplanationofliftingandtransfer.html) (4 messages, latest: Mar 19 2021 at 23:16)
 
 * [@{const} antiquotation before definition](40684constantiquotationbeforedefinition.html) (2 messages, latest: Mar 19 2021 at 12:26)
 

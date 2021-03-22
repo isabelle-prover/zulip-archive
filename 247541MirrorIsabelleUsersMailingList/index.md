@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Specifying a Universal Property in a locale	de...](96526isabelleSpecifyingaUniversalPropertyinalocalede.html) (1 message, latest: Mar 22 2021 at 06:11)
+
 * [\[isabelle\] Weak lemma: sum_mset_diff](13005isabelleWeaklemmasummsetdiff.html) (1 message, latest: Mar 21 2021 at 22:25)
 
 * [\[isabelle\] Formal algorithms in Isabelle - is it OK to sp...](83805isabelleFormalalgorithmsinIsabelleisitOKtosp.html) (2 messages, latest: Mar 20 2021 at 19:46)

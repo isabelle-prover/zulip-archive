@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: High-quality blackboard-bold symbols](18479isabelledevNEWSHighqualityblackboardboldsymbols.html) (1 message, latest: Mar 21 2021 at 23:06)
+
 * [\[isabelle-dev\] NEWS: Remote provers from SystemOnTPTP via...](54402isabelledevNEWSRemoteproversfromSystemOnTPTPvia.html) (2 messages, latest: Mar 14 2021 at 21:44)
 
 * [\[isabelle-dev\] Isabelle repository version, problems star...](08993isabelledevIsabellerepositoryversionproblemsstar.html) (8 messages, latest: Mar 12 2021 at 15:57)

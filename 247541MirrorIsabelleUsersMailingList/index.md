@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] How to see the names of all active Isabelle se...](49546isabelleHowtoseethenamesofallactiveIsabellese.html) (2 messages, latest: Mar 22 2021 at 15:42)
+
 * [\[isabelle\] C-to-Isabelle multiple external files](53117isabelleCtoIsabellemultipleexternalfiles.html) (3 messages, latest: Mar 22 2021 at 10:54)
 
 * [\[isabelle\] Call for Papers: HotSpot 2021](89528isabelleCallforPapersHotSpot2021.html) (1 message, latest: Mar 22 2021 at 10:23)

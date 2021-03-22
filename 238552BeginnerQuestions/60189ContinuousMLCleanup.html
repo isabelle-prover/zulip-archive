@@ -1,0 +1,41 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/60189ContinuousMLCleanup.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/60189ContinuousMLCleanup.html">Continuous "ML Cleanup"</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="231271992"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Continuous%20%22ML%20Cleanup%22/near/231271992" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/60189ContinuousMLCleanup.html#231271992">Alex (Mar 22 2021 at 07:34)</a>:</h4>
+<p>I have many "by auto"-proofs that use up a lot of memory. As soon as ML reaches about 8GB (I have 16GB RAM), a "ML cleanup" is performed after every single line in my theory, which in total takes up far more time than the actual proofs. Is there a way to adjust the memory limits or GC frequency?</p>
+
+<a name="231272465"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Continuous%20%22ML%20Cleanup%22/near/231272465" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/60189ContinuousMLCleanup.html#231272465">Mathias Fleury (Mar 22 2021 at 07:42)</a>:</h4>
+<p>In theory, you can adjust the min-heap of PolyML. Add to <code>$ISABELLE_HOME/etc/settings</code></p>
+<div class="codehilite"><pre><span></span><code>ML_OPTIONS=&quot;--minheap 10G&quot;
+</code></pre></div>
+<p>restart Isabelle, and try. That could backfire however (GCs become slower)</p>
+
+<a name="231272474"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Continuous%20%22ML%20Cleanup%22/near/231272474" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/60189ContinuousMLCleanup.html#231272474">Mathias Fleury (Mar 22 2021 at 07:42)</a>:</h4>
+<p>Not sure if that helps though</p>
+
+<a name="231272585"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Continuous%20%22ML%20Cleanup%22/near/231272585" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/60189ContinuousMLCleanup.html#231272585">Mathias Fleury (Mar 22 2021 at 07:44)</a>:</h4>
+<p>Other alternatives are splitting the file or changing the proofs…</p>
+
+<a name="231273211"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Continuous%20%22ML%20Cleanup%22/near/231273211" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/60189ContinuousMLCleanup.html#231273211">Mathias Fleury (Mar 22 2021 at 07:52)</a>:</h4>
+<p>More generally, I always found that the garbage collector behave strangely in SML (both PolyML and  MLton): Not eager enough to allocate memory past 50% of memory (including cases where GC will take up most of the runtime…), but also not eager enough to deallocate memory for low memory usage (in percentage again: Isabelle/polyml can use 50GB if the server has 1TB RAM… completely useless)</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

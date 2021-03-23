@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Specifying a Universal Property in a locale	de...](96526isabelleSpecifyingaUniversalPropertyinalocalede.html) (2 messages, latest: Mar 23 2021 at 19:43)
+
 * [\[isabelle\] C-to-Isabelle multiple external files](53117isabelleCtoIsabellemultipleexternalfiles.html) (4 messages, latest: Mar 23 2021 at 10:20)
 
 * [\[isabelle\] How to see the names of all active Isabelle se...](49546isabelleHowtoseethenamesofallactiveIsabellese.html) (2 messages, latest: Mar 22 2021 at 15:42)
 
 * [\[isabelle\] Call for Papers: HotSpot 2021](89528isabelleCallforPapersHotSpot2021.html) (1 message, latest: Mar 22 2021 at 10:23)
-
-* [\[isabelle\] Specifying a Universal Property in a locale	de...](96526isabelleSpecifyingaUniversalPropertyinalocalede.html) (1 message, latest: Mar 22 2021 at 06:11)
 
 * [\[isabelle\] Weak lemma: sum_mset_diff](13005isabelleWeaklemmasummsetdiff.html) (1 message, latest: Mar 21 2021 at 22:25)
 

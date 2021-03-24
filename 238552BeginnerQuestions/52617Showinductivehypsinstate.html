@@ -24,6 +24,23 @@ permalink: ./238552BeginnerQuestions/52617Showinductivehypsinstate.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Show%20inductive%20hyps%20in%20state/near/231604080" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/52617Showinductivehypsinstate.html#231604080">Lukas Stevens (Mar 24 2021 at 09:28)</a>:</h4>
 <p>A code sample with an explanation of what you expected would be great.</p>
 
+<a name="231609021"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Show%20inductive%20hyps%20in%20state/near/231609021" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/52617Showinductivehypsinstate.html#231609021">Mathias Fleury (Mar 24 2021 at 10:09)</a>:</h4>
+<p>Do you mean that in something like that:</p>
+<div class="codehilite"><pre><span></span><code>lemma
+  fixes xs ys :: ‹&#39;a list›
+  assumes ‹P xs›
+  shows ‹Q ys›
+proof (induction ys)
+  case Nil
+  then show ?case sorry
+next
+  case (Cons a ys)
+  then show ?case sorry
+qed
+</code></pre></div>
+<p>you don't see the <code>P xs</code>? If so that is expected. Isabelle shows only the fact that are threaded.</p>
+
 
 {% endraw %}
 

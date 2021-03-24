@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (1 message, latest: Mar 24 2021 at 16:47)
+
 * [\[isabelle\] Specifying a Universal Property in a locale	de...](96526isabelleSpecifyingaUniversalPropertyinalocalede.html) (2 messages, latest: Mar 23 2021 at 19:43)
 
 * [\[isabelle\] C-to-Isabelle multiple external files](53117isabelleCtoIsabellemultipleexternalfiles.html) (4 messages, latest: Mar 23 2021 at 10:20)

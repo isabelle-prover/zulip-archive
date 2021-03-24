@@ -1,0 +1,36 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/06505isabellePossibleproblemwithfloatingpointaddition.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06505isabellePossibleproblemwithfloatingpointaddition.html">[isabelle] Possible problem with floating-point addition ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="231667863"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Possible%20problem%20with%20floating-point%20addition%20.../near/231667863" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/06505isabellePossibleproblemwithfloatingpointaddition.html#231667863">Email Gateway (Mar 24 2021 at 16:47)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+I just noticed something wonky in the "approximation" package: addition<br>
+of two intervals is implemented by simply adding the two floats and<br>
+<em>then</em> rounding to the required precision.</p>
+<p>This leads to pathological behaviour when the two numbers being added<br>
+are of greatly different orders of magnitude, e.g.</p>
+<p>value "approx 10 (floatarith.Add<br>
+  (floatarith.Num (Float 1 0))<br>
+  (floatarith.Num (Float 1 (-100000)))) []"</p>
+<p>This takes about 93 seconds. If you add a few more zeros, it runs out of<br>
+memory entirely. Surely one can do better than that!</p>
+<p>Does anyone feel responsible for the approximation package and wants to<br>
+comment on if and how this should be repaired?</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/w0AeB_Ru1wRiozEjzQRB3h6U/smime.p7s">smime.p7s</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

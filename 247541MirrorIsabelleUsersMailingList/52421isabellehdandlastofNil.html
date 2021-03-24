@@ -27,6 +27,36 @@ lemma last_rev: "xs ≠ [] ⟹ last(rev xs) = hd xs"</p>
 <p>Best regards</p>
 <p>Stepan</p>
 
+<a name="231712351"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20hd%20and%20last%20of%20Nil/near/231712351" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/52421isabellehdandlastofNil.html#231712351">Email Gateway (Mar 24 2021 at 21:32)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+I don’t think it’s cheating. I think it’s great!<br>
+Larry</p>
+
+<a name="231714367"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20hd%20and%20last%20of%20Nil/near/231714367" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/52421isabellehdandlastofNil.html#231714367">Email Gateway (Mar 24 2021 at 21:46)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Philosophically, I think it is not a good idea to rely on the behaviour<br>
+of functions outside their domain. From the point of view of robustness,<br>
+this is also the case, since any change in this ‘unspecified behaviour’<br>
+will break your proofs.</p>
+<p>From a practical point of view, I would say: if it makes your life<br>
+easier, go for it. The definitions of hd and tl are highly unlikely to<br>
+change.</p>
+<p>Experience has shown that while it may seem more "honest" to leave<br>
+functions "as unspecified as possible" outside their domain, it just<br>
+makes things unnecessarily different. This is why I e.g. like to give<br>
+functions some reasonable "dummy" value at points at which they are not<br>
+defined, such as "0" for functions that return numbers. This is also<br>
+what we do for "x / 0". Every now and then, somebody comes along and<br>
+complains about it, but the reality is that it doesn't break anything<br>
+and makes some things in practice a little easier.</p>
+<p>(for example, if you let ln be <em>completely</em> undefined on the negative<br>
+numbers, it would no longer be a unconditionally measurable function,<br>
+which confuses the automation for measurability to no end)</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+
 
 {% endraw %}
 

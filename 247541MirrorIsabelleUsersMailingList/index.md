@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (1 message, latest: Mar 24 2021 at 20:30)
+* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (3 messages, latest: Mar 24 2021 at 21:46)
 
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (2 messages, latest: Mar 24 2021 at 17:11)
 

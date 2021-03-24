@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Show inductive hyps in state](52617Showinductivehypsinstate.html) (4 messages, latest: Mar 24 2021 at 10:09)
+* [Show inductive hyps in state](52617Showinductivehypsinstate.html) (5 messages, latest: Mar 24 2021 at 17:19)
 
 * [Continuous "ML Cleanup"](60189ContinuousMLCleanup.html) (6 messages, latest: Mar 22 2021 at 08:07)
 

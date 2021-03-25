@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (1 message, latest: Mar 25 2021 at 09:23)
+* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (5 messages, latest: Mar 25 2021 at 10:23)
 
-* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (4 messages, latest: Mar 25 2021 at 07:25)
+* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (1 message, latest: Mar 25 2021 at 09:23)
 
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (2 messages, latest: Mar 24 2021 at 17:11)
 

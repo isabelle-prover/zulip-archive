@@ -1,0 +1,72 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html">[isabelle] Evaluation of definitions defined inside a locale</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="231768663"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Evaluation%20of%20definitions%20defined%20inside%20a%20locale/near/231768663" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html#231768663">Email Gateway (Mar 25 2021 at 09:23)</a>:</h4>
+<p>From: "Sanan Baena David Miguel (Dr)" &lt;<a href="mailto:sanan@ntu.edu.sg">sanan@ntu.edu.sg</a>&gt;<br>
+Hi Isabelle users,</p>
+<p>I am trying to evaluate definitions declared inside a locale, but I am getting errors saying that I am using terms that are not constructors. However, if I use abbreviations instead it works slightly better (details below).</p>
+<p>In this very simple example</p>
+<p>theory test<br>
+  imports Main<br>
+begin<br>
+locale mytest =<br>
+  fixes s1::"nat set"<br>
+  fixes l1::"nat list"<br>
+begin</p>
+<p>definition add::"nat ⇒ nat set"<br>
+  where "add v ≡ insert v s1"</p>
+<p>definition addl::"nat ⇒ nat list"<br>
+  where "addl v ≡ v#l1"</p>
+<p>abbreviation abbs::"nat ⇒ nat set"<br>
+  where "abbs v ≡ insert v s1"</p>
+<p>abbreviation abbl::"nat =&gt; nat list"<br>
+  where "abbl ≡ insert v l1"</p>
+<p>end</p>
+<p>If I do an interpretation of mytest using numbers (1,2,3..) instead of 0 and Suc.</p>
+<p>interpretation v: mytest "{0,1}" "[0,1]".</p>
+<p>and I evaluate function add</p>
+<p>value "v.addl 2"</p>
+<p>I get<br>
+""Nat.one_nat_inst.one_nat" is not a constructor, on left hand side of equation, in theorem:<br>
+mytest.addl [zero_nat_inst.zero_nat, one_nat_inst.one_nat] ?v ≡<br>
+[?v, zero_nat_inst.zero_nat, one_nat_inst.one_nat]"</p>
+<p>if I change the interpretation</p>
+<p>interpretation v: mytest "{0,1}" "[0,Suc 0]".</p>
+<p>then the evaluation of addl is correct.</p>
+<p>However, it always fails when trying to evaluate "add" no matter whether the set is instantiated with numbers or with the natural number constructs.</p>
+<p>interpretation v: mytest "{0,Suc 0}" "[0,Suc 0]".</p>
+<p>gives the following error</p>
+<p>"Set.insert" is not a constructor, on left hand side of equation, in theorem:<br>
+mytest.add<br>
+ (insert zero_nat_inst.zero_nat<br>
+   (insert (Suc zero_nat_inst.zero_nat) bot_set_inst.bot_set))<br>
+ ?v ≡<br>
+insert ?v<br>
+ (insert zero_nat_inst.zero_nat<br>
+   (insert (Suc zero_nat_inst.zero_nat) bot_set_inst.bot_set))</p>
+<p>I am guessing that the problem here is that a set is an axiomatization and it doesn't have proper constructs.</p>
+<p>If instead of using "definition" I use "abbreviation" for the declaration, it works then when using sets and instantiating the set by using 0 and Suc. If I use numbers, it doesn't evaluate the definition, it just gives the type. But at least it doesn't throw any error.</p>
+<p>Is there any workaround for this?</p>
+<p>Thank you very much!</p>
+<p>Best regards,<br>
+David.</p>
+<hr>
+<p>CONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.<br>
+Towards a sustainable earth: Print only when necessary. Thank you.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

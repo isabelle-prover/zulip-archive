@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (7 messages, latest: Mar 25 2021 at 22:56)
+* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (10 messages, latest: Mar 25 2021 at 23:35)
 
 * [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (1 message, latest: Mar 25 2021 at 09:23)
 

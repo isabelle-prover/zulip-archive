@@ -120,6 +120,42 @@ on dividing by zero?</p>
 <p>If so, it is surely a rather dangerous thing to do.</p>
 <p>Jeremy</p>
 
+<a name="231891115"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20hd%20and%20last%20of%20Nil/near/231891115" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/52421isabellehdandlastofNil.html#231891115">Email Gateway (Mar 25 2021 at 23:15)</a>:</h4>
+<p>From: "John F. Hughes" &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt;<br>
+I was unhappy with this notion of "total functions" from my first moments<br>
+learning Isabelle, but I sucked it up and tried anyhow. I'd love to see,<br>
+say, two different versions of the most basic parts of Isabelle in which<br>
+stuff like this occurs, one of which defines x/0 to be 0, the other of<br>
+which defines it to be, say, 17. If the theorems you can prove are all<br>
+provable in both situations, then I'd be a lot happier. Sure, it doesn't<br>
+ensure Jeremy's criterion, but at least it'd help ease the minds of new<br>
+users.</p>
+
+<a name="231892581"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20hd%20and%20last%20of%20Nil/near/231892581" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/52421isabellehdandlastofNil.html#231892581">Email Gateway (Mar 25 2021 at 23:34)</a>:</h4>
+<p>From: Mario Carneiro &lt;<a href="mailto:di.gama@gmail.com">di.gama@gmail.com</a>&gt;<br>
+No it doesn't, and it's not hard to prove this either. As long as the<br>
+<em>statement</em> does not make direct use of the value of x / 0, you can replace<br>
+all occurrences of x / y with x /' y where x /' y has any other value you<br>
+like at y=0, and all the same theorems will hold. Regardless of whether x /<br>
+y is used in the proof, because it is a definition which is a conservative<br>
+extension, it does not enhance the logical strength of the system so you<br>
+can prove all the same theorems about x /' y. So for instance, if you prove<br>
+FLT relying on this definition of division, then you can also prove FLT<br>
+without that definition, or where the definition has some different<br>
+behavior at 0, because FLT doesn't have a division sign in it. This is what<br>
+it means for a definition to be conservative.</p>
+<p>Mario Carneiro</p>
+
+<a name="231892644"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20hd%20and%20last%20of%20Nil/near/231892644" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/52421isabellehdandlastofNil.html#231892644">Email Gateway (Mar 25 2021 at 23:35)</a>:</h4>
+<p>From: "Norrish, Michael (Data61, Acton)" &lt;<a href="mailto:Michael.Norrish@data61.csiro.au">Michael.Norrish@data61.csiro.au</a>&gt;<br>
+That won’t happen.  If inv 0 is defined to be zero, then you get the nice theorem</p>
+<p>inv (inv x) = x</p>
+<p>without a precondition.  Making inv 0 = 17 wrecks this (inv is no longer injective).</p>
+<p>Michael</p>
+
 
 {% endraw %}
 

@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (3 messages, latest: Mar 26 2021 at 12:37)
+
 * [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (13 messages, latest: Mar 26 2021 at 11:19)
 
 * [\[isabelle\] CFP ICTCS 2021 - 22th Italian Conference on Th...](47096isabelleCFPICTCS202122thItalianConferenceonTh.html) (1 message, latest: Mar 26 2021 at 10:56)
 
 * [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (1 message, latest: Mar 25 2021 at 09:23)
-
-* [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (2 messages, latest: Mar 24 2021 at 17:11)
 
 * [\[isabelle\] Specifying a Universal Property in a locale	de...](96526isabelleSpecifyingaUniversalPropertyinalocalede.html) (2 messages, latest: Mar 23 2021 at 19:43)
 

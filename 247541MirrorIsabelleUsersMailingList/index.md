@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\]  Pārs.:  How to see the names of all active Is...](11247isabellePrsHowtoseethenamesofallactiveIs.html) (1 message, latest: Mar 27 2021 at 14:41)
+
+* [\[isabelle\] Atb.: How to see the names of all active Isabe...](71124isabelleAtbHowtoseethenamesofallactiveIsabe.html) (1 message, latest: Mar 27 2021 at 14:22)
+
 * [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (14 messages, latest: Mar 26 2021 at 14:22)
 
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (3 messages, latest: Mar 26 2021 at 12:37)

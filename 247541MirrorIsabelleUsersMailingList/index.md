@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] I completed mmt_import but now I have some que...](90109isabelleIcompletedmmtimportbutnowIhavesomeque.html) (2 messages, latest: Mar 28 2021 at 13:35)
+* [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (2 messages, latest: Mar 28 2021 at 14:34)
 
-* [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (1 message, latest: Mar 28 2021 at 09:21)
+* [\[isabelle\] I completed mmt_import but now I have some que...](90109isabelleIcompletedmmtimportbutnowIhavesomeque.html) (2 messages, latest: Mar 28 2021 at 13:35)
 
 * [\[isabelle\]  Pārs.:  How to see the names of all active Is...](11247isabellePrsHowtoseethenamesofallactiveIs.html) (1 message, latest: Mar 27 2021 at 14:41)
 

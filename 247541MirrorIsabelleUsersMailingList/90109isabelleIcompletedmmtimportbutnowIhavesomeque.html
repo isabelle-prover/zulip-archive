@@ -1,0 +1,55 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/90109isabelleIcompletedmmtimportbutnowIhavesomeque.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/90109isabelleIcompletedmmtimportbutnowIhavesomeque.html">[isabelle] I completed mmt_import but now I have some que...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="232131796"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20I%20completed%20mmt_import%20but%20now%20I%20have%20some%20que.../near/232131796" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/90109isabelleIcompletedmmtimportbutnowIhavesomeque.html#232131796">Email Gateway (Mar 28 2021 at 01:27)</a>:</h4>
+<p>From: Alex Meyer &lt;<a href="mailto:alex153@outlook.lv">alex153@outlook.lv</a>&gt;<br>
+I have theory with 2 definitions and some 20 LOC including the usual boilerplate.</p>
+<p>I have completed mmt_import with Isabelle_MMT-20190611.exe from <a href="https://sketis.net/2019/mmt-as-component-for-isabelle2019">https://sketis.net/2019/mmt-as-component-for-isabelle2019</a> . I used command:</p>
+<p>tomr@DESKTOP /cygdrive/c/Homes/Isabelle_MMT-20190611/Isabelle_MMT-20190611<br>
+$ isabelle mmt_import -D /cygdrive/c/Workspace-Algo<br>
+Adding archive C:\Homes\Isabelle_MMT-20190611\Isabelle_MMT-20190611\isabelle_test<br>
+Loading 3 sessions ...<br>
+Processing theory Pure ...<br>
+Starting session Pure ...<br>
+Loading 112 theories ...<br>
+Processing theory HOL.Code_Generator ...<br>
+...<br>
+...</p>
+<p>/cygdrive/c/Workspace-Algo is my theory session directory (with ROOT in it) and C:\Homes\Isabelle_MMT-20190611\Isabelle_MMT-20190611\isabelle_test is some test directory inside Isabelle-MMT-2019 combined installation, I don't know why mmt_import requires/works on it. For the sake of security I copied all the content from my theory session directory /cygdrive/c/Workspace-Algo to this C:\Homes\Isabelle_MMT-20190611\Isabelle_MMT-20190611\isabelle_test as well.</p>
+<p>All in all - mmt_import exported more than 100 theories and it took 45 minutes on Intel7/16GB RAM machine with almost total consumption of all awailable RAM.</p>
+<p>So, the questions:</p>
+<p>*   Is there a way to indicate that I would like to export only 1 theory and not the remaining theories which somehow (indirectly) can be required for export?<br>
+  *   Is there a way to ask not to export the base theories once more: e.g. indicate that base theories have already been exported and to provide path to exports and then the proper export of the propert single theory could be fast?<br>
+  *   Why RAM consumption, consumption of resources ir so large?<br>
+  *   Is it hard to upgrade mmt_import 2019 for Isabelle2021. What it takes? Maybe I can do it myself, but some quick guidance could be good?<br>
+  *   I guess - if I would like to improve mmt_import or dig deeper, then I should be very good at Isabelle/Scala implementation. I checked System manual and there is Chapter 5 about Isabelle/Scala systems programming - as I understand, that is all for Isabelle/Scala?<br>
+  *   As I understand - if I would like to form my own Isabelle textual commans and send programmatically them to Isabelle and recieve response etc. then I should use Isabelle/Scala interface, am I right on this point? There is nothing more appropriate? (We have already discussed this about theory export in JSON/XML and as I understood - then every export tool, every interaction tools boils down to Isabelle/Scala - so - it should be worth to lear it).</p>
+<p>And lastly - just quick question: I installed mmt-20190611.tar.gz (un-gzipped, un-tarred and installed) as components for Isabelle2021 and I tried to run - I got errors about isabelle_scala_tools:</p>
+<p>tomr@DESKTOP /cygdrive/c/Workspace-Algo<br>
+$ isabelle components -u /cygdrive/c/Homes/IsabelleMMT/mmt-20190611<br>
+Added component "/cygdrive/c/Homes/IsabelleMMT/mmt-20190611"</p>
+<p>tomr@DESKTOP /cygdrive/c/Workspace-Algo<br>
+$ isabelle mmt_import<br>
+/cygdrive/c/Homes/IsabelleMMT/mmt-20190611/MMT-17.0.0/src/mmt-isabelle/etc/settings: line 11: isabelle_scala_tools: command not found<br>
+Return code 127 from bash script: "/cygdrive/c/Homes/IsabelleMMT/mmt-20190611/MMT-17.0.0/src/mmt-isabelle/etc/settings"</p>
+<p>Well, I know that this is bad thing to do - documentation explicitly required total compatibility of releases between Isabelle-MMT and Isabelle and in this case I am violating it by 2 major version, but still - what could it take to upgrade mmt_import for Isabelle2021? Maybe I can somehow installa isabelle_scala_tools and all the remaining will work anyway?</p>
+<p>Well - and just one last question. I am trying to do externa manipulation (parsing, machine learning and generating) Isabelle code and see, how hard is this. Maybe someone have experience with Coq and Lean with the similar tasks - parsing, machine learning and generating? Maybe it is easier and why easier? Isabelle's large and ever growing AFP is the strongest case why I am so fond of Isabelle, but still...</p>
+<p>Thanks in advance!</p>
+<p>Alex</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

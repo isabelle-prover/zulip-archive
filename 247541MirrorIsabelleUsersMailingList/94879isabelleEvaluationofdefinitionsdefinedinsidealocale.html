@@ -66,6 +66,27 @@ David.</p>
 <p>CONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.<br>
 Towards a sustainable earth: Print only when necessary. Thank you.</p>
 
+<a name="232181278"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Evaluation%20of%20definitions%20defined%20inside%20a%20locale/near/232181278" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html#232181278">Email Gateway (Mar 28 2021 at 17:41)</a>:</h4>
+<p>From: "Thiemann, René" &lt;<a href="mailto:Rene.Thiemann@uibk.ac.at">Rene.Thiemann@uibk.ac.at</a>&gt;<br>
+Hi David, </p>
+<p>if you want executable of definitions inside a locale, you have to explicitly add code-equations outside the locale.</p>
+<p>e.g., in your case </p>
+<p>locale mytest  = …<br>
+begin<br>
+…<br>
+definition addl = …<br>
+fun some_fun … <br>
+...<br>
+end</p>
+<p>declare mytest.addl_def[code]<br>
+declare mytest.some_fun.simps[code]</p>
+<p>interpretation v: mytest "{0,1}" "[0,1]" . </p>
+<p>Then your execution will succeed.</p>
+<p>value "v.addl 2”</p>
+<p>Best,<br>
+René</p>
+
 
 {% endraw %}
 

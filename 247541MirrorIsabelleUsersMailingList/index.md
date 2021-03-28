@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (2 messages, latest: Mar 28 2021 at 17:41)
+
 * [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (2 messages, latest: Mar 28 2021 at 14:34)
 
 * [\[isabelle\] I completed mmt_import but now I have some que...](90109isabelleIcompletedmmtimportbutnowIhavesomeque.html) (2 messages, latest: Mar 28 2021 at 13:35)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (3 messages, latest: Mar 26 2021 at 12:37)
 
 * [\[isabelle\] CFP ICTCS 2021 - 22th Italian Conference on Th...](47096isabelleCFPICTCS202122thItalianConferenceonTh.html) (1 message, latest: Mar 26 2021 at 10:56)
-
-* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (1 message, latest: Mar 25 2021 at 09:23)
 
 * [\[isabelle\] Specifying a Universal Property in a locale	de...](96526isabelleSpecifyingaUniversalPropertyinalocalede.html) (2 messages, latest: Mar 23 2021 at 19:43)
 

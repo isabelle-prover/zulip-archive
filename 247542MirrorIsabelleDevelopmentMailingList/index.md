@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] Sedicated session for material on combinat...](37402isabelledevSedicatedsessionformaterialoncombinat.html) (1 message, latest: Mar 28 2021 at 09:07)
+
 * [\[isabelle-dev\] NEWS: High-quality blackboard-bold symbols](18479isabelledevNEWSHighqualityblackboardboldsymbols.html) (1 message, latest: Mar 21 2021 at 23:06)
 
 * [\[isabelle-dev\] NEWS: Remote provers from SystemOnTPTP via...](54402isabelledevNEWSRemoteproversfromSystemOnTPTPvia.html) (2 messages, latest: Mar 14 2021 at 21:44)

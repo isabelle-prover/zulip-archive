@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Proof Ground 2021 - Call for Problems](59272isabelleProofGround2021CallforProblems.html) (1 message, latest: Mar 29 2021 at 09:17)
+
+* [\[isabelle\] Morello: Edinburgh research posts on capabilit...](61948isabelleMorelloEdinburghresearchpostsoncapabilit.html) (1 message, latest: Mar 29 2021 at 09:09)
+
 * [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (2 messages, latest: Mar 28 2021 at 17:41)
 
 * [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (2 messages, latest: Mar 28 2021 at 14:34)

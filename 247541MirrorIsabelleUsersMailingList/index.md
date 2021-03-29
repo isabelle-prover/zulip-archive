@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (15 messages, latest: Mar 29 2021 at 11:36)
+
 * [\[isabelle\] Proof Ground 2021 - Call for Problems](59272isabelleProofGround2021CallforProblems.html) (1 message, latest: Mar 29 2021 at 09:17)
 
 * [\[isabelle\] Morello: Edinburgh research posts on capabilit...](61948isabelleMorelloEdinburghresearchpostsoncapabilit.html) (1 message, latest: Mar 29 2021 at 09:09)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\]  Pārs.:  How to see the names of all active Is...](11247isabellePrsHowtoseethenamesofallactiveIs.html) (1 message, latest: Mar 27 2021 at 14:41)
 
 * [\[isabelle\] Atb.: How to see the names of all active Isabe...](71124isabelleAtbHowtoseethenamesofallactiveIsabe.html) (1 message, latest: Mar 27 2021 at 14:22)
-
-* [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (14 messages, latest: Mar 26 2021 at 14:22)
 
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (3 messages, latest: Mar 26 2021 at 12:37)
 

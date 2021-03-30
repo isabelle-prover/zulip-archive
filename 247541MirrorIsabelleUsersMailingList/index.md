@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 2nd CfP: SCSS 2021](83506isabelle2ndCfPSCSS2021.html) (1 message, latest: Mar 30 2021 at 08:44)
+
+* [\[isabelle\] Deadline Extension: April 5th, 20201,	14th Con...](44145isabelleDeadlineExtensionApril5th2020114thCon.html) (1 message, latest: Mar 30 2021 at 08:44)
+
 * [\[isabelle\] hd and last of Nil](52421isabellehdandlastofNil.html) (15 messages, latest: Mar 29 2021 at 11:36)
 
 * [\[isabelle\] Proof Ground 2021 - Call for Problems](59272isabelleProofGround2021CallforProblems.html) (1 message, latest: Mar 29 2021 at 09:17)

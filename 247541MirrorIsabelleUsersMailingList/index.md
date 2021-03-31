@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (3 messages, latest: Mar 31 2021 at 04:57)
+
 * [\[isabelle\] 2nd CfP: SCSS 2021](83506isabelle2ndCfPSCSS2021.html) (1 message, latest: Mar 30 2021 at 08:44)
 
 * [\[isabelle\] Deadline Extension: April 5th, 20201,	14th Con...](44145isabelleDeadlineExtensionApril5th2020114thCon.html) (1 message, latest: Mar 30 2021 at 08:44)
@@ -18,8 +20,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Proof Ground 2021 - Call for Problems](59272isabelleProofGround2021CallforProblems.html) (1 message, latest: Mar 29 2021 at 09:17)
 
 * [\[isabelle\] Morello: Edinburgh research posts on capabilit...](61948isabelleMorelloEdinburghresearchpostsoncapabilit.html) (1 message, latest: Mar 29 2021 at 09:09)
-
-* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (2 messages, latest: Mar 28 2021 at 17:41)
 
 * [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (2 messages, latest: Mar 28 2021 at 14:34)
 

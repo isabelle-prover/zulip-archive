@@ -115,6 +115,36 @@ Which makes sense to me.</p>
 <p>Thanks again!</p>
 <p>David.</p>
 
+<a name="232538013"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Evaluation%20of%20definitions%20defined%20inside%20a%20locale/near/232538013" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html#232538013">Email Gateway (Mar 31 2021 at 05:18)</a>:</h4>
+<p>From: "YAMADA, Akihisa" &lt;<a href="mailto:ayamada@trs.cm.is.nagoya-u.ac.jp">ayamada@trs.cm.is.nagoya-u.ac.jp</a>&gt;<br>
+Hi David,</p>
+<p>locales with assumptions inserts the assumptions to all facts including <br>
+defining equations (when they are seen from outside the locale). One <br>
+trick is to declare a locale without assumptions, and then extend it <br>
+with assumptions.</p>
+<p>locale pre_mytest =<br>
+    fixes s1::"nat set"<br>
+    fixes l1::"nat list"<br>
+begin</p>
+<p>definition add::"nat ⇒ nat set"<br>
+    where "add v ≡ insert v s1"</p>
+<p>definition addl::"nat ⇒ nat list"<br>
+    where "addl v ≡ v#l1"<br>
+end</p>
+<p>declare pre_mytest.add_def[code]</p>
+<p>locale mytest = pre_mytest +<br>
+    assumes not_empty:"s1≠{}"</p>
+<p>HTH,<br>
+Akihisa</p>
+
+<a name="232540345"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Evaluation%20of%20definitions%20defined%20inside%20a%20locale/near/232540345" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html#232540345">Email Gateway (Mar 31 2021 at 05:55)</a>:</h4>
+<p>From: "Sanan Baena David Miguel (Dr)" &lt;<a href="mailto:sanan@ntu.edu.sg">sanan@ntu.edu.sg</a>&gt;<br>
+Thanks a lot Akihisa,</p>
+<p>This does the trick, of course! (How I didn't think about that...)</p>
+<p>David.</p>
+
 
 {% endraw %}
 

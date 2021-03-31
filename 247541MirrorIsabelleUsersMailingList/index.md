@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (3 messages, latest: Mar 31 2021 at 04:57)
+* [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (5 messages, latest: Mar 31 2021 at 05:55)
 
 * [\[isabelle\] 2nd CfP: SCSS 2021](83506isabelle2ndCfPSCSS2021.html) (1 message, latest: Mar 30 2021 at 08:44)
 

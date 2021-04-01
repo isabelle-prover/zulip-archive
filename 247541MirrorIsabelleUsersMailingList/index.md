@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New AFP entry: Information Flow Control via De...](04185isabelleNewAFPentryInformationFlowControlviaDe.html) (1 message, latest: Apr 01 2021 at 10:14)
+
 * [\[isabelle\] UNIF 2021: second call for papers](95893isabelleUNIF2021secondcallforpapers.html) (1 message, latest: Apr 01 2021 at 09:26)
 
 * [\[isabelle\] Evaluation of definitions defined inside a locale](94879isabelleEvaluationofdefinitionsdefinedinsidealocale.html) (5 messages, latest: Mar 31 2021 at 05:55)

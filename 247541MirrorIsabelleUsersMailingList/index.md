@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\]  Pārs.: Parsing term is easy with Scala, can s...](49041isabellePrsParsingtermiseasywithScalacans.html) (1 message, latest: Apr 04 2021 at 13:16)
+
 * [\[isabelle\] Parsing term is easy with Scala, can similar a...](29934isabelleParsingtermiseasywithScalacansimilara.html) (1 message, latest: Apr 04 2021 at 12:37)
 
 * [\[isabelle\] New AFP entry: Information Flow Control via De...](04185isabelleNewAFPentryInformationFlowControlviaDe.html) (1 message, latest: Apr 01 2021 at 10:14)

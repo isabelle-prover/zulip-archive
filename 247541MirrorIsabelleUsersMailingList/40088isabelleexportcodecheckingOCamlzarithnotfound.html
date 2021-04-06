@@ -1,0 +1,40 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/40088isabelleexportcodecheckingOCamlzarithnotfound.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/40088isabelleexportcodecheckingOCamlzarithnotfound.html">[isabelle] export code checking OCaml: zarith not found</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="233304659"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20export%20code%20checking%20OCaml%3A%20zarith%20not%20found/near/233304659" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/40088isabelleexportcodecheckingOCamlzarithnotfound.html#233304659">Email Gateway (Apr 06 2021 at 11:49)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hi,</p>
+<p>I'm trying to use the checking OCaml mode of export_code, but it fails<br>
+with</p>
+<p>ocamlfind: Package `zarith' not found <br>
+Code check failed for OCaml: "$ISABELLE_OCAMLFIND" ocamlopt -w pu<br>
+-package zarith -linkpkg <a href="http://ROOT.ml">ROOT.ml</a> &lt;/dev/null</p>
+<p>I have installed opam and ocamlfind, and added the path to ocamlfind<br>
+and an eval $(opam env) to my ~/.isabelle/Isabelle2021/etc/settings<br>
+file:</p>
+<p>peter@peterXps:~$ cat ~/.isabelle/Isabelle2021/etc/settings <br>
+ISABELLE_OCAMLFIND=/usr/bin/ocamlfind<br>
+ISABELLE_GHC=/usr/bin/ghc</p>
+<p>eval $(opam env)</p>
+<p>running with isabelle env works as expected</p>
+<p>peter@peterXps:~$ isabelle env ocamlfind query zarith<br>
+/home/peter/.opam/default/lib/zarith</p>
+<p>but, even after restarting isabelle, export_code keeps complaining.<br>
+What am I missing? How to troubleshoot?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

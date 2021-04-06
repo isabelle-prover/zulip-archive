@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Results — Survey on the AFP](37861isabelleResultsSurveyontheAFP.html) (1 message, latest: Apr 06 2021 at 09:12)
+
 * [\[isabelle\] Parsing term is easy with Scala, can similar a...](29934isabelleParsingtermiseasywithScalacansimilara.html) (2 messages, latest: Apr 05 2021 at 00:09)
 
 * [\[isabelle\]  Pārs.: Parsing term is easy with Scala, can s...](49041isabellePrsParsingtermiseasywithScalacans.html) (2 messages, latest: Apr 04 2021 at 22:49)

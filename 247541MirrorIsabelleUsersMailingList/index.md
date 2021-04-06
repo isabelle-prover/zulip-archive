@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] export code checking OCaml: zarith not found](40088isabelleexportcodecheckingOCamlzarithnotfound.html) (1 message, latest: Apr 06 2021 at 11:49)
+* [\[isabelle\] export code checking OCaml: zarith not found](40088isabelleexportcodecheckingOCamlzarithnotfound.html) (2 messages, latest: Apr 06 2021 at 12:08)
 
 * [\[isabelle\] Results — Survey on the AFP](37861isabelleResultsSurveyontheAFP.html) (1 message, latest: Apr 06 2021 at 09:12)
 

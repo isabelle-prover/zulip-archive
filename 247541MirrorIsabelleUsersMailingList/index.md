@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Announcement: Isabelle/DOF 1.1.0](48886isabelleAnnouncementIsabelleDOF110.html) (1 message, latest: Apr 06 2021 at 18:47)
+
 * [\[isabelle\] export code checking OCaml: zarith not found](40088isabelleexportcodecheckingOCamlzarithnotfound.html) (3 messages, latest: Apr 06 2021 at 14:09)
 
 * [\[isabelle\] Results — Survey on the AFP](37861isabelleResultsSurveyontheAFP.html) (1 message, latest: Apr 06 2021 at 09:12)

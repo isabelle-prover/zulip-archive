@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (4 messages, latest: Apr 07 2021 at 15:35)
+
 * [\[isabelle\] Announcement: Isabelle/DOF 1.1.0](48886isabelleAnnouncementIsabelleDOF110.html) (1 message, latest: Apr 06 2021 at 18:47)
 
 * [\[isabelle\] export code checking OCaml: zarith not found](40088isabelleexportcodecheckingOCamlzarithnotfound.html) (3 messages, latest: Apr 06 2021 at 14:09)
@@ -42,8 +44,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\]  Pārs.:  How to see the names of all active Is...](11247isabellePrsHowtoseethenamesofallactiveIs.html) (1 message, latest: Mar 27 2021 at 14:41)
 
 * [\[isabelle\] Atb.: How to see the names of all active Isabe...](71124isabelleAtbHowtoseethenamesofallactiveIsabe.html) (1 message, latest: Mar 27 2021 at 14:22)
-
-* [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (3 messages, latest: Mar 26 2021 at 12:37)
 
 * [\[isabelle\] CFP ICTCS 2021 - 22th Italian Conference on Th...](47096isabelleCFPICTCS202122thItalianConferenceonTh.html) (1 message, latest: Mar 26 2021 at 10:56)
 

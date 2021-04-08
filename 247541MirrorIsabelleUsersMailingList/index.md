@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Editing the Isabelle Wiki](23220isabelleEditingtheIsabelleWiki.html) (2 messages, latest: Apr 08 2021 at 09:59)
+
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (4 messages, latest: Apr 07 2021 at 15:35)
 
 * [\[isabelle\] Announcement: Isabelle/DOF 1.1.0](48886isabelleAnnouncementIsabelleDOF110.html) (1 message, latest: Apr 06 2021 at 18:47)

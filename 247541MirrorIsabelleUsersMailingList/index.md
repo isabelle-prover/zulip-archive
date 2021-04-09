@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (1 message, latest: Apr 09 2021 at 11:23)
+
 * [\[isabelle\] Editing the Isabelle Wiki](23220isabelleEditingtheIsabelleWiki.html) (3 messages, latest: Apr 08 2021 at 10:40)
 
 * [\[isabelle\] Possible problem with floating-point addition ...](06505isabellePossibleproblemwithfloatingpointaddition.html) (4 messages, latest: Apr 07 2021 at 15:35)

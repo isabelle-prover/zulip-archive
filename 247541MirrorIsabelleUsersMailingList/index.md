@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Grothendieck's Schemes in Alge...](83424isabelleNewintheAFPGrothendiecksSchemesinAlge.html) (1 message, latest: Apr 09 2021 at 13:39)
+
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (1 message, latest: Apr 09 2021 at 11:23)
 
 * [\[isabelle\] Editing the Isabelle Wiki](23220isabelleEditingtheIsabelleWiki.html) (3 messages, latest: Apr 08 2021 at 10:40)

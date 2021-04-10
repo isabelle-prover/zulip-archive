@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FMBC: Second Call for Papers](65718isabelleFMBCSecondCallforPapers.html) (1 message, latest: Apr 10 2021 at 09:18)
+
 * [\[isabelle\] New in the AFP: Grothendieck's Schemes in Alge...](83424isabelleNewintheAFPGrothendiecksSchemesinAlge.html) (1 message, latest: Apr 09 2021 at 13:39)
 
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (1 message, latest: Apr 09 2021 at 11:23)

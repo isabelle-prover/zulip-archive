@@ -1,0 +1,28 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961General/92603RealimperativecodegenerationfromIsabelle.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961General/index.html">General</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html">"Real" imperative code generation from Isabelle</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234045438"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234045438" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234045438">Florian Sextl (Apr 11 2021 at 13:36)</a>:</h4>
+<p>Dear community,</p>
+<p>I'm looking for ways to generate code from Isabelle in a "real" imperative programming language. As far as I understand, the closest to this would be Imperative HOL, which generates code in an imperative fashion embedded in otherwise functional languages like Haskell or SML. In a slightly different fashion, Isabelle LLVM targets LLVM intermediate representation which is more imperative but not a high level programming language. To be more precise, I would like to have a code generation backend for Isabelle that generates something like C or Rust. Has there been any kind of work in this direction yet?</p>
+<p>To give some background, the talk by <span class="user-mention" data-user-id="344245">@pandaman</span> at the first <a href="https://sites.google.com/view/rustverify2021">Rust Verification Workshop</a> gave me the idea to combine their <a href="https://github.com/pandaman64/sabi">Rust verification tool</a> with the Imperative Refinement framework. It would be quite helpful to be able to refine some algorithm from a high level functional specification to a lower level imperative definition based on Imperative HOL (or something similar) and use this to generate Rust code that can then also be checked by something like pandaman's tool for Rust specific properties. This approach would leverage the Refinement Framework's abilities to verify rather general algorithms whereas more specialised verified compilers that can generate Rust code (e.g. <a href="https://github.com/AU-COBRA/ConCert">ConCert</a> or <a href="https://github.com/mit-plv/fiat-crypto">fiat</a>, both implemented in Coq) work only for some domain specific programs. A more general tool would be especially helpful for the Rust community as there exists no complete formal standard/semantics for the Rust programming language yet.</p>
+
+<a name="234045556"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234045556" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234045556">Lukas Stevens (Apr 11 2021 at 13:39)</a>:</h4>
+<p>There is <a href="https://www.isa-afp.org/entries/Isabelle_C.html">Isabelle/C</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

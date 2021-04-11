@@ -22,6 +22,102 @@ permalink: ./202961General/92603RealimperativecodegenerationfromIsabelle.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234045556" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234045556">Lukas Stevens (Apr 11 2021 at 13:39)</a>:</h4>
 <p>There is <a href="https://www.isa-afp.org/entries/Isabelle_C.html">Isabelle/C</a></p>
 
+<a name="234047226"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234047226" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234047226">Mathias Fleury (Apr 11 2021 at 14:03)</a>:</h4>
+<p>I don't see how a new backend that generates helps for the semantics for Rust <span aria-label="thinking" class="emoji emoji-1f914" role="img" title="thinking">:thinking:</span> By definition, you will target a subset of the language and have a semantic of only that (like Isabelle_LLVM does not have a semantic for the complete LLVM language, but only the useful parts)</p>
+
+<a name="234047382"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234047382" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234047382">Mathias Fleury (Apr 11 2021 at 14:06)</a>:</h4>
+<p>Remark that due to how the RF work you cannot share ownership of impure values anyway. So you will never be able to express an algorithm that shares values</p>
+
+<a name="234047780"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234047780" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234047780">Florian Sextl (Apr 11 2021 at 14:11)</a>:</h4>
+<blockquote>
+<p>I don't see how a new backend that generates helps for the semantics for Rust.</p>
+</blockquote>
+<p>So my intuition to this is that without a complete standard/specification there probably won't be tools that can verify programs written in an arbitrary subset of the language. Thus generating verified program parts in a fixed subset seems like the more reasonable solution to obtain verified Rust code for now.</p>
+
+<a name="234048182"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234048182" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234048182">Mathias Fleury (Apr 11 2021 at 14:16)</a>:</h4>
+<p>Just to be sure we are talking about the same thing. The standard RF works the following way:</p>
+<div class="codehilite"><pre><span></span><code>   1. Generic Isabelle code
+       /\
+        |
+        |    Refinement Framework (automatic)
+       \/
+   2. Isabelle in Imperative/HOL
+      /\
+       | Code Generator  (trusted)
+      \/
+    3. OCaml/Scala/Haskell Code
+</code></pre></div>
+<p>And Isabelle_LLVM:</p>
+<div class="codehilite"><pre><span></span><code>   1. Generic Isabelle code
+       /\
+        |
+        |    Refinement Framework (automatic)
+       \/
+   2. Isabelle in LLVM semantics
+      /\
+       | Pretty-printing
+      \/
+    3. LLVM Code
+</code></pre></div>
+
+<a name="234048295"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234048295" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234048295">Mathias Fleury (Apr 11 2021 at 14:18)</a>:</h4>
+<p>You want to change Isabelle_LLVM to have a Rust-like in step 2, right?</p>
+
+<a name="234049795"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234049795" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234049795">Florian Sextl (Apr 11 2021 at 14:37)</a>:</h4>
+<p>Not necessarily, I thought of something in between:</p>
+<div class="codehilite"><pre><span></span><code>1. Generic Isabelle code
+  /\
+   |
+   |    Refinement Framework (automatic)
+  \/
+2. Isabelle in Imperative/HOL
+  /\
+   |
+   | More or less direct translation (hopefully automatic)
+  \/
+3. Rust-like intermediate representation (e.g. a formalisation of a subset), Rust specific analyses can be performed on this level
+  /\
+   |
+   | Code Generator (should be trusted)
+  \/
+4. Rust Code
+</code></pre></div>
+<p>I'm not entirely sure whether the intermediate step to Imperative/HOL would actually help in this setup.</p>
+
+<a name="234050215"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234050215" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234050215">Mathias Fleury (Apr 11 2021 at 14:42)</a>:</h4>
+<p>3 is still in Isabelle, right?</p>
+
+<a name="234050274"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234050274" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234050274">Florian Sextl (Apr 11 2021 at 14:43)</a>:</h4>
+<p>Yes, that stage would be similar to the aforementioned work by pandaman (which is implemented in Isabelle).</p>
+
+<a name="234050307"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234050307" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234050307">Mathias Fleury (Apr 11 2021 at 14:44)</a>:</h4>
+<p>and the step from 3 to 4 is simply pretty-printing?</p>
+
+<a name="234050368"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234050368" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234050368">Mathias Fleury (Apr 11 2021 at 14:44)</a>:</h4>
+<p>In 3 you already have rust code, what is the difference to 4?</p>
+
+<a name="234050489"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234050489" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234050489">Florian Sextl (Apr 11 2021 at 14:46)</a>:</h4>
+<p>3 does not really have to be valid Rust code but I would rather expect some simple formalisation of it. Maybe some kind of AST like in Isabelle/C.</p>
+
+<a name="234051234"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234051234" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234051234">Mathias Fleury (Apr 11 2021 at 14:56)</a>:</h4>
+<p>Imperative HOL is more general than the output of the RF. Somehow I expect that you can express code in Imperative HOL that violates the ownership property (which cannot happen with the RF). Not sure though.</p>
+
+<a name="234051364"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234051364" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234051364">Mathias Fleury (Apr 11 2021 at 14:58)</a>:</h4>
+<p>So the translation would have to fail</p>
+
 
 {% endraw %}
 

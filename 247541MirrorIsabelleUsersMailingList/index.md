@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (3 messages, latest: Apr 12 2021 at 10:21)
+
 * [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (2 messages, latest: Apr 12 2021 at 09:15)
 
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
@@ -78,8 +80,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] 21st Midlands Graduate School in the Foundatio...](53424isabelle21stMidlandsGraduateSchoolintheFoundatio.html) (2 messages, latest: Mar 17 2021 at 11:04)
 
 * [\[isabelle\] 14th Conference on Intelligent Computer Mathem...](14244isabelle14thConferenceonIntelligentComputerMathem.html) (3 messages, latest: Mar 17 2021 at 10:02)
-
-* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (2 messages, latest: Mar 16 2021 at 10:37)
 
 * [\[isabelle\] A lemma about remove1](64001isabelleAlemmaaboutremove1.html) (3 messages, latest: Mar 16 2021 at 07:18)
 

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (2 messages, latest: Apr 11 2021 at 23:45)
+* [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (3 messages, latest: Apr 12 2021 at 05:37)
 
 * [Show inductive hyps in state](52617Showinductivehypsinstate.html) (5 messages, latest: Mar 24 2021 at 17:19)
 

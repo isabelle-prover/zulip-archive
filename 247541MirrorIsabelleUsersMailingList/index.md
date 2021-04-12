@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (2 messages, latest: Apr 12 2021 at 15:56)
+
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (3 messages, latest: Apr 12 2021 at 10:21)
 
 * [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (2 messages, latest: Apr 12 2021 at 09:15)
@@ -112,8 +114,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] by fact and try0](17333isabellebyfactandtry0.html) (2 messages, latest: Mar 09 2021 at 16:38)
 
 * [\[isabelle\] New in the AFP: Quantum projective measurements](11052isabelleNewintheAFPQuantumprojectivemeasurements.html) (1 message, latest: Mar 09 2021 at 15:00)
-
-* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (1 message, latest: Mar 09 2021 at 10:26)
 
 * [\[isabelle\] Structure of Proofs](01529isabelleStructureofProofs.html) (3 messages, latest: Mar 08 2021 at 17:17)
 

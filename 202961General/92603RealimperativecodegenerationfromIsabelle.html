@@ -118,6 +118,18 @@ permalink: ./202961General/92603RealimperativecodegenerationfromIsabelle.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234051364" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234051364">Mathias Fleury (Apr 11 2021 at 14:58)</a>:</h4>
 <p>So the translation would have to fail</p>
 
+<a name="234149316"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234149316" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234149316">maximilian p.l. haslbeck (Apr 12 2021 at 12:35)</a>:</h4>
+<p><span class="user-mention" data-user-id="368701">@Florian Sextl</span> Thank you for your question. It is certainly an interesting idea. Could you summarize what the Rustv project has already formalized in Isabelle? From what you wrote and I saw in their github repo, I have the impression that they use <a href="https://www.isa-afp.org/entries/Simpl.html">Simpl</a> -- a generic verification environment for imperative code -- to build up an verification environment for Rust. Is that already done? Do they provide a case study example?</p>
+
+<a name="234149492"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234149492" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234149492">maximilian p.l. haslbeck (Apr 12 2021 at 12:37)</a>:</h4>
+<p>If they already provide a formalization of states and (operational) semantics of Rust this could indeed be integrated with the Isabelle Refinement Framework.</p>
+
+<a name="234150084"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/%22Real%22%20imperative%20code%20generation%20from%20Isabelle/near/234150084" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/92603RealimperativecodegenerationfromIsabelle.html#234150084">maximilian p.l. haslbeck (Apr 12 2021 at 12:41)</a>:</h4>
+<p><span class="user-mention" data-user-id="324415">@Peter Lammich</span> provides a quite <a href="https://github.com/lammich/isabelle_llvm/blob/master/thys/vcg/Sep_Generic_Wp.thy">generic setup</a> for a verification environment that requires a weakest precondition predicate capturing the semantics of a programming language and a separation algebra modelling its state. It is quite straightforward to hook that up with the IRF. In fact, that generic wp framework is instantiated for LLVM and then hooked up with IRF (described in his <a href="https://drops.dagstuhl.de/opus/volltexte/2019/11077/">ITP19 Paper</a>).</p>
+
 
 {% endraw %}
 

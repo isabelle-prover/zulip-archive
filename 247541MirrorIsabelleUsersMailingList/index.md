@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
+* [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (2 messages, latest: Apr 12 2021 at 09:15)
 
-* [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (1 message, latest: Apr 11 2021 at 13:56)
+* [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
 
 * [\[isabelle\] FMBC: Second Call for Papers](65718isabelleFMBCSecondCallforPapers.html) (1 message, latest: Apr 10 2021 at 09:18)
 

@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (3 messages, latest: Apr 12 2021 at 05:37)
+* [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (1 message, latest: Apr 12 2021 at 11:33)
+
+* [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (4 messages, latest: Apr 12 2021 at 11:00)
 
 * [Show inductive hyps in state](52617Showinductivehypsinstate.html) (5 messages, latest: Mar 24 2021 at 17:19)
 

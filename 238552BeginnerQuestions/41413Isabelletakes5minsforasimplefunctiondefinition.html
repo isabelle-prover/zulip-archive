@@ -1,0 +1,60 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html">Isabelle takes ~5 mins for a simple function definition</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234142265"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20takes%20~5%20mins%20for%20a%20simple%20function%20definition/near/234142265" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html#234142265">Mistral Contrastin (Apr 12 2021 at 11:33)</a>:</h4>
+<p>I have a function definition that is not recursive, but takes about five minutes to be processed (lose its purple background) on a relatively beefy machine. I already tried factoring it at the <code>Plus</code> <code>Plus</code> case. This is enough for the definition to be processed immediately, but I'd like to understand why Isabelle struggles with it so much and how in general I'd go about seeing where the time is being spent. After five minutes, it also reports redundant equations and it is not clear to me why these are redundant.</p>
+<p>Definitions:</p>
+<div class="codehilite"><pre><span></span><code>datatype aexp = N int | V string | Plus aexp aexp
+
+fun plus_full :: &quot;aexp ⇒ aexp ⇒ aexp&quot; where
+&quot;plus_full (N a) (N b) = N (a + b)&quot; |
+&quot;plus_full (Plus p (N a)) (N b) = Plus p (N (a + b))&quot; |
+&quot;plus_full (N b) (Plus p (N a)) = Plus p (N (a + b))&quot; |
+&quot;plus_full (Plus p (N a)) (Plus q (N b)) = Plus (Plus p q) (N (a + b))&quot; |
+&quot;plus_full (Plus p (N a)) (Plus (N b) q) = Plus (Plus p q) (N (a + b))&quot; |
+&quot;plus_full (Plus (N a) p) (Plus (N b) q) = Plus (Plus p q) (N (a + b))&quot; |
+&quot;plus_full (Plus (N a) p) (Plus q (N b)) = Plus (Plus p q) (N (a + b))&quot; |
+&quot;plus_full (Plus p (N a)) q = Plus (Plus p q) (N a)&quot; |
+&quot;plus_full q (Plus p (N a)) = Plus (Plus p q) (N a)&quot; |
+&quot;plus_full p (N i) = (if i = 0 then p else Plus p (N i))&quot; |
+&quot;plus_full (N i) p = (if i = 0 then p else Plus p (N i))&quot; |
+&quot;plus_full p q = (Plus p q)&quot;
+</code></pre></div>
+<p>Redundant equations after five minutes:</p>
+<div class="codehilite"><pre><span></span><code>Ignoring duplicate rewrite rule:
+plus_full (Plus (V ?vc1) (V ?vd1)) (Plus ?v1 (V ?vb1)) ≡
+Plus (Plus (V ?vc1) (V ?vd1)) (Plus ?v1 (V ?vb1))
+Ignoring duplicate rewrite rule:
+plus_full (Plus (Plus ?vc1 ?ve1) (V ?vd1)) (Plus ?v1 (V ?vb1)) ≡
+Plus (Plus (Plus ?vc1 ?ve1) (V ?vd1)) (Plus ?v1 (V ?vb1))
+Ignoring duplicate rewrite rule:
+plus_full (Plus (V ?vc1) (Plus ?vd1 ?ve1)) (Plus ?v1 (V ?vb1)) ≡
+Plus (Plus (V ?vc1) (Plus ?vd1 ?ve1)) (Plus ?v1 (V ?vb1))
+Ignoring duplicate rewrite rule:
+plus_full (Plus (Plus ?vc1 ?vf1) (Plus ?vd1 ?ve1)) (Plus ?v1 (V ?vb1)) ≡
+Plus (Plus (Plus ?vc1 ?vf1) (Plus ?vd1 ?ve1)) (Plus ?v1 (V ?vb1))
+Ignoring duplicate rewrite rule:
+plus_full (Plus ?v1 (V ?vd1)) (Plus (V ?va1) (V ?vb1)) ≡
+Plus (Plus ?v1 (V ?vd1)) (Plus (V ?va1) (V ?vb1))
+Ignoring duplicate rewrite rule:
+plus_full (Plus ?v1 (Plus ?vd1 ?ve1)) (Plus (V ?va1) (V ?vb1)) ≡
+Plus (Plus ?v1 (Plus ?vd1 ?ve1)) (Plus (V ?va1) (V ?vb1))
+</code></pre></div>
+<p>Thanks in advance for the help!</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

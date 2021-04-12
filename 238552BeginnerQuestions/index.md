@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (7 messages, latest: Apr 12 2021 at 12:59)
+* [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (11 messages, latest: Apr 12 2021 at 13:05)
 
 * [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (4 messages, latest: Apr 12 2021 at 11:00)
 

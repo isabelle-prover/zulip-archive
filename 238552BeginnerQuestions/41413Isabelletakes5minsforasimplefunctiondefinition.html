@@ -84,6 +84,29 @@ Plus (Plus ?v1 (Plus ?vd1 ?ve1)) (Plus (V ?va1) (V ?vb1))
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20takes%20~5%20mins%20for%20a%20simple%20function%20definition/near/234152763" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html#234152763">Mistral Contrastin (Apr 12 2021 at 12:59)</a>:</h4>
 <p>I guess I have the wrong mindset. I figured the second equation on <code>f</code> would implicitly be on <code>Suc n</code> due to the existence of the first equation. I guess such fall through reasoning is not appropriate in Isabelle? Is that right? If that's the case, I'd have expected your definition of <code>f</code> to be rejected due to patterns not being orthogonal.</p>
 
+<a name="234153204"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20takes%20~5%20mins%20for%20a%20simple%20function%20definition/near/234153204" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html#234153204">Mathias Fleury (Apr 12 2021 at 13:01)</a>:</h4>
+<p>Yeah indeed the second pattern becomes Suc:</p>
+<div class="codehilite"><pre><span></span><code>fun f :: ‹nat ⇒ nat› where
+&quot;f 0 = 0&quot; |
+&quot;f _ = 1&quot;
+thm f.simps
+(*  f 0 = 0
+  f (Suc ?v) = 1*)
+</code></pre></div>
+
+<a name="234153329"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20takes%20~5%20mins%20for%20a%20simple%20function%20definition/near/234153329" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html#234153329">Mathias Fleury (Apr 12 2021 at 13:02)</a>:</h4>
+<p>My point is that this transformation from <code>f _ = 1</code> to <code>f (Suc _) = 1</code> becomes slow if you have too many patterns</p>
+
+<a name="234153447"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20takes%20~5%20mins%20for%20a%20simple%20function%20definition/near/234153447" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html#234153447">Mathias Fleury (Apr 12 2021 at 13:03)</a>:</h4>
+<p>(but it will eventually succeed as your large example illustrates)</p>
+
+<a name="234153808"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20takes%20~5%20mins%20for%20a%20simple%20function%20definition/near/234153808" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/41413Isabelletakes5minsforasimplefunctiondefinition.html#234153808">Mistral Contrastin (Apr 12 2021 at 13:05)</a>:</h4>
+<p>Perfect, I think I understand now. Thanks a lot for your explanations!</p>
+
 
 {% endraw %}
 

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (2 messages, latest: Apr 11 2021 at 23:45)
+
 * [Show inductive hyps in state](52617Showinductivehypsinstate.html) (5 messages, latest: Mar 24 2021 at 17:19)
 
 * [Continuous "ML Cleanup"](60189ContinuousMLCleanup.html) (6 messages, latest: Mar 22 2021 at 08:07)

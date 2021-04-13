@@ -37,6 +37,29 @@ aforementioned drawback, but given the size and complexity of current<br>
 implementation, improving it seems extremely difficult.</p>
 <p>Your thoughts are greatly appreciated.</p>
 
+<a name="234339408"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234339408" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234339408">Email Gateway (Apr 13 2021 at 14:51)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Hi Shuhan,</p>
+<p>There are a couple of knobs one can turn. For example, a definition like</p>
+<p>datatype t =<br>
+  A00 | A01 | A02 | A03 | A04 | A05 | A06 | A07 | A08 | A09 |<br>
+  A10 | A11 | A12 | A13 | A14 | A15 | A16 | A17 | A18 | A19 |<br>
+  A20 | A21 | A22 | A23 | A24 | A25 | A26 | A27 | A28 | A29 |<br>
+  A30 | A31 | A32 | A33 | A34 | A35 | A36 | A37 | A38 | A39 |<br>
+  A40 | A41 | A42 | A43 | A44 | A45 | A46 | A47 | A48 | A49</p>
+<p>takes something like 30 seconds on my machine. In contrast,</p>
+<p>datatype (plugins only: ) t =<br>
+  A00 | A01 | A02 | A03 | A04 | A05 | A06 | A07 | A08 | A09 |<br>
+  A10 | A11 | A12 | A13 | A14 | A15 | A16 | A17 | A18 | A19 |<br>
+  A20 | A21 | A22 | A23 | A24 | A25 | A26 | A27 | A28 | A29 |<br>
+  A30 | A31 | A32 | A33 | A34 | A35 | A36 | A37 | A38 | A39 |<br>
+  A40 | A41 | A42 | A43 | A44 | A45 | A46 | A47 | A48 | A49</p>
+<p>takes only something like 3 seconds. So the actual datatype constructions (including the simplification theorems which are indeed quadratic in the number<br>
+of constructors) is reasonably fast. The plugins (e.g., size function, code generation setup, transfer theorems, etc.) that were disabled in the second definition provide many useful things too, but have their cost for large datatypes. It depends on the actual application which plugins are actually needed.</p>
+<p>It would help to see your specific example and your requirements (what do you want to do with the type?) to provide further hints.</p>
+<p>Dmitriy</p>
+
 
 {% endraw %}
 

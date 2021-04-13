@@ -74,6 +74,73 @@ existing construction is fast enough for any reasonably-sized datatype.</p>
 <p>Manuel<br>
 <a href="/user_uploads/14278/1MnfC7M3WbleAhzmt_e3Wh79/smime.p7s">smime.p7s</a></p>
 
+<a name="234354863"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234354863" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234354863">Email Gateway (Apr 13 2021 at 16:07)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+Maybe the following approach would be nice:</p>
+<p>Instead of generating pairwise inequalities, a function constructor_num <br>
+is generated with the simp-rules "constructor_num A00 = 1" <br>
+"constructor_num A01 = 2" "constructor_num A03 = 3" etc. (Where <br>
+"constructor_num" is an overloaded function like size.)</p>
+<p>Then we additionally add the simp-rule "constructor_num x != <br>
+constructor_num y ==&gt; x != y". (For each datatype one instances because <br>
+the generic one would loop. Or alternatively, have a no-assumptions type <br>
+class for which that rule holds is added to the simplifier.)</p>
+<p>Now I believe that this would be enough to decide inequalities the same <br>
+way as simp can do now. (Haven't tested this.)</p>
+<p>To avoid unnecessary simplifications, maybe add a cong-rule that forbids <br>
+simplifications in the argument of constructor_num.</p>
+<p>(Sorry if this is obvious and anyway what you had in mind for the inner <br>
+workings of the simproc.)</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
+<a name="234355661"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234355661" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234355661">Email Gateway (Apr 13 2021 at 16:12)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;</p>
+<blockquote>
+<p>"constructor_num x != constructor_num y ==&gt; x != y"</p>
+</blockquote>
+<p>That works in this very simple case where your datatype is just an<br>
+"enum"-like type. But in general, it should probably be something like</p>
+<p>"constructor_num x != constructor_num y ==&gt; x a b c != y d e"</p>
+<p>because constructors, of course, can take parameters.</p>
+<p>In any case, I don't think that works because you cannot really quantify<br>
+over constructors like this. In general, the constructors may not even<br>
+have the same type.</p>
+<p>What I had in mind was that the simproc unfolds the internal<br>
+construction that the datatype uses and then proves the inequality from<br>
+that. I am not familiar with the details of that; there is probably a<br>
+little bit of overhead involved, but probably not too much.</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/R2lFCU6pGbuJCnNXXRxquhxB/smime.p7s">smime.p7s</a></p>
+
+<a name="234356068"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234356068" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234356068">Email Gateway (Apr 13 2021 at 16:14)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+No, Dominique's statement works. For example, for "option", it could be<br>
+defined as</p>
+<p>"constructor_num None = 0" |<br>
+"constructor_num (Some x) = 1"</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
+<a name="234356325"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234356325" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234356325">Email Gateway (Apr 13 2021 at 16:16)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+Ah, okay, I misunderstood. Yes, I suppose that should work. Might indeed<br>
+be the easiest and fastest way to do it.</p>
+<p>Nice idea!</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/7OgwY2km-Qtuyq1QY8cm5Bqu/smime.p7s">smime.p7s</a></p>
+
+<a name="234359869"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234359869" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234359869">Email Gateway (Apr 13 2021 at 16:37)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+Yes, that's what I had in mind.</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

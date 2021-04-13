@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Datatype definition can be slow](27229isabelleDatatypedefinitioncanbeslow.html) (3 messages, latest: Apr 13 2021 at 15:01)
+* [\[isabelle\] Datatype definition can be slow](27229isabelleDatatypedefinitioncanbeslow.html) (8 messages, latest: Apr 13 2021 at 16:37)
+
+* [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (1 message, latest: Apr 13 2021 at 16:15)
 
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (2 messages, latest: Apr 12 2021 at 15:56)
 

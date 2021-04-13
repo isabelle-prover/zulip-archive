@@ -9,9 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [(no topic)](79918notopic.html) (6 messages, latest: Apr 13 2021 at 09:30)
+* [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (13 messages, latest: Apr 13 2021 at 10:20)
 
-* [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (12 messages, latest: Apr 12 2021 at 17:33)
+* [(no topic)](79918notopic.html) (6 messages, latest: Apr 13 2021 at 09:30)
 
 * [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (4 messages, latest: Apr 12 2021 at 11:00)
 

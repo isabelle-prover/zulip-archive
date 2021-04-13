@@ -1,0 +1,43 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html">[isabelle] Datatype definition can be slow</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234299782"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234299782" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234299782">Email Gateway (Apr 13 2021 at 10:12)</a>:</h4>
+<p>From: "He, Shuhan" &lt;<a href="mailto:13061136@buaa.edu.cn">13061136@buaa.edu.cn</a>&gt;<br>
+Hello fellow researchers,</p>
+<p>I'm working on a translator from an ML-like language to HOL, and I'm having a<br>
+difficulty with translation of inductive datatype definitions.</p>
+<p>Datatype definition in Isabelle can be quite slow (at least compared to HOL4)<br>
+when the number of constructors goes up (say a few dozen), and time consumption<br>
+seems to be super-linear in the number of constructors.  This has a significant<br>
+impact on usability since some programs in the source language have very large<br>
+datatypes, and it's not always feasible to modify the source programs to make<br>
+them friendlier to Isabelle.  Is the poor performance caused by inherent<br>
+limitation of the theoretical foundation of the datatype definition package, or<br>
+suboptimality of implementation of the package?  Also, does the package provide<br>
+a "quick mode" that skips the slow part of the definition process, while<br>
+retaining the essential theorems about the datatype being defined?</p>
+<p>I once tried to poke into the implementation of the 'datatype' command to find<br>
+out what's slowing the thing down, but finally got lost in its sheer<br>
+complexity.  The only potential culprit I found is the simplification theorems,<br>
+the number of which is quadratic in the number of constructors.</p>
+<p>It would be nice to have a datatype definition package without the<br>
+aforementioned drawback, but given the size and complexity of current<br>
+implementation, improving it seems extremely difficult.</p>
+<p>Your thoughts are greatly appreciated.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

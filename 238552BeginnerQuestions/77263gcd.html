@@ -1,0 +1,31 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/77263gcd.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/77263gcd.html">gcd</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234345334"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/gcd/near/234345334" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/77263gcd.html#234345334">Anthony Bordg (Apr 13 2021 at 15:13)</a>:</h4>
+<p>Can we find somewhere in Isabelle a version of <code>lemma bezout_gcd_nat</code> (in HOL/Computational_Algebra/Primes) but for integers?</p>
+
+<a name="234346229"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/gcd/near/234346229" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/77263gcd.html#234346229">Manuel Eberl (Apr 13 2021 at 15:17)</a>:</h4>
+<p>You probably want this from <code>HOL-Computational_Algebra.Euclidean_Algorithm</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">bezout_coefficients</span><span class="o">:</span>
+  <span class="kp">assumes</span> <span class="s">"bezout_coefficients a b = (x, y)"</span>
+  <span class="kp">shows</span> <span class="s">"x * a + y * b = gcd a b"</span>
+</code></pre></div>
+<p>Works for any Euclidean ring.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

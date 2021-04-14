@@ -141,6 +141,17 @@ Yes, that's what I had in mind.</p>
 <p>Best wishes,<br>
 Dominique.</p>
 
+<a name="234415020"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20can%20be%20slow/near/234415020" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/27229isabelleDatatypedefinitioncanbeslow.html#234415020">Email Gateway (Apr 13 2021 at 23:02)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Hi Dominique &amp; Manuel,</p>
+<p>Using a simproc for proving distinctness for datatypes with a large number of constructors was the behavior for the old datatype package, see e.g., [1, p32].<br>
+When developing the new package it was a deliberate decision to get rid of this special case. IIRC the reasoning was that distinctness is just one example of a quadratic fact (quadratically many theorems of constant size). There are others, e.g., the case theorems, which are linearly many each of linear size, so also quadratic altogether. So if one decides to seriously battle the quadratic behavior, one has to develop special cases for every such fact (and the cute constructor’s numbering trick will not always work). Also, a simproc has the big downside of being virtually invisible for Sledgehammer (and other tools that are not simp).</p>
+<p>Moreover considering my below measurements: before optimizing the 3 second datatype declaration (which proves all 2450 distinctness theorems), I think we should rather understand the 27 seconds that are spend in the plugins (specifically, code, transfer, and quickcheck seem to be the culprits).</p>
+<p>I would still be interested to see the original problematic example (the number of constructors is only one aspect that affects performance).</p>
+<p>Dmitriy</p>
+<p>[1] <a href="https://isabelle.in.tum.de/website-Isabelle2012/dist/Isabelle2012/doc/logics-HOL.pdf">https://isabelle.in.tum.de/website-Isabelle2012/dist/Isabelle2012/doc/logics-HOL.pdf</a></p>
+
 
 {% endraw %}
 

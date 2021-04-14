@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Induction can't be applied](70625Inductioncantbeapplied.html) (10 messages, latest: Apr 14 2021 at 11:55)
+
 * [gcd](77263gcd.html) (2 messages, latest: Apr 13 2021 at 15:17)
 
 * [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (13 messages, latest: Apr 13 2021 at 10:20)

@@ -1,0 +1,78 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/70625Inductioncantbeapplied.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html">Induction can't be applied</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234480603"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234480603" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234480603">Jan van Brügge (Apr 14 2021 at 11:12)</a>:</h4>
+<p>What does "Rule has fewer conclusions than the arguments given" mean exactly? I am trying to mutually induct over a inductive, but somehow I am messing up. I even tried explicity instanciating the goals:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">fresh_in_context_term_var</span><span class="o">:</span>
+  <span class="kp">assumes</span> <span class="s">"atom (x::var) ♯ Γ"</span>
+  <span class="kp">shows</span> <span class="s">"Γ , Δ ⊢ e : τ ⟶ atom x ♯ e"</span>
+  <span class="kp">and</span> <span class="s">"Alts Γ Δ T σs τ1 alts τ ⟶ atom x ♯ alts"</span>
+  <span class="k">using</span> <span class="n">assms</span> <span class="k">proof</span> <span class="o">(</span><span class="n">induction</span> <span class="n">Γ</span> <span class="n">Δ</span> <span class="n">e</span> <span class="n">τ</span> <span class="kp">and</span> <span class="n">Γ</span> <span class="n">Δ</span> <span class="n">T</span> <span class="n">σs</span> <span class="n">τ1</span> <span class="n">alts</span> <span class="n">τ</span> <span class="n">rule</span><span class="o">:</span> <span class="n">Tm_Alts.induct</span><span class="o">[</span><span class="n">of</span> <span class="s">"λ_ _ e _. atom x ♯ e"</span> <span class="s">"λ_ _ _ _ _ alts _. atom x ♯ alts"</span><span class="o">])</span>
+</code></pre></div>
+
+<a name="234481613"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234481613" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234481613">Manuel Eberl (Apr 14 2021 at 11:23)</a>:</h4>
+<p>If possible, please post a full example (including all the relevant definitions, or at least dummies for the constants/notation used) so that people can try it out themselves.</p>
+
+<a name="234481704"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234481704" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234481704">Manuel Eberl (Apr 14 2021 at 11:24)</a>:</h4>
+<p>In any case, I think instantiating the induction rule manually like this is only going to confuse the <code>induction</code> method. If you want to instantiate stuff by hand for debugging purposes, you can try applying the induction rule manually with e.g. <code>rule</code>.</p>
+
+<a name="234482292"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234482292" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234482292">Jan van Brügge (Apr 14 2021 at 11:30)</a>:</h4>
+<p>I tried it first without instantiating, but with the same error. I pushed the code and this is the lemma: <a href="https://github.com/jvanbruegge/isabelle-lambda-calculus/blob/case-expressions/Typing.thy#L214">https://github.com/jvanbruegge/isabelle-lambda-calculus/blob/case-expressions/Typing.thy#L214</a></p>
+
+<a name="234483796"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234483796" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234483796">Jan van Brügge (Apr 14 2021 at 11:43)</a>:</h4>
+<p>It works if I use <code>proof (rule Tm_Alts.induct, goal_cases)</code>, but why not with the induction method?</p>
+
+<a name="234484455"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234484455" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234484455">Jan van Brügge (Apr 14 2021 at 11:50)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">fresh_in_context_term_var</span><span class="o">:</span>
+  <span class="kp">assumes</span> <span class="s">"atom (x::var) ♯ Γ"</span>
+  <span class="kp">shows</span> <span class="s">"Γ , Δ ⊢ e : τ ⟹ atom x ♯ e"</span>
+  <span class="kp">and</span> <span class="s">"Alts Γ Δ T σs τ1 alts τ ⟹ atom x ♯ alts"</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">have</span> <span class="s">"(Γ , Δ ⊢ e : τ ⟶ (atom x ♯ Γ ⟶ atom x ♯ e)) ∧ (Alts Γ Δ T σs τ1 alts τ ⟶ (atom x ♯ Γ ⟶ atom x ♯ alts))"</span>
+  <span class="k">proof</span> <span class="o">(</span><span class="n">rule</span> <span class="n">Tm_Alts.induct</span><span class="o">,</span> <span class="n">goal_cases</span><span class="o">)</span>
+    <span class="c">(* ... *)</span>
+  <span class="k">qed</span>
+
+  <span class="k">then</span> <span class="k">show</span> <span class="s">"Γ , Δ ⊢ e : τ ⟹ atom x ♯ e"</span> <span class="kp">and</span> <span class="s">"Alts Γ Δ T σs τ1 alts τ ⟹ atom x ♯ alts"</span> <span class="k">using</span> <span class="n">assms</span> <span class="k">by</span> <span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+<a name="234484661"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234484661" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234484661">Jakub Kądziołka (Apr 14 2021 at 11:51)</a>:</h4>
+<p>the induction tactic might be having a problem with a goal shaped <code>shows X and Y</code></p>
+
+<a name="234484861"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234484861" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234484861">Jan van Brügge (Apr 14 2021 at 11:53)</a>:</h4>
+<p>no, it works for other lemmas: <a href="https://github.com/jvanbruegge/isabelle-lambda-calculus/blob/case-expressions/Lemmas.thy#L178">https://github.com/jvanbruegge/isabelle-lambda-calculus/blob/case-expressions/Lemmas.thy#L178</a></p>
+
+<a name="234485061"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234485061" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234485061">Jakub Kądziołka (Apr 14 2021 at 11:55)</a>:</h4>
+<p>do the induction rules in question have the right number of conclusions?</p>
+
+<a name="234485125"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234485125" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234485125">Jan van Brügge (Apr 14 2021 at 11:55)</a>:</h4>
+<p>yes, it looks like this:</p>
+<div class="codehilite"><pre><span></span><code>(?x1.0 , ?x2.0 ⊢ ?x3.0 : ?x4.0 ⟶ ?P1.0 ?x1.0 ?x2.0 ?x3.0 ?x4.0) ∧ (Alts ?x5.0 ?x6.0 ?x7.0 ?x8.0 ?x9.0 ?x10.0 ?x11.0 ⟶ ?P2.0 ?x5.0 ?x6.0 ?x7.0 ?x8.0 ?x9.0 ?x10.0 ?x11.0)
+</code></pre></div>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

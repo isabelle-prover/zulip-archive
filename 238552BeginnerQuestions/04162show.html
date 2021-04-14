@@ -1,0 +1,109 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/04162show.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html">show</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234496864"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234496864" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234496864">Manuel Eberl (Apr 14 2021 at 13:19)</a>:</h4>
+<p>But <code>induct</code>/<code>induction</code> normally work without consuming all the facts as well, right?</p>
+
+<a name="234497019"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234497019" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234497019">zibo yang (Apr 14 2021 at 13:20)</a>:</h4>
+<p>section ‹Abelian Groups›</p>
+<p>context abelian_group<br>
+begin</p>
+<p>definition minus:: "'a ⇒ 'a ⇒ 'a" (infixl "‐" 70)<br>
+  where "x ‐ y ≡ x ⋅ inverse y "</p>
+<p>lemma vsdf:"x ⋅ y = 𝟭 ⟹ x  = inverse y"<br>
+proof(unfold_locales,auto)<br>
+  assume xg:"x ∈ G" and yg:"y ∈ G"" x ⋅ y = 𝟭"<br>
+  from this have "y ⋅ x = 𝟭" by (simp add: commutative)<br>
+  from this and xg and yg show"x = inverse y" by (simp add:inverse_equality)<br>
+qed</p>
+<p>end (* abelian_group*)</p>
+<p>can someone help me with why it indicates:</p>
+<p>Failed to refine any pending goal <br>
+Local statement fails to refine any pending goal<br>
+Failed attempt to solve goal by exported rule:<br>
+  (x ∈ G) ⟹<br>
+  (y ∈ G) ⟹ (x ⋅ y = 𝟭) ⟹ x = local.inverse y</p>
+<p>when I use "show" in the last line but it's ok if "show" is replaced by "have"?</p>
+
+<a name="234497832"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234497832" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234497832">Jakub Kądziołka (Apr 14 2021 at 13:25)</a>:</h4>
+<p>(Note: if you're just interested in the group, you'll want <code>comm_group</code> instead. The <code>abelian_group</code> locale talks about the additive group of a ring)</p>
+
+<a name="234498106"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234498106" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234498106">Jakub Kądziołka (Apr 14 2021 at 13:27)</a>:</h4>
+<p>(also, paste your code inside</p>
+<div class="codehilite"><pre><span></span><code> ```isabelle
+ ...
+ ```
+</code></pre></div>
+<p>to make it look nice and preserve indentation)</p>
+
+<a name="234498388"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234498388" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234498388">Jakub Kądziołka (Apr 14 2021 at 13:29)</a>:</h4>
+<p>okay now that I've loaded up Isabelle with HOL-Algebra it seems that you're defining your own <code>abelian_group</code> locale. Leaving aside why you'd want to do that, there isn't really a good way to check the code out locally and poke around...</p>
+
+<a name="234498475"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234498475" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234498475">Jakub Kądziołka (Apr 14 2021 at 13:29)</a>:</h4>
+<p>anyway, this error usually means that you <code>assume</code>d something that isn't part of the goal</p>
+
+<a name="234498792"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234498792" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234498792">Jakub Kądziołka (Apr 14 2021 at 13:31)</a>:</h4>
+<p>you shouldn't need <code>unfold_locales</code> unless you're proving a statement with the shape <code>locale_name some_object</code></p>
+
+<a name="234499007"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234499007" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234499007">Jakub Kądziołka (Apr 14 2021 at 13:32)</a>:</h4>
+<p>fundamentally, the issue is that your <code>xg</code> and <code>yg</code> assumptions are unfounded, I think. You might be interested in how <code>HOL-Algebra</code> solves this problem: <a href="https://github.com/NieDzejkob/isabelle-math-contests/blob/master/NOTES.md#the-two-definitions-of-a-group">https://github.com/NieDzejkob/isabelle-math-contests/blob/master/NOTES.md#the-two-definitions-of-a-group</a></p>
+
+<a name="234499143"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234499143" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234499143">Jakub Kądziołka (Apr 14 2021 at 13:33)</a>:</h4>
+<p>also, some Isar style tips: <code>from this have</code> = <code>hence</code>; <code>from this and xg and yg show</code> = <code>with xg and yg show</code> or <code>with xg yg show</code></p>
+
+<a name="234499723"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234499723" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234499723">zibo yang (Apr 14 2021 at 13:36)</a>:</h4>
+<p>I found something very interesting but strange is that: when I add [ x \&lt;in &gt; G; y \&lt;in&gt; G] into the lemma, it works.  but why does Isabelle think it reasonable when I state nothing like [ x \&lt;in &gt; G; y \&lt;in&gt; G]?  I always think when I state x \&lt;cdot&gt; y, it should indicate  [ x \&lt;in &gt; G; y \&lt;in&gt; G].......</p>
+
+<a name="234499789"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234499789" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234499789">Jakub Kądziołka (Apr 14 2021 at 13:37)</a>:</h4>
+<p>why <em>would</em> it automatically assume <code>x \&lt;in&gt; G</code>?</p>
+
+<a name="234500547"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234500547" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234500547">zibo yang (Apr 14 2021 at 13:41)</a>:</h4>
+<p>because \&lt;cdot&gt; should be the type"G -&gt; G -&gt; G" when it was initialized, isabelle should infer x \&lt;in&gt; G</p>
+
+<a name="234500677"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234500677" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234500677">Jakub Kądziołka (Apr 14 2021 at 13:42)</a>:</h4>
+<p>Every expression in Isabelle has some type, and if you don't specify it (for example with <code>fixes a :: nat and S :: "nat set"</code> in the lemma statement), the most general type will be inferred (in a lemma, based on its statement. For example <code>a :: 'a</code> and <code>S :: 'a set</code>, for any type variable <code>'a</code>). However, <code>G</code> is not a type here, but a set — simply, a value of type <code>'something set</code>. The multiplication is defined (like all functions in HOL) on an entire type, not just a set.</p>
+
+<a name="234501281"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234501281" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234501281">zibo yang (Apr 14 2021 at 13:46)</a>:</h4>
+<p>ok. I am a bit clear with that. so it's the same reason why we need to clarify the type (1::nat) + 1?</p>
+
+<a name="234501431"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234501431" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234501431">Jakub Kądziołka (Apr 14 2021 at 13:47)</a>:</h4>
+<p>yeah, kinda — inference will give both your <code>1</code>s the type <code>'a</code> with a sort constraint <code>'a::{plus, and_probably_something_else_I_forget}</code></p>
+
+<a name="234501552"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234501552" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234501552">Jakub Kądziołka (Apr 14 2021 at 13:48)</a>:</h4>
+<p>BTW, are you creating your own algebra library because you're unaware of the existing one, or on purpose as practice?</p>
+
+<a name="234501853"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/show/near/234501853" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04162show.html#234501853">zibo yang (Apr 14 2021 at 13:50)</a>:</h4>
+<p>the situation is more closed to practice but I still wanna refer that lemma in another file</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

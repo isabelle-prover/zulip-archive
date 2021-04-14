@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [show](04162show.html) (17 messages, latest: Apr 14 2021 at 13:50)
+
 * [Induction can't be applied](70625Inductioncantbeapplied.html) (16 messages, latest: Apr 14 2021 at 12:16)
 
 * [gcd](77263gcd.html) (2 messages, latest: Apr 13 2021 at 15:17)

@@ -72,6 +72,37 @@ permalink: ./238552BeginnerQuestions/70625Inductioncantbeapplied.html
 <div class="codehilite"><pre><span></span><code>(?x1.0 , ?x2.0 ⊢ ?x3.0 : ?x4.0 ⟶ ?P1.0 ?x1.0 ?x2.0 ?x3.0 ?x4.0) ∧ (Alts ?x5.0 ?x6.0 ?x7.0 ?x8.0 ?x9.0 ?x10.0 ?x11.0 ⟶ ?P2.0 ?x5.0 ?x6.0 ?x7.0 ?x8.0 ?x9.0 ?x10.0 ?x11.0)
 </code></pre></div>
 
+<a name="234485653"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234485653" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234485653">Lukas Stevens (Apr 14 2021 at 12:00)</a>:</h4>
+<p>The problem is the <code>and</code>.</p>
+
+<a name="234486351"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234486351" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234486351">Jan van Brügge (Apr 14 2021 at 12:05)</a>:</h4>
+<p>ok, this works, but as soon as I try to add <code>using assms proof</code> it fails again with "Failed to apply initial proof method"</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">fresh_in_context_term_var</span><span class="o">:</span>
+  <span class="kp">assumes</span> <span class="s">"atom (x::var) ♯ Γ"</span>
+  <span class="kp">shows</span> <span class="s">"(Γ , Δ ⊢ e : τ ⟶ atom x ♯ e) ∧ (Alts Γ Δ T σs τ1 alts τ ⟶ atom x ♯ alts)"</span>
+<span class="k">proof</span> <span class="o">(</span><span class="n">induction</span> <span class="n">rule</span><span class="o">:</span> <span class="n">Tm_Alts.induct</span><span class="o">)</span>
+</code></pre></div>
+
+<a name="234486969"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234486969" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234486969">Lukas Stevens (Apr 14 2021 at 12:11)</a>:</h4>
+<p>Because the induction rule probably does not consume/eliminate <code>"atom (x::var) ♯ Γ"</code></p>
+
+<a name="234487027"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234487027" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234487027">Jan van Brügge (Apr 14 2021 at 12:11)</a>:</h4>
+<p>Yes, but formulating the goal like this is annoying to prove because of the extra implication</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="s">"(Γ , Δ ⊢ e : τ ⟶ (atom x ♯ Γ ⟶ atom x ♯ e)) ∧ (Alts Γ Δ T σs τ1 alts τ ⟶ (atom x ♯ Γ ⟶ atom x ♯ alts))"</span>
+</code></pre></div>
+
+<a name="234487409"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234487409" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234487409">Jan van Brügge (Apr 14 2021 at 12:15)</a>:</h4>
+<p>I guess it can't be helped</p>
+
+<a name="234487596"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Induction%20can%27t%20be%20applied/near/234487596" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70625Inductioncantbeapplied.html#234487596">Lukas Stevens (Apr 14 2021 at 12:16)</a>:</h4>
+<p>You could  define a new induction rule that consumes the assumption and puts it into the hypothesis. Doesn't make sense for a one-off though.</p>
+
 
 {% endraw %}
 

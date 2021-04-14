@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] SMT 2021 Workshop: Final Call for Papers](95362isabelleSMT2021WorkshopFinalCallforPapers.html) (1 message, latest: Apr 14 2021 at 09:10)
+
 * [\[isabelle\] Datatype definition can be slow](27229isabelleDatatypedefinitioncanbeslow.html) (9 messages, latest: Apr 13 2021 at 23:02)
 
 * [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (1 message, latest: Apr 13 2021 at 16:15)

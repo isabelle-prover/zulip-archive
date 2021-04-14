@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [show](04162show.html) (17 messages, latest: Apr 14 2021 at 13:50)
+* [show](04162show.html) (19 messages, latest: Apr 14 2021 at 14:56)
 
 * [Induction can't be applied](70625Inductioncantbeapplied.html) (16 messages, latest: Apr 14 2021 at 12:16)
 

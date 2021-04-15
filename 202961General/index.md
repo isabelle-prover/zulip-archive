@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [new streams](74282newstreams.html) (9 messages, latest: Apr 15 2021 at 17:32)
+
 * [Analysis](26501Analysis.html) (7 messages, latest: Apr 14 2021 at 13:19)
 
 * ["Real" imperative code generation from Isabelle](92603RealimperativecodegenerationfromIsabelle.html) (19 messages, latest: Apr 12 2021 at 13:24)
@@ -76,8 +78,6 @@ permalink: ./202961General/index.html
 * [Kolmogorov–Arnol'd superposition theorem](31140KolmogorovArnoldsuperpositiontheorem.html) (1 message, latest: Jul 15 2020 at 16:07)
 
 * [intro vs simp for equality facts](58133introvssimpforequalityfacts.html) (12 messages, latest: Jul 15 2020 at 14:12)
-
-* [new streams](74282newstreams.html) (8 messages, latest: Jul 13 2020 at 21:36)
 
 * [bundled syntax / translations](34839bundledsyntaxtranslations.html) (1 message, latest: Jul 13 2020 at 15:54)
 

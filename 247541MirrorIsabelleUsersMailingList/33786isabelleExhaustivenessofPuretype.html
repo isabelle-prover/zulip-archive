@@ -1,0 +1,44 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/33786isabelleExhaustivenessofPuretype.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/33786isabelleExhaustivenessofPuretype.html">[isabelle] Exhaustiveness of Pure.type</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="234905426"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Exhaustiveness%20of%20Pure.type/near/234905426" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/33786isabelleExhaustivenessofPuretype.html#234905426">Email Gateway (Apr 16 2021 at 19:06)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;<br>
+Hello!</p>
+<p>I've recently noticed an unexpected thing about the quite common type <br>
+proxy ‹Pure.type›. My understanding is that it's convenient to use for <br>
+defining type-dependent polymorphic constants, including type class <br>
+members with no normal parameters (say, some abstract number ascribed to <br>
+a type such as its assumed physical size). The thing is, I can't find <br>
+any exhaustiveness theorem related to the constant ‹Pure.type› and its <br>
+type ‹'a itself› e.g. "x ≡ Pure.type" or "(x ≡ Pure.type ⟹ P) ⟹ P". <br>
+Analogous lemma exists for the unit type in HOL and the type itself <br>
+looks similar enough to Haskell's Proxy datatype with a single Proxy <br>
+constructor (which should imply exhaustiveness as with other datatypes). <br>
+The non-exhaustiveness of ‹'a itself› causes a problem when one <br>
+accidentally defines some class axiom with an extra term variable ‹t :: <br>
+'a itself› in place of the ‹Pure.type› constant, sometimes the axiom <br>
+then cannot be proved if the corresponding instance definition is <br>
+specified using the ‹Pure.type› constant, since the definition in the <br>
+goal can be neither unfolded nor refined using the exhaustiveness <br>
+rewrite/elimination rule. Is this situation intentional due to some <br>
+logical limitations I'm not aware of? Of course ‹Pure.type› is part of <br>
+Pure and not even HOL, so it's not technically related to datatypes, but <br>
+is such exhaustiveness axiom incompatible with something important?</p>
+<p>Regards, Mikhail</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

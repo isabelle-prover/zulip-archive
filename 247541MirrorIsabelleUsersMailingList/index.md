@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (1 message, latest: Apr 16 2021 at 19:06)
+
 * [\[isabelle\] New in the AFP: Formalization of Timely Datafl...](59307isabelleNewintheAFPFormalizationofTimelyDatafl.html) (1 message, latest: Apr 16 2021 at 05:47)
 
 * [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (3 messages, latest: Apr 16 2021 at 05:28)

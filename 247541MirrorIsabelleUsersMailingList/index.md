@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Formalization of Timely Datafl...](59307isabelleNewintheAFPFormalizationofTimelyDatafl.html) (1 message, latest: Apr 16 2021 at 05:47)
+
+* [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (3 messages, latest: Apr 16 2021 at 05:28)
+
 * [\[isabelle\] Datatype definition can be slow](27229isabelleDatatypedefinitioncanbeslow.html) (10 messages, latest: Apr 16 2021 at 02:39)
 
 * [\[isabelle\] SMT 2021 Workshop: Final Call for Papers](95362isabelleSMT2021WorkshopFinalCallforPapers.html) (1 message, latest: Apr 14 2021 at 09:10)
@@ -18,8 +22,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (2 messages, latest: Apr 12 2021 at 15:56)
 
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (3 messages, latest: Apr 12 2021 at 10:21)
-
-* [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (2 messages, latest: Apr 12 2021 at 09:15)
 
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
 

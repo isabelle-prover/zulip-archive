@@ -80,6 +80,16 @@ permalink: ./202961General/82144ProgrammaticaccesstoIsabelletheories.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Programmatic%20access%20to%20Isabelle%20theories/near/235001795" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/82144ProgrammaticaccesstoIsabelletheories.html#235001795">Lukas Stevens (Apr 17 2021 at 16:51)</a>:</h4>
 <p>It's probably also kind of dangerous to use the string representation. It should probably be encoded in YXML or something and then decoded on the Scala side again.</p>
 
+<a name="235005255"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Programmatic%20access%20to%20Isabelle%20theories/near/235005255" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/82144ProgrammaticaccesstoIsabelletheories.html#235005255">Fabian Richter (Apr 17 2021 at 17:42)</a>:</h4>
+<p>I think I've "solved" my problem for now. I've built my own type_to_string function, preserving the tree-like structure of typs as a bracket-expression within the string.</p>
+<div class="codehilite"><pre><span></span><code>fun typ_to_string (x: Basic_Term.typ): string = case x of
+    Type x =&gt; &quot;(&quot; ^ (fst x) ^ String.concat (map (typ_to_string) (snd x)) ^ &quot;)&quot;
+  |  _ =&gt; &quot;&quot;
+</code></pre></div>
+
+<p>While this does feel rather hacky, is limited to a very special case and the output is not particularly appealing to the eye, I think it fits my purposes for now, especially as I've been stuck on this for quite some time. Thanks again, and in case I come up with something better, I'll update the thread for future reference.</p>
+
 
 {% endraw %}
 

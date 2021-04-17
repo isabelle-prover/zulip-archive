@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (4 messages, latest: Apr 17 2021 at 08:25)
+
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (1 message, latest: Apr 16 2021 at 19:06)
 
 * [\[isabelle\] New in the AFP: Formalization of Timely Datafl...](59307isabelleNewintheAFPFormalizationofTimelyDatafl.html) (1 message, latest: Apr 16 2021 at 05:47)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (1 message, latest: Apr 13 2021 at 16:15)
 
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (2 messages, latest: Apr 12 2021 at 15:56)
-
-* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (3 messages, latest: Apr 12 2021 at 10:21)
 
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
 

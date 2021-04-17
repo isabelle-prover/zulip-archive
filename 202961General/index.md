@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (5 messages, latest: Apr 17 2021 at 12:53)
+
 * [new streams](74282newstreams.html) (9 messages, latest: Apr 15 2021 at 17:32)
 
 * [Analysis](26501Analysis.html) (7 messages, latest: Apr 14 2021 at 13:19)
@@ -16,8 +18,6 @@ permalink: ./202961General/index.html
 * ["Real" imperative code generation from Isabelle](92603RealimperativecodegenerationfromIsabelle.html) (19 messages, latest: Apr 12 2021 at 13:24)
 
 * [Proof Ground 2021](95227ProofGround2021.html) (1 message, latest: Mar 29 2021 at 08:57)
-
-* [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (4 messages, latest: Mar 18 2021 at 12:14)
 
 * [IRC](88031IRC.html) (2 messages, latest: Mar 17 2021 at 17:47)
 

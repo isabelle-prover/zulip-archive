@@ -48,6 +48,38 @@ permalink: ./202961General/82144ProgrammaticaccesstoIsabelletheories.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Programmatic%20access%20to%20Isabelle%20theories/near/234988608" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/82144ProgrammaticaccesstoIsabelletheories.html#234988608">Lukas Stevens (Apr 17 2021 at 13:26)</a>:</h4>
 <p>You might want to take a look into the <a href="https://nms.kcl.ac.uk/christian.urban/Cookbook/">Isabelle/ML cookbook</a> as well. For an overview of important Isabelle resources see <a href="https://isabelle.systems">https://isabelle.systems</a>.</p>
 
+<a name="234999121"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Programmatic%20access%20to%20Isabelle%20theories/near/234999121" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/82144ProgrammaticaccesstoIsabelletheories.html#234999121">Fabian Richter (Apr 17 2021 at 16:09)</a>:</h4>
+<p>Hi Lukas,</p>
+<p>thanks for the reply! I've been playing around with this, and it is not working as I hoped. The following lays out my current approach and its intermediate results:</p>
+<p>fun sequential_composition :: "'a Electoral_Module ⇒ 'a Electoral_Module ⇒<br>
+        'a Electoral_Module" where <br>
+[...]</p>
+<p>"x = "(?'a set ⇒ (?'a × ?'a) set list ⇒ ?'a set × ?'a set × ?'a set)<br>
+    ⇒ (?'a set ⇒ (?'a × ?'a) set list ⇒ ?'a set × ?'a set × ?'a set)<br>
+       ⇒ ?'a set ⇒ (?'a × ?'a) set list ⇒ ?'a set × ?'a set × ?'a set":<br>
+   typ"</p>
+<p>val x_pretty = Syntax.pretty_typ @{context} x<br>
+ ==&gt; "(?'a set ⇒ (?'a × ?'a) set list ⇒ ?'a set × ?'a set × ?'a set)<br>
+    ⇒ (?'a set ⇒ (?'a × ?'a) set list ⇒ ?'a set × ?'a set × ?'a set)<br>
+       ⇒ ?'a set ⇒ (?'a × ?'a) set list ⇒ ?'a set × ?'a set × ?'a set":<br>
+   Pretty.T</p>
+<p>val x_pretty_string = Pretty.string_of x_pretty<br>
+ ==&gt; "&lt;markup&gt;": string (in Isabelle/jEdit)<br>
+ ==&gt; (?'a, ?'b,<br>
+ ?'c) tuple_isomorphism.tuple_isomorphism_IITN_tuple_isomorphism itself<br>
+\&lt;Rightarrow&gt; typerep (in my Java application after going through scala-isabelle)</p>
+<p>This last string I receive is significantly different from the one I see within the Pretty.T and Isabelle/jEdit. Is this part of the markup done by Pretty.string_of, or might it even be scala-isabelle working differently than I think?</p>
+<p>Thanks again!</p>
+
+<a name="235001660"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Programmatic%20access%20to%20Isabelle%20theories/near/235001660" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/82144ProgrammaticaccesstoIsabelletheories.html#235001660">Lukas Stevens (Apr 17 2021 at 16:49)</a>:</h4>
+<p>Hm, I played around with it a bit and I am not sure how to get the string directly without the surrounding markup. You should probably ask Makarius/the mailing list.</p>
+
+<a name="235001795"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Programmatic%20access%20to%20Isabelle%20theories/near/235001795" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/82144ProgrammaticaccesstoIsabelletheories.html#235001795">Lukas Stevens (Apr 17 2021 at 16:51)</a>:</h4>
+<p>It's probably also kind of dangerous to use the string representation. It should probably be encoded in YXML or something and then decoded on the Scala side again.</p>
+
 
 {% endraw %}
 

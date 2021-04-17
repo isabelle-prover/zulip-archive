@@ -9,9 +9,9 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
-* [Raspberry Pi OS](13270RaspberryPiOS.html) (1 message, latest: Apr 17 2021 at 15:59)
+* [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (10 messages, latest: Apr 17 2021 at 16:51)
 
-* [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (7 messages, latest: Apr 17 2021 at 13:26)
+* [Raspberry Pi OS](13270RaspberryPiOS.html) (12 messages, latest: Apr 17 2021 at 16:33)
 
 * [new streams](74282newstreams.html) (9 messages, latest: Apr 15 2021 at 17:32)
 

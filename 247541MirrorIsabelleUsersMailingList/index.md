@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (1 message, latest: Apr 18 2021 at 18:35)
+* [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (2 messages, latest: Apr 18 2021 at 22:22)
 
 * [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (1 message, latest: Apr 18 2021 at 09:29)
 

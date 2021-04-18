@@ -1,0 +1,33 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/95094isabelleSymbolicexecutioninIsabelle.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/95094isabelleSymbolicexecutioninIsabelle.html">[isabelle] Symbolic execution in Isabelle.</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="235058655"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Symbolic%20execution%20in%20Isabelle./near/235058655" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/95094isabelleSymbolicexecutioninIsabelle.html#235058655">Email Gateway (Apr 18 2021 at 09:29)</a>:</h4>
+<p>From: Thomas Melham &lt;<a href="mailto:tom.melham@cs.ox.ac.uk">tom.melham@cs.ox.ac.uk</a>&gt;<br>
+Dear Isabelle Users,</p>
+<p>Please excuse me for a beginners’ question!</p>
+<p>My student Dapeng Gao and I are looking into using Isabelle for symbolic execution of large microprocessor instruction set specifications. Our starting point is the translation into Isabelle definitions of the SAIL specification for the CHERI RSIC-V ISA:</p>
+<p><a href="https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-risc-v.html">https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-risc-v.html</a></p>
+<p>This consists of a large number of function definitions that define the effect on visible architectural state of each of the CHERI RISC-V machine instructions – functions of the form</p>
+<p>InstructionX ins1 ins2 ... insn = &lt;effect on an architectural state monad&gt;</p>
+<p>where ins1, ins2, ... insn are variables raging over fields of the machine instruction X. E.g. register addresses, immediate data, etc.</p>
+<p>We want to be able to use Isabelle in “forward proof” mode, in which we specialise some or all of the variables ins1, ins2, ... insn to data structures containing some variables  (for example a list of Boolean bits, each represented by a variable). And then use rewriting and simplification to compute a kind of normal form effect on machine state as a function of the inputs. I.e. get a simplified logical expression on the RHS – which we can then traverse and translate into another language outside the logic.</p>
+<p>Is this kind of thing possible in Isabelle? We don’t want to have to type the right-and sides in, so goal directed proof is no use to us.</p>
+<p>Best regards,</p>
+<p>Tom</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (1 message, latest: Apr 18 2021 at 09:29)
+
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (4 messages, latest: Apr 17 2021 at 08:25)
 
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (1 message, latest: Apr 16 2021 at 19:06)

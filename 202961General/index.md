@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [jEdit Plugin for Isabelle Symbol suggestions](66073jEditPluginforIsabelleSymbolsuggestions.html) (1 message, latest: Apr 18 2021 at 13:01)
+
 * [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (12 messages, latest: Apr 17 2021 at 19:48)
 
 * [Raspberry Pi OS](13270RaspberryPiOS.html) (12 messages, latest: Apr 17 2021 at 16:33)

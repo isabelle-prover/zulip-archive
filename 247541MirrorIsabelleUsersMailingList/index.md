@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (4 messages, latest: Apr 19 2021 at 11:22)
+* [\[isabelle\] Announcing SErAPIS: a new search engine for Is...](21375isabelleAnnouncingSErAPISanewsearchengineforIs.html) (2 messages, latest: Apr 19 2021 at 13:28)
 
-* [\[isabelle\] Announcing SErAPIS: a new search engine for Is...](21375isabelleAnnouncingSErAPISanewsearchengineforIs.html) (1 message, latest: Apr 19 2021 at 11:14)
+* [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (4 messages, latest: Apr 19 2021 at 11:22)
 
 * [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (2 messages, latest: Apr 18 2021 at 22:22)
 

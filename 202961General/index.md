@@ -9,13 +9,13 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [new streams](74282newstreams.html) (10 messages, latest: Apr 19 2021 at 11:25)
+
 * [jEdit Plugin for Isabelle Symbol suggestions](66073jEditPluginforIsabelleSymbolsuggestions.html) (1 message, latest: Apr 18 2021 at 13:01)
 
 * [Programmatic access to Isabelle theories](82144ProgrammaticaccesstoIsabelletheories.html) (12 messages, latest: Apr 17 2021 at 19:48)
 
 * [Raspberry Pi OS](13270RaspberryPiOS.html) (12 messages, latest: Apr 17 2021 at 16:33)
-
-* [new streams](74282newstreams.html) (9 messages, latest: Apr 15 2021 at 17:32)
 
 * [Analysis](26501Analysis.html) (7 messages, latest: Apr 14 2021 at 13:19)
 

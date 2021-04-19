@@ -54,6 +54,23 @@ toolset.</p>
 <p>Makarius<br>
 <a href="/user_uploads/14278/S3NwQpJcFjl1WQGESCKG1Slx/Scratch.thy">Scratch.thy</a></p>
 
+<a name="235163946"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Symbolic%20execution%20in%20Isabelle./near/235163946" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/95094isabelleSymbolicexecutioninIsabelle.html#235163946">Email Gateway (Apr 19 2021 at 11:22)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Yes, the classic way to "drive the prover" in ML following the LCF paradigm<br>
+works very well in Isabelle. You merely need to keep in mind that Isabelle/ML<br>
+is always embedded into Isabelle/Isar, with a formal theory or proof context<br>
+around it. Even the toplevel ML bindings are stored in the formal context.</p>
+<p>As a start, just take Isabelle/jEdit and produce a theory file with some 'ML'<br>
+snippets, e.g. copied from the sources of the manuals in<br>
+$ISABELLE_HOME/src/Doc or other examples.</p>
+<p>By expanding such Isabelle/ML snippets, they eventually become your tool<br>
+implementation: experimentation and implementation is intertwined.</p>
+<p>Isabelle/ML text that grows too large becomes its own ML file eventually. See<br>
+also the isar-ref manual on commands like 'ML', 'ML_file', but also 'ML_val'<br>
+for exploring proof states.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

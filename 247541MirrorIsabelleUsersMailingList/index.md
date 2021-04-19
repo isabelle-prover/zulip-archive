@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (2 messages, latest: Apr 18 2021 at 22:22)
+* [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (2 messages, latest: Apr 19 2021 at 01:04)
 
-* [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (1 message, latest: Apr 18 2021 at 09:29)
+* [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (2 messages, latest: Apr 18 2021 at 22:22)
 
 * [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (4 messages, latest: Apr 17 2021 at 08:25)
 

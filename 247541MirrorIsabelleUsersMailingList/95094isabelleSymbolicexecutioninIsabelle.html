@@ -27,6 +27,20 @@ Dear Isabelle Users,</p>
 <p>Best regards,</p>
 <p>Tom</p>
 
+<a name="235115366"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Symbolic%20execution%20in%20Isabelle./near/235115366" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/95094isabelleSymbolicexecutioninIsabelle.html#235115366">Email Gateway (Apr 19 2021 at 01:04)</a>:</h4>
+<p>From: Peter Gammie &lt;<a href="mailto:peteg42@gmail.com">peteg42@gmail.com</a>&gt;<br>
+Tom,</p>
+<p>I’m sure there are a variety of ways to do this at the ML level, e.g. using the mechanisms the <code>subst</code> and <code>simp</code> methods leverage. This is likely to be the way to go for robustness. Look at the (Pure/)<code>Conv</code> structure for instance, which I expect is similar to what’s in HOL(4).</p>
+<p>At the Isar (surface) level you can try to use <code>schematic_goal</code>. There is some documentation somewhere — try the Isar reference manual. Thomas Sewell helped me with this:</p>
+<p><a href="https://www.isa-afp.org/browser_info/current/AFP/ConcurrentGC/Tactics.html">https://www.isa-afp.org/browser_info/current/AFP/ConcurrentGC/Tactics.html</a><br>
+-&gt; <code>schematic_goal system_responds_actionE</code></p>
+<p>Note that schematic variables are sometimes aggressively instantiated by some tools. For instance I’d expect</p>
+<p>schematic_goal “1 + 2 = ?x” by simp</p>
+<p>to instantiate <code>?x</code> to <code>1 + 2</code>. Hence the very ginger small steps (mostly resolution) taken in the above theory. IIRC this behaviour is in the default simplifier solver setup, which you should be able to tweak without too much hassle but may result in breaking other things.</p>
+<p>cheers,<br>
+peter</p>
+
 
 {% endraw %}
 

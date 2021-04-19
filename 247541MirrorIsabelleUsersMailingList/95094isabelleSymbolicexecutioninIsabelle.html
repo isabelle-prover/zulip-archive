@@ -71,6 +71,38 @@ also the isar-ref manual on commands like 'ML', 'ML_file', but also 'ML_val'<br>
 for exploring proof states.</p>
 <p>Makarius</p>
 
+<a name="235243012"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Symbolic%20execution%20in%20Isabelle./near/235243012" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/95094isabelleSymbolicexecutioninIsabelle.html#235243012">Email Gateway (Apr 19 2021 at 20:24)</a>:</h4>
+<p>From: Thomas Sewell &lt;<a href="mailto:tals4@cam.ac.uk">tals4@cam.ac.uk</a>&gt;<br>
+Hi Thomas.</p>
+<p>I think it's worth adding that there are two sides to this story.</p>
+<p>Isabelle is a fairly flexible tool. You can probably use the simplifier,<br>
+in some form or another, to help you doing this rewriting, and it's<br>
+possible that it gets the job done easily.</p>
+<p>However, it's not clear to me from your explanation that Isabelle is the<br>
+right tool for the job. Isabelle is an interactive theorem prover, so <br>
+I'd<br>
+expect you to be using it if you want to prove some theorem, and you <br>
+accept<br>
+some interactive work as a cost of doing that. If you're just <br>
+preprocessing<br>
+a function definition to pass to some other tool, perhaps you don't need<br>
+that? If Isabelle doesn't turn out to solve your problems easily, <br>
+perhaps<br>
+you could investigate some of the other SAIL backends.</p>
+<p>To extend on Pete Gammie's remark, you can also run the simplifier as a<br>
+rewriter from within a theory file like this:</p>
+<p>ML {*<br>
+Simplifier.rewrite<br>
+   (@{context} addsimps @{thms id_def})<br>
+   @{cterm "f x"}<br>
+*}</p>
+<p>Working within a theory file can be very convenient for experimentation.<br>
+I've used the old ASCII syntax above for reasons to do with email <br>
+formatting.</p>
+<p>Cheers,<br>
+     Thomas.</p>
+
 
 {% endraw %}
 

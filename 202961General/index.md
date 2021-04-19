@@ -9,7 +9,7 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
-* [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (19 messages, latest: Apr 19 2021 at 17:45)
+* [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (20 messages, latest: Apr 19 2021 at 19:16)
 
 * [new streams](74282newstreams.html) (10 messages, latest: Apr 19 2021 at 11:25)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CfP: Logical Frameworks and Meta-Languages: Th...](63047isabelleCfPLogicalFrameworksandMetaLanguagesTh.html) (1 message, latest: Apr 19 2021 at 14:32)
+
 * [\[isabelle\] Announcing SErAPIS: a new search engine for Is...](21375isabelleAnnouncingSErAPISanewsearchengineforIs.html) (2 messages, latest: Apr 19 2021 at 13:28)
 
 * [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (4 messages, latest: Apr 19 2021 at 11:22)

@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (9 messages, latest: Apr 19 2021 at 14:31)
+
 * [new streams](74282newstreams.html) (10 messages, latest: Apr 19 2021 at 11:25)
 
 * [jEdit Plugin for Isabelle Symbol suggestions](66073jEditPluginforIsabelleSymbolsuggestions.html) (1 message, latest: Apr 18 2021 at 13:01)
@@ -30,8 +32,6 @@ permalink: ./202961General/index.html
 * [Isabelle2021 instability](16819Isabelle2021instability.html) (23 messages, latest: Mar 09 2021 at 09:30)
 
 * [Download Isabelle2020](66174DownloadIsabelle2020.html) (7 messages, latest: Mar 01 2021 at 12:46)
-
-* [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (8 messages, latest: Feb 18 2021 at 18:30)
 
 * [Random idea: multiway if?](62809Randomideamultiwayif.html) (4 messages, latest: Feb 10 2021 at 14:32)
 

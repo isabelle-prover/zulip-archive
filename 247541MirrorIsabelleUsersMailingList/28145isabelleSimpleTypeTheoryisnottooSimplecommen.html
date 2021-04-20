@@ -1,0 +1,187 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/28145isabelleSimpleTypeTheoryisnottooSimplecommen.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/28145isabelleSimpleTypeTheoryisnottooSimplecommen.html">[isabelle] "Simple Type Theory is not too Simple": commen...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="235397077"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Simple%20Type%20Theory%20is%20not%20too%20Simple%22%3A%20commen.../near/235397077" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/28145isabelleSimpleTypeTheoryisnottooSimplecommen.html#235397077">Email Gateway (Apr 20 2021 at 19:01)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear All,</p>
+<p>I noticed that the recent AFP entry on Grothendieck's Schemes (<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-April/msg00016.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-April/msg00016.html</a>)<br>
+[0] also has an article associated with it (<a href="http://arxiv.org">arxiv.org</a>:<br>
+<a href="https://arxiv.org/abs/2104.09366">https://arxiv.org/abs/2104.09366</a>) [1].</p>
+<p>I hope it would not be inappropriate of me to ask a few questions about<br>
+certain elements of the content of [1] and provide several remarks on<br>
+certain aspects of the development that is described in the article.</p>
+<hr>
+<p>Section 1 contains the following passage:</p>
+<blockquote>
+<p>In particular, the present work makes a triple contribution to<br>
+Isabelle/HOL: a first building block towards a new topology library, a new<br>
+building block towards a library for abstract algebra and finally a<br>
+formalization of schemes.</p>
+</blockquote>
+<p>Given that the information about the "new topology/abstract algebra"<br>
+libraries is now not only in the public domain, but a part of an official<br>
+publication, I would like to kindly ask the authors whether it would be<br>
+possible to provide more information about these new developments? Are the<br>
+existing HOL-Algebra/HOL-Analysis libraries meant to be refactored in a<br>
+non-backward compatible manner? Will this new development affect the<br>
+topology library that is currently a part of the main library of<br>
+Isabelle/HOL? Is this topology library also going to be<br>
+replaced/deprecated? I believe that all of the existing users of these<br>
+libraries deserve to know about their future :-).</p>
+<hr>
+<p>Section 2 contains the following passage:</p>
+<blockquote>
+<p>Even using locales, we can still go wrong. The root of the problems in<br>
+HOL-Algebra is the desire to refer to a structure such as a group with its<br>
+components using a single variable, as a record data structure. The new (at<br>
+the time) extensible records seemed perfect for the task. But they led to<br>
+some peculiarities: notably, the locale abelian_group (in Theory Ring)<br>
+which presents the odd twist of requiring a ring structure. The lack of<br>
+multiple inheritance for records seems to have required the awkward use of<br>
+the ring record for abelian groups. However, Clemens Ballarin recently<br>
+conducted an experiment [...] showing that locales, without records, allow<br>
+for a smooth handling of basic algebraic structures in Isabelle such as<br>
+monoids, groups and rings. We decided to base our formal development on<br>
+this experiment.</p>
+</blockquote>
+<p>Furthermore, section 3 describes the "new topology library":</p>
+<blockquote>
+<p>Our new topology library is entirely built on locales without using type<br>
+classes or type declarations (via the typedef command). In particular, our<br>
+topological spaces have explicit carrier sets as part of their data instead<br>
+of using UNIV, the set of all elements of some type, or having to define it<br>
+later as the union of all the open sets.</p>
+</blockquote>
+<p>From these passages and the comments above, my guess is that there is an<br>
+intention to develop the new algebra/topology libraries for Isabelle/HOL<br>
+based on this pattern.</p>
+<p>In this context, I would like to mention that, in a certain sense, I have<br>
+already achieved a certain degree success (and failures) in this direction<br>
+(and I was not the first one), albeit in connection with my work on<br>
+Types-To-Sets, and I thought that it may be relevant to share my experience<br>
+here and one of the main conclusions of my own attempts.</p>
+<p>Generally, (what I call) the <em>design pattern</em> that was used in [2] in the<br>
+context of algebra, in my opinion, is very similar to the design pattern<br>
+that was originally proposed by Ondřej Kunčar and Andrei Popescu in their<br>
+work on Types-To-Sets [3] in the context of both algebra and topology (I am<br>
+referring, primarily, to the examples associated with the article and not<br>
+the article itself) and later developed further into a part of a small case<br>
+study by Fabian Immler and Bohua Zhan [4]. Thus, for example, the locale<br>
+for the definition of a semigroup from [4] looks like</p>
+<p>locale semigroup_add_on_with =<br>
+  fixes S::"'a set" and pls::"'a⇒'a⇒'a"<br>
+  assumes add_assoc: "a ∈ S ⟹ b ∈ S ⟹ c ∈ S ⟹ pls (pls a b) c = pls a (pls<br>
+b c)"<br>
+  assumes add_mem: "a ∈ S ⟹ b ∈ S ⟹ pls a b ∈ S"</p>
+<p>I have continued this work and developed several small libraries that are<br>
+meant to showcase different design patterns that can be used for the<br>
+development of libraries in Isabelle/HOL based around the same idea in 2019<br>
+and 2020. Fundamentally, all of these libraries use a very similar design<br>
+pattern based on explicit locale parameters with explicitly fixed<br>
+carrier/underlying sets for modeling all possible mathematical structures<br>
+(I use the term mathematical structure informally). The current iteration<br>
+is available here: <a href="https://gitlab.com/user9716869/tts_examples">https://gitlab.com/user9716869/tts_examples</a>. For<br>
+example, the definition of (e.g.) topological space in [1] is based on the<br>
+same idea as in that library (<br>
+<a href="https://mailman46.in.tum.de/pipermail/isabelle-dev/2019-April/016894.html">https://mailman46.in.tum.de/pipermail/isabelle-dev/2019-April/016894.html</a>).<br>
+Compare:</p>
+<p>(from <a href="https://gitlab.com/user9716869/tts_examples">https://gitlab.com/user9716869/tts_examples</a>)<br>
+locale topological_space_ow = fixes 𝔘 :: "'at set" and τ :: "'at set ⇒<br>
+bool"<br>
+assumes open_UNIV[simp, intro]: "τ 𝔘"<br>
+assumes open_Int[intro]: "⟦ S ⊆ 𝔘; T ⊆ 𝔘; τ S; τ T ⟧ ⟹ τ (S ∩ T)"<br>
+assumes open_Union[intro]: "⟦ K ⊆ Pow 𝔘; ∀S∈K. τ S ⟧ ⟹ τ (⋃K)"</p>
+<p>(from [1])<br>
+locale topological_space = fixes S :: "'a set" and is_open :: "'a set ⇒<br>
+bool"<br>
+  assumes open_space [simp, intro]: "is_open S" and open_empty [simp,<br>
+intro]: "is_open {}"<br>
+    and open_imp_subset: "is_open U ⟹ U ⊆ S"<br>
+    and open_inter [intro]: "⟦is_open U; is_open V⟧ ⟹ is_open (U ∩ V)"<br>
+    and open_union [intro]: "⋀F::('a set) set. (⋀x. x ∈ F ⟹ is_open x) ⟹<br>
+is_open (⋃x∈F. x)"</p>
+<p>I hope that the remarks above will suffice to give my further claims a<br>
+certain degree of credibility, as it seems that the ideas (albeit, not<br>
+entirely my own ideas) that I was trying to promote in 2019 are beginning<br>
+to be adapted by the community :-). By the way, it might be appropriate to<br>
+add references to (at least) [3], [4] and the aforementioned post by Fabian<br>
+Immler (if not my own repository), in connection with the design pattern<br>
+being used, given that it seems to be one of the matters emphasized in [1].<br>
+I would like to be very clear, however, that I have little concern about<br>
+what decision will be made with regard to this matter and this is very far<br>
+from being the main issue that I would like to discuss in this post.</p>
+<p>I have already summarised some of my concerns about the design pattern<br>
+being used in [1] in the following post on the mailing list:<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-August/msg00006.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-August/msg00006.html</a>.<br>
+However, since then, I developed further concerns about it. Unfortunately,<br>
+in my experience, using explicit parameters for the definition of<br>
+mathematical structures makes it difficult to talk about the interplay<br>
+between different structures, e.g. using tools and techniques from category<br>
+theory or similar. Furthermore, carrying around dramatically large lists of<br>
+explicitly stated parameters can become unwieldy very quickly as the<br>
+structures become more complex (see my remarks in<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-August/msg00006.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-August/msg00006.html</a><br>
+for further information).</p>
+<p>Finally, I converged on the opinion that there has to exist a canonical<br>
+methodology for representing any mathematical structure as a term of some<br>
+type (e.g. by using product types or similar). If this is so, then why<br>
+would one wish to define such structures using explicitly stated locale<br>
+parameters?</p>
+<p>Once again, from [1],</p>
+<blockquote>
+<p>The new (at the time) extensible records seemed perfect for the task. But<br>
+they led to some peculiarities: notably, the locale abelian_group (in<br>
+Theory Ring) which presents the odd twist of requiring a ring structure.</p>
+</blockquote>
+<p>My opinion is that this is the only problem of the record + locale<br>
+approach, and it is not insurmountable. That is, the problem is that the<br>
+records lack a mechanism for multiple inheritance. Perhaps, the key to its<br>
+solution lies in the following comments made by Andreas Lochbihler in reply<br>
+to one of my questions:<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-August/msg00017.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2019-August/msg00017.html</a>.<br>
+I believe that I have already solved the crux of the problem by following<br>
+up on one of the ideas expressed in the aforementioned post by Andreas<br>
+Lochbihler and providing yet another design pattern that allows for<br>
+mimicking records with multiple inheritance. At the moment, this pattern is<br>
+quite unwieldy, but it can be fully automated, potentially (of course, this<br>
+would require a considerable amount of programming effort).</p>
+<p>I describe it based on a close-to-minimal example that is provided as a<br>
+copy at the end of the email in Appendix A. Hopefully, with the comments in<br>
+the code, the example provides a self-sufficient explanation of the pattern<br>
+(however, this variant of the pattern is slightly outdated, as the pattern<br>
+has been slightly improved since the example was developed). As such, the<br>
+example does not showcase the use of multiple inheritance, as it would make<br>
+the example too long. However, hopefully, it should be apparent to see that<br>
+multiple inheritance is not an issue for the design pattern, as it is<br>
+possible to 'upcast' a 'multirecord' to any 'multirecord' with the 'parent<br>
+structure' with ease (of course, privately, I have already developed use<br>
+cases for the demonstration of multiple inheritance). Overall, I used this<br>
+inheritance mechanism to define (and reason about) semifunctors,<br>
+categories, functors, natural transformations, dagger<br>
+digraphs/semicategories/categories, and several other concepts, not<br>
+necessarily related to category theory (e.g. topological spaces). Moreover,<br>
+it is possible to combine the inheritance mechanism with the inheritance of<br>
+the fields of the record. This is used, for example, to ensure that a<br>
+semifunctor from one semicategory to another (stated as a locale) inherits<br>
+from the digraph homomorphism from one digraph to another in a canonical<br>
+manner.</p>
+<p>At first sight, it may seem that using records+unrest<br>
+[message truncated]</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

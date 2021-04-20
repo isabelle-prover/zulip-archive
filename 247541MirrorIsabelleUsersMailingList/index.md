@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (1 message, latest: Apr 20 2021 at 19:01)
+
 * [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (4 messages, latest: Apr 20 2021 at 11:11)
 
 * [\[isabelle\] 2021 Conference on Intelligent Computer Mathem...](43720isabelle2021ConferenceonIntelligentComputerMathem.html) (1 message, latest: Apr 20 2021 at 08:49)

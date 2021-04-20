@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (1 message, latest: Apr 20 2021 at 09:31)
+
 * [\[isabelle\] 2021 Conference on Intelligent Computer Mathem...](43720isabelle2021ConferenceonIntelligentComputerMathem.html) (1 message, latest: Apr 20 2021 at 08:49)
 
 * [\[isabelle\] SPIN 2021 - Final Call for Papers](17822isabelleSPIN2021FinalCallforPapers.html) (1 message, latest: Apr 20 2021 at 08:49)

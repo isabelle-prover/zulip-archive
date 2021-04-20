@@ -20,7 +20,7 @@ permalink: ./index.html
 
 * [New Members & Projects](202967NewMembersProjects/index.html) (11 topics)
 
-* [Announcements](214136Announcements/index.html) (9 topics)
+* [Announcements](214136Announcements/index.html) (10 topics)
 
 * [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 

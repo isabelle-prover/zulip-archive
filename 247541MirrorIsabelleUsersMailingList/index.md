@@ -9,15 +9,21 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 2021 Conference on Intelligent Computer Mathem...](43720isabelle2021ConferenceonIntelligentComputerMathem.html) (1 message, latest: Apr 20 2021 at 08:49)
+
+* [\[isabelle\] SPIN 2021 - Final Call for Papers](17822isabelleSPIN2021FinalCallforPapers.html) (1 message, latest: Apr 20 2021 at 08:49)
+
+* [\[isabelle\] Women in Logic 2021 - Call for Participation](91089isabelleWomeninLogic2021CallforParticipation.html) (1 message, latest: Apr 20 2021 at 08:49)
+
+* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (5 messages, latest: Apr 20 2021 at 08:49)
+
+* [\[isabelle\] Announcing SErAPIS: a new search engine for Is...](21375isabelleAnnouncingSErAPISanewsearchengineforIs.html) (3 messages, latest: Apr 20 2021 at 08:48)
+
 * [\[isabelle\] Symbolic execution in Isabelle.](95094isabelleSymbolicexecutioninIsabelle.html) (5 messages, latest: Apr 19 2021 at 20:24)
 
 * [\[isabelle\] CfP: Logical Frameworks and Meta-Languages: Th...](63047isabelleCfPLogicalFrameworksandMetaLanguagesTh.html) (1 message, latest: Apr 19 2021 at 14:32)
 
-* [\[isabelle\] Announcing SErAPIS: a new search engine for Is...](21375isabelleAnnouncingSErAPISanewsearchengineforIs.html) (2 messages, latest: Apr 19 2021 at 13:28)
-
 * [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (2 messages, latest: Apr 18 2021 at 22:22)
-
-* [\[isabelle\] \[CFP\] Logical Frameworks and Meta-Languages: T...](64669isabelleCFPLogicalFrameworksandMetaLanguagesT.html) (4 messages, latest: Apr 17 2021 at 08:25)
 
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (1 message, latest: Apr 16 2021 at 19:06)
 

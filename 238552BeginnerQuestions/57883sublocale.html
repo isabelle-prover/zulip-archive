@@ -53,6 +53,77 @@ permalink: ./238552BeginnerQuestions/57883sublocale.html
 sublocale real_normed_vector_space ⊆ sub: topological_space "is_open_space"<br>
 after I specify is_open_space in the context of real_normed_vector_space</p>
 
+<a name="235525067"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/sublocale/near/235525067" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/57883sublocale.html#235525067">zibo yang (Apr 21 2021 at 15:00)</a>:</h4>
+<p>but I always fail to define is_open when facing <br>
+sublocale real_normed_vector_space ⊆ topological_space</p>
+
+<a name="235529857"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/sublocale/near/235529857" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/57883sublocale.html#235529857">zibo yang (Apr 21 2021 at 15:19)</a>:</h4>
+<p>what causes my confusion is that: I code:</p>
+<div class="codehilite" data-code-language="sublocale"><pre><span></span><code>proof(unfold_locales)```
+then I get the proof state:
+</code></pre></div>
+<p>proof (state)<br>
+goal (3 subgoals):</p>
+<ol>
+<li>open UNIV</li>
+<li>
+<p>⋀S T. open S ⟹<br>
+           open T ⟹<br>
+           open<br>
+(S ∩ T)</p>
+</li>
+<li>
+<p>⋀K. ∀S∈K.<br>
+open S ⟹<br>
+         open (⋃ K)</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>I am confused about:1. I don&#39;t see any function named &quot;open&quot;, there is only &quot;is_open&quot;
+2. I get failure when I print &quot;using open_def&quot; to get the definition of &quot;open&quot;
+3. I cannot define it like
+</code></pre></div>
+<p>where "open = is_open_space"</p>
+<div class="codehilite"><pre><span></span><code>
+</code></pre></div>
+
+<a name="235530300"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/sublocale/near/235530300" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/57883sublocale.html#235530300">zibo yang (Apr 21 2021 at 15:22)</a>:</h4>
+<p>what causes my confusion is that: I code:</p>
+<div class="codehilite"><pre><span></span><code>sublocale real_normed_vector_space ⊆ topological_space
+proof(unfold_locales)
+</code></pre></div>
+<p>then I get the proof state:</p>
+<div class="codehilite"><pre><span></span><code>proof (state)
+goal (3 subgoals):
+ 1. open UNIV
+ 2. ⋀S T. open S ⟹
+           open T ⟹
+           open
+(S ∩ T)
+ 3. ⋀K. ∀S∈K.
+open S ⟹
+         open (⋃ K)
+</code></pre></div>
+<p>I am confused about:1. I don't see any function named "open", there is only "is_open"</p>
+<ol start="2">
+<li>I get failure when I print "using open_def" to get the definition of "open"</li>
+<li>I cannot define it like </li>
+</ol>
+<div class="codehilite"><pre><span></span><code>where &quot;open = is_open_space&quot;
+</code></pre></div>
+
+<a name="235531272"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/sublocale/near/235531272" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/57883sublocale.html#235531272">zibo yang (Apr 21 2021 at 15:27)</a>:</h4>
+<p>so I guess the only way to define "is_open" is just to specify it after the name"topological_space" like:</p>
+<div class="codehilite"><pre><span></span><code>sublocale real_normed_vector_space ⊆ sub: topological_space &quot;is_open_space&quot;
+</code></pre></div>
+
+<a name="235531609"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/sublocale/near/235531609" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/57883sublocale.html#235531609">zibo yang (Apr 21 2021 at 15:28)</a>:</h4>
+<p>am I right?</p>
+
 
 {% endraw %}
 

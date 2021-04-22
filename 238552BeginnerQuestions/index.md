@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [scale](09545scale.html) (3 messages, latest: Apr 22 2021 at 05:20)
+* [scale](09545scale.html) (4 messages, latest: Apr 22 2021 at 06:05)
 
 * [sublocale](57883sublocale.html) (15 messages, latest: Apr 21 2021 at 16:05)
 

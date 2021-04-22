@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (3 messages, latest: Apr 22 2021 at 15:12)
+
 * [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (7 messages, latest: Apr 22 2021 at 12:57)
 
 * [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (4 messages, latest: Apr 20 2021 at 11:11)
@@ -40,8 +42,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] SMT 2021 Workshop: Final Call for Papers](95362isabelleSMT2021WorkshopFinalCallforPapers.html) (1 message, latest: Apr 14 2021 at 09:10)
 
 * [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (1 message, latest: Apr 13 2021 at 16:15)
-
-* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (2 messages, latest: Apr 12 2021 at 15:56)
 
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
 

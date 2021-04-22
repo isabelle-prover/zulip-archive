@@ -28,6 +28,19 @@ permalink: ./238552BeginnerQuestions/09545scale.html
 </code></pre></div>
 <p>since I find it nothing feedback when I code like "using scale_def"</p>
 
+<a name="235620930"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/scale/near/235620930" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/09545scale.html#235620930">Mathias Fleury (Apr 22 2021 at 05:13)</a>:</h4>
+<p>Well, first, scale is not defined through a /definition/. Instead it is an arbitrary constant that has 4 properties (<code>scale_add</code>,  <code>add_scale</code>, <code>scale_scale</code>, and <code>one_scale</code>). Hence there is no definition (I don't even see what you expect here).</p>
+
+<a name="235621359"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/scale/near/235621359" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/09545scale.html#235621359">Mathias Fleury (Apr 22 2021 at 05:20)</a>:</h4>
+<p>And for you actual question, you need to assume that <code>⋅⇩ℝ</code> stays in <code>V</code>.  If you look at the module definition in the Isabelle Library (<code>~~/src/HOL/Types_To_Sets/Examples/Linear_Algebra_On.thy</code>), this is what it is done:</p>
+<div class="codehilite"><pre><span></span><code>locale module_on =
+  fixes S and scale :: &quot;&#39;a::comm_ring_1 \&lt;Rightarrow&gt; &#39;b::ab_group_add \&lt;Rightarrow&gt; &#39;b&quot; (infixr &quot;*s&quot; 75)
+  assumes [...]
+    and mem_scale: &quot;x \&lt;in&gt; S \&lt;Longrightarrow&gt; a *s x \&lt;in&gt; S&quot;
+</code></pre></div>
+
 
 {% endraw %}
 

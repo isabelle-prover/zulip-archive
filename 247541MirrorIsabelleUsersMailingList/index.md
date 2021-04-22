@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (4 messages, latest: Apr 21 2021 at 18:38)
+* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (6 messages, latest: Apr 22 2021 at 09:45)
 
 * [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (4 messages, latest: Apr 20 2021 at 11:11)
 

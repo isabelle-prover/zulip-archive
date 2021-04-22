@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [sqrt](70251sqrt.html) (10 messages, latest: Apr 22 2021 at 16:55)
+
 * [jEdit style](43970jEditstyle.html) (10 messages, latest: Apr 22 2021 at 11:58)
 
 * [scale](09545scale.html) (5 messages, latest: Apr 22 2021 at 08:51)

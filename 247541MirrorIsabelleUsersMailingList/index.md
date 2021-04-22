@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (3 messages, latest: Apr 22 2021 at 15:12)
+* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (8 messages, latest: Apr 22 2021 at 21:07)
 
-* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (7 messages, latest: Apr 22 2021 at 12:57)
+* [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (3 messages, latest: Apr 22 2021 at 15:12)
 
 * [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (4 messages, latest: Apr 20 2021 at 11:11)
 

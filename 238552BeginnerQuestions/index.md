@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Sort inference?](33047Sortinference.html) (1 message, latest: Apr 23 2021 at 12:05)
+
 * [Isabelle2020](77702Isabelle2020.html) (2 messages, latest: Apr 22 2021 at 21:30)
 
 * [sqrt](70251sqrt.html) (10 messages, latest: Apr 22 2021 at 16:55)

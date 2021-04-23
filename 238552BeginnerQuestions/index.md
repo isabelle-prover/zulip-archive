@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Sort inference?](33047Sortinference.html) (1 message, latest: Apr 23 2021 at 12:05)
+* [Sort inference?](33047Sortinference.html) (4 messages, latest: Apr 23 2021 at 13:22)
 
 * [Isabelle2020](77702Isabelle2020.html) (2 messages, latest: Apr 22 2021 at 21:30)
 

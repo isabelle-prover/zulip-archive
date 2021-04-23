@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (9 messages, latest: Apr 23 2021 at 01:51)
+* [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (12 messages, latest: Apr 23 2021 at 11:37)
 
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (3 messages, latest: Apr 22 2021 at 15:12)
 

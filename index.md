@@ -10,7 +10,7 @@ permalink: ./index.html
 
 * [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (373 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (104 topics)
+* [Beginner Questions](238552BeginnerQuestions/index.html) (105 topics)
 
 * [General](202961General/index.html) (91 topics)
 

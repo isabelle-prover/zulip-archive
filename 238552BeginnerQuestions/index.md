@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Generic 'a set set => 'a set](01869Genericasetsetaset.html) (6 messages, latest: Apr 24 2021 at 18:32)
+
 * [Sort inference?](33047Sortinference.html) (4 messages, latest: Apr 23 2021 at 13:22)
 
 * [Isabelle2020](77702Isabelle2020.html) (2 messages, latest: Apr 22 2021 at 21:30)

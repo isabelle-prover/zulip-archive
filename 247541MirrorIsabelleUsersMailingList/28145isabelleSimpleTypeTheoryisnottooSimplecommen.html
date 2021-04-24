@@ -332,6 +332,129 @@ I am not sure this helps, since from a set theoretic point of view, we have a pr
 <p>To the best of my knowledge, we don’t have many useful tools for reasoning in the style of category theory within higher-order logic.</p>
 <p>Larry</p>
 
+<a name="235926563"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Simple%20Type%20Theory%20is%20not%20too%20Simple%22%3A%20commen.../near/235926563" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/28145isabelleSimpleTypeTheoryisnottooSimplecommen.html#235926563">Email Gateway (Apr 24 2021 at 00:19)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear Eugene W. Stark/All,</p>
+<p>Thank you for your remarks.</p>
+<p>My criticism of Isabelle/HOL in connection with applied category theory was<br>
+twofold:</p>
+<p>- Firstly, I claimed that the existing frameworks for doing category<br>
+   theory cannot be applied to the canonical constructions conveniently (this<br>
+   argument has little to do with what kind of categories we can construct in<br>
+   Isabelle/HOL: I provide more details below).</p>
+<p>- My second argument was related to the impossibility of the<br>
+   construction of certain large categories.</p>
+<p>It seems that we both agree that Isabelle/HOL's size limitations are quite<br>
+severe, although, perhaps, they do not have a significant impact on your<br>
+own work. From my perspective, this is a very strong and rather objective<br>
+argument against Isabelle/HOL (please do remember that my arguments were<br>
+aimed predominantly at the Isabelle/HOL, not any specific formalization of<br>
+category theory), merely because there exist formal systems that do not<br>
+have these limitations; at least, they are less severe to the point of<br>
+making such systems suitable for performing the vast majority of<br>
+constructions in the published literature, including almost anything that<br>
+involves reasonably large categories. From what I have seen, most commonly,<br>
+mathematics is exposed in systems that are equiconsistent with or stronger<br>
+than ZFC (more specifically, most of the mathematics in the published<br>
+literature seems to be exposed using some logic of the order higher or<br>
+equal than 1 + the axioms of ZFC or MK, or, if category theory is involved,<br>
+either TG or the one-universe axiomatization of Mac Lane, even if this is<br>
+not always stated explicitly). It seems to me then that the consistency<br>
+strength greater or equal to that of the ZFC is a prerequisite for any<br>
+formal system to be accepted as some general medium for the communication<br>
+and storage of mathematical knowledge. Whether or not a significant<br>
+fraction of the ideas that are expressed using such systems can also be<br>
+expressed in Isabelle/HOL, I find slightly irrelevant. The question comes<br>
+down to why would one wish to use Isabelle/HOL in favor of stronger systems<br>
+(at least, equiconsistent with the ZFC) that are already available.</p>
+<p>As a side note, in my opinion, the systems like ZFC in HOL and HOTG come<br>
+closest to what is conventionally used for the exposition of mathematics.<br>
+Personally, having tried formalizing mathematics in ZFC in HOL (e.g., see<br>
+<a href="https://gitlab.com/category-theory-for-zfc-in-hol">https://gitlab.com/category-theory-for-zfc-in-hol</a>), I found that it is<br>
+almost as easy and convenient as "copying" mathematics from textbooks.</p>
+<p>On 23 Apr 2021, Eugene W. Stark wrote</p>
+<blockquote>
+<p>My question is that I would like to understand better something that was<br>
+said in the quoted text below<br>
+regarding the supposed impossibility of treating the collections of all<br>
+real numbers and all complex numbers<br>
+as two distinct objects in (for example) the category Top.</p>
+</blockquote>
+<p>Perhaps I have missed what was intended by the phrase "so long as real</p>
+<blockquote>
+<p>numbers and complex numbers are<br>
+modelled as two distinct types and not distinct terms of some other<br>
+type".  Does this mean that somehow<br>
+some particular construction of "the" real numbers and "the" complex<br>
+numbers are to be given special<br>
+status...</p>
+</blockquote>
+<blockquote>
+<p>a). My first argument was hardly concerned with the issues related to size<br>
+(this is covered by the second, more important, argument), but mere<br>
+practical convenience of using the results about specific categories<br>
+that can be exposed in Isabelle/HOL. I am inclined to tentatively give a<br>
+positive answer to the question "Does this mean that somehow some<br>
+particular construction of "the" real numbers and "the" complex numbers are<br>
+to be given special status?". At the moment, the transfer infrastructure of<br>
+Isabelle/HOL still has a number of limitations, so it is not that easy to<br>
+transfer the results automatically from, e.g., an existing type real to its<br>
+isomorphic copy embedded in some other type and vice versa. At the very<br>
+least, it requires some amount of tedious manual labor (also, if our copy<br>
+of the real numbers is no longer a type, we cannot even instantiate it as,<br>
+e.g., a canonical field from the standard library). Perhaps, in the future,<br>
+the transfer infrastructure of Isabelle/HOL will be perfected to the point<br>
+that I would no longer try to use such an argument. But this would, yet<br>
+again, require a substantial amount of labor in a different direction.</p>
+</blockquote>
+<p>In essence, my first argument is slightly subjective and comes down to how<br>
+much one is prepared to sacrifice convenience and conventional<br>
+Isabelle/HOL's approach of treating distinct mathematical structures as<br>
+distinct types in favor of being able to apply the tools of category theory<br>
+to them. Another problem is that similar issues seem to hardly exist in<br>
+most of the other formal systems that I have tried thus far, or, somehow,<br>
+are easier to deal with, subjectively.</p>
+<p>b). As a side remark, the chosen name of the category in my last email is<br>
+misleading, and, perhaps, led to an alternative interpretation of the<br>
+argument that I was trying to make. In my original email (<br>
+<a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-April/msg00062.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-April/msg00062.html</a>)<br>
+I was more careful and stated "something similar to the category Top<br>
+(whatever can be achieved taking into consideration the size limitation of<br>
+Isabelle/HOL).". Indeed, I have not analyzed in detail as to how much<br>
+exactly can be done in this direction in Isabelle/HOL alone and exactly how<br>
+close we can get: perhaps, you can provide an affirmative answer to this<br>
+question.</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+
+<a name="235927501"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Simple%20Type%20Theory%20is%20not%20too%20Simple%22%3A%20commen.../near/235927501" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/28145isabelleSimpleTypeTheoryisnottooSimplecommen.html#235927501">Email Gateway (Apr 24 2021 at 00:34)</a>:</h4>
+<p>From: Mikhail Chekhov &lt;<a href="mailto:mikhail.chekhov.w@gmail.com">mikhail.chekhov.w@gmail.com</a>&gt;<br>
+Dear Lawrence Paulson/All,</p>
+<p>Thank you for your comments.</p>
+<p>Indeed, one ambitious person has already tried doing something similar in<br>
+Isabelle/ZF in 2010 [1]. Indeed, in Category2, the concept of a category is<br>
+defined in arbitrary types, but it uses the type ZF for the development of<br>
+the category Set, defining all related concepts via isomorphisms. I did<br>
+modernize a large part of this development some time ago (this work is not<br>
+publicly available), adapting it to V from ZFC in HOL, but I have given up<br>
+on this approach in favor of internalizing everything in V and simply<br>
+treating HOL as (indeed) a logic, merely a better alternative to FOL (see<br>
+<a href="https://gitlab.com/category-theory-for-zfc-in-hol">https://gitlab.com/category-theory-for-zfc-in-hol</a>). Nonetheless, I still<br>
+use the mechanism that you mentioned for the transfer of some of the<br>
+relevant properties exposed in HOL to the sets in V. For example, see my<br>
+exposition of the integer/rational/real numbers and finite sequences in<br>
+<a href="https://gitlab.com/category-theory-for-zfc-in-hol/czh_sets">https://gitlab.com/category-theory-for-zfc-in-hol/czh_sets</a>: most of the<br>
+properties were transferred automatically using the capabilities of<br>
+transfer [2].</p>
+<p>Kind Regards,<br>
+Mikhail Chekhov</p>
+<p>[1] Katovsky A. Category Theory. Archive of Formal Proofs. 2010;<br>
+[2] Huffman B, Kunčar O. Lifting and Transfer: A Modular Design for<br>
+Quotients in Isabelle/HOL. In: Gonthier G, Norrish M, editors. Certified<br>
+Programs and Proofs. Heidelberg: Springer; 2013. p. 131–46.</p>
+
 
 {% endraw %}
 

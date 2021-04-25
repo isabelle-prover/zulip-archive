@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] new in the AFP: The BKR Decision Procedure for...](21365isabellenewintheAFPTheBKRDecisionProcedurefor.html) (1 message, latest: Apr 25 2021 at 15:40)
+
 * [\[isabelle\] Using the global context when performing synta...](26491isabelleUsingtheglobalcontextwhenperformingsynta.html) (1 message, latest: Apr 25 2021 at 09:17)
 
 * [\[isabelle\] FMBC 2021 - 3rd Call for Papers (Deadline exte...](43993isabelleFMBC20213rdCallforPapersDeadlineexte.html) (1 message, latest: Apr 25 2021 at 09:17)

@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Using the global context when performing synta...](26491isabelleUsingtheglobalcontextwhenperformingsynta.html) (1 message, latest: Apr 25 2021 at 09:17)
+
+* [\[isabelle\] FMBC 2021 - 3rd Call for Papers (Deadline exte...](43993isabelleFMBC20213rdCallforPapersDeadlineexte.html) (1 message, latest: Apr 25 2021 at 09:17)
+
 * [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (15 messages, latest: Apr 24 2021 at 22:41)
 
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (3 messages, latest: Apr 22 2021 at 15:12)

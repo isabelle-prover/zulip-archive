@@ -9,7 +9,7 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
-* [delta](67755delta.html) (1 message, latest: Apr 26 2021 at 12:41)
+* [delta](67755delta.html) (7 messages, latest: Apr 26 2021 at 13:54)
 
 * [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (27 messages, latest: Apr 20 2021 at 17:18)
 

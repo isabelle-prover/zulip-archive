@@ -1,0 +1,39 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/83153Polymorphicrecursion.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html">Polymorphic recursion</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="236152830"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236152830" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236152830">Jan van Brügge (Apr 26 2021 at 10:48)</a>:</h4>
+<p>Just trying it out naively does not work. Is there are trick or is it not possible to use polymorphic recursion in datatypes?</p>
+
+<a name="236153093"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236153093" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236153093">Manuel Eberl (Apr 26 2021 at 10:51)</a>:</h4>
+<p>These are called non-uniform datatypes, and no, the normal datatype package cannot do that.</p>
+<p>There's a paper by <span class="user-mention" data-user-id="366824">@Jasmin Blanchette</span> et al. from a few years ago on it though: <a href="https://www21.in.tum.de/~traytel/papers/lics17-nonuniform/nonuniform.pdf">https://www21.in.tum.de/~traytel/papers/lics17-nonuniform/nonuniform.pdf</a></p>
+
+<a name="236153186"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236153186" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236153186">Manuel Eberl (Apr 26 2021 at 10:52)</a>:</h4>
+<p>(Tagging <span class="user-mention" data-user-id="361271">@Dmitriy Traytel</span> as well)</p>
+
+<a name="236153610"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236153610" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236153610">Dmitriy Traytel (Apr 26 2021 at 10:56)</a>:</h4>
+<p>Yes, unfortunately for non-uniform datatypes there is only a partial implementation (which is thus not part of the Isabelle distribution). But the approach described in the linked paper could be nonetheless followed in principle (define a larger uniform (co)datatype first; carve out the more precise non-uniform type via <code>typedef</code>; lift definitions and theorems from the too-large uniform type to the non-uniform one).</p>
+
+<a name="236153779"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236153779" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236153779">Dmitriy Traytel (Apr 26 2021 at 10:58)</a>:</h4>
+<p><span class="user-mention" data-user-id="392255">@Jan van Brügge</span> what is the specific non-uniform type you would like to define?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

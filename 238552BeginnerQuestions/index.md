@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Polymorphic recursion](83153Polymorphicrecursion.html) (10 messages, latest: Apr 26 2021 at 11:10)
+* [Polymorphic recursion](83153Polymorphicrecursion.html) (11 messages, latest: Apr 26 2021 at 14:13)
 
 * [Generic 'a set set => 'a set](01869Genericasetsetaset.html) (6 messages, latest: Apr 24 2021 at 18:32)
 

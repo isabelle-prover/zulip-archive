@@ -57,6 +57,58 @@ permalink: ./238552BeginnerQuestions/83153Polymorphicrecursion.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236155077" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236155077">Jan van Brügge (Apr 26 2021 at 11:10)</a>:</h4>
 <p>Yes, I saw that, but as said, I tried to prove something about the haskell code, so a completely different definition is not really helpful</p>
 
+<a name="236180750"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236180750" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236180750">Dmitriy Traytel (Apr 26 2021 at 14:13)</a>:</h4>
+<p>So following the approach from our paper you would end up with the following definitions</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span> <span class="n n-Type">'a</span> <span class="n">digit</span> <span class="o">=</span> <span class="n">One</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Two</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Three</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Four</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span>
+<span class="k">datatype</span> <span class="n n-Type">'a</span> <span class="n">node</span> <span class="o">=</span> <span class="n">Node2</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Node3</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span>
+
+<span class="k">datatype</span> <span class="o">(</span><span class="n">discs_sels</span><span class="o">)</span> <span class="n n-Type">'a</span> <span class="n">sh</span> <span class="o">=</span> <span class="n">Leaf</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Node</span> <span class="s">"'a sh node"</span>
+<span class="k">datatype</span> <span class="n n-Type">'a</span> <span class="n">raw</span> <span class="o">=</span> <span class="n">Empty0</span> <span class="o">|</span> <span class="n">Single0</span> <span class="s">"'a sh"</span> <span class="o">|</span> <span class="n">Deep0</span> <span class="s">"('a sh) digit"</span> <span class="s">"'a raw"</span> <span class="s">"('a sh) digit"</span>
+
+<span class="k">inductive</span> <span class="n">ok_sh</span> <span class="kp">where</span>
+  <span class="s">"ok_sh 0 (Leaf x)"</span>
+<span class="o">|</span> <span class="s">"pred_node (ok_sh n) s ⟹ ok_sh (Suc n) (Node s)"</span>
+<span class="kp">monos</span> <span class="n">node.pred_mono</span>
+
+<span class="k">inductive</span> <span class="n">ok</span> <span class="kp">where</span>
+  <span class="s">"ok n Empty0"</span>
+<span class="o">|</span> <span class="s">"ok_sh n s ⟹ ok n (Single0 s)"</span>
+<span class="o">|</span> <span class="s">"pred_digit (ok_sh n) d1 ⟹ ok (Suc n) t ⟹ pred_digit (ok_sh n) d2 ⟹ ok n (Deep0 d1 t d2)"</span>
+
+<span class="k">primrec</span> <span class="n">flat_sh</span> <span class="kp">where</span>
+  <span class="s">"flat_sh (Leaf x) = Node (map_node Leaf x)"</span>
+<span class="o">|</span> <span class="s">"flat_sh (Node t) = Node (map_node flat_sh t)"</span>
+
+<span class="k">primrec</span> <span class="n">flat</span> <span class="kp">where</span>
+  <span class="s">"flat Empty0 = Empty0"</span>
+<span class="o">|</span> <span class="s">"flat (Single0 s) = Single0 (flat_sh s)"</span>
+<span class="o">|</span> <span class="s">"flat (Deep0 d1 t d2) = Deep0 (map_digit flat_sh d1) (flat t) (map_digit flat_sh d2)"</span>
+
+<span class="kn">lemma</span> <span class="n">ok_sh_flat_sh</span><span class="o">:</span> <span class="s">"ok_sh n s ⟹ ok_sh (Suc n) (flat_sh s)"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">induct</span> <span class="n">n</span> <span class="n">s</span> <span class="n">rule</span><span class="o">:</span> <span class="n">ok_sh.induct</span><span class="o">)</span> <span class="o">(</span><span class="n">auto</span> <span class="n">intro</span><span class="o">!:</span> <span class="n">ok_sh.intros</span> <span class="n">simp</span><span class="o">:</span> <span class="n">node.set_map</span> <span class="n">node.pred_set</span><span class="o">)</span>
+
+<span class="kn">lemma</span> <span class="n">ok_flat</span><span class="o">:</span> <span class="s">"ok n t ⟹ ok (Suc n) (flat t)"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">induct</span> <span class="n">n</span> <span class="n">t</span> <span class="n">rule</span><span class="o">:</span> <span class="n">ok.induct</span><span class="o">)</span>
+    <span class="o">(</span><span class="n">auto</span> <span class="n">intro</span><span class="o">!:</span> <span class="n">ok.intros</span> <span class="n">simp</span><span class="o">:</span> <span class="n">digit.set_map</span> <span class="n">digit.pred_set</span> <span class="n">ok_sh_flat_sh</span><span class="o">)</span>
+
+<span class="kn">typedef</span> <span class="n n-Type">'a</span> <span class="n">fingertree</span> <span class="o">=</span> <span class="s">"{t :: 'a raw. ok 0 t}"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">rule</span> <span class="n">exI</span><span class="o">[</span><span class="n">of</span> <span class="o">_</span> <span class="n">Empty0</span><span class="o">])</span> <span class="o">(</span><span class="n">auto</span> <span class="n">intro</span><span class="o">:</span> <span class="n">ok.intros</span><span class="o">)</span>
+
+<span class="k">setup_lifting</span> <span class="n">type_definition_fingertree</span>
+
+<span class="kn">lift_definition</span> <span class="n">Empty</span> <span class="o">::</span> <span class="s">"'a fingertree"</span> <span class="kp">is</span> <span class="s">"Empty0"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">auto</span> <span class="n">intro</span><span class="o">:</span> <span class="n">ok.intros</span><span class="o">)</span>
+
+<span class="kn">lift_definition</span> <span class="n">Single</span> <span class="o">::</span> <span class="s">"'a ⇒ 'a fingertree"</span> <span class="kp">is</span> <span class="s">"Single0 o Leaf"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">auto</span> <span class="n">intro</span><span class="o">:</span> <span class="n">ok.intros</span> <span class="n">ok_sh.intros</span><span class="o">)</span>
+
+<span class="kn">lift_definition</span> <span class="n">Deep</span> <span class="o">::</span> <span class="s">"'a digit ⇒ 'a node fingertree ⇒ 'a digit ⇒ 'a fingertree"</span> <span class="kp">is</span>
+  <span class="s">"λd1 t d2. Deep0 (map_digit Leaf d1) (flat t) (map_digit Leaf d1)"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">auto</span> <span class="n">intro</span><span class="o">!:</span> <span class="n">ok.intros</span> <span class="n">ok_sh.intros</span> <span class="n">simp</span><span class="o">:</span> <span class="n">digit.set_map</span> <span class="n">digit.pred_set</span> <span class="n">ok_flat</span><span class="o">)</span>
+</code></pre></div>
+<p>This possibly falls under what you call "heavy encoding" though. On the other hand the precise definition does not matter; what matters are the properties of Empty, Single, Deep (e.g., injectivity, distinctness) and with a little bit of work (also described in our paper) one can get them---then it does not matter how the type was defined.</p>
+
 
 {% endraw %}
 

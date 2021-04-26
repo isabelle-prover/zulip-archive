@@ -22,7 +22,7 @@ permalink: ./index.html
 
 * [Announcements](214136Announcements/index.html) (10 topics)
 
-* [Isabelle/ML](211483IsabelleML/index.html) (5 topics)
+* [Isabelle/ML](211483IsabelleML/index.html) (6 topics)
 
 * [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 

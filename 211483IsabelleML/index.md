@@ -9,6 +9,8 @@ permalink: ./211483IsabelleML/index.html
 
 ### Topics:
 
+* [Writing to file for logging](75382Writingtofileforlogging.html) (1 message, latest: Apr 26 2021 at 08:37)
+
 * [Illegal fixed variable error](84859Illegalfixedvariableerror.html) (1 message, latest: Apr 23 2021 at 15:49)
 
 * [Installation problem](81412Installationproblem.html) (3 messages, latest: Apr 10 2021 at 14:09)

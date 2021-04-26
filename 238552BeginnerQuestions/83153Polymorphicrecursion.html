@@ -33,6 +33,30 @@ permalink: ./238552BeginnerQuestions/83153Polymorphicrecursion.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236153779" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236153779">Dmitriy Traytel (Apr 26 2021 at 10:58)</a>:</h4>
 <p><span class="user-mention" data-user-id="392255">@Jan van Brügge</span> what is the specific non-uniform type you would like to define?</p>
 
+<a name="236154411"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236154411" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236154411">Jan van Brügge (Apr 26 2021 at 11:03)</a>:</h4>
+<p>A finger tree:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span> <span class="n n-Type">'a</span> <span class="n">digit</span> <span class="o">=</span> <span class="n">One</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Two</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Three</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Four</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span>
+<span class="k">datatype</span> <span class="n n-Type">'a</span> <span class="n">node</span> <span class="o">=</span> <span class="n">Node2</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Node3</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span> <span class="n n-Type">'a</span>
+<span class="k">datatype</span> <span class="n n-Type">'a</span> <span class="n">fingertree</span> <span class="o">=</span> <span class="n">Empty</span> <span class="o">|</span> <span class="n">Single</span> <span class="n n-Type">'a</span> <span class="o">|</span> <span class="n">Deep</span> <span class="s">"'a digit"</span> <span class="s">"'a node fingertree"</span> <span class="s">"'a digit"</span>
+</code></pre></div>
+
+<a name="236154580"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236154580" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236154580">Jan van Brügge (Apr 26 2021 at 11:05)</a>:</h4>
+<p>But I just wanted to quickly check a property of the haskell code, so any heavy encoding is probably not worth it as it strays too far from the original definition</p>
+
+<a name="236154969"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236154969" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236154969">Manuel Eberl (Apr 26 2021 at 11:09)</a>:</h4>
+<p>There are finger trees in the AFP: <a href="https://www.isa-afp.org/browser_info/current/AFP/Finger-Trees/FingerTree.html">https://www.isa-afp.org/browser_info/current/AFP/Finger-Trees/FingerTree.html</a></p>
+
+<a name="236155075"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236155075" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236155075">Manuel Eberl (Apr 26 2021 at 11:10)</a>:</h4>
+<p>Although that may not help you.</p>
+
+<a name="236155077"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Polymorphic%20recursion/near/236155077" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/83153Polymorphicrecursion.html#236155077">Jan van Brügge (Apr 26 2021 at 11:10)</a>:</h4>
+<p>Yes, I saw that, but as said, I tried to prove something about the haskell code, so a completely different definition is not really helpful</p>
+
 
 {% endraw %}
 

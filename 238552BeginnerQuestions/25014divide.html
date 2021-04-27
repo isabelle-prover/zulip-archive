@@ -42,6 +42,24 @@ sort mismatch
 </code></pre></div>
 <p>can someone explain the description here?</p>
 
+<a name="236281927"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/divide/near/236281927" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/25014divide.html#236281927">Mathias Fleury (Apr 27 2021 at 04:28)</a>:</h4>
+<p>Types have so-called sorts, which are extra-constraints over types. Isabelle computes the minimum required types and sorts to type a lemma.</p>
+<p>Here the type<code>'b</code> has sorts <code>inverse</code> (this is required to have division) and <code>power</code> (because of the <code>^2</code>). However you want to apply the theorem <code>field_class.times_divide_times_eq</code> that only works when <code>'b</code> has also the sort field (i.e., when <code>'b</code> is a field).</p>
+
+<a name="236281999"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/divide/near/236281999" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/25014divide.html#236281999">Mathias Fleury (Apr 27 2021 at 04:30)</a>:</h4>
+<p>The solution is to be more explicit about sorts:</p>
+<div class="codehilite"><pre><span></span><code>lemma delta2:&quot;b^2 / a^2 = ((b::&#39;b :: {field,power}) / a)^2&quot;
+</code></pre></div>
+<p>or</p>
+<div class="codehilite"><pre><span></span><code>lemma delta2:&quot;b^2 / a^2 = (b / a)^2&quot; for b:: &quot;&#39;b :: {field,power}&quot;
+</code></pre></div>
+
+<a name="236282025"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/divide/near/236282025" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/25014divide.html#236282025">Mathias Fleury (Apr 27 2021 at 04:30)</a>:</h4>
+<p>(untested but if you need the <code>inverse</code>, you know how to add it too)</p>
+
 
 {% endraw %}
 

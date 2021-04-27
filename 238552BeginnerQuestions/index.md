@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [stupid](31706stupid.html) (2 messages, latest: Apr 27 2021 at 13:59)
+
 * [finite_induct over sets](30977finiteinductoversets.html) (42 messages, latest: Apr 27 2021 at 11:19)
 
 * [divide](25014divide.html) (4 messages, latest: Apr 27 2021 at 04:30)

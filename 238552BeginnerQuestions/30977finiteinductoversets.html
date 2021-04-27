@@ -145,6 +145,54 @@ where
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/229887823" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#229887823">Jakub Kądziołka (Mar 11 2021 at 17:13)</a>:</h4>
 <p>If your operation is commutative, i.e. the result doesn't depend on the order used (and you can prove it), then there's <code>Finite_Set.fold</code> which uses <code>THE</code> on <code>fold_graph</code></p>
 
+<a name="236317369"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317369" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317369">Max Nowak (Apr 27 2021 at 11:05)</a>:</h4>
+<p>I gave up on this last time, but the issue has come up again, and I'm at my wit's end to be honest. I have a set <code>A</code>, and a subset <code>S</code> of A. And I have a linear order <code>linord</code> on A. How do I get <code>S</code> transformed into a list according to the linear order? I know there is <code>List.sorted_list_of_set</code>, but it uses Locales and I have no time to dig into that for something this (seemingly) simple, sorry..</p>
+
+<a name="236317531"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317531" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317531">Lukas Stevens (Apr 27 2021 at 11:07)</a>:</h4>
+<p>Is the linear order on the type or or just the set <code>S</code>?</p>
+
+<a name="236317564"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317564" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317564">Max Nowak (Apr 27 2021 at 11:07)</a>:</h4>
+<p>Just on <code>A</code> (and S is a subset).</p>
+
+<a name="236317606"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317606" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317606">Mathias Fleury (Apr 27 2021 at 11:08)</a>:</h4>
+<p>can you use <code>SOME xs. set xs = A</code>?</p>
+
+<a name="236317706"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317706" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317706">Lukas Stevens (Apr 27 2021 at 11:08)</a>:</h4>
+<p>If it is on the set, then you are out of luck currently without resorting to <code>Types-To-Sets</code>. I have already relativised the <code>folding</code> locale to sets but the changes will be in the next release at the earliest.</p>
+
+<a name="236317739"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317739" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317739">Manuel Eberl (Apr 27 2021 at 11:09)</a>:</h4>
+<p>I have something like that in the AFP: <a href="https://www.isa-afp.org/browser_info/current/AFP/Comparison_Sort_Lower_Bound/Linorder_Relations.html">https://www.isa-afp.org/browser_info/current/AFP/Comparison_Sort_Lower_Bound/Linorder_Relations.html</a></p>
+
+<a name="236317750"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317750" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317750">Manuel Eberl (Apr 27 2021 at 11:09)</a>:</h4>
+<p><code>sorted_wrt_list_of_set</code></p>
+
+<a name="236317777"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236317777" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236317777">Manuel Eberl (Apr 27 2021 at 11:09)</a>:</h4>
+<p>It uses its own notation of "linear order", but that should be easy to adapt.</p>
+
+<a name="236318288"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236318288" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236318288">Max Nowak (Apr 27 2021 at 11:14)</a>:</h4>
+<p>Looks like <code>linorder_on</code> is equivalent to <code>linear_order_on</code></p>
+
+<a name="236318495"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236318495" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236318495">Max Nowak (Apr 27 2021 at 11:16)</a>:</h4>
+<p>Looks like what I need then! I never used AFP before, is there a canonical way of importing theories from AFP? It also seems to depend on List_Index which is AFP-only as well by the looks of it</p>
+
+<a name="236318743"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236318743" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236318743">Manuel Eberl (Apr 27 2021 at 11:18)</a>:</h4>
+<p>The easiest way is to download the AFP, include it as a component (that's explained on the website) and then you can import it by writing <code>Comparison_Sort_Lower_Bound.Linorder_Relations</code>.</p>
+
+<a name="236318792"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/finite_induct%20over%20sets/near/236318792" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/30977finiteinductoversets.html#236318792">Manuel Eberl (Apr 27 2021 at 11:19)</a>:</h4>
+<p>You can also try just copying out whatever parts of the theory you need (no need to cite me or anything).</p>
+
 
 {% endraw %}
 

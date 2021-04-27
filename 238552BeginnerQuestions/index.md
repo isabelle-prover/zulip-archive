@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [finite_induct over sets](30977finiteinductoversets.html) (42 messages, latest: Apr 27 2021 at 11:19)
+
 * [divide](25014divide.html) (4 messages, latest: Apr 27 2021 at 04:30)
 
 * [Polymorphic recursion](83153Polymorphicrecursion.html) (11 messages, latest: Apr 26 2021 at 14:13)
@@ -54,8 +56,6 @@ permalink: ./238552BeginnerQuestions/index.html
 * [Difference between = and ≡](69170Differencebetweenand.html) (8 messages, latest: Mar 17 2021 at 20:14)
 
 * [intro exI is overzealous](97806introexIisoverzealous.html) (6 messages, latest: Mar 12 2021 at 08:35)
-
-* [finite_induct over sets](30977finiteinductoversets.html) (30 messages, latest: Mar 11 2021 at 17:13)
 
 * [ML memory usage goes up](21819MLmemoryusagegoesup.html) (4 messages, latest: Mar 06 2021 at 11:12)
 

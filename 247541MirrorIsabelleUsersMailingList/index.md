@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (1 message, latest: Apr 27 2021 at 09:26)
+
 * [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (1 message, latest: Apr 27 2021 at 08:48)
 
 * [\[isabelle\] new in the AFP: The BKR Decision Procedure for...](21365isabellenewintheAFPTheBKRDecisionProcedurefor.html) (1 message, latest: Apr 25 2021 at 15:40)

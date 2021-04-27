@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (2 messages, latest: Apr 27 2021 at 10:57)
+* [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (4 messages, latest: Apr 27 2021 at 22:45)
 
 * [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (1 message, latest: Apr 27 2021 at 08:48)
 

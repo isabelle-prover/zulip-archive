@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Unbound Schematic Variable](76851UnboundSchematicVariable.html) (6 messages, latest: Apr 27 2021 at 15:50)
+
 * [stupid](31706stupid.html) (6 messages, latest: Apr 27 2021 at 14:34)
 
 * [finite_induct over sets](30977finiteinductoversets.html) (42 messages, latest: Apr 27 2021 at 11:19)

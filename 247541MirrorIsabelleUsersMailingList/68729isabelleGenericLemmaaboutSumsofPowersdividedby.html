@@ -1,0 +1,37 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/68729isabelleGenericLemmaaboutSumsofPowersdividedby.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68729isabelleGenericLemmaaboutSumsofPowersdividedby.html">[isabelle] Generic Lemma about Sums of Powers divided by ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="236515607"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Generic%20Lemma%20about%20Sums%20of%20Powers%20divided%20by%20.../near/236515607" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/68729isabelleGenericLemmaaboutSumsofPowersdividedby.html#236515607">Email Gateway (Apr 28 2021 at 14:24)</a>:</h4>
+<p>From: Florian Märkl &lt;<a href="mailto:isabelle-users@florianmaerkl.de">isabelle-users@florianmaerkl.de</a>&gt;<br>
+Hello,</p>
+<p>in my current project I have to reason about right bit shifts, among other things.<br>
+In particular I needed to prove the following (simplified) equalities:</p>
+<p>X &gt;&gt; 1<br>
+= (x_0 * 2^0 + x_1 * 2^1 + x_2 * 2^2 + …) div 2<br>
+= x_1 * 2^0 + x_2 * 2^1 + …</p>
+<p>where x_0, … are the individual bits of X. The first = is pretty much the definition already given in the word library, but the second turned out to be a bit trickier.<br>
+I formulated this problem of „integer-dividing a sum of powers by their base“ to get a representation without a division inside of it as more generic lemmas saying</p>
+<p>(∑n∈A. b ^ f n) div b = (∑n∈Set.filter (λn. f n ≠ 0) A. b ^ (f n - 1))</p>
+<p>with a few preconditions. I have attached the theory containing this in isolation.<br>
+Since it appears to be a little too generic to not already be formalized somewhere, I wonder if maybe this is either something that already exists in some form and I just have not found it yet or if it should be added to the AFP or distribution.<br>
+It kind of reminds me of polynomial division, only that here the base is a known constant rather than some variable x.</p>
+<p>Cheers<br>
+Florian<br>
+<a href="/user_uploads/14278/TEtKx_PVmYVkaKDuWUBvhg3u/PowerSum.thy">PowerSum.thy</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

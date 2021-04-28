@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Term to be evaluated contains free dictionaries](00150isabelleTermtobeevaluatedcontainsfreedictionaries.html) (2 messages, latest: Apr 28 2021 at 09:48)
+
+* [\[isabelle\] NASA Formal Methods 2021: Call for (virtual)	p...](43791isabelleNASAFormalMethods2021Callforvirtualp.html) (1 message, latest: Apr 28 2021 at 09:18)
+
 * [\[isabelle\] Two new AFP entries: Gale-Stewart games and Is...](69215isabelleTwonewAFPentriesGaleStewartgamesandIs.html) (1 message, latest: Apr 28 2021 at 08:36)
 
 * [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (5 messages, latest: Apr 28 2021 at 08:02)

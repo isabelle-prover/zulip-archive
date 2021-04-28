@@ -1,0 +1,55 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/00150isabelleTermtobeevaluatedcontainsfreedictionaries.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00150isabelleTermtobeevaluatedcontainsfreedictionaries.html">[isabelle] Term to be evaluated contains free dictionaries</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="236478012"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Term%20to%20be%20evaluated%20contains%20free%20dictionaries/near/236478012" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00150isabelleTermtobeevaluatedcontainsfreedictionaries.html#236478012">Email Gateway (Apr 28 2021 at 09:41)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt;<br>
+Dear all,</p>
+<p>can anybody explain why the error</p>
+<p>"Term to be evaluated contains free dictionaries"</p>
+<p>appears in the following minimal example:</p>
+<p>================<br>
+theory Scratch</p>
+<p>imports Main</p>
+<p>begin</p>
+<p>context ord<br>
+begin<br>
+fun foo :: "'a list ⇒ bool"<br>
+   where "foo xs = True"<br>
+end</p>
+<p>value "foo Nil"</p>
+<p>"Term to be evaluated contains free dictionaries"</p>
+<p>end<br>
+=============</p>
+<p>Thanks.</p>
+<p>Stepan</p>
+
+<a name="236478890"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Term%20to%20be%20evaluated%20contains%20free%20dictionaries/near/236478890" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00150isabelleTermtobeevaluatedcontainsfreedictionaries.html#236478890">Email Gateway (Apr 28 2021 at 09:48)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+A dictionary is the implicit structure used to pass around constants and<br>
+functions defined by a type class. For `ord', the dictionary would<br>
+contain (&lt;) and (&lt;=).</p>
+<p>A dictionary is free if the corresponding type variable is free. So, the<br>
+error essentially says "The value of this term depends on what ordered<br>
+type you instantiate it to, and you haven't specified that". In your<br>
+simple example, the result would be the same either way, but Isabelle<br>
+doesn't have a way of handling this special case.</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

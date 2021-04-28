@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] How to get TopLevel.state from the theorem str...](40369isabelleHowtogetTopLevelstatefromthetheoremstr.html) (1 message, latest: Apr 28 2021 at 22:43)
+
 * [\[isabelle\] Atb.: Is it possible to use QRHL tool without ...](59126isabelleAtbIsitpossibletouseQRHLtoolwithout.html) (1 message, latest: Apr 28 2021 at 17:08)
 
 * [\[isabelle\] Can QRHL tool be used without QRHL theories, f...](99171isabelleCanQRHLtoolbeusedwithoutQRHLtheoriesf.html) (1 message, latest: Apr 28 2021 at 16:35)

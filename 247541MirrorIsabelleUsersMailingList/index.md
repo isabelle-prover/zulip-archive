@@ -9,7 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (4 messages, latest: Apr 27 2021 at 22:45)
+* [\[isabelle\] Two new AFP entries: Gale-Stewart games and Is...](69215isabelleTwonewAFPentriesGaleStewartgamesandIs.html) (1 message, latest: Apr 28 2021 at 08:36)
+
+* [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (5 messages, latest: Apr 28 2021 at 08:02)
 
 * [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (1 message, latest: Apr 27 2021 at 08:48)
 

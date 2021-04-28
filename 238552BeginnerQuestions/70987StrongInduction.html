@@ -1,0 +1,26 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/70987StrongInduction.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70987StrongInduction.html">Strong Induction</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="236506432"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Strong%20Induction/near/236506432" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70987StrongInduction.html#236506432">Ahmed B (Apr 28 2021 at 13:28)</a>:</h4>
+<p>If I carry out induction in Isabelle on a natural number, Isabelle automatically uses standard induction (in the <code>Suc x</code> case, the induction hypothesis is that the predicate holds for <code>x</code>). Is there a way to force Isabelle to carry out strong induction (in the <code>Suc x</code> case, the induction hypothesis is that the predicate holds for all <code>n &lt; Suc x</code>)? Thanks</p>
+
+<a name="236508710"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Strong%20Induction/near/236508710" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/70987StrongInduction.html#236508710">Manuel Eberl (Apr 28 2021 at 13:43)</a>:</h4>
+<p>You can use the induction rule <code>less_induct</code> (i.e. <code>(induction n rule: less_induct)</code>) to perform strong induction. That will not give you <code>0</code> and <code>Suc</code> as cases though, but only a single induction case <code>less</code> where you get as an induction hypothesis that the property holds for all <code>k &lt; n</code>. If you want to distinguish between e.g: zero and non-zero, you have to do an additional case split (or prove a custom induction rule that does this, e.g. with <code>induction_schema</code>).</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

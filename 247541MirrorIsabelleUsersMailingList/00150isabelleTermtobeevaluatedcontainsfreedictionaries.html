@@ -60,6 +60,34 @@ The same inference is made for Nil.</p>
 <p>The difference in the result is therefore still not clear to me.</p>
 <p>Stepan</p>
 
+<a name="236487981"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Term%20to%20be%20evaluated%20contains%20free%20dictionaries/near/236487981" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00150isabelleTermtobeevaluatedcontainsfreedictionaries.html#236487981">Email Gateway (Apr 28 2021 at 11:08)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;<br>
+The dictionary error that you saw comes from the code generator, which<br>
+is the evaluation backend that the value command normally uses.</p>
+<p>When you write "foo xs", there is a free variable in the term, so code<br>
+generation cannot work at all. Therefore, the "value" command falls back<br>
+to one of its other evaluators (probably "nbe", normalisation by<br>
+evaluation). There is also a simplifier-backed backend.</p>
+<p>You can tell the value command precisely which evaluator to use:</p>
+<p>value [code] "foo Nil" (* free dictionary error *)<br>
+  value [nbe] "foo Nil" (* True *)<br>
+  value [simp] "foo Nil" (* True *)</p>
+<p>By the way, when you do something like</p>
+<p>value "Nil"</p>
+<p>you see the error</p>
+<p>Wellsortedness error:<br>
+  Type 'a not of sort term_of<br>
+  Cannot derive subsort relation {} &lt; term_of</p>
+<p>This is also an error caused by polymorphism in the term to be<br>
+evaluated, but this time, the problem is not that there are dictionaries<br>
+from type classes flying around, but simply that Isabelle does not know<br>
+how to convert the result (which is an ML term) back into a HOL term<br>
+(this only works for concrete types that are instances of the "term_of"<br>
+class).</p>
+<p>Manuel<br>
+<a href="/user_uploads/14278/SdSsFi_SaPVGQsq_uRE0VVOw/smime.p7s">smime.p7s</a></p>
+
 
 {% endraw %}
 

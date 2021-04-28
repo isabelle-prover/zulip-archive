@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Term to be evaluated contains free dictionaries](00150isabelleTermtobeevaluatedcontainsfreedictionaries.html) (3 messages, latest: Apr 28 2021 at 10:06)
+* [\[isabelle\] Term to be evaluated contains free dictionaries](00150isabelleTermtobeevaluatedcontainsfreedictionaries.html) (4 messages, latest: Apr 28 2021 at 11:08)
 
 * [\[isabelle\] NASA Formal Methods 2021: Call for (virtual)	p...](43791isabelleNASAFormalMethods2021Callforvirtualp.html) (1 message, latest: Apr 28 2021 at 09:18)
 

@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Undo hide_fact (open)](46257Undohidefactopen.html) (1 message, latest: Apr 29 2021 at 09:50)
+
 * [delta](67755delta.html) (8 messages, latest: Apr 27 2021 at 10:52)
 
 * [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (27 messages, latest: Apr 20 2021 at 17:18)

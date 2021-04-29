@@ -9,6 +9,10 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Complexity proofs with logarithm](25643Complexityproofswithlogarithm.html) (5 messages, latest: Apr 29 2021 at 09:46)
+
+* [Lifting a relation to a quotient](89322Liftingarelationtoaquotient.html) (2 messages, latest: Apr 29 2021 at 09:21)
+
 * [Strong Induction](70987StrongInduction.html) (2 messages, latest: Apr 28 2021 at 13:43)
 
 * [Unbound Schematic Variable](76851UnboundSchematicVariable.html) (8 messages, latest: Apr 27 2021 at 16:22)

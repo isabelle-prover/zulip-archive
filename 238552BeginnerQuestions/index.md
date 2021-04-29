@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [First-order logic on graphs](23298Firstorderlogicongraphs.html) (1 message, latest: Apr 29 2021 at 19:06)
+
 * [Complexity proofs with logarithm](25643Complexityproofswithlogarithm.html) (5 messages, latest: Apr 29 2021 at 09:46)
 
 * [Lifting a relation to a quotient](89322Liftingarelationtoaquotient.html) (2 messages, latest: Apr 29 2021 at 09:21)

@@ -21,6 +21,21 @@ I've been able to add the queue into the theory context using the Theory_Data fu
 <p>Kind regards and thank you in advance,<br>
 Matthys Grobbelaar</p>
 
+<a name="236813754"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/236813754" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#236813754">Email Gateway (Apr 30 2021 at 10:22)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;<br>
+Hi,</p>
+<p>how are you accessing the theory inside your parse translation? If you <br>
+use the ML antiquotation \&lt;^theory&gt; (rendered /<em>theory</em>/), then you get <br>
+the theory that you had at compile time of the parse translation. (And <br>
+theories are immutable, so changing the theory data will not affect that <br>
+theory.) The correct way is to use the context that is given to the <br>
+parse translation as an argument, and then get the theory via <br>
+"Proof_Context.theory_of ctxt". (If this is already what you are doing, <br>
+sorry for pointing out the obvious.)</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./282466IRCisabelle/index.html
 
 ### Topics:
 
-* [IRC](88031IRC.html) (84 messages, latest: Apr 29 2021 at 12:22)
+* [IRC](88031IRC.html) (88 messages, latest: Apr 30 2021 at 11:51)
 
 * [stream events](95106streamevents.html) (1 message, latest: Mar 17 2021 at 17:38)
 

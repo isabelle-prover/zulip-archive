@@ -36,6 +36,28 @@ sorry for pointing out the obvious.)</p>
 <p>Best wishes,<br>
 Dominique.</p>
 
+<a name="236918467"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/236918467" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#236918467">Email Gateway (Apr 30 2021 at 23:52)</a>:</h4>
+<p>From: Matthys Grobbelaar &lt;<a href="mailto:m.grobbelaar@uq.net.au">m.grobbelaar@uq.net.au</a>&gt;<br>
+Hi Dominique,</p>
+<p>Thank you for your quick response.<br>
+At the moment, I've been accessing the theory with the following: Context.theory_of (Context.proof ctxt) where ctxt is the context given to the parse translation.<br>
+I've since changed it to be Proof_Context.theory_of ctxt which looks cleaner and appears to yield identical results.</p>
+<p>At the moment, I've been testing this as follows:</p>
+<p>*   Making a duplicate translation function in the file where I'm modifying the theory context (via setup and using the functor) and called it directly: val _ = parse_val (Context.the_local_context ()) [@{term "..."}]<br>
+  *   Making a direct call to my original translation function (which lives in another theory) with the same parameters: val _ = parse_val_orig (Context.the_local_context ()) [@{term "..."}]<br>
+  *   Using the syntax directly in the file where I'm modifying the theory context: &lt;\lrel&gt;...&lt;/rrel&gt; where &lt;\lrel&gt; and &lt;\rrel&gt; is the new syntax (just a pair of parentheses essentially)</p>
+<p>The dummy translation function is as follows (essentially just printing out the content of the queue):<br>
+    fun parse_val ctxt [trm] =<br>
+        let<br>
+            val data = VarList.get (Proof_Context.theory_of ctxt)    (* VarList is the structure using the functor which stores the data *)<br>
+            val _ = VarList.print_vars data ctxt<br>
+        in undefined end;</p>
+<p>The duplicate function in the file where the I'm modifying the context prints out the values in the queue correctly. The direct call to the translation function in the other theory and the use of syntax (which also uses this other function) prints nothing (an empty queue). Note that the printing function does not modify the queue passed in for printing.</p>
+<p>Why would the same argument, given to identical methods in different files, have different results? It seems a bit strange to me.</p>
+<p>Kind regards and thank you in advance,<br>
+Matthys Grobbelaar</p>
+
 
 {% endraw %}
 

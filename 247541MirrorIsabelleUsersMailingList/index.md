@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (3 messages, latest: Apr 30 2021 at 14:58)
+* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (3 messages, latest: Apr 30 2021 at 23:52)
 
-* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (2 messages, latest: Apr 30 2021 at 10:22)
+* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (3 messages, latest: Apr 30 2021 at 14:58)
 
 * [\[isabelle\] How to get TopLevel.state from the theorem str...](40369isabelleHowtogetTopLevelstatefromthetheoremstr.html) (1 message, latest: Apr 28 2021 at 22:43)
 

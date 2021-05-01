@@ -58,6 +58,50 @@ I've since changed it to be Proof_Context.theory_of ctxt which looks cleaner and
 <p>Kind regards and thank you in advance,<br>
 Matthys Grobbelaar</p>
 
+<a name="236952264"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/236952264" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#236952264">Email Gateway (May 01 2021 at 09:15)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+I find it hard to follow what you are actually doing. Can you show the formal<br>
+explanation written in Isabelle/ML?</p>
+<p>A lot of details are non-standard in the small snipptes (e.g. use of<br>
+Context.the_local_context, undefined, trm as name for a term), so it is likely<br>
+that the overall approach is somehow wrong.</p>
+<p>Further note that in functional programming, functions are called "functions",<br>
+not methods.</p>
+<p>Makarius</p>
+
+<a name="236953596"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/236953596" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#236953596">Email Gateway (May 01 2021 at 09:41)</a>:</h4>
+<p>From: Dominique Unruh &lt;<a href="mailto:unruh@ut.ee">unruh@ut.ee</a>&gt;</p>
+<blockquote>
+<p>Why would the same argument, given to identical methods in different <br>
+files, have different results? It seems a bit strange to me.</p>
+</blockquote>
+<p>That does seem very strange to me, too. My best hypothesis is that they <br>
+are not, actually, identical methods. (They might have the exact same <br>
+code but, due to different namespaces, call different functions in their <br>
+code.)</p>
+<p>What I would try:</p>
+<p>* Write \&lt;^context&gt; instead of "Context.the_local_context ()" in your<br>
+    experiments (shouldn't change much, but if you want to refer to the<br>
+    current context at compile time of a given code snippet, that's the<br>
+    right thing to use).</p>
+<p>* Ctrl-click on both of VarList.get and VarList.print_vars to see<br>
+    where jEdit jumps. If it jumps to different places, then you have<br>
+    accidentally defined VarList twice. (Also check whether you might<br>
+    include the same ML-file twice.)</p>
+<p>* Try and print theory you got, to see if it's the right one (val _ =<br>
+    Proof_Context.theory_of ctxt |&gt; \&lt;^print&gt; or something like that).<br>
+    \&lt;^print&gt; is useful generally for debugging because it can be<br>
+    applied to anything, not just strings.</p>
+<p>* Instead of "undefined", you can also as a hack return debug output<br>
+    from a parse translation via: HOLogic.mk_literal string_to_return<br>
+    (this will then give you a string literal inside your parsed<br>
+    output). Not sure it helps specifically with your current problem,<br>
+    but it might be useful in general.</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

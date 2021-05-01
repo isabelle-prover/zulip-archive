@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (3 messages, latest: Apr 30 2021 at 23:52)
+* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (5 messages, latest: May 01 2021 at 09:41)
 
 * [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (3 messages, latest: Apr 30 2021 at 14:58)
 

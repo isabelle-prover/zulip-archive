@@ -274,6 +274,42 @@ with our Prover IDE add-ons.</p>
 <p>Makarius<br>
 <a href="/user_uploads/14278/C35RAh5d7JUt0-WaVYZA9lFl/My_Relation.thy">My_Relation.thy</a></p>
 
+<a name="237051299"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/237051299" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#237051299">Email Gateway (May 02 2021 at 12:58)</a>:</h4>
+<p>From: Matthys Grobbelaar &lt;<a href="mailto:m.grobbelaar@uq.net.au">m.grobbelaar@uq.net.au</a>&gt;<br>
+Hi Makarius,</p>
+<p>Thank you for the great advice, I appreciate it! It will really help improve my programming in Isabelle.<br>
+With regards to structuring theories, I am constructing a framework of syntax translations (as part of a larger project) and would like to have a single top-level entry point which the other theories in the project can include if they would like to use the framework. </p>
+<p>At the moment I have the following entry point:</p>
+<p>--- BEGIN Translations_Main.thy ---<br>
+theory Translations_Main<br>
+    imports<br>
+        "core/My_Relation"<br>
+        "core/My_Predicate"<br>
+        (* More imports are added here as the framework evolves *)<br>
+begin</p>
+<p>end<br>
+--- END Translations_Main ---</p>
+<p>Then any other theory can simply use the framework by importing Translations_Main.<br>
+Is this the correct way to go about structuring such a framework? Are there things I should watch out for?</p>
+<p>Kind regards and thank you in advance,<br>
+Matthys Grobbelaar</p>
+<p>These theory and ML sources are the main means of communication, both with the system and between humans.</p>
+<p>I've put everything into "canonical form", such it tells the story on its own account, using standard "style and orthography": see the attached My_Relation.thy. Doing this, it magically worked in the end, while your original sources did not even type-check (maybe something was missing here and there).</p>
+<p>Of course, it requires some practice to do things in the proper way. It helps to look around in documentation and existing implementations, and eventually develop a taste for good and bad approaches.</p>
+<p>Here are also some concrete hints for your attempt so far:</p>
+<p>* There is no point to have many small files to obscure the structure of the project. Instead, I've written just one "theory document" with various sections. (As the project grows and matures, it will of course have more files at some later stage, e.g. at a healthy size of 5-25 KByte each.)</p>
+<p>* A theory name should consist of several words separated by underscore, describing the main concept of your theory in singular. Plural is only used if you have multiple concepts, or multiple examples. E.g. theory "My_Great_Concept" vs. theory "My_Great_Concept_Examples". Moreover, WeDontUseCamelCaseAnymore, because Underscore_has_been_discovered_decades_ago.</p>
+<p>* For Isabelle/HOL the canonical import is indeed theory "Main"; you should not import anything more primitive inside HOL, because that would mean to depend on its rather complex bootstrap. Sometimes you need more base material, e.g. types rat, real, complex: then you import "Complex_Main" or a different library entry point (beyond Main).</p>
+<p>* Theory data: Instead of the slightly odd Queue.T you can use a plain list in "canonical reverse order" as shown in my version. To add means to "cons", and to merge means to use the standard operation "Library.merge": with proper equality on type term (aconv).</p>
+<p>* Symbols \&lt;lrel&gt; and \&lt;rrel&gt;: it is OK to experiment with newly allocated symbols in the infinite space of possibilities, but to get anything into the official Isabelle release (e.g. for Isabelle/AFP entries with more than one user), it needs to be really convincing. (I've done that with some Z guys recently, and it required 2 weeks to get everything right: fonts, latex macros, symbol names and groups.)</p>
+<p>It is often better to use variants of pre-allocated symbols, e.g. together with \&lt;^bold&gt; or other decoration to avoid conflicts. It is easy to define specific input methods for Isabelle/jEdit in the theory header using "abbrevs", e.g. see theory HOL-Library.Finite_Map.</p>
+<p>Side-remark: the Isabelle Prover IDE is called Isabelle/jEdit, while "jEdit"<br>
+is a plain text editor used as a basis for that. Nobody would call an Emacs mode for Isabelle just "Emacs", or a VSCode extension for Isabelle just "VSCode".</p>
+<p>It is important to treat the jEdit project honestly as something separate (and quite different). It deserves its original name for itself, and not confuse it with our Prover IDE add-ons.</p>
+<p>(An alternative is to call Isabelle/jEdit abstractly "PIDE".)</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] SMT 2021 Workshop: Deadline Extension to May 7](60862isabelleSMT2021WorkshopDeadlineExtensiontoMay7.html) (1 message, latest: May 01 2021 at 10:03)
+* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (7 messages, latest: May 02 2021 at 04:09)
 
-* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (5 messages, latest: May 01 2021 at 09:41)
+* [\[isabelle\] SMT 2021 Workshop: Deadline Extension to May 7](60862isabelleSMT2021WorkshopDeadlineExtensiontoMay7.html) (1 message, latest: May 01 2021 at 10:03)
 
 * [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (3 messages, latest: Apr 30 2021 at 14:58)
 

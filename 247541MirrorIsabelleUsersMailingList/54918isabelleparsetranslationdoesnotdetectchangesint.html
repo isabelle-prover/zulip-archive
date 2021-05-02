@@ -102,6 +102,126 @@ code.)</p>
 <p>Best wishes,<br>
 Dominique.</p>
 
+<a name="237023894"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/237023894" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#237023894">Email Gateway (May 02 2021 at 04:01)</a>:</h4>
+<p>From: Matthys Grobbelaar &lt;<a href="mailto:m.grobbelaar@uq.net.au">m.grobbelaar@uq.net.au</a>&gt;<br>
+Hi Makarius,</p>
+<p>My overall approach is as follows:<br>
+In order to add my queue of data into the theory context I have the following structure defined in a file structures.ML:</p>
+<p>--- BEGIN structures.ML ---<br>
+signature VAR_LIST =<br>
+sig<br>
+    val get: theory -&gt; term Queue.T<br>
+    val add: term -&gt; theory -&gt; theory<br>
+    val reset: theory -&gt; theory<br>
+end;</p>
+<p>structure VarList: VAR_LIST =<br>
+struct</p>
+<p>structure Terms = Theory_Data (<br>
+    type T = term Queue.T;<br>
+    val empty = Queue.empty;<br>
+    val extend = I;<br>
+    fun merge (ts1, ts2) = fold Queue.enqueue (Library.merge (op =) (Queue.content ts1, Queue.content ts2)) Queue.empty;<br>
+);</p>
+<p>val get = Terms.get;</p>
+<p>fun add raw_t thy = <br>
+    let<br>
+        val t = Sign.cert_term thy raw_t;<br>
+    in <a href="http://Terms.map">Terms.map</a> (Queue.enqueue t) thy end;</p>
+<p>fun reset thy = Terms.put (Queue.empty) thy;</p>
+<p>end;</p>
+<p>--- END structures.ML ---</p>
+<p>Then, in a separate theory file, I have my syntax definition and translation function:</p>
+<p>--- BEGIN MyRelations.thy ---<br>
+theory MyRelations<br>
+  imports Main  (* I'm not sure if there's a more appropriate theory to import *)<br>
+begin</p>
+<p>ML_file \&lt;open&gt; structures.ML \&lt;close&gt;</p>
+<p>syntax<br>
+    "_myrelation" :: "args =&gt; 'a set" ("\&lt;lrel&gt;_\&lt;rrel&gt;")  (* lrel and rrel are new symbols I've defined *)</p>
+<p>ML \&lt;open&gt;<br>
+fun translate_relation ctxt [trm] =<br>
+    let<br>
+        val data = VarList.get (Proof_Context.theory_of ctxt)  (* Retrieve the data in the theory context *)<br>
+        val _ = print_var_list data ctxt  (* Just prints out the terms in the list with the given context *) <br>
+        (* My actual translation uses the data stored to build a set of tuples satisfying a predicate *)<br>
+        val translation = @{term "{((x, y),(x', y')). x &gt; x'}"}   (* Just a dummy value for demo purposes *)<br>
+    in<br>
+        translation<br>
+    end<br>
+\&lt;close&gt;</p>
+<p>parse_translation \&lt;open&gt;[(@{syntax_const "_myrelation"}, translate_relation)] \&lt;close&gt;<br>
+end<br>
+--- END MyRelations.thy ---</p>
+<p>Finally, I have a theory file used for testing the translation:</p>
+<p>--- BEGIN TestRelation.thy ---<br>
+theory TestRelation<br>
+  imports "MyRelations"<br>
+begin</p>
+<p>(* Update the theory context with the necessary data for translation *)<br>
+setup \&lt;open&gt;<br>
+  VarList.add (@{term "x"}) #&gt;<br>
+  VarList.add (@{term "y"}) #&gt;<br>
+  VarList.add (@{term "z"})<br>
+\&lt;close&gt;</p>
+<p>(* See if the syntax creates the correct result *)<br>
+(* Note that the variables added create the tuples in the set comprehension *)<br>
+(* Here, the queue data is not printed out *)<br>
+lemma test_relation: "\&lt;lrel&gt; x &gt; x' \&lt;rrel&gt;" = "{((x,y,z), (x',y',z')). x &gt; x'}"</p>
+<p>(* We also create a duplicate of the translation function to see if it works differently *)<br>
+ML \&lt;open&gt;<br>
+fun translate_relation_dup ctxt [trm] =<br>
+    let<br>
+        val data = VarList.get (Proof_Context.theory_of ctxt) <br>
+        val _ = print_var_list data ctxt  <br>
+        val translation = @{term "{((x, y),(x', y')). x &gt; x'}"}   <br>
+    in<br>
+        translation<br>
+    end</p>
+<p>(* We call the duplicate translation function directly - the data is printed *)<br>
+val res = translate_relation_dup (Context.the_local_context ()) [@{term "x &gt; x'"}]<br>
+\&lt;close&gt;<br>
+end<br>
+--- END TestRelation.thy ---</p>
+<p>So essentially, when the translation function is called via the syntax, the data stored<br>
+in the theory context is not passed into the function. However, when I call a duplicate<br>
+translation function with what I would think are identical arguments, the stored data<br>
+is present. </p>
+<p>I'm not sure where I'm going wrong.  Any help is much appreciated. I'm quite new<br>
+to Isabelle so I'm certain that there are better ways to go about this.</p>
+<p>Kind regards and thank you in advance,<br>
+Matthys Grobbelaar</p>
+<p>I find it hard to follow what you are actually doing. Can you show the formal explanation written in Isabelle/ML?</p>
+<p>A lot of details are non-standard in the small snipptes (e.g. use of Context.the_local_context, undefined, trm as name for a term), so it is likely that the overall approach is somehow wrong.</p>
+<p>Further note that in functional programming, functions are called "functions", not methods.</p>
+<p>Makarius</p>
+
+<a name="237024341"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20parse_translation%20does%20not%20detect%20changes%20in%20t.../near/237024341" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/54918isabelleparsetranslationdoesnotdetectchangesint.html#237024341">Email Gateway (May 02 2021 at 04:09)</a>:</h4>
+<p>From: Matthys Grobbelaar &lt;<a href="mailto:m.grobbelaar@uq.net.au">m.grobbelaar@uq.net.au</a>&gt;<br>
+Hi Dominique,</p>
+<p>Thank you for your advice.<br>
+Learning about \&lt;^context&gt;, &lt;\^print&gt; and mk_literal has been very useful and has made debugging a lot easier.</p>
+<p>With regards to looking where JEdit jumps to, both jump to the same structure so the code is the same there. Also printing the theory appears to give the same output as well. It may well be that there is something happening with the namespaces.</p>
+<p>Kind regards,<br>
+Matthys Grobbelaar</p>
+<p>From: Dominique Unruh &lt;<a href="mailto:d.unruh@gmail.com">d.unruh@gmail.com</a>&gt; On Behalf Of Dominique Unruh<br>
+Sent: Saturday, 1 May 2021 7:41 PM<br>
+To: Matthys Grobbelaar &lt;<a href="mailto:m.grobbelaar@uq.net.au">m.grobbelaar@uq.net.au</a>&gt;<br>
+Cc: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+Subject: Re: [isabelle] parse_translation does not detect changes in theory data</p>
+<blockquote>
+<p>Why would the same argument, given to identical methods in different files, have different results? It seems a bit strange to me.</p>
+</blockquote>
+<p>That does seem very strange to me, too. My best hypothesis is that they are not, actually, identical methods. (They might have the exact same code but, due to different namespaces, call different functions in their code.)</p>
+<p>What I would try:</p>
+<p>*   Write \&lt;^context&gt; instead of "Context.the_local_context ()" in your experiments (shouldn't change much, but if you want to refer to the current context at compile time of a given code snippet, that's the right thing to use).<br>
+  *   Ctrl-click on both of VarList.get and VarList.print_vars to see where jEdit jumps. If it jumps to different places, then you have accidentally defined VarList twice. (Also check whether you might include the same ML-file twice.)<br>
+  *   Try and print theory you got, to see if it's the right one (val _ = Proof_Context.theory_of ctxt |&gt; \&lt;^print&gt; or something like that). \&lt;^print&gt; is useful generally for debugging because it can be applied to anything, not just strings.<br>
+  *   Instead of "undefined", you can also as a hack return debug output from a parse translation via: HOLogic.mk_literal string_to_return (this will then give you a string literal inside your parsed output). Not sure it helps specifically with your current problem, but it might be useful in general.</p>
+<p>Best wishes,<br>
+Dominique.</p>
+
 
 {% endraw %}
 

@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (10 messages, latest: May 02 2021 at 13:29)
+* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (5 messages, latest: May 02 2021 at 20:20)
 
-* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (4 messages, latest: May 02 2021 at 10:15)
+* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (10 messages, latest: May 02 2021 at 13:29)
 
 * [\[isabelle\] SMT 2021 Workshop: Deadline Extension to May 7](60862isabelleSMT2021WorkshopDeadlineExtensiontoMay7.html) (1 message, latest: May 01 2021 at 10:03)
 

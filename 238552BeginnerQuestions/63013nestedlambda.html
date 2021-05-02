@@ -1,0 +1,31 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/63013nestedlambda.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html">nested lambda</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="237081343"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237081343" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237081343">Max Nowak (May 02 2021 at 20:46)</a>:</h4>
+<p>I'm probably missing something simple here, but I can't figure it out on my own. I usually have statements of the form <code>P (do_thing a s)</code>, but at some point I need to prove <code>P (λp. do_thing a (f p) p)</code> instead (note how s has been replaced with <code>f p</code>). I have a helper lemma, which would give me the proof easily, but it requires <code>bounded s</code>, or in this case <code>bounded (f p)</code>, which I can provide. So, in short, I need something like this:</p>
+<div class="codehilite"><pre><span></span><code>  assumes &quot;⋀p. bounded (f p)&quot;
+      and &quot;⋀s. bounded s ⟹ P (λp. do_thing a s p)&quot;
+    shows &quot;P (λp. do_thing a (f p) p)&quot;
+</code></pre></div>
+<p>And I don't know how to approach this.</p>
+
+<a name="237081522"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237081522" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237081522">Jakub Kądziołka (May 02 2021 at 20:48)</a>:</h4>
+<p>your assumption, <code>⋀s. bounded s ⟹ P (λp. do_thing a s p)</code>, is too weak. as written, <code>s</code> is not allowed to depend on <code>p</code></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (7 messages, latest: May 02 2021 at 04:09)
+* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (4 messages, latest: May 02 2021 at 10:15)
+
+* [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (8 messages, latest: May 02 2021 at 10:03)
 
 * [\[isabelle\] SMT 2021 Workshop: Deadline Extension to May 7](60862isabelleSMT2021WorkshopDeadlineExtensiontoMay7.html) (1 message, latest: May 01 2021 at 10:03)
-
-* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (3 messages, latest: Apr 30 2021 at 14:58)
 
 * [\[isabelle\] How to get TopLevel.state from the theorem str...](40369isabelleHowtogetTopLevelstatefromthetheoremstr.html) (1 message, latest: Apr 28 2021 at 22:43)
 

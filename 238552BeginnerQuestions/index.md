@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [nested lambda](63013nestedlambda.html) (3 messages, latest: May 02 2021 at 21:15)
+* [nested lambda](63013nestedlambda.html) (4 messages, latest: May 03 2021 at 04:55)
 
 * [First-order logic on graphs](23298Firstorderlogicongraphs.html) (1 message, latest: Apr 29 2021 at 19:06)
 

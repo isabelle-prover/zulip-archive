@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Regression Test Selection](76628isabelleNewintheAFPRegressionTestSelection.html) (1 message, latest: May 03 2021 at 18:12)
+
 * [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (4 messages, latest: May 03 2021 at 13:42)
 
 * [\[isabelle\] A Redesign of the Archive of Formal Proofs](16883isabelleARedesignoftheArchiveofFormalProofs.html) (1 message, latest: May 03 2021 at 13:00)

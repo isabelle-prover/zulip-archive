@@ -59,6 +59,78 @@ Term contains additional bound variable(s) p
   done
 </code></pre></div>
 
+<a name="237207321"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237207321" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237207321">Max Nowak (May 03 2021 at 18:32)</a>:</h4>
+<p>That's the issue though. I need to prove <code>⋀(f :: 'a ⇒ 'b) (x :: 'a). bounded (f x) ==&gt; P (λp. do_thing a (f p) p)</code>, since I am not given that fact.</p>
+
+<a name="237209062"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237209062" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237209062">Jakub Kądziołka (May 03 2021 at 18:42)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>⋀(f :: &#39;a ⇒ &#39;b) (x :: &#39;a). bounded (f x) ==&gt; P (λp. do_thing a (f p) p)
+</code></pre></div>
+<p>this statement is too strong. You're saying that if, for a specific <code>x</code>, <code>f x</code> is bounded, then <code>P (%p. do_thing a (f p) p)</code> holds, which depends on the boundedness of <code>f p</code> for many different <code>p</code>, I'd assume</p>
+
+<a name="237209063"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237209063" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237209063">Mathias Fleury (May 03 2021 at 18:42)</a>:</h4>
+<p>and we are telling you: without more assumption it does not work</p>
+
+<a name="237209107"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237209107" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237209107">Jakub Kądziołka (May 03 2021 at 18:43)</a>:</h4>
+<p>You'd want</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="err">⋀</span><span class="o">(</span><span class="n">f</span> <span class="o">::</span> <span class="n n-Type">'a</span> <span class="err">⇒</span> <span class="n n-Type">'b</span><span class="o">)</span> <span class="o">(</span><span class="err">⋀</span><span class="o">(</span><span class="n">x</span> <span class="o">::</span> <span class="n n-Type">'a</span><span class="o">)</span><span class="ow">.</span> <span class="n">bounded</span> <span class="o">(</span><span class="n">f</span> <span class="n">x</span><span class="o">))</span> <span class="o">==</span><span class="err">&gt;</span> <span class="n">P</span> <span class="o">(</span><span class="n">λp.</span> <span class="n">do_thing</span> <span class="n">a</span> <span class="o">(</span><span class="n">f</span> <span class="n">p</span><span class="o">)</span> <span class="n">p</span><span class="o">)</span>
+</code></pre></div>
+
+<a name="237209130"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237209130" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237209130">Jakub Kądziołka (May 03 2021 at 18:43)</a>:</h4>
+<p>how is <code>bounded</code> and <code>do_thing</code> defined?</p>
+
+<a name="237209394"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237209394" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237209394">Jakub Kądziołka (May 03 2021 at 18:45)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>  assumes &quot;⋀p. bounded (f p)&quot;
+      and &quot;⋀s. bounded s ⟹ P (λp. do_thing a s p)&quot;
+    shows &quot;P (λp. do_thing a (f p) p)&quot;
+</code></pre></div>
+<p>this inference can never work. Consider <code>bounded x = True</code>, <code>do_thing a s p = s</code>, <code>P f = (EX c. f = %x. c)</code>, <code>f x = x</code></p>
+
+<a name="237209878"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237209878" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237209878">Max Nowak (May 03 2021 at 18:48)</a>:</h4>
+<p>bounded is an abbreviation: <code>bounded r == (0 &lt;= r /\ r &lt;= 1)</code>, and roughly the <code>fun</code> <code>do_thing a s p = (modify p and return a similar p, same type)</code></p>
+
+<a name="237210447"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237210447" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237210447">Max Nowak (May 03 2021 at 18:52)</a>:</h4>
+<p>The classes I took never covered ZF axioms, so I have to be honest and say that this goes over my head. I suppose I simply have to change the structure of my proof so that I don't run into this issue.</p>
+
+<a name="237210467"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237210467" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237210467">Max Nowak (May 03 2021 at 18:53)</a>:</h4>
+<p>Thanks for the help though!</p>
+
+<a name="237210818"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237210818" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237210818">Jakub Kądziołka (May 03 2021 at 18:55)</a>:</h4>
+<p>this is independent of ZF axioms, it's just logic</p>
+
+<a name="237211002"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237211002" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237211002">Mathias Fleury (May 03 2021 at 18:56)</a>:</h4>
+<p>maybe the example <code>has_a_maximum (λp. f p)</code> with <code>f p x = x</code> and <code>f p _ = p</code> is easier to understand</p>
+
+<a name="237211049"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237211049" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237211049">Max Nowak (May 03 2021 at 18:57)</a>:</h4>
+<p>What's the % syntax?</p>
+
+<a name="237211307"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237211307" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237211307">Mathias Fleury (May 03 2021 at 18:58)</a>:</h4>
+<p>a λ I was too lazy to seach for... but that does not type for your definition of bound</p>
+
+<a name="237211341"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237211341" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237211341">Max Nowak (May 03 2021 at 18:59)</a>:</h4>
+<p>Ah, gotcha</p>
+
+<a name="237211526"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237211526" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237211526">Mathias Fleury (May 03 2021 at 19:00)</a>:</h4>
+<p>that is what I had in mind:</p>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/nested.20lambda/near/237211002">said</a>:</p>
+<blockquote>
+<p>maybe the example <code>has_a_maximum (λp. f p)</code> with <code>f p x = x</code> and <code>f p _ = p</code> is easier to understand</p>
+</blockquote>
+
 
 {% endraw %}
 

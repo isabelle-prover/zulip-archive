@@ -9,6 +9,8 @@ permalink: ./202967NewMembersProjects/index.html
 
 ### Topics:
 
+* [AutoCorres](93672AutoCorres.html) (1 message, latest: May 03 2021 at 18:01)
+
 * [stream events](95106streamevents.html) (1 message, latest: Mar 17 2021 at 13:24)
 
 * [HoTT/dependent types in Isabelle](59987HoTTdependenttypesinIsabelle.html) (5 messages, latest: Nov 02 2020 at 17:12)

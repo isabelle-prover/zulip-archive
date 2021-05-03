@@ -9,9 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Cantor's pairing function](59154Cantorspairingfunction.html) (14 messages, latest: May 03 2021 at 14:10)
+* [nested lambda](63013nestedlambda.html) (21 messages, latest: May 03 2021 at 19:00)
 
-* [nested lambda](63013nestedlambda.html) (6 messages, latest: May 03 2021 at 05:02)
+* [Cantor's pairing function](59154Cantorspairingfunction.html) (14 messages, latest: May 03 2021 at 14:10)
 
 * [First-order logic on graphs](23298Firstorderlogicongraphs.html) (1 message, latest: Apr 29 2021 at 19:06)
 

@@ -45,6 +45,20 @@ Term contains additional bound variable(s) p
 *)
 </code></pre></div>
 
+<a name="237113006"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237113006" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237113006">Mathias Fleury (May 03 2021 at 05:01)</a>:</h4>
+<p>In this version <code>⋀f x. bounded (f x) ==&gt; P (λp. do_thing a (f x) p)</code> there is still no dependency between <code>f x</code> and <code>p</code>: whatever <code>p</code> is, <code>f x</code> does not change. If you get <code>f p</code> instead, the proof will work.</p>
+
+<a name="237113021"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/nested%20lambda/near/237113021" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/63013nestedlambda.html#237113021">Mathias Fleury (May 03 2021 at 05:02)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>  assumes &quot;⋀p. bounded (f p)&quot;
+      and &quot;⋀(f :: &#39;a ⇒ &#39;b) (x :: &#39;a). bounded (f x) ==&gt; P (λp. do_thing a (f p) p)&quot;
+    shows &quot;P (λp :: &#39;a. do_thing a (f p) p)&quot;
+  apply (rule assms(2))
+  apply (rule assms(1))
+  done
+</code></pre></div>
+
 
 {% endraw %}
 

@@ -1,0 +1,58 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/59154Cantorspairingfunction.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html">Cantor's pairing function</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="237160985"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237160985" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237160985">Lukas Stevens (May 03 2021 at 13:33)</a>:</h4>
+<p>I need an injective function from <code>(int * int) =&gt; int</code>, e.g. Cantor's pairing function. Where is this formalised?</p>
+
+<a name="237161683"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237161683" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237161683">Mathias Fleury (May 03 2021 at 13:38)</a>:</h4>
+<p>like <a href="https://www.isa-afp.org/browser_info/current/AFP/Recursion-Theory-I/CPair.html">https://www.isa-afp.org/browser_info/current/AFP/Recursion-Theory-I/CPair.html</a>?</p>
+
+<a name="237162304"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237162304" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237162304">Manuel Eberl (May 03 2021 at 13:43)</a>:</h4>
+<p>No need to turn to the AFP. You can use <code>prod_encode</code>/<code>prod_decode</code> from <code>HOL-Library.Nat_Bijection</code>. This is also used to prove the countability of products in <code>HOL-Library.Countable</code>.</p>
+
+<a name="237162404"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237162404" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237162404">Lukas Stevens (May 03 2021 at 13:44)</a>:</h4>
+<p>Thanks Manuel, I was hoping for something like that :D</p>
+
+<a name="237162513"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237162513" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237162513">Manuel Eberl (May 03 2021 at 13:45)</a>:</h4>
+<p>Unrelatedly, my favourite pairing function at least for theoretical purposes is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>↦</mo><msup><mn>2</mn><mi>a</mi></msup><mo>⋅</mo><mo stretchy="false">(</mo><mn>2</mn><mi>b</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(a,b) \mapsto 2^a \cdot (2b+1)</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">↦</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">a</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>. It's much easier to see why this is bijective, and it's very easy to invert as well. The drawback is that it is not as economic as the other one.</p>
+
+<a name="237162854"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237162854" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237162854">Lukas Stevens (May 03 2021 at 13:47)</a>:</h4>
+<p>For my application, the function does not have to be economic.</p>
+
+<a name="237163344"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237163344" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237163344">Manuel Eberl (May 03 2021 at 13:50)</a>:</h4>
+<p>Yes but still, it's easier to take the one that's already in the library.</p>
+
+<a name="237163387"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237163387" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237163387">Manuel Eberl (May 03 2021 at 13:51)</a>:</h4>
+<p>I just like telling people about the one above because it's neat and few people seem to know about it.</p>
+
+<a name="237163555"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237163555" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237163555">Manuel Eberl (May 03 2021 at 13:52)</a>:</h4>
+<p>By the way, if you're wondering how I found <code>prod_encode</code>: I knew about <code>HOL-Library.Countable_Set</code> and figured there has to be a pairing function in there somewhere, and I was right. <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+<a name="237164592"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237164592" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237164592">Lukas Stevens (May 03 2021 at 13:59)</a>:</h4>
+<p>Related question: are there any helpers for proving that combining bijective functions again yield a bijective function? Specifically, I am looking at the function <code>(λ(a, b). int_decode (prod_encode (int_encode a, int_encode b)))</code>.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

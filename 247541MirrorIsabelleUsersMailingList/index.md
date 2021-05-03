@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (4 messages, latest: May 03 2021 at 13:42)
+
+* [\[isabelle\] A Redesign of the Archive of Formal Proofs](16883isabelleARedesignoftheArchiveofFormalProofs.html) (1 message, latest: May 03 2021 at 13:00)
+
 * [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (6 messages, latest: May 03 2021 at 12:04)
 
 * [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (10 messages, latest: May 02 2021 at 13:29)
@@ -30,8 +34,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Two new AFP entries: Gale-Stewart games and Is...](69215isabelleTwonewAFPentriesGaleStewartgamesandIs.html) (1 message, latest: Apr 28 2021 at 08:36)
 
 * [\[isabelle\] Failed call to isabelle jedit -R with code gen...](26889isabelleFailedcalltoisabellejeditRwithcodegen.html) (5 messages, latest: Apr 28 2021 at 08:02)
-
-* [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (1 message, latest: Apr 27 2021 at 08:48)
 
 * [\[isabelle\] new in the AFP: The BKR Decision Procedure for...](21365isabellenewintheAFPTheBKRDecisionProcedurefor.html) (1 message, latest: Apr 25 2021 at 15:40)
 

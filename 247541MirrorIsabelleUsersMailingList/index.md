@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (5 messages, latest: May 02 2021 at 20:20)
+* [\[isabelle\] Recurring error from Isabelle Syslog](39979isabelleRecurringerrorfromIsabelleSyslog.html) (6 messages, latest: May 03 2021 at 12:04)
 
 * [\[isabelle\] parse_translation does not detect changes in t...](54918isabelleparsetranslationdoesnotdetectchangesint.html) (10 messages, latest: May 02 2021 at 13:29)
 

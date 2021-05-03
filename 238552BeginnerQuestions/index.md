@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Cantor's pairing function](59154Cantorspairingfunction.html) (10 messages, latest: May 03 2021 at 13:59)
+* [Cantor's pairing function](59154Cantorspairingfunction.html) (14 messages, latest: May 03 2021 at 14:10)
 
 * [nested lambda](63013nestedlambda.html) (6 messages, latest: May 03 2021 at 05:02)
 

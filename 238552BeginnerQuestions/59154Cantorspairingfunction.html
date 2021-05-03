@@ -52,6 +52,34 @@ permalink: ./238552BeginnerQuestions/59154Cantorspairingfunction.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237164592" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237164592">Lukas Stevens (May 03 2021 at 13:59)</a>:</h4>
 <p>Related question: are there any helpers for proving that combining bijective functions again yield a bijective function? Specifically, I am looking at the function <code>(λ(a, b). int_decode (prod_encode (int_encode a, int_encode b)))</code>.</p>
 
+<a name="237164782"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237164782" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237164782">Lukas Stevens (May 03 2021 at 14:00)</a>:</h4>
+<p>I tried a bit and only managed to prove it by taking annoyingly small steps</p>
+
+<a name="237165458"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237165458" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237165458">Lukas Stevens (May 03 2021 at 14:04)</a>:</h4>
+<p>*prove parts of it (until now)</p>
+
+<a name="237165591"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237165591" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237165591">Manuel Eberl (May 03 2021 at 14:05)</a>:</h4>
+<p>Write it with as a composition of bijective functions with <code>∘</code> and <code>map_prod</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">map_prod_bij</span><span class="o">:</span>
+  <span class="kp">assumes</span> <span class="s">"bij f"</span> <span class="s">"bij g"</span>
+  <span class="kp">shows</span>   <span class="s">"bij (map_prod f g)"</span>
+  <span class="k">using</span> <span class="n">assms</span> <span class="k">unfolding</span> <span class="n">bij_def</span> <span class="k">by</span> <span class="o">(</span><span class="n">intro</span> <span class="n">conjI</span> <span class="n">prod.inj_map</span> <span class="n">map_prod_surj</span><span class="o">)</span> <span class="n">auto</span>
+
+<span class="kn">lemma</span> <span class="s">"(λ(a, b). int_decode (prod_encode (int_encode a, int_encode b))) =</span>
+<span class="s">       int_decode ∘ prod_encode ∘ map_prod int_encode int_encode"</span>
+  <span class="k">by</span> <span class="n">auto</span>
+
+<span class="kn">lemma</span> <span class="s">"bij (int_decode ∘ prod_encode ∘ map_prod int_encode int_encode)"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">intro</span> <span class="n">map_prod_bij</span> <span class="n">bij_comp</span> <span class="n">bij_int_encode</span> <span class="n">bij_prod_encode</span> <span class="n">bij_int_decode</span><span class="o">)</span>
+</code></pre></div>
+
+<a name="237166277"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Cantor%27s%20pairing%20function/near/237166277" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/59154Cantorspairingfunction.html#237166277">Lukas Stevens (May 03 2021 at 14:10)</a>:</h4>
+<p>Thanks!</p>
+
 
 {% endraw %}
 

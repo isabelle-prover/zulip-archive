@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Optimal Sorting Networks in Isabelle](55666OptimalSortingNetworksinIsabelle.html) (1 message, latest: May 04 2021 at 14:53)
+
 * [Undo hide_fact (open)](46257Undohidefactopen.html) (1 message, latest: Apr 29 2021 at 09:50)
 
 * [delta](67755delta.html) (8 messages, latest: Apr 27 2021 at 10:52)

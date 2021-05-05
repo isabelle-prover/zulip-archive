@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Isabelle in command line](35520Isabelleincommandline.html) (15 messages, latest: May 05 2021 at 16:44)
+* [Isabelle in command line](35520Isabelleincommandline.html) (16 messages, latest: May 05 2021 at 18:16)
 
 * [shortcut](41501shortcut.html) (5 messages, latest: May 05 2021 at 16:25)
 

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Isabelle in command line](35520Isabelleincommandline.html) (8 messages, latest: May 05 2021 at 12:39)
+
 * [nested lambda](63013nestedlambda.html) (21 messages, latest: May 03 2021 at 19:00)
 
 * [Cantor's pairing function](59154Cantorspairingfunction.html) (14 messages, latest: May 03 2021 at 14:10)

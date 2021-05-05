@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Postdoc in Computing Science with a Specialisa...](67906isabellePostdocinComputingSciencewithaSpecialisa.html) (1 message, latest: May 05 2021 at 12:33)
+
 * [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (5 messages, latest: May 04 2021 at 09:48)
 
 * [\[isabelle\] New in the AFP: Regression Test Selection](76628isabelleNewintheAFPRegressionTestSelection.html) (1 message, latest: May 03 2021 at 18:12)

@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Isabelle in command line](35520Isabelleincommandline.html) (8 messages, latest: May 05 2021 at 12:39)
+* [Isabelle in command line](35520Isabelleincommandline.html) (15 messages, latest: May 05 2021 at 16:44)
+
+* [shortcut](41501shortcut.html) (5 messages, latest: May 05 2021 at 16:25)
 
 * [nested lambda](63013nestedlambda.html) (21 messages, latest: May 03 2021 at 19:00)
 

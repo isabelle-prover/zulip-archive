@@ -92,6 +92,50 @@ end
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638719" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638719">Jakub Kądziołka (May 06 2021 at 10:51)</a>:</h4>
 <p>if you do need two, you'll need to give explicit names to the topological spaces and then use <code>nbhds⊗⇘T⇙</code> and <code>nbhds⊗⇘U⇙</code> (again, see the <code>group_hom</code> example</p>
 
+<a name="237641061"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237641061" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237641061">Nicolò Cavalleri (May 06 2021 at 11:14)</a>:</h4>
+<p>Thank you very much for your help! I am trying to imitate the example you linked. Now it recognizes <code>nbhds</code> but it still have a type overloading problem: if I replace <code>test_1</code> above with</p>
+<div class="codehilite"><pre><span></span><code>locale test_1 =
+X?: weird_topological_space X + Y?: weird_topological_space Y
+for X and Y +
+fixes f :: &quot;&#39;a ⇒ &#39;b&quot; and x :: &#39;a and y :: &#39;b
+assumes at_mem_x : &quot;x ∈ X&quot;
+and at_mem_y : &quot;y ∈ Y&quot;
+and lim: &quot;filterlim f (nbhds x) (nbhds y)&quot;
+
+(* Type unification failed
+
+Type error in application: incompatible operand type
+
+Operator:  (∈) y :: &#39;b set ⇒ bool
+Operand:   Y :: &#39;a set *)
+</code></pre></div>
+<p>I get the above error. What am I doing wrong this time? Again it is as if it forces both topological spaces to be built on the same type</p>
+
+<a name="237642067"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237642067" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237642067">Nicolò Cavalleri (May 06 2021 at 11:24)</a>:</h4>
+<p>Also I am not sure what the symbols in <code>nbhds⊗⇘T⇙</code> are! Is it something important? I can't find anything about this notation in the online tutorial on locales!</p>
+
+<a name="237642323"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237642323" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237642323">Lukas Stevens (May 06 2021 at 11:26)</a>:</h4>
+<p>This is like <code>\&lt;sub&gt;</code> but you are allowed to use multiple characters (<code>\&lt;bsub&gt;</code> ...<code>\&lt;esub&gt;</code>). Additionally, you are allowed to use parameters inside this notation, which is not allowed for <code>\&lt;sub&gt;</code>. The notation is not displayed correctly but there are patches for jEdit flying around <span class="user-mention" data-user-id="233212">@Mohammad Abdulaziz</span>?</p>
+
+<a name="237643419"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237643419" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237643419">Jakub Kądziołka (May 06 2021 at 11:36)</a>:</h4>
+<p>ah, ignore the ⊗, copy-paste mishap</p>
+
+<a name="237645045"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237645045" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237645045">Nicolò Cavalleri (May 06 2021 at 11:52)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Type.20overloading.20not.20working/near/237641061">said</a>:</p>
+<blockquote>
+<p>I get the above error. What am I doing wrong this time? Again it is as if it forces both topological spaces to be built on the same type</p>
+</blockquote>
+<p><span class="user-mention" data-user-id="380931">@Jakub Kądziołka</span> do you by chance know anything about this?</p>
+
+<a name="237645146"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237645146" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237645146">Jakub Kądziołka (May 06 2021 at 11:53)</a>:</h4>
+<p>say <code>for X (structure) and Y (structure)</code> and add subscripts to invokations of <code>nbhds</code></p>
+
 
 {% endraw %}
 

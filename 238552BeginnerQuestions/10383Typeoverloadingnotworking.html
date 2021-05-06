@@ -1,0 +1,98 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/10383Typeoverloadingnotworking.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html">Type overloading not working</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="237637885"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237637885" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237637885">Nicolò Cavalleri (May 06 2021 at 10:41)</a>:</h4>
+<p>I have the following code, which is not the original but just a mwe to recreate the problem I have:</p>
+<div class="codehilite"><pre><span></span><code>theory Scratch
+  imports Main
+
+begin
+
+locale weird_topological_space = fixes S :: &quot;&#39;a set&quot; and is_open :: &quot;&#39;a set ⇒ bool&quot;
+  assumes open_space [simp, intro]: &quot;is_open S&quot; and open_empty [simp, intro]: &quot;is_open {}&quot;
+    and open_imp_subset: &quot;is_open U ⟹ U ⊆ S&quot;
+    and open_inter [intro]: &quot;⟦is_open U; is_open V⟧ ⟹ is_open (U ∩ V)&quot;
+    and open_union [intro]: &quot;⋀F::(&#39;a set) set. (⋀x. x ∈ F ⟹ is_open x) ⟹ is_open (⋃x∈F. x)&quot;
+
+begin
+
+definition nbhds :: &quot;&#39;a ⇒ &#39;a filter&quot;
+  where &quot;nbhds a = (INF S∈{S. is_open S ∧ a ∈ S}. principal S)&quot;
+
+end
+
+definition pippo :: &quot;&#39;a ⇒ &#39;a filter&quot;
+  where &quot;pippo a = (INF S∈{S. a ∈ S}. principal S)&quot;
+
+locale test_1 =
+fixes f :: &quot;&#39;a ⇒ &#39;b&quot; and x :: &#39;a and y :: &#39;b
+assumes has_derivative_hd: &quot;filterlim f (nbhds y) (nbhds x)&quot;
+
+(* Type unification failed
+
+Type error in application: incompatible operand type
+
+Operator:  nbhds :: &#39;b ⇒ &#39;b filter
+Operand:   x :: &#39;a *)
+
+locale test_2 =
+fixes f :: &quot;&#39;a ⇒ &#39;b&quot; and x :: &#39;a and y :: &#39;b
+assumes has_derivative_hd: &quot;filterlim f (pippo y) (nbhds x)&quot;
+
+locale test_3 =
+fixes f :: &quot;&#39;a ⇒ &#39;b&quot; and x :: &#39;a and y :: &#39;b
+assumes has_derivative_hd: &quot;filterlim f (pippo y) (pippox)&quot;
+
+end
+</code></pre></div>
+<p>and for some reason test 2 and 3 work, whereas test 1 does not. It is as if for some reason the function <code>is_open</code> does not allow the function <code>nbhds</code> to change type in different instances.</p>
+<p>Does anybody know why?</p>
+
+<a name="237638301"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638301" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638301">Jakub Kądziołka (May 06 2021 at 10:47)</a>:</h4>
+<p>as you can see by the identifier being blue, the <code>nbhds</code> in <code>test_1</code> is a free variable, it does not refer to the definition in <code>weird_topological_space</code></p>
+
+<a name="237638390"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638390" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638390">Jakub Kądziołka (May 06 2021 at 10:47)</a>:</h4>
+<p>when you're defining <code>test_1</code>, you're outside of the <code>weird_topological_space</code></p>
+
+<a name="237638494"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638494" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638494">Jakub Kądziołka (May 06 2021 at 10:48)</a>:</h4>
+<p>Take a look at how <code>group_hom</code> is defined <a href="https://isabelle.in.tum.de/library/HOL/HOL-Algebra/Group.html">here</a></p>
+
+<a name="237638507"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638507" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638507">Nicolò Cavalleri (May 06 2021 at 10:49)</a>:</h4>
+<p>Ok ops that was a stupid mistake, sorry I am not used to Isabelle colors! How can I use it outside?</p>
+
+<a name="237638535"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638535" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638535">Jakub Kądziołka (May 06 2021 at 10:49)</a>:</h4>
+<p>you need to provide the implicit parameters of the locale somehow</p>
+
+<a name="237638550"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638550" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638550">Jakub Kądziołka (May 06 2021 at 10:49)</a>:</h4>
+<p>I assume that you want to have two topological spaces involved</p>
+
+<a name="237638636"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638636" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638636">Jakub Kądziołka (May 06 2021 at 10:50)</a>:</h4>
+<p>if you only needed one, you could do <code>locale test_1 = weird_topological_space  +</code> and <code>nbhds</code> would be in scope</p>
+
+<a name="237638719"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237638719" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237638719">Jakub Kądziołka (May 06 2021 at 10:51)</a>:</h4>
+<p>if you do need two, you'll need to give explicit names to the topological spaces and then use <code>nbhds⊗⇘T⇙</code> and <code>nbhds⊗⇘U⇙</code> (again, see the <code>group_hom</code> example</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

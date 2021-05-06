@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Type overloading not working](10383Typeoverloadingnotworking.html) (9 messages, latest: May 06 2021 at 10:51)
+
 * [Isabelle in command line](35520Isabelleincommandline.html) (16 messages, latest: May 05 2021 at 18:16)
 
 * [shortcut](41501shortcut.html) (5 messages, latest: May 05 2021 at 16:25)

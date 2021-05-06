@@ -136,6 +136,57 @@ Operand:   Y :: &#39;a set *)
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237645146" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237645146">Jakub Kądziołka (May 06 2021 at 11:53)</a>:</h4>
 <p>say <code>for X (structure) and Y (structure)</code> and add subscripts to invokations of <code>nbhds</code></p>
 
+<a name="237645910"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237645910" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237645910">Nicolò Cavalleri (May 06 2021 at 12:00)</a>:</h4>
+<p>I added <code>(structure)</code>, but as for subscripts, the error comes out even if I remove the line about nbhds: it comes out for the line</p>
+<div class="codehilite"><pre><span></span><code>and at_mem_y : &quot;y ∈ Y&quot;
+</code></pre></div>
+
+<a name="237646342"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237646342" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237646342">Nicolò Cavalleri (May 06 2021 at 12:03)</a>:</h4>
+<p>Also I tried to add subscripts your way, with \&lt;bsub&gt; and \&lt;esub&gt; but Isabelle does not seem to recognize them, it says <code>Inner syntax error⌂
+Failed to parse prop</code>. I don't really know how subscripts work in isabelle and they don't appear to be in any tutorial: neither <code>prog-prove</code> nor "A proof Assistant for Higher-Order Logic"</p>
+
+<a name="237647028"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237647028" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237647028">Jakub Kądziołka (May 06 2021 at 12:09)</a>:</h4>
+<p>hmm, I do not understand why this is happening</p>
+
+<a name="237647095"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237647095" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237647095">Nicolò Cavalleri (May 06 2021 at 12:10)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Type.20overloading.20not.20working/near/237645910">said</a>:</p>
+<blockquote>
+<p>I added <code>(structure)</code>, but as for subscripts, the error comes out even if I remove the line about nbhds: it comes out for the line</p>
+<p><div class="codehilite"><pre><span></span><code>and at_mem_y : &quot;y ∈ Y&quot;
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>You mean this right?</p>
+
+<a name="237648047"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237648047" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237648047">Jakub Kądziołka (May 06 2021 at 12:18)</a>:</h4>
+<p>Looks like locales with multiple parameters aren't behaving like they should. I'd suggest posting on the mailing list. Meanwhile you can package up your topological space into a record like HOL-Algebra does:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span> <span class="n">Scratch</span>
+  <span class="kp">imports</span> <span class="n">Main</span> <span class="s">"HOL-Algebra.Congruence"</span>
+<span class="k">begin</span>
+
+<span class="k">record</span> <span class="n n-Type">'a</span> <span class="n">weird_topological_space</span> <span class="o">=</span>  <span class="s">"'a partial_object"</span> <span class="o">+</span>
+  <span class="n">is_open</span>    <span class="o">::</span> <span class="s">"'a set ⇒ bool"</span> <span class="o">(</span><span class="s">"is'_openı _"</span><span class="o">)</span>
+
+<span class="k">locale</span> <span class="n">weird_topological_space</span> <span class="o">=</span> <span class="kp">fixes</span> <span class="n">S</span> <span class="o">(</span><span class="kp">structure</span><span class="o">)</span>
+  <span class="kp">assumes</span> <span class="n">open_space</span> <span class="o">[</span><span class="n">simp</span><span class="o">,</span> <span class="n">intro</span><span class="o">]:</span> <span class="s">"is_open (carrier S)"</span>
+
+<span class="k">begin</span>
+
+<span class="k">end</span>
+
+<span class="k">locale</span> <span class="n">test_1</span> <span class="o">=</span>
+<span class="n">X</span><span class="o">?:</span> <span class="n">weird_topological_space</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Y</span><span class="o">?:</span> <span class="n">weird_topological_space</span> <span class="n">Y</span>
+<span class="kp">for</span> <span class="n">X</span> <span class="o">(</span><span class="kp">structure</span><span class="o">)</span> <span class="kp">and</span> <span class="n">Y</span> <span class="o">(</span><span class="kp">structure</span><span class="o">)</span> <span class="o">+</span>
+<span class="kp">fixes</span> <span class="n">f</span> <span class="o">::</span> <span class="s">"'a ⇒ 'b"</span> <span class="kp">and</span> <span class="n">x</span> <span class="n">y</span>
+<span class="kp">assumes</span> <span class="n">at_mem_x</span> <span class="o">:</span> <span class="s">"x ∈ carrier X"</span>
+<span class="kp">and</span> <span class="n">at_mem_y</span> <span class="o">:</span> <span class="s">"y ∈ carrier Y"</span>
+</code></pre></div>
+
 
 {% endraw %}
 

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Type overloading not working](10383Typeoverloadingnotworking.html) (22 messages, latest: May 06 2021 at 13:45)
+* [Type overloading not working](10383Typeoverloadingnotworking.html) (31 messages, latest: May 06 2021 at 14:59)
 
 * [Isabelle in command line](35520Isabelleincommandline.html) (16 messages, latest: May 05 2021 at 18:16)
 

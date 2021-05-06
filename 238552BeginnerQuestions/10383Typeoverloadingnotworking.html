@@ -195,6 +195,58 @@ Failed to parse prop</code>. I don't really know how subscripts work in isabelle
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237660047" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237660047">Nicolò Cavalleri (May 06 2021 at 13:45)</a>:</h4>
 <p>Also do you know about somewhere where I can read more about how are locales related to records? I don't really understand what is going on and I can't manage to get rid of the carriers, I mean I'd just like to write <code>S :: 'a set</code> instead of <code>"'a partial_object"</code></p>
 
+<a name="237670457"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237670457" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237670457">Jakub Kądziołka (May 06 2021 at 14:49)</a>:</h4>
+<p>ctrl+click on <code>partial_object</code> -- it is just a record field <code>carrier :: "'a set"</code></p>
+
+<a name="237670530"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237670530" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237670530">Jakub Kądziołka (May 06 2021 at 14:49)</a>:</h4>
+<p>using this common definition lets you use HOL-Algebra and your definitions without having to disambugate the meaning of <code>carrier</code></p>
+
+<a name="237671196"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237671196" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237671196">Jakub Kądziołka (May 06 2021 at 14:53)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Type.20overloading.20not.20working/near/237659203">said</a>:</p>
+<blockquote>
+<p>What is happening in the parenthesis <code>("is'_openı _")</code>? I mean what is that and what is its role?</p>
+</blockquote>
+<p>Right. The motivation is that <code>is_open</code> needs an argument which is the record (topological space) itself. This is the role of the <code>structure</code> mechanism:</p>
+<ul>
+<li>If a variable has been defined with <code>fixes X (structure)</code> or <code>for X (structure)</code> (with optional type signature before the parenthesis), it can be used as a subscript in a place corresponding to a <code>ı</code> in notation</li>
+<li>if only one structure is in scope, the structure parameter will be inferred</li>
+</ul>
+
+<a name="237671330"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237671330" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237671330">Jakub Kądziołka (May 06 2021 at 14:54)</a>:</h4>
+<p>The carrier is your set <code>S</code></p>
+
+<a name="237671522"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237671522" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237671522">Nicolò Cavalleri (May 06 2021 at 14:55)</a>:</h4>
+<p>What is the ' after "is" in <code>is'_open</code>?</p>
+
+<a name="237671719"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237671719" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237671719">Jakub Kądziołka (May 06 2021 at 14:56)</a>:</h4>
+<p>the <code>'</code> is an escape character — unescaped, an underscore indicates an argument. Think <code>if _ then _ else _</code></p>
+
+<a name="237671781"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237671781" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237671781">Jakub Kądziołka (May 06 2021 at 14:56)</a>:</h4>
+<p>BTW, I realized why your earlier example wasn't working. This works:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">locale</span> <span class="n">test_1</span> <span class="o">=</span>
+  <span class="n">X</span><span class="o">?:</span> <span class="n">weird_topological_space</span> <span class="n">X</span> <span class="n">open_in_X</span> <span class="o">+</span> <span class="n">Y</span><span class="o">?:</span> <span class="n">weird_topological_space</span> <span class="n">Y</span> <span class="n">open_in_Y</span>
+  <span class="kp">for</span> <span class="n">X</span> <span class="n">open_in_X</span>  <span class="n">Y</span> <span class="kp">and</span> <span class="n">open_in_Y</span> <span class="o">+</span>
+  <span class="kp">fixes</span> <span class="n">f</span> <span class="o">::</span> <span class="s">"'a ⇒ 'b"</span> <span class="kp">and</span> <span class="n">x</span> <span class="o">::</span> <span class="n n-Type">'a</span> <span class="kp">and</span> <span class="n">y</span> <span class="o">::</span> <span class="n n-Type">'b</span>
+  <span class="kp">assumes</span> <span class="n">at_mem_x</span> <span class="o">:</span> <span class="s">"x ∈ X"</span>
+    <span class="kp">and</span> <span class="n">at_mem_y</span> <span class="o">:</span> <span class="s">"y ∈ Y"</span>
+    <span class="kp">and</span> <span class="n">lim</span><span class="o">:</span> <span class="s">"filterlim f (Y.nbhds y) (X.nbhds x)"</span>
+</code></pre></div>
+
+<a name="237671991"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237671991" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237671991">Jakub Kądziołka (May 06 2021 at 14:58)</a>:</h4>
+<p>note that you need to do <code>for &lt;set&gt; and &lt;open predicate for that set&gt;</code>, and provide both to <code>weird_topological_space</code>, as only both values at once can define a topological space</p>
+
+<a name="237672114"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Type%20overloading%20not%20working/near/237672114" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/10383Typeoverloadingnotworking.html#237672114">Jakub Kądziołka (May 06 2021 at 14:59)</a>:</h4>
+<p>This is why records are so common — a record is essentially a tuple where its elements have been named</p>
+
 
 {% endraw %}
 

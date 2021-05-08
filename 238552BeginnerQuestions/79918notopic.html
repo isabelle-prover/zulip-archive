@@ -36,6 +36,28 @@ permalink: ./238552BeginnerQuestions/79918notopic.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28no%20topic%29/near/234294785" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/79918notopic.html#234294785">zibo yang (Apr 13 2021 at 09:30)</a>:</h4>
 <p>you are right</p>
 
+<a name="237931171"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28no%20topic%29/near/237931171" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/79918notopic.html#237931171">Robert Soeldner (May 08 2021 at 06:35)</a>:</h4>
+<p>Hi,</p>
+<p>so-far I have used a record like (node\edge are type_synonyms to nat)</p>
+<div class="codehilite"><pre><span></span><code>record (&#39;a,&#39;v,&#39;e) graph =
+  nodes :: &quot;node set&quot;
+  edges :: &quot;edge set&quot;
+  src   :: &quot;edge ⇒ node&quot;
+  trg   :: &quot;edge ⇒ node&quot;
+ ...
+</code></pre></div>
+<p>to describe a graph. Checking the well-formedness was performed by <code>(∀ x ∈ (edges gr) . src gr x ∈ nodes gr ∧ trg gr x ∈ nodes gr) ...</code>.</p>
+<p>When specifying a concrete graph,  I tried  naively tried</p>
+<div class="codehilite"><pre><span></span><code> ⦇nodes = {1,2}, edges={1},
+                 src = [1 ↦ 1],
+                 trg = [1 ↦ 1],
+                 ...
+</code></pre></div>
+<p>which forces <code>src\trg</code> to be of type <code>edge =&gt; node option</code>.  <br>
+I read about underspecifying <a href="https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined">https://www.joachim-breitner.de/blog/732-Isabelle_functions__Always_total%2C_sometimes_undefined</a> and thought,  this is ok for my usage but now I"m not sure if  I fully understood the topic. </p>
+<p>Does it make sense for <code>src\trg</code> to map to <code>'a option</code> if a well-formed graph permits this case?</p>
+
 
 {% endraw %}
 

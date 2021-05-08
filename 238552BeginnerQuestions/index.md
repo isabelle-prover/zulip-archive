@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [(no topic)](79918notopic.html) (7 messages, latest: May 08 2021 at 06:35)
+
 * [Type overloading not working](10383Typeoverloadingnotworking.html) (33 messages, latest: May 07 2021 at 00:02)
 
 * [Isabelle in command line](35520Isabelleincommandline.html) (16 messages, latest: May 05 2021 at 18:16)
@@ -60,8 +62,6 @@ permalink: ./238552BeginnerQuestions/index.html
 * [gcd](77263gcd.html) (2 messages, latest: Apr 13 2021 at 15:17)
 
 * [Isabelle takes ~5 mins for a simple function definition](41413Isabelletakes5minsforasimplefunctiondefinition.html) (13 messages, latest: Apr 13 2021 at 10:20)
-
-* [(no topic)](79918notopic.html) (6 messages, latest: Apr 13 2021 at 09:30)
 
 * [Removing assumptions in apply style proofs](36917Removingassumptionsinapplystyleproofs.html) (4 messages, latest: Apr 12 2021 at 11:00)
 

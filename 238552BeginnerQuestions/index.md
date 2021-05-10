@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Explicit syntax: multi-character \<sub> and \<sup> ?](21129Explicitsyntaxmulticharactersubandsup.html) (7 messages, latest: May 10 2021 at 03:42)
+* [Explicit syntax: multi-character \<sub> and \<sup> ?](21129Explicitsyntaxmulticharactersubandsup.html) (8 messages, latest: May 10 2021 at 09:47)
 
 * ['a option vs underspecified](95445aoptionvsunderspecified.html) (6 messages, latest: May 08 2021 at 20:01)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New book: Functional Algorithms, Verified!](44305isabelleNewbookFunctionalAlgorithmsVerified.html) (1 message, latest: May 10 2021 at 06:51)
+
 * [\[isabelle\] Postdoc in Computing Science with a Specialisa...](67906isabellePostdocinComputingSciencewithaSpecialisa.html) (1 message, latest: May 05 2021 at 12:33)
 
 * [\[isabelle\] High CPU usage on PolyML subprocess (Pure/HOL)...](98787isabelleHighCPUusageonPolyMLsubprocessPureHOL.html) (5 messages, latest: May 04 2021 at 09:48)

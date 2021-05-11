@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] map_ran's type in HOL-Library.AList is too...](52991isabelledevmapranstypeinHOLLibraryALististoo.html) (1 message, latest: May 11 2021 at 07:11)
+
 * [\[isabelle-dev\] Admin/init](10930isabelledevAdmininit.html) (1 message, latest: Apr 27 2021 at 20:47)
 
 * [\[isabelle-dev\] Sedicated session for material on combinat...](37402isabelledevSedicatedsessionformaterialoncombinat.html) (1 message, latest: Mar 28 2021 at 09:07)

@@ -1,0 +1,54 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247542MirrorIsabelleDevelopmentMailingList/52991isabelledevmapranstypeinHOLLibraryALististoo.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/index.html">Mirror: Isabelle Development Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/52991isabelledevmapranstypeinHOLLibraryALististoo.html">[isabelle-dev] map_ran's type in HOL-Library.AList is too...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="238261644"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20map_ran%27s%20type%20in%20HOL-Library.AList%20is%20too.../near/238261644" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247542MirrorIsabelleDevelopmentMailingList/52991isabelledevmapranstypeinHOLLibraryALististoo.html#238261644">Email Gateway (May 11 2021 at 07:11)</a>:</h4>
+<p>From: Martin Desharnais &lt;<a href="mailto:martin.desharnais@posteo.de">martin.desharnais@posteo.de</a>&gt;<br>
+Dear Isabelle developers,</p>
+<p>I noticed that the map_ran function from HOL-Library is defined with the <br>
+following type annotation.</p>
+<p>definition map_ran :: "('key ⇒ 'val ⇒ 'val) ⇒ ('key × 'val) list ⇒ ('key <br>
+× 'val) list"<br>
+   where "map_ran f = map (λ(k, v). (k, f k v))"</p>
+<p>This means that it is not possible to use map_ran to map an association <br>
+list from one range type to another. This would be possible if it had <br>
+the following type annotation (or no type annotation at all).</p>
+<p>('key ⇒ 'val1 ⇒ 'val2) ⇒ ('key × 'val1) list ⇒ ('key × 'val2) list</p>
+<p>I cannot think of any case where it would pose a problem for map_ran to <br>
+have this general type so I tried to changed it. I noticed no resulting <br>
+problem in the HOL distribution. I also checked in the AFP and found <br>
+that only the following sessions use this constant: Call_Arity, <br>
+Launchbury, LTL_to_DRA, and Collections. I also noticed no problem in <br>
+these sessions with the general type.</p>
+<p>Is there an historical reason why map_ran has this restrictive type <br>
+annotation?</p>
+<p>Is there any objection to me pushing this change?</p>
+<p>While I am at it, I also have the following two small lemmas that I <br>
+found useful and would like to add to HOL-Library.AList. Note that <br>
+map_ran_Cons is only a generalization of map_ran_simps(2) that avoids <br>
+the need for a case analysis of the product x. Is there any objection?</p>
+<p>lemma map_fst_map_ran[simp]: "map fst (map_ran f xs) = map fst xs"<br>
+   by (simp add: map_ran_def case_prod_beta)</p>
+<p>lemma map_ran_Cons: "map_ran f (x # xs) = (fst x, f (fst x) (snd x)) # <br>
+map_ran f xs"<br>
+   by (simp add: map_ran_def case_prod_beta)</p>
+<p>Regards,<br>
+Martin Desharnais<br>
+<a href="/user_uploads/14278/V_VUjlH11gWAA4E3MZsKZPl3/OpenPGP_0x58AE985FE188789A.asc">OpenPGP_0x58AE985FE188789A.asc</a><br>
+<a href="/user_uploads/14278/UmwkIUBN8jDlSn2bjS29BSlB/OpenPGP_signature">OpenPGP_signature</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

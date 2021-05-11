@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CALCO 2021: Second call for papers](19333isabelleCALCO2021Secondcallforpapers.html) (1 message, latest: May 11 2021 at 09:57)
+
+* [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (1 message, latest: May 11 2021 at 09:56)
+
+* [\[isabelle\] postdoc position (6 years) in CL group in Inns...](03778isabellepostdocposition6yearsinCLgroupinInns.html) (1 message, latest: May 11 2021 at 09:56)
+
 * [\[isabelle\] FMBC 2021 - Final Call for Papers (Deadline ex...](10689isabelleFMBC2021FinalCallforPapersDeadlineex.html) (1 message, latest: May 10 2021 at 08:57)
 
 * [\[isabelle\] New book: Functional Algorithms, Verified!](44305isabelleNewbookFunctionalAlgorithmsVerified.html) (1 message, latest: May 10 2021 at 06:51)

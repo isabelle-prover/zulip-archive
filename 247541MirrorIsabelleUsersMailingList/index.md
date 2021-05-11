@@ -9,9 +9,9 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] CALCO 2021: Second call for papers](19333isabelleCALCO2021Secondcallforpapers.html) (1 message, latest: May 11 2021 at 09:57)
+* [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (2 messages, latest: May 11 2021 at 10:17)
 
-* [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (1 message, latest: May 11 2021 at 09:56)
+* [\[isabelle\] CALCO 2021: Second call for papers](19333isabelleCALCO2021Secondcallforpapers.html) (1 message, latest: May 11 2021 at 09:57)
 
 * [\[isabelle\] postdoc position (6 years) in CL group in Inns...](03778isabellepostdocposition6yearsinCLgroupinInns.html) (1 message, latest: May 11 2021 at 09:56)
 

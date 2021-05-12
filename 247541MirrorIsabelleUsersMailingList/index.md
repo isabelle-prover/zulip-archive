@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Questions regarding endomorphisms of real norm...](48767isabelleQuestionsregardingendomorphismsofrealnorm.html) (1 message, latest: May 12 2021 at 20:58)
+
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (1 message, latest: May 12 2021 at 03:00)
 
 * [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (2 messages, latest: May 11 2021 at 10:17)

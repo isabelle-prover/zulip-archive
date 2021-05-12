@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Predicate get element from set](62204Predicategetelementfromset.html) (1 message, latest: May 12 2021 at 19:38)
+* [Predicate get element from set](62204Predicategetelementfromset.html) (3 messages, latest: May 12 2021 at 20:24)
 
 * [Abs_filter](73980Absfilter.html) (9 messages, latest: May 12 2021 at 18:30)
 

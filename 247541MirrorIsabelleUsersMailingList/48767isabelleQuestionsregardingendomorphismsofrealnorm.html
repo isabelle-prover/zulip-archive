@@ -1,0 +1,52 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/48767isabelleQuestionsregardingendomorphismsofrealnorm.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/48767isabelleQuestionsregardingendomorphismsofrealnorm.html">[isabelle] Questions regarding endomorphisms of real norm...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="238543371"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Questions%20regarding%20endomorphisms%20of%20real%20norm.../near/238543371" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/48767isabelleQuestionsregardingendomorphismsofrealnorm.html#238543371">Email Gateway (May 12 2021 at 20:58)</a>:</h4>
+<p>From: "Luckhardt, Daniel" &lt;<a href="mailto:daniel.luckhardt@mathematik.uni-goettingen.de">daniel.luckhardt@mathematik.uni-goettingen.de</a>&gt;<br>
+Hi,</p>
+<p>I want to tell Isabelle that the bounded linear functions from a real normed vector space to itself form a real normed algebra. My approach is to formalize it parallel to and basing on what is already in the theory Bounded_Linear_Function, namely</p>
+<p>typedef ‹tag important› (overloaded) ('a, 'b) blinfun ("(_ ⇒⇩L /_)" [22, 21] 21) =<br>
+  "{f::'a::real_normed_vector⇒'b::real_normed_vector. bounded_linear f}"<br>
+  morphisms blinfun_apply Blinfun<br>
+  by (blast intro: bounded_linear_intros)</p>
+<p>So my attempt is</p>
+<p>typedef ‹tag important› (overloaded) ('a) blinalg  =<br>
+  "UNIV :: ('a ⇒⇩L 'a) set"<br>
+  morphisms blinalg_apply Blinalg<br>
+by simp</p>
+<p>But unfortunately, when I want to do the instantiation</p>
+<p>instantiation blinalg :: (real_normed_vector) real_normed_algebra<br>
+begin<br>
+lift_definition times_blinalg :: "('a ⇒⇩L 'a) ⇒ ('a ⇒⇩L 'a) ⇒ ('a ⇒⇩L 'a)" is "λ a b x. a (b x)"  by (rule bounded_linear_compose)</p>
+<p>lift_definition norm_blinalg :: "'a ⇒⇩L 'a ⇒ real" is onorm .<br>
+...<br>
+end</p>
+<p>there is a conflict with the instantiation of blinfun as real_normed_vector. The error message is</p>
+<p>Clash of specifications for norm:<br>
+  "Play_type.norm_blinfun_inst.norm_blinfun_def"⌂<br>
+  "Bounded_Linear_Function.norm_blinfun_inst.norm_blinfun_def"⌂<br>
+The error(s) above occurred in definition "norm_blinfun_def":<br>
+  "norm ≡ Play_type.norm_blinfun_inst.norm_blinfun"</p>
+<p>How do I get around this?</p>
+<p>Secondary questions:</p>
+<p>1.  What is the function of  "setup_lifting type_definition_blinfun" where is it documented?<br>
+  2.  What is the difference (if it exists) between "definition" and "lift_definition" (besides that the syntax is a bit different)<br>
+  3.  What is the "morphisms" doing, where is it documented?</p>
+<p>Daniel</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

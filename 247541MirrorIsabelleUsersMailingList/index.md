@@ -9,13 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Questions regarding endomorphisms of real norm...](48767isabelleQuestionsregardingendomorphismsofrealnorm.html) (2 messages, latest: May 14 2021 at 15:28)
+
 * [\[isabelle\] Last CfP: SCSS 2021](21666isabelleLastCfPSCSS2021.html) (1 message, latest: May 14 2021 at 09:07)
 
 * [\[isabelle\] 5 permanent positions (lecturer, senior lectur...](40772isabelle5permanentpositionslecturerseniorlectur.html) (1 message, latest: May 13 2021 at 22:36)
 
 * [\[isabelle\] First Call for Papers: Formal Methods Teaching...](83180isabelleFirstCallforPapersFormalMethodsTeaching.html) (1 message, latest: May 13 2021 at 08:26)
-
-* [\[isabelle\] Questions regarding endomorphisms of real norm...](48767isabelleQuestionsregardingendomorphismsofrealnorm.html) (1 message, latest: May 12 2021 at 20:58)
 
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (1 message, latest: May 12 2021 at 03:00)
 

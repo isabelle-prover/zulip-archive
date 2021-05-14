@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Hensel's Lemma for the p-adic ...](86354isabelleNewintheAFPHenselsLemmaforthepadic.html) (1 message, latest: May 14 2021 at 16:02)
+
 * [\[isabelle\] Questions regarding endomorphisms of real norm...](48767isabelleQuestionsregardingendomorphismsofrealnorm.html) (2 messages, latest: May 14 2021 at 15:28)
 
 * [\[isabelle\] Last CfP: SCSS 2021](21666isabelleLastCfPSCSS2021.html) (1 message, latest: May 14 2021 at 09:07)

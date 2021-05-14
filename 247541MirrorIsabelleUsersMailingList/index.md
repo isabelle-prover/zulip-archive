@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Last CfP: SCSS 2021](21666isabelleLastCfPSCSS2021.html) (1 message, latest: May 14 2021 at 09:07)
+
 * [\[isabelle\] 5 permanent positions (lecturer, senior lectur...](40772isabelle5permanentpositionslecturerseniorlectur.html) (1 message, latest: May 13 2021 at 22:36)
 
 * [\[isabelle\] First Call for Papers: Formal Methods Teaching...](83180isabelleFirstCallforPapersFormalMethodsTeaching.html) (1 message, latest: May 13 2021 at 08:26)

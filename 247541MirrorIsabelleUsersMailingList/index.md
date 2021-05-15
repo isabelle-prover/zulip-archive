@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (3 messages, latest: May 15 2021 at 10:14)
+
 * [\[isabelle\] New in the AFP: Hensel's Lemma for the p-adic ...](86354isabelleNewintheAFPHenselsLemmaforthepadic.html) (1 message, latest: May 14 2021 at 16:02)
 
 * [\[isabelle\] Questions regarding endomorphisms of real norm...](48767isabelleQuestionsregardingendomorphismsofrealnorm.html) (2 messages, latest: May 14 2021 at 15:28)
@@ -20,8 +22,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] First Call for Papers: Formal Methods Teaching...](83180isabelleFirstCallforPapersFormalMethodsTeaching.html) (1 message, latest: May 13 2021 at 08:26)
 
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (1 message, latest: May 12 2021 at 03:00)
-
-* [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (2 messages, latest: May 11 2021 at 10:17)
 
 * [\[isabelle\] CALCO 2021: Second call for papers](19333isabelleCALCO2021Secondcallforpapers.html) (1 message, latest: May 11 2021 at 09:57)
 

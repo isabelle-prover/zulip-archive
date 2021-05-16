@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (2 messages, latest: May 16 2021 at 13:55)
+
 * [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (3 messages, latest: May 15 2021 at 10:14)
 
 * [\[isabelle\] New in the AFP: Hensel's Lemma for the p-adic ...](86354isabelleNewintheAFPHenselsLemmaforthepadic.html) (1 message, latest: May 14 2021 at 16:02)
@@ -206,8 +208,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Troubles building Pure; can't find Foreign.bui...](20607isabelleTroublesbuildingPurecantfindForeignbui.html) (2 messages, latest: Mar 06 2021 at 23:16)
 
 * [\[isabelle\] Nitpick finds counterexample to proven lemma](14933isabelleNitpickfindscounterexampletoprovenlemma.html) (2 messages, latest: Mar 06 2021 at 09:03)
-
-* [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (1 message, latest: Mar 05 2021 at 12:29)
 
 * [\[isabelle\] New in the AFP: Mereology](21440isabelleNewintheAFPMereology.html) (1 message, latest: Mar 05 2021 at 12:09)
 

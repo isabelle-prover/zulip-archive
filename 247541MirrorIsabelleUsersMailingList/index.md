@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (2 messages, latest: May 16 2021 at 14:23)
+
+* [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (2 messages, latest: May 16 2021 at 14:18)
+
 * [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (2 messages, latest: May 16 2021 at 13:55)
 
 * [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (3 messages, latest: May 15 2021 at 10:14)
@@ -91,8 +95,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Lemma like shiftr_bl but for sshiftr in Word L...](52038isabelleLemmalikeshiftrblbutforsshiftrinWordL.html) (2 messages, latest: Apr 18 2021 at 22:22)
 
-* [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (1 message, latest: Apr 16 2021 at 19:06)
-
 * [\[isabelle\] New in the AFP: Formalization of Timely Datafl...](59307isabelleNewintheAFPFormalizationofTimelyDatafl.html) (1 message, latest: Apr 16 2021 at 05:47)
 
 * [\[isabelle\] Quickcheck reports an incorrect counterexample](79464isabelleQuickcheckreportsanincorrectcounterexample.html) (3 messages, latest: Apr 16 2021 at 05:28)
@@ -100,8 +102,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Datatype definition can be slow](27229isabelleDatatypedefinitioncanbeslow.html) (10 messages, latest: Apr 16 2021 at 02:39)
 
 * [\[isabelle\] SMT 2021 Workshop: Final Call for Papers](95362isabelleSMT2021WorkshopFinalCallforPapers.html) (1 message, latest: Apr 14 2021 at 09:10)
-
-* [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (1 message, latest: Apr 13 2021 at 16:15)
 
 * [\[isabelle\] Issues with locale interpretation](38970isabelleIssueswithlocaleinterpretation.html) (3 messages, latest: Apr 11 2021 at 17:01)
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] RV'21 Call for Papers (with an Extended Deadline)](89469isabelleRV21CallforPaperswithanExtendedDeadline.html) (1 message, latest: May 16 2021 at 16:52)
+
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (2 messages, latest: May 16 2021 at 14:23)
 
 * [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (2 messages, latest: May 16 2021 at 14:18)

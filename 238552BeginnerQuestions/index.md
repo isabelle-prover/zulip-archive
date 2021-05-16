@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Folding over a Map](43167FoldingoveraMap.html) (1 message, latest: May 16 2021 at 17:43)
+
 * [Predicate get element from set](62204Predicategetelementfromset.html) (4 messages, latest: May 13 2021 at 17:21)
 
 * [Abs_filter](73980Absfilter.html) (9 messages, latest: May 12 2021 at 18:30)

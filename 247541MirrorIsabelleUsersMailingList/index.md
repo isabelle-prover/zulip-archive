@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] elimination rule for length s = Suc n](64893isabelleeliminationruleforlengthsSucn.html) (1 message, latest: May 17 2021 at 14:42)
+* [\[isabelle\] elimination rule for length s = Suc n](64893isabelleeliminationruleforlengthsSucn.html) (3 messages, latest: May 17 2021 at 15:49)
 
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (3 messages, latest: May 17 2021 at 13:56)
 

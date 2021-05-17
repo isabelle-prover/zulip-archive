@@ -9,11 +9,11 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Primrec abstracts over the wrong variable](99619isabellePrimrecabstractsoverthewrongvariable.html) (2 messages, latest: May 17 2021 at 19:51)
+
 * [\[isabelle\] elimination rule for length s = Suc n](64893isabelleeliminationruleforlengthsSucn.html) (3 messages, latest: May 17 2021 at 15:49)
 
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (3 messages, latest: May 17 2021 at 13:56)
-
-* [\[isabelle\] Primrec abstracts over the wrong variable](99619isabellePrimrecabstractsoverthewrongvariable.html) (1 message, latest: May 17 2021 at 13:26)
 
 * [\[isabelle\] \[Call for Papers\] Formal Verification of Physi...](21584isabelleCallforPapersFormalVerificationofPhysi.html) (1 message, latest: May 17 2021 at 10:07)
 

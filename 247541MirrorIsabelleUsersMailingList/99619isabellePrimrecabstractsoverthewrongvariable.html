@@ -26,6 +26,28 @@ transfer rules from primrec.</p>
 Andreas<br>
 <a href="/user_uploads/14278/pbzAJI0Pr7LH6pnO3DJA0Fhi/Scratch.thy">Scratch.thy</a></p>
 
+<a name="239149317"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Primrec%20abstracts%20over%20the%20wrong%20variable/near/239149317" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/99619isabellePrimrecabstractsoverthewrongvariable.html#239149317">Email Gateway (May 17 2021 at 19:51)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;<br>
+Andreas Lochbihler писал 2021-05-17 16:26:</p>
+<blockquote>
+<p>My current workaround is to use fun instead, but it<br>
+would be nice to get the support for transfer rules from primrec.<br>
+I'm not at all a primrec expert, but I was able to get the resulting <br>
+equations from primrec rather than fun by<br>
+using another work-around:</p>
+</blockquote>
+<p>‹<br>
+datatype 'a dt<br>
+   = C1 | C2 'a "'a dt list" "'a dt"</p>
+<p>primrec f :: "'a ⇒ 'a dt list ⇒ 'a dt ⇒  'a dt list ⇒ 'a dt" where<br>
+   f1: "f n y C1 y' = C2 n (y @ y') C1"<br>
+| f2[unfolded Let_def]: "f n y (C2 n' y' co) y'' = (let r = λ x y. f x y <br>
+co in C2 n y (r n' y'  y''))"</p>
+<p>thm f1 f2<br>
+›</p>
+<p>Regards, Mikhail</p>
+
 
 {% endraw %}
 

@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[Call for Papers\] Formal Verification of Physi...](21584isabelleCallforPapersFormalVerificationofPhysi.html) (1 message, latest: May 17 2021 at 10:07)
+
+* [\[isabelle\] Cannot build HOL.Complex_Main](08570isabelleCannotbuildHOLComplexMain.html) (1 message, latest: May 17 2021 at 10:07)
+
 * [\[isabelle\] RV'21 Call for Papers (with an Extended Deadline)](89469isabelleRV21CallforPaperswithanExtendedDeadline.html) (1 message, latest: May 16 2021 at 16:52)
 
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (2 messages, latest: May 16 2021 at 14:23)

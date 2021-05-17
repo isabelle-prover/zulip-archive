@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [HOL library organization](92014HOLlibraryorganization.html) (1 message, latest: May 16 2021 at 23:59)
+* [HOL library organization](92014HOLlibraryorganization.html) (2 messages, latest: May 17 2021 at 08:18)
 
 * [Folding over a Map](43167FoldingoveraMap.html) (1 message, latest: May 16 2021 at 17:43)
 

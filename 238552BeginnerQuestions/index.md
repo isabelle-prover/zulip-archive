@@ -9,9 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [HOL library organization](92014HOLlibraryorganization.html) (10 messages, latest: May 17 2021 at 12:58)
+* [Folding over a Map](43167FoldingoveraMap.html) (14 messages, latest: May 18 2021 at 12:59)
 
-* [Folding over a Map](43167FoldingoveraMap.html) (1 message, latest: May 16 2021 at 17:43)
+* [HOL library organization](92014HOLlibraryorganization.html) (10 messages, latest: May 17 2021 at 12:58)
 
 * [Predicate get element from set](62204Predicategetelementfromset.html) (4 messages, latest: May 13 2021 at 17:21)
 

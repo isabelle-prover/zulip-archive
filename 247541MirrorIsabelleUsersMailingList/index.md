@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (3 messages, latest: May 18 2021 at 13:43)
+
 * [\[isabelle\] Primrec abstracts over the wrong variable](99619isabellePrimrecabstractsoverthewrongvariable.html) (3 messages, latest: May 18 2021 at 04:50)
 
 * [\[isabelle\] elimination rule for length s = Suc n](64893isabelleeliminationruleforlengthsSucn.html) (3 messages, latest: May 17 2021 at 15:49)
@@ -22,8 +24,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] RV'21 Call for Papers (with an Extended Deadline)](89469isabelleRV21CallforPaperswithanExtendedDeadline.html) (1 message, latest: May 16 2021 at 16:52)
 
 * [\[isabelle\] isabelle ghc_setup](96317isabelleisabelleghcsetup.html) (2 messages, latest: May 16 2021 at 14:18)
-
-* [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (2 messages, latest: May 16 2021 at 13:55)
 
 * [\[isabelle\] Generate fun/datatype definition in ML](17266isabelleGeneratefundatatypedefinitioninML.html) (3 messages, latest: May 15 2021 at 10:14)
 

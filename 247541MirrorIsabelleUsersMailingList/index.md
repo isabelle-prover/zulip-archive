@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Primrec abstracts over the wrong variable](99619isabellePrimrecabstractsoverthewrongvariable.html) (2 messages, latest: May 17 2021 at 19:51)
+* [\[isabelle\] Primrec abstracts over the wrong variable](99619isabellePrimrecabstractsoverthewrongvariable.html) (3 messages, latest: May 18 2021 at 04:50)
 
 * [\[isabelle\] elimination rule for length s = Suc n](64893isabelleeliminationruleforlengthsSucn.html) (3 messages, latest: May 17 2021 at 15:49)
 

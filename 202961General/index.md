@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [new streams](74282newstreams.html) (11 messages, latest: May 19 2021 at 15:17)
+
 * [Optimal Sorting Networks in Isabelle](55666OptimalSortingNetworksinIsabelle.html) (1 message, latest: May 04 2021 at 14:53)
 
 * [Undo hide_fact (open)](46257Undohidefactopen.html) (1 message, latest: Apr 29 2021 at 09:50)
@@ -16,8 +18,6 @@ permalink: ./202961General/index.html
 * [delta](67755delta.html) (8 messages, latest: Apr 27 2021 at 10:52)
 
 * [turn subgoal into Isar style statement](74886turnsubgoalintoIsarstylestatement.html) (27 messages, latest: Apr 20 2021 at 17:18)
-
-* [new streams](74282newstreams.html) (10 messages, latest: Apr 19 2021 at 11:25)
 
 * [jEdit Plugin for Isabelle Symbol suggestions](66073jEditPluginforIsabelleSymbolsuggestions.html) (1 message, latest: Apr 18 2021 at 13:01)
 

@@ -91,6 +91,22 @@ permalink: ./238552BeginnerQuestions/43167FoldingoveraMap.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Folding%20over%20a%20Map/near/239250719" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43167FoldingoveraMap.html#239250719">Manuel Eberl (May 18 2021 at 13:12)</a>:</h4>
 <p>Indeed, <code>Mapping</code> is intended to be something of a first step of refining "mathematical maps" (i.e. partial functions) to actual implementations</p>
 
+<a name="239477581"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Folding%20over%20a%20Map/near/239477581" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43167FoldingoveraMap.html#239477581">Robert Soeldner (May 19 2021 at 18:52)</a>:</h4>
+<p>Thank you for the amount of comments. Still, I'm not able to follow most comments.  See below for a minimal example of my current issue. Basically, I have a finite map containing id's and their corresponding object. The folding function should accumulate some state.</p>
+<div class="codehilite"><pre><span></span><code>fun test1 :: &quot;(nat, bool) fmap ⇒ bool&quot; where
+&quot;test1 m = (let t = fmdom m in ffold (λv a. the (fmlookup m v) ∧ a) True t)&quot;
+
+value &quot;test1 (fmupd 1 False fmempty)&quot;
+</code></pre></div>
+<p>I guess, the error reports, <code>nat</code> is  not finite.</p>
+<div class="codehilite"><pre><span></span><code>Wellsortedness error
+(in code equation test1 ?m ≡ Let (fmdom ?m) (ffold (λv. (∧) (the (fmlookup ?m v))) True),
+with dependency &quot;Pure.dummy_pattern&quot; -&gt; &quot;test1&quot;):
+Type nat not of sort finite
+No type arity nat :: finite
+</code></pre></div>
+
 
 {% endraw %}
 

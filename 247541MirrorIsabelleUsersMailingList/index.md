@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Position of Lecturer or Senior Lecturer in Cyb...](74272isabellePositionofLecturerorSeniorLecturerinCyb.html) (1 message, latest: May 19 2021 at 19:18)
+
 * [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (3 messages, latest: May 18 2021 at 13:43)
 
 * [\[isabelle\] Primrec abstracts over the wrong variable](99619isabellePrimrecabstractsoverthewrongvariable.html) (3 messages, latest: May 18 2021 at 04:50)

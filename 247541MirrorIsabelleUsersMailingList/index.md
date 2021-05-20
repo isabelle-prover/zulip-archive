@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Cannot build HOL.Complex_Main](08570isabelleCannotbuildHOLComplexMain.html) (2 messages, latest: May 20 2021 at 11:26)
+
 * [\[isabelle\] SCSS 2021: deadline extension](82824isabelleSCSS2021deadlineextension.html) (1 message, latest: May 20 2021 at 09:00)
 
 * [\[isabelle\] \[Call for Participation\] 12th International Sc...](26627isabelleCallforParticipation12thInternationalSc.html) (1 message, latest: May 20 2021 at 09:00)
@@ -24,8 +26,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Exhaustiveness of Pure.type](33786isabelleExhaustivenessofPuretype.html) (3 messages, latest: May 17 2021 at 13:56)
 
 * [\[isabelle\] \[Call for Papers\] Formal Verification of Physi...](21584isabelleCallforPapersFormalVerificationofPhysi.html) (1 message, latest: May 17 2021 at 10:07)
-
-* [\[isabelle\] Cannot build HOL.Complex_Main](08570isabelleCannotbuildHOLComplexMain.html) (1 message, latest: May 17 2021 at 10:07)
 
 * [\[isabelle\] RV'21 Call for Papers (with an Extended Deadline)](89469isabelleRV21CallforPaperswithanExtendedDeadline.html) (1 message, latest: May 16 2021 at 16:52)
 

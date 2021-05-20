@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] SCSS 2021: deadline extension](82824isabelleSCSS2021deadlineextension.html) (1 message, latest: May 20 2021 at 09:00)
+
+* [\[isabelle\] \[Call for Participation\] 12th International Sc...](26627isabelleCallforParticipation12thInternationalSc.html) (1 message, latest: May 20 2021 at 09:00)
+
 * [\[isabelle\] Position of Lecturer or Senior Lecturer in Cyb...](74272isabellePositionofLecturerorSeniorLecturerinCyb.html) (1 message, latest: May 19 2021 at 19:18)
 
 * [\[isabelle\] Bitblasting via SAT and Argo](46673isabelleBitblastingviaSATandArgo.html) (3 messages, latest: May 18 2021 at 13:43)

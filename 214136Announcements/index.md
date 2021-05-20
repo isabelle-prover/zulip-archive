@@ -9,6 +9,8 @@ permalink: ./214136Announcements/index.html
 
 ### Topics:
 
+* [PhD verifying automated reasoning in Saarbrücken](56780PhDverifyingautomatedreasoninginSaarbrcken.html) (1 message, latest: May 20 2021 at 16:37)
+
 * [schemes](04809schemes.html) (1 message, latest: Apr 20 2021 at 07:23)
 
 * [Stream Subscriptions](97125StreamSubscriptions.html) (1 message, latest: Apr 07 2021 at 10:44)

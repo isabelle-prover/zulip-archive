@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] PhD position using Isabelle in Saarbrücken](94372isabellePhDpositionusingIsabelleinSaarbrcken.html) (1 message, latest: May 20 2021 at 16:26)
+
 * [\[isabelle\] Cannot build HOL.Complex_Main](08570isabelleCannotbuildHOLComplexMain.html) (2 messages, latest: May 20 2021 at 11:26)
 
 * [\[isabelle\] SCSS 2021: deadline extension](82824isabelleSCSS2021deadlineextension.html) (1 message, latest: May 20 2021 at 09:00)

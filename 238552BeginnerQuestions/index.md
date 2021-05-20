@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Folding over a Map](43167FoldingoveraMap.html) (20 messages, latest: May 20 2021 at 04:59)
+* [Folding over a Map](43167FoldingoveraMap.html) (21 messages, latest: May 20 2021 at 05:04)
 
 * [HOL library organization](92014HOLlibraryorganization.html) (10 messages, latest: May 17 2021 at 12:58)
 

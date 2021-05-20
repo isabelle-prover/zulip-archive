@@ -114,6 +114,25 @@ No type arity nat :: finite
 </code></pre></div>
 <p>to be easier to manipulate than your <code>ffold+fmlookup</code> definition, but it is not executable either.</p>
 
+<a name="239535227"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Folding%20over%20a%20Map/near/239535227" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43167FoldingoveraMap.html#239535227">Mathias Fleury (May 20 2021 at 05:04)</a>:</h4>
+<p>Here is a way to make it work, by providing a characterization directly over the fset, but that might not be applicable to your real example:</p>
+<div class="codehilite"><pre><span></span><code>definition myfold where
+  ‹myfold = ffold (λv a. v ∧ a)›
+
+lemma [code]:
+  ‹myfold b A ⟷ b ∧ False |∉| A›
+proof -
+  interpret comp_fun_commute ‹(λv a. v ∧ a)›
+    by standard auto
+  show ?thesis
+    unfolding myfold_def
+    by (induction A) auto
+qed
+
+value &quot;myfold True ((fmran (fmupd (1::nat) False fmempty))) &quot;
+</code></pre></div>
+
 
 {% endraw %}
 

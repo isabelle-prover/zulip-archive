@@ -30,9 +30,9 @@ permalink: ./index.html
 
 * [Is there code for X?](285459IstherecodeforX/index.html) (4 topics)
 
-* [Lie](211306Lie/index.html) (3 topics)
+* [SErAPIS](285806SErAPIS/index.html) (4 topics)
 
-* [SErAPIS](285806SErAPIS/index.html) (3 topics)
+* [Lie](211306Lie/index.html) (3 topics)
 
 * [IRC #isabelle](282466IRCisabelle/index.html) (2 topics)
 

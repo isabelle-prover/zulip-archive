@@ -9,6 +9,8 @@ permalink: ./285806SErAPIS/index.html
 
 ### Topics:
 
+* [intermediate value theorem](25229intermediatevaluetheorem.html) (2 messages, latest: May 21 2021 at 11:31)
+
 * [search only one afp entry](70244searchonlyoneafpentry.html) (5 messages, latest: May 05 2021 at 22:54)
 
 * [public release](11233publicrelease.html) (9 messages, latest: May 05 2021 at 22:12)

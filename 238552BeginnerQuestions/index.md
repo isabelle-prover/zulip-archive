@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [chernoff](23532chernoff.html) (2 messages, latest: May 21 2021 at 13:59)
+* [chernoff](23532chernoff.html) (10 messages, latest: May 21 2021 at 14:39)
 
 * [Folding over a Map](43167FoldingoveraMap.html) (21 messages, latest: May 20 2021 at 05:04)
 

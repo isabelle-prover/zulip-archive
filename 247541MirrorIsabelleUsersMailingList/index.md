@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (1 message, latest: May 22 2021 at 09:19)
+
 * [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (3 messages, latest: May 22 2021 at 06:26)
 
 * [\[isabelle\] PhD position using Isabelle in Saarbrücken](94372isabellePhDpositionusingIsabelleinSaarbrcken.html) (1 message, latest: May 20 2021 at 16:26)

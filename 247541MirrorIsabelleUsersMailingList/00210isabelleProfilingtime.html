@@ -1,0 +1,43 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/00210isabelleProfilingtime.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00210isabelleProfilingtime.html">[isabelle] Profiling time?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="239859296"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Profiling%20time%3F/near/239859296" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00210isabelleProfilingtime.html#239859296">Email Gateway (May 22 2021 at 09:19)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Hi all,</p>
+<p>I aim to get some time samples for locale activation and my first<br>
+entrance point is ML_Profiling.profile_time, with a naive modification<br>
+of locale.ML:</p>
+<blockquote>
+<p>fun print (k, s) = string_of_int k ^ " " ^ s;<br>
+fun prints kss = (map print kss; ());</p>
+<p>fun activate_all name thy activ_elem transfer (marked, input) =<br>
+  ML_Profiling.profile_time_thread prints (activate_all' name thy activ_elem transfer) (marked, input)</p>
+</blockquote>
+<p>Anyway, the build of the HOL image fails erratically with sth like</p>
+<blockquote>
+<p>*** exception Fail raised (line 506 of "profiling.cpp"): Profiling is currently active<br>
+*** At command "class" (line 93 of "~~/src/HOL/Complete_Lattices.thy")</p>
+</blockquote>
+<p>presumably due to parallelism.</p>
+<p>Am I on the right path for timing samples or should I try sth else, e.<br>
+g. from timing.ML?</p>
+<p>Cheers,<br>
+    Florian<br>
+<a href="/user_uploads/14278/hs1jiC_Jdi8dNrb1u9kGNzn0/OpenPGP_signature">OpenPGP_signature</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

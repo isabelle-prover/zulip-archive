@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (3 messages, latest: May 22 2021 at 06:26)
+
 * [\[isabelle\] PhD position using Isabelle in Saarbrücken](94372isabellePhDpositionusingIsabelleinSaarbrcken.html) (1 message, latest: May 20 2021 at 16:26)
 
 * [\[isabelle\] Cannot build HOL.Complex_Main](08570isabelleCannotbuildHOLComplexMain.html) (2 messages, latest: May 20 2021 at 11:26)
@@ -156,8 +158,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Proof Ground 2021 - Call for Problems](59272isabelleProofGround2021CallforProblems.html) (1 message, latest: Mar 29 2021 at 09:17)
 
 * [\[isabelle\] Morello: Edinburgh research posts on capabilit...](61948isabelleMorelloEdinburghresearchpostsoncapabilit.html) (1 message, latest: Mar 29 2021 at 09:09)
-
-* [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (2 messages, latest: Mar 28 2021 at 14:34)
 
 * [\[isabelle\] I completed mmt_import but now I have some que...](90109isabelleIcompletedmmtimportbutnowIhavesomeque.html) (2 messages, latest: Mar 28 2021 at 13:35)
 

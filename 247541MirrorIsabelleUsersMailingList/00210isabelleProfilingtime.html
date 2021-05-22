@@ -37,6 +37,21 @@ g. from timing.ML?</p>
     Florian<br>
 <a href="/user_uploads/14278/hs1jiC_Jdi8dNrb1u9kGNzn0/OpenPGP_signature">OpenPGP_signature</a></p>
 
+<a name="239862962"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Profiling%20time%3F/near/239862962" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/00210isabelleProfilingtime.html#239862962">Email Gateway (May 22 2021 at 10:28)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+The 3 combinators in ML_Profiling are provided by the Poly/ML run-time system<br>
+and allow detailed and low-level profiling.</p>
+<p>I often use 2 of them indirectly via "isabelle build -o profiling=time" or<br>
+"... -o profiling=allocations". The allocations are actually more useful,<br>
+since most of our run-time is spent in producing new functional data<br>
+structures. Reading the tea leaves within that trace can reveal where<br>
+performance problems really are.</p>
+<p>ML_Profiling.profile_time_thread is special, because it is restricted to a<br>
+single thread and measures its CPU time accurately. It should work properly<br>
+together with "... -o threads=1".</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

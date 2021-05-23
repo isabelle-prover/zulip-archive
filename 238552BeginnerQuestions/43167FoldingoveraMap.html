@@ -133,6 +133,23 @@ qed
 value &quot;myfold True ((fmran (fmupd (1::nat) False fmempty))) &quot;
 </code></pre></div>
 
+<a name="239968857"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Folding%20over%20a%20Map/near/239968857" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43167FoldingoveraMap.html#239968857">Robert Soeldner (May 23 2021 at 18:19)</a>:</h4>
+<p>Following up on this, even the more simplified version fails to be executed.  See:</p>
+<div class="codehilite"><pre><span></span><code>definition bla1 :: &quot;nat fset ⇒ bool&quot; where
+&quot;bla1 n = (ffold (λeid a. True ∧ a) True n)&quot;
+
+value &quot;bla1 {|1,2,3|}&quot;
+</code></pre></div>
+<p>with</p>
+<div class="codehilite"><pre><span></span><code>Wellsortedness error
+(in code equation bla1 ?n ≡ ffold (λeid. (∧) True) True ?n,
+with dependency &quot;Pure.dummy_pattern&quot; -&gt; &quot;bla1&quot;):
+Type nat not of sort finite
+No type arity nat :: finite
+</code></pre></div>
+<p>From the error message, I assume it is expected that <code>nat</code> is finite?</p>
+
 
 {% endraw %}
 

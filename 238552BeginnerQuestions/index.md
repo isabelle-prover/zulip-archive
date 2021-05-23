@@ -9,9 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [chernoff](23532chernoff.html) (11 messages, latest: May 21 2021 at 16:34)
+* [Folding over a Map](43167FoldingoveraMap.html) (22 messages, latest: May 23 2021 at 18:19)
 
-* [Folding over a Map](43167FoldingoveraMap.html) (21 messages, latest: May 20 2021 at 05:04)
+* [chernoff](23532chernoff.html) (11 messages, latest: May 21 2021 at 16:34)
 
 * [HOL library organization](92014HOLlibraryorganization.html) (10 messages, latest: May 17 2021 at 12:58)
 

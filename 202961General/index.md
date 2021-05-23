@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [AFP submission processing time](79600AFPsubmissionprocessingtime.html) (1 message, latest: May 23 2021 at 21:07)
+
 * [new streams](74282newstreams.html) (11 messages, latest: May 19 2021 at 15:17)
 
 * [Optimal Sorting Networks in Isabelle](55666OptimalSortingNetworksinIsabelle.html) (1 message, latest: May 04 2021 at 14:53)

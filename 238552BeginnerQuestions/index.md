@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [afp](77272afp.html) (52 messages, latest: May 25 2021 at 21:53)
+* [afp](77272afp.html) (54 messages, latest: May 25 2021 at 22:13)
 
 * [Partial function as parameter](02665Partialfunctionasparameter.html) (3 messages, latest: May 25 2021 at 11:32)
 

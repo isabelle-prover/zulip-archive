@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [afp](77272afp.html) (15 messages, latest: May 25 2021 at 19:52)
+
 * [Partial function as parameter](02665Partialfunctionasparameter.html) (3 messages, latest: May 25 2021 at 11:32)
 
 * [Folding over a Map](43167FoldingoveraMap.html) (22 messages, latest: May 23 2021 at 18:19)

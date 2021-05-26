@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (1 message, latest: May 26 2021 at 14:51)
+
 * [\[isabelle\] New in the AFP: Combinatorics on Words](43302isabelleNewintheAFPCombinatoricsonWords.html) (1 message, latest: May 26 2021 at 10:18)
 
 * [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (2 messages, latest: May 22 2021 at 10:28)

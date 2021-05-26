@@ -1,0 +1,36 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/03527isabelleTheinstructionsinAFPsUsingEntriesdon.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/03527isabelleTheinstructionsinAFPsUsingEntriesdon.html">[isabelle] The instructions in AFP's "Using Entries" do n...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="240336710"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20The%20instructions%20in%20AFP%27s%20%22Using%20Entries%22%20do%20n.../near/240336710" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/03527isabelleTheinstructionsinAFPsUsingEntriesdon.html#240336710">Email Gateway (May 26 2021 at 14:51)</a>:</h4>
+<p>From: Jakub Kądziołka &lt;<a href="mailto:kuba@kadziolka.net">kuba@kadziolka.net</a>&gt;<br>
+Hello,</p>
+<p>at the Isabelle Zulip, we have just successfully troubleshot an issue<br>
+with getting Isabelle to recognize AFP component. As it turns out, the<br>
+path that should be included in $ISABELLE_HOME_USER/etc/components<br>
+(which is, by the way, incorrectly referred to by <code>isabelle components --help</code><br>
+as $ISABELLE_HOME_USER/components, without the /etc/ path component),<br>
+is .../afp-2021-05-14/thys, and not just .../afp-2021-05-14.<br>
+Moreover, <code>isabelle components -u</code> will only accept the former,<br>
+rejecting the latter with</p>
+<p>*** Bad component directory: "/home/kuba/formal/afp-2021-05-14/thys"</p>
+<p>Manually editing $ISABELLE_HOME_USER/etc/components to include the path<br>
+to .../thys makes things work.</p>
+<p>Regards,<br>
+Jakub Kądziołka</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Isabelle Listings in LaTeX](80644IsabelleListingsinLaTeX.html) (4 messages, latest: May 27 2021 at 13:35)
+
 * [afp](77272afp.html) (58 messages, latest: May 26 2021 at 11:37)
 
 * [Partial function as parameter](02665Partialfunctionasparameter.html) (3 messages, latest: May 25 2021 at 11:32)

@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Problem to push to AFP at heptapod](89118isabelledevProblemtopushtoAFPatheptapod.html) (2 messages, latest: May 27 2021 at 14:38)
+* [\[isabelle-dev\] Problem to push to AFP at heptapod](89118isabelledevProblemtopushtoAFPatheptapod.html) (3 messages, latest: May 27 2021 at 21:51)
 
 * [\[isabelle-dev\] map_ran's type in HOL-Library.AList is too...](52991isabelledevmapranstypeinHOLLibraryALististoo.html) (2 messages, latest: May 12 2021 at 06:35)
 

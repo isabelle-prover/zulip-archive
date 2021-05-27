@@ -9,11 +9,13 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (2 messages, latest: May 27 2021 at 12:58)
+
+* [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (3 messages, latest: May 27 2021 at 12:51)
+
 * [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (2 messages, latest: May 26 2021 at 23:28)
 
 * [\[isabelle\] New in the AFP: Combinatorics on Words](43302isabelleNewintheAFPCombinatoricsonWords.html) (1 message, latest: May 26 2021 at 10:18)
-
-* [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (2 messages, latest: May 22 2021 at 10:28)
 
 * [\[isabelle\] Concerning Fun.swap](61842isabelleConcerningFunswap.html) (3 messages, latest: May 22 2021 at 06:26)
 
@@ -52,8 +54,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] 5 permanent positions (lecturer, senior lectur...](40772isabelle5permanentpositionslecturerseniorlectur.html) (1 message, latest: May 13 2021 at 22:36)
 
 * [\[isabelle\] First Call for Papers: Formal Methods Teaching...](83180isabelleFirstCallforPapersFormalMethodsTeaching.html) (1 message, latest: May 13 2021 at 08:26)
-
-* [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (1 message, latest: May 12 2021 at 03:00)
 
 * [\[isabelle\] CALCO 2021: Second call for papers](19333isabelleCALCO2021Secondcallforpapers.html) (1 message, latest: May 11 2021 at 09:57)
 

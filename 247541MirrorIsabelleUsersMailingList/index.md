@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (1 message, latest: May 26 2021 at 14:51)
+* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (2 messages, latest: May 26 2021 at 23:28)
 
 * [\[isabelle\] New in the AFP: Combinatorics on Words](43302isabelleNewintheAFPCombinatoricsonWords.html) (1 message, latest: May 26 2021 at 10:18)
 

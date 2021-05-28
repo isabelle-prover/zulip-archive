@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] PhD position on program verification in Coq](87165isabellePhDpositiononprogramverificationinCoq.html) (1 message, latest: May 28 2021 at 09:03)
+
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (2 messages, latest: May 27 2021 at 12:58)
 
 * [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (3 messages, latest: May 27 2021 at 12:51)

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Forward declaration](70844Forwarddeclaration.html) (1 message, latest: May 28 2021 at 10:59)
+
 * [instantiation](25318instantiation.html) (7 messages, latest: May 27 2021 at 15:40)
 
 * [Isabelle Listings in LaTeX](80644IsabelleListingsinLaTeX.html) (4 messages, latest: May 27 2021 at 13:35)

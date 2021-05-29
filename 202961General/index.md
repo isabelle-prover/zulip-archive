@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Dropping global mixfix syntax](44241Droppingglobalmixfixsyntax.html) (1 message, latest: May 29 2021 at 22:13)
+
 * [AFP submission processing time](79600AFPsubmissionprocessingtime.html) (3 messages, latest: May 24 2021 at 15:39)
 
 * [new streams](74282newstreams.html) (11 messages, latest: May 19 2021 at 15:17)

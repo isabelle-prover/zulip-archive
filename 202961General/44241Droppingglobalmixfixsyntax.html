@@ -1,0 +1,32 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961General/44241Droppingglobalmixfixsyntax.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961General/index.html">General</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961General/44241Droppingglobalmixfixsyntax.html">Dropping global mixfix syntax</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="240724304"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/Dropping%20global%20mixfix%20syntax/near/240724304" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/44241Droppingglobalmixfixsyntax.html#240724304">Jakub Kądziołka (May 29 2021 at 22:13)</a>:</h4>
+<p>I am using the following code to define a function with mixfix syntax that depends on a context's parameter:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">context</span>
+  <span class="kp">fixes</span> <span class="n">a</span> <span class="o">::</span> <span class="n">real</span>
+  <span class="kp">assumes</span> <span class="s">"a &gt; 0"</span>
+<span class="k">begin</span>
+
+<span class="k">fun</span> <span class="n">x</span> <span class="o">::</span> <span class="s">"nat ⇒ real"</span> <span class="o">(</span><span class="s">"x⇘_⇙"</span><span class="o">)</span> <span class="kp">where</span>
+  <span class="s">"x⇘0⇙ = 0"</span> <span class="o">|</span>
+  <span class="s">"x⇘Suc n⇙ = a + x⇘n⇙⇧2"</span>
+</code></pre></div>
+<p>This works, except for the following warning: <code>Dropping global mixfix syntax: "x" (‹x⇘_⇙›) </code>. Does this indicate that I'm doing something wrong? Can I silence it by doing this differently?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

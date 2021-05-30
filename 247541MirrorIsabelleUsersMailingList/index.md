@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CALCO 2021: Deadline extension and invited spe...](23590isabelleCALCO2021Deadlineextensionandinvitedspe.html) (1 message, latest: May 30 2021 at 11:06)
+
 * [\[isabelle\] PhD position on program verification in Coq](87165isabellePhDpositiononprogramverificationinCoq.html) (1 message, latest: May 28 2021 at 09:03)
 
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (2 messages, latest: May 27 2021 at 12:58)

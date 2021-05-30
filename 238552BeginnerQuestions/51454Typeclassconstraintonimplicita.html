@@ -22,6 +22,10 @@ permalink: ./238552BeginnerQuestions/51454Typeclassconstraintonimplicita.html
 </code></pre></div>
 <p>Isabelle complains that "Sort constraint linorder inconsistent with default type for type variable 'a" at the <code>fix</code>. I only need to prove the lemma for <code>'a</code> which satisfy linorder, I do not care about other cases. The issue seems to be that the <code>shows</code> statement is too general and/or <code>(in linorder)</code> seems to somehow not apply to the implicit <code>'a</code> in the shows statement? Can I make it explicit somehow?</p>
 
+<a name="240770710"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Typeclass%20constraint%20on%20implicit%20%27a/near/240770710" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/51454Typeclassconstraintonimplicita.html#240770710">Lukas Stevens (May 30 2021 at 19:42)</a>:</h4>
+<p>I think in the context of linorder the type <code>'a</code> isn't of sort <code>linorder</code> (the typeclass <code>linorder</code> does not exist in the context of <code>linorder</code>, only outside of the context). You either have to state the lemma in the global context and annotate the sort <code>linorder</code> or just drop the sort annotation. I could be wrong though.</p>
+
 
 {% endraw %}
 

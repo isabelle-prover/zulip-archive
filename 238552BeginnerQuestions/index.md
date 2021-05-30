@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Typeclass constraint on implicit 'a](51454Typeclassconstraintonimplicita.html) (1 message, latest: May 29 2021 at 13:37)
+* [Typeclass constraint on implicit 'a](51454Typeclassconstraintonimplicita.html) (2 messages, latest: May 30 2021 at 19:42)
 
 * [Forward declaration](70844Forwarddeclaration.html) (4 messages, latest: May 28 2021 at 11:02)
 

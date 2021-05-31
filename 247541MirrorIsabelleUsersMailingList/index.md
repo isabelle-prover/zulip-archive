@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New AFP entry: Lifting the Exponent](83110isabelleNewAFPentryLiftingtheExponent.html) (1 message, latest: May 31 2021 at 18:41)
+
 * [\[isabelle\] CALCO 2021: Deadline extension and invited spe...](23590isabelleCALCO2021Deadlineextensionandinvitedspe.html) (1 message, latest: May 30 2021 at 11:06)
 
 * [\[isabelle\] PhD position on program verification in Coq](87165isabellePhDpositiononprogramverificationinCoq.html) (1 message, latest: May 28 2021 at 09:03)

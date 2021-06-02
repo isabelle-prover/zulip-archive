@@ -9,9 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [extend_nat](46507extendnat.html) (1 message, latest: Jun 01 2021 at 22:18)
+* [extend_nat](46507extendnat.html) (2 messages, latest: Jun 02 2021 at 02:43)
 
-* [conditional](50325conditional.html) (1 message, latest: Jun 01 2021 at 15:50)
+* [conditional](50325conditional.html) (2 messages, latest: Jun 02 2021 at 02:41)
 
 * [Typeclass constraint on implicit 'a](51454Typeclassconstraintonimplicita.html) (2 messages, latest: May 30 2021 at 19:42)
 

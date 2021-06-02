@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] TUM repository is down?](56047isabelledevTUMrepositoryisdown.html) (1 message, latest: Jun 02 2021 at 14:57)
+* [\[isabelle-dev\] TUM repository is down?](56047isabelledevTUMrepositoryisdown.html) (3 messages, latest: Jun 02 2021 at 15:56)
 
 * [\[isabelle-dev\] Problem to push to AFP at heptapod](89118isabelledevProblemtopushtoAFPatheptapod.html) (3 messages, latest: May 27 2021 at 21:51)
 

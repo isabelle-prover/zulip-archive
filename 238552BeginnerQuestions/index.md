@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [minimal](43208minimal.html) (2 messages, latest: Jun 02 2021 at 13:19)
+* [minimal](43208minimal.html) (3 messages, latest: Jun 02 2021 at 14:02)
 
 * [extend_nat](46507extendnat.html) (3 messages, latest: Jun 02 2021 at 13:16)
 

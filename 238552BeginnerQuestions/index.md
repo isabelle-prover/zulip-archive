@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [reset](10660reset.html) (1 message, latest: Jun 03 2021 at 12:49)
+* [reset](10660reset.html) (3 messages, latest: Jun 03 2021 at 13:07)
 
 * [minimal](43208minimal.html) (3 messages, latest: Jun 02 2021 at 14:02)
 

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [reset](10660reset.html) (1 message, latest: Jun 03 2021 at 12:49)
+
 * [minimal](43208minimal.html) (3 messages, latest: Jun 02 2021 at 14:02)
 
 * [extend_nat](46507extendnat.html) (3 messages, latest: Jun 02 2021 at 13:16)

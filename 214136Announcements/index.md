@@ -9,6 +9,8 @@ permalink: ./214136Announcements/index.html
 
 ### Topics:
 
+* [Research position in Formal Verification at HENSOLDT](01972ResearchpositioninFormalVerificationatHENSOLDT.html) (1 message, latest: Jun 03 2021 at 20:54)
+
 * [PhD verifying automated reasoning in Saarbrücken](56780PhDverifyingautomatedreasoninginSaarbrcken.html) (1 message, latest: May 20 2021 at 16:37)
 
 * [schemes](04809schemes.html) (1 message, latest: Apr 20 2021 at 07:23)

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Pattern Aliases](64801PatternAliases.html) (2 messages, latest: Jun 04 2021 at 18:59)
+
 * [manual method for forall-elimination](16429manualmethodforforallelimination.html) (22 messages, latest: Jun 04 2021 at 11:27)
 
 * [reset](10660reset.html) (3 messages, latest: Jun 03 2021 at 13:07)

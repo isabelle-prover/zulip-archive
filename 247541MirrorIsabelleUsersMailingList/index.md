@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] \[Call for Participation\] 12th International Sc...](26627isabelleCallforParticipation12thInternationalSc.html) (2 messages, latest: Jun 04 2021 at 10:07)
+
+* [\[isabelle\] Research position in Formal Verification at HE...](60899isabelleResearchpositioninFormalVerificationatHE.html) (1 message, latest: Jun 04 2021 at 10:06)
+
 * [\[isabelle\] New AFP entry: Lifting the Exponent](83110isabelleNewAFPentryLiftingtheExponent.html) (1 message, latest: May 31 2021 at 18:41)
 
 * [\[isabelle\] CALCO 2021: Deadline extension and invited spe...](23590isabelleCALCO2021Deadlineextensionandinvitedspe.html) (1 message, latest: May 30 2021 at 11:06)
@@ -30,8 +34,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Cannot build HOL.Complex_Main](08570isabelleCannotbuildHOLComplexMain.html) (2 messages, latest: May 20 2021 at 11:26)
 
 * [\[isabelle\] SCSS 2021: deadline extension](82824isabelleSCSS2021deadlineextension.html) (1 message, latest: May 20 2021 at 09:00)
-
-* [\[isabelle\] \[Call for Participation\] 12th International Sc...](26627isabelleCallforParticipation12thInternationalSc.html) (1 message, latest: May 20 2021 at 09:00)
 
 * [\[isabelle\] Position of Lecturer or Senior Lecturer in Cyb...](74272isabellePositionofLecturerorSeniorLecturerinCyb.html) (1 message, latest: May 19 2021 at 19:18)
 

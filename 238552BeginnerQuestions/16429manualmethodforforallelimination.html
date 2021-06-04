@@ -41,6 +41,29 @@ permalink: ./238552BeginnerQuestions/16429manualmethodforforallelimination.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241504741" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241504741">Mathias Fleury (Jun 04 2021 at 08:25)</a>:</h4>
 <p>My understanding was that the goal is <code>(\&lt;And&gt; x. P x) ==&gt; Q</code>, but the question is not so clear...</p>
 
+<a name="241508297"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241508297" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241508297">Qiyuan Xu (Jun 04 2021 at 09:04)</a>:</h4>
+<p>Thank you. I'm just learning this and interested in all cases you mentioned.<br>
+BTW, another trivial case just for learning, </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="s">"⋀ x. P x"</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">fix</span> <span class="n">x</span>
+  <span class="k">have</span> <span class="s">"P x"</span> <span class="k">by</span> <span class="gr">sorry</span>
+  <span class="k">thus</span> <span class="s">"⋀ x. P x"</span> <span class="k">by</span> <span class="c">(* what method? *)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>which method could prove it here? Both the <code>auto</code> and <code>sledgehammer</code> fail here.</p>
+<p>Another question: I also found the schematic variable <code>?thesis</code> in this proof context is <code>P</code> rather than <code>⋀ x. P x</code>, which is also confusing.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="s">"⋀ x. P x"</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="kt">term</span> <span class="o">?</span><span class="n">thesis</span> <span class="c">(* P rather than ⋀ x. P x *)</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+<a name="241509229"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241509229" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241509229">Qiyuan Xu (Jun 04 2021 at 09:14)</a>:</h4>
+<p>Just for learning, I'm also interested in which tactic in the <code>apply</code> form or which rule could eliminate the <code>\&lt;And&gt;</code> in the goal of <code>lemma "\&lt;And&gt; x. P x"</code> (if it was a worthy question</p>
+
 
 {% endraw %}
 

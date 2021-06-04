@@ -159,6 +159,37 @@ qed
 ultimately have &quot;P x y&quot; by auto (* or perhaps blast with the lemma that x &lt;= y \/ y &lt;= x *)
 </code></pre></div>
 
+<a name="241519614"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241519614" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241519614">Qiyuan Xu (Jun 04 2021 at 11:01)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/manual.20method.20for.20forall-elimination/near/241517094">said</a>:</p>
+<blockquote>
+<p>Basically, what you need to know is that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋀</mo></mrow><annotation encoding="application/x-tex">\bigwedge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00001em;vertical-align:-0.25001em;"></span><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">⋀</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⟹</mo></mrow><annotation encoding="application/x-tex">\Longrightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.549em;vertical-align:-0.024em;"></span><span class="mrel">⟹</span></span></span></span> are special in the sense that Isar knows what they mean and they are integrated into the reasoning structure of Isar. When you have a <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⋀</mo></mrow><annotation encoding="application/x-tex">\bigwedge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00001em;vertical-align:-0.25001em;"></span><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">⋀</span></span></span></span> in a goal, it means that you have to do a <code>fix x</code> in order to prove it, and if you have a <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>⟹</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P \Longrightarrow Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.70733em;vertical-align:-0.024em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⟹</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">Q</span></span></span></span> in a goal, it means that you have to do <code>assume P</code> in order to prove it.</p>
+</blockquote>
+<p>I see. Then it's the reason why it's better to use the structural notation</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+  <span class="kp">assumes</span> <span class="n">asm</span><span class="o">:</span> <span class="s">"P"</span>
+  <span class="kp">shows</span> <span class="s">"Q"</span>
+</code></pre></div>
+<p>and we don't need to assume <code>asm</code> in proof body again.</p>
+
+<a name="241519747"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241519747" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241519747">Qiyuan Xu (Jun 04 2021 at 11:03)</a>:</h4>
+<p>Yes, the keyword <code>for</code> is elegant here.</p>
+
+<a name="241520493"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241520493" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241520493">Manuel Eberl (Jun 04 2021 at 11:11)</a>:</h4>
+<p>If you mention <code>for</code>, you should also know about <code>if</code>. You can write</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span> <span class="s">"P x"</span> <span class="kp">if</span> <span class="s">"Q x"</span> <span class="kp">for</span> <span class="n">x</span> <span class="o">::</span> <span class="n">nat</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">from</span> <span class="n">that</span> <span class="k">show</span> <span class="s">"P x"</span> <span class="gr">sorry</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>The <code>that</code> is the name that is given to the thing you assume with <code>if</code>. You can also give it another name, of course. I use this a lot.</p>
+
+<a name="241521892"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/manual%20method%20for%20forall-elimination/near/241521892" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16429manualmethodforforallelimination.html#241521892">Qiyuan Xu (Jun 04 2021 at 11:27)</a>:</h4>
+<p>yeah, it's clear and good. thanks.</p>
+
 
 {% endraw %}
 

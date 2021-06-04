@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [manual method for forall-elimination](16429manualmethodforforallelimination.html) (3 messages, latest: Jun 04 2021 at 07:41)
+
 * [reset](10660reset.html) (3 messages, latest: Jun 03 2021 at 13:07)
 
 * [minimal](43208minimal.html) (3 messages, latest: Jun 02 2021 at 14:02)

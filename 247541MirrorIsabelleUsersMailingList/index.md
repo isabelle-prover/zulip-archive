@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (3 messages, latest: Jun 05 2021 at 19:18)
+
 * [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (5 messages, latest: Jun 05 2021 at 11:34)
 
 * [\[isabelle\] build output](84347isabellebuildoutput.html) (2 messages, latest: Jun 05 2021 at 11:27)
@@ -28,8 +30,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (2 messages, latest: May 27 2021 at 12:58)
 
 * [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (3 messages, latest: May 27 2021 at 12:51)
-
-* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (2 messages, latest: May 26 2021 at 23:28)
 
 * [\[isabelle\] New in the AFP: Combinatorics on Words](43302isabelleNewintheAFPCombinatoricsonWords.html) (1 message, latest: May 26 2021 at 10:18)
 

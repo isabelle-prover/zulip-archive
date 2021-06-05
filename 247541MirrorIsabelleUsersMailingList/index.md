@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (5 messages, latest: Jun 05 2021 at 11:34)
+
+* [\[isabelle\] build output](84347isabellebuildoutput.html) (2 messages, latest: Jun 05 2021 at 11:27)
+
+* [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (3 messages, latest: Jun 05 2021 at 11:26)
+
 * [\[isabelle\] \[Call for Participation\] 12th International Sc...](26627isabelleCallforParticipation12thInternationalSc.html) (2 messages, latest: Jun 04 2021 at 10:07)
 
 * [\[isabelle\] Research position in Formal Verification at HE...](60899isabelleResearchpositioninFormalVerificationatHE.html) (1 message, latest: Jun 04 2021 at 10:06)
@@ -255,8 +261,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 * [\[isabelle\] Fixing type variables in locales](07028isabelleFixingtypevariablesinlocales.html) (6 messages, latest: Mar 03 2021 at 14:14)
 
-* [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (4 messages, latest: Mar 02 2021 at 17:53)
-
 * [\[isabelle\] Code generation for a subtype with free_constr...](50133isabelleCodegenerationforasubtypewithfreeconstr.html) (1 message, latest: Mar 02 2021 at 11:55)
 
 * [\[isabelle\] Working with list symmetry (Attributes for the...](83806isabelleWorkingwithlistsymmetryAttributesforthe.html) (1 message, latest: Mar 02 2021 at 10:33)
@@ -264,8 +268,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Error in DockerHub documentation](78636isabelleErrorinDockerHubdocumentation.html) (8 messages, latest: Mar 01 2021 at 14:09)
 
 * [\[isabelle\] New in the AFP: The Sunflower Lemma of Erdős a...](19203isabelleNewintheAFPTheSunflowerLemmaofErdsa.html) (1 message, latest: Mar 01 2021 at 12:37)
-
-* [\[isabelle\] build output](84347isabellebuildoutput.html) (1 message, latest: Mar 01 2021 at 11:55)
 
 * [\[isabelle\] AFP instructions](24806isabelleAFPinstructions.html) (20 messages, latest: Feb 28 2021 at 21:25)
 
@@ -410,8 +412,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle2021-RC2, Isabelle/jEdit getting sluggish](91768isabelleIsabelle2021RC2IsabellejEditgettingsluggish.html) (3 messages, latest: Jan 24 2021 at 18:59)
 
 * [\[isabelle\] Isabelle2021-RC3 available for testing](62075isabelleIsabelle2021RC3availablefortesting.html) (1 message, latest: Jan 24 2021 at 18:39)
-
-* [\[isabelle\] Isabelle document generation and ACM and LIPIc...](30104isabelleIsabelledocumentgenerationandACMandLIPIc.html) (2 messages, latest: Jan 23 2021 at 14:26)
 
 * [\[isabelle\] \[Lambda Days + TFP + TFPIE 2021\] call for part...](22085isabelleLambdaDaysTFPTFPIE2021callforpart.html) (1 message, latest: Jan 23 2021 at 10:53)
 

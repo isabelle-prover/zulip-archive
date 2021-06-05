@@ -74,6 +74,36 @@ build file.</p>
 <p>changeset:   3:68ac580ac444<br>
 user:        wenzelm</p>
 
+<a name="241631412"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20document%20generation%20and%20ACM%20and%20LIPIc.../near/241631412" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/30104isabelleIsabelledocumentgenerationandACMandLIPIc.html#241631412">Email Gateway (Jun 05 2021 at 11:26)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 20/01/2021 08:36, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>This is an experience report that highlights problems when preparing an<br>
+Isabelle-based document with LaTeX style files provided by the ACM and by LIPIcs.</p>
+<ol>
+<li>Isabelle style files use the plain tex comment package (for speed). This<br>
+apperas to clash with ACM and LIPIcs.</li>
+</ol>
+</blockquote>
+<p>I will do something about this for the next release: Isabelle2021-1 (December<br>
+2021). Presently I am collecting more problems and drafting some ideas how to<br>
+do better --- after more than 20 years of naive LaTeX generation from Isabelle/ML.</p>
+<blockquote>
+<ol start="2">
+<li>Luatex does not work for LIPIcs:</li>
+</ol>
+<p>It works without problem with pdflatex. In fact, it would be nice if one could<br>
+tell Isabelle easily to use a specific latex instead of having to write a<br>
+build file.</p>
+</blockquote>
+<p>This will also work better in Isabelle2021-1: we still need old pdflatex for<br>
+various publishing channels.</p>
+<p>I am also interested in the most nasty and annoying hacks in document/build<br>
+scripts, in order to eliminate the need for them and let the default<br>
+Isabelle/Scala setup do it directly.</p>
+<p>Makarius</p>
+
 
 {% endraw %}
 

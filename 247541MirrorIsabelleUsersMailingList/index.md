@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (3 messages, latest: Jun 05 2021 at 19:18)
+* [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (4 messages, latest: Jun 05 2021 at 20:00)
 
 * [\[isabelle\] VS Code extension](38075isabelleVSCodeextension.html) (5 messages, latest: Jun 05 2021 at 11:34)
 

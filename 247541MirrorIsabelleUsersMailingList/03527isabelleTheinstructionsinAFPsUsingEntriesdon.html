@@ -165,6 +165,50 @@ Prover IDE should just do it in a prospective "AFP" panel.</p>
 <p>Makarius<br>
 <a href="/user_uploads/14278/9_5x2i-GnqT6RAFhvJon20EC/ch">ch</a></p>
 
+<a name="241663568"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20The%20instructions%20in%20AFP%27s%20%22Using%20Entries%22%20do%20n.../near/241663568" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/03527isabelleTheinstructionsinAFPsUsingEntriesdon.html#241663568">Email Gateway (Jun 06 2021 at 00:36)</a>:</h4>
+<p>From: Gerwin Klein &lt;<a href="mailto:kleing@unsw.edu.au">kleing@unsw.edu.au</a>&gt;</p>
+<blockquote>
+<p>On 6 Jun 2021, at 06:00, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>The initial AFP/etc/settings go back to Florian Haftmann in Aug-2011, where he<br>
+introduced $AFP_BASE for the main AFP directory and $AFP for AFP/thys. See also:<br>
+[..]</p>
+</blockquote>
+<p>I agree with all of this.</p>
+<blockquote>
+<p>This is important for build management of Isabelle and AFP separately:</p>
+<p>isabelle build -a  # build all of Isabelle, without AFP</p>
+</blockquote>
+<p>True, I had not anticipated that <code>isabelle build -a</code> is called in contexts where the AFP is registered as component. You'd now have to explicitly exclude the afp group, and that is not very nice.</p>
+<blockquote>
+<p>The option -d '$AFP' has later become idiomatic for many other Isabelle tools,<br>
+to add the "AFP aspect" with minimal complexity. For example for the Prover IDE:</p>
+<p>isabelle jedit -d '$AFP'</p>
+</blockquote>
+<p>Agree, that was the canonical way, but that was part of the problem. It doesn't work for users who don't use the command line.</p>
+<p>We had discussions amongst the editors before about having AFP ROOTS available by default -- this what I was referring to about the ROOTS file. You can't find them in the history, because it didn't work when we discussed it, so it was never committed.</p>
+<p>[..]</p>
+<blockquote>
+<p>For Isabelle2021 + AFP, there are at least two possibilities, without the<br>
+deadly $AFP_BASE/ROOTS catalog:<br>
+[..]<br>
+ (2) Be more ambitious in having the AFP/thys/etc/settings initialize<br>
+$AFP_BASE if not yet done by the user. Thus users get two choices for AFP as<br>
+component:</p>
+<p>(a) use component AFP, but not AFP/thys; thus the important "isabelle<br>
+build -a" versus "isabelle build -a -d '$AFP'" works properly</p>
+<p>(b) use component AFP/thys and let its etc/settings init AFP if required<br>
+(otherwise users would have to init both AFP and AFP/thys manually).</p>
+</blockquote>
+<p>This is much better than my solution, and I'd be very happy with it.</p>
+<blockquote>
+<p>This is a long explanation for a small change, see the attachment for afp-2021<br>
+(and merge into afp-devel).</p>
+</blockquote>
+<p>Thanks for that, I'll include it and update the instruction (again ;-))</p>
+<p>Cheers,<br>
+Gerwin</p>
+
 
 {% endraw %}
 

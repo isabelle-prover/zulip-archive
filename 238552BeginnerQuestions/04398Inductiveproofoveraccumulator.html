@@ -1,0 +1,27 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html">Inductive proof over accumulator</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="241707047"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241707047" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241707047">Max Nowak (Jun 06 2021 at 19:30)</a>:</h4>
+<p>I'm stuck in a proof and thoroughly confused about what I am even doing. I have defined myself a loop composition operator which just starts a helper initalized with a neutral accumulator: <code>loop m p = loop_helper dummy m p</code>, and then I have (excessively simplified):</p>
+<div class="codehilite"><pre><span></span><code>function loop_helper where
+    (my_term_cond (acc p)) ==&gt; loop_helper acc m p = acc
+not (my_term_cond (acc p)) ==&gt; loop_helper acc m p = loop_helper (steppy acc m) m p
+</code></pre></div>
+<p>And now I want to prove something about loop, akin to <code>loop m p = loop m (f p)</code>, but I can't figure out the approach. I know of <code>loop_helper.induct</code>, but I don't think I can use it, or at least, I can't figure it out. Is there some canonical approach on how I can induct over the steps of loop?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

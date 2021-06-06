@@ -21,6 +21,26 @@ not (my_term_cond (acc p)) ==&gt; loop_helper acc m p = loop_helper (steppy acc 
 </code></pre></div>
 <p>And now I want to prove something about loop, akin to <code>loop m p = loop m (f p)</code>, but I can't figure out the approach. I know of <code>loop_helper.induct</code>, but I don't think I can use it, or at least, I can't figure it out. Is there some canonical approach on how I can induct over the steps of loop?</p>
 
+<a name="241708563"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241708563" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241708563">Manuel Eberl (Jun 06 2021 at 20:09)</a>:</h4>
+<p>If you define a recursive function and want to prove anything about it, you're indeed going to have to use induction. Before you can use the induction rule, you will however also have to prove termination (not sure if you have – you did not really mention it). Before that, there is only a partial induction (<code>pinduct</code>) rule that has termination as an additional assumption. In most cases, you should aim to prove termination.</p>
+<p>Once that is done, you can use the <code>induct</code> rule to prove some property about <code>loop_helper</code> that is a generalisation of the thing you want to prove for <code>loop</code>.</p>
+<p>However, I should point out that you might fare better using one of the while combinators from <code>HOL-Library.While_Combinator</code>. You give them an initial state, a step function, and a breaking condition. There's one where you have to prove termination and one that does not require proving termination but only returns an option type (with <code>None</code> signifying non-termination). You can then prove whatever result you need about the result by providing a suitable loop invariant using e.g. <code>while_rule</code>.</p>
+
+<a name="241708862"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241708862" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241708862">Max Nowak (Jun 06 2021 at 20:16)</a>:</h4>
+<p>I have termination, yes. While While-Combinators look promising, sadly I am only adding new code to an existing framework which contains <code>loop</code>. Maybe if I had more time to delve into restructuring the existing code I'd give it a shot, but I don't :/.</p>
+
+<a name="241709103"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241709103" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241709103">Manuel Eberl (Jun 06 2021 at 20:22)</a>:</h4>
+<p>In that case, you have to figure out the loop invariant and prove that</p>
+<ul>
+<li>the initial state fulfils it</li>
+<li>the step function preserves it</li>
+<li>the invariant plus the termination condition imply what you want to show</li>
+</ul>
+<p>The rest is then a simple induction.</p>
+
 
 {% endraw %}
 

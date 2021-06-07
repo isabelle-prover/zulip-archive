@@ -147,6 +147,22 @@ I had initially created an MWE without <code>Mutator</code>s, but adding those i
 <span class="k">end</span>
 </code></pre></div>
 
+<a name="241772804"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241772804" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241772804">Max Nowak (Jun 07 2021 at 13:03)</a>:</h4>
+<p>Actually, if you just completely get rid of <code>TermCond</code> (you want me to copy paste the code again?), it does manage to come up with some goals. Some very.... questionable goals :D</p>
+<div class="codehilite"><pre><span></span><code>proof (state)
+goal (2 subgoals):
+ 1. ⋀acc m M p.
+       whendoesitstop acc m M p ⟹
+       m p =
+       m (M (?Pa3 acc m M p)
+           (M (?Pa4 acc m M p)
+             (M (?Pa5 acc m M p)
+               (M (?Pa6 acc m M p)
+               ...
+                     (M (?Pa57 acc m M p) (f p))
+</code></pre></div>
+
 
 {% endraw %}
 

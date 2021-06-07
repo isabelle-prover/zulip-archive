@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: System options short form (e.g. "-o ...](53194isabelledevNEWSSystemoptionsshortformego.html) (1 message, latest: Jun 07 2021 at 12:50)
+
 * [\[isabelle-dev\] TUM repository is down?](56047isabelledevTUMrepositoryisdown.html) (6 messages, latest: Jun 07 2021 at 09:10)
 
 * [\[isabelle-dev\] testboard directory missing](08733isabelledevtestboarddirectorymissing.html) (1 message, latest: Jun 03 2021 at 09:57)

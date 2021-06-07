@@ -106,6 +106,47 @@ not (my_term_cond (acc p)) ==&gt; loop_helper acc m p = loop_helper (steppy acc 
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763301" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763301">Jakub Kądziołka (Jun 07 2021 at 11:44)</a>:</h4>
 <p>is there a chance you could create a minimal example that reproduces the problem?</p>
 
+<a name="241770902"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241770902" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241770902">Max Nowak (Jun 07 2021 at 12:49)</a>:</h4>
+<p>Here you go. I didn't manage to recreate how adding arbitraries fixes it though, I'd have to copy over even more code then.<br>
+I had initially created an MWE without <code>Mutator</code>s, but adding those introduced the hanging again.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span> <span class="n">LoopyLand</span> <span class="kp">imports</span> <span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">type_synonym</span> <span class="n n-Type">'a</span> <span class="n">Result</span> <span class="o">=</span> <span class="s">"('a set)"</span>
+<span class="k">type_synonym</span> <span class="n n-Type">'a</span> <span class="n">Module</span> <span class="o">=</span> <span class="s">"'a list ⇒ 'a Result"</span>
+<span class="k">type_synonym</span> <span class="n n-Type">'a</span> <span class="n">Mutator</span> <span class="o">=</span> <span class="s">"'a Result ⇒ 'a list ⇒ 'a list"</span> <span class="c">(* Modifies `as` given a Result. *)</span>
+<span class="k">type_synonym</span> <span class="n n-Type">'a</span> <span class="n">TermCond</span> <span class="o">=</span> <span class="s">"'a Result ⇒ bool"</span>
+
+<span class="c">(* Run m1, then mutate p, and pipe that into m2. Unify results. Probably irrelevant for MWE though. *)</span>
+<span class="k">fun</span> <span class="n">steppy</span> <span class="o">::</span> <span class="s">"'a Module ⇒ 'a Mutator ⇒ 'a Module ⇒ 'a Module"</span> <span class="kp">where</span>
+<span class="s">"steppy m1 M m2 p = (m1 p) ∪ (m2 (M (m1 p) p))"</span>
+
+<span class="c">(* loop_helper stops when user-provided termination condition tell us to, or</span>
+<span class="c"> when we reached a fixed point (result remains the same when we add more `m`). *)</span>
+<span class="k">fun</span> <span class="n">whendoesitstop</span> <span class="kp">where</span>
+<span class="s">"whendoesitstop acc m M t p = (t (acc p) ∨ (steppy acc M m) p = acc p)"</span>
+
+<span class="c">(* Build a chain of steppy. Which slowly grows our result set. *)</span>
+<span class="kn">function</span> <span class="n">loop_helper</span> <span class="o">::</span> <span class="s">"'a Module ⇒ 'a Module ⇒ 'a Mutator ⇒ 'a TermCond ⇒ 'a Module"</span> <span class="kp">where</span>
+<span class="s">"whendoesitstop acc m M t p    ⟹ loop_helper acc m M t p = acc p"</span> <span class="o">|</span>
+<span class="s">"¬(whendoesitstop acc m M t p) ⟹ loop_helper acc m M t p = loop_helper (steppy acc M m)  m M t p"</span>
+     <span class="kp">apply</span> <span class="n">fast</span> <span class="kp">apply</span> <span class="n">simp</span> <span class="kp">apply</span> <span class="n">simp</span> <span class="k">by</span> <span class="n">simp</span> <span class="kn">termination</span> <span class="gr">sorry</span>
+
+<span class="k">fun</span> <span class="n">dummy</span> <span class="o">::</span> <span class="s">"'a Module"</span> <span class="kp">where</span> <span class="s">"dummy p = {}"</span>
+<span class="k">fun</span> <span class="n">never_stop</span> <span class="o">::</span> <span class="s">"'a TermCond"</span> <span class="kp">where</span>  <span class="s">"never_stop result = False"</span>
+<span class="k">fun</span> <span class="n">fake_mutator</span> <span class="o">::</span> <span class="s">"'a Mutator"</span> <span class="kp">where</span> <span class="s">"fake_mutator result p = p"</span>
+
+<span class="c">(* The module we want to prove stuff for. In reality, does more exciting stuff. *)</span>
+<span class="k">fun</span> <span class="n">find_nemo</span> <span class="o">::</span> <span class="s">"'a Module"</span> <span class="kp">where</span> <span class="s">"find_nemo p = {}"</span>
+
+<span class="kn">lemma</span> <span class="s">"loop_helper dummy find_nemo fake_mutator never_stop p = loop_helper dummy find_nemo fake_mutator never_stop (f p)"</span>
+<span class="k">proof</span> <span class="o">(</span><span class="n">induct</span> <span class="n">p</span> <span class="n">rule</span><span class="o">:</span> <span class="n">loop_helper.induct</span> <span class="c">(* &lt;---- complete the brace *)</span>
+<span class="k">qed</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
 
 {% endraw %}
 

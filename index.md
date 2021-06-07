@@ -14,7 +14,7 @@ permalink: ./index.html
 
 * [General](202961General/index.html) (96 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (62 topics)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (63 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 
@@ -26,7 +26,7 @@ permalink: ./index.html
 
 * [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 
-* [Proof Ground](245944ProofGround/index.html) (4 topics)
+* [Proof Ground](245944ProofGround/index.html) (5 topics)
 
 * [Is there code for X?](285459IstherecodeforX/index.html) (4 topics)
 

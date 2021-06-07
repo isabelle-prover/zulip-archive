@@ -45,6 +45,15 @@ not (my_term_cond (acc p)) ==&gt; loop_helper acc m p = loop_helper (steppy acc 
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241710766" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241710766">Max Nowak (Jun 06 2021 at 21:04)</a>:</h4>
 <p>The thing I can't figure out is the accumulator though. I need to prove my property just for <code>loop_helper dummy m p</code>, with dummy being the starting point, and then <code>loop_helper</code> expands it until it terminates. But <code>loop_helper.induct</code> gives me goals such as (base case:) <code>!!acc m p. my_term_cond (acc p) ==&gt; ?P acc m p</code>, so, do I have to prove it for all possible acc in the base case? Maybe you know of some (hopefully very) simple sample proofs so I can have a look at how to do it, since I'm just hopelessly confused.</p>
 
+<a name="241751243"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241751243" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241751243">Mohammad Abdulaziz (Jun 07 2021 at 09:41)</a>:</h4>
+<p>I would like to note that the approach of using the function package gives you better flexibility if you want to prove partial termination. E.g. you will not need to learn any of the automation behind the while-combinator and you have greater flexibility in structuring your proofs.  A good reference on how to use the induction principle that comes out of the function package is in section 8 in the `functions' tutorial in the Isabelle documentation. The following paper uses the function package for an interesting small example:</p>
+<p><a href="https://files.sketis.net/Isabelle_Workshop_2020/Isabelle_2020_paper_1.pdf">https://files.sketis.net/Isabelle_Workshop_2020/Isabelle_2020_paper_1.pdf</a></p>
+
+<a name="241753120"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241753120" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241753120">Max Nowak (Jun 07 2021 at 09:58)</a>:</h4>
+<p>....I now noticed there <em>is</em> a small inductive proof example in the isabelle docs on functions, which I skipped when first learning Isabelle, and then forgot forever that it existed.</p>
+
 
 {% endraw %}
 

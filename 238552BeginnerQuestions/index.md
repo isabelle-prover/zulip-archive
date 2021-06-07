@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Inductive proof over accumulator](04398Inductiveproofoveraccumulator.html) (5 messages, latest: Jun 06 2021 at 21:04)
+* [Inductive proof over accumulator](04398Inductiveproofoveraccumulator.html) (7 messages, latest: Jun 07 2021 at 09:58)
 
 * [Pattern Aliases](64801PatternAliases.html) (5 messages, latest: Jun 04 2021 at 19:57)
 

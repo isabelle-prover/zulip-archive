@@ -54,6 +54,58 @@ not (my_term_cond (acc p)) ==&gt; loop_helper acc m p = loop_helper (steppy acc 
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241753120" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241753120">Max Nowak (Jun 07 2021 at 09:58)</a>:</h4>
 <p>....I now noticed there <em>is</em> a small inductive proof example in the isabelle docs on functions, which I skipped when first learning Isabelle, and then forgot forever that it existed.</p>
 
+<a name="241762071"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241762071" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241762071">Max Nowak (Jun 07 2021 at 11:32)</a>:</h4>
+<p>Hmm, using <code>proof (induct p rule: loop_helper.induct)</code> just highlights the <code>proof (induct...)</code> line purple and Isabelle becomes unberably laggy forever, to the point I need to terminate the process.</p>
+
+<a name="241762189"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241762189" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241762189">Jakub Kądziołka (Jun 07 2021 at 11:33)</a>:</h4>
+<p>Hmm, this means that the <code>induct</code> proof method does not terminate. Perhaps <code>induction</code> instead will work better?</p>
+
+<a name="241762316"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241762316" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241762316">Max Nowak (Jun 07 2021 at 11:34)</a>:</h4>
+<p>I wasn't aware there is a difference between the two. And nope, same issue sadly.</p>
+
+<a name="241762779"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241762779" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241762779">Max Nowak (Jun 07 2021 at 11:38)</a>:</h4>
+<p>Adding the remaining free variables as arbitraries worked somehow though. I have no clue why.</p>
+
+<a name="241762954"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241762954" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241762954">Max Nowak (Jun 07 2021 at 11:40)</a>:</h4>
+<p>But now (after clicking on the proof outline in jEdit ouput window), the <code>then show</code> statements have a squiggly underline. It fails to refine any pending goal.</p>
+
+<a name="241762988"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241762988" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241762988">Max Nowak (Jun 07 2021 at 11:41)</a>:</h4>
+<p>(Now I remember, this was the point where I gave up a month or two ago :D)</p>
+
+<a name="241763088"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763088" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763088">Jakub Kądziołka (Jun 07 2021 at 11:42)</a>:</h4>
+<p>IIRC this sometimes happens when one of the goals was automatically solved because the assumptions were trivially contradictory</p>
+
+<a name="241763099"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763099" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763099">Jakub Kądziołka (Jun 07 2021 at 11:42)</a>:</h4>
+<p>are there as many goals as there are <code>show</code>s?</p>
+
+<a name="241763148"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763148" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763148">Jakub Kądziołka (Jun 07 2021 at 11:42)</a>:</h4>
+<p>anyway, you can always use <code>show</code> manually to show the expected thing</p>
+
+<a name="241763157"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763157" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763157">Max Nowak (Jun 07 2021 at 11:43)</a>:</h4>
+<p>I just have <code>lemma " ... = ..." proof (induct...)</code></p>
+
+<a name="241763175"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763175" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763175">Max Nowak (Jun 07 2021 at 11:43)</a>:</h4>
+<p>And yes two goals are generated</p>
+
+<a name="241763272"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763272" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763272">Jakub Kądziołka (Jun 07 2021 at 11:44)</a>:</h4>
+<p>assumptions as in the goal is <code>?P 0</code> and you're inducting over <code>Suc n</code></p>
+
+<a name="241763301"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Inductive%20proof%20over%20accumulator/near/241763301" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/04398Inductiveproofoveraccumulator.html#241763301">Jakub Kądziołka (Jun 07 2021 at 11:44)</a>:</h4>
+<p>is there a chance you could create a minimal example that reproduces the problem?</p>
+
 
 {% endraw %}
 

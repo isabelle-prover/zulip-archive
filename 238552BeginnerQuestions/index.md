@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Could a translation rule be disabled by an option?](79073Couldatranslationrulebedisabledbyanoption.html) (1 message, latest: Jun 08 2021 at 11:14)
+
 * [Inductive proof over accumulator](04398Inductiveproofoveraccumulator.html) (22 messages, latest: Jun 07 2021 at 13:03)
 
 * [Pattern Aliases](64801PatternAliases.html) (5 messages, latest: Jun 04 2021 at 19:57)

@@ -40,6 +40,33 @@ lemma  test3:
 </code></pre></div>
 <p>Another weird thing is that there is just a little change from test2 to test3, but blast can prove the test2 and fail on test3.  Why does it fail? can anyone explain to me the definition or the difference bewteen SOME and THE ?</p>
 
+<a name="242017840"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/THE/near/242017840" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71074THE.html#242017840">Mathias Fleury (Jun 09 2021 at 04:51)</a>:</h4>
+<p>Your are missing a type annotation that is implicit in test2:</p>
+<div class="codehilite"><pre><span></span><code>lemma  test3:
+  fixes A and i :: nat
+  assumes &quot;i = (SOME a. a ∈ A ∧ a&lt;1)&quot; &quot;A ={0,1,10}&quot;
+  shows &quot;i ∈ A&quot;
+  using assms
+  by blast
+</code></pre></div>
+
+<a name="242017912"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/THE/near/242017912" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71074THE.html#242017912">Mathias Fleury (Jun 09 2021 at 04:52)</a>:</h4>
+<ul>
+<li><code>SOME x. P x</code> is _one_ undefined element that fulfills <code>P x</code> (if any exists).</li>
+<li><code>THE x. P x</code> is _the_ unique element that fulfills <code>P x</code> (if any exists).</li>
+</ul>
+
+<a name="242017934"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/THE/near/242017934" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71074THE.html#242017934">Mathias Fleury (Jun 09 2021 at 04:53)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>thm theI someI
+(*
+  ?P ?a ⟹ (⋀x. ?P x ⟹ x = ?a) ⟹ ?P (THE x. ?P x)
+  ?P ?x ⟹ ?P (Eps ?P)
+*)
+</code></pre></div>
+
 
 {% endraw %}
 

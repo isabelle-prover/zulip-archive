@@ -22,6 +22,24 @@ permalink: ./238552BeginnerQuestions/71074THE.html
 </code></pre></div>
 <p>I didn't get the point why this simple lemma was not proved by sledgehammer or myself. Is there any assumption lost there?</p>
 
+<a name="241999837"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/THE/near/241999837" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/71074THE.html#241999837">zibo yang (Jun 08 2021 at 23:18)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>lemma test2:
+  fixes A
+  assumes &quot;enat i = enat (SOME a. a ∈ A ∧ a&lt;1)&quot; &quot;A ={0,1,10}&quot;
+  shows &quot;i ∈ A&quot;
+  using enat.inject assms
+  by blast
+
+lemma  test3:
+  fixes A
+  assumes &quot;i = (SOME a. a ∈ A ∧ a&lt;1)&quot; &quot;A ={0,1,10}&quot;
+  shows &quot;i ∈ A&quot;
+  using assms
+  by blast
+</code></pre></div>
+<p>Another weird thing is that there is just a little change from test2 to test3, but blast can prove the test2 and fail on test3.  Why does it fail? can anyone explain to me the definition or the difference bewteen SOME and THE ?</p>
+
 
 {% endraw %}
 

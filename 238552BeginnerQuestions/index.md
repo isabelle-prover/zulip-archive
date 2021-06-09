@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [pending](25702pending.html) (6 messages, latest: Jun 09 2021 at 12:52)
+
 * [THE](71074THE.html) (5 messages, latest: Jun 09 2021 at 04:53)
 
 * [Could a translation rule be disabled by an option?](79073Couldatranslationrulebedisabledbyanoption.html) (1 message, latest: Jun 08 2021 at 11:14)

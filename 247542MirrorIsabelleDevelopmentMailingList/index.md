@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS: Reactivated ML profiling](90604isabelledevNEWSReactivatedMLprofiling.html) (1 message, latest: Jun 09 2021 at 12:01)
+
 * [\[isabelle-dev\] NEWS: System options short form (e.g. "-o ...](53194isabelledevNEWSSystemoptionsshortformego.html) (1 message, latest: Jun 07 2021 at 12:50)
 
 * [\[isabelle-dev\] TUM repository is down?](56047isabelledevTUMrepositoryisdown.html) (6 messages, latest: Jun 07 2021 at 09:10)

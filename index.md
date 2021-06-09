@@ -10,11 +10,11 @@ permalink: ./index.html
 
 * [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (419 topics)
 
-* [Beginner Questions](238552BeginnerQuestions/index.html) (140 topics)
+* [Beginner Questions](238552BeginnerQuestions/index.html) (141 topics)
 
 * [General](202961General/index.html) (96 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (63 topics)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (64 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 

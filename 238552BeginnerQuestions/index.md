@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Sum of functions](74308Sumoffunctions.html) (1 message, latest: Jun 10 2021 at 18:13)
+
 * [pending](25702pending.html) (15 messages, latest: Jun 09 2021 at 14:09)
 
 * [THE](71074THE.html) (5 messages, latest: Jun 09 2021 at 04:53)

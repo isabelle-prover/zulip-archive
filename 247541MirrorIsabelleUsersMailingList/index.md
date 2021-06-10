@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] CADE 2021 call for participation](98150isabelleCADE2021callforparticipation.html) (1 message, latest: Jun 10 2021 at 05:21)
+
 * [\[isabelle\] The instructions in AFP's "Using Entries" do n...](03527isabelleTheinstructionsinAFPsUsingEntriesdon.html) (8 messages, latest: Jun 07 2021 at 09:24)
 
 * [\[isabelle\] \[Second Call for Papers\] Formal Verification o...](67673isabelleSecondCallforPapersFormalVerificationo.html) (1 message, latest: Jun 07 2021 at 09:02)

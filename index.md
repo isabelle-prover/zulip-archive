@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (419 topics)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (420 topics)
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (141 topics)
 
@@ -18,7 +18,7 @@ permalink: ./index.html
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 
-* [Announcements](214136Announcements/index.html) (12 topics)
+* [Announcements](214136Announcements/index.html) (13 topics)
 
 * [New Members & Projects](202967NewMembersProjects/index.html) (12 topics)
 

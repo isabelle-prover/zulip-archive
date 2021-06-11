@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Sum of functions](74308Sumoffunctions.html) (8 messages, latest: Jun 11 2021 at 08:53)
+* [Sum of functions](74308Sumoffunctions.html) (16 messages, latest: Jun 11 2021 at 11:00)
 
 * [pending](25702pending.html) (15 messages, latest: Jun 09 2021 at 14:09)
 

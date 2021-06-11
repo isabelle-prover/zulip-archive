@@ -48,6 +48,49 @@ permalink: ./238552BeginnerQuestions/74308Sumoffunctions.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242317199" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242317199">Manuel Eberl (Jun 11 2021 at 08:53)</a>:</h4>
 <p>I see, the Smooth Manifold entry defines its own vector space instance for functions – presumably in the same way as the <code>Lp</code> entry.</p>
 
+<a name="242328860"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242328860" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242328860">Nicolò Cavalleri (Jun 11 2021 at 10:51)</a>:</h4>
+<p>Can I write the instantiation in an equivalent way as</p>
+<div class="codehilite"><pre><span></span><code>instantiation &quot;&#39;a ⇒ (&#39;b :: real_vector)&quot; :: real_vector
+</code></pre></div>
+<p>somehow? It tells me <code>Undefined type name: "'a ⇒ ('b :: real_vector)"</code></p>
+
+<a name="242329031"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329031" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329031">Manuel Eberl (Jun 11 2021 at 10:53)</a>:</h4>
+<p>No, you have to write <code>instantiation "fun" :: (type, real_vector) real_vector</code>. The bit before the <code>::</code> has to be a type constructor.</p>
+
+<a name="242329340"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329340" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329340">Nicolò Cavalleri (Jun 11 2021 at 10:57)</a>:</h4>
+<p>Ok, my final goal is to put an instance of <code>real_vector</code> on the type <code>('a × (('a ⇒ real) ⇒ real))</code> which ignores the first coordinate and treats pairs as if they were they second coordinate. Does this mean that I have to put an instance on a generic product of a type and a real vector space? This will probably collide with the instance of product of vector spaces which is more standard I guess</p>
+
+<a name="242329462"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329462" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329462">Nicolò Cavalleri (Jun 11 2021 at 10:58)</a>:</h4>
+<p>Indeed it says</p>
+<div class="codehilite"><pre><span></span><code>Conflict of type arities:
+  prod :: (type, real_vector) cancel_ab_semigroup_add and
+  prod :: (cancel_ab_semigroup_add, cancel_ab_semigroup_add) cancel_ab_semigroup_add
+</code></pre></div>
+
+<a name="242329468"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329468" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329468">Manuel Eberl (Jun 11 2021 at 10:58)</a>:</h4>
+<p>You cannot do that in Isabelle. Typeclass instances must <em>always</em> be for a type constructor.</p>
+
+<a name="242329503"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329503" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329503">Manuel Eberl (Jun 11 2021 at 10:59)</a>:</h4>
+<p>What you are trying to do would require something like <code>FlexibleInstances</code> and <code>OverlappingInstances</code> in Haskell, which the Isabelle type class ssystem just doesn't support.</p>
+
+<a name="242329530"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329530" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329530">Manuel Eberl (Jun 11 2021 at 10:59)</a>:</h4>
+<p>The only way around this would be to introduce a type clone of <code>'a × (('a ⇒ real) ⇒ real)</code> with <code>type_definition</code>, then you can instantiate it in whichever way you want</p>
+
+<a name="242329605"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Sum%20of%20functions/near/242329605" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74308Sumoffunctions.html#242329605">Nicolò Cavalleri (Jun 11 2021 at 11:00)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Sum.20of.20functions/near/242329530">said</a>:</p>
+<blockquote>
+<p>The only way around this would be to introduce a type clone of <code>'a × (('a ⇒ real) ⇒ real)</code> with <code>type_definition</code>, then you can instantiate it in whichever way you want</p>
+</blockquote>
+<p>Ok thanks this is what I was looking for!</p>
+
 
 {% endraw %}
 

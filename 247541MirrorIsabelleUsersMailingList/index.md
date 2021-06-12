@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Code equations for Rep in lift_definition with...](19952isabelleCodeequationsforRepinliftdefinitionwith.html) (1 message, latest: Jun 12 2021 at 10:42)
+
+* [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (4 messages, latest: Jun 12 2021 at 10:24)
+
 * [\[isabelle\] FVPS 2021: Deadline Extension (June 25, 2021)](33382isabelleFVPS2021DeadlineExtensionJune252021.html) (1 message, latest: Jun 12 2021 at 09:20)
 
 * [\[isabelle\] CADE 2021 call for participation](98150isabelleCADE2021callforparticipation.html) (1 message, latest: Jun 10 2021 at 05:21)
@@ -34,8 +38,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] PhD position on program verification in Coq](87165isabellePhDpositiononprogramverificationinCoq.html) (1 message, latest: May 28 2021 at 09:03)
 
 * [\[isabelle\] Generating set comprehensions as part of a syn...](80604isabelleGeneratingsetcomprehensionsaspartofasyn.html) (2 messages, latest: May 27 2021 at 12:58)
-
-* [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (3 messages, latest: May 27 2021 at 12:51)
 
 * [\[isabelle\] New in the AFP: Combinatorics on Words](43302isabelleNewintheAFPCombinatoricsonWords.html) (1 message, latest: May 26 2021 at 10:18)
 

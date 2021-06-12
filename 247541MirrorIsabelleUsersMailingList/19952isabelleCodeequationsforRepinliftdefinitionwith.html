@@ -1,0 +1,41 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/19952isabelleCodeequationsforRepinliftdefinitionwith.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/19952isabelleCodeequationsforRepinliftdefinitionwith.html">[isabelle] Code equations for Rep in lift_definition with...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="242443098"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Code%20equations%20for%20Rep%20in%20lift_definition%20with.../near/242443098" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/19952isabelleCodeequationsforRepinliftdefinitionwith.html#242443098">Email Gateway (Jun 12 2021 at 10:42)</a>:</h4>
+<p>From: "C.A. Watt" &lt;<a href="mailto:caw77@cam.ac.uk">caw77@cam.ac.uk</a>&gt;<br>
+Dear list</p>
+<p>I am stuck trying to get an example to generate executable code. A <br>
+stripped down version is attached. I define a type "my_nat", set up as a <br>
+trivial quotient of nat. I lift a definition</p>
+<p>definition all_zeros :: "nat list =&gt; bool"</p>
+<p>to</p>
+<p>lift_definition my_all_zeros :: "my_nat list =&gt; bool" is all_zeros .</p>
+<p>When I attempt to export the code of the lifted function, I get the <br>
+error "No code equations for Rep_my_nat".</p>
+<p>It looks like this is caused by the code equation for my_all_zeros <br>
+working out as</p>
+<p>my_all_zeros ?xa ≡ all_zeros (map Rep_my_nat ?xa)</p>
+<p>Is there a way to make code generation work with this quotient/lifting <br>
+setup? I found the "code_dt" flag to lift_definition, which seems to be <br>
+documented in isar-ref as dealing with something vaguely related, but it <br>
+doesn't affect the behaviour here.</p>
+<p>Best wishes<br>
+Conrad Watt<br>
+<a href="/user_uploads/14278/HDgTu9Fj6pmMrcFh-MFmOLl0/Test.thy">Test.thy</a></p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

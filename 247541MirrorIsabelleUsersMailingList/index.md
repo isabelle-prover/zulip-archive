@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Code equations for Rep in lift_definition with...](19952isabelleCodeequationsforRepinliftdefinitionwith.html) (1 message, latest: Jun 12 2021 at 10:42)
+* [\[isabelle\] Code equations for Rep in lift_definition with...](19952isabelleCodeequationsforRepinliftdefinitionwith.html) (2 messages, latest: Jun 13 2021 at 17:56)
 
 * [\[isabelle\] Profiling time?](00210isabelleProfilingtime.html) (4 messages, latest: Jun 12 2021 at 10:24)
 

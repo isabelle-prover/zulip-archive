@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Call for Papers: Fifth Workshop on Formal Math...](45666isabelleCallforPapersFifthWorkshoponFormalMath.html) (1 message, latest: Jun 14 2021 at 07:01)
+
+* [\[isabelle\] Certified Programs and Proofs (CPP) 2022: Call...](65210isabelleCertifiedProgramsandProofsCPP2022Call.html) (1 message, latest: Jun 14 2021 at 07:01)
+
 * [\[isabelle\] Question about some projects to work on](13646isabelleQuestionaboutsomeprojectstoworkon.html) (1 message, latest: Jun 13 2021 at 20:14)
 
 * [\[isabelle\] Code equations for Rep in lift_definition with...](19952isabelleCodeequationsforRepinliftdefinitionwith.html) (2 messages, latest: Jun 13 2021 at 17:56)

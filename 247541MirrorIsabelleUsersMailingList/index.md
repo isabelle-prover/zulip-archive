@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Execute typedef Definition](31015isabelleExecutetypedefDefinition.html) (1 message, latest: Jun 14 2021 at 09:28)
+
 * [\[isabelle\] Call for Papers: Fifth Workshop on Formal Math...](45666isabelleCallforPapersFifthWorkshoponFormalMath.html) (1 message, latest: Jun 14 2021 at 07:01)
 
 * [\[isabelle\] Certified Programs and Proofs (CPP) 2022: Call...](65210isabelleCertifiedProgramsandProofsCPP2022Call.html) (1 message, latest: Jun 14 2021 at 07:01)

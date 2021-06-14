@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Execute typedef Definition](31015isabelleExecutetypedefDefinition.html) (1 message, latest: Jun 14 2021 at 09:28)
+* [\[isabelle\] Execute typedef Definition](31015isabelleExecutetypedefDefinition.html) (2 messages, latest: Jun 14 2021 at 10:35)
 
 * [\[isabelle\] Call for Papers: Fifth Workshop on Formal Math...](45666isabelleCallforPapersFifthWorkshoponFormalMath.html) (1 message, latest: Jun 14 2021 at 07:01)
 

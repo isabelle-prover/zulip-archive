@@ -35,6 +35,27 @@ Ahornstr. 55, 52074 Aachen, Germany   |  <a href="https://www.se-rwth.de">https:
 Phone ++49 241 80-21352<br>
 <a href="/user_uploads/14278/0lKJJ1kPVvCaz3VJRtvywXQy/Scratch.thy">Scratch.thy</a></p>
 
+<a name="242578180"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Execute%20typedef%20Definition/near/242578180" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/31015isabelleExecutetypedefDefinition.html#242578180">Email Gateway (Jun 14 2021 at 10:35)</a>:</h4>
+<p>From: "C.A. Watt" &lt;<a href="mailto:caw77@cam.ac.uk">caw77@cam.ac.uk</a>&gt;<br>
+Dear Sebastian</p>
+<p>My understanding is that you must define conv by way of <br>
+"lift_definition". Intuitively, in your current setup you have not <br>
+proven that you are applying Abs_evenNat to only elements of nat that <br>
+are within the evenNat set. So instead of your current definition, you <br>
+should state:</p>
+<p>lift_definition(code_dt) conv :: "nat list =&gt; evenNat list" is "filter <br>
+even"<br>
+   by (simp add: list_all_def)</p>
+<p>The proof obligation is exactly the fact that the result of "filter <br>
+even" is always within the set that defines evenNat. Note that the <br>
+"code_dt" parameter is necessary to allow extraction/execution of conv, <br>
+because the abstract type evenNat occuring in the return type has a type <br>
+constructor applied to it. I don't understand all the technical details <br>
+of this parameter, but it's documented in isar-ref.</p>
+<p>Best wishes<br>
+Conrad</p>
+
 
 {% endraw %}
 

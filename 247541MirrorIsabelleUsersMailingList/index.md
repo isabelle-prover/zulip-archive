@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Call for (Online) Participation](47465isabelleFSCD2021CallforOnlineParticipation.html) (1 message, latest: Jun 15 2021 at 08:08)
+
 * [\[isabelle\] Execute typedef Definition](31015isabelleExecutetypedefDefinition.html) (2 messages, latest: Jun 14 2021 at 10:35)
 
 * [\[isabelle\] Call for Papers: Fifth Workshop on Formal Math...](45666isabelleCallforPapersFifthWorkshoponFormalMath.html) (1 message, latest: Jun 14 2021 at 07:01)

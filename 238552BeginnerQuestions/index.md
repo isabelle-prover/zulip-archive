@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Why Pure.conjunctionI is an "ill-formed introduction rule"?](21193WhyPureconjunctionIisanillformedintroductionrule.html) (2 messages, latest: Jun 15 2021 at 07:57)
+
 * [How to get all elimination rules?](29646Howtogetalleliminationrules.html) (2 messages, latest: Jun 15 2021 at 04:42)
 
 * [Sum of functions](74308Sumoffunctions.html) (19 messages, latest: Jun 11 2021 at 13:31)

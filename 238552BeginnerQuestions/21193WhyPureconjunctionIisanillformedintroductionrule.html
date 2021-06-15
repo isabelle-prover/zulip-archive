@@ -1,0 +1,31 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/21193WhyPureconjunctionIisanillformedintroductionrule.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/21193WhyPureconjunctionIisanillformedintroductionrule.html">Why Pure.conjunctionI is an "ill-formed introduction rule"?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="242699205"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Why%20Pure.conjunctionI%20is%20an%20%22ill-formed%20introduction%20rule%22%3F/near/242699205" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/21193WhyPureconjunctionIisanillformedintroductionrule.html#242699205">Qiyuan Xu (Jun 15 2021 at 07:55)</a>:</h4>
+<p>This Isar code triggers an error "Ill-formed introduction rule",</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span> <span class="n">Pure.conjunctionI</span><span class="o">[</span><span class="n">intro</span><span class="o">]</span>
+</code></pre></div>
+<p>where the <code>Pure.conjunctionI</code> is <code>PROP ?A ⟹ PROP ?B ⟹ PROP ?A &amp;&amp;&amp; PROP ?B</code><br>
+Why? Isn't it an introduction rule??</p>
+<p>The same problem is actually hindering me. I have defined a constant for certain  purpose, let's say <code>MyConj :: prop =&gt; prop =&gt; prop</code> where <code>MyConj = (&amp;&amp;&amp;)</code> , and the same error "Ill-formed introduction rule" occurs when I'm trying to declare the introduction rule for it, that <code>PROP P ⟹ PROP Q ⟹ PROP MyConj (RPOP P) (PROP Q)</code>.</p>
+
+<a name="242699371"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Why%20Pure.conjunctionI%20is%20an%20%22ill-formed%20introduction%20rule%22%3F/near/242699371" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/21193WhyPureconjunctionIisanillformedintroductionrule.html#242699371">Mathias Fleury (Jun 15 2021 at 07:57)</a>:</h4>
+<p>why don't you use standard HOL conjunction instead of Pure conjuction?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

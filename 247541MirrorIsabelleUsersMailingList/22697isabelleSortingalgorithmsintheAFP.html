@@ -1,0 +1,66 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/22697isabelleSortingalgorithmsintheAFP.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22697isabelleSortingalgorithmsintheAFP.html">[isabelle] Sorting algorithms in the AFP</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="242866180"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sorting%20algorithms%20in%20the%20AFP/near/242866180" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22697isabelleSortingalgorithmsintheAFP.html#242866180">Email Gateway (Jun 16 2021 at 11:20)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@informatik.tu-muenchen.de">florian.haftmann@informatik.tu-muenchen.de</a>&gt;<br>
+Dear all,</p>
+<p>I stumbled over a fundamental structural issue in the AFP (referring to<br>
+the 2021 release):</p>
+<ul>
+<li>
+<p>There is entry Efficient_Merge_Sort, with obvious content.</p>
+</li>
+<li>
+<p>There is theory Automatic_Refinement.Misc, which provides both a quick<br>
+sort and a merge sort specification tailored for efficient execution.</p>
+</li>
+<li>
+<p>There are a couple of references to Automatic_Refinement.Misc<br>
+throughout the AFP:</p>
+</li>
+</ul>
+<p>I have not yet visited all of them in detail but already this overview<br>
+suggests that a significant amount of those references makes use of the<br>
+sorting algorithms.</p>
+<p>It seems worth a try whether those applications can be changed to use<br>
+session Efficient_Merge_Sort instead.  But maybe the authors /<br>
+maintainers of Automatic_Refinement can say more on this.</p>
+<p>In any case, the sorting part of Automatic_Refinement.Misc should be<br>
+made more explicit using a separate theory.</p>
+<p>Cheers,<br>
+    Florian<br>
+<a href="/user_uploads/14278/BIbYMgqK90Rny0HE6rpiRVVs/OpenPGP_signature">OpenPGP_signature</a></p>
+
+<a name="242869480"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sorting%20algorithms%20in%20the%20AFP/near/242869480" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/22697isabelleSortingalgorithmsintheAFP.html#242869480">Email Gateway (Jun 16 2021 at 11:58)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+The quicksort and mergesort algorithms in AFP have been developed by<br>
+Thomas Tuerk, for the CAVA model checker.</p>
+<p>It is slightly different from the mergesort afp entry:</p>
+<p>Efficient_Merge_Sort uses a key function ('a =&gt; 'key::linorder), while<br>
+the Automatic_Refinement version accepts a relation. While this is<br>
+theoretically the same (both define weak linear orderings), practically<br>
+the introduction of an additional linearly ordered key type and type-<br>
+class can be cumbersome. In CAVA, we have had type-class conflicts<br>
+before, which do not affect our typeclass-less sorting definitions.</p>
+<p>The efficiency of the existing algorithms should be benchmarked. To my<br>
+knowledge, we have never benchmarked our sorting algorithms. <br>
+The comments in Efficient_Merge_Sort suggests, however, that the<br>
+performance may also be language independent.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle-dev\] NEWS](90179isabelledevNEWS.html) (2 messages, latest: Jun 16 2021 at 11:17)
+
 * [\[isabelle-dev\] NEWS: Reactivated ML profiling](90604isabelledevNEWSReactivatedMLprofiling.html) (1 message, latest: Jun 09 2021 at 12:01)
 
 * [\[isabelle-dev\] NEWS: System options short form (e.g. "-o ...](53194isabelledevNEWSSystemoptionsshortformego.html) (1 message, latest: Jun 07 2021 at 12:50)
@@ -88,8 +90,6 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 * [\[isabelle-dev\] Towards localized syntax: bundle mixins fo...](39539isabelledevTowardslocalizedsyntaxbundlemixinsfo.html) (2 messages, latest: Nov 01 2020 at 17:09)
 
 * [\[isabelle-dev\] NEWS: update of external provers](02153isabelledevNEWSupdateofexternalprovers.html) (4 messages, latest: Oct 29 2020 at 16:51)
-
-* [\[isabelle-dev\] NEWS](90179isabelledevNEWS.html) (1 message, latest: Oct 29 2020 at 13:49)
 
 * [\[isabelle-dev\] Update to jdk-11.0.9+11 with arm64-linux](00297isabelledevUpdatetojdk110911witharm64linux.html) (1 message, latest: Oct 26 2020 at 20:58)
 

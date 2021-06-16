@@ -9,6 +9,8 @@ permalink: ./211483IsabelleML/index.html
 
 ### Topics:
 
+* [Forall introduction?](08898Forallintroduction.html) (1 message, latest: Jun 16 2021 at 16:49)
+
 * [Writing to file for logging](75382Writingtofileforlogging.html) (1 message, latest: Apr 26 2021 at 08:37)
 
 * [Illegal fixed variable error](84859Illegalfixedvariableerror.html) (1 message, latest: Apr 23 2021 at 15:49)

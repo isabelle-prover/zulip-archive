@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] PhD position on Embedded Systems Verification ...](91703isabellePhDpositiononEmbeddedSystemsVerification.html) (1 message, latest: Jun 16 2021 at 09:44)
+
 * [\[isabelle\] FSCD 2021: Call for (Online) Participation](47465isabelleFSCD2021CallforOnlineParticipation.html) (1 message, latest: Jun 15 2021 at 08:08)
 
 * [\[isabelle\] Execute typedef Definition](31015isabelleExecutetypedefDefinition.html) (2 messages, latest: Jun 14 2021 at 10:35)

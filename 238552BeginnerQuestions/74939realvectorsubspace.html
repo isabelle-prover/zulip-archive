@@ -66,6 +66,46 @@ permalink: ./238552BeginnerQuestions/74939realvectorsubspace.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243056870" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243056870">Nicolò Cavalleri (Jun 17 2021 at 17:51)</a>:</h4>
 <p>But is the definition supposed to be in that file? Because I looked at all occurrences of subspace in that file and I did not find it... What other file could I look at? If I ctrl+click it it takes me to Real Vector Spaces even if the lemma is about subspaces of vector spaces on a generic field!</p>
 
+<a name="243060288"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243060288" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243060288">Manuel Eberl (Jun 17 2021 at 18:13)</a>:</h4>
+<p>It's in <code>~~/src/HOL/Modules.thy</code>. Yes, finding definitions for constants coming from locales can be annoying. One way is to do something like <code>find_consts "name:subspace"</code> and see if it shows up in that list. In this case you find <code>Modules.module.subspace</code>.</p>
+
+<a name="243060782"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243060782" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243060782">Nicolò Cavalleri (Jun 17 2021 at 18:17)</a>:</h4>
+<p>What do you mean with "do <code>find_consts "name:subspace"</code>"? If I type it in the middle of a file it tells me <code>Inner syntax error⌂</code></p>
+
+<a name="243060950"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243060950" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243060950">Manuel Eberl (Jun 17 2021 at 18:18)</a>:</h4>
+<p>Sorry, that should be <code>find_consts name:"subspace"</code>. You can do the same thing with the "Query" panel.</p>
+
+<a name="243061016"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061016" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061016">Manuel Eberl (Jun 17 2021 at 18:18)</a>:</h4>
+<p>(I for one never use that one though so I'm not sure how it works)</p>
+
+<a name="243061111"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061111" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061111">Manuel Eberl (Jun 17 2021 at 18:19)</a>:</h4>
+<p>You just put the <code>find_consts</code> invocation just about anywhere in your Isabelle file and it will search for constants matching that query, i.e. having the given type or, in this case, name.</p>
+
+<a name="243061136"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061136" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061136">Manuel Eberl (Jun 17 2021 at 18:19)</a>:</h4>
+<p>There's also <code>find_theorems</code>, which works similarly.</p>
+
+<a name="243061251"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061251" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061251">Nicolò Cavalleri (Jun 17 2021 at 18:20)</a>:</h4>
+<p>Ok thanks that works! I can't find the query panel but <code>find_consts</code> does the job</p>
+
+<a name="243061378"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061378" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061378">Nicolò Cavalleri (Jun 17 2021 at 18:21)</a>:</h4>
+<p>As for the problem of Isabelle not being able to typecheck the files in the HOL folder you agree there is no easy workaround right?</p>
+
+<a name="243061416"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061416" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061416">Nicolò Cavalleri (Jun 17 2021 at 18:21)</a>:</h4>
+<p>As in that does not involve copying code</p>
+
+<a name="243061665"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/real_vector.subspace/near/243061665" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/74939realvectorsubspace.html#243061665">Manuel Eberl (Jun 17 2021 at 18:23)</a>:</h4>
+<p>No, there isn't, currently. It's a known issue but not one that is easy to fix, apparently, or Makarius would have done it long ago.</p>
+
 
 {% endraw %}
 

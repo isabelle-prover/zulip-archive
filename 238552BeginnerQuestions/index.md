@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [real_vector.subspace](74939realvectorsubspace.html) (5 messages, latest: Jun 17 2021 at 15:31)
+* [real_vector.subspace](74939realvectorsubspace.html) (10 messages, latest: Jun 17 2021 at 17:51)
 
 * [Why Pure.conjunctionI is an "ill-formed introduction rule"?](21193WhyPureconjunctionIisanillformedintroductionrule.html) (9 messages, latest: Jun 15 2021 at 08:20)
 

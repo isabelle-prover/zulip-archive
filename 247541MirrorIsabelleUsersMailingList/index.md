@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Update on the SErAPIS search engine: New videos](33196isabelleUpdateontheSErAPISsearchengineNewvideos.html) (1 message, latest: Jun 17 2021 at 16:19)
+
 * [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (3 messages, latest: Jun 16 2021 at 23:01)
 
 * [\[isabelle\] PhD position on Embedded Systems Verification ...](91703isabellePhDpositiononEmbeddedSystemsVerification.html) (1 message, latest: Jun 16 2021 at 09:44)

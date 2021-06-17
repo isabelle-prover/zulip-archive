@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (429 topics)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (430 topics)
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (145 topics)
 
@@ -28,9 +28,9 @@ permalink: ./index.html
 
 * [Proof Ground](245944ProofGround/index.html) (5 topics)
 
-* [Is there code for X?](285459IstherecodeforX/index.html) (4 topics)
+* [SErAPIS](285806SErAPIS/index.html) (5 topics)
 
-* [SErAPIS](285806SErAPIS/index.html) (4 topics)
+* [Is there code for X?](285459IstherecodeforX/index.html) (4 topics)
 
 * [Lie](211306Lie/index.html) (3 topics)
 

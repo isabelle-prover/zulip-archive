@@ -40,6 +40,18 @@ end
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Unification%20issues%20with%20OF/near/243130198" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/95751UnificationissueswithOF.html#243130198">Mathias Fleury (Jun 18 2021 at 08:26)</a>:</h4>
 <p>The HO unification is probably your problem, but we need more details (don't forget to <code>@{print}</code> intermediate results if you are using ML)</p>
 
+<a name="243136110"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Unification%20issues%20with%20OF/near/243136110" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/95751UnificationissueswithOF.html#243136110">Paul Bachmann (Jun 18 2021 at 09:23)</a>:</h4>
+<p>The problem seems to be that the theorem that I want to use as H2 has, in ML, the form  <code>Const ("Pure.all", "(?'a1 ⇒ prop) ⇒ prop") $ Abs ("x", "?'a1", ...)</code> while your H2 theorem has the bound variable replacd by a Var.  I need this because I explicitly want the x variable to be the bound variable in the lambda term of the conclusion of H1 and my f  and g terms might be more complicated and might contain more variables. However, I could also try using the version with a Var in H2, but as you suspected, the unification result I get from that is not exactly what I want, since I simply want f and g in H1 to be instantiated with f and g from H2.</p>
+
+<a name="243139440"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Unification%20issues%20with%20OF/near/243139440" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/95751UnificationissueswithOF.html#243139440">Manuel Eberl (Jun 18 2021 at 09:54)</a>:</h4>
+<p>I think the problem is that instantiation with <code>OF</code> can only instantiate schematic variables, not variables bound by a <code>Pure.all</code>. This is usually not a problem because all theorems you can normally get your hands on have schematic variables instead of outermost-level-universally-meta-quantified variables anyway.</p>
+
+<a name="243139517"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Unification%20issues%20with%20OF/near/243139517" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/95751UnificationissueswithOF.html#243139517">Manuel Eberl (Jun 18 2021 at 09:55)</a>:</h4>
+<p>If you really do have a theorem with outermost-level <code>Pure.all</code> and want to instantiate these variables, you will have to do an explicit elimination of the universal quantifier using e.g. the corresponding functions from the <code>Thm</code> module.</p>
+
 
 {% endraw %}
 

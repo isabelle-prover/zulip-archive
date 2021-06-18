@@ -9,7 +9,7 @@ permalink: ./211483IsabelleML/index.html
 
 ### Topics:
 
-* [Unification issues with OF](95751UnificationissueswithOF.html) (4 messages, latest: Jun 18 2021 at 08:26)
+* [Unification issues with OF](95751UnificationissueswithOF.html) (7 messages, latest: Jun 18 2021 at 09:55)
 
 * [Forall introduction?](08898Forallintroduction.html) (3 messages, latest: Jun 16 2021 at 19:49)
 

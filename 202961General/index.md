@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Proof Ground 2021](95227ProofGround2021.html) (2 messages, latest: Jun 18 2021 at 13:19)
+
 * [Dropping global mixfix syntax](44241Droppingglobalmixfixsyntax.html) (2 messages, latest: May 30 2021 at 12:26)
 
 * [AFP submission processing time](79600AFPsubmissionprocessingtime.html) (3 messages, latest: May 24 2021 at 15:39)
@@ -32,8 +34,6 @@ permalink: ./202961General/index.html
 * [Analysis](26501Analysis.html) (7 messages, latest: Apr 14 2021 at 13:19)
 
 * ["Real" imperative code generation from Isabelle](92603RealimperativecodegenerationfromIsabelle.html) (19 messages, latest: Apr 12 2021 at 13:24)
-
-* [Proof Ground 2021](95227ProofGround2021.html) (1 message, latest: Mar 29 2021 at 08:57)
 
 * [IRC](88031IRC.html) (2 messages, latest: Mar 17 2021 at 17:47)
 

@@ -9,6 +9,12 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] SCSS 2021: call for short and work-in-progress...](80782isabelleSCSS2021callforshortandworkinprogress.html) (1 message, latest: Jun 19 2021 at 10:45)
+
+* [\[isabelle\] Add markup to term annotations](79548isabelleAddmarkuptotermannotations.html) (1 message, latest: Jun 19 2021 at 10:45)
+
+* [\[isabelle\] Industry researchers and engineer sought for n...](73580isabelleIndustryresearchersandengineersoughtforn.html) (1 message, latest: Jun 19 2021 at 10:42)
+
 * [\[isabelle\] Proof Ground 2021 Call for Participation](86318isabelleProofGround2021CallforParticipation.html) (1 message, latest: Jun 18 2021 at 12:47)
 
 * [\[isabelle\] Update on the SErAPIS search engine: New videos](33196isabelleUpdateontheSErAPISsearchengineNewvideos.html) (1 message, latest: Jun 17 2021 at 16:19)

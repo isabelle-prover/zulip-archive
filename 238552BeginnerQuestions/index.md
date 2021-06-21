@@ -9,11 +9,13 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Changing type classes in locales](43946Changingtypeclassesinlocales.html) (6 messages, latest: Jun 21 2021 at 14:51)
+* [((A ==> B) & A) ==> B?](26174ABAB.html) (11 messages, latest: Jun 21 2021 at 15:58)
+
+* [Changing type classes in locales](43946Changingtypeclassesinlocales.html) (22 messages, latest: Jun 21 2021 at 15:38)
+
+* [Isomorphism on](54008Isomorphismon.html) (1 message, latest: Jun 21 2021 at 15:22)
 
 * [Fix 'a with typeclass](28740Fixawithtypeclass.html) (15 messages, latest: Jun 21 2021 at 13:48)
-
-* [((A ==> B) & A) ==> B?](26174ABAB.html) (10 messages, latest: Jun 21 2021 at 10:42)
 
 * [theory Aux](38154theoryAux.html) (1 message, latest: Jun 20 2021 at 08:07)
 

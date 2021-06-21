@@ -55,6 +55,78 @@ assumes cont: &quot;continuous_on UNIV f&quot;
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243393833" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243393833">Manuel Eberl (Jun 21 2021 at 14:51)</a>:</h4>
 <p>Works fine for me. What did you write exactly?</p>
 
+<a name="243398325"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243398325" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243398325">Nicolò Cavalleri (Jun 21 2021 at 15:20)</a>:</h4>
+<p>Ops I forgot the f... it works indeed, sorry!</p>
+
+<a name="243398471"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243398471" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243398471">Manuel Eberl (Jun 21 2021 at 15:21)</a>:</h4>
+<p>No worries!</p>
+
+<a name="243399094"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399094" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399094">Nicolò Cavalleri (Jun 21 2021 at 15:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Changing.20type.20classes.20in.20locales/near/243391746">said</a>:</p>
+<blockquote>
+<p>(You might want <code>real_normed_vector</code> anyway, which contains both.)</p>
+</blockquote>
+<p>What if I want it to be a topological vector space whose topology does not come from a norm: is there a topological_vector_space in HOL?</p>
+
+<a name="243399338"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399338" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399338">Manuel Eberl (Jun 21 2021 at 15:27)</a>:</h4>
+<p>Hm, if anything it would have to be <code>topological_real_vector_space</code> because type classes in Isabelle cannot have more than one type variable, i.e. you cannot have a <code>vector_space</code> type class, only a <code>real_vector_space</code> class.</p>
+
+<a name="243399612"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399612" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399612">Nicolò Cavalleri (Jun 21 2021 at 15:29)</a>:</h4>
+<p>Well, that would be fine: I am working with real numbers only, but it does not exist yet, right?</p>
+
+<a name="243399650"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399650" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399650">Manuel Eberl (Jun 21 2021 at 15:29)</a>:</h4>
+<p>I had a quick look and didn't find it, no.</p>
+
+<a name="243399696"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399696" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399696">Manuel Eberl (Jun 21 2021 at 15:29)</a>:</h4>
+<p>Isabelle's type class system is really not great for showing "abstract" results about structures due to its limitations.</p>
+
+<a name="243399713"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399713" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399713">Nicolò Cavalleri (Jun 21 2021 at 15:29)</a>:</h4>
+<p>Ok thanks!</p>
+
+<a name="243399730"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399730" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399730">Manuel Eberl (Jun 21 2021 at 15:30)</a>:</h4>
+<p>It works well for working with concrete ones.</p>
+
+<a name="243399787"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399787" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399787">Manuel Eberl (Jun 21 2021 at 15:30)</a>:</h4>
+<p>But if you want to do fancier stuff you may have to work entirely with locales instead.</p>
+
+<a name="243399886"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399886" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399886">Manuel Eberl (Jun 21 2021 at 15:30)</a>:</h4>
+<p>But a <code>topological_real_vector_space</code> would of course be perfectly possible.</p>
+
+<a name="243399988"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243399988" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243399988">Manuel Eberl (Jun 21 2021 at 15:31)</a>:</h4>
+<p>It probably doesn't exist because for the "interesting" real topological vector spaces the topology is always induced by a norm</p>
+
+<a name="243400046"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243400046" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243400046">Manuel Eberl (Jun 21 2021 at 15:31)</a>:</h4>
+<p>Especially since the type class approach only allows you to fashion your type with <strong>one</strong> canonical topology. And that's probably going to be the one induced by the norm.</p>
+
+<a name="243400209"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243400209" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243400209">Manuel Eberl (Jun 21 2021 at 15:32)</a>:</h4>
+<p>(There are ways to work with topologies in a more liberal way though, there is a type <code>'a toplogy</code> representing a topology on the type <code>'a</code>, and then you can e.g. write <code>openin top X</code> to say that <code>X</code> is open in the topology <code>top</code>).</p>
+
+<a name="243400714"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243400714" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243400714">Nicolò Cavalleri (Jun 21 2021 at 15:36)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Changing.20type.20classes.20in.20locales/near/243399988">said</a>:</p>
+<blockquote>
+<p>It probably doesn't exist because for the "interesting" real topological vector spaces the topology is always induced by a norm</p>
+</blockquote>
+<p>I kind of disagree with this (what about infinite dimensional Frechet spaces?) but I get your point! My problem is that I am trying to write code that works with the current library for smooth manifolds, so I cannot make a lot of choices in the implementaion, otherwise I would certainly follow your tip of using locales! In any case there's no problem here, since you say <code>topological_real_vector_space</code> can be done and I only need that!</p>
+
+<a name="243401076"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243401076" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243401076">Manuel Eberl (Jun 21 2021 at 15:38)</a>:</h4>
+<p>The smooth manifold development was already pushing what you can do with the current formalisation in a lot of ways</p>
+
 
 {% endraw %}
 

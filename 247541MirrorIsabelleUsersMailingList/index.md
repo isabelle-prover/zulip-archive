@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Active Area for jEdit Console](54233isabelleActiveAreaforjEditConsole.html) (1 message, latest: Jun 21 2021 at 09:10)
+
 * [\[isabelle\] WiL'21 Final Call for Participation](50452isabelleWiL21FinalCallforParticipation.html) (1 message, latest: Jun 21 2021 at 08:52)
 
 * [\[isabelle\] New in the AFP: A Shorter Compiler Correctness...](08421isabelleNewintheAFPAShorterCompilerCorrectness.html) (1 message, latest: Jun 21 2021 at 07:12)

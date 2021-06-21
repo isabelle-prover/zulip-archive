@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [((A ==> B) & A) ==> B?](26174ABAB.html) (1 message, latest: Jun 21 2021 at 10:00)
+
 * [theory Aux](38154theoryAux.html) (1 message, latest: Jun 20 2021 at 08:07)
 
 * [real_vector.subspace](74939realvectorsubspace.html) (20 messages, latest: Jun 17 2021 at 18:23)

@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [((A ==> B) & A) ==> B?](26174ABAB.html) (11 messages, latest: Jun 21 2021 at 15:58)
+* [((A ==> B) & A) ==> B?](26174ABAB.html) (18 messages, latest: Jun 21 2021 at 16:25)
 
 * [Changing type classes in locales](43946Changingtypeclassesinlocales.html) (22 messages, latest: Jun 21 2021 at 15:38)
 

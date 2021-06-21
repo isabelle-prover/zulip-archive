@@ -107,6 +107,36 @@ proof -
 First, I should have written <code>∀x∈s. ∀y∈s. ∀p. on_line x y p ⟶ p ∈ s⟹ convex s</code> as this was what I actually meant to say, not quantifying p was gibberish.<br>
 And second I fixed x and y and then assumed what i needed for them instead of just fixing them and showing that if my assumtions hold more follows (if that makes any sense)</p>
 
+<a name="243404880"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243404880" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243404880">Manuel Eberl (Jun 21 2021 at 16:04)</a>:</h4>
+<p>You probably defined <code>on_line</code> yourself, right? Note that <code>HOL-Analysis</code> contains the definition <code>closed_segment</code> together with a lot of other material about convexity.</p>
+
+<a name="243406201"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243406201" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243406201">Simon Hanssen (Jun 21 2021 at 16:15)</a>:</h4>
+<p>Yes I did. Looking at <code>closed_segment</code> it seems to be pretty much what I needed, but it is working on vectors though while Councerclockwise_2D_Strict uses points</p>
+
+<a name="243406452"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243406452" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243406452">Simon Hanssen (Jun 21 2021 at 16:17)</a>:</h4>
+<p>(there might aswell be a conversion but seems like i didn't find that yet)</p>
+
+<a name="243407093"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243407093" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243407093">Manuel Eberl (Jun 21 2021 at 16:22)</a>:</h4>
+<p>What is a point?</p>
+
+<a name="243407221"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243407221" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243407221">Manuel Eberl (Jun 21 2021 at 16:23)</a>:</h4>
+<p>Ah, <code>point</code> is just an abbreviation for <code>real × real</code>. That should work fine with <code>closed_segment</code> though.</p>
+
+<a name="243407369"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243407369" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243407369">Manuel Eberl (Jun 21 2021 at 16:24)</a>:</h4>
+<p>Yes, works fine:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">term</span> <span class="s">"closed_segment (1,2) (3::real,4::real)"</span><span class="sx">`</span>
+</code></pre></div>
+
+<a name="243407474"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/%28%28A%20%3D%3D%3E%20B%29%20%26%20A%29%20%3D%3D%3E%20B%3F/near/243407474" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/26174ABAB.html#243407474">Manuel Eberl (Jun 21 2021 at 16:25)</a>:</h4>
+<p><code>closed_segment</code> has type <code>'a::real_vector ⇒ 'a ⇒ 'a set</code>, i.e. it works for any type that has a <code>real_vector</code> instance. And there are corresponding instances for <code>real</code> and the <code>product</code> type, so <code>real × real</code> works fine.</p>
+
 
 {% endraw %}
 

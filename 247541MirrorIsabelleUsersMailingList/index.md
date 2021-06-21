@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: A Shorter Compiler Correctness...](08421isabelleNewintheAFPAShorterCompilerCorrectness.html) (1 message, latest: Jun 21 2021 at 07:12)
+
 * [\[isabelle\] SCSS 2021: call for short and work-in-progress...](80782isabelleSCSS2021callforshortandworkinprogress.html) (1 message, latest: Jun 19 2021 at 10:45)
 
 * [\[isabelle\] Add markup to term annotations](79548isabelleAddmarkuptotermannotations.html) (1 message, latest: Jun 19 2021 at 10:45)

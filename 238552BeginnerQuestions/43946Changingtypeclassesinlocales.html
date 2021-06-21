@@ -1,0 +1,61 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html">Changing type classes in locales</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="243391230"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243391230" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243391230">Nicolò Cavalleri (Jun 21 2021 at 14:34)</a>:</h4>
+<p>Suppose I have a locale that depends on a certain type that we require to satisfy certain type class hypotheses, e.g.</p>
+<div class="codehilite"><pre><span></span><code>locale test =
+fixes f :: &quot;(&#39;a :: t2_space) =&gt; (&#39;b :: t2_space)&quot;
+assumes cont: &quot;continuous_on UNIV f&quot;
+</code></pre></div>
+<p>and I want to extend it to a locale that adds other hypotheses but that also needs to put other instances on my types, e.g.</p>
+<div class="codehilite"><pre><span></span><code>locale test_2 = test + assumes linear: &quot;linear f&quot;
+</code></pre></div>
+<p>for which I need e.g. <code>'b :: real_vector</code>. How do I specify this new requirement?</p>
+
+<a name="243391669"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243391669" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243391669">Manuel Eberl (Jun 21 2021 at 14:36)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">locale</span> <span class="n">test_2</span> <span class="o">=</span>
+  <span class="n">test</span> <span class="n">f</span> <span class="kp">for</span> <span class="n">f</span> <span class="o">::</span> <span class="s">"'a :: {real_vector, t2_space} ⇒ 'b :: {real_vector, t2_space}"</span> <span class="o">+</span>
+  <span class="kp">assumes</span> <span class="n">linear</span><span class="o">:</span> <span class="s">"linear f"</span>
+</code></pre></div>
+
+<a name="243391705"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243391705" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243391705">Manuel Eberl (Jun 21 2021 at 14:37)</a>:</h4>
+<p>Note however that the <code>linear</code> already gives you the <code>real_vector</code> constraint anyway.</p>
+
+<a name="243391746"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243391746" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243391746">Manuel Eberl (Jun 21 2021 at 14:37)</a>:</h4>
+<p>(You might want <code>real_normed_vector</code> anyway, which contains both.)</p>
+
+<a name="243393271"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243393271" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243393271">Nicolò Cavalleri (Jun 21 2021 at 14:47)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Changing.20type.20classes.20in.20locales/near/243391669">said</a>:</p>
+<blockquote>
+<p><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">locale</span> <span class="n">test_2</span> <span class="o">=</span>
+  <span class="n">test</span> <span class="n">f</span> <span class="kp">for</span> <span class="n">f</span> <span class="o">::</span> <span class="s">"'a :: {real_vector, t2_space} ⇒ 'b :: {real_vector, t2_space}"</span> <span class="o">+</span>
+  <span class="kp">assumes</span> <span class="n">linear</span><span class="o">:</span> <span class="s">"linear f"</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>If I do so it says <code>Parameter(s) declared simultaneously in expression and for clause: f</code>!</p>
+
+<a name="243393833"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Changing%20type%20classes%20in%20locales/near/243393833" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/43946Changingtypeclassesinlocales.html#243393833">Manuel Eberl (Jun 21 2021 at 14:51)</a>:</h4>
+<p>Works fine for me. What did you write exactly?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

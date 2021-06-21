@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Changing type classes in locales](43946Changingtypeclassesinlocales.html) (6 messages, latest: Jun 21 2021 at 14:51)
+
 * [Fix 'a with typeclass](28740Fixawithtypeclass.html) (15 messages, latest: Jun 21 2021 at 13:48)
 
 * [((A ==> B) & A) ==> B?](26174ABAB.html) (10 messages, latest: Jun 21 2021 at 10:42)

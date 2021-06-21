@@ -1,0 +1,49 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/94850binarynumbers.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94850binarynumbers.html">binary numbers</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="243452762"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/binary%20numbers/near/243452762" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94850binarynumbers.html#243452762">tangentstorm (Jun 21 2021 at 22:47)</a>:</h4>
+<p>Hello. :) I'm trying to make a little theory of binary numbers and I could use some help. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span> <span class="n">bin</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">|</span> <span class="n">Q</span> <span class="n">bin</span> <span class="o">|</span> <span class="n">I</span> <span class="n">bin</span>
+
+<span class="k">fun</span> <span class="n">nb</span> <span class="o">::</span> <span class="s">"bin ⇒ nat"</span> <span class="kp">where</span>
+  <span class="s">"nb   Z = 0"</span>
+<span class="o">|</span> <span class="s">"nb (Q x) = 2 * (nb x)"</span>
+<span class="o">|</span> <span class="s">"nb (I x) = 2 * (nb x) + 1"</span>
+
+<span class="k">fun</span> <span class="n">bn</span> <span class="o">::</span> <span class="s">"nat ⇒ bin"</span> <span class="kp">where</span>
+  <span class="s">"bn 0 = Z"</span>
+<span class="o">|</span> <span class="s">"bn (Suc 0) = (I Z)"</span>
+<span class="o">|</span> <span class="s">"bn x = (if even x then Q (bn (x div 2))</span>
+<span class="s">           else I (bn ((x-1) div 2)))"</span>
+</code></pre></div>
+<ol>
+<li>
+<p>I want to use the constructors <code>O x</code> to represent the operation "2<em>x" and <code>I x</code> to represent "1+2</em>x", but <code>O</code> is already defined as an infix operator, so I'm using <code>Q x</code>... Can I hide the pre-existing <code>O</code> ?</p>
+</li>
+<li>
+<p>The syntax of data constructors forces me to write by binary numbers backwards : to write the value <code>0b1010</code>, I have to say <code>Q I Q I Z</code> ... Is there a way for me to define a lexer rule that lets me write something like <code>0b1010</code> (or at least arrange the bits in the traditional order)?</p>
+</li>
+</ol>
+
+<a name="243453702"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/binary%20numbers/near/243453702" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/94850binarynumbers.html#243453702">tangentstorm (Jun 21 2021 at 22:55)</a>:</h4>
+<p>Oh wow it's even worse. I have to write it with a set of parens for each bit. :/</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="s">"10 = nb(Q(I(Q(I Z))))"</span> <span class="k">by</span> <span class="n">simp</span>
+</code></pre></div>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Fix 'a with typeclass](28740Fixawithtypeclass.html) (15 messages, latest: Jun 21 2021 at 13:48)
+
 * [((A ==> B) & A) ==> B?](26174ABAB.html) (10 messages, latest: Jun 21 2021 at 10:42)
 
 * [theory Aux](38154theoryAux.html) (1 message, latest: Jun 20 2021 at 08:07)

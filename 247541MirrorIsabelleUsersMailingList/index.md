@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Job offer: 3 year research engineer in static ...](00808isabelleJoboffer3yearresearchengineerinstatic.html) (1 message, latest: Jun 22 2021 at 13:20)
+
 * [\[isabelle\] Active Area for jEdit Console](54233isabelleActiveAreaforjEditConsole.html) (1 message, latest: Jun 21 2021 at 09:10)
 
 * [\[isabelle\] WiL'21 Final Call for Participation](50452isabelleWiL21FinalCallforParticipation.html) (1 message, latest: Jun 21 2021 at 08:52)

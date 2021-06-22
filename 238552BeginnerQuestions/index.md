@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [binary numbers](94850binarynumbers.html) (2 messages, latest: Jun 21 2021 at 22:55)
+* [binary numbers](94850binarynumbers.html) (3 messages, latest: Jun 22 2021 at 04:35)
 
 * [((A ==> B) & A) ==> B?](26174ABAB.html) (18 messages, latest: Jun 21 2021 at 16:25)
 

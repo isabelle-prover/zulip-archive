@@ -9,13 +9,13 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Isomorphism on](54008Isomorphismon.html) (2 messages, latest: Jun 22 2021 at 20:14)
+
 * [binary numbers](94850binarynumbers.html) (9 messages, latest: Jun 22 2021 at 06:12)
 
 * [((A ==> B) & A) ==> B?](26174ABAB.html) (18 messages, latest: Jun 21 2021 at 16:25)
 
 * [Changing type classes in locales](43946Changingtypeclassesinlocales.html) (22 messages, latest: Jun 21 2021 at 15:38)
-
-* [Isomorphism on](54008Isomorphismon.html) (1 message, latest: Jun 21 2021 at 15:22)
 
 * [Fix 'a with typeclass](28740Fixawithtypeclass.html) (15 messages, latest: Jun 21 2021 at 13:48)
 

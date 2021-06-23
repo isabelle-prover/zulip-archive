@@ -9,9 +9,9 @@ permalink: ./245944ProofGround/index.html
 
 ### Topics:
 
-* [\[PG 2019\] Fold](30465PG2019Fold.html) (3 messages, latest: Jun 23 2021 at 09:30)
+* [Proving for Fun checker: Internal error](56940ProvingforFuncheckerInternalerror.html) (3 messages, latest: Jun 23 2021 at 15:26)
 
-* [Proving for Fun checker: Internal error](56940ProvingforFuncheckerInternalerror.html) (2 messages, latest: Jun 21 2021 at 06:58)
+* [\[PG 2019\] Fold](30465PG2019Fold.html) (3 messages, latest: Jun 23 2021 at 09:30)
 
 * [Proof Ground 2021](95227ProofGround2021.html) (2 messages, latest: Jun 07 2021 at 12:53)
 

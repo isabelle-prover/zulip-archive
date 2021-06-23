@@ -32,6 +32,24 @@ permalink: ./245944ProofGround/30465PG2019Fold.html
 </code></pre></div>
 <p>Is it just poor wording of the problem, or is there a clever solution I'm not seeing?</p>
 
+<a name="243626819"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/245944-Proof%20Ground/topic/%5BPG%202019%5D%20Fold/near/243626819" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./245944ProofGround/30465PG2019Fold.html#243626819">Manuel Eberl (Jun 23 2021 at 09:30)</a>:</h4>
+<p>Well, that's how <em>Sledgehammer Squad</em> did it (the team consisting of <span class="user-mention" data-user-id="324415">@Peter Lammich</span> and me):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">filter_with_fold</span><span class="o">:</span>
+  <span class="kp">fixes</span> <span class="n">p</span> <span class="o">::</span> <span class="s">"'a ⇒ bool"</span>
+  <span class="kp">shows</span> <span class="s">"∃a g. (∀xs. filter p xs = foldr g xs a)"</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">exI</span><span class="o">[</span><span class="kp">where</span> <span class="n">x</span><span class="o">=</span><span class="s">"[]"</span><span class="o">])</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">exI</span><span class="o">[</span><span class="kp">where</span> <span class="n">x</span><span class="o">=</span><span class="s">"λx xs. if p x then x#xs else xs"</span><span class="o">])</span>
+  <span class="kp">apply</span> <span class="n">clarify</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">universal_property_foldI2</span><span class="o">)</span>
+  <span class="kp">apply</span> <span class="n">auto</span>
+  <span class="k">done</span>
+</code></pre></div>
+
+<a name="243626878"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/245944-Proof%20Ground/topic/%5BPG%202019%5D%20Fold/near/243626878" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./245944ProofGround/30465PG2019Fold.html#243626878">Manuel Eberl (Jun 23 2021 at 09:30)</a>:</h4>
+<p>Actually, pretty sure it was Peter who wrote this.</p>
+
 
 {% endraw %}
 

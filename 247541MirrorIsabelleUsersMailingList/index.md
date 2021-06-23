@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] New in the AFP: Van der Waerden's Theorem](67905isabelleNewintheAFPVanderWaerdensTheorem.html) (1 message, latest: Jun 23 2021 at 10:52)
+
+* [\[isabelle\] SErAPIS update, June 2021 (MAJOR update)](49380isabelleSErAPISupdateJune2021MAJORupdate.html) (1 message, latest: Jun 23 2021 at 10:16)
+
 * [\[isabelle\] Job offer: 3 year research engineer in static ...](00808isabelleJoboffer3yearresearchengineerinstatic.html) (1 message, latest: Jun 22 2021 at 13:20)
 
 * [\[isabelle\] Active Area for jEdit Console](54233isabelleActiveAreaforjEditConsole.html) (1 message, latest: Jun 21 2021 at 09:10)

@@ -9,6 +9,8 @@ permalink: ./285806SErAPIS/index.html
 
 ### Topics:
 
+* [SErAPIS update, June 2021 (MAJOR update)](03339SErAPISupdateJune2021MAJORupdate.html) (1 message, latest: Jun 23 2021 at 10:18)
+
 * [New Demo Videos](39002NewDemoVideos.html) (1 message, latest: Jun 17 2021 at 16:29)
 
 * [intermediate value theorem](25229intermediatevaluetheorem.html) (2 messages, latest: May 21 2021 at 11:31)

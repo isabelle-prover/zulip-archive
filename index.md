@@ -8,7 +8,7 @@ permalink: ./index.html
 
 ## Streams:
 
-* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (438 topics)
+* [Mirror: Isabelle Users Mailing List](247541MirrorIsabelleUsersMailingList/index.html) (440 topics)
 
 * [Beginner Questions](238552BeginnerQuestions/index.html) (151 topics)
 
@@ -26,9 +26,9 @@ permalink: ./index.html
 
 * [Proof Ground](245944ProofGround/index.html) (7 topics)
 
-* [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
+* [SErAPIS](285806SErAPIS/index.html) (6 topics)
 
-* [SErAPIS](285806SErAPIS/index.html) (5 topics)
+* [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 
 * [Is there code for X?](285459IstherecodeforX/index.html) (4 topics)
 

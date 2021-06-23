@@ -24,7 +24,7 @@ permalink: ./index.html
 
 * [Isabelle/ML](211483IsabelleML/index.html) (8 topics)
 
-* [Proof Ground](245944ProofGround/index.html) (6 topics)
+* [Proof Ground](245944ProofGround/index.html) (7 topics)
 
 * [Machine Learning for Isabelle](203204MachineLearningforIsabelle/index.html) (5 topics)
 

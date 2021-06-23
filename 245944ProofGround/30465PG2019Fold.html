@@ -1,0 +1,38 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./245944ProofGround/30465PG2019Fold.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./245944ProofGround/index.html">Proof Ground</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./245944ProofGround/30465PG2019Fold.html">[PG 2019] Fold</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="243590353"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/245944-Proof%20Ground/topic/%5BPG%202019%5D%20Fold/near/243590353" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./245944ProofGround/30465PG2019Fold.html#243590353">Jakub Kądziołka (Jun 22 2021 at 23:15)</a>:</h4>
+<p>I'm trying to do the "Fold" problem from Proof Ground 2019. I did the first 4/6 theorems, but I am confused as to what was intended. The description states:</p>
+<blockquote>
+<p>Using the universal property, prove that <code>filter</code> and <code>fold_left</code> can be rewritten as a fold.</p>
+</blockquote>
+<p>However, I do not use the universal property for this at all. In fact, I am confused as to how it's useful. Instead, I simply instantiate the existentials manually:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">filter_with_fold</span><span class="o">:</span>
+  <span class="kp">fixes</span> <span class="n">p</span> <span class="o">::</span> <span class="s">"'a ⇒ bool"</span>
+  <span class="kp">shows</span>            <span class="s">"∃a g. (∀xs. filter p xs = foldr g xs a)"</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">exI</span><span class="o">[</span><span class="n">of</span> <span class="o">_</span> <span class="s">"[]"</span><span class="o">])</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">exI</span><span class="o">[</span><span class="n">of</span> <span class="o">_</span> <span class="s">"λx ys. if p x then x # ys else ys"</span><span class="o">])</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">allI</span><span class="o">)</span>
+  <span class="n">subgoal</span> <span class="kp">for</span> <span class="n">xs</span>
+    <span class="kp">apply</span> <span class="o">(</span><span class="n">induction</span> <span class="n">xs</span><span class="o">)</span>
+    <span class="k">by</span> <span class="n">auto</span>
+  <span class="k">done</span>
+</code></pre></div>
+<p>Is it just poor wording of the problem, or is there a clever solution I'm not seeing?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

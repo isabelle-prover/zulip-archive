@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Inverse of bijective function](74701Inverseofbijectivefunction.html) (2 messages, latest: Jun 23 2021 at 23:34)
+* [Inverse of bijective function](74701Inverseofbijectivefunction.html) (4 messages, latest: Jun 24 2021 at 12:50)
 
 * [Unfinished termination proof allows to finish proof](44858Unfinishedterminationproofallowstofinishproof.html) (10 messages, latest: Jun 23 2021 at 13:43)
 

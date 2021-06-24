@@ -9,9 +9,11 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [very new to isabelle, can't open WasmCert](30182verynewtoisabellecantopenWasmCert.html) (13 messages, latest: Jun 24 2021 at 17:17)
+* [Topology with the axiom of choice](90201Topologywiththeaxiomofchoice.html) (1 message, latest: Jun 24 2021 at 19:57)
 
-* [Inverse of bijective function](74701Inverseofbijectivefunction.html) (4 messages, latest: Jun 24 2021 at 12:50)
+* [Inverse of bijective function](74701Inverseofbijectivefunction.html) (21 messages, latest: Jun 24 2021 at 19:14)
+
+* [very new to isabelle, can't open WasmCert](30182verynewtoisabellecantopenWasmCert.html) (13 messages, latest: Jun 24 2021 at 17:17)
 
 * [Unfinished termination proof allows to finish proof](44858Unfinishedterminationproofallowstofinishproof.html) (10 messages, latest: Jun 23 2021 at 13:43)
 

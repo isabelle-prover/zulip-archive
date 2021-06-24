@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (4 messages, latest: Jun 24 2021 at 07:21)
+
 * [\[isabelle\] New in the AFP: Van der Waerden's Theorem](67905isabelleNewintheAFPVanderWaerdensTheorem.html) (1 message, latest: Jun 23 2021 at 10:52)
 
 * [\[isabelle\] SErAPIS update, June 2021 (MAJOR update)](49380isabelleSErAPISupdateJune2021MAJORupdate.html) (1 message, latest: Jun 23 2021 at 10:16)
@@ -30,8 +32,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Proof Ground 2021 Call for Participation](86318isabelleProofGround2021CallforParticipation.html) (1 message, latest: Jun 18 2021 at 12:47)
 
 * [\[isabelle\] Update on the SErAPIS search engine: New videos](33196isabelleUpdateontheSErAPISsearchengineNewvideos.html) (1 message, latest: Jun 17 2021 at 16:19)
-
-* [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (3 messages, latest: Jun 16 2021 at 23:01)
 
 * [\[isabelle\] PhD position on Embedded Systems Verification ...](91703isabellePhDpositiononEmbeddedSystemsVerification.html) (1 message, latest: Jun 16 2021 at 09:44)
 

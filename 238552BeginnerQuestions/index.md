@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Inverse of bijective function](74701Inverseofbijectivefunction.html) (2 messages, latest: Jun 23 2021 at 23:34)
+
 * [Unfinished termination proof allows to finish proof](44858Unfinishedterminationproofallowstofinishproof.html) (10 messages, latest: Jun 23 2021 at 13:43)
 
 * [Isomorphism on](54008Isomorphismon.html) (2 messages, latest: Jun 22 2021 at 20:14)

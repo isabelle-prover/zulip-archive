@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [very new to isabelle, can't open WasmCert](30182verynewtoisabellecantopenWasmCert.html) (7 messages, latest: Jun 24 2021 at 16:51)
+
 * [Inverse of bijective function](74701Inverseofbijectivefunction.html) (4 messages, latest: Jun 24 2021 at 12:50)
 
 * [Unfinished termination proof allows to finish proof](44858Unfinishedterminationproofallowstofinishproof.html) (10 messages, latest: Jun 23 2021 at 13:43)

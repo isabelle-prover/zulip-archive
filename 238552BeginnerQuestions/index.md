@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [learning resources](59212learningresources.html) (6 messages, latest: Jun 25 2021 at 03:42)
+* [learning resources](59212learningresources.html) (10 messages, latest: Jun 25 2021 at 09:53)
 
 * [Topology with the axiom of choice](90201Topologywiththeaxiomofchoice.html) (1 message, latest: Jun 24 2021 at 19:57)
 

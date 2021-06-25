@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Two new AFP entries: "Public Announcement Logi...](33738isabelleTwonewAFPentriesPublicAnnouncementLogi.html) (1 message, latest: Jun 25 2021 at 10:12)
+
 * [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (4 messages, latest: Jun 24 2021 at 07:21)
 
 * [\[isabelle\] New in the AFP: Van der Waerden's Theorem](67905isabelleNewintheAFPVanderWaerdensTheorem.html) (1 message, latest: Jun 23 2021 at 10:52)

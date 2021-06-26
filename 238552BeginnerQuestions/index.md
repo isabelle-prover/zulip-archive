@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [binary numbers](94850binarynumbers.html) (10 messages, latest: Jun 26 2021 at 09:27)
+
 * [learning resources](59212learningresources.html) (22 messages, latest: Jun 25 2021 at 18:06)
 
 * [Topology with the axiom of choice](90201Topologywiththeaxiomofchoice.html) (1 message, latest: Jun 24 2021 at 19:57)
@@ -20,8 +22,6 @@ permalink: ./238552BeginnerQuestions/index.html
 * [Unfinished termination proof allows to finish proof](44858Unfinishedterminationproofallowstofinishproof.html) (10 messages, latest: Jun 23 2021 at 13:43)
 
 * [Isomorphism on](54008Isomorphismon.html) (2 messages, latest: Jun 22 2021 at 20:14)
-
-* [binary numbers](94850binarynumbers.html) (9 messages, latest: Jun 22 2021 at 06:12)
 
 * [((A ==> B) & A) ==> B?](26174ABAB.html) (18 messages, latest: Jun 21 2021 at 16:25)
 

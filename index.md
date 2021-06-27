@@ -14,7 +14,7 @@ permalink: ./index.html
 
 * [General](202961General/index.html) (96 topics)
 
-* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (65 topics)
+* [Mirror: Isabelle Development Mailing List](247542MirrorIsabelleDevelopmentMailingList/index.html) (66 topics)
 
 * [quantum computing](202968quantumcomputing/index.html) (22 topics)
 

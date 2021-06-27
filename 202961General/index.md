@@ -9,6 +9,8 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
+* [Defining Eisbach methods with variable length arguments](37378DefiningEisbachmethodswithvariablelengtharguments.html) (1 message, latest: Jun 27 2021 at 15:58)
+
 * [Proof Ground 2021](95227ProofGround2021.html) (2 messages, latest: Jun 18 2021 at 13:19)
 
 * [Dropping global mixfix syntax](44241Droppingglobalmixfixsyntax.html) (2 messages, latest: May 30 2021 at 12:26)

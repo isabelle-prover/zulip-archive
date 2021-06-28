@@ -22,6 +22,26 @@ permalink: ./238552BeginnerQuestions/16723Localhomeomorphism.html
 </code></pre></div>
 <p>into a type with fixed topologies right? I mean using <code>typedef</code> with some trick.</p>
 
+<a name="244203938"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244203938" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244203938">Nicolò Cavalleri (Jun 28 2021 at 21:00)</a>:</h4>
+<p>I gave up on fixing the topologies, but why does this:</p>
+<div class="codehilite"><pre><span></span><code>import Analysis.Abstract_topology
+
+definition is_chart :: &quot;&#39;a topology ⇒ &#39;e topology ⇒ &#39;a set ⇒ &#39;e set ⇒ (&#39;a ⇒ &#39;e) ⇒ (&#39;e ⇒ &#39;a)
+  ⇒ bool&quot; where
+&quot;is_chart Ta Te A E f g ≡ openin Ta A ∧ openin Te E ∧
+  homeomorphic_maps (subtopology Ta A) (subtopology Te E) f g&quot;
+
+typedef (overloaded) (&#39;a, &#39;e) chart =
+  &quot;{(Ta::&#39;a topology, Te::&#39;e topology, A::&#39;a set, E::&#39;e set, f, g).
+    is_chart Ta Te A E f g}&quot;
+  by (rule exI[where x=&quot;(discrete_topology, discrete_topology, {}, {}, (λx. undefined),
+    (λx. undefined))&quot;]) simp
+
+setup_lifting type_definition_chart
+</code></pre></div>
+<p>not work?</p>
+
 
 {% endraw %}
 

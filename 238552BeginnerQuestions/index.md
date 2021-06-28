@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Local homeomorphism](16723Localhomeomorphism.html) (1 message, latest: Jun 28 2021 at 17:20)
+* [Local homeomorphism](16723Localhomeomorphism.html) (2 messages, latest: Jun 28 2021 at 21:00)
 
 * [Threaded view](77917Threadedview.html) (12 messages, latest: Jun 28 2021 at 16:28)
 

@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] Failure to update isabelle repo checkout](27393isabelledevFailuretoupdateisabellerepocheckout.html) (2 messages, latest: Jun 27 2021 at 20:42)
+* [\[isabelle-dev\] Failure to update isabelle repo checkout](27393isabelledevFailuretoupdateisabellerepocheckout.html) (3 messages, latest: Jun 28 2021 at 05:46)
 
 * [\[isabelle-dev\] complex argument function(s)](30315isabelledevcomplexargumentfunctions.html) (1 message, latest: Jun 25 2021 at 20:28)
 

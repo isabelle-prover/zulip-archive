@@ -32,6 +32,14 @@ permalink: ./211483IsabelleML/02121ActiveAreas.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Active%20Areas/near/244132454" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/02121ActiveAreas.html#244132454">Fabian Huch (Jun 28 2021 at 11:46)</a>:</h4>
 <p>That is active markup (see <code>Pure/PIDE/active.ML</code>). You can then write a handler in Isabelle/Scala for that (see <code>Tools/jEdit/src/active.scala</code>).</p>
 
+<a name="244134133"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Active%20Areas/near/244134133" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/02121ActiveAreas.html#244134133">Yecine Megdiche (Jun 28 2021 at 12:05)</a>:</h4>
+<p>To act on clicks, you'd need to write a handler as Fabian explained, and register it in <code>Tools/jEdit/src/services.xml</code>. You can look up the <code>Graphview_Dockable.Handler</code> in <code>Tools/jEdit/src/graphview_dockable.scala</code> on an example of how to do it. It might also be a good idea to define your own markup element and add it to the list of active markups (<code>GraphView</code> defines <code>Markup.GRAPHVIEW</code> in <code>Pure/PIDE/markup.scala</code>,  you can see where it's added and you could do the same)</p>
+
+<a name="244136334"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Active%20Areas/near/244136334" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/02121ActiveAreas.html#244136334">Simon Foster (Jun 28 2021 at 12:27)</a>:</h4>
+<p>Thank you for your very helpful answers. The functionality I need is implemented by the jEdit Console plugin in the method runInSystemShell(view, command). I noticed that there's an already an active area called "jedit_action", which presumably allows me to execute jEdit actions (cf. <code>src/Tools/jEdit/src/actions.xml</code>). These can apparently be implemented in BeanScript. Is there a way of implementing it this way, by an action that calls runInSystemShell? That would avoid the need to extend the PIDE Scala code, although I'm happy to do that if it's necessary.</p>
+
 
 {% endraw %}
 

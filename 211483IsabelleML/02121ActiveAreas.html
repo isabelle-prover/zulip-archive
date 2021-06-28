@@ -40,6 +40,10 @@ permalink: ./211483IsabelleML/02121ActiveAreas.html
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Active%20Areas/near/244136334" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/02121ActiveAreas.html#244136334">Simon Foster (Jun 28 2021 at 12:27)</a>:</h4>
 <p>Thank you for your very helpful answers. The functionality I need is implemented by the jEdit Console plugin in the method runInSystemShell(view, command). I noticed that there's an already an active area called "jedit_action", which presumably allows me to execute jEdit actions (cf. <code>src/Tools/jEdit/src/actions.xml</code>). These can apparently be implemented in BeanScript. Is there a way of implementing it this way, by an action that calls runInSystemShell? That would avoid the need to extend the PIDE Scala code, although I'm happy to do that if it's necessary.</p>
 
+<a name="244153005"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/Active%20Areas/near/244153005" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/02121ActiveAreas.html#244153005">Simon Foster (Jun 28 2021 at 14:29)</a>:</h4>
+<p>I think I've figured it out myself. It is indeed possible to have an active area that calls an additional jEdit action specified in <code>actions.xml</code> via <code>JEdit.check_action</code>. It seems necessary to rebuild Isabelle/jEdit to do this.</p>
+
 
 {% endraw %}
 

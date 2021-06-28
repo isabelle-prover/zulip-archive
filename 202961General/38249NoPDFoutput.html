@@ -1,0 +1,86 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./202961General/38249NoPDFoutput.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./202961General/index.html">General</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html">No PDF output</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="244167390"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244167390" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244167390">Wolfgang Jeltsch (Jun 28 2021 at 16:02)</a>:</h4>
+<p>Anyone able to help me with this one: <a href="https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-June/msg00041.html">https://lists.cam.ac.uk/pipermail/cl-isabelle-users/2021-June/msg00041.html</a>? In short: Isabelle2021 doesn’t produce PDF files for me, where Isabelle2019 did.</p>
+
+<a name="244167833"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244167833" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244167833">Lukas Stevens (Jun 28 2021 at 16:06)</a>:</h4>
+<p>I had a similar issue. Can you try building with <code>isabelle build -o document=pdf -P output -D .</code>?</p>
+
+<a name="244168074"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244168074" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244168074">Fabian Huch (Jun 28 2021 at 16:08)</a>:</h4>
+<p>You can probably also specify <code>document_output</code>in your ROOT file.</p>
+
+<a name="244168158"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244168158" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244168158">Wolfgang Jeltsch (Jun 28 2021 at 16:09)</a>:</h4>
+<p>Yes, it works this way. However, I’d like to have the PDF file in the standard location. Specifying the standard location by hand seems a bit awkward to me.</p>
+
+<a name="244168191"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244168191" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244168191">Lukas Stevens (Jun 28 2021 at 16:09)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233155">Lukas Stevens</span> <a href="#narrow/stream/202961-General/topic/No.20PDF.20output/near/244167833">said</a>:</p>
+<blockquote>
+<p>I had a similar issue. Can you try building with <code>isabelle build -o document=pdf -P output -D .</code>?</p>
+</blockquote>
+<p>the <code>-P output</code> was the thing I had to add</p>
+
+<a name="244168326"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244168326" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244168326">Fabian Huch (Jun 28 2021 at 16:10)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="423655">Wolfgang Jeltsch</span> <a href="#narrow/stream/202961-General/topic/No.20PDF.20output/near/244168158">said</a>:</p>
+<blockquote>
+<p>Yes, it works this way. However, I’d like to have the PDF file in the standard location. Specifying the standard location by hand seems a bit awkward to me.</p>
+</blockquote>
+<p>How about <code>document_output = "."</code>?</p>
+
+<a name="244168495"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244168495" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244168495">Wolfgang Jeltsch (Jun 28 2021 at 16:11)</a>:</h4>
+<p>Well, then the file ends up in the current directory and not in the standard location, which is under <code>$ISABELLE_BROWSER_INFO</code>.</p>
+
+<a name="244169210"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244169210" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244169210">Fabian Huch (Jun 28 2021 at 16:17)</a>:</h4>
+<p>That's the standard directory for html -- if you build with <code>-o browser_info -o document=pdf</code>, the pdfs should also be there.</p>
+
+<a name="244169633"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244169633" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244169633">Wolfgang Jeltsch (Jun 28 2021 at 16:20)</a>:</h4>
+<p>Yes, this works. Is the <code>-P</code> option new? What is its purpose? Shouldn’t the setting <code>document=pdf</code> already enable PDF output?</p>
+
+<a name="244169675"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244169675" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244169675">Wolfgang Jeltsch (Jun 28 2021 at 16:20)</a>:</h4>
+<p>It’s also the standard directory for PDFs.</p>
+
+<a name="244169987"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244169987" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244169987">Lukas Stevens (Jun 28 2021 at 16:23)</a>:</h4>
+<p>The <code>-P output</code> specifies the output directory.</p>
+
+<a name="244170451"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244170451" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244170451">Wolfgang Jeltsch (Jun 28 2021 at 16:27)</a>:</h4>
+<p>No, it “enables output”, according to the documentation. It’s the <code>document_output</code> option that specifies the output directory.</p>
+
+<a name="244170708"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244170708" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244170708">Lukas Stevens (Jun 28 2021 at 16:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233155">Lukas Stevens</span> <a href="#narrow/stream/202961-General/topic/No.20PDF.20output/near/244169987">said</a>:</p>
+<blockquote>
+<p>The <code>-P output</code> specifies the output directory.</p>
+</blockquote>
+<p>That is what <span class="user-mention" data-user-id="232736">@Manuel Eberl</span> told me anyway <span aria-label="shrug" class="emoji emoji-1f937" role="img" title="shrug">:shrug:</span></p>
+
+<a name="244171481"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/No%20PDF%20output/near/244171481" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/38249NoPDFoutput.html#244171481">Manuel Eberl (Jun 28 2021 at 16:35)</a>:</h4>
+<p>All I know is I do <code>-P :</code> and that works.</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

@@ -22,7 +22,7 @@ permalink: ./index.html
 
 * [New Members & Projects](202967NewMembersProjects/index.html) (12 topics)
 
-* [Isabelle/ML](211483IsabelleML/index.html) (9 topics)
+* [Isabelle/ML](211483IsabelleML/index.html) (10 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (7 topics)
 

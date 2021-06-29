@@ -9,7 +9,9 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Local homeomorphism](16723Localhomeomorphism.html) (3 messages, latest: Jun 29 2021 at 07:52)
+* [Local homeomorphism](16723Localhomeomorphism.html) (8 messages, latest: Jun 29 2021 at 11:00)
+
+* [Filters in abstract topology](47234Filtersinabstracttopology.html) (1 message, latest: Jun 29 2021 at 10:57)
 
 * [Threaded view](77917Threadedview.html) (12 messages, latest: Jun 28 2021 at 16:28)
 

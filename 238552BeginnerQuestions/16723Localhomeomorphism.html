@@ -138,6 +138,122 @@ Reason:  No relator for the type &quot;Abstract_Topology.topology&quot; found.
 </blockquote>
 <p>Ok thank you very much!</p>
 
+<a name="244263554"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244263554" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244263554">Wenda Li (Jun 29 2021 at 11:02)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244262056">said</a>:</p>
+<blockquote>
+<p>Also, <code>setup_lifting type_definition_chart</code> gives a warning </p>
+<div class="codehilite"><pre><span></span><code>Generation of a parametrized correspondence relation failed.
+Reason:  No relator for the type &quot;Abstract_Topology.topology&quot; found.
+</code></pre></div>
+<p>but the code works fine. Should I worry about it?</p>
+</blockquote>
+<p>There might be a problem if you want to use the <strong>lift and transfer framework</strong> sometimes later. If you don't plan to use that framework, <code>setup_lifting type_definition_chart</code> is actually not necessary.</p>
+
+<a name="244263660"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244263660" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244263660">Nicolò Cavalleri (Jun 29 2021 at 11:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="246083">Wenda Li</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244263554">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244262056">said</a>:</p>
+<blockquote>
+<p>Also, <code>setup_lifting type_definition_chart</code> gives a warning </p>
+<div class="codehilite"><pre><span></span><code>Generation of a parametrized correspondence relation failed.
+Reason:  No relator for the type &quot;Abstract_Topology.topology&quot; found.
+</code></pre></div>
+<p>but the code works fine. Should I worry about it?</p>
+</blockquote>
+<p>There might be a problem if you want to use the <strong>lift and transfer framework</strong> sometimes later. If you don't plan to use that framework, <code>setup_lifting type_definition_chart</code> is actually not necessary.</p>
+</blockquote>
+<p>I do plan to use (you can see my use in the mwe) it but it works despite the warning!</p>
+
+<a name="244264130"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264130" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264130">Nicolò Cavalleri (Jun 29 2021 at 11:08)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244263231">said</a>:</p>
+<blockquote>
+<p>Also I wonder why the last lemma in this mwe</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="ow">...</span>
+</code></pre></div>
+<p>does not work...</p>
+</blockquote>
+<p>The problem is that these proofs should be super easy but Isabelle does not find them automatically and apparently I am not able to write any proof by hand, I can only use auto simp fastforce and sledgehammer</p>
+
+<a name="244264172"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264172" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264172">Wenda Li (Jun 29 2021 at 11:09)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244263660">said</a>:</p>
+<blockquote>
+<p>I do plan to use (you can see my use in the mwe) it but it works despite the warning!</p>
+</blockquote>
+<p>Yes, I just saw that. It is nice that <code>transfer</code> works so far. You may need to work out those relator stuff when it fails.</p>
+
+<a name="244264340"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264340" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264340">Nicolò Cavalleri (Jun 29 2021 at 11:11)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="246083">Wenda Li</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244264172">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244263660">said</a>:</p>
+<blockquote>
+<p>I do plan to use (you can see my use in the mwe) it but it works despite the warning!</p>
+</blockquote>
+<p>Yes, I just saw that. It is nice that <code>transfer</code> works so far. You may need to work out those relator stuff when it fails.</p>
+</blockquote>
+<p>Yep I would not know how to do that because I do not know either abstract topology nor the transfer package but I will ask for help here in case!</p>
+
+<a name="244264412"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264412" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264412">Wenda Li (Jun 29 2021 at 11:12)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244264130">said</a>:</p>
+<blockquote>
+<p>The problem is that these proofs should be super easy but Isabelle does not find them automatically and apparently I am not able to write any proof by hand, I can only use auto simp fastforce and sledgehammer</p>
+</blockquote>
+<p>That is the idea of <strong>interactive</strong> theorem proving and the difference between us and those ATPs -- we can always learn to proceed when automation fails even though we may proceed at a mush slower pace :-)</p>
+
+<a name="244264662"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264662" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264662">Nicolò Cavalleri (Jun 29 2021 at 11:15)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="246083">Wenda Li</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244264412">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="370356">Nicolò Cavalleri</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244264130">said</a>:</p>
+<blockquote>
+<p>The problem is that these proofs should be super easy but Isabelle does not find them automatically and apparently I am not able to write any proof by hand, I can only use auto simp fastforce and sledgehammer</p>
+</blockquote>
+<p>That is the idea of <strong>interactive</strong> theorem proving and the difference between us and those ATPs -- we can always learn to proceed when automation fails even though we may proceed at a mush slower pace :-)</p>
+</blockquote>
+<p>Yeah actually I saw the problem in my proof... the theorem <code>at_within_open</code> does not apply here.</p>
+
+<a name="244264668"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264668" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264668">Wenda Li (Jun 29 2021 at 11:15)</a>:</h4>
+<p>As for</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">at_within_domain</span><span class="o">:</span> <span class="s">"at x within domain c = at x"</span> <span class="kp">if</span> <span class="s">"x ∈ domain c"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">rule</span> <span class="n">at_within_open</span><span class="o">[</span><span class="n">OF</span> <span class="n">that</span> <span class="n">open_domain</span><span class="o">])</span>
+</code></pre></div>
+<p>Your <code>at_within_open[OF that open_domain]</code> is not valid. The proof can be fixed if you can prove <code>open (domain c)</code> (I am not sure if it is provable or not):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">at_within_domain</span><span class="o">:</span> <span class="s">"at x within domain c = at x"</span> <span class="kp">if</span> <span class="s">"x ∈ domain c"</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">have</span> <span class="s">"open (domain c)"</span> <span class="gr">sorry</span>
+  <span class="k">then</span> <span class="k">show</span> <span class="o">?</span><span class="n">thesis</span> <span class="k">using</span> <span class="n">at_within_open</span><span class="o">[</span><span class="n">OF</span> <span class="n">that</span><span class="o">]</span> <span class="k">by</span> <span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+<a name="244264775"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264775" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264775">Nicolò Cavalleri (Jun 29 2021 at 11:16)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="246083">Wenda Li</span> <a href="#narrow/stream/238552-Beginner-Questions/topic/Local.20homeomorphism/near/244264668">said</a>:</p>
+<blockquote>
+<p>As for</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">at_within_domain</span><span class="o">:</span> <span class="s">"at x within domain c = at x"</span> <span class="kp">if</span> <span class="s">"x ∈ domain c"</span>
+  <span class="k">by</span> <span class="o">(</span><span class="n">rule</span> <span class="n">at_within_open</span><span class="o">[</span><span class="n">OF</span> <span class="n">that</span> <span class="n">open_domain</span><span class="o">])</span>
+</code></pre></div>
+<p>Your <code>at_within_open[OF that open_domain]</code> is not valid. The proof can be fixed if you can prove <code>open (domain c)</code> (I am not sure if it is true or not):</p>
+<p><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span> <span class="n">at_within_domain</span><span class="o">:</span> <span class="s">"at x within domain c = at x"</span> <span class="kp">if</span> <span class="s">"x ∈ domain c"</span>
+<span class="k">proof</span> <span class="o">-</span>
+  <span class="k">have</span> <span class="s">"open (domain c)"</span> <span class="gr">sorry</span>
+  <span class="k">then</span> <span class="k">show</span> <span class="o">?</span><span class="n">thesis</span> <span class="k">using</span> <span class="n">at_within_open</span><span class="o">[</span><span class="n">OF</span> <span class="n">that</span><span class="o">]</span> <span class="k">by</span> <span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>No I think it is not true but hopefully I should manage to recover a proof if someone who knows well Abstract topology will answer me in the thread <code>Filters in abstract topology</code></p>
+
+<a name="244264783"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244264783" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244264783">Nicolò Cavalleri (Jun 29 2021 at 11:16)</a>:</h4>
+<p>Thank you very much though!</p>
+
 
 {% endraw %}
 

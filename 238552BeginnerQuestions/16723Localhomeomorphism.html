@@ -42,6 +42,17 @@ setup_lifting type_definition_chart
 </code></pre></div>
 <p>not work?</p>
 
+<a name="244244592"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/Local%20homeomorphism/near/244244592" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/16723Localhomeomorphism.html#244244592">Wenda Li (Jun 29 2021 at 07:52)</a>:</h4>
+<p>How about this one? </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">typedef</span> <span class="o">(</span><span class="kp">overloaded</span><span class="o">)</span> <span class="o">(</span><span class="n n-Type">'a</span><span class="o">,</span> <span class="n n-Type">'e</span><span class="o">)</span> <span class="n">chart</span> <span class="o">=</span>
+  <span class="s">"{(Ta::'a topology, Te::'e topology, A::'a set, E::'e set, f, g).</span>
+<span class="s">    is_chart Ta Te A E f g}"</span>
+  <span class="kp">apply</span> <span class="o">(</span><span class="n">rule</span> <span class="n">exI</span><span class="o">[</span><span class="kp">where</span> <span class="n">x</span><span class="o">=</span><span class="s">"(discrete_topology {}, discrete_topology {}, {},</span>
+<span class="s">          {}, (λx. undefined),(λx. undefined))"</span><span class="o">])</span>
+  <span class="k">unfolding</span> <span class="n">is_chart_def</span> <span class="n">homeomorphic_maps_def</span> <span class="k">by</span> <span class="n">auto</span>
+</code></pre></div>
+
 
 {% endraw %}
 

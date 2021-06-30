@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Black proof instead of red](84860Blackproofinsteadofred.html) (1 message, latest: Jun 29 2021 at 23:05)
+
 * [Sledgehammer timeout option](29615Sledgehammertimeoutoption.html) (4 messages, latest: Jun 29 2021 at 15:07)
 
 * [Local homeomorphism](16723Localhomeomorphism.html) (18 messages, latest: Jun 29 2021 at 11:16)

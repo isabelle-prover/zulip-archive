@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Incompatibility between code generation, HOL-L...](72302isabelleIncompatibilitybetweencodegenerationHOLL.html) (2 messages, latest: Jun 30 2021 at 07:25)
+
 * [\[isabelle\] PDF file not generated](17908isabellePDFfilenotgenerated.html) (4 messages, latest: Jun 28 2021 at 21:49)
 
 * [\[isabelle\] Last Call for Participation: 12th Internationa...](00887isabelleLastCallforParticipation12thInternationa.html) (1 message, latest: Jun 26 2021 at 13:20)
@@ -406,8 +408,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Isabelle code for getting in-memory representa...](23119isabelleIsabellecodeforgettinginmemoryrepresenta.html) (5 messages, latest: Feb 05 2021 at 20:56)
 
 * [\[isabelle\] Isabelle2021-RC1 - Any way to limit "veriT" me...](83845isabelleIsabelle2021RC1AnywaytolimitveriTme.html) (15 messages, latest: Feb 05 2021 at 13:36)
-
-* [\[isabelle\] Incompatibility between code generation, HOL-L...](72302isabelleIncompatibilitybetweencodegenerationHOLL.html) (1 message, latest: Feb 05 2021 at 13:21)
 
 * [\[isabelle\] CfP: SCSS 2021](82414isabelleCfPSCSS2021.html) (1 message, latest: Feb 03 2021 at 09:54)
 

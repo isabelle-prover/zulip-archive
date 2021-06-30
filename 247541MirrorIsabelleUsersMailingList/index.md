@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] SMT Workshop 2021: Call for Participation](84260isabelleSMTWorkshop2021CallforParticipation.html) (1 message, latest: Jun 30 2021 at 08:51)
+
+* [\[isabelle\] Call for Participation - SPIN 2021](43136isabelleCallforParticipationSPIN2021.html) (1 message, latest: Jun 30 2021 at 08:51)
+
 * [\[isabelle\] Incompatibility between code generation, HOL-L...](72302isabelleIncompatibilitybetweencodegenerationHOLL.html) (2 messages, latest: Jun 30 2021 at 07:25)
 
 * [\[isabelle\] PDF file not generated](17908isabellePDFfilenotgenerated.html) (4 messages, latest: Jun 28 2021 at 21:49)

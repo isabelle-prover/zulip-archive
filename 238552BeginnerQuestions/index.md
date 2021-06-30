@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [closure_of](40274closureof.html) (2 messages, latest: Jun 30 2021 at 11:51)
+
 * [Black proof instead of red](84860Blackproofinsteadofred.html) (4 messages, latest: Jun 30 2021 at 08:43)
 
 * [Sledgehammer timeout option](29615Sledgehammertimeoutoption.html) (4 messages, latest: Jun 29 2021 at 15:07)

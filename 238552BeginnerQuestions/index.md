@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Isabelle loosing typecheck memory](74742Isabelleloosingtypecheckmemory.html) (2 messages, latest: Jul 01 2021 at 08:22)
+* [Isabelle loosing typecheck memory](74742Isabelleloosingtypecheckmemory.html) (12 messages, latest: Jul 01 2021 at 10:44)
 
 * [Abstract_topology](22577Abstracttopology.html) (2 messages, latest: Jun 30 2021 at 18:34)
 

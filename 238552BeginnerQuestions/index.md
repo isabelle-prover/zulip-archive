@@ -9,7 +9,7 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
-* [Abstract_topology](22577Abstracttopology.html) (3 messages, latest: Jul 01 2021 at 14:22)
+* [Abstract_topology](22577Abstracttopology.html) (4 messages, latest: Jul 01 2021 at 15:47)
 
 * [Isabelle loosing typecheck memory](74742Isabelleloosingtypecheckmemory.html) (14 messages, latest: Jul 01 2021 at 11:53)
 

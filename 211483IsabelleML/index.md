@@ -9,7 +9,7 @@ permalink: ./211483IsabelleML/index.html
 
 ### Topics:
 
-* [stack trace for exceptions](38383stacktraceforexceptions.html) (3 messages, latest: Jul 01 2021 at 08:34)
+* [stack trace for exceptions](38383stacktraceforexceptions.html) (5 messages, latest: Jul 01 2021 at 13:52)
 
 * [Active Areas](02121ActiveAreas.html) (7 messages, latest: Jun 28 2021 at 14:29)
 

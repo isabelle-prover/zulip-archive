@@ -1,0 +1,28 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./211483IsabelleML/38383stacktraceforexceptions.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./211483IsabelleML/index.html">Isabelle/ML</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./211483IsabelleML/38383stacktraceforexceptions.html">stack trace for exceptions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="244513481"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/211483-Isabelle/ML/topic/stack%20trace%20for%20exceptions/near/244513481" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./211483IsabelleML/38383stacktraceforexceptions.html#244513481">Qiyuan Xu (Jul 01 2021 at 03:03)</a>:</h4>
+<p>I'm struggling with why the exception trace doesn't work, by the ML function <code>Runtime.exn_trace</code>.<br>
+In this minimal example,</p>
+<div class="codehilite" data-code-language="Standard ML"><pre><span></span><code><span class="kr">fun</span> <span class="nf">f</span> <span class="n">i</span> <span class="p">=</span> <span class="kr">if</span> <span class="n">i</span> <span class="p">=</span> <span class="mi">0</span> <span class="kr">then</span> <span class="kr">raise</span> <span class="n">Fail</span> <span class="s2">""</span> <span class="kr">else</span> <span class="n">f</span> <span class="p">(</span><span class="n">i-</span><span class="mi">1</span><span class="p">)</span>
+<span class="kr">val</span> <span class="nv">x</span> <span class="p">=</span> <span class="nn">Runtime</span><span class="p">.</span><span class="n">exn_trace</span> <span class="p">(</span><span class="kr">fn</span> <span class="p">_</span> <span class="p">=&gt;</span> <span class="n">f</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>The output dialogue doesn't print any stack trace as expected, but only a simple error in a line.<br>
+Should I set some other configurations to enable the stack trace?</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

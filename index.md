@@ -20,9 +20,9 @@ permalink: ./index.html
 
 * [Announcements](214136Announcements/index.html) (15 topics)
 
-* [New Members & Projects](202967NewMembersProjects/index.html) (12 topics)
+* [Isabelle/ML](211483IsabelleML/index.html) (12 topics)
 
-* [Isabelle/ML](211483IsabelleML/index.html) (11 topics)
+* [New Members & Projects](202967NewMembersProjects/index.html) (12 topics)
 
 * [Proof Ground](245944ProofGround/index.html) (7 topics)
 

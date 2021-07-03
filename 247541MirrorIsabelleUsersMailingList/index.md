@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Second Call for Papers (Deadline Extension): F...](78226isabelleSecondCallforPapersDeadlineExtensionF.html) (1 message, latest: Jul 03 2021 at 09:26)
+
+* [\[isabelle\] Fixed-term research position at Mitsubishi Ele...](48263isabelleFixedtermresearchpositionatMitsubishiEle.html) (1 message, latest: Jul 03 2021 at 09:26)
+
 * [\[isabelle\] Call for Workshops - FLoC 2022 — The 2022 Fede...](91935isabelleCallforWorkshopsFLoC2022The2022Fede.html) (1 message, latest: Jul 01 2021 at 14:33)
 
 * [\[isabelle\] SMT Workshop 2021: Call for Participation](84260isabelleSMTWorkshop2021CallforParticipation.html) (1 message, latest: Jun 30 2021 at 08:51)

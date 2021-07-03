@@ -1,0 +1,29 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./247541MirrorIsabelleUsersMailingList/79344isabelleshbogusproofsfrome.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/index.html">Mirror: Isabelle Users Mailing List</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79344isabelleshbogusproofsfrome.html">[isabelle] s/h: bogus proofs from e</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="244825264"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20s/h%3A%20bogus%20proofs%20from%20e/near/244825264" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79344isabelleshbogusproofsfrome.html#244825264">Email Gateway (Jul 03 2021 at 21:32)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+I’ve been getting a lot of junk sledgehammer proofs from e lately. Finally I found a reproducible example that can be run from a standard theory setup: simply HOL-Analysis. Then try it on</p>
+<p>lemma vector_derivative_of_real_left:<br>
+  assumes "f differentiable at x"<br>
+  shows   "vector_derivative (λx. of_real (f x)) (at x) = of_real (deriv f x)"</p>
+<p>by (metis UNIV_I add_diff_cancel_left' assms cancel_comm_monoid_add_class.diff_cancel diff_add_cancel diff_zero differentiable_at_withinI differentiable_compose differentiable_const has_vector_derivative_const has_vector_derivative_transform of_real_differentiable of_real_eq_0_iff of_real_eq_1_iff vector_derivative_const_at vector_derivative_unique_at vector_derivative_works)</p>
+<p>Generally these proofs involve theorems like add_diff_cancel_left’ and diff_add_cancel. They are only found by e and they never work. Some output formatting issue?</p>
+<p>Larry</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

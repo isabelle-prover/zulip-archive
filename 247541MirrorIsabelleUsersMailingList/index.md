@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (1 message, latest: Jul 03 2021 at 21:32)
+
 * [\[isabelle\] Second Call for Papers (Deadline Extension): F...](78226isabelleSecondCallforPapersDeadlineExtensionF.html) (1 message, latest: Jul 03 2021 at 09:26)
 
 * [\[isabelle\] Fixed-term research position at Mitsubishi Ele...](48263isabelleFixedtermresearchpositionatMitsubishiEle.html) (1 message, latest: Jul 03 2021 at 09:26)

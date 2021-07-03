@@ -9,7 +9,7 @@ permalink: ./247542MirrorIsabelleDevelopmentMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle-dev\] complex argument function(s)](30315isabelledevcomplexargumentfunctions.html) (8 messages, latest: Jul 01 2021 at 14:34)
+* [\[isabelle-dev\] complex argument function(s)](30315isabelledevcomplexargumentfunctions.html) (9 messages, latest: Jul 03 2021 at 11:05)
 
 * [\[isabelle-dev\] Failure to update isabelle repo checkout](27393isabelledevFailuretoupdateisabellerepocheckout.html) (3 messages, latest: Jun 28 2021 at 05:46)
 

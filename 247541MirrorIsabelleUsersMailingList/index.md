@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (2 messages, latest: Jul 04 2021 at 14:09)
+* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (3 messages, latest: Jul 04 2021 at 16:28)
 
 * [\[isabelle\] Second Call for Papers (Deadline Extension): F...](78226isabelleSecondCallforPapersDeadlineExtensionF.html) (1 message, latest: Jul 03 2021 at 09:26)
 

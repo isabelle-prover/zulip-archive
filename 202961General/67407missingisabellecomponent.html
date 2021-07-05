@@ -152,6 +152,21 @@ Presenting gambler ...
 <h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244938975" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244938975">Wenda Li (Jul 05 2021 at 13:57)</a>:</h4>
 <p>Your ROOT file does not seem good, it should have at least one theory file you intend to build.</p>
 
+<a name="244940877"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244940877" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244940877">zibo yang (Jul 05 2021 at 14:13)</a>:</h4>
+<p>Yes I agree, but why does it produce such "empty" ROOT?</p>
+
+<a name="244941912"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244941912" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244941912">Wenda Li (Jul 05 2021 at 14:22)</a>:</h4>
+<p><code>mkroot</code> simply creates an empty entry. What you need to do is to put your development in this entry, say it is <code>D.thy</code>, then you modify the ROOT file:</p>
+<div class="codehilite"><pre><span></span><code>  options [document = pdf, document_output = &quot;output&quot;]
+  theories
+    D
+  document_files
+    &quot;root.tex&quot;
+</code></pre></div>
+<p>Finally, you can try to build the entry as you were attempting, which should results in a pdf for <code>D.thy</code>.</p>
+
 
 {% endraw %}
 

@@ -86,6 +86,72 @@ C:/Users/hp/Desktop/Isabelle2021/afp/afp-2021-05-14
 <p>then isabelle stop resolving any theory in AFP. <br>
 Previous it 's "afp/afp-2021-05-14/thys" as relative one but it works well.</p>
 
+<a name="244933013"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244933013" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244933013">zibo yang (Jul 05 2021 at 13:00)</a>:</h4>
+<p>Fine, I code the right absolute path here.</p>
+
+<a name="244933792"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244933792" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244933792">zibo yang (Jul 05 2021 at 13:08)</a>:</h4>
+<div class="codehilite"><pre><span></span><code>hp@LAPTOP-K1JS8QU4 ~/Desktop/Isabelle2021/gambler
+$ isabelle mkroot
+### Missing Isabelle component: &quot;/cygdrive/c/Users/hp/.isabelle/Isabelle2021/~/afp/afp-2021-05-14/thys&quot;
+
+Preparing session &quot;gambler&quot; in &quot;.&quot;
+  creating &quot;ROOT&quot;
+  creating &quot;document/root.tex&quot;
+
+Now use the following command line to build the session:
+
+  isabelle build -D .
+
+
+hp@LAPTOP-K1JS8QU4 ~/Desktop/Isabelle2021/gambler
+$ isabelle components -a
+### Missing Isabelle component: &quot;/cygdrive/c/Users/hp/.isabelle/Isabelle2021/~/afp/afp-2021-05-14/thys&quot;
+Skipping existing component &quot;/cygdrive/c/Users/hp/Desktop/Isabelle2021/afp/afp-2021-05-14/thys&quot;
+</code></pre></div>
+<p>I change my path as</p>
+<div class="codehilite"><pre><span></span><code>/cygdrive/c/Users/hp/Desktop/Isabelle2021/afp/afp-2021-05-14/thys
+</code></pre></div>
+<p>but it still fails like above, so what's wrong with that?</p>
+
+<a name="244935982"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244935982" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244935982">zibo yang (Jul 05 2021 at 13:29)</a>:</h4>
+<p>Ok now I guess I solve this missing component problem:</p>
+<div class="codehilite"><pre><span></span><code>hp@LAPTOP-K1JS8QU4 ~/Desktop/Isabelle2021/gambler
+$ isabelle mkroot
+
+Preparing session &quot;gambler&quot; in &quot;.&quot;
+  creating &quot;ROOT&quot;
+  creating &quot;document/root.tex&quot;
+
+Now use the following command line to build the session:
+
+  isabelle build -D .
+hp@LAPTOP-K1JS8QU4 ~/Desktop/Isabelle2021/gambler
+$ isabelle build -o document=pdf -P output -D .
+Presentation in &quot;/cygdrive/c/Users/hp/Desktop/Isabelle2021/gambler/output&quot;
+Presenting gambler ...
+0:00:05 elapsed time
+</code></pre></div>
+<p>However,  my document.pdf is nothing but title and my ROOT shows like:</p>
+<div class="codehilite"><pre><span></span><code>session gambler = HOL +
+  options [document = pdf, document_output = &quot;output&quot;]
+(*theories [document = false]
+    A
+    B
+  theories
+    C
+    D*)
+  document_files
+    &quot;root.tex&quot;
+</code></pre></div>
+<p>Now I want to figure out why it produces an empty pdf?</p>
+
+<a name="244938975"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/202961-General/topic/missing%20isabelle%20component/near/244938975" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./202961General/67407missingisabellecomponent.html#244938975">Wenda Li (Jul 05 2021 at 13:57)</a>:</h4>
+<p>Your ROOT file does not seem good, it should have at least one theory file you intend to build.</p>
+
 
 {% endraw %}
 

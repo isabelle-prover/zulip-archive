@@ -9,7 +9,7 @@ permalink: ./202961General/index.html
 
 ### Topics:
 
-* [missing isabelle component](67407missingisabellecomponent.html) (4 messages, latest: Jul 05 2021 at 12:42)
+* [missing isabelle component](67407missingisabellecomponent.html) (8 messages, latest: Jul 05 2021 at 13:57)
 
 * [No PDF output](38249NoPDFoutput.html) (14 messages, latest: Jun 28 2021 at 16:35)
 

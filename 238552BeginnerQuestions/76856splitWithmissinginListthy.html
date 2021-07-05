@@ -1,0 +1,46 @@
+---
+layout: archive
+title: Isabelle Zulip Archive
+permalink: ./238552BeginnerQuestions/76856splitWithmissinginListthy.html
+---
+
+<h2>Stream: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/index.html">Beginner Questions</a>
+<h3>Topic: <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html">splitWith missing in List.thy ?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com">
+
+{% raw %}
+<a name="244968914"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/splitWith%20missing%20in%20List.thy%20%3F/near/244968914" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html#244968914">Robert Soeldner (Jul 05 2021 at 19:50)</a>:</h4>
+<p>I was looking for <code>splitWith</code>, like<br>
+<code>fun splitWith :: "'a list ⇒ ('a ⇒ bool) ⇒ 'a list × 'a list" where
+"splitWith t p = foldr (λe (l,r). if p e then (e#l,r) else (l, e#r)) t ([],[])"
+</code><br>
+any reason it (and friends) are not in the List theory?</p>
+
+<a name="244969073"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/splitWith%20missing%20in%20List.thy%20%3F/near/244969073" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html#244969073">Manuel Eberl (Jul 05 2021 at 19:53)</a>:</h4>
+<p>You're looking for <code>partition</code>.</p>
+
+<a name="244969128"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/splitWith%20missing%20in%20List.thy%20%3F/near/244969128" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html#244969128">Robert Soeldner (Jul 05 2021 at 19:54)</a>:</h4>
+<p>ha :-) thank you</p>
+
+<a name="244969291"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/splitWith%20missing%20in%20List.thy%20%3F/near/244969291" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html#244969291">Manuel Eberl (Jul 05 2021 at 19:56)</a>:</h4>
+<p>If you want to export code, note that the default code equations from the library may not be terribly efficient depending on your target language.</p>
+
+<a name="244969329"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/splitWith%20missing%20in%20List.thy%20%3F/near/244969329" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html#244969329">Manuel Eberl (Jul 05 2021 at 19:56)</a>:</h4>
+<p>(The definition/code equations are basically equivalent to your fold.)</p>
+
+<a name="244969374"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/238552-Beginner%20Questions/topic/splitWith%20missing%20in%20List.thy%20%3F/near/244969374" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./238552BeginnerQuestions/76856splitWithmissinginListthy.html#244969374">Robert Soeldner (Jul 05 2021 at 19:57)</a>:</h4>
+<p>good to know, thank you</p>
+
+
+{% endraw %}
+
+{% include archive_update.html %}

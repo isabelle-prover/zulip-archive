@@ -9,6 +9,10 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Extreme processing time for function definition](76630isabelleExtremeprocessingtimeforfunctiondefinition.html) (1 message, latest: Jul 07 2021 at 14:51)
+
+* [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (5 messages, latest: Jul 07 2021 at 14:13)
+
 * [\[isabelle\] FSCD 2021: Final Call for (Online) Participati...](61952isabelleFSCD2021FinalCallforOnlineParticipati.html) (1 message, latest: Jul 07 2021 at 08:37)
 
 * [\[isabelle\] FMBC 2021 - Call for Participation](84382isabelleFMBC2021CallforParticipation.html) (1 message, latest: Jul 06 2021 at 09:03)
@@ -184,8 +188,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] "Simple Type Theory is not too Simple": commen...](28145isabelleSimpleTypeTheoryisnottooSimplecommen.html) (15 messages, latest: Apr 24 2021 at 22:41)
 
 * [\[isabelle\] 7th International Workshop on Proof eXchange f...](58968isabelle7thInternationalWorkshoponProofeXchangef.html) (3 messages, latest: Apr 22 2021 at 15:12)
-
-* [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (4 messages, latest: Apr 20 2021 at 11:11)
 
 * [\[isabelle\] 2021 Conference on Intelligent Computer Mathem...](43720isabelle2021ConferenceonIntelligentComputerMathem.html) (1 message, latest: Apr 20 2021 at 08:49)
 

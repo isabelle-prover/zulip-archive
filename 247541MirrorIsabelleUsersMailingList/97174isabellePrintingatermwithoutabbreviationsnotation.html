@@ -68,6 +68,30 @@ really want to have something like this.</p>
 I'm also using an "inofficial" hack if the term structure is not clear<br>
 to me, and would like to see something that works better and reliably.</p>
 
+<a name="245186289"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Printing%20a%20term%20without%20abbreviations/notation/near/245186289" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/97174isabellePrintingatermwithoutabbreviationsnotation.html#245186289">Email Gateway (Jul 07 2021 at 14:13)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:mandrykin@ispras.ru">mandrykin@ispras.ru</a>&gt;<br>
+I recently tackled with similar situations and for now implemented a <br>
+workaround/hack that works quite acceptably for me. It declares a <br>
+configuration option "bypass_translations" similar to "show_abbrevs", <br>
+and the option, when enabled, prevents print_translations and <br>
+print_ast_translations from being applied by temporarily prefixing all <br>
+constant names with a relatively uncommon symbol (e.g. '@'). Meanwhile, <br>
+it leaves alone the constants that have the type "prop" as their <br>
+argument or result types. This option is relatively convenient as it <br>
+works well for goal statements, retains trivial infix notations (but not <br>
+binders and more complex stuff) and notations from the Pure kernel (e.g. <br>
+‹⟦…⟧›). Usually it's enough to add ‹using [[show_abbrevs=false, <br>
+bypass_translations=true]]› to enable it temporarily for the current <br>
+goal. Attached the theory and a sample goal snapshot</p>
+<p>Regards,<br>
+Mikhail</p>
+<p>Peter Lammich писал 2021-04-20 14:11:<br>
+<a href="/user_uploads/14278/D_OWmS-qBHwHjEBnQTEp1Q3x/Bypass_Translations.thy">Bypass_Translations.thy</a><br>
+<a href="/user_uploads/14278/G8xCVDgfyRzv70A6CJVs3Tl9/goal_untranslated.png">goal_untranslated.png</a><br>
+<a href="/user_uploads/14278/rvCTFMgQoNad_i7m49dp-kEN/goal_translated.png">goal_translated.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/G8xCVDgfyRzv70A6CJVs3Tl9/goal_untranslated.png" title="goal_untranslated.png"><img src="/user_uploads/14278/G8xCVDgfyRzv70A6CJVs3Tl9/goal_untranslated.png"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/rvCTFMgQoNad_i7m49dp-kEN/goal_translated.png" title="goal_translated.png"><img src="/user_uploads/14278/rvCTFMgQoNad_i7m49dp-kEN/goal_translated.png"></a></div>
+
 
 {% endraw %}
 

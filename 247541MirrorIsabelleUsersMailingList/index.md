@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] FSCD 2021: Final Call for (Online) Participati...](61952isabelleFSCD2021FinalCallforOnlineParticipati.html) (1 message, latest: Jul 07 2021 at 08:37)
+
 * [\[isabelle\] FMBC 2021 - Call for Participation](84382isabelleFMBC2021CallforParticipation.html) (1 message, latest: Jul 06 2021 at 09:03)
 
 * [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (3 messages, latest: Jul 04 2021 at 16:28)

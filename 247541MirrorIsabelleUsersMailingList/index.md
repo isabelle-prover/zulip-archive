@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] JFLA 2022: Call for papers (in French)](05827isabelleJFLA2022CallforpapersinFrench.html) (1 message, latest: Jul 08 2021 at 14:22)
+
 * [\[isabelle\] How to retrieve theorems defined in ML](11191isabelleHowtoretrievetheoremsdefinedinML.html) (1 message, latest: Jul 08 2021 at 13:35)
 
 * [\[isabelle\] Extreme processing time for function definition](76630isabelleExtremeprocessingtimeforfunctiondefinition.html) (7 messages, latest: Jul 08 2021 at 10:13)

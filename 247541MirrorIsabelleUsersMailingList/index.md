@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] How to retrieve theorems defined in ML](11191isabelleHowtoretrievetheoremsdefinedinML.html) (1 message, latest: Jul 08 2021 at 13:35)
+
 * [\[isabelle\] Extreme processing time for function definition](76630isabelleExtremeprocessingtimeforfunctiondefinition.html) (7 messages, latest: Jul 08 2021 at 10:13)
 
 * [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (5 messages, latest: Jul 07 2021 at 14:13)

@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] Extreme processing time for function definition](76630isabelleExtremeprocessingtimeforfunctiondefinition.html) (2 messages, latest: Jul 07 2021 at 20:02)
+* [\[isabelle\] Extreme processing time for function definition](76630isabelleExtremeprocessingtimeforfunctiondefinition.html) (3 messages, latest: Jul 08 2021 at 01:28)
 
 * [\[isabelle\] Printing a term without abbreviations/notation](97174isabellePrintingatermwithoutabbreviationsnotation.html) (5 messages, latest: Jul 07 2021 at 14:13)
 

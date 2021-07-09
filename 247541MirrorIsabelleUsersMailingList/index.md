@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (5 messages, latest: Jul 09 2021 at 18:20)
+
 * [\[isabelle\] New AFP entry SpecCheck](37334isabelleNewAFPentrySpecCheck.html) (1 message, latest: Jul 08 2021 at 19:30)
 
 * [\[isabelle\] JFLA 2022: Call for papers (in French)](05827isabelleJFLA2022CallforpapersinFrench.html) (1 message, latest: Jul 08 2021 at 14:22)
@@ -42,8 +44,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] Last Call for Participation: 12th Internationa...](00887isabelleLastCallforParticipation12thInternationa.html) (1 message, latest: Jun 26 2021 at 13:20)
 
 * [\[isabelle\] Two new AFP entries: "Public Announcement Logi...](33738isabelleTwonewAFPentriesPublicAnnouncementLogi.html) (1 message, latest: Jun 25 2021 at 10:12)
-
-* [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (4 messages, latest: Jun 24 2021 at 07:21)
 
 * [\[isabelle\] New in the AFP: Van der Waerden's Theorem](67905isabelleNewintheAFPVanderWaerdensTheorem.html) (1 message, latest: Jun 23 2021 at 10:52)
 

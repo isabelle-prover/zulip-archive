@@ -9,6 +9,8 @@ permalink: ./238552BeginnerQuestions/index.html
 
 ### Topics:
 
+* [Convert a char to nat](13575Convertachartonat.html) (3 messages, latest: Jul 09 2021 at 08:20)
+
 * [Undefined control sequence](24333Undefinedcontrolsequence.html) (4 messages, latest: Jul 06 2021 at 16:56)
 
 * [Collect optional values](53821Collectoptionalvalues.html) (1 message, latest: Jul 06 2021 at 09:58)

@@ -9,6 +9,8 @@ permalink: ./211483IsabelleML/index.html
 
 ### Topics:
 
+* [Interface between Isabelle/ML and regular Isabelle](52363InterfacebetweenIsabelleMLandregularIsabelle.html) (2 messages, latest: Jul 09 2021 at 19:24)
+
 * [AutoCorres](93672AutoCorres.html) (1 message, latest: Jul 02 2021 at 02:08)
 
 * [stack trace for exceptions](38383stacktraceforexceptions.html) (5 messages, latest: Jul 01 2021 at 13:52)

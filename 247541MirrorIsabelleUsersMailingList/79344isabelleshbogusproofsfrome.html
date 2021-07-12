@@ -39,6 +39,18 @@ certainly involved.</p>
 A problem I’ve often noticed is that meson proofs fail, but replacing “meson” by “metis” creates a working proof.</p>
 <p>Larry</p>
 
+<a name="245697026"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20s/h%3A%20bogus%20proofs%20from%20e/near/245697026" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79344isabelleshbogusproofsfrome.html#245697026">Email Gateway (Jul 12 2021 at 14:51)</a>:</h4>
+<p>From: Jasmin Blanchette via Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Larry,</p>
+<p>I've looked into this one and it turns out E can refind its own proof if given enough time. That's a sign that the issue is either E unsoundness (unlikely) or simply weakness of reconstruction (more likely). This proof in particular relies on the very explosive axiom "X = fTrue \/ X = fFalse" (where X : bool), which Metis, like any reasonable superposition prover, probably weighs down in its clause selection heuristic because X matches anything. (This is the evil case that goes by the name "paramodulation from variable".)</p>
+<p>Assuming my analysis is correct, it's unfortunate that you get so many unreconstructable in that area. Perhaps try setting [no_atp] on some offending lemma?</p>
+<p>If you have any indication that no proof should be possible from the above lemmas or other sets of lemmas, let me know.</p>
+<p>TODO for myself: Repair/improve Isar proof reconstruction so that it provides some useful output in such cases, even if that output is too ugly for inclusion in a user's theory.</p>
+<p>Cheers,</p>
+<p>Jasmin</p>
+<p>P.S. Concerning meson failures, which you mentioned in a followup email: I'm a taker for any reproducible failure.</p>
+
 
 {% endraw %}
 

@@ -9,6 +9,8 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
+* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (4 messages, latest: Jul 12 2021 at 14:51)
+
 * [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (5 messages, latest: Jul 09 2021 at 18:20)
 
 * [\[isabelle\] New AFP entry SpecCheck](37334isabelleNewAFPentrySpecCheck.html) (1 message, latest: Jul 08 2021 at 19:30)
@@ -24,8 +26,6 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 * [\[isabelle\] FSCD 2021: Final Call for (Online) Participati...](61952isabelleFSCD2021FinalCallforOnlineParticipati.html) (1 message, latest: Jul 07 2021 at 08:37)
 
 * [\[isabelle\] FMBC 2021 - Call for Participation](84382isabelleFMBC2021CallforParticipation.html) (1 message, latest: Jul 06 2021 at 09:03)
-
-* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (3 messages, latest: Jul 04 2021 at 16:28)
 
 * [\[isabelle\] Second Call for Papers (Deadline Extension): F...](78226isabelleSecondCallforPapersDeadlineExtensionF.html) (1 message, latest: Jul 03 2021 at 09:26)
 

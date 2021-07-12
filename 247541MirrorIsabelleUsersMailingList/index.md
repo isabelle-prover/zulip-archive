@@ -9,7 +9,7 @@ permalink: ./247541MirrorIsabelleUsersMailingList/index.html
 
 ### Topics:
 
-* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (4 messages, latest: Jul 12 2021 at 14:51)
+* [\[isabelle\] s/h: bogus proofs from e](79344isabelleshbogusproofsfrome.html) (5 messages, latest: Jul 12 2021 at 15:05)
 
 * [\[isabelle\] Sorting algorithms in the AFP](22697isabelleSortingalgorithmsintheAFP.html) (5 messages, latest: Jul 09 2021 at 18:20)
 

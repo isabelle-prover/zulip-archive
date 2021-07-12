@@ -51,6 +51,30 @@ Hi Larry,</p>
 <p>Jasmin</p>
 <p>P.S. Concerning meson failures, which you mentioned in a followup email: I'm a taker for any reproducible failure.</p>
 
+<a name="245699402"></a>
+<h4><a href="https://isabelle.zulipchat.com#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20s/h%3A%20bogus%20proofs%20from%20e/near/245699402" class="zl"><img src="file:///tmp/zulip_archiveassets/img/zulip2.png" alt="view this post on Zulip"></a> <a href="file:///tmp/zulip_archive/./247541MirrorIsabelleUsersMailingList/79344isabelleshbogusproofsfrome.html#245699402">Email Gateway (Jul 12 2021 at 15:05)</a>:</h4>
+<p>From: Asta Halkjær From &lt;<a href="mailto:andro.from@gmail.com">andro.from@gmail.com</a>&gt;<br>
+I find that meson is very sensitive to "using" lemmas vs feeding them as<br>
+arguments and that sledgehammer ignores this.</p>
+<p>In my recent AFP entry on Public Announcement Logic I ran into this a lot.<br>
+It's unfortunately not a small example, but for instance in the following<br>
+lines:</p>
+<p>ultimately have ‹⊢⇩! ([r]⇩! K⇩! i p ❙⟷⇩! r ❙⟶⇩! K⇩! i (reduce' r p))›<br>
+    using Iff_Iff sledgehammer<br>
+    by (meson Iff_sym Iff_wk)</p>
+<p>Sledgehammer provides the meson proof which fails ("Failed to apply initial<br>
+proof method") but is easily fixed by either:</p>
+<ul>
+<li>switching to metis or</li>
+<li>removing the using (important) and adding the Iff_Iff lemma as an<br>
+argument to meson.</li>
+</ul>
+<p>The theory:<br>
+<a href="https://foss.heptapod.net/isa-afp/afp-2021/-/blob/branch/default/thys/Public_Announcement_Logic/PAL.thy#L344">https://foss.heptapod.net/isa-afp/afp-2021/-/blob/branch/default/thys/Public_Announcement_Logic/PAL.thy#L344</a></p>
+<p>Asta</p>
+<p>Den man. 12. jul. 2021 kl. 16.53 skrev Jasmin Blanchette via<br>
+Cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;:</p>
+
 
 {% endraw %}
 

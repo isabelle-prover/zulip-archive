@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: <a href=\"mailto:arithalghomework@sina.com\">arithalghomework@sina.com</a><br>\nDear Isabelle User Mailing List,</p>\n<p>I'm going to submit my formalization of prime number theorem with remainder into an AFP entry. Here is my code: <a href=\"https://github.com/mmew-2022/Isabelle_Prime_Number_Theorem\">https://github.com/mmew-2022/Isabelle_Prime_Number_Theorem</a>. I removed most of custom notations from my first version. What additional changes should I make to fulfill the requirement of an AFP entry? I've read the guideline of <a href=\"https://www.isa-afp.org/submission/\">https://www.isa-afp.org/submission/</a>, and the Isabelle linter reported some warnings about some <code>rule_tac</code> proofs and too long proof lines. Is this important?</p>\n<p>Thanks,</p>\n<p>Shuhao Song</p>",
+        "id": 426113947,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1710246519
+    },
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nDear Shuhao,</p>\n<p>I took a look at your proofs. On the whole, they look good. With regard to rule_tac, we specifically object to references to automatically-generated names e.g. xa, xb, but you don't seem to be doing this. I also noticed that where you are using rule_tac, often sledgehammer yielded up a nice simple proof. </p>\n<p>In one place I noticed compound methods in a proof: </p>\n<p>by (safe, rule zeta_bound_params.zeta_bound_param_axioms)<br>\n       (use assms in auto)</p>\n<p>This sort of thing should be rewritten if possible. Typically what helps is to explicitly prove the hardest subgoals produced by the compound method (if they are not too long to write out).</p>\n<p>So please do look at the output of the Linter, and where the problem is easy to fix, please just fix it. It's okay to leave a few of the warnings. If we don't accept your submission the first time, I'm pretty confident it will be accepted soon. </p>\n<p>Larry Paulson</p>",
+        "id": 426315548,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1710329538
+    }
+]

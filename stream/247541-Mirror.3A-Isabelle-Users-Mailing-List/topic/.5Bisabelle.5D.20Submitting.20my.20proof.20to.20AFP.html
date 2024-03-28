@@ -1,0 +1,37 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Submitting my proof to AFP · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Submitting.20my.20proof.20to.20AFP.html">[isabelle] Submitting my proof to AFP</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="426113947"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Submitting%20my%20proof%20to%20AFP/near/426113947" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Submitting.20my.20proof.20to.20AFP.html#426113947">(Mar 12 2024 at 12:28)</a>:</h4>
+<p>From: <a href="mailto:arithalghomework@sina.com">arithalghomework@sina.com</a><br>
+Dear Isabelle User Mailing List,</p>
+<p>I'm going to submit my formalization of prime number theorem with remainder into an AFP entry. Here is my code: <a href="https://github.com/mmew-2022/Isabelle_Prime_Number_Theorem">https://github.com/mmew-2022/Isabelle_Prime_Number_Theorem</a>. I removed most of custom notations from my first version. What additional changes should I make to fulfill the requirement of an AFP entry? I've read the guideline of <a href="https://www.isa-afp.org/submission/">https://www.isa-afp.org/submission/</a>, and the Isabelle linter reported some warnings about some <code>rule_tac</code> proofs and too long proof lines. Is this important?</p>
+<p>Thanks,</p>
+<p>Shuhao Song</p>
+
+
+
+<a name="426315548"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Submitting%20my%20proof%20to%20AFP/near/426315548" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Submitting.20my.20proof.20to.20AFP.html#426315548">(Mar 13 2024 at 11:32)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Dear Shuhao,</p>
+<p>I took a look at your proofs. On the whole, they look good. With regard to rule_tac, we specifically object to references to automatically-generated names e.g. xa, xb, but you don't seem to be doing this. I also noticed that where you are using rule_tac, often sledgehammer yielded up a nice simple proof. </p>
+<p>In one place I noticed compound methods in a proof: </p>
+<p>by (safe, rule zeta_bound_params.zeta_bound_param_axioms)<br>
+       (use assms in auto)</p>
+<p>This sort of thing should be rewritten if possible. Typically what helps is to explicitly prove the hardest subgoals produced by the compound method (if they are not too long to write out).</p>
+<p>So please do look at the output of the Linter, and where the problem is easy to fix, please just fix it. It's okay to leave a few of the warnings. If we don't accept your submission the first time, I'm pretty confident it will be accepted soon. </p>
+<p>Larry Paulson</p>
+
+
+
+<hr><p>Last updated: Mar 28 2024 at 12:29 UTC</p>
+</html>

@@ -1,0 +1,116 @@
+[
+    {
+        "content": "<p>I am wondering if there is a way to parse the syntax of Isabelle/Isar into an AST that I can implement in Isabelle/jEdit, I know that there is a parser in Isabelle/ML in the source of Isabelle, but how can I see the actual parsed tree?</p>",
+        "id": 422547159,
+        "sender_full_name": "Minh D",
+        "timestamp": 1708492843
+    },
+    {
+        "content": "<p>There is no parse tree - parsing is done via parsing combinators without ever creating one. As the syntax is not static but user-extensible,  parsing is dependent on the theory context.</p>\n<p>Not sure what you're trying to implement but you can view the markup tree already in jEdit in the Sidekick panel (select <code>isabelle-markup</code>).</p>",
+        "id": 422565008,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1708503455
+    },
+    {
+        "content": "<p>Just for the sake of completeness: There <em>is</em> an AST for the inner syntax. But Isar is part of the outer syntax, which indeed does not have an AST.</p>",
+        "id": 422584955,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1708510709
+    },
+    {
+        "content": "<p>Thank you both for the answers. </p>\n<blockquote>\n<p>As the syntax is not static but user-extensible, parsing is dependent on the theory context.</p>\n</blockquote>\n<p>As I am new to this, what do you mean by user-extensible? Isn't the syntax for Isabelle/Isar is already mentioned in the Isabelle/Isar reference manual?</p>\n<blockquote>\n<p>There is an AST for the inner syntax.</p>\n</blockquote>\n<p>How can I get to produce the AST for the inner syntax?</p>",
+        "id": 422621872,
+        "sender_full_name": "Minh D",
+        "timestamp": 1708523393
+    },
+    {
+        "content": "<p>At almost any point in an Isabelle theory, you can open an ML block and do some stuff there. Such as: declaring new commands (like <code>proof</code>, <code>lemma</code>, <code>by</code>, <code>qed</code>, <code>fun</code>), new methods (like <code>simp</code>, <code>auto</code>) etc., and when you do that you can specify a parser (in the form of a parser combinator) to parse the arguments of that command or method.</p>",
+        "id": 422647423,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1708530374
+    },
+    {
+        "content": "<p>The \"built-in\" Isar commands like \"have\", \"also\", etc. are not special in that regard. You could define your own Isar-style commands in your theories, and indeed some people do.</p>",
+        "id": 422647556,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1708530416
+    },
+    {
+        "content": "<p>The reference manual just lists the canonical pre-defined Isar commands.</p>",
+        "id": 422647693,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1708530458
+    },
+    {
+        "content": "<p>The only thing that is really fixed (as far as I am aware) is the tokenisation.</p>",
+        "id": 422647873,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1708530495
+    },
+    {
+        "content": "<p>I actually have no idea how to look at the inner syntax AST. I just know it exists because there are parse/print translations (kind of \"hooks\" that can manipulate syntax after parsing) that operate on it. Chapter 8 of the reference manual has some information about this. But this is quite obscure internal stuff that only very few Isabelle users actually care about.</p>",
+        "id": 422649278,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1708530848
+    },
+    {
+        "content": "<p>Dear <span class=\"user-mention\" data-user-id=\"689992\">@Minh D</span> </p>\n<p>Do you already know what you intend to do with the inner syntax ASTs?</p>\n<p>I have some experience in analyzing them to build AI tools for Isabelle. Perhaps I am familiar with the APIs you are searching for.</p>",
+        "id": 422720036,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1708557389
+    },
+    {
+        "content": "<p>Thank you <span class=\"user-mention\" data-user-id=\"232736\">@Manuel Eberl</span> for the detailed explanation, I finally see what it means to say \"user-extensible\" syntax for Isabelle.<br>\n<span class=\"user-mention\" data-user-id=\"644411\">@Yutaka Nagashima</span>  Thank you, it would be great if I can understand how to work around with the inner syntax AST, can I DM you?</p>",
+        "id": 422737965,
+        "sender_full_name": "Minh D",
+        "timestamp": 1708569777
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"689992\">@Minh D</span> <br>\nSure. I have a full-time job, so please be aware that my replies may be slow.</p>",
+        "id": 422895954,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1708632442
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Parser.20for.20Isabelle/near/422720036\">said</a>:</p>\n<blockquote>\n<p>Dear <span class=\"user-mention silent\" data-user-id=\"689992\">Minh D</span> </p>\n<p>Do you already know what you intend to do with the inner syntax ASTs?</p>\n<p>I have some experience in analyzing them to build AI tools for Isabelle. Perhaps I am familiar with the APIs you are searching for.</p>\n</blockquote>\n<p>Dear <span class=\"user-mention\" data-user-id=\"644411\">@Yutaka Nagashima</span> </p>\n<p>Could I get some help from you as well, please?<br>\nI have similar questions of needing a parser for Isabelle to do some source-to-source transformation.<br>\nFor instance, some search-and-replace cannot be intuitively implemented using regex only, such as replacing occurrences of variables that are not inside a lambda expression. <br>\nCould I DM you about the details?<br>\nThanks in advance!</p>\n<p>Best wishes,<br>\nChengsong</p>",
+        "id": 427387296,
+        "sender_full_name": "Chengsong Tan",
+        "timestamp": 1710750832
+    },
+    {
+        "content": "<p>There is some prior work on that. Some students at TUM were working on building refactoring tools for Isabelle/jEdit. As I recall they used the markup generated by PIDE, i.e. the same stuff Isabelle/jEdit uses for highlighting and annotations as well. But I honestly don't know anything about this stuff. Maybe <span class=\"user-mention\" data-user-id=\"348400\">@Fabian Huch</span>  knows?</p>",
+        "id": 427400521,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1710753336
+    },
+    {
+        "content": "<p>I don't know of any students doing that.</p>",
+        "id": 427509798,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1710775141
+    },
+    {
+        "content": "<p>Hm, someone ought to know. Sounds like the kind of thing you'd have supervised. Maybe ask Tobias.</p>",
+        "id": 427769982,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1710867249
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"241231\">Chengsong Tan</span> <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Parser.20for.20Isabelle/near/427387296\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Parser.20for.20Isabelle/near/422720036\">said</a>:</p>\n<blockquote>\n<p>Dear <span class=\"user-mention silent\" data-user-id=\"689992\">Minh D</span> </p>\n<p>Do you already know what you intend to do with the inner syntax ASTs?</p>\n<p>I have some experience in analyzing them to build AI tools for Isabelle. Perhaps I am familiar with the APIs you are searching for.</p>\n</blockquote>\n<p>Dear <span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> </p>\n<p>Could I get some help from you as well, please?<br>\nI have similar questions of needing a parser for Isabelle to do some source-to-source transformation.<br>\nFor instance, some search-and-replace cannot be intuitively implemented using regex only, such as replacing occurrences of variables that are not inside a lambda expression. <br>\nCould I DM you about the details?<br>\nThanks in advance!</p>\n<p>Best wishes,<br>\nChengsong</p>\n</blockquote>\n<p>Sure, you can send me direct messages. It might take a bit longer to respond since I have a full-time job. </p>\n<p>However, if you are working on a non-confidential project, I think it's better to have our conversation in public. That way, others can also read the messages. They might learn something new or may know something that I don't.</p>",
+        "id": 427826322,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1710889939
+    },
+    {
+        "content": "<p>(deleted)</p>",
+        "id": 429751702,
+        "sender_full_name": "Chengsong Tan",
+        "timestamp": 1711493270
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Parser.20for.20Isabelle/near/427826322\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"241231\">Chengsong Tan</span> <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Parser.20for.20Isabelle/near/427387296\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Parser.20for.20Isabelle/near/422720036\">said</a>:</p>\n<blockquote>\n<p>Dear <span class=\"user-mention silent\" data-user-id=\"689992\">Minh D</span> </p>\n<p>Do you already know what you intend to do with the inner syntax ASTs?</p>\n<p>I have some experience in analyzing them to build AI tools for Isabelle. Perhaps I am familiar with the APIs you are searching for.</p>\n</blockquote>\n<p>Dear <span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> </p>\n<p>Could I get some help from you as well, please?<br>\nI have similar questions of needing a parser for Isabelle to do some source-to-source transformation.<br>\nFor instance, some search-and-replace cannot be intuitively implemented using regex only, such as replacing occurrences of variables that are not inside a lambda expression. <br>\nCould I DM you about the details?<br>\nThanks in advance!</p>\n<p>Best wishes,<br>\nChengsong</p>\n</blockquote>\n<p>Sure, you can send me direct messages. It might take a bit longer to respond since I have a full-time job. </p>\n<p>However, if you are working on a non-confidential project, I think it's better to have our conversation in public. That way, others can also read the messages. They might learn something new or may know something that I don't.</p>\n</blockquote>\n<p>Yes sure, I am happy to discuss in public. Do you know of any existing Isabelle parsers? I essentially want to do some source-to-source transformations in Isabelle, and to do that I need to be able to parse the code such that I can refer to the constructs like a lemma, a conjunct in a logic formula, a subgoal, a named fact inside a lemma and etc. It would be great if there's already something that can be used out of the box. Or if you have any experience in hand-rolling such a parser and know the caveats it would be very helpful.</p>\n<p>Thanks a lot,<br>\nChengsong</p>",
+        "id": 429752016,
+        "sender_full_name": "Chengsong Tan",
+        "timestamp": 1711493470
+    }
+]

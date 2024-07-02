@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>Sledgehammer: &gt; 1.0 s, timed out · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Sledgehammer.3A.20.3E.201.2E0.20s.2C.20timed.20out.html">Sledgehammer: &gt; 1.0 s, timed out</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="444472397"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Sledgehammer%3A%20%3E%201.0%20s%2C%20timed%20out/near/444472397" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Sledgehammer.3A.20.3E.201.2E0.20s.2C.20timed.20out.html#444472397">(Jun 13 2024 at 13:59)</a>:</h4>
+<p>Sometimes, at a hard to prove lemma I get a hint:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">vampire</span><span class="o">:</span><span class="w"> </span><span class="n">Try</span><span class="w"> </span><span class="n">this</span><span class="o">:</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">&gt;</span><span class="w"> </span><span class="n">1.0</span><span class="w"> </span><span class="n">s</span><span class="o">,</span><span class="w"> </span><span class="n">timed</span><span class="w"> </span><span class="n">out</span><span class="o">)</span>
+</code></pre></div>
+<p>but when I try <code>by metis</code>, the system loops and <code>by metis</code> keeps to be purple.</p>
+<p>Is there a general advice how can I write a proper proof for the statement?</p>
+<p>What is being over 1 seconds? How can I make Sledgehammer try longer? sledgehammer [timeou= ...] is something different I fear.</p>
+
+
+
+<a name="444474307"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Sledgehammer%3A%20%3E%201.0%20s%2C%20timed%20out/near/444474307" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Sledgehammer.3A.20.3E.201.2E0.20s.2C.20timed.20out.html#444474307">(Jun 13 2024 at 14:06)</a>:</h4>
+<p>Self-answer: I guess the </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">sledgehammer</span><span class="w"> </span><span class="o">[</span><span class="n">preplay_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">5</span><span class="o">]</span>
+</code></pre></div>
+<p>sets the metis timeout.</p>
+
+
+
+<hr><p>Last updated: Jul 02 2024 at 16:22 UTC</p>
+</html>

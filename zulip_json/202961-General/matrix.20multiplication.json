@@ -1,0 +1,140 @@
+[
+    {
+        "content": "<p>In the last two months, I've learned to do lots of stuff in Isabelle, but I haven't had the opportunity to verify results of relatively complex calculations, until now. For instance, I tried the following, but got stuck with the last part. The matrix C which is a function of a,b,c,d is such that C*C^t is supposed to be (a^2 + b^2 + c^2 + d^2)*I_4. Any ideas?</p>\n<div class=\"codehilite\" data-code-language=\"fun\"><pre><span></span><code>  \"four_squares n = (SOME (a, b, c, d). a^2 + b^2 + c^2 + d^2 = n)\"\n\nfun lagrange_mat_of_4 :: \"(nat × nat × nat × nat) ⇒ int mat\" where\n  \"lagrange_mat_of_4 (a, b, c, d) =\n  mat 4 4 (λ(i, j). if      (i, j) = (1, 1) then a\n                    else if (i, j) = (1, 2) then b\n                    else if (i, j) = (1, 3) then c\n                    else if (i, j) = (1, 4) then d\n                    else if (i, j) = (2, 1) then -b\n                    else if (i, j) = (2, 2) then a\n                    else if (i, j) = (2, 3) then -d\n                    else if (i, j) = (2, 4) then c\n                    else if (i, j) = (3, 1) then -c\n                    else if (i, j) = (3, 2) then d\n                    else if (i, j) = (3, 3) then a\n                    else if (i, j) = (3, 4) then -b\n                    else if (i, j) = (4, 1) then -d\n                    else if (i, j) = (4, 2) then -c\n                    else if (i, j) = (4, 3) then b\n                    else if (i, j) = (4, 4) then a\n                    else 0)\"\n\nfun lagrange_mat :: \"nat ⇒ int mat\" where\n  \"lagrange_mat n = lagrange_mat_of_4(four_squares(n))\"\n\nlemma lagrange_identity:\n  assumes \"n ∈ ℕ\"\n  shows \"(lagrange_mat n)*(lagrange_mat n)⇧T = int n ⋅⇩m (1⇩m (4::nat))\"\nproof -\n   let ?M = \"lagrange_mat n\"\n   let ?MT = \"transpose_mat(?M)\"\n   let ?prodM = \"?M*?MT\"\n   let ?nI = \"int n ⋅⇩m (1⇩m (4::nat))\"\n\n  obtain a b c d where squares: \"four_squares n = (a, b, c, d)\"\n    using sum_of_four_squares by (metis surj_pair)\n\n  have M_def: \"?M = lagrange_mat_of_4 (a, b, c, d)\"\n    using squares by simp\n\n  have MT_def: \"?MT = transpose_mat(?M)\"\n    by simp\n\n  have prodM_def: \"?prodM = ?M*?MT\"\n    by simp\n\n  then have lagrange_matrix_structure: \"?prodM = mat 4 4\n  (λ(i, j). if      (i, j) = (1, 1) then a*a + b*b + c*c + d*d\n            else if (i, j) = (1, 2) then a*(-b) + b*a + c*(-d) + d*c\n            else if (i, j) = (1, 3) then a*(-c) + b*d + c*a + d*(-b)\n            else if (i, j) = (1, 4) then a*(-d) + b*(-c) + c*b + d*a\n            else if (i, j) = (2, 1) then (-b)*a + a*b + (-d)*c + c*d\n            else if (i, j) = (2, 2) then (-b)*(-b) + a*a + (-d)*(-d) + c*c\n            else if (i, j) = (2, 3) then (-b)*(-c) + a*d + (-d)*a + c*(-b)\n            else if (i, j) = (2, 4) then (-b)*(-d) + a*(-c) + (-d)*b + c*a\n            else if (i, j) = (3, 1) then (-c)*a + d*b + a*c + (-b)*d\n            else if (i, j) = (3, 2) then (-c)*(-b) + d*a + a*(-d) + (-b)*c\n            else if (i, j) = (3, 3) then (-c)*(-c) + d*d + a*a + (-b)*(-b)\n            else if (i, j) = (3, 4) then (-c)*(-d) + d*(-c) + a*b + (-b)*a\n            else if (i, j) = (4, 1) then (-d)*a + (-c)*b + b*c + a*d\n            else if (i, j) = (4, 2) then (-d)*(-b) + (-c)*a + b*(-d) + a*c\n            else if (i, j) = (4, 3) then (-d)*(-c) + (-c)*d + b*a + a*(-b)\n            else if (i, j) = (4, 4) then (-d)*(-d) + (-c)*(-c) + b*b + a*a\n            else 0)\"\n    by sorry\n</code></pre></div>",
+        "id": 456752816,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1722913215
+    },
+    {
+        "content": "<p>I forgot to say I am importing stuff from the Jordan Normal Form directory</p>",
+        "id": 456758064,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1722915948
+    },
+    {
+        "content": "<p>have you tried using <code>mat_eq_iff</code>?</p>",
+        "id": 456780070,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1722926464
+    },
+    {
+        "content": "<p>I tried using mat_eq_iff and sledgehammer with no success</p>",
+        "id": 456893978,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1722960238
+    },
+    {
+        "content": "<p>I just had a thought that maybe I didn’t import the section containing mat_eq_iff. I’ll check that when I get back on Isabelle.</p>",
+        "id": 456933210,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1722971249
+    },
+    {
+        "content": "<p>I tried importing that section but it didn’t work</p>",
+        "id": 456981721,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1722991450
+    },
+    {
+        "content": "<p>you probably need to do <code>mat_eq_iff</code> and <code>auto</code> and inspect the goal more closely....</p>",
+        "id": 457025824,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1723013916
+    },
+    {
+        "content": "<p>maybe simplify using <code>algebra_simps</code></p>",
+        "id": 457025882,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1723013943
+    },
+    {
+        "content": "<p>And for sure give more details than \"it didn't work\". What did you try? What goal remained?</p>",
+        "id": 457088246,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1723031497
+    },
+    {
+        "content": "<p>I changed it to make it look a little nicer to this, but it didn't find anything from sledgehammer:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">four_squares</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ (nat × nat × nat × nat)\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"four_squares n = (SOME (a, b, c, d). a^2 + b^2 + c^2 + d^2 = n)\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">lagrange_mat_of_4</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(nat × nat × nat × nat) ⇒ int mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"lagrange_mat_of_4 (a, b, c, d) =</span>\n<span class=\"s\">  mat 4 4 (λ(i, j). if      (i, j) = (1, 1) then a</span>\n<span class=\"s\">                    else if (i, j) = (1, 2) then b</span>\n<span class=\"s\">                    else if (i, j) = (1, 3) then c</span>\n<span class=\"s\">                    else if (i, j) = (1, 4) then d</span>\n<span class=\"s\">                    else if (i, j) = (2, 1) then -b</span>\n<span class=\"s\">                    else if (i, j) = (2, 2) then a</span>\n<span class=\"s\">                    else if (i, j) = (2, 3) then -d</span>\n<span class=\"s\">                    else if (i, j) = (2, 4) then c</span>\n<span class=\"s\">                    else if (i, j) = (3, 1) then -c</span>\n<span class=\"s\">                    else if (i, j) = (3, 2) then d</span>\n<span class=\"s\">                    else if (i, j) = (3, 3) then a</span>\n<span class=\"s\">                    else if (i, j) = (3, 4) then -b</span>\n<span class=\"s\">                    else if (i, j) = (4, 1) then -d</span>\n<span class=\"s\">                    else if (i, j) = (4, 2) then -c</span>\n<span class=\"s\">                    else if (i, j) = (4, 3) then b</span>\n<span class=\"s\">                    else if (i, j) = (4, 4) then a</span>\n<span class=\"s\">                    else 0)\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">lagrange_mat</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ int mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"lagrange_mat n = lagrange_mat_of_4(four_squares(n))\"</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">lagrange_identity</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">n_natural</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"n ∈ ℕ\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"(lagrange_mat n)*(lagrange_mat n)⇧T = int n ⋅⇩m (1⇩m (4::nat))\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">c</span><span class=\"w\"> </span><span class=\"n\">d</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">squares</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"four_squares n = (a, b, c, d)\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">sum_of_four_squares</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">metis</span><span class=\"w\"> </span><span class=\"n\">surj_pair</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"lagrange_mat n = lagrange_mat_of_4(a, b, c, d)\"</span><span class=\"w\"> </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">squares</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"(lagrange_mat n)*(lagrange_mat n)⇧T =</span>\n<span class=\"s\">    lagrange_mat_of_4(a, b, c, d)*(lagrange_mat_of_4(a, b, c, d))⇧T\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">have</span>\n<span class=\"w\">  </span><span class=\"s\">\"lagrange_mat_of_4(a, b, c, d)*(lagrange_mat_of_4(a, b, c, d))⇧T =</span>\n<span class=\"s\">    int n ⋅⇩m (1⇩m (4::nat))\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">algebra_simps</span><span class=\"w\"> </span><span class=\"n\">mat_eq_iff</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"kt\">sledgehammer</span>\n</code></pre></div>",
+        "id": 457227512,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723075014
+    },
+    {
+        "content": "<p>The \"by auto\" suggestion was helpful, as it allowed me to see some steps in what Isabelle is thinking. But I still don't know how to convince Isabelle.</p>",
+        "id": 457227716,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723075170
+    },
+    {
+        "content": "<p>It seems that working with matrices and vectors is harder than working with simple algebra in Isabelle. Any suggestions would be appreciated.</p>",
+        "id": 457262004,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723091057
+    },
+    {
+        "content": "<p>If I understand the problem correctly, the issue now is that you have to work with the choice (to derive that <code>a^2 + b^2 + c^2 + d^2 = n</code>) which sledgehammer is not good at</p>",
+        "id": 457380220,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1723126428
+    },
+    {
+        "content": "<p>See this thread <a href=\"#narrow/stream/238552-Beginner-Questions/topic/Proving.20lemma.20with.20definite.20description/near/291315915\">https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner-Questions/topic/Proving.20lemma.20with.20definite.20description/near/291315915</a></p>",
+        "id": 457381672,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1723126856
+    },
+    {
+        "content": "<p>@MathiasFleury I think that is a good suggestion, so I got rid of the n and just kept the a,b,c,d. I'll worry about the n later. I came up with this (worrying only about the first entry of the matrix), but sledgehammer didn't find a proof. Any ideas?</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">lagrange_mat_of_4</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(nat × nat × nat × nat) ⇒ int mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"lagrange_mat_of_4 (a, b, c, d) =</span>\n<span class=\"s\">  mat 4 4 (λ(i, j). if      (i, j) = (1, 1) then a</span>\n<span class=\"s\">                    else if (i, j) = (1, 2) then b</span>\n<span class=\"s\">                    else if (i, j) = (1, 3) then c</span>\n<span class=\"s\">                    else if (i, j) = (1, 4) then d</span>\n<span class=\"s\">                    else if (i, j) = (2, 1) then -b</span>\n<span class=\"s\">                    else if (i, j) = (2, 2) then a</span>\n<span class=\"s\">                    else if (i, j) = (2, 3) then -d</span>\n<span class=\"s\">                    else if (i, j) = (2, 4) then c</span>\n<span class=\"s\">                    else if (i, j) = (3, 1) then -c</span>\n<span class=\"s\">                    else if (i, j) = (3, 2) then d</span>\n<span class=\"s\">                    else if (i, j) = (3, 3) then a</span>\n<span class=\"s\">                    else if (i, j) = (3, 4) then -b</span>\n<span class=\"s\">                    else if (i, j) = (4, 1) then -d</span>\n<span class=\"s\">                    else if (i, j) = (4, 2) then -c</span>\n<span class=\"s\">                    else if (i, j) = (4, 3) then b</span>\n<span class=\"s\">                    else if (i, j) = (4, 4) then a</span>\n<span class=\"s\">                    else 0)\"</span>\n\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">lagrange_mat_of_4_identity</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"a ∈ ℕ\"</span><span class=\"w\"> </span><span class=\"s\">\"b ∈ ℕ\"</span><span class=\"w\"> </span><span class=\"s\">\"c ∈ ℕ\"</span><span class=\"w\"> </span><span class=\"s\">\"d ∈ ℕ\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"(lagrange_mat_of_4 (a, b, c, d))*(lagrange_mat_of_4 (a, b, c, d))⇧T =</span>\n<span class=\"s\">        int (a^2 + b^2 + c^2 + d^2) ⋅⇩m (1⇩m (4::nat))\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">   </span><span class=\"k\">let</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">M</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"lagrange_mat_of_4 (a, b, c, d)\"</span>\n<span class=\"w\">   </span><span class=\"k\">let</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">MT</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"transpose_mat(?M)\"</span>\n<span class=\"w\">   </span><span class=\"k\">let</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">prodM</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"?M*?MT\"</span>\n<span class=\"w\">   </span><span class=\"k\">let</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">nI</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"int (a^2 + b^2 + c^2 + d^2) ⋅⇩m (1⇩m (4::nat))\"</span>\n\n<span class=\"w\">   </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"?prodM $$ (1,1)  =</span>\n<span class=\"s\">    a * a + b * b + c * c + d * d\"</span><span class=\"w\"> </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">algebra_simps</span><span class=\"w\"> </span><span class=\"n\">mat_eq_iff</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"kt\">sledgehammer</span>\n</code></pre></div>",
+        "id": 459324877,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723164228
+    },
+    {
+        "content": "<p>Wait a second - I just had a thought that maybe the indices are 0,1,2,3 instead of 1,2,3,4 for matrices in Isabelle? I'll try this now.</p>",
+        "id": 459325427,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723164533
+    },
+    {
+        "content": "<p>Unfortunately changing the indices had no effect. Sledgehammer still failed.</p>",
+        "id": 459326060,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723164911
+    },
+    {
+        "content": "<p>Are there any actual examples of matrix multiplication in Isabelle?</p>",
+        "id": 459333313,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723168002
+    },
+    {
+        "content": "<p>As I have never used the matrix multiplication, I cannot help you. Some general information:</p>\n<ul>\n<li>sledgehammer is not magic. Sometimes you really need to understand how the things (here matrices) you are working on are defined</li>\n<li>sledgehammer is not very good at unfolding definitions and very bad if the proofs involves <code>transfer</code>or  variants like that</li>\n<li>sledgehammer can be much slower than using <code>find_theorem</code> or the panel if you know that the theorem exists</li>\n</ul>",
+        "id": 459462520,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1723207092
+    },
+    {
+        "content": "<p>You are at the point where searching for lemmas and deciding how to prove things by hand and looking how other theorems are proved is the right way to go</p>",
+        "id": 459462669,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1723207139
+    },
+    {
+        "content": "<p>I agree that I am at a point where I need to learn how to find stuff on my own. What is find_theorem and the panel?</p>",
+        "id": 459472019,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723209458
+    },
+    {
+        "content": "<p><a href=\"https://stackoverflow.com/questions/21255473/using-find-theorems-in-isabelle\">https://stackoverflow.com/questions/21255473/using-find-theorems-in-isabelle</a> the query panel is just a front-end to the same tool</p>",
+        "id": 459472331,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1723209535
+    },
+    {
+        "content": "<p>Ok thank you</p>",
+        "id": 459473359,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1723209748
+    }
+]

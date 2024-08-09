@@ -1,0 +1,298 @@
+<html>
+<head><meta charset="utf-8"><title>matrix multiplication · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html">matrix multiplication</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="456752816"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/456752816" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#456752816">(Aug 06 2024 at 03:00)</a>:</h4>
+<p>In the last two months, I've learned to do lots of stuff in Isabelle, but I haven't had the opportunity to verify results of relatively complex calculations, until now. For instance, I tried the following, but got stuck with the last part. The matrix C which is a function of a,b,c,d is such that C*C^t is supposed to be (a^2 + b^2 + c^2 + d^2)*I_4. Any ideas?</p>
+<div class="codehilite" data-code-language="fun"><pre><span></span><code>  "four_squares n = (SOME (a, b, c, d). a^2 + b^2 + c^2 + d^2 = n)"
+
+fun lagrange_mat_of_4 :: "(nat × nat × nat × nat) ⇒ int mat" where
+  "lagrange_mat_of_4 (a, b, c, d) =
+  mat 4 4 (λ(i, j). if      (i, j) = (1, 1) then a
+                    else if (i, j) = (1, 2) then b
+                    else if (i, j) = (1, 3) then c
+                    else if (i, j) = (1, 4) then d
+                    else if (i, j) = (2, 1) then -b
+                    else if (i, j) = (2, 2) then a
+                    else if (i, j) = (2, 3) then -d
+                    else if (i, j) = (2, 4) then c
+                    else if (i, j) = (3, 1) then -c
+                    else if (i, j) = (3, 2) then d
+                    else if (i, j) = (3, 3) then a
+                    else if (i, j) = (3, 4) then -b
+                    else if (i, j) = (4, 1) then -d
+                    else if (i, j) = (4, 2) then -c
+                    else if (i, j) = (4, 3) then b
+                    else if (i, j) = (4, 4) then a
+                    else 0)"
+
+fun lagrange_mat :: "nat ⇒ int mat" where
+  "lagrange_mat n = lagrange_mat_of_4(four_squares(n))"
+
+lemma lagrange_identity:
+  assumes "n ∈ ℕ"
+  shows "(lagrange_mat n)*(lagrange_mat n)⇧T = int n ⋅⇩m (1⇩m (4::nat))"
+proof -
+   let ?M = "lagrange_mat n"
+   let ?MT = "transpose_mat(?M)"
+   let ?prodM = "?M*?MT"
+   let ?nI = "int n ⋅⇩m (1⇩m (4::nat))"
+
+  obtain a b c d where squares: "four_squares n = (a, b, c, d)"
+    using sum_of_four_squares by (metis surj_pair)
+
+  have M_def: "?M = lagrange_mat_of_4 (a, b, c, d)"
+    using squares by simp
+
+  have MT_def: "?MT = transpose_mat(?M)"
+    by simp
+
+  have prodM_def: "?prodM = ?M*?MT"
+    by simp
+
+  then have lagrange_matrix_structure: "?prodM = mat 4 4
+  (λ(i, j). if      (i, j) = (1, 1) then a*a + b*b + c*c + d*d
+            else if (i, j) = (1, 2) then a*(-b) + b*a + c*(-d) + d*c
+            else if (i, j) = (1, 3) then a*(-c) + b*d + c*a + d*(-b)
+            else if (i, j) = (1, 4) then a*(-d) + b*(-c) + c*b + d*a
+            else if (i, j) = (2, 1) then (-b)*a + a*b + (-d)*c + c*d
+            else if (i, j) = (2, 2) then (-b)*(-b) + a*a + (-d)*(-d) + c*c
+            else if (i, j) = (2, 3) then (-b)*(-c) + a*d + (-d)*a + c*(-b)
+            else if (i, j) = (2, 4) then (-b)*(-d) + a*(-c) + (-d)*b + c*a
+            else if (i, j) = (3, 1) then (-c)*a + d*b + a*c + (-b)*d
+            else if (i, j) = (3, 2) then (-c)*(-b) + d*a + a*(-d) + (-b)*c
+            else if (i, j) = (3, 3) then (-c)*(-c) + d*d + a*a + (-b)*(-b)
+            else if (i, j) = (3, 4) then (-c)*(-d) + d*(-c) + a*b + (-b)*a
+            else if (i, j) = (4, 1) then (-d)*a + (-c)*b + b*c + a*d
+            else if (i, j) = (4, 2) then (-d)*(-b) + (-c)*a + b*(-d) + a*c
+            else if (i, j) = (4, 3) then (-d)*(-c) + (-c)*d + b*a + a*(-b)
+            else if (i, j) = (4, 4) then (-d)*(-d) + (-c)*(-c) + b*b + a*a
+            else 0)"
+    by sorry
+</code></pre></div>
+
+
+
+<a name="456758064"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/456758064" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#456758064">(Aug 06 2024 at 03:45)</a>:</h4>
+<p>I forgot to say I am importing stuff from the Jordan Normal Form directory</p>
+
+
+
+<a name="456780070"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/456780070" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#456780070">(Aug 06 2024 at 06:41)</a>:</h4>
+<p>have you tried using <code>mat_eq_iff</code>?</p>
+
+
+
+<a name="456893978"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/456893978" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#456893978">(Aug 06 2024 at 16:03)</a>:</h4>
+<p>I tried using mat_eq_iff and sledgehammer with no success</p>
+
+
+
+<a name="456933210"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/456933210" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#456933210">(Aug 06 2024 at 19:07)</a>:</h4>
+<p>I just had a thought that maybe I didn’t import the section containing mat_eq_iff. I’ll check that when I get back on Isabelle.</p>
+
+
+
+<a name="456981721"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/456981721" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#456981721">(Aug 07 2024 at 00:44)</a>:</h4>
+<p>I tried importing that section but it didn’t work</p>
+
+
+
+<a name="457025824"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457025824" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457025824">(Aug 07 2024 at 06:58)</a>:</h4>
+<p>you probably need to do <code>mat_eq_iff</code> and <code>auto</code> and inspect the goal more closely....</p>
+
+
+
+<a name="457025882"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457025882" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457025882">(Aug 07 2024 at 06:59)</a>:</h4>
+<p>maybe simplify using <code>algebra_simps</code></p>
+
+
+
+<a name="457088246"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457088246" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457088246">(Aug 07 2024 at 11:51)</a>:</h4>
+<p>And for sure give more details than "it didn't work". What did you try? What goal remained?</p>
+
+
+
+<a name="457227512"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457227512" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457227512">(Aug 07 2024 at 23:56)</a>:</h4>
+<p>I changed it to make it look a little nicer to this, but it didn't find anything from sledgehammer:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">four_squares</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ (nat × nat × nat × nat)"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"four_squares n = (SOME (a, b, c, d). a^2 + b^2 + c^2 + d^2 = n)"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">lagrange_mat_of_4</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(nat × nat × nat × nat) ⇒ int mat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"lagrange_mat_of_4 (a, b, c, d) =</span>
+<span class="s">  mat 4 4 (λ(i, j). if      (i, j) = (1, 1) then a</span>
+<span class="s">                    else if (i, j) = (1, 2) then b</span>
+<span class="s">                    else if (i, j) = (1, 3) then c</span>
+<span class="s">                    else if (i, j) = (1, 4) then d</span>
+<span class="s">                    else if (i, j) = (2, 1) then -b</span>
+<span class="s">                    else if (i, j) = (2, 2) then a</span>
+<span class="s">                    else if (i, j) = (2, 3) then -d</span>
+<span class="s">                    else if (i, j) = (2, 4) then c</span>
+<span class="s">                    else if (i, j) = (3, 1) then -c</span>
+<span class="s">                    else if (i, j) = (3, 2) then d</span>
+<span class="s">                    else if (i, j) = (3, 3) then a</span>
+<span class="s">                    else if (i, j) = (3, 4) then -b</span>
+<span class="s">                    else if (i, j) = (4, 1) then -d</span>
+<span class="s">                    else if (i, j) = (4, 2) then -c</span>
+<span class="s">                    else if (i, j) = (4, 3) then b</span>
+<span class="s">                    else if (i, j) = (4, 4) then a</span>
+<span class="s">                    else 0)"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">lagrange_mat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ int mat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"lagrange_mat n = lagrange_mat_of_4(four_squares(n))"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">lagrange_identity</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">n_natural</span><span class="o">:</span><span class="w"> </span><span class="s">"n ∈ ℕ"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(lagrange_mat n)*(lagrange_mat n)⇧T = int n ⋅⇩m (1⇩m (4::nat))"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">squares</span><span class="o">:</span><span class="w"> </span><span class="s">"four_squares n = (a, b, c, d)"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">sum_of_four_squares</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">surj_pair</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"lagrange_mat n = lagrange_mat_of_4(a, b, c, d)"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">squares</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"(lagrange_mat n)*(lagrange_mat n)⇧T =</span>
+<span class="s">    lagrange_mat_of_4(a, b, c, d)*(lagrange_mat_of_4(a, b, c, d))⇧T"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span>
+<span class="w">  </span><span class="s">"lagrange_mat_of_4(a, b, c, d)*(lagrange_mat_of_4(a, b, c, d))⇧T =</span>
+<span class="s">    int n ⋅⇩m (1⇩m (4::nat))"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">algebra_simps</span><span class="w"> </span><span class="n">mat_eq_iff</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+</code></pre></div>
+
+
+
+<a name="457227716"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457227716" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457227716">(Aug 07 2024 at 23:59)</a>:</h4>
+<p>The "by auto" suggestion was helpful, as it allowed me to see some steps in what Isabelle is thinking. But I still don't know how to convince Isabelle.</p>
+
+
+
+<a name="457262004"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457262004" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457262004">(Aug 08 2024 at 04:24)</a>:</h4>
+<p>It seems that working with matrices and vectors is harder than working with simple algebra in Isabelle. Any suggestions would be appreciated.</p>
+
+
+
+<a name="457380220"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457380220" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457380220">(Aug 08 2024 at 14:13)</a>:</h4>
+<p>If I understand the problem correctly, the issue now is that you have to work with the choice (to derive that <code>a^2 + b^2 + c^2 + d^2 = n</code>) which sledgehammer is not good at</p>
+
+
+
+<a name="457381672"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/457381672" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#457381672">(Aug 08 2024 at 14:20)</a>:</h4>
+<p>See this thread <a href="#narrow/stream/238552-Beginner-Questions/topic/Proving.20lemma.20with.20definite.20description/near/291315915">https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner-Questions/topic/Proving.20lemma.20with.20definite.20description/near/291315915</a></p>
+
+
+
+<a name="459324877"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459324877" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459324877">(Aug 09 2024 at 00:43)</a>:</h4>
+<p>@MathiasFleury I think that is a good suggestion, so I got rid of the n and just kept the a,b,c,d. I'll worry about the n later. I came up with this (worrying only about the first entry of the matrix), but sledgehammer didn't find a proof. Any ideas?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">lagrange_mat_of_4</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(nat × nat × nat × nat) ⇒ int mat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"lagrange_mat_of_4 (a, b, c, d) =</span>
+<span class="s">  mat 4 4 (λ(i, j). if      (i, j) = (1, 1) then a</span>
+<span class="s">                    else if (i, j) = (1, 2) then b</span>
+<span class="s">                    else if (i, j) = (1, 3) then c</span>
+<span class="s">                    else if (i, j) = (1, 4) then d</span>
+<span class="s">                    else if (i, j) = (2, 1) then -b</span>
+<span class="s">                    else if (i, j) = (2, 2) then a</span>
+<span class="s">                    else if (i, j) = (2, 3) then -d</span>
+<span class="s">                    else if (i, j) = (2, 4) then c</span>
+<span class="s">                    else if (i, j) = (3, 1) then -c</span>
+<span class="s">                    else if (i, j) = (3, 2) then d</span>
+<span class="s">                    else if (i, j) = (3, 3) then a</span>
+<span class="s">                    else if (i, j) = (3, 4) then -b</span>
+<span class="s">                    else if (i, j) = (4, 1) then -d</span>
+<span class="s">                    else if (i, j) = (4, 2) then -c</span>
+<span class="s">                    else if (i, j) = (4, 3) then b</span>
+<span class="s">                    else if (i, j) = (4, 4) then a</span>
+<span class="s">                    else 0)"</span>
+
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">lagrange_mat_of_4_identity</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"a ∈ ℕ"</span><span class="w"> </span><span class="s">"b ∈ ℕ"</span><span class="w"> </span><span class="s">"c ∈ ℕ"</span><span class="w"> </span><span class="s">"d ∈ ℕ"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(lagrange_mat_of_4 (a, b, c, d))*(lagrange_mat_of_4 (a, b, c, d))⇧T =</span>
+<span class="s">        int (a^2 + b^2 + c^2 + d^2) ⋅⇩m (1⇩m (4::nat))"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">   </span><span class="k">let</span><span class="w"> </span><span class="o">?</span><span class="n">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"lagrange_mat_of_4 (a, b, c, d)"</span>
+<span class="w">   </span><span class="k">let</span><span class="w"> </span><span class="o">?</span><span class="n">MT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"transpose_mat(?M)"</span>
+<span class="w">   </span><span class="k">let</span><span class="w"> </span><span class="o">?</span><span class="n">prodM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"?M*?MT"</span>
+<span class="w">   </span><span class="k">let</span><span class="w"> </span><span class="o">?</span><span class="n">nI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"int (a^2 + b^2 + c^2 + d^2) ⋅⇩m (1⇩m (4::nat))"</span>
+
+<span class="w">   </span><span class="k">have</span><span class="w"> </span><span class="s">"?prodM $$ (1,1)  =</span>
+<span class="s">    a * a + b * b + c * c + d * d"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">algebra_simps</span><span class="w"> </span><span class="n">mat_eq_iff</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+</code></pre></div>
+
+
+
+<a name="459325427"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459325427" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459325427">(Aug 09 2024 at 00:48)</a>:</h4>
+<p>Wait a second - I just had a thought that maybe the indices are 0,1,2,3 instead of 1,2,3,4 for matrices in Isabelle? I'll try this now.</p>
+
+
+
+<a name="459326060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459326060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459326060">(Aug 09 2024 at 00:55)</a>:</h4>
+<p>Unfortunately changing the indices had no effect. Sledgehammer still failed.</p>
+
+
+
+<a name="459333313"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459333313" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459333313">(Aug 09 2024 at 01:46)</a>:</h4>
+<p>Are there any actual examples of matrix multiplication in Isabelle?</p>
+
+
+
+<a name="459462520"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459462520" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459462520">(Aug 09 2024 at 12:38)</a>:</h4>
+<p>As I have never used the matrix multiplication, I cannot help you. Some general information:</p>
+<ul>
+<li>sledgehammer is not magic. Sometimes you really need to understand how the things (here matrices) you are working on are defined</li>
+<li>sledgehammer is not very good at unfolding definitions and very bad if the proofs involves <code>transfer</code>or  variants like that</li>
+<li>sledgehammer can be much slower than using <code>find_theorem</code> or the panel if you know that the theorem exists</li>
+</ul>
+
+
+
+<a name="459462669"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459462669" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459462669">(Aug 09 2024 at 12:38)</a>:</h4>
+<p>You are at the point where searching for lemmas and deciding how to prove things by hand and looking how other theorems are proved is the right way to go</p>
+
+
+
+<a name="459472019"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459472019" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459472019">(Aug 09 2024 at 13:17)</a>:</h4>
+<p>I agree that I am at a point where I need to learn how to find stuff on my own. What is find_theorem and the panel?</p>
+
+
+
+<a name="459472331"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459472331" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459472331">(Aug 09 2024 at 13:18)</a>:</h4>
+<p><a href="https://stackoverflow.com/questions/21255473/using-find-theorems-in-isabelle">https://stackoverflow.com/questions/21255473/using-find-theorems-in-isabelle</a> the query panel is just a front-end to the same tool</p>
+
+
+
+<a name="459473359"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/matrix%20multiplication/near/459473359" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/matrix.20multiplication.html#459473359">(Aug 09 2024 at 13:22)</a>:</h4>
+<p>Ok thank you</p>
+
+
+
+<hr><p>Last updated: Aug 09 2024 at 16:21 UTC</p>
+</html>

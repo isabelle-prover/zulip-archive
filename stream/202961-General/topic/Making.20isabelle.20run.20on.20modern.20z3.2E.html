@@ -1,0 +1,240 @@
+<html>
+<head><meta charset="utf-8"><title>Making isabelle run on modern z3. · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html">Making isabelle run on modern z3.</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="475986314"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/475986314" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#475986314">(Oct 10 2024 at 00:49)</a>:</h4>
+<p>Making a new thread to distinguish from the previous thread on making isabelle run on musl-c</p>
+
+
+
+<a name="475986354"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/475986354" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#475986354">(Oct 10 2024 at 00:49)</a>:</h4>
+<p><a href="https://www21.in.tum.de/~boehmes/proofrec.pdf">https://www21.in.tum.de/~boehmes/proofrec.pdf</a><br>
+think this is the paper?</p>
+
+
+
+<a name="476020442"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476020442" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476020442">(Oct 10 2024 at 03:41)</a>:</h4>
+<p>Ok looking at it so far Z3 now uses SMTLIB2.<br>
+isabelle already has some code ~~/src/HOL/Tools/SMT/smtlib for smtlib2 which is used for verit i think.</p>
+
+
+
+<a name="476021920"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476021920" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476021920">(Oct 10 2024 at 03:48)</a>:</h4>
+<p><a href="https://www.verit-solver.org/papers/pxtp2019.pdf">https://www.verit-solver.org/papers/pxtp2019.pdf</a><br>
+found another relevant paper</p>
+
+
+
+<a name="476031589"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476031589" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476031589">(Oct 10 2024 at 04:56)</a>:</h4>
+<p>The PhD thesis is probably a better start <a href="https://www21.in.tum.de/~boehmes/phd_thesis.pdf">https://www21.in.tum.de/~boehmes/phd_thesis.pdf</a></p>
+
+
+
+<a name="476032445"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476032445" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476032445">(Oct 10 2024 at 05:04)</a>:</h4>
+<p>I have to do some digging if I still have the patch I used back then, but anyway the realistic path to do this is to add a z3_new and keep the old one:</p>
+<ol>
+<li>add a Z3_NEW_SOLVER to the binary to the <code>.isabelle/etc/settings</code> file (compare it to <code>$ isabelle env | grep Z3</code></li>
+<li>add a z3_new system to <code>~/src/HOL/Tools/smt/smt_systems.ML</code> (duplicate the z3 fields + duplicate the reconstruction function by creating a new file)</li>
+<li>copy <code>~~/src/HOL/SMT_Examples/SMT_Examples.thy</code> into <code>~~/src/HOL/SMT_Examples/SMT_Examples_Z3_New.thy</code>, replace z3 by z3_new, remove the certificates stuff (comment out the two lines on top) and look at the examples that fail here</li>
+</ol>
+
+
+
+<a name="476032481"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476032481" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476032481">(Oct 10 2024 at 05:05)</a>:</h4>
+<p>Then you need to know the <code>[[smt_trace]]</code> flag to see what the reconstruction is doing</p>
+
+
+
+<a name="476032610"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476032610" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476032610">(Oct 10 2024 at 05:06)</a>:</h4>
+<p>and the obvious thing: if the lemma you have is only about quantifiers, bool, and int, you can copy it over to SMT.thy and change the reconstruction directly</p>
+
+
+
+<a name="476032626"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476032626" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476032626">(Oct 10 2024 at 05:06)</a>:</h4>
+<p>Do not forget to start Isabelle with Pure as base session (<code>-l Pure</code>)</p>
+
+
+
+<a name="476032941"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476032941" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476032941">(Oct 10 2024 at 05:10)</a>:</h4>
+<p>(PS: there are two people around who can answer questions on the reconstruction, <span class="user-mention" data-user-id="477368">@Hanna Lachnitt</span> and me, so it might be a good idea to explicitly mention me when you have a question)</p>
+
+
+
+<a name="476071103"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476071103" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476071103">(Oct 10 2024 at 08:07)</a>:</h4>
+<p>I have a request: the SMT method sometimes fails if there is high system load, e. g. <a href="https://build.proof.cit.tum.de/build?name=all%2F190">here</a>. While you're delving into SMT, could you check if this can be made more robust? I suspect that there's a timeout somewhere in the internals.</p>
+
+
+
+<a name="476072369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476072369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476072369">(Oct 10 2024 at 08:12)</a>:</h4>
+<p>That is another issue that has nothing to do with this (if there is a timeout you get a proper error)</p>
+
+
+
+<a name="476072419"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476072419" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476072419">(Oct 10 2024 at 08:12)</a>:</h4>
+<p>There is no timeout anymore (see the smt_timeout parameter)</p>
+
+
+
+<a name="476072855"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476072855" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476072855">(Oct 10 2024 at 08:14)</a>:</h4>
+<p>I think the issue is that Isabelle is spawning so many tasks that all the external threads (smt is running in a bash shell) is starved until another general timeout happens</p>
+
+
+
+<a name="476074229"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476074229" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476074229">(Oct 10 2024 at 08:21)</a>:</h4>
+<p>Hmm I see</p>
+
+
+
+<a name="476074327"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476074327" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476074327">(Oct 10 2024 at 08:22)</a>:</h4>
+<p>I believe that this issue is somehow linked to the windows issue of stuff not being killed</p>
+
+
+
+<a name="476074713"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476074713" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476074713">(Oct 10 2024 at 08:24)</a>:</h4>
+<p>Internally smt and sledgehammer are relying on this in cache_io to run code:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">raw_run</span><span class="w"> </span><span class="n">make_cmd</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="n">in_path</span><span class="w"> </span><span class="n">out_path</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="k">let</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File.write</span><span class="w"> </span><span class="n">in_path</span><span class="w"> </span><span class="n">str</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="o">(</span><span class="n">out2</span><span class="o">,</span><span class="w"> </span><span class="n">rc</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Isabelle_System.bash_output</span><span class="w"> </span><span class="o">(</span><span class="n">make_cmd</span><span class="w"> </span><span class="n">in_path</span><span class="w"> </span><span class="n">out_path</span><span class="o">)</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">out1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">try_read_lines</span><span class="w"> </span><span class="n">out_path</span>
+<span class="w">  </span><span class="kp">in</span><span class="w"> </span><span class="ow">{</span><span class="kp">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split_lines</span><span class="w"> </span><span class="n">out2</span><span class="o">,</span><span class="w"> </span><span class="n">redirected_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out1</span><span class="o">,</span><span class="w"> </span><span class="n">return_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rc</span><span class="ow">}</span><span class="w"> </span><span class="k">end</span>
+</code></pre></div>
+<p>and this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">with_time_limit</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">timeout_config</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Timeout.apply</span><span class="w"> </span><span class="o">(</span><span class="n">seconds</span><span class="w"> </span><span class="o">(</span><span class="n">Config.get</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">timeout_config</span><span class="o">))</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span>
+<span class="w">    </span><span class="n">handle</span><span class="w"> </span><span class="n">Timeout.TIMEOUT</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">raise</span><span class="w"> </span><span class="n">SMT_Failure.SMT</span><span class="w"> </span><span class="n">SMT_Failure.Time_Out</span>
+</code></pre></div>
+<p>to limit the amount of time</p>
+
+
+
+<a name="476074899"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476074899" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476074899">(Oct 10 2024 at 08:25)</a>:</h4>
+<p>So the culprit would be <code>Isabelle_System.bash_output</code></p>
+
+
+
+<a name="476074959"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476074959" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476074959">(Oct 10 2024 at 08:25)</a>:</h4>
+<p>That is my guess, but I have no clue how to check that</p>
+
+
+
+<a name="476075031"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476075031" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476075031">(Oct 10 2024 at 08:25)</a>:</h4>
+<p>We also get some spurious nitpick errors: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Unexpected</span><span class="w"> </span><span class="n">outcome</span><span class="o">:</span><span class="w"> </span><span class="s">"unknown"</span>
+<span class="n">***</span><span class="w">                              </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"nitpick"</span>
+</code></pre></div>
+<p>which might be for the same reason</p>
+
+
+
+<a name="476075135"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476075135" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476075135">(Oct 10 2024 at 08:26)</a>:</h4>
+<p>basically yes, but here there is a timeout</p>
+
+
+
+<a name="476075151"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476075151" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476075151">(Oct 10 2024 at 08:26)</a>:</h4>
+<p>hence the unknown answer</p>
+
+
+
+<a name="476075858"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476075858" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476075858">(Oct 10 2024 at 08:29)</a>:</h4>
+<p>Oh you're right, that seems like a weird implementation of nitpick</p>
+
+
+
+<a name="476076395"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476076395" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476076395">(Oct 10 2024 at 08:32)</a>:</h4>
+<p>It is more complicated than that I think: during development it totally makes sense to have such a timeout. Also these problems only appear on big servers or slow machines (I tried to run Isabelle on raspberry pi)</p>
+
+
+
+<a name="476076457"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476076457" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476076457">(Oct 10 2024 at 08:32)</a>:</h4>
+<p>Well also under heavy load on normal machines</p>
+
+
+
+<a name="476077260"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476077260" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476077260">(Oct 10 2024 at 08:36)</a>:</h4>
+<p>I remember the time before I could run <code>-j 8</code> on my office machine (not enough RAM) and back then that was not an issue</p>
+
+
+
+<a name="476077372"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476077372" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476077372">(Oct 10 2024 at 08:37)</a>:</h4>
+<p>but you are right that this should be fixed somehow</p>
+
+
+
+<a name="476077627"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476077627" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476077627">(Oct 10 2024 at 08:38)</a>:</h4>
+<p>It was not an issue before because the build strategy was too inefficient</p>
+
+
+
+<a name="476078630"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476078630" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476078630">(Oct 10 2024 at 08:43)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E/near/476074899">said</a>:</p>
+<blockquote>
+<p>So the culprit would be <code>Isabelle_System.bash_output</code></p>
+</blockquote>
+<p>But somehow trying to understand the behavior sounds like a bachelor project (at least understanding the behavior)</p>
+
+
+
+<a name="476078770"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476078770" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476078770">(Oct 10 2024 at 08:44)</a>:</h4>
+<p>do you have bachelor students around?</p>
+
+
+
+<a name="476079179"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476079179" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476079179">(Oct 10 2024 at 08:46)</a>:</h4>
+<p>I don't think code archeology is a good thesis project...</p>
+
+
+
+<a name="476079738"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476079738" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476079738">(Oct 10 2024 at 08:48)</a>:</h4>
+<p>Not for a thesis. But as a more practical project (so trying to understand the behavior and the order in which the jobs are done)</p>
+
+
+
+<a name="476079835"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Making%20isabelle%20run%20on%20modern%20z3./near/476079835" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E.html#476079835">(Oct 10 2024 at 08:49)</a>:</h4>
+<p>Sadly I don't really have students for that</p>
+
+
+
+<hr><p>Last updated: Oct 10 2024 at 20:20 UTC</p>
+</html>

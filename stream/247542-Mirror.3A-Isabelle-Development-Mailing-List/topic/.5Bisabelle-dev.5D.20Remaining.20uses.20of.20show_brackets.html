@@ -1,0 +1,100 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle-dev] Remaining uses of show_brackets · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle-dev.5D.20Remaining.20uses.20of.20show_brackets.html">[isabelle-dev] Remaining uses of show_brackets</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="476193586"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Remaining%20uses%20of%20show_brackets/near/476193586" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle-dev.5D.20Remaining.20uses.20of.20show_brackets.html#476193586">(Oct 10 2024 at 18:17)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Are there any remaining uses of show_brackets?</p>
+<p>Here is historical proof for this feature from many decades ago:</p>
+<p>changeset:   504:a4f09493d929<br>
+user:        nipkow<br>
+date:        Tue Aug 02 09:07:10 1994 +0200<br>
+files:       src/Pure/Syntax/printer.ML<br>
+description:<br>
+added flag show_brackets for printinmg fully bracketed terms.</p>
+<p>changeset:   508:d8b6999ca364<br>
+user:        lcp<br>
+date:        Thu Aug 04 11:51:30 1994 +0200<br>
+files:       doc-src/Ref/introduction.tex<br>
+description:<br>
+addition of show_brackets</p>
+<p>The documentation in d8b6999ca364 says: "show_brackets makes Isabelle show <br>
+full bracketing.  This reveals the grouping of infix operators."</p>
+<p>We have that already via PIDE markup for pretty-blocks, see also <br>
+Isabelle/87f173836d56 --- and it works more accurately, too.</p>
+<p>So if there are no further uses of it, I will remove it shortly before the <br>
+Isabelle2025 release process starts (Jan-2025).</p>
+<p>Makarius</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+
+
+<a name="476195807"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Remaining%20uses%20of%20show_brackets/near/476195807" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle-dev.5D.20Remaining.20uses.20of.20show_brackets.html#476195807">(Oct 10 2024 at 18:27)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Yes – for anyone who wants their proof states to be legible. I always recommend it to students. </p>
+<p>It’s exactly the same principle as having [_,_,_] for lists instead of _::_::_::nil.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Oct 2024, at 19:16, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Are there any remaining uses of show_brackets?</p>
+</blockquote>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+
+
+<a name="476201887"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Remaining%20uses%20of%20show_brackets/near/476201887" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle-dev.5D.20Remaining.20uses.20of.20show_brackets.html#476201887">(Oct 10 2024 at 18:52)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 10/10/2024 20:26, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Yes – for anyone who wants their proof states to be legible. I always recommend it to students.</p>
+</blockquote>
+<p>I don't understand what you mean by "legible". How is the following example <br>
+legible?</p>
+<p>declare [[show_brackets]]<br>
+lemma ‹∀x y. P x y ⟶ Q y x›</p>
+<p>goal (1 subgoal):</p>
+<p>1. (∀(x y). ((P x y) ⟶ (Q y x)))</p>
+<p>The parentheses for the variable bindings are even wrong in the sense of the <br>
+formal syntax.</p>
+<blockquote>
+<p>It’s exactly the same principle as having [_,_,_] for lists instead of _::_::_::nil.</p>
+</blockquote>
+<p>I don't understand that either. Can you explain that, please?</p>
+<p>If I would understand the principle, I could say if cane be done via PIDE <br>
+rendering instead of occasionally bad parentheses.</p>
+<p>Makarius</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+
+
+<a name="476207137"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle-dev%5D%20Remaining%20uses%20of%20show_brackets/near/476207137" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle-dev.5D.20Remaining.20uses.20of.20show_brackets.html#476207137">(Oct 10 2024 at 19:19)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<hr>
+<p>isabelle-dev mailing list<br>
+<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev">https://mailman46.in.tum.de/mailman/listinfo/isabelle-dev</a></p>
+
+
+
+<hr><p>Last updated: Oct 10 2024 at 20:20 UTC</p>
+</html>

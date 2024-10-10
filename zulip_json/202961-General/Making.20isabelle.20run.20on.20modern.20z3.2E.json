@@ -1,0 +1,200 @@
+[
+    {
+        "content": "<p>Making a new thread to distinguish from the previous thread on making isabelle run on musl-c</p>",
+        "id": 475986314,
+        "sender_full_name": "irvin",
+        "timestamp": 1728521362
+    },
+    {
+        "content": "<p><a href=\"https://www21.in.tum.de/~boehmes/proofrec.pdf\">https://www21.in.tum.de/~boehmes/proofrec.pdf</a><br>\nthink this is the paper?</p>",
+        "id": 475986354,
+        "sender_full_name": "irvin",
+        "timestamp": 1728521399
+    },
+    {
+        "content": "<p>Ok looking at it so far Z3 now uses SMTLIB2.<br>\nisabelle already has some code ~~/src/HOL/Tools/SMT/smtlib for smtlib2 which is used for verit i think.</p>",
+        "id": 476020442,
+        "sender_full_name": "irvin",
+        "timestamp": 1728531715
+    },
+    {
+        "content": "<p><a href=\"https://www.verit-solver.org/papers/pxtp2019.pdf\">https://www.verit-solver.org/papers/pxtp2019.pdf</a><br>\nfound another relevant paper</p>",
+        "id": 476021920,
+        "sender_full_name": "irvin",
+        "timestamp": 1728532112
+    },
+    {
+        "content": "<p>The PhD thesis is probably a better start <a href=\"https://www21.in.tum.de/~boehmes/phd_thesis.pdf\">https://www21.in.tum.de/~boehmes/phd_thesis.pdf</a></p>",
+        "id": 476031589,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728536218
+    },
+    {
+        "content": "<p>I have to do some digging if I still have the patch I used back then, but anyway the realistic path to do this is to add a z3_new and keep the old one:</p>\n<ol>\n<li>add a Z3_NEW_SOLVER to the binary to the <code>.isabelle/etc/settings</code> file (compare it to <code>$ isabelle env | grep Z3</code></li>\n<li>add a z3_new system to <code>~/src/HOL/Tools/smt/smt_systems.ML</code> (duplicate the z3 fields + duplicate the reconstruction function by creating a new file)</li>\n<li>copy <code>~~/src/HOL/SMT_Examples/SMT_Examples.thy</code> into <code>~~/src/HOL/SMT_Examples/SMT_Examples_Z3_New.thy</code>, replace z3 by z3_new, remove the certificates stuff (comment out the two lines on top) and look at the examples that fail here</li>\n</ol>",
+        "id": 476032445,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728536686
+    },
+    {
+        "content": "<p>Then you need to know the <code>[[smt_trace]]</code> flag to see what the reconstruction is doing</p>",
+        "id": 476032481,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728536719
+    },
+    {
+        "content": "<p>and the obvious thing: if the lemma you have is only about quantifiers, bool, and int, you can copy it over to SMT.thy and change the reconstruction directly</p>",
+        "id": 476032610,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728536779
+    },
+    {
+        "content": "<p>Do not forget to start Isabelle with Pure as base session (<code>-l Pure</code>)</p>",
+        "id": 476032626,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728536799
+    },
+    {
+        "content": "<p>(PS: there are two people around who can answer questions on the reconstruction, <span class=\"user-mention\" data-user-id=\"477368\">@Hanna Lachnitt</span> and me, so it might be a good idea to explicitly mention me when you have a question)</p>",
+        "id": 476032941,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728537019
+    },
+    {
+        "content": "<p>I have a request: the SMT method sometimes fails if there is high system load, e. g. <a href=\"https://build.proof.cit.tum.de/build?name=all%2F190\">here</a>. While you're delving into SMT, could you check if this can be made more robust? I suspect that there's a timeout somewhere in the internals.</p>",
+        "id": 476071103,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728547625
+    },
+    {
+        "content": "<p>That is another issue that has nothing to do with this (if there is a timeout you get a proper error)</p>",
+        "id": 476072369,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728547926
+    },
+    {
+        "content": "<p>There is no timeout anymore (see the smt_timeout parameter)</p>",
+        "id": 476072419,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728547945
+    },
+    {
+        "content": "<p>I think the issue is that Isabelle is spawning so many tasks that all the external threads (smt is running in a bash shell) is starved until another general timeout happens</p>",
+        "id": 476072855,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728548096
+    },
+    {
+        "content": "<p>Hmm I see</p>",
+        "id": 476074229,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728548514
+    },
+    {
+        "content": "<p>I believe that this issue is somehow linked to the windows issue of stuff not being killed</p>",
+        "id": 476074327,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728548539
+    },
+    {
+        "content": "<p>Internally smt and sledgehammer are relying on this in cache_io to run code:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">raw_run</span><span class=\"w\"> </span><span class=\"n\">make_cmd</span><span class=\"w\"> </span><span class=\"n\">str</span><span class=\"w\"> </span><span class=\"n\">in_path</span><span class=\"w\"> </span><span class=\"n\">out_path</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"k\">let</span>\n<span class=\"w\">    </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"o\">_</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">File.write</span><span class=\"w\"> </span><span class=\"n\">in_path</span><span class=\"w\"> </span><span class=\"n\">str</span>\n<span class=\"w\">    </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">out2</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">rc</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">Isabelle_System.bash_output</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">make_cmd</span><span class=\"w\"> </span><span class=\"n\">in_path</span><span class=\"w\"> </span><span class=\"n\">out_path</span><span class=\"o\">)</span>\n<span class=\"w\">    </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"n\">out1</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">try_read_lines</span><span class=\"w\"> </span><span class=\"n\">out_path</span>\n<span class=\"w\">  </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"ow\">{</span><span class=\"kp\">output</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">split_lines</span><span class=\"w\"> </span><span class=\"n\">out2</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">redirected_output</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">out1</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">return_code</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">rc</span><span class=\"ow\">}</span><span class=\"w\"> </span><span class=\"k\">end</span>\n</code></pre></div>\n<p>and this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">with_time_limit</span><span class=\"w\"> </span><span class=\"n\">ctxt</span><span class=\"w\"> </span><span class=\"n\">timeout_config</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"n\">Timeout.apply</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">seconds</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">Config.get</span><span class=\"w\"> </span><span class=\"n\">ctxt</span><span class=\"w\"> </span><span class=\"n\">timeout_config</span><span class=\"o\">))</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"w\"> </span><span class=\"n\">x</span>\n<span class=\"w\">    </span><span class=\"n\">handle</span><span class=\"w\"> </span><span class=\"n\">Timeout.TIMEOUT</span><span class=\"w\"> </span><span class=\"o\">_</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"n\">&gt;</span><span class=\"w\"> </span><span class=\"n\">raise</span><span class=\"w\"> </span><span class=\"n\">SMT_Failure.SMT</span><span class=\"w\"> </span><span class=\"n\">SMT_Failure.Time_Out</span>\n</code></pre></div>\n<p>to limit the amount of time</p>",
+        "id": 476074713,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728548656
+    },
+    {
+        "content": "<p>So the culprit would be <code>Isabelle_System.bash_output</code></p>",
+        "id": 476074899,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728548714
+    },
+    {
+        "content": "<p>That is my guess, but I have no clue how to check that</p>",
+        "id": 476074959,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728548732
+    },
+    {
+        "content": "<p>We also get some spurious nitpick errors: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Unexpected</span><span class=\"w\"> </span><span class=\"n\">outcome</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"unknown\"</span>\n<span class=\"n\">***</span><span class=\"w\">                              </span><span class=\"n\">At</span><span class=\"w\"> </span><span class=\"n\">command</span><span class=\"w\"> </span><span class=\"s\">\"nitpick\"</span>\n</code></pre></div>\n<p>which might be for the same reason</p>",
+        "id": 476075031,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728548755
+    },
+    {
+        "content": "<p>basically yes, but here there is a timeout</p>",
+        "id": 476075135,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728548780
+    },
+    {
+        "content": "<p>hence the unknown answer</p>",
+        "id": 476075151,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728548785
+    },
+    {
+        "content": "<p>Oh you're right, that seems like a weird implementation of nitpick</p>",
+        "id": 476075858,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728548989
+    },
+    {
+        "content": "<p>It is more complicated than that I think: during development it totally makes sense to have such a timeout. Also these problems only appear on big servers or slow machines (I tried to run Isabelle on raspberry pi)</p>",
+        "id": 476076395,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728549127
+    },
+    {
+        "content": "<p>Well also under heavy load on normal machines</p>",
+        "id": 476076457,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728549149
+    },
+    {
+        "content": "<p>I remember the time before I could run <code>-j 8</code> on my office machine (not enough RAM) and back then that was not an issue</p>",
+        "id": 476077260,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728549392
+    },
+    {
+        "content": "<p>but you are right that this should be fixed somehow</p>",
+        "id": 476077372,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728549430
+    },
+    {
+        "content": "<p>It was not an issue before because the build strategy was too inefficient</p>",
+        "id": 476077627,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728549494
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/stream/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E/near/476074899\">said</a>:</p>\n<blockquote>\n<p>So the culprit would be <code>Isabelle_System.bash_output</code></p>\n</blockquote>\n<p>But somehow trying to understand the behavior sounds like a bachelor project (at least understanding the behavior)</p>",
+        "id": 476078630,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728549819
+    },
+    {
+        "content": "<p>do you have bachelor students around?</p>",
+        "id": 476078770,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728549859
+    },
+    {
+        "content": "<p>I don't think code archeology is a good thesis project...</p>",
+        "id": 476079179,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728549987
+    },
+    {
+        "content": "<p>Not for a thesis. But as a more practical project (so trying to understand the behavior and the order in which the jobs are done)</p>",
+        "id": 476079738,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1728550133
+    },
+    {
+        "content": "<p>Sadly I don't really have students for that</p>",
+        "id": 476079835,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1728550162
+    }
+]

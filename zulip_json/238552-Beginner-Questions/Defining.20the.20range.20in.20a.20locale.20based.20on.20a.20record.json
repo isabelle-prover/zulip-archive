@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>Hi all,</p>\n<p>I am using the combination of record and locale to prove some lemmas. To do so, I have a record with a field that maps (nat x 'a x 'b) =&gt; (nat x 'b), let's call it <em>next</em>, and another field that keeps track of all the inserted ('b)s in another field as a ('b list), let's call it <em>List</em>.<br>\nMy problem is in the locale when I am trying to define the range of <em>next</em>. I tried different combinations for it, for example, set (nat set A x set (List A)). But Isabelle finds my definition a clash of types and says:</p>\n<blockquote>\n<p>Type unification failed: Clash of types \"_ set\" and \"_ list\"</p>\n<p>Type error in application: incompatible operand type</p>\n</blockquote>\n<p>I borrowed this use of record and locale from :<br>\n<a href=\"https://www.isa-afp.org/sessions/finite_automata_hf/#Finite_Automata_HF.html#Finite_Automata_HF.nfa_def|fact\">https://www.isa-afp.org/sessions/finite_automata_hf/#Finite_Automata_HF.html#Finite_Automata_HF.nfa_def|fact</a></p>",
+        "id": 486442540,
+        "sender_full_name": "Atie Bastan",
+        "timestamp": 1733461831
+    },
+    {
+        "content": "<p>My crystal ball says that you are using your <code>List</code> field wrong, sometimes a list and sometimes as a set. Isabelle does not allow mixing</p>",
+        "id": 486446062,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733464615
+    },
+    {
+        "content": "<p>(<code>x ∈ set (List q)</code>, not <code>x ∈ List q</code>)</p>",
+        "id": 486446100,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733464655
+    },
+    {
+        "content": "<p>But: without code, without any precise information, how do you expect any help?</p>",
+        "id": 486446203,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733464716
+    },
+    {
+        "content": "<p>You are right. This is the whole thing:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">record</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'a</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n n-Type\">'b</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">pda</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">                </span><span class=\"n\">states</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat set\"</span>\n<span class=\"w\">                </span><span class=\"n\">init</span><span class=\"w\">   </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat set\"</span>\n<span class=\"w\">                </span><span class=\"n\">final</span><span class=\"w\">  </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat set\"</span>\n<span class=\"w\">                </span><span class=\"n\">nxt</span><span class=\"w\">    </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ 'a ⇒ 'b ⇒ (nat × 'b list) set\"</span>\n<span class=\"w\">                </span><span class=\"n\">eps</span><span class=\"w\">    </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(nat × nat) set\"</span>\n<span class=\"w\">                </span><span class=\"n\">stack</span><span class=\"w\">  </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'b list\"</span>\n\n\n<span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">pda</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">P</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"('a, 'b) pda\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">init</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"init P ⊆ states P\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">final</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"final P ⊆ states P\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">nxt</span><span class=\"o\">:</span><span class=\"w\">   </span><span class=\"s\">\"⋀q a b. q ∈ states P ⟹ ((nxt P) q a b) ⊆ set (states P × set (stack P))\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">finite</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"finite (states P)\"</span>\n</code></pre></div>",
+        "id": 486446664,
+        "sender_full_name": "Atie Bastan",
+        "timestamp": 1733464947
+    },
+    {
+        "content": "<p>As the error message, you <code>nxt</code> statement does not type</p>",
+        "id": 486446968,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733465149
+    },
+    {
+        "content": "<p>Is this what you want?</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">pda</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">P</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"('a, 'b) pda\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">init</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"init P ⊆ states P\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">final</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"final P ⊆ states P\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">nxt</span><span class=\"o\">:</span><span class=\"w\">   </span><span class=\"s\">\"⋀q a b. q ∈ states P ⟹ fst ` ((nxt P) q a b) ⊆  (states P)\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">nxt'</span><span class=\"o\">:</span><span class=\"w\">   </span><span class=\"s\">\"⋀q a b. q ∈ states P ⟹ q' ∈ snd ` ((nxt P) q a b) ⟹ set q' ⊆ set (stack P)\"</span>\n<span class=\"w\">      </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">finite</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"finite (states P)\"</span>\n</code></pre></div>",
+        "id": 486447166,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733465259
+    },
+    {
+        "content": "<p>Thank you.</p>",
+        "id": 486551074,
+        "sender_full_name": "Atie Bastan",
+        "timestamp": 1733502497
+    }
+]

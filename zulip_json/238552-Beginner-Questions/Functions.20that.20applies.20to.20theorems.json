@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I remember there are some functions that manipulates on theorems, say, give an iff thm, it turns <code>A \\equiv B</code> into <code>A ==&gt;B</code> or <code>B ==&gt;A</code>. And there is also a function, maybe called <code>conjunction1</code> <code>conjunction2</code> or something like that, that takes a <code>A /\\ B</code> into <code>A</code> and <code>B</code>.</p>\n<p>I like them, but forgot their names, are they documented somewhere?</p>",
+        "id": 488114844,
+        "sender_full_name": "Yiming Xu",
+        "timestamp": 1733928158
+    },
+    {
+        "content": "<p>iffD1 and iffD2</p>",
+        "id": 488114988,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733928203
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kt\">find_theorems</span><span class=\"w\"> </span><span class=\"s\">\"?A = ?B ⟹ ?A ⟹ ?B\"</span>\n</code></pre></div>",
+        "id": 488115267,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1733928272
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems/near/488114988\">said</a>:</p>\n<blockquote>\n<p>iffD1 and iffD2</p>\n</blockquote>\n<p>Thanks! Is iffD1[OF sth] the only thing to do here? I saw somewhere it is possible to write sth[... a function] to take one direction of the sth.</p>",
+        "id": 488124916,
+        "sender_full_name": "Yiming Xu",
+        "timestamp": 1733930735
+    },
+    {
+        "content": "<p>Oh I found it in my old files.<br>\nsth[unfolded sth_def, THEN conjunct2,THEN conjunct2,THEN conjunct2,<br>\n        THEN conjunct2]</p>",
+        "id": 488126021,
+        "sender_full_name": "Yiming Xu",
+        "timestamp": 1733931010
+    },
+    {
+        "content": "<p>And I can also do [THEN iffD1].</p>",
+        "id": 488126133,
+        "sender_full_name": "Yiming Xu",
+        "timestamp": 1733931043
+    }
+]

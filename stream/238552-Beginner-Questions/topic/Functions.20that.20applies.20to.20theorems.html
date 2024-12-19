@@ -1,0 +1,57 @@
+<html>
+<head><meta charset="utf-8"><title>Functions that applies to theorems · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html">Functions that applies to theorems</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="488114844"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Functions%20that%20applies%20to%20theorems/near/488114844" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiming Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html#488114844">(Dec 11 2024 at 14:42)</a>:</h4>
+<p>I remember there are some functions that manipulates on theorems, say, give an iff thm, it turns <code>A \equiv B</code> into <code>A ==&gt;B</code> or <code>B ==&gt;A</code>. And there is also a function, maybe called <code>conjunction1</code> <code>conjunction2</code> or something like that, that takes a <code>A /\ B</code> into <code>A</code> and <code>B</code>.</p>
+<p>I like them, but forgot their names, are they documented somewhere?</p>
+
+
+
+<a name="488114988"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Functions%20that%20applies%20to%20theorems/near/488114988" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html#488114988">(Dec 11 2024 at 14:43)</a>:</h4>
+<p>iffD1 and iffD2</p>
+
+
+
+<a name="488115267"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Functions%20that%20applies%20to%20theorems/near/488115267" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html#488115267">(Dec 11 2024 at 14:44)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">find_theorems</span><span class="w"> </span><span class="s">"?A = ?B ⟹ ?A ⟹ ?B"</span>
+</code></pre></div>
+
+
+
+<a name="488124916"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Functions%20that%20applies%20to%20theorems/near/488124916" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiming Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html#488124916">(Dec 11 2024 at 15:25)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems/near/488114988">said</a>:</p>
+<blockquote>
+<p>iffD1 and iffD2</p>
+</blockquote>
+<p>Thanks! Is iffD1[OF sth] the only thing to do here? I saw somewhere it is possible to write sth[... a function] to take one direction of the sth.</p>
+
+
+
+<a name="488126021"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Functions%20that%20applies%20to%20theorems/near/488126021" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiming Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html#488126021">(Dec 11 2024 at 15:30)</a>:</h4>
+<p>Oh I found it in my old files.<br>
+sth[unfolded sth_def, THEN conjunct2,THEN conjunct2,THEN conjunct2,<br>
+        THEN conjunct2]</p>
+
+
+
+<a name="488126133"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Functions%20that%20applies%20to%20theorems/near/488126133" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiming Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Functions.20that.20applies.20to.20theorems.html#488126133">(Dec 11 2024 at 15:30)</a>:</h4>
+<p>And I can also do [THEN iffD1].</p>
+
+
+
+<hr><p>Last updated: Dec 19 2024 at 12:39 UTC</p>
+</html>

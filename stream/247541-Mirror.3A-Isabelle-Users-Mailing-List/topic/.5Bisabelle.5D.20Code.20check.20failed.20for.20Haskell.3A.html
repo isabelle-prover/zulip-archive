@@ -1,0 +1,86 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Code check failed for Haskell: · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Code.20check.20failed.20for.20Haskell.3A.html">[isabelle] Code check failed for Haskell:</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="491106452"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Code%20check%20failed%20for%20Haskell%3A/near/491106452" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Code.20check.20failed.20for.20Haskell.3A.html#491106452">(Dec 28 2024 at 17:14)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+When building AFP/devel/Collections:</p>
+<p>Collections FAILED (see also "isabelle build_log -H Error Collections")<br>
+*** Code check failed for Haskell: "$ISABELLE_GHC" -XEmptyDataDecls -XRankNTypes <br>
+-XScopedTypeVariables -odir build -hidir build -stubdir build -e "" <br>
+Generated_Code.hs<br>
+*** At command "export_code" (line 90 of <br>
+"$AFP/Collections/ICF/tools/Locale_Code_Ex.thy")<br>
+*** Code check failed for Haskell: "$ISABELLE_GHC" -XEmptyDataDecls -XRankNTypes <br>
+-XScopedTypeVariables -odir build -hidir build -stubdir build -e "" <br>
+Generated_Code.hs<br>
+*** At command "export_code" (line 1095 of "$AFP/Collections/Lib/Diff_Array.thy")</p>
+<p>What is happening here? How can I avoid this?</p>
+<p>I am on AFP c69ba7047b69 and isabelle 4219bb3951de</p>
+<p>Thanks<br>
+Tobias</p>
+<p>PS I know isabelle-dev is the correct destination but I am having problems with <br>
+that one.</p>
+<p><a href="/user_uploads/14278/45EuyC0mPaW3eoDx2sg_sMrJ/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="491118475"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Code%20check%20failed%20for%20Haskell%3A/near/491118475" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Code.20check.20failed.20for.20Haskell.3A.html#491118475">(Dec 28 2024 at 20:36)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Florian,</p>
+<p>That seems to have been the problem. I have backed out that changeset and pushed <br>
+that.</p>
+<p>Tobias</p>
+<p>On 28/12/2024 19:09, Florian Haftmann wrote:</p>
+<blockquote>
+<p>Hi Tobias,</p>
+<p>Am 28.12.24 um 18:13 schrieb Tobias Nipkow:</p>
+<blockquote>
+<p>When building AFP/devel/Collections:</p>
+<p>Collections FAILED (see also "isabelle build_log -H Error Collections")<br>
+*** Code check failed for Haskell: "$ISABELLE_GHC" -XEmptyDataDecls - <br>
+XRankNTypes -XScopedTypeVariables -odir build -hidir build -stubdir build -e <br>
+"" Generated_Code.hs<br>
+*** At command "export_code" (line 90 of "$AFP/Collections/ICF/tools/ <br>
+Locale_Code_Ex.thy")<br>
+*** Code check failed for Haskell: "$ISABELLE_GHC" -XEmptyDataDecls - <br>
+XRankNTypes -XScopedTypeVariables -odir build -hidir build -stubdir build -e <br>
+"" Generated_Code.hs<br>
+*** At command "export_code" (line 1095 of "$AFP/Collections/Lib/ <br>
+Diff_Array.thy")</p>
+<p>What is happening here? How can I avoid this?</p>
+<p>I am on AFP c69ba7047b69 and isabelle 4219bb3951de</p>
+</blockquote>
+<p>it might be related to some extension I made recently in <a href="https://isabelle-">https://isabelle-</a> <br>
+<a href="http://dev.sketis.net/rISABELLE0ca0a47235e53ec93bce681e2a149726b829db61">dev.sketis.net/rISABELLE0ca0a47235e53ec93bce681e2a149726b829db61</a> – although <br>
+isabelle build_task reported no issues (maybe I accidentally checked the wrong <br>
+points in history?).</p>
+<p>Unfortunately I am currently away from anything and can’t check myself what’s <br>
+going on. Feel free to back out the changeset 0ca0a47235e5 (hg backout) and if <br>
+that helps, push that also.</p>
+<blockquote>
+<p>PS I know isabelle-dev is the correct destination but I am having problems <br>
+with that one.</p>
+</blockquote>
+<p>Me too, I made a new account using my @cit.tum.de mail address. Maybe this is <br>
+related of the enforced turning down of well-established domains like <br>
+informatik.tu-muenchen.de…</p>
+<p>Cheers,<br>
+     Florian<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/a_FN6Rs18CTD7OfZmOx_G76y/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Jan 04 2025 at 01:23 UTC</p>
+</html>

@@ -1,0 +1,203 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] How to define parametric finite set of natural... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20define.20parametric.20finite.20set.20of.20natural.2E.2E.2E.html">[isabelle] How to define parametric finite set of natural...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="503132674"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20to%20define%20parametric%20finite%20set%20of%20natural.../near/503132674" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20define.20parametric.20finite.20set.20of.20natural.2E.2E.2E.html#503132674">(Mar 03 2025 at 22:03)</a>:</h4>
+<p>From: Kangfeng Ye &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear all,</p>
+<p>I would like to define a new data type for a finite set of natural numbers,<br>
+and it is also parametric in its size.</p>
+<ol>
+<li>Something like below.</li>
+</ol>
+<p>abbreviation "max_agents ≡ 2"<br>
+typedef snat = "{0..&lt;max_agents}::nat set"<br>
+  morphisms nat_of_snat snat_of_nat<br>
+  by (rule_tac x="0" in exI, auto)</p>
+<p>There is one problem here because max_agents is not a parameter for snat. So<br>
+it couldn't be instantiated to types with different sizes.</p>
+<ol start="2">
+<li>I have tried the finite type variable below.</li>
+</ol>
+<p>typedef ('s, 'n::finite) snat = "{0..&lt;CARD('n)}::nat set"<br>
+  morphisms nat_of_snat snat_of_nat<br>
+  by (rule_tac x="0" in exI, auto)</p>
+<p>But there are two problems:</p>
+<ul>
+<li>
+<p>I cannot use "derive linorder" to instantiate linorder for the type (I want<br>
+to use the sort for the type)</p>
+</li>
+<li>
+<p>an error in code generation "Finite_Set.hs:21:1-52: Non-exhaustive patterns<br>
+in function card"</p>
+</li>
+</ul>
+<ol start="3">
+<li>Then I tried locale as well like below.</li>
+</ol>
+<p>locale T1 =<br>
+  fixes max_agents :: "nat"<br>
+begin<br>
+typedef snat = "{0..&lt;max_agents}"<br>
+  morphisms nat_of_snat snat_of_nat<br>
+  by (rule_tac x="0" in exI, auto)<br>
+end</p>
+<p>This also caused an error:</p>
+<ul>
+<li>Illegal variables in representing set: "max_agents"</li>
+</ul>
+<p>It seems related to "closed term" as mentioned in<br>
+<a href="https://www21.in.tum.de/~kuncar/documents/kuncar-phdthesis.pdf">https://www21.in.tum.de/~kuncar/documents/kuncar-phdthesis.pdf</a></p>
+<p>By the way, I am using Isabelle2023 now.</p>
+<p>Any suggestions?</p>
+<p>Thanks,<br>
+Kangfeng</p>
+
+
+
+<a name="503242522"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20to%20define%20parametric%20finite%20set%20of%20natural.../near/503242522" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20define.20parametric.20finite.20set.20of.20natural.2E.2E.2E.html#503242522">(Mar 04 2025 at 11:28)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+In HOL (and Isabelle/HOL in particular), types cannot depend on terms, <br>
+so #1 and #3 are not possible -- you can only do #2, commonly called the <br>
+'Harrison Trick' [1].</p>
+<p>Why the Haskell code-gen isn't set up for CARD is a different question <br>
+(that I can't answer).</p>
+<p>Fabian</p>
+<p>[1]: Kunčar, O., Popescu, A. (2016). From Types to Sets by Local Type <br>
+Definitions in Higher-Order Logic. In: Blanchette, J., Merz, S. (eds) <br>
+Interactive Theorem Proving. ITP 2016. Lecture Notes in Computer <br>
+Science(), vol 9807. Springer, Cham. <br>
+<a href="https://doi.org/10.1007/978-3-319-43144-4_13">https://doi.org/10.1007/978-3-319-43144-4_13</a></p>
+<p>On 3/3/25 23:03, Kangfeng Ye (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>I would like to define a new data type for a finite set of natural numbers,<br>
+and it is also parametric in its size.</p>
+<ol>
+<li>Something like below.</li>
+</ol>
+<p>abbreviation "max_agents ≡ 2"<br>
+typedef snat = "{0..&lt;max_agents}::nat set"<br>
+   morphisms nat_of_snat snat_of_nat<br>
+   by (rule_tac x="0" in exI, auto)</p>
+<p>There is one problem here because max_agents is not a parameter for snat. So<br>
+it couldn't be instantiated to types with different sizes.</p>
+<ol start="2">
+<li>I have tried the finite type variable below.</li>
+</ol>
+<p>typedef ('s, 'n::finite) snat = "{0..&lt;CARD('n)}::nat set"<br>
+   morphisms nat_of_snat snat_of_nat<br>
+   by (rule_tac x="0" in exI, auto)</p>
+<p>But there are two problems:<br>
+- I cannot use "derive linorder" to instantiate linorder for the type (I want<br>
+to use the sort for the type)<br>
+- an error in code generation "Finite_Set.hs:21:1-52: Non-exhaustive patterns<br>
+in function card"</p>
+<ol start="3">
+<li>Then I tried locale as well like below.</li>
+</ol>
+<p>locale T1 =<br>
+   fixes max_agents :: "nat"<br>
+begin<br>
+typedef snat = "{0..&lt;max_agents}"<br>
+   morphisms nat_of_snat snat_of_nat<br>
+   by (rule_tac x="0" in exI, auto)<br>
+end</p>
+<p>This also caused an error:<br>
+- Illegal variables in representing set: "max_agents"</p>
+<p>It seems related to "closed term" as mentioned in<br>
+<a href="https://www21.in.tum.de/~kuncar/documents/kuncar-phdthesis.pdf">https://www21.in.tum.de/~kuncar/documents/kuncar-phdthesis.pdf</a></p>
+<p>By the way, I am using Isabelle2023 now.</p>
+<p>Any suggestions?</p>
+<p>Thanks,<br>
+Kangfeng</p>
+</blockquote>
+
+
+
+<a name="503254225"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20to%20define%20parametric%20finite%20set%20of%20natural.../near/503254225" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20define.20parametric.20finite.20set.20of.20natural.2E.2E.2E.html#503254225">(Mar 04 2025 at 12:28)</a>:</h4>
+<p>From: Kangfeng Ye &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Fabian,</p>
+<p>That's what I thought. Thanks for confirming it and I will focus on #2 and<br>
+try to figure out the problem with the code generation.</p>
+<p>Cheers,<br>
+Kangfeng</p>
+<p>On Tue, 4 Mar 2025, 12:28 Fabian Huch, &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt; wrote:</p>
+<blockquote>
+<p>In HOL (and Isabelle/HOL in particular), types cannot depend on terms,<br>
+so #1 and #3 are not possible -- you can only do #2, commonly called the<br>
+'Harrison Trick' [1].</p>
+<p>Why the Haskell code-gen isn't set up for CARD is a different question<br>
+(that I can't answer).</p>
+<p>Fabian</p>
+<p>[1]: Kunčar, O., Popescu, A. (2016). From Types to Sets by Local Type<br>
+Definitions in Higher-Order Logic. In: Blanchette, J., Merz, S. (eds)<br>
+Interactive Theorem Proving. ITP 2016. Lecture Notes in Computer<br>
+Science(), vol 9807. Springer, Cham.<br>
+<a href="https://doi.org/10.1007/978-3-319-43144-4_13">https://doi.org/10.1007/978-3-319-43144-4_13</a></p>
+<p>On 3/3/25 23:03, Kangfeng Ye (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>I would like to define a new data type for a finite set of natural<br>
+numbers,<br>
+and it is also parametric in its size.</p>
+<ol>
+<li>Something like below.</li>
+</ol>
+<p>abbreviation "max_agents ≡ 2"<br>
+typedef snat = "{0..&lt;max_agents}::nat set"<br>
+   morphisms nat_of_snat snat_of_nat<br>
+   by (rule_tac x="0" in exI, auto)</p>
+<p>There is one problem here because max_agents is not a parameter for<br>
+snat. So<br>
+it couldn't be instantiated to types with different sizes.</p>
+<ol start="2">
+<li>I have tried the finite type variable below.</li>
+</ol>
+<p>typedef ('s, 'n::finite) snat = "{0..&lt;CARD('n)}::nat set"<br>
+   morphisms nat_of_snat snat_of_nat<br>
+   by (rule_tac x="0" in exI, auto)</p>
+<p>But there are two problems:<br>
+- I cannot use "derive linorder" to instantiate linorder for the type (I<br>
+want<br>
+to use the sort for the type)<br>
+- an error in code generation "Finite_Set.hs:21:1-52: Non-exhaustive<br>
+patterns<br>
+in function card"</p>
+<ol start="3">
+<li>Then I tried locale as well like below.</li>
+</ol>
+<p>locale T1 =<br>
+   fixes max_agents :: "nat"<br>
+begin<br>
+typedef snat = "{0..&lt;max_agents}"<br>
+   morphisms nat_of_snat snat_of_nat<br>
+   by (rule_tac x="0" in exI, auto)<br>
+end</p>
+<p>This also caused an error:<br>
+- Illegal variables in representing set: "max_agents"</p>
+<p>It seems related to "closed term" as mentioned in<br>
+<a href="https://www21.in.tum.de/~kuncar/documents/kuncar-phdthesis.pdf">https://www21.in.tum.de/~kuncar/documents/kuncar-phdthesis.pdf</a></p>
+<p>By the way, I am using Isabelle2023 now.</p>
+<p>Any suggestions?</p>
+<p>Thanks,<br>
+Kangfeng<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Mar 04 2025 at 20:21 UTC</p>
+</html>

@@ -1,0 +1,30 @@
+<html>
+<head><meta charset="utf-8"><title>Batch-mode proof output for app + smt crash on macOS · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html">Batch-mode proof output for app + smt crash on macOS</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="510307695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510307695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510307695">(Apr 04 2025 at 23:33)</a>:</h4>
+<p>Hi everyone, I'm in a bit of a bind </p>
+<p>So simply put, I’ve built a desktop app that allows users to check for some verification, the reasoning system is based in Isabelle, and I want it to call a script that runs proofs in batch mode (no GUI). My goal is to show users that certain named lemmas have been proved, sort of like auto-verifying a set of logical claims so there is no need for user interaction with isabelle. </p>
+<p>I hit the following error when building in batch mode: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">***</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">Fail</span><span class="w"> </span><span class="n">raised</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">55</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"System/isabelle_system.ML"</span><span class="o">):</span><span class="w"> </span><span class="n">Bad</span><span class="w"> </span><span class="n">bash_process</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">address</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"by"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1399</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"/Applications/Isabelle2024.app/src/HOL/Algebra/Group.thy"</span><span class="o">)</span>
+</code></pre></div>
+<p>It happens when I run </p>
+<p><code>isabelle build -o -D TheoryA</code> or basically any variant of this command. Everything works fine in jEdit. At first it would show errors wherever I used smt in my theories so I changed that because from what I’ve read, this seems related to <code>smt</code> or <code>verit</code> subprocesses on macOS being blocked in batch mode - not sure if that is accurate? Do I need to remove all smt usage? Or is there another solution like moving to Linux because I keep encountering issues in batch mode and sometimes even when there is no error in jEdit, I still come across this... I have checked the documentation but that has not helped much with this particular problem.</p>
+<p>I also want to know how isabelle build and isabelle process command is different - for example if I use <code>isabelle build -D .</code> <br>
+or <code>isabelle process -l HOL -e 'use_thy "theoryA";'</code> <br>
+How do they work? </p>
+<p>Any suggestions, tips, or "you’re totally doing this wrong" are very welcome.</p>
+
+
+
+<hr><p>Last updated: Apr 05 2025 at 16:23 UTC</p>
+</html>

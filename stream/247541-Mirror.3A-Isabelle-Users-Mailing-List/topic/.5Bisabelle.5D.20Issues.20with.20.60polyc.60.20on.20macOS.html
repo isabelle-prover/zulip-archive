@@ -1,0 +1,36 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Issues with `polyc` on macOS · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Issues.20with.20.60polyc.60.20on.20macOS.html">[isabelle] Issues with `polyc` on macOS</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515716194"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Issues%20with%20%60polyc%60%20on%20macOS/near/515716194" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Issues.20with.20.60polyc.60.20on.20macOS.html#515716194">(May 02 2025 at 13:38)</a>:</h4>
+<p>From: Simon Wimmer &lt;<a href="mailto:wimmersimon@gmail.com">wimmersimon@gmail.com</a>&gt;<br>
+The executable <code>polyc</code> of Poly/ML 5.9.1 is broken in multiple ways on Mac.</p>
+<p>This pertains both to the versions bundled with Isabelle2025 as well as the<br>
+homebrew build.<br>
+This issue (<a href="https://github.com/polyml/polyml/issues/194">https://github.com/polyml/polyml/issues/194</a>) names the<br>
+problems, and suggests fixes (in <code>polyc</code>):</p>
+<ul>
+<li>Add <code>-ld_classic</code> to <code>EXTRALDFLAGS</code></li>
+<li>Remove quotes around <code>LINK</code></li>
+</ul>
+<p>I stumbled upon this since I wanted to compile exported SML code with<br>
+<code>polyc</code> in <code>compile_generated_files</code> for an AFP entry.<br>
+Until a new version of Poly/ML is released, what is a recommended<br>
+workaround?<br>
+Is there something like <code>theories [condition= ]</code> (in a ROOT file) to skip<br>
+the theory with the call to <code>compile_generated_files</code> on macOS?</p>
+<p>Thanks,<br>
+Simon</p>
+
+
+
+<hr><p>Last updated: May 17 2025 at 12:38 UTC</p>
+</html>

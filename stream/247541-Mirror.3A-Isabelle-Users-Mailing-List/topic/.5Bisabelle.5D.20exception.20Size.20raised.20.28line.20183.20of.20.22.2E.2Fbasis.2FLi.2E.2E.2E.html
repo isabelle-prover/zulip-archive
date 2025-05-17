@@ -1,0 +1,65 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] exception Size raised (line 183 of &quot;./basis/Li... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20exception.20Size.20raised.20.28line.20183.20of.20.22.2E.2Fbasis.2FLi.2E.2E.2E.html">[isabelle] exception Size raised (line 183 of &quot;./basis/Li...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="518364122"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20exception%20Size%20raised%20%28line%20183%20of%20%22./basis/Li.../near/518364122" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20exception.20Size.20raised.20.28line.20183.20of.20.22.2E.2Fbasis.2FLi.2E.2E.2E.html#518364122">(May 15 2025 at 17:40)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi List,</p>
+<p>an innocent print_codesetup (at the end of some sizeable development) <br>
+will fail with exception Size raised (line 183 of <br>
+"./basis/LibrarySupport.sml").</p>
+<p>Just under Main it works fine. What is happening here? And can I still <br>
+inspect the code setup?</p>
+<p>Example:</p>
+<p>theory Scratch<br>
+imports Refine_Imperative_HOL.IICF (* from AFP *)<br>
+begin</p>
+<p>print_codesetup</p>
+<p>(<em>exception Size raised (line 183 of "./basis/LibrarySupport.sml")</em>)<br>
+end</p>
+<p>--</p>
+<p>Peter</p>
+
+
+
+<a name="518366675"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20exception%20Size%20raised%20%28line%20183%20of%20%22./basis/Li.../near/518366675" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20exception.20Size.20raised.20.28line.20183.20of.20.22.2E.2Fbasis.2FLi.2E.2E.2E.html#518366675">(May 15 2025 at 17:54)</a>:</h4>
+<p>From: Jan van Brügge &lt;<a href="mailto:jan@vanbruegge.de">jan@vanbruegge.de</a>&gt;<br>
+Hi Peter,</p>
+<p>this error is thrown when there is not enough memory for the ML process. <br>
+By default Isabelle uses the 32-bit version of PolyML, so switching on <br>
+the option "ML_system_64" should fix that.</p>
+<p>Cheers,<br>
+Jan</p>
+<p>Am 15.05.25 um 18:39 schrieb Peter Lammich (via cl-isabelle-users <br>
+Mailing List):</p>
+<blockquote>
+<p>Hi List,</p>
+<p>an innocent print_codesetup (at the end of some sizeable development) <br>
+will fail with exception Size raised (line 183 of <br>
+"./basis/LibrarySupport.sml").</p>
+<p>Just under Main it works fine. What is happening here? And can I still <br>
+inspect the code setup?</p>
+<p>Example:</p>
+<p>theory Scratch<br>
+imports Refine_Imperative_HOL.IICF (* from AFP *)<br>
+begin</p>
+<p>print_codesetup</p>
+<p>(<em>exception Size raised (line 183 of "./basis/LibrarySupport.sml")</em>)<br>
+end</p>
+<p>-- </p>
+<p>Peter</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: May 17 2025 at 12:38 UTC</p>
+</html>

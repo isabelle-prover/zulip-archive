@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nWhen issuing a new build task, the resulting URL (e.g. <br>\n<a href=\"https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720\">https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720</a>) <br>\njust yields »Invalid request« and the task doesn’t show up in <br>\n<a href=\"https://build.proof.cit.tum.de/home\">https://build.proof.cit.tum.de/home</a></p>\n<p>What is going wrong here?<br>\n    Florian</p>\n<p><a href=\"/user_uploads/14278/CTh1jf0SrN93FF4izneWEYSA/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/Y2hMVJLv1XRJShX7QgkDfke2/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 519753842,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1747894261
+    },
+    {
+        "content": "<p>From: Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;</p>\n<blockquote>\n<p>When issuing a new build task, the resulting URL (e.g. <br>\n<a href=\"https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720\">https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720</a>) <br>\njust yields »Invalid request« and the task doesn’t show up in <br>\n<a href=\"https://build.proof.cit.tum.de/home\">https://build.proof.cit.tum.de/home</a></p>\n<p>What is going wrong here?</p>\n</blockquote>\n<p>The database connection had been closed:</p>\n<blockquote>\n<p>Exception in thread \"Isabelle.thread-15\" Exception in thread <br>\n\"Isabelle.thread-18\" org.postgresql.util.PSQLException: This <br>\nconnection has been closed.</p>\n</blockquote>\n<p>But I don't see a reason for that: The database is still running.</p>\n<p>We do have problems with long-running SSH connections (the nightly <br>\npresentation job regularly fails because of SSH disconnects), but so far <br>\nthe database connections have not created any problems. I have to <br>\ninvestigate this at some point: Perhaps we have to build a mechanism for <br>\nre-connects when the underlying connections are not perfectly reliable.</p>\n<p>Fabian</p>",
+        "id": 519757978,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1747896453
+    }
+]

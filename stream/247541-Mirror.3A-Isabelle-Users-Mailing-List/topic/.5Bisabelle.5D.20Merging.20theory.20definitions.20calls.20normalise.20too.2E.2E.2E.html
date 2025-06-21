@@ -1,0 +1,28 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Merging theory definitions calls normalise too... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html">[isabelle] Merging theory definitions calls normalise too...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525149985"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20theory%20definitions%20calls%20normalise%20too.../near/525149985" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html#525149985">(Jun 21 2025 at 10:12)</a>:</h4>
+<p>From: "\"Mulder, Ike\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory _ imports _ begin</code> header is taking anywhere from 5-20 seconds.<br>
+One of the two bottlenecks we’ve seen is the merging of definitions of two theories.</p>
+<p>Merging definitions happens in this function&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l254">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l254</a>&gt;, which adds the definitions in one theory to that of the other if they are not already present.<br>
+Whenever a new definition is found, the <code>dependencies</code> function is called, which in turn calls <code>normalize</code>.<br>
+The problem is that <code>normalize</code> is expensive, folding over all definitions to find reducts that must be reduced further (I think).<br>
+This makes it at least O(#definitions). <code>normalize</code> is called for _every_ newly inserted definition, so the complexity of merge becomes quadratic in the number of definitions.</p>
+<p>I have experimented with removing the call to <code>normalize</code> from <code>dependencies</code>, then <code>normalize</code>ing after all definitions have been added. Note that one must also add an explicit call to normalize at the other callsite of <code>dependencies</code> here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l279">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l279</a>&gt;. That seems to work and speed things up significantly.</p>
+<p>Best, Ike</p>
+
+
+
+<hr><p>Last updated: Jun 21 2025 at 16:25 UTC</p>
+</html>

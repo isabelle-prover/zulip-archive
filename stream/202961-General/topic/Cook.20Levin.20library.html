@@ -1,0 +1,35 @@
+<html>
+<head><meta charset="utf-8"><title>Cook Levin library · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html">Cook Levin library</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="524144385"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/524144385" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#524144385">(Jun 15 2025 at 17:05)</a>:</h4>
+<p>I’ve been trying to use AI to prove a simple theorem using the Cook Levin library - if a Turing machine outputs a certain bit at a certain location, then the Turing machine must read that bit. Chat GPT and Claude AI haven’t been able to do it. Anyone know how to do this?</p>
+
+
+
+<a name="524684946"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/524684946" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#524684946">(Jun 18 2025 at 11:29)</a>:</h4>
+<p>Hi,</p>
+<p>I'm interested in your question as well, and just to check whether I've understood it correctly: I can prove the following lemma by <code>simp</code>, is it somewhat relevant to what you are proving?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"|.| (act (w, Stay) tape) = w"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+
+
+
+<a name="524967209"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/524967209" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#524967209">(Jun 20 2025 at 01:54)</a>:</h4>
+<p>Yiran, the way I understand that statement, it means "If you write symbol w to a tape without moving the head, then reading from the tape returns w". When I asked my question, I meant if the Turing machine outputs w, then beforehand it must have read bit w. To give an idea of what I had in mind, I would like to use this to prove in Isabelle that if a Turing machine take the OR function of n bits and all n bits are zero, then the Turing machine must read all of the bits beforehand.</p>
+
+
+
+<hr><p>Last updated: Jun 21 2025 at 16:25 UTC</p>
+</html>

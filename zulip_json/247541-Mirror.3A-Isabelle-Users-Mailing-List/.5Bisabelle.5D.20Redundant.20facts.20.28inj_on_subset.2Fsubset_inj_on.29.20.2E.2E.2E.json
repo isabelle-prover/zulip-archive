@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: \"Eugene W. Stark\" &lt;<a href=\"mailto:isabelle-users@starkeffect.com\">isabelle-users@starkeffect.com</a>&gt;<br>\nI just happened to notice the following within a few lines of each other in src/HOL/Fun.thy<br>\n(Isabelle 2025):</p>\n<p>lemma inj_on_subset:</p>\n<p>assumes \"inj_on f A\"</p>\n<p>and \"B ⊆ A\"</p>\n<p>shows \"inj_on f B\"</p>\n<p>proof (rule inj_onI)</p>\n<p>fix a b</p>\n<p>assume \"a ∈ B\" and \"b ∈ B\"</p>\n<p>with assms have \"a ∈ A\" and \"b ∈ A\"</p>\n<p>by auto</p>\n<p>moreover assume \"f a = f b\"</p>\n<p>ultimately show \"a = b\"</p>\n<p>using assms by (auto dest: inj_onD)</p>\n<p>qed</p>\n<p>lemma subset_inj_on: \"inj_on f B ⟹ A ⊆ B ⟹ inj_on f A\"</p>\n<p>unfolding inj_on_def by blast</p>\n<p>They seem to be completely redundant, and in fact the first version can be proved by<br>\nthe shorter proof:</p>\n<p>using assms unfolding inj_on_def by blast</p>\n<p>which corresponds to the proof that appears for the second version.</p>\n<p>- Gene Stark</p>\n<p><a href=\"/user_uploads/14278/xWmBbr-VCcG7OAochhu-c2ES/OpenPGP_0x5C7344E4A8F23061.asc\">OpenPGP_0x5C7344E4A8F23061.asc</a><br>\n<a href=\"/user_uploads/14278/AEifOSm3qa7-JlKy0KI91Gy1/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 532557343,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1754227947
+    },
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nThanks for pointing this out. I believe I got rid of it about four months ago, so it won't be in the next release.</p>\n<blockquote>\n<p>On 3 Aug 2025, at 14:06, Eugene W. Stark &lt;<a href=\"mailto:isabelle-users@starkeffect.com\">isabelle-users@starkeffect.com</a>&gt; wrote:</p>\n<p>I just happened to notice the following within a few lines of each other in src/HOL/Fun.thy<br>\n(Isabelle 2025):<br>\n</p>\n</blockquote>",
+        "id": 532575173,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1754238578
+    }
+]

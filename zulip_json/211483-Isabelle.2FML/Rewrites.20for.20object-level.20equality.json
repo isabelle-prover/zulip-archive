@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p>I'm writing a logic atop Pure with its own object-level equality. I have lots of theorems of the form \"complicated lhs = simple rhs\" which I'd like to use as simplifying rules. It seems this is not possible, as the simplifier works with meta-level equality only, right? Does every object logic need to implement its own simplifier/rewrite engine? Or can you 'hook into' the simplifier? I did already write a simplifier which takes a theorem, extracts its lhs and rhs, recursively finds a match for the lhs in a term and then applies the axioms for equality substitution and discharges the resulting subgoal with the theorem used for rewriting. Is this anywhere close to an idiomatic approach? I could still profit from existing infrastructure to be sublinear in the number of rewrite theorems. I'm really sorry if this is all the wrong place for a question like this.</p>",
+        "id": 532780524,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333644
+    },
+    {
+        "content": "<p>I am confused by your question. There is a <em>pure</em> simplifier (<code>Pure.simp</code>) which should work also in your case</p>",
+        "id": 532780823,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754333791
+    },
+    {
+        "content": "<p>It seems it only accepts rewrite rules using meta-level equality, which none of my rewrite rules use. They all use object-level equality. How can I circumvent that.</p>",
+        "id": 532781031,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333883
+    },
+    {
+        "content": "<p>Ah, you mean that you have an equality that cannot be converted to <code>==</code>?</p>",
+        "id": 532781117,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754333916
+    },
+    {
+        "content": "<p>Yes.</p>",
+        "id": 532781135,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333924
+    },
+    {
+        "content": "<p>But maybe it is idiomatic to not do what I do (is object-level equality usually convertible to meta-level equality == ?) and I would be glad about a pointer like that as well</p>",
+        "id": 532781279,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333984
+    },
+    {
+        "content": "<p>As far as I know, the simplifier only works for meta-equality (it is a limitation of Isabelle's simplifier)</p>",
+        "id": 532781348,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334015
+    },
+    {
+        "content": "<p>Do HOL and other object logics all have their own simplifier then?</p>",
+        "id": 532781455,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754334063
+    },
+    {
+        "content": "<p>No, in HOL <code>=</code>  can be converted to <code>==</code></p>",
+        "id": 532781781,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334212
+    },
+    {
+        "content": "<p>same in ZF</p>",
+        "id": 532781802,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334219
+    },
+    {
+        "content": "<p>And if you look at <code>~~//Tools/eqsubst.ML</code>, the first thing that happen is:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"c\">(* changes object \"=\" to meta \"==\" which prepares a given rewrite rule *)</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">prep_meta_eq</span><span class=\"w\"> </span><span class=\"n\">ctxt</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"n\">Simplifier.mksimps</span><span class=\"w\"> </span><span class=\"n\">ctxt</span><span class=\"w\"> </span><span class=\"n\">#&gt;</span><span class=\"w\"> </span><span class=\"n\">map</span><span class=\"w\"> </span><span class=\"n\">Drule.zero_var_indexes;</span>\n</code></pre></div>",
+        "id": 532781877,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334256
+    },
+    {
+        "content": "<p>Thanks! Seems I should seek compatibility with meta equality then.</p>",
+        "id": 532782006,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754334307
+    }
+]

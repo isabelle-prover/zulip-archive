@@ -1,0 +1,108 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [Isabelle2025-1-RC1] About try0 · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html">[isabelle] [Isabelle2025-1-RC1] About try0</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="555311339"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/555311339" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#555311339">(Nov 13 2025 at 09:57)</a>:</h4>
+<p>From: "\"Kohlen, Bram (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear all,</p>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of days now. I see that try0 has gotten a bit of an overhaul where certain provers are tried before others. First it tries satx and metis, then order, presburger, linarith, algebra and argo and finally simp, auto, blast, fast, fastforce, force and meson.</p>
+<p>I have been running into some issues where for example satx and metis block (sometimes almost trivial) proofs that can easily be solved by auto.<br>
+For example:</p>
+<p>lemma "(λ (n,M). M n) (n,M) ⟹ M n"<br>
+    try0</p>
+<p>First, metis or satx will block try0 for about 5 seconds while searching for a proof. After 5 seconds, presumably because of a timeout, try0 moves on to the second batch of provers (order, presburger, linarith, algebra and argo), which fail immediately and only then moves on to the third batch where it provides proofs using simp, auto, blast, fast, fastforce and force.</p>
+<p>This bothers me, because I feel like I should not have to wait five seconds for this very simple proof. Especially because, in Isabelle2025, these proofs show up immediately with try0.</p>
+<p>My first question is: Can I somehow change or disable this ordering? Or can this be added? I looked around for about 15 minutes but could not find any new settings. I do want to play around a bit to see if I can find an ordering works for me, but the current one makes try0 feel a bit sluggish in my opinion.</p>
+<p>My second question is: Could these changes be added to the news? Currently it states nothing about changes to try0 while this one is quite large in my opinion.</p>
+<p>Kind regards,<br>
+Bram</p>
+
+
+
+<a name="555313038"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/555313038" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#555313038">(Nov 13 2025 at 10:04)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I would just like to add that a student of mine has the same issue.</p>
+<p>Tobias</p>
+<p>On 13/11/2025 10:56, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of days now. I <br>
+see that try0 has gotten a bit of an overhaul where certain provers are tried <br>
+before others. First it tries satx and metis, then order, presburger, linarith, <br>
+algebra and argo and finally simp, auto, blast, fast, fastforce, force and meson.</p>
+<p>I have been running into some issues where for example satx and metis block <br>
+(sometimes almost trivial) proofs that can easily be solved by auto.<br>
+For example:</p>
+<p>lemma "(λ (n,M). M n) (n,M) ⟹ M n"<br>
+    try0</p>
+<p>First, metis or satx will block try0 for about 5 seconds while searching for a <br>
+proof. After 5 seconds, presumably because of a timeout, try0 moves on to the <br>
+second batch of provers (order, presburger, linarith, algebra and argo), which <br>
+fail immediately and only then moves on to the third batch where it provides <br>
+proofs using simp, auto, blast, fast, fastforce and force.</p>
+<p>This bothers me, because I feel like I should not have to wait five seconds for <br>
+this very simple proof. Especially because, in Isabelle2025, these proofs show <br>
+up immediately with try0.</p>
+<p>My first question is: Can I somehow change or disable this ordering? Or can this <br>
+be added? I looked around for about 15 minutes but could not find any new <br>
+settings. I do want to play around a bit to see if I can find an ordering works <br>
+for me, but the current one makes try0 feel a bit sluggish in my opinion.</p>
+<p>My second question is: Could these changes be added to the news? Currently it <br>
+states nothing about changes to try0 while this one is quite large in my opinion.</p>
+<p>Kind regards,<br>
+Bram</p>
+</blockquote>
+<p><a href="/user_uploads/14278/KEy3xHnCnmLwHqgtYx31M8f_/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="555315119"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/555315119" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#555315119">(Nov 13 2025 at 10:13)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+In my experience, Isabelle2025 already had the issue where "try" would sometimes completely<br>
+fail when in fact it turns out "auto" would succeed very quickly.  This meant that you would<br>
+lose the time of waiting through an entire cycle of "try" and only then (because it looks<br>
+like the goal ought to be fairly simple to solve) you find that "auto" worked in the first place.</p>
+<p>So far, it looks like Isabelle2025-1-RC1 also has this behavior.  It is of course very difficult<br>
+to extract reasonable examples for bug reporting purposes.</p>
+<p>- Gene Stark</p>
+<p>On 11/13/25 04:56, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of days now. I see that try0 has gotten a bit of an<br>
+overhaul where certain provers are tried before others. First it tries satx and metis, then order, presburger, linarith,<br>
+algebra and argo and finally simp, auto, blast, fast, fastforce, force and meson.</p>
+<p>I have been running into some issues where for example satx and metis block (sometimes almost trivial) proofs that can<br>
+easily be solved by auto.<br>
+For example: </p>
+<p>lemma "(λ (n,M). M n) (n,M) ⟹ M n"<br>
+    try0</p>
+<p>First, metis or satx will block try0 for about 5 seconds while searching for a proof. After 5 seconds, presumably<br>
+because of a timeout, try0 moves on to the second batch of provers (order, presburger, linarith, algebra and argo),<br>
+which fail immediately and only then moves on to the third batch where it provides proofs using simp, auto, blast, fast,<br>
+fastforce and force.</p>
+<p>This bothers me, because I feel like I should not have to wait five seconds for this very simple proof. Especially<br>
+because, in Isabelle2025, these proofs show up immediately with try0.</p>
+<p>My first question is: Can I somehow change or disable this ordering? Or can this be added? I looked around for about 15<br>
+minutes but could not find any new settings. I do want to play around a bit to see if I can find an ordering works for<br>
+me, but the current one makes try0 feel a bit sluggish in my opinion.</p>
+<p>My second question is: Could these changes be added to the news? Currently it states nothing about changes to try0 while<br>
+this one is quite large in my opinion.</p>
+<p>Kind regards,<br>
+Bram</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Nov 15 2025 at 12:39 UTC</p>
+</html>

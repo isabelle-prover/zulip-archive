@@ -1,0 +1,131 @@
+<html>
+<head><meta charset="utf-8"><title>zombie proof processes · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html">zombie proof processes</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="554161580"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554161580" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554161580">(Nov 06 2025 at 18:25)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+While we are thinking about the next release, I thought I would bring up an intermittent issue. I use sledgehammer quite a lot, and sometimes things grind to a halt. Then I check the process monitor and find many copies of veriT seemingly looping. It's okay to just kill them. But I imagine this annoys a lot of people and I wonder if there is a way of preventing it. Does anybody else experience this?</p>
+<p>Larry</p>
+
+
+
+<a name="554166204"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554166204" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554166204">(Nov 06 2025 at 18:50)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+When I taught the Concrete Semantics course in Innsbruck this summer a <br>
+lot of my students had this problem on Windows, often to the extent that <br>
+they had to frequently reboot their laptops because they would be <br>
+rendered unusable. I don't remember whether it was Isabelle 2024 or 2025 <br>
+that caused that issue though.</p>
+<p>I for one have not encountered that problem on Linux. It's possible that <br>
+my machine is just beefy enough that a few veriT processes running amok <br>
+isn't even noticeable, so not sure. But I did definitely get the <br>
+impression that the problem is much more pronounced on Windows.</p>
+<p>Manuel</p>
+<p>On 06/11/2025 19:24, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>While we are thinking about the next release, I thought I would bring up an intermittent issue. I use sledgehammer quite a lot, and sometimes things grind to a halt. Then I check the process monitor and find many copies of veriT seemingly looping. It's okay to just kill them. But I imagine this annoys a lot of people and I wonder if there is a way of preventing it. Does anybody else experience this?</p>
+<p>Larry<br>
+</p>
+</blockquote>
+
+
+
+<a name="554171422"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554171422" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554171422">(Nov 06 2025 at 19:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 06/11/2025 19:50, Manuel Eberl wrote:</p>
+<blockquote>
+<p>When I taught the Concrete Semantics course in Innsbruck this summer a lot of <br>
+my students had this problem on Windows, often to the extent that they had to <br>
+frequently reboot their laptops because they would be rendered unusable. I <br>
+don't remember whether it was Isabelle 2024 or 2025 that caused that issue <br>
+though.</p>
+</blockquote>
+<p>Yes, that was due to E Prover, mostly in Isabelle2024. For Isabelle2025 we've <br>
+had this NEWS item:</p>
+<p>- Update of bundled provers:<br>
+       . E 3.1 -- with patch on Windows/Cygwin for proper interrupts</p>
+<p>It was due to bad project management on the side of Stephan Schulz: He had <br>
+accepted patches without looking closely enough.</p>
+<p>Makarius</p>
+
+
+
+<a name="554204662"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554204662" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554204662">(Nov 06 2025 at 23:02)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+I've, very rarely, some zombie atp processes keeping my CPU nice and warm, and<br>
+my battery draining (on Linux). I typically just kill them manually.</p>
+<p>Peter </p>
+<p>On 6 Nov 2025 20:18, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:  </p>
+<blockquote>
+<p>On 06/11/2025 19:50, Manuel Eberl wrote:  </p>
+<blockquote>
+<p>When I taught the Concrete Semantics course in Innsbruck this summer a<br>
+lot of  <br>
+my students had this problem on Windows, often to the extent that they<br>
+had to  <br>
+frequently reboot their laptops because they would be rendered unusable.<br>
+I  <br>
+don't remember whether it was Isabelle 2024 or 2025 that caused that<br>
+issue  <br>
+though.  </p>
+</blockquote>
+<p>Yes, that was due to E Prover, mostly in Isabelle2024. For Isabelle2025<br>
+we've  <br>
+ had this NEWS item:  </p>
+<p>\- Update of bundled provers:  <br>
+        . E 3.1 -- with patch on Windows/Cygwin for proper interrupts  </p>
+<p>It was due to bad project management on the side of Stephan Schulz: He had  <br>
+ accepted patches without looking closely enough.  </p>
+<p>Makarius  </p>
+</blockquote>
+
+
+
+<a name="554283491"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554283491" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554283491">(Nov 07 2025 at 10:14)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 07/11/2025 00:02, Peter Lammich wrote:</p>
+<blockquote>
+<p>I've, very rarely, some zombie atp processes keeping my CPU nice and warm, and <br>
+my battery draining (on Linux). I typically just kill them manually.</p>
+</blockquote>
+<p>So which ATPs (or SMTs) are they?</p>
+<p>Makarius</p>
+
+
+
+<a name="554291957"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554291957" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554291957">(Nov 07 2025 at 10:50)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>On 07/11/2025 11:13, Makarius wrote:</p>
+<blockquote>
+<p>On 07/11/2025 00:02, Peter Lammich wrote:</p>
+<blockquote>
+<p>I've, very rarely, some zombie atp processes keeping my CPU nice and <br>
+warm, and my battery draining (on Linux). I typically just kill them <br>
+manually.</p>
+</blockquote>
+<p>So which ATPs (or SMTs) are they?</p>
+</blockquote>
+<p>I do not remember, but will log them the next time I encounter one ... <br>
+(happens very rarely, as I said)</p>
+<blockquote>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Nov 15 2025 at 12:39 UTC</p>
+</html>

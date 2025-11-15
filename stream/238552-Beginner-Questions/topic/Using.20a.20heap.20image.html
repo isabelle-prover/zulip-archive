@@ -1,0 +1,62 @@
+<html>
+<head><meta charset="utf-8"><title>Using a heap image · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html">Using a heap image</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="555740747"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/555740747" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#555740747">(Nov 15 2025 at 12:22)</a>:</h4>
+<p>I'm trying to make a "Session" so that loading up the work I've done already will be quicker. </p>
+<p>I've read through <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Issue.20opening.20with.20prebuilt.20parent.20session.20image/with/420472975">#Beginner Questions &gt; Issue opening with prebuilt parent session image</a>  and think I understand a bit more. I've even successfully built a heap image using the following ROOT file, because opening up Chapter1-3, which includes 1-1 and 1-2,  from another file currently takes a couple of minutes, and I'd like it to be quicker. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">CS1951Y2025</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span><span class="w"> </span><span class="o">+</span>
+<span class="n">sessions</span>
+<span class="w">  </span><span class="s">"HOL-Library"</span>
+<span class="w">  </span><span class="s">"HOL-Analysis"</span>
+<span class="n">theories</span>
+<span class="w">    </span><span class="s">"Chapter1-1"</span>
+<span class="w">    </span><span class="s">"Chapter1-2"</span>
+<span class="w">    </span><span class="s">"Chapter1-3"</span>
+
+<span class="w">  </span><span class="n">document_files</span>
+<span class="w">    </span><span class="s">"root.tex"</span>
+</code></pre></div>
+<p>with the result being that </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">ls</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">~/.isabelle/Isabelle2025/heaps/polyml</span><span class="o">-</span><span class="n">5.9.1_arm64_32</span><span class="o">-</span><span class="n">darwin/CS1951Y2025</span>
+</code></pre></div>
+<p>produces</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span><span class="n">@</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">jhughes</span><span class="w">  </span><span class="n">staff</span><span class="w">  </span><span class="n">97684232</span><span class="w"> </span><span class="n">Nov</span><span class="w"> </span><span class="n">15</span><span class="w"> </span><span class="n">06</span><span class="o">:</span><span class="n">49</span><span class="w"> </span><span class="n">/Users/jhughes/.isabelle/Isabelle2025/heaps/polyml</span><span class="o">-</span><span class="n">5.9.1_arm64_32</span><span class="o">-</span><span class="n">darwin/CS1951Y2025</span>
+</code></pre></div>
+<p>which indicates that this heap file was created about 10 minutes before I began typing this question. </p>
+<p>But when I start Isabelle in the usual way for me (use Spotlight-search on my Mac to find the Isabelle2025 app) and load up Chapter1-3.thy, it still takes about 2 minutes, suggesting to me that Isabelle is not using that prebuilt heap. I searched the Systems manual for the word heap, but didn't find anything about how to make sure a particular heap is loaded when I start jEdit. Looking through the Isabelle/jEdit documentation led me to try</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">/Applications/Isabelle2025.app/bin/isabelle</span><span class="w"> </span><span class="n">jEdit</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="ow">.</span>
+</code></pre></div>
+<p>from Terminal while in the directory where the ROOT file (above) is located. Still, when I opened Chapter1-3.thy, I see all the various subordinate theories slowly loading -- no speed improvement at all.:<br>
+<a href="/user_uploads/14278/cl9oeHcZclt_UCn2x73O8rwZ/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/cl9oeHcZclt_UCn2x73O8rwZ/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="910x780" src="/user_uploads/thumbnail/14278/cl9oeHcZclt_UCn2x73O8rwZ/image.png/840x560.webp"></a></div><p>I even discovered the dropdown at the upper right of the "Theories" panel and tried selecting CS1951Y2025:</p>
+<p><a href="/user_uploads/14278/xmCLkSaaKdPoSaTd_g6uAXwr/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/xmCLkSaaKdPoSaTd_g6uAXwr/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="614x64" src="/user_uploads/thumbnail/14278/xmCLkSaaKdPoSaTd_g6uAXwr/image.png/840x560.webp"></a></div><p>with no benefit. </p>
+<p>Is there some other invocation I should have used? Did I build the session wrong?</p>
+
+
+
+<a name="556602719"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556602719" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556602719">(Nov 15 2025 at 12:38)</a>:</h4>
+<p>After selecting the base session, you need to restart Isabelle do have any effect</p>
+
+
+
+<a name="556602743"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556602743" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556602743">(Nov 15 2025 at 12:39)</a>:</h4>
+<p>I prefer the terminal variant:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">/Applications/Isabelle2025.app/bin/isabelle</span><span class="w"> </span><span class="n">jEdit</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="ow">.</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">CS1951YS2025</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Nov 15 2025 at 12:39 UTC</p>
+</html>

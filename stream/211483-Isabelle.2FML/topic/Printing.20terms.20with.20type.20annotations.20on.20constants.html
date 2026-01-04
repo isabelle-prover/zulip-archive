@@ -1,0 +1,80 @@
+<html>
+<head><meta charset="utf-8"><title>Printing terms with type annotations on constants · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html">Printing terms with type annotations on constants</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="563662484"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563662484" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563662484">(Dec 14 2025 at 04:10)</a>:</h4>
+<p>Hello,</p>
+<p>I am trying to print terms with type annotations. I am aware of <code>declare[[show_types]]</code> which seems to add type annotations to variables, but not constants, when printing terms. For instance, suppose the following goal is yielded by running <code>apply (induct xs)</code> on a goal involving an <code>int list</code>.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">⋀x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">z.</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="n">⊆</span><span class="w"> </span><span class="ow">{</span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="ow">}</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">sum_list</span><span class="w"> </span><span class="o">[]</span>
+</code></pre></div>
+<p>In the proof state after the apply, the empty list <code>[]</code> has type <code>int list</code>. However, if I print out this goal with <code>declare[[show_types]]</code> enabled, I get the following.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">⋀</span><span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">y</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="w"> </span><span class="n">z</span><span class="o">::</span><span class="n">nat.</span>
+<span class="w">                  </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">                  </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="n">⊆</span><span class="w"> </span><span class="ow">{</span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="ow">}</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">sum_list</span><span class="w"> </span><span class="o">[]</span>
+</code></pre></div>
+<p>The problem is that there are no type annotations on the conclusion <code>0 ≤ sum_list []</code>, so this cannot be proved (e.g. if I insert this string into a "have" statement verbatim).</p>
+<p>Is there any way to print type annotations on everything, including constants?</p>
+
+
+
+<a name="563682694"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563682694" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563682694">(Dec 14 2025 at 11:37)</a>:</h4>
+<p>You can get the type information for constants by control-hovering over the constant in question. (This might not work as expected when fancy syntax is used.)</p>
+<p>There is also <code>[[show_consts]]</code>. It is not ideal because it prints the type of constants below the goal, so if a constant occurs more than once you'll end up having to guess. But it does help spotting unexpected type variables.</p>
+
+
+
+<a name="563682745"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563682745" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563682745">(Dec 14 2025 at 11:37)</a>:</h4>
+<p>(Not sure why this is a question on the Isabelle/ML channel BTW.)</p>
+
+
+
+<a name="563707246"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563707246" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563707246">(Dec 14 2025 at 19:19)</a>:</h4>
+<p>Sorry, let me clarify a bit.</p>
+<p>I am trying to build a tool that takes a goal from an apply-style proof and prints it out in Isar. For instance, if <code>P</code> is a subgoal arising in an apply-style proof, it should become <code>have "P"</code> within some Isar that gets printed to the user. The problem is that without type annotations on constants, some goals become unprovable when printed in Isar (e.g., in my example above, in the term <code>0 ≤ sum_list []</code>, the type of <code>[]</code> does not match the type of <code>xs</code>).</p>
+<p>In ML, I'm using <code>Config.put (Printer.show_types) true</code> to enable the printing of types, and I'm using <code>(Syntax.pretty_term ctxt) |&gt; Pretty.string_of</code> to convert terms to strings. Per your suggestions, I tried using <code>Config.put (show_consts) true</code> as well, but that still does not seem to print types on constants.</p>
+
+
+
+<a name="563710367"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563710367" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563710367">(Dec 14 2025 at 20:28)</a>:</h4>
+<p>What you are describings sounds a lot like <a href="https://isabelle.in.tum.de/library/HOL/HOL-ex/Sketch_and_Explore.html">Sketch</a></p>
+
+
+
+<a name="563710437"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563710437" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563710437">(Dec 14 2025 at 20:30)</a>:</h4>
+<p>But <code>explore</code> has the same problem</p>
+
+
+
+<a name="563710469"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563710469" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563710469">(Dec 14 2025 at 20:30)</a>:</h4>
+<p>As a side-remark, I have my own version of explore and never had a problem with types, but that might be due to my goals.</p>
+
+
+
+<a name="563787916"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563787916" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563787916">(Dec 15 2025 at 10:43)</a>:</h4>
+<p><span class="user-mention" data-user-id="694924">@Sage Binder</span> we support several versions of what you want to do in our repository <a href="https://github.com/ChengsongTan/super_sketch_and_super_fix">super_sketch_and_super_fix</a> inspired on the Sketch tool Mathias linked above. You can see some examples in the <a href="https://github.com/ChengsongTan/super_sketch_and_super_fix/blob/main/Super_Sketch/Try_Sketch.thy">Try_Sketch.thy</a></p>
+
+
+
+<a name="564109261"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/564109261" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#564109261">(Dec 16 2025 at 18:35)</a>:</h4>
+<p><span class="user-mention" data-user-id="441006">@Jonathan Julian Huerta y Munive</span> Thanks, this looks promising! I'll take a look. Also, the Super Sketch and Super Fix tools look cool <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span></p>
+
+
+
+<hr><p>Last updated: Jan 04 2026 at 16:27 UTC</p>
+</html>

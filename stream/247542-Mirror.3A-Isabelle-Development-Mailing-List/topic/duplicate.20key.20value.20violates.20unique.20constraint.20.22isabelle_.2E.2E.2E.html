@@ -1,0 +1,87 @@
+<html>
+<head><meta charset="utf-8"><title>duplicate key value violates unique constraint &quot;isabelle_... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/duplicate.20key.20value.20violates.20unique.20constraint.20.22isabelle_.2E.2E.2E.html">duplicate key value violates unique constraint &quot;isabelle_...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="565826940"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/duplicate%20key%20value%20violates%20unique%20constraint%20%22isabelle_.../near/565826940" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/duplicate.20key.20value.20violates.20unique.20constraint.20.22isabelle_.2E.2E.2E.html#565826940">(Dec 30 2025 at 19:49)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<p>There is a reproducible break down in the build system:</p>
+<p><a href="https://build.proof.cit.tum.de/build?id=038ecd8c-6a3e-4e55-bacd-a455cf7f6b40">https://build.proof.cit.tum.de/build?id=038ecd8c-6a3e-4e55-bacd-a455cf7f6b40</a></p>
+<p>A few weeks ago there was a similar break down.</p>
+<p>What is going on here?</p>
+<p>Thanks a lot,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/DKgCQ4OoTKzCCIqfW3ghE7Vw/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/ZqtDiqNJy6pzHYGFUuBMeSH-/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="566001220"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/duplicate%20key%20value%20violates%20unique%20constraint%20%22isabelle_.../near/566001220" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/duplicate.20key.20value.20violates.20unique.20constraint.20.22isabelle_.2E.2E.2E.html#566001220">(Jan 01 2026 at 21:47)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 30/12/2025 20:49, Florian Haftmann wrote:</p>
+<blockquote>
+<p>There is a reproducible break down in the build system:</p>
+<p><a href="https://build.proof.cit.tum.de/build?id=038ecd8c-6a3e-4e55-bacd-a455cf7f6b40">https://build.proof.cit.tum.de/build?id=038ecd8c-6a3e-4e55-bacd-a455cf7f6b40</a></p>
+</blockquote>
+<p>Thanks for the hint. I have now reset the database state of the build server.</p>
+<blockquote>
+<p>A few weeks ago there was a similar break down.</p>
+<p>What is going on here?<br>
+There is some fragility in the design and/or implementation of the cluster. <br>
+Rather soon, I need to sit down with Fabian Huch, to sort it out.</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<a name="566031142"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/duplicate%20key%20value%20violates%20unique%20constraint%20%22isabelle_.../near/566031142" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/duplicate.20key.20value.20violates.20unique.20constraint.20.22isabelle_.2E.2E.2E.html#566031142">(Jan 02 2026 at 08:16)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Unfortunately the build system has hit the same problem again.</p>
+<p>Tobias</p>
+<p>On 01/01/2026 22:46, Makarius wrote:</p>
+<blockquote>
+<p>On 30/12/2025 20:49, Florian Haftmann wrote:</p>
+<blockquote>
+<p>There is a reproducible break down in the build system:</p>
+<p><a href="https://build.proof.cit.tum.de/build?id=038ecd8c-6a3e-4e55-bacd-a455cf7f6b40">https://build.proof.cit.tum.de/build?id=038ecd8c-6a3e-4e55-bacd-a455cf7f6b40</a></p>
+</blockquote>
+<p>Thanks for the hint. I have now reset the database state of the build server.</p>
+<blockquote>
+<p>A few weeks ago there was a similar break down.</p>
+<p>What is going on here?<br>
+There is some fragility in the design and/or implementation of the cluster. <br>
+Rather soon, I need to sit down with Fabian Huch, to sort it out.</p>
+</blockquote>
+<p>Makarius<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/KSuwvXdsxxluEuh54sLFdCbl/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="566101413"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/duplicate%20key%20value%20violates%20unique%20constraint%20%22isabelle_.../near/566101413" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/duplicate.20key.20value.20violates.20unique.20constraint.20.22isabelle_.2E.2E.2E.html#566101413">(Jan 02 2026 at 21:08)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/01/2026 09:15, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Unfortunately the build system has hit the same problem again.</p>
+</blockquote>
+<p>I have reset everything once more, and tried "isabelle build_task -a" <br>
+successfully.</p>
+<p>Hopefully this is sufficient for the rest of the Christmas vacation. I will be <br>
+mostly unavailable at least until 07-Jan-2026.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Jan 04 2026 at 16:27 UTC</p>
+</html>

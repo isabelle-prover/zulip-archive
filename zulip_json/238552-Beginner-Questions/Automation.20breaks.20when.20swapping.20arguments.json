@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>While working through \"Concrete Semantics\", I discovered a very confusing scenario where automation works well or breaks completely depending on how you arrange the arguments. To demonstrate, given these definitions:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">alpha</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">b</span>\n\n<span class=\"k\">inductive</span><span class=\"w\"> </span><span class=\"n\">T</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"alpha list ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"T []\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">\"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ a # w⇩2 @ [b])\"</span>\n</code></pre></div>\n<p>The following lemma cannot be proven automatically:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ w⇩2)\"</span>\n<span class=\"w\">  </span><span class=\"kt\">try</span><span class=\"w\"> </span><span class=\"c\">(* \"No proof found, Tried in vain\" *)</span>\n</code></pre></div>\n<p>Whereas if you swap the order of arguments in the conclusion, sledgehammer finds the solution instantly, and the previous lemma can now be trivially proved as well:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">T_append</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩2 @ w⇩1)\"</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"o\">(</span><span class=\"n\">induction</span><span class=\"w\"> </span><span class=\"n\">rule</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">T.induct</span><span class=\"o\">)</span>\n<span class=\"w\">   </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"o\">(</span><span class=\"n\">metis</span><span class=\"w\"> </span><span class=\"n\">T.intros</span><span class=\"o\">(</span><span class=\"n\">2</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">append_assoc</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">done</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ w⇩2)\"</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"o\">(</span><span class=\"n\">simp</span><span class=\"w\"> </span><span class=\"n\">add</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">T_append</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>Why does this happen? Is there some sort of a rule I should follow to avoid this in the future?</p>",
+        "id": 558351330,
+        "sender_full_name": "isauser",
+        "timestamp": 1763616073
+    },
+    {
+        "content": "<p>Neither version can be proven without <code>T_append</code></p>",
+        "id": 558352632,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1763617225
+    },
+    {
+        "content": "<p>And proving <code>T_append</code> is very hard, because the solvers do not do induction</p>",
+        "id": 558352665,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1763617253
+    },
+    {
+        "content": "<blockquote>\n<p>Neither version can be proven without <code>T_append</code></p>\n</blockquote>\n<p>I'm not sure I understand. This is <code>T_append</code>:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">T_append</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩2 @ w⇩1)\"</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"o\">(</span><span class=\"n\">induction</span><span class=\"w\"> </span><span class=\"n\">rule</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">T.induct</span><span class=\"o\">)</span>\n<span class=\"w\">   </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"kt\">try</span>\n</code></pre></div>\n<p>The <code>try</code> statement immediately finds several proofs. But then if you state this lemma slightly differently:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">T_append</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ w⇩2)\"</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"o\">(</span><span class=\"n\">induction</span><span class=\"w\"> </span><span class=\"n\">rule</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">T.induct</span><span class=\"o\">)</span>\n<span class=\"w\">   </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"kt\">try</span>\n</code></pre></div>\n<p>The automation breaks completely. The order of the arguments shouldn't matter, but for some reason it does, and I don't understand why.</p>",
+        "id": 558354053,
+        "sender_full_name": "isauser",
+        "timestamp": 1763618367
+    },
+    {
+        "content": "<p>The order matters</p>",
+        "id": 558355121,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1763619079
+    },
+    {
+        "content": "<p>you are not doing induction on the same variable</p>",
+        "id": 558355131,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1763619086
+    },
+    {
+        "content": "<p>Ah, thank you - it's clear to me now.</p>",
+        "id": 558355287,
+        "sender_full_name": "isauser",
+        "timestamp": 1763619205
+    },
+    {
+        "content": "<p>BTW: I briefly tried to do a proof by hand, but I failed because the induction principle does not apply</p>",
+        "id": 558355463,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1763619325
+    },
+    {
+        "content": "<p>It might be possible but I don't see it</p>",
+        "id": 558355508,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1763619348
+    }
+]

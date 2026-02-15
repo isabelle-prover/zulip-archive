@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>If I have a locale with several fixes and assumes, but for many operations some of the fixes will always be the same, what is the best way of providing a partially instantiated locale?<br>\nWritten differenctly: let's say the locale <code>L</code> has fixes <code>A</code>, <code>B</code> and <code>C</code> and assumes <code>P1</code>, <code>P2</code>, <code>P3</code>. <code>P3</code> only depends on <code>C</code>. What is the best way to provide the locale <code>L A B K</code> (where <code>C</code> is fixed to some constant <code>K</code>) that only assumes <code>P1</code> and <code>P2</code> (because I can prove <code>P3</code> for <code>K</code>)?</p>",
+        "id": 516271597,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1746470464
+    },
+    {
+        "content": "<p>Currently I can only think of a lemma <code>P1 ⟹ P2 ⟹ L A B K</code>, is there a better way that does not require restating <code>P1</code> and <code>P2</code>?</p>",
+        "id": 516272373,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1746470749
+    },
+    {
+        "content": "<p>Ok, that is very inconvenient for the user as they won't be able to use <code>interpretation</code> easily (at least as far as I can tell). So I think the solution is to define a new locale <code>L' A B</code> that assumes <code>P1</code> and <code>P2</code>, then interpret <code>L A B K</code> inside <code>L'</code> and provide an abbreviation for the derived constants that I care about and use <code>lemmas</code> statements as abbreviations for the derived theorems from the inner locale. Is there a better way?</p>",
+        "id": 516280102,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1746473422
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"392255\">Jan van Brügge</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale/near/516280102\">said</a>:</p>\n<blockquote>\n<p>Ok, that is very inconvenient for the user as they won't be able to use <code>interpretation</code> easily (at least as far as I can tell). So I think the solution is to define a new locale <code>L' A B</code> that assumes <code>P1</code> and <code>P2</code>, then interpret <code>L A B K</code> inside <code>L'</code> and provide an abbreviation for the derived constants that I care about and use <code>lemmas</code> statements as abbreviations for the derived theorems from the inner locale. Is there a better way?</p>\n</blockquote>\n<p>I do pretty much the same what you describe, just that I use <code>sublocale</code> for the inner locale. Then you don't have to provide the abbreviations and the <code>lemmas</code> statement</p>",
+        "id": 517380931,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1746984890
+    },
+    {
+        "content": "<p>You could also rearrange the locales: have a locale <code>C c</code> assuming <code>P3</code> and have your <code>L = C c + fixes a b assumes P1 P2</code></p>",
+        "id": 517449635,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1747034407
+    },
+    {
+        "content": "<p>Then you can interpret your <code>C</code> with your constant, which should avoid you needing to reinterpret it when interpreting <code>L</code>.</p>",
+        "id": 517449813,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1747034460
+    }
+]

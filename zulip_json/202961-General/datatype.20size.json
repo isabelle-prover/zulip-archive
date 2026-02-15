@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>I have this datatype:<br>\n<code>\ndatatype ('n,'t) tree = Sym \"('n,'t) sym\"  | Rule 'n \"('n,'t) tree list\"\ndatatype_compat tree\n</code><br>\nThe size function I seem to get is not the one I get. I would have liked this one:<br>\n<code>\nfun size_pt :: \"('n,'t)tree ⇒ nat\" where\n\"size_pt (Sym _) = 0\" |\n\"size_pt (Rule _ ts) = sum_list (map size_pt ts) + 1\"\n</code><br>\nBut ideally without the <code>_pt</code>, directly out of the datatype definition.</p>\n<p>I tried<br>\n<code>\ndatatype (plugins del: size)\n</code><br>\nBut now my own definition  of <code>size</code> fails, possibly because the recursive call <code>map size_pt ts</code> needs a size function for the termination proof.</p>\n<p>It is not a big issue but maybe there is a trick.</p>\n<p>Thanks<br>\nTobias</p>",
+        "id": 570777721,
+        "sender_full_name": "Tobias Nipkow",
+        "timestamp": 1769688698
+    },
+    {
+        "content": "<p>You could use <code>primrec</code> instead of <code>fun</code>.</p>",
+        "id": 570803993,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1769695627
+    },
+    {
+        "content": "<p>Of course! Thanks</p>",
+        "id": 570807188,
+        "sender_full_name": "Tobias Nipkow",
+        "timestamp": 1769696284
+    }
+]

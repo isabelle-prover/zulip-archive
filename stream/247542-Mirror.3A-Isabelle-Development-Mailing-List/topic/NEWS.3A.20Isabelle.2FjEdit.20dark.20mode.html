@@ -1,0 +1,77 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Isabelle/jEdit dark mode · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.20dark.20mode.html">NEWS: Isabelle/jEdit dark mode</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="519451290"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%20dark%20mode/near/519451290" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.20dark.20mode.html#519451290">(May 20 2025 at 18:34)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* Isabelle/jEdit Prover IDE </strong>*</p>
+<ul>
+<li>
+<p>Additional look-and-feels "FlatLaf macOS Light" and "FlatLaf macOS<br>
+Dark" imitate original macOS more closely. This is the default for the<br>
+bundled application on macOS.</p>
+</li>
+<li>
+<p>GUI rendering for dark look-and-feels has been slightly improved:<br>
+colors and icons, notably the menu accelerator font/color.</p>
+</li>
+<li>
+<p>Explicit support for dark GUI themes: FlatLaf tells wether a Swing<br>
+look &amp; feel is dark or non-dark (default); jEdit options with suffix<br>
+".dark" and Isabelle options with suffix "_dark" determine GUI rendering<br>
+in dark mode. The panels for "Global Options" and "Plugin Options /<br>
+Isabelle / Rendering" operate on options according to the current Swing<br>
+look &amp; feel, e.g. on "view.fgColor.dark" in dark mode vs. "view.fgColor"<br>
+in non-dark mode.</p>
+</li>
+</ul>
+<p>This refers to Isabelle/f7007ebfb556. It is based on a bachelor project by Kai <br>
+Naumann (supervised by Balazs Toth), LMU München. As often, I ended up <br>
+changing the initial design and implementation in several rounds.</p>
+<p>Side-remark: The place to change the jEdit look and feel is "Global Options / <br>
+Appearance / Swing look &amp; feel".</p>
+<p>Makarius</p>
+
+
+
+<a name="519454313"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%20dark%20mode/near/519454313" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.20dark.20mode.html#519454313">(May 20 2025 at 18:52)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 20/05/2025 20:34, Makarius wrote:</p>
+<blockquote>
+<p>This refers to Isabelle/f7007ebfb556. It is based on a bachelor project by Kai <br>
+Naumann (supervised by Balazs Toth), LMU München. As often, I ended up <br>
+changing the initial design and implementation in several rounds.</p>
+</blockquote>
+<p>Further side-remarks: the color scheme is mostly that of Kai Naumann, who made <br>
+some efforts to produce an "accessible" color scheme, taking well-known <br>
+limitations of eye-sight into account.</p>
+<p>We may have to refine the colors a few more times, and take other "dark" <br>
+themes into account as well (e.g. IntelliJ IDEA, VSCode). Also note that macOS <br>
+provides a built-in color filter to simulate such limitations, but I have not <br>
+tried that yet.</p>
+<p>Right now, the main point in testing is to figure out details that are <br>
+definitely unusable. For example, only today I have noticed that the small <br>
+dropdown triangle in the dockable window manager was almost invisible. I've <br>
+changed it here, both in size and color:</p>
+<p>changeset:   82634:9f85679fd899<br>
+user:        wenzelm<br>
+date:        Tue May 20 15:32:24 2025 +0200<br>
+files:       src/Tools/jEdit/patches/docking src/Tools/jEdit/patches/gui <br>
+src/Tools/jEdit/patches/panel_font src/Tools/jEdit/patches/vfs_marker<br>
+description:<br>
+proper scalable icon, also for dark mode -- requires to update jedit component;</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

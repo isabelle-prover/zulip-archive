@@ -1,0 +1,102 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Conflicting name spaces · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Conflicting.20name.20spaces.html">[isabelle] Conflicting name spaces</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="544505350"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Conflicting%20name%20spaces/near/544505350" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Conflicting.20name.20spaces.html#544505350">(Oct 13 2025 at 09:43)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+We use qualified names to disambiguate when the same identifier is used in multiple theories. But sometimes a slight change to the theory hierarchy causes a new name space to predominate, requiring substantial changes to qualify all the names that had referred to the other name space. In the case of datatype constructors, one can even have conflicting names within a single theory. Is there, or could there be, a way to set a default name space in a particular context?</p>
+<p>Larry</p>
+
+
+
+<a name="544518445"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Conflicting%20name%20spaces/near/544518445" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Conflicting.20name.20spaces.html#544518445">(Oct 13 2025 at 10:51)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 13/10/2025 11:42, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>We use qualified names to disambiguate when the same identifier is used in <br>
+multiple theories. But sometimes a slight change to the theory hierarchy <br>
+causes a new name space to predominate, requiring substantial changes to <br>
+qualify all the names that had referred to the other name space. In the case <br>
+of datatype constructors, one can even have conflicting names within a single <br>
+theory. Is there, or could there be, a way to set a default name space in a <br>
+particular context?</p>
+</blockquote>
+<p>I don't quite understand the phrase "set a default name space" in the context <br>
+of Isabelle. Is that a notion from different proof assistants (or programming <br>
+languages). Isabelle name spaces and access policies work quite differently <br>
+--- and not easily changed.</p>
+<p>Further, the same principle applies as for performance tuning (last time with <br>
+classical.ML). We do need explicit empirical proof of actual problems, e.g. as <br>
+public entries in AFP. Odd applications that are nowhere visible are by <br>
+definition non-existant.</p>
+<p>Very often, such applications can be done in a better way. There is even the <br>
+'alias' command for unusual situations.</p>
+<p>Makarius</p>
+
+
+
+<a name="544525952"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Conflicting%20name%20spaces/near/544525952" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Conflicting.20name.20spaces.html#544525952">(Oct 13 2025 at 11:29)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+I think what Larry is referring to is that when the short name of a <br>
+constant or theorem (mostly it is constants that cause this problem) is <br>
+not unique then which constant you get when you type the short name is <br>
+somewhat unpredictable. Then you have to use the long, qualified name to <br>
+disambiguate.</p>
+<p>This can be quite annoying when, during refactoring, you have to import <br>
+an additional theory and suddenly lots of constants get resolved <br>
+differently and you have to change every single occurrence to the new name.</p>
+<p>The classic example that keeps bothering me is polynomials: there are <br>
+constants called "smult", "degree", etc. both for the univariate <br>
+polynomials in HOL-Computational_Algebra (arguably the most important <br>
+ones) and for multivariate polynomials (in the AFP entry of the same <br>
+name) and for the univariate polynomials in HOL-Algebra. If you do maths <br>
+in Isabelle/HOL, you will sooner or later end up transitively importing <br>
+HOL-Algebra, and suddenly "smult" is the "smult" from HOL-Algebra, which <br>
+is rarely the one you want since the HOL-Computational_Algebra <br>
+polynomials are used <em>much</em> more.</p>
+<p>Thus, it would be nice to specify that "smult" should by default always <br>
+mean "Polynomial.smult" (the one from HOL-Computational_Algebra), either <br>
+globally or at least within some context.</p>
+<p>I don't have any concrete occurrences of this, but if you search the AFP <br>
+for "Polynomial.smult" or "<a href="http://Polynomial.degree">Polynomial.degree</a>" there are hundreds of matches.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 13/10/2025 12:43, Makarius wrote:</p>
+<blockquote>
+<p>On 13/10/2025 11:42, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>We use qualified names to disambiguate when the same identifier is <br>
+used in multiple theories. But sometimes a slight change to the <br>
+theory hierarchy causes a new name space to predominate, requiring <br>
+substantial changes to qualify all the names that had referred to the <br>
+other name space. In the case of datatype constructors, one can even <br>
+have conflicting names within a single theory. Is there, or could <br>
+there be, a way to set a default name space in a particular context?</p>
+</blockquote>
+<p>I don't quite understand the phrase "set a default name space" in the <br>
+context of Isabelle. Is that a notion from different proof assistants <br>
+(or programming languages). Isabelle name spaces and access policies <br>
+work quite differently --- and not easily changed.</p>
+<p>Further, the same principle applies as for performance tuning (last <br>
+time with classical.ML). We do need explicit empirical proof of actual <br>
+problems, e.g. as public entries in AFP. Odd applications that are <br>
+nowhere visible are by definition non-existant.</p>
+<p>Very often, such applications can be done in a better way. There is <br>
+even the 'alias' command for unusual situations.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

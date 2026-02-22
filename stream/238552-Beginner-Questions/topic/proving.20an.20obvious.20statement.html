@@ -1,0 +1,106 @@
+<html>
+<head><meta charset="utf-8"><title>proving an obvious statement · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/proving.20an.20obvious.20statement.html">proving an obvious statement</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="554521839"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/proving%20an%20obvious%20statement/near/554521839" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/proving.20an.20obvious.20statement.html#554521839">(Nov 09 2025 at 00:23)</a>:</h4>
+<p>I'm trying to prove   </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="n">i0_in</span><span class="o">:</span><span class="w"> </span><span class="s">"0 ∈ {0..&lt;4}"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">have</span><span class="w"> </span><span class="n">i1_in</span><span class="o">:</span><span class="w"> </span><span class="s">"1 ∈ {0..&lt;4}"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">have</span><span class="w"> </span><span class="n">i2_in</span><span class="o">:</span><span class="w"> </span><span class="s">"2 ∈ {0..&lt;4}"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">have</span><span class="w"> </span><span class="n">i3_in</span><span class="o">:</span><span class="w"> </span><span class="s">"3 ∈ {0..&lt;4}"</span><span class="w"> </span><span class="gr">sorry</span>
+</code></pre></div>
+<p>I sledgehammered it, but no luck. Why?</p>
+
+
+
+<a name="554541762"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/proving%20an%20obvious%20statement/near/554541762" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Max Lang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/proving.20an.20obvious.20statement.html#554541762">(Nov 09 2025 at 07:18)</a>:</h4>
+<p>Usually failing to prove this kind of "obvious" statement involving numerals is because the type of numerals (<code>0</code>, <code>1</code>, <code>2</code>, ...) is much more general than one expects. If you fix some type for those numerals, the propositions should become easy to prove, e.g.:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="s">"(0 :: nat) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"(1 :: nat) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"(2 :: int) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"(3 :: int) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"finite ({0..&lt;4} :: nat set)"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp_all</span>
+</code></pre></div>
+<p>depending on what you're after. In general, whenever you find yourself stumped on some trivial lemma like this, it's always a good idea to check which types Isabelle has inferred and/or annotate them yourself.</p>
+<p>In fact, we can find a type <code>'a :: numeral</code> for which the propositions can be falsified. With a little help from a friendly chatbot and sledgehammer:</p>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>Counterexample</p>
+</div><div class="spoiler-content" aria-hidden="true">
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Rev</span><span class="w"> </span><span class="o">(</span><span class="n">unrev</span><span class="o">:</span><span class="w"> </span><span class="n">nat</span><span class="o">)</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"0 = Rev 0"</span>
+<span class="kn">instance</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">end</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"1 = Rev 1"</span>
+<span class="kn">instance</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">end</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">plus</span><span class="w"> </span><span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"(x + y) = Rev (unrev x + unrev y)"</span>
+<span class="kn">instance</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">end</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">times</span><span class="w"> </span><span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"(x * y) = Rev (unrev x * unrev y)"</span>
+<span class="kn">instance</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">end</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">ord</span><span class="w"> </span><span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"(x ≤ y) ≡ unrev y ≤ unrev x"</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"(x &lt; y) ≡ unrev y &lt; unrev x"</span>
+<span class="kn">instance</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">end</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">linorder</span>
+<span class="k">begin</span>
+<span class="kn">instance</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">standard</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">less_eq_rev_nat_def</span><span class="w"> </span><span class="n">less_rev_nat_def</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">rev_nat.expand</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">end</span>
+
+<span class="k">instantiation</span><span class="w"> </span><span class="n">rev_nat</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">semiring_1</span>
+<span class="k">begin</span>
+<span class="kn">instance</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">standard</span>
+<span class="w">  </span><span class="k">unfolding</span>
+<span class="w">    </span><span class="n">zero_rev_nat_def</span><span class="w"> </span><span class="n">one_rev_nat_def</span><span class="w"> </span><span class="n">plus_rev_nat_def</span><span class="w"> </span><span class="n">times_rev_nat_def</span>
+<span class="w">      </span><span class="n">less_eq_rev_nat_def</span><span class="w"> </span><span class="n">less_rev_nat_def</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">rev_nat.expand</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp_all</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">algebra_simps</span><span class="o">)</span>
+<span class="k">end</span>
+
+<span class="kn">lemma</span>
+<span class="w">  </span><span class="s">"¬ (0 :: rev_nat) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"¬ (1 :: rev_nat) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"¬ (2 :: rev_nat) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="s">"¬ (3 :: rev_nat) ∈ {0..&lt;4}"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp_all</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">numeral_Bit0</span><span class="w"> </span><span class="n">numeral_Bit1</span><span class="w"> </span><span class="n">zero_rev_nat_def</span><span class="w"> </span><span class="n">one_rev_nat_def</span><span class="w"> </span><span class="n">plus_rev_nat_def</span><span class="w"> </span><span class="n">less_rev_nat_def</span><span class="o">)</span>
+</code></pre></div>
+<p>Also</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"¬ finite ({0..&lt;4} :: real set)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+</div></div>
+
+
+
+<a name="554588583"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/proving%20an%20obvious%20statement/near/554588583" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/proving.20an.20obvious.20statement.html#554588583">(Nov 09 2025 at 20:09)</a>:</h4>
+<p>Thank you, that works fine.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

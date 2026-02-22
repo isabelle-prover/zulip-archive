@@ -1,0 +1,77 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Performance of AFP/Padic_Fields · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Performance.20of.20AFP.2FPadic_Fields.html">[isabelle] Performance of AFP/Padic_Fields</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="533260979"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Performance%20of%20AFP/Padic_Fields/near/533260979" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Performance.20of.20AFP.2FPadic_Fields.html#533260979">(Aug 07 2025 at 10:11)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 30/06/2025 20:52, Manuel Eberl wrote:</p>
+<blockquote>
+<p>The entry in question is "Padic_Field", and the theory that is affected most <br>
+severely is "Padic_Field_Powers". We talked about this entry quite a bit when <br>
+it was first submitted three years ago. Back then the performance problems <br>
+were so severe I was wondering whether we could even accept it.</p>
+<p>The entire entry is still pretty slow for what it is. But it's not as <br>
+excessive as it once was. I asked the author to try to reduce the context <br>
+switches as much as possible and that already helped a lot. But I also think <br>
+some of the other performance tuning you did to Isabelle since then also helped.</p>
+<p>As it stands now, there are still two "context" commands in there that take <br>
+about 5 s (elapsed) on my machine, namely in line 41 and line 10404. The <br>
+"lemma" command on line 2837 and the subsequent "blast" call also take about 2 <br>
+seconds each, presumably due to the context switch induced by "(in <br>
+padic_fields)". As I recall, this used to be almost an order of magnitude worse.</p>
+<p>Of course, 2 or 5 seconds is not dramatic. But in a development that uses <br>
+locales quite a bit, these numbers accumulate to an extent that makes working <br>
+with such a development interactively (especially during refactoring) very <br>
+annoying.</p>
+</blockquote>
+<p>Thanks for the detailed report. I have looked around a bit in that session: it <br>
+requires more work to understand its uses of locales and potential problems of <br>
+that infrastructure (or the application).</p>
+<p>I am also including measurements from the past two years, always on the same <br>
+hardware: it shows that nothing has really changed so far.</p>
+<p>Makarius</p>
+<p><a href="/user_uploads/14278/fNxx359Ta4fRD1FHW0eacuzV/Padic_Field.csv">Padic_Field.csv</a></p>
+
+
+
+<a name="533317698"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Performance%20of%20AFP/Padic_Fields/near/533317698" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Performance.20of.20AFP.2FPadic_Fields.html#533317698">(Aug 07 2025 at 15:36)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Sorting in the order of the build date, I get the following. It is a bit jagged, and the maximum value of timing_cpu is 777000.</p>
+<p>Larry<br>
+[PastedGraphic-2.png]<br>
+On 7 Aug 2025, at 11:10, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Thanks for the detailed report. I have looked around a bit in that session: it requires more work to understand its uses of locales and potential problems of that infrastructure (or the application).</p>
+<p>I am also including measurements from the past two years, always on the same hardware: it shows that nothing has really changed so far.</p>
+<p>Makarius<br>
+&lt;Padic_Field.csv&gt;</p>
+<p><a href="/user_uploads/14278/dWixtSsJiN0OW2ykA294l8pn/PastedGraphic-2.png">PastedGraphic-2.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/dWixtSsJiN0OW2ykA294l8pn/PastedGraphic-2.png" title="PastedGraphic-2.png"><img data-original-content-type="image/png" data-original-dimensions="640x480" src="/user_uploads/thumbnail/14278/dWixtSsJiN0OW2ykA294l8pn/PastedGraphic-2.png/840x560.webp"></a></div>
+
+
+
+<a name="533334548"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Performance%20of%20AFP/Padic_Fields/near/533334548" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Performance.20of.20AFP.2FPadic_Fields.html#533334548">(Aug 07 2025 at 17:23)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 07/08/2025 17:35, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Sorting in the order of the build date, I get the following. It is a bit <br>
+jagged, and the maximum value of timing_cpu is 777000.</p>
+</blockquote>
+<p>The build_date is somewhat accidental. Relevant is the pull_date, i.e. the <br>
+date when a the nightly-build daemon has first seen a certain changeset (via <br>
+"hg pull").</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

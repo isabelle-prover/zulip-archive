@@ -1,0 +1,117 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Question regarding lifting/transfer · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20regarding.20lifting.2Ftransfer.html">[isabelle] Question regarding lifting/transfer</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525793321"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20lifting/transfer/near/525793321" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20regarding.20lifting.2Ftransfer.html#525793321">(Jun 25 2025 at 21:28)</a>:</h4>
+<p>From: "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi List,</p>
+<p>I do have another question regarding the lifting/transfer package.<br>
+When I try to use the transfer proof method to transfer a lemma from one datatype to another it actually did not replace the terms accordingly.<br>
+I was able to do it by using transfer_step but it is a bit tedious and I am not sure if it is the way it is supposed to do it or if I am missing something here.</p>
+<p>Below is again a concrete example. The issue is with the proof of myfun2.</p>
+<p>(<strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong>)</p>
+<p>datatype 'a A =<br>
+  Value 'a</p>
+<p>datatype 'a B =<br>
+  Value 'a</p>
+<p>fun myfun1 where<br>
+  "myfun1 (A.Value a) = a"</p>
+<p>fun A_to_B where<br>
+  "A_to_B (A.Value a) = (B.Value a)"</p>
+<p>fun B_to_A where<br>
+  "B_to_A (B.Value a) = (A.Value a)"</p>
+<p>fun T where<br>
+  "T (A.Value a) (B.Value b) = (a = b)"</p>
+<p>lemma q: " Quotient (=) A_to_B B_to_A T"<br>
+  sorry</p>
+<p>setup_lifting q</p>
+<p>lift_definition myfun2::"'a B ⇒ 'a" is myfun1 .</p>
+<p>lemma myfun2: "myfun2 (B.Value x) = x"<br>
+  apply transfer_start<br>
+  apply (subgoal_tac "Transfer.Rel (rel_fun (=) T) A.Value B.Value", assumption)<br>
+  apply (simp add: Rel_def rel_funI)<br>
+  apply (subgoal_tac "Transfer.Rel (rel_fun T (=)) myfun1 myfun2",assumption)<br>
+  apply (metis B.pcr_cr_eq Rel_def myfun2.transfer)<br>
+  apply transfer_step<br>
+  apply transfer_step<br>
+  apply transfer_end<br>
+  by (simp add: transfer_forall_def)</p>
+<p>(<strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong>)</p>
+<p>Thanks a lot for your help!</p>
+<p>Diego</p>
+<p>Diego Marmsoler<br>
+Senior Lecturer (Education and Research), Computer Science<br>
+PI of Secure Smart Contracts with Isabelle/Solidity (<a href="https://sites.exeter.ac.uk/isabelle-solidity/">https://sites.exeter.ac.uk/isabelle-solidity/</a>)<br>
+Deputy Director of Education and Student Experience<br>
+University of Exeter, Innovation 1, Room 10<br>
+www: marmsoler.com&lt;<a href="http://www.marmsoler.com/">http://www.marmsoler.com/</a>&gt;<br>
+Twitter: @DiegoMarmsoler&lt;<a href="https://twitter.com/DiegoMarmsoler">https://twitter.com/DiegoMarmsoler</a>&gt;</p>
+
+
+
+<a name="525827552"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20regarding%20lifting/transfer/near/525827552" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20regarding.20lifting.2Ftransfer.html#525827552">(Jun 26 2025 at 05:45)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Diego,</p>
+<p>You don’t have the transfer rule for B.Value that relates it to A.Value registered in your setup:</p>
+<p>lemma Value_transfer[transfer_rule]: "rel_fun R (pcr_B R) A.Value B.Value"<br>
+  by (auto simp: rel_fun_def pcr_B_def relcompp_apply intro!: exI[of _ "A.Value _"])</p>
+<p>Missing transfer rules are the main reason for transfer to fail. You can inspect existing transfer rules by looking at the theorem transfer_raw. E.g., when searching for B.Value you will see that there is only a parametricity rule for it (one that relates B.Value to another B.Value with a different type) if you do not issue the above declaration.</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<p>On 25 Jun 2025, at 23.28, Marmsoler, Diego &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Hi List,</p>
+<p>I do have another question regarding the lifting/transfer package.<br>
+When I try to use the transfer proof method to transfer a lemma from one datatype to another it actually did not replace the terms accordingly.<br>
+I was able to do it by using transfer_step but it is a bit tedious and I am not sure if it is the way it is supposed to do it or if I am missing something here.</p>
+<p>Below is again a concrete example. The issue is with the proof of myfun2.</p>
+<p>(<strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong>)</p>
+<p>datatype 'a A =<br>
+  Value 'a</p>
+<p>datatype 'a B =<br>
+  Value 'a</p>
+<p>fun myfun1 where<br>
+  "myfun1 (A.Value a) = a"</p>
+<p>fun A_to_B where<br>
+  "A_to_B (A.Value a) = (B.Value a)"</p>
+<p>fun B_to_A where<br>
+  "B_to_A (B.Value a) = (A.Value a)"</p>
+<p>fun T where<br>
+  "T (A.Value a) (B.Value b) = (a = b)"</p>
+<p>lemma q: " Quotient (=) A_to_B B_to_A T"<br>
+  sorry</p>
+<p>setup_lifting q</p>
+<p>lift_definition myfun2::"'a B ⇒ 'a" is myfun1 .</p>
+<p>lemma myfun2: "myfun2 (B.Value x) = x"<br>
+  apply transfer_start<br>
+  apply (subgoal_tac "Transfer.Rel (rel_fun (=) T) A.Value B.Value", assumption)<br>
+  apply (simp add: Rel_def rel_funI)<br>
+  apply (subgoal_tac "Transfer.Rel (rel_fun T (=)) myfun1 myfun2",assumption)<br>
+  apply (metis B.pcr_cr_eq Rel_def myfun2.transfer)<br>
+  apply transfer_step<br>
+  apply transfer_step<br>
+  apply transfer_end<br>
+  by (simp add: transfer_forall_def)</p>
+<p>(<strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong><strong>*</strong>)</p>
+<p>Thanks a lot for your help!</p>
+<p>Diego</p>
+<p>Diego Marmsoler<br>
+Senior Lecturer (Education and Research), Computer Science<br>
+PI of Secure Smart Contracts with Isabelle/Solidity (<a href="https://sites.exeter.ac.uk/isabelle-solidity/&lt;https://sites.exeter.ac.uk/isabelle-solidity/">https://sites.exeter.ac.uk/isabelle-solidity/&lt;https://sites.exeter.ac.uk/isabelle-solidity/</a>&gt;)<br>
+Deputy Director of Education and Student Experience<br>
+University of Exeter, Innovation 1, Room 10<br>
+www: marmsoler.com&lt;<a href="http://www.marmsoler.com/">http://www.marmsoler.com/</a>&gt;<br>
+Twitter: @DiegoMarmsoler&lt;<a href="https://twitter.com/DiegoMarmsoler">https://twitter.com/DiegoMarmsoler</a>&gt;</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

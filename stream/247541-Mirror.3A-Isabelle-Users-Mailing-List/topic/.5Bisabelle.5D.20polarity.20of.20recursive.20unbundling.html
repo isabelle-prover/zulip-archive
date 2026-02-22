@@ -1,0 +1,74 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] polarity of recursive unbundling · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20polarity.20of.20recursive.20unbundling.html">[isabelle] polarity of recursive unbundling</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="574269539"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20polarity%20of%20recursive%20unbundling/near/574269539" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20polarity.20of.20recursive.20unbundling.html#574269539">(Feb 17 2026 at 11:31)</a>:</h4>
+<p><strong>From:</strong> Daniel Kirchner &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,</p>
+<p>I'm a bit confused about the recursive behaviour of the polarity of<br>
+unbundle in nested bundles. Consider the following snippet:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">bundle</span><span class="w"> </span><span class="n">A</span>
+<span class="k">begin</span>
+<span class="k">notation</span><span class="w"> </span><span class="n">implies</span><span class="w"> </span><span class="o">(</span><span class="kp">infix</span><span class="w"> </span><span class="s">"-&gt;"</span><span class="w"> </span><span class="n">25</span><span class="o">)</span>
+<span class="k">end</span>
+<span class="k">bundle</span><span class="w"> </span><span class="n">B</span>
+<span class="k">begin</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">A</span>
+<span class="k">end</span>
+
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* expected: doesn't parse *)</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">B</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* expected: parses *)</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">B</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* unexpected: still parses! *)</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">A</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* only now fails to parse again *)</span>
+</code></pre></div>
+<p>isar-ref.pdf states for the no-prefix of bundles that "This also works<br>
+recusively for the unbundle command as declaration inside a bundle<br>
+definition: no means that both the order and polarity of declarations<br>
+is reversed"</p>
+<p>So shouldn't "unbundle no B" entail "unbundle no A" resulting in the<br>
+notation to already vanish in the third "term" above? It actually<br>
+appears to be the case that "unbundle no B" even causes "unbundle A"<br>
+instead of "unbundle no A" (replace "unbundle B" with "unbundle no B"<br>
+in the snippet above and the behaviour remains exactly the same).</p>
+<p>It would be useful to be able to define several fine-grained bundles<br>
+and then combine them into a compound bundle, but due to this<br>
+behaviour, that doesn't seem to work as expected.</p>
+<p>Interestingly, for "unbundle no" within bundles, reversing the polarity<br>
+<em>does</em> seem to work, so this works as expected:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">bundle</span><span class="w"> </span><span class="n">A</span>
+<span class="k">begin</span>
+<span class="k">notation</span><span class="w"> </span><span class="n">implies</span><span class="w"> </span><span class="o">(</span><span class="kp">infix</span><span class="w"> </span><span class="s">"-&gt;"</span><span class="w"> </span><span class="n">25</span><span class="o">)</span>
+<span class="k">end</span>
+<span class="k">bundle</span><span class="w"> </span><span class="n">B</span>
+<span class="k">begin</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">A</span>
+<span class="k">end</span>
+
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* as expected: doesn't parse *)</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">B</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* as expected: parses *)</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">B</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"a -&gt; b"</span><span class="w"> </span><span class="c">(* as expected: doesn't parse *)</span>
+</code></pre></div>
+<p>Is this a bug or am I misunderstanding something here? If the latter,<br>
+is there another way to define a bundle C consisting of several other<br>
+bundles, s.t. "unbundle C" unbundles all of them, while "unbundle no C"<br>
+causes "unbundle no" for all of them?</p>
+<p>Best wishes,<br>
+Daniel</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

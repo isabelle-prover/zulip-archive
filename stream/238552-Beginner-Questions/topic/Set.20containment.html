@@ -1,0 +1,142 @@
+<html>
+<head><meta charset="utf-8"><title>Set containment · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Set.20containment.html">Set containment</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="540856979"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Set%20containment/near/540856979" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Set.20containment.html#540856979">(Sep 22 2025 at 17:02)</a>:</h4>
+<p>I'm trying to show that each item of some datatype lies in 3 of the subsets in a list of subsets of that datatype:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">test</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+<span class="k">datatype</span><span class="w"> </span><span class="n">pointD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hd</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Ad</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Bd</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Cd</span><span class="o">|</span><span class="w"> </span><span class="n">Dd</span><span class="o">|</span><span class="w"> </span><span class="n">Ed</span><span class="o">|</span><span class="w"> </span><span class="n">Fd</span><span class="o">|</span><span class="w"> </span><span class="n">Pd</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Qd</span><span class="w"> </span><span class="o">|</span><span class="n">Rd</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">LinesD</span><span class="o">::</span><span class="s">"pointD set set"</span><span class="w">  </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"LinesD ={{Ad,Bd, Pd}, {Bd, Cd,Rd}, {Cd, Ad, Qd}, {Dd, Ed, Pd}, {Ed, Fd, Rd}, {Fd, Dd, Qd},</span>
+<span class="s">            {Hd, Ad, Dd}, {Hd, Bd, Ed}, {Hd, Cd, Fd}, {Pd, Qd, Rd}}"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">desargues_three_lines</span><span class="o">:</span><span class="w"> </span><span class="c">(* every pt lies on 3 lines *)</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="o">::</span><span class="s">"pointD"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"X = Ad"</span><span class="w"> </span><span class="c">(* an extreme case...can we prove this even with X known *)</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃ l m n . distinct[l, m, n] ∧</span>
+<span class="s">   X ∈ l ∧  X ∈ m ∧  X ∈ n ∧</span>
+<span class="s">   l ∈ LinesD ∧ m ∈ LinesD ∧ n ∈ LinesD"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">LinesD_def</span><span class="w"> </span><span class="n">pointD.exhaust</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This claim seems completely evident to me, but sledgehammer is getting nowhere. As you can see, I've tried to reduce the problem by a factor of ten and simple show that the point <code>Ad</code> lies in three of the "Lines"; even this seems to be too much. (The lines are right there: <code>{Ad,Bd, Pd}, {Cd, Ad, Qd}, {Hd, Ad, Dd}</code>, but apparently I don't have the right magic to make it easy for Isabelle to see this.) </p>
+<p>Of course, I'd like to show the 10-times-harder claim that leaves out that assumption. </p>
+<p>Can someone nudge me in the right direction? (BTW, I'm trying to do this with Isar rather than apply-style proofs, although I'm not sure how I'd do it even if I <em>were</em> using <code>apply</code>.)</p>
+
+
+
+<a name="540863740"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Set%20containment/near/540863740" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Set.20containment.html#540863740">(Sep 22 2025 at 17:46)</a>:</h4>
+<p>Ahh my favorite kind of proofs: the useless proofs where you fight the simplifier and auto to do the right thing. I managed to get it a 40s (!) one-liner:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">desargues_three_lines</span><span class="o">:</span><span class="w"> </span><span class="c">(* every pt lies on 3 lines *)</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="o">::</span><span class="s">"pointD"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃ l m n . distinct[l, m, n] ∧</span>
+<span class="s">   X ∈ l ∧  X ∈ m ∧  X ∈ n ∧</span>
+<span class="s">   l ∈ LinesD ∧ m ∈ LinesD ∧ n ∈ LinesD"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span>
+<span class="w">    </span><span class="s">‹{Hd, Cd, Fd} ≠ {Hd, Bd, Ed}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Cd, Fd} ≠ {Hd, Ad, Dd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Bd, Ed} ≠ {Hd, Ad, Dd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Ad, Dd} ≠ {Cd, Ad, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Ad, Dd} ≠ {Ad, Bd, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Cd, Ad, Qd} ≠ {Ad, Bd, Pd}›</span>
+<span class="w">    </span><span class="s">‹ {Hd, Bd, Ed} ≠ {Bd, Cd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Bd, Ed} ≠ {Ad, Bd, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Bd, Cd, Rd} ≠ {Ad, Bd, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Cd, Fd} ≠ {Cd, Ad, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Cd, Fd} ≠ {Bd, Cd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Cd, Ad, Qd} ≠ {Bd, Cd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Ad, Dd} ≠ {Fd, Dd, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Ad, Dd} ≠ {Dd, Ed, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Fd, Dd, Qd} ≠ {Dd, Ed, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Bd, Ed} ≠ {Ed, Fd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Bd, Ed} ≠ {Dd, Ed, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Ed, Fd, Rd} ≠ {Dd, Ed, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Cd, Fd} ≠ {Fd, Dd, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Hd, Cd, Fd} ≠ {Ed, Fd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Fd, Dd, Qd} ≠ {Ed, Fd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Pd, Qd, Rd} ≠ {Dd, Ed, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Pd, Qd, Rd} ≠ {Ad, Bd, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Dd, Ed, Pd} ≠ {Ad, Bd, Pd}›</span>
+<span class="w">    </span><span class="s">‹{Pd, Qd, Rd} ≠ {Fd, Dd, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Pd, Qd, Rd} ≠ {Cd, Ad, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Fd, Dd, Qd} ≠ {Cd, Ad, Qd}›</span>
+<span class="w">    </span><span class="s">‹{Pd, Qd, Rd} ≠ {Ed, Fd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Pd, Qd, Rd} ≠ {Bd, Cd, Rd}›</span>
+<span class="w">    </span><span class="s">‹{Ed, Fd, Rd} ≠ {Bd, Cd, Rd}›</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">X</span><span class="o">)</span>
+<span class="w">     </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">only</span><span class="o">:</span><span class="w"> </span><span class="n">insert_iff</span><span class="w"> </span><span class="n">empty_iff</span><span class="w"> </span><span class="n">LinesD_def</span><span class="w"> </span><span class="n">conj_disj_distribL</span><span class="w"> </span><span class="n">conj_disj_distribR</span><span class="w"> </span><span class="n">ex_disj_distrib</span>
+<span class="w">          </span><span class="n">simp_thms</span><span class="o">(</span><span class="n">39</span><span class="o">)</span><span class="n">;</span><span class="w"> </span><span class="n">simp;</span><span class="w"> </span><span class="n">fail</span><span class="o">)+</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="540876723"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Set%20containment/near/540876723" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Set.20containment.html#540876723">(Sep 22 2025 at 19:01)</a>:</h4>
+<p>If you are not afraid of using normalization oracles:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">desargues_three_lines</span><span class="o">:</span><span class="w"> </span><span class="c">(* every pt lies on 3 lines *)</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">pointD</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃(l, m, n) ∈ LinesD × LinesD × LinesD. distinct [l, m, n] ∧ X ∈ l ∧  X ∈ m ∧  X ∈ n"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">X;</span><span class="w"> </span><span class="n">hypsubst</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">normalization</span><span class="o">+</span><span class="w"> </span><span class="c">(*or eval*)</span>
+<span class="w">  </span><span class="k">done</span>
+</code></pre></div>
+
+
+
+<a name="540882309"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Set%20containment/near/540882309" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Set.20containment.html#540882309">(Sep 22 2025 at 19:37)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Set.20containment/near/540863740">said</a>:</p>
+<blockquote>
+<p>Ahh my favorite kind of proofs: the useless proofs where you fight the simplifier and auto to do the right thing. I managed to get it a 40s (!) one-liner:<br>
+...</p>
+</blockquote>
+<p>Now I'm thankful that the Desargues configuration is the most complex I need to discuss. :) I'm astounded that the first fact -- that all those triples are distinct -- needs to be supplied to <code>simp</code>.  The  <code>by (cases X) ...</code> proof uses a structure that I've never seen . In my limited worldview, <code>by</code> is followed by a prover-name (like <code>metis</code> or <code>simp</code> or <code>auto</code> and possibly some arguments. I guess that the <code>(simp only:...)</code> is an instance of that. The <code>+</code> at the end presumably means "do it over and over" --- that's nice. But the <code>(by cases)</code> is something I'd expect to see only in the form</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">X</span><span class="o">)</span>
+<span class="w">   </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">only</span><span class="o">:</span><span class="w"> </span><span class="ow">...</span><span class="o">)</span>
+</code></pre></div>
+<p>I guess I'm headed back to the reference manual to learn a few more constructs. Thanks for both (1) pushing me towards learning a few new things and (2) confirming that this is really just as annoying as it appeared to be!</p>
+
+
+
+<a name="540883943"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Set%20containment/near/540883943" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Set.20containment.html#540883943">(Sep 22 2025 at 19:48)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233154">Kevin Kappelmann</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Set.20containment/near/540876723">said</a>:</p>
+<blockquote>
+<p><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">desargues_three_lines</span><span class="o">:</span><span class="w"> </span><span class="c">(* every pt lies on 3 lines *)</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">pointD</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃(l, m, n) ∈ LinesD × LinesD × LinesD. distinct [l, m, n] ∧ X ∈ l ∧  X ∈ m ∧  X ∈ n"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">X;</span><span class="w"> </span><span class="n">hypsubst</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">normalization</span><span class="o">+</span><span class="w"> </span><span class="c">(*or eval*)</span>
+<span class="w">  </span><span class="k">done</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>I've managed to rewrite this in Isar without the slightest understanding of what I've done, by patching together your answer with Mathias's:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">X;</span><span class="w"> </span><span class="n">hypsubst;</span><span class="w"> </span><span class="n">normalization</span><span class="o">+)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now I just have to go decode whatever it is I've managed to do! Thank you!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

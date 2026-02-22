@@ -1,0 +1,380 @@
+[
+    {
+        "content": "<p>I haven't really used Isabelle heavily since last year and I'm just getting back into it now. The good news is I've learned so much since the summer of last year. Last year, someone in Zulip recommended the \"fix\" operator. I tried using it here but I got a \"linarith_split_limited exceeded\" error after the last line \"by auto\":</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">brc_v_1_mod_4</span><span class=\"o\">:</span>\n<span class=\"w\">      </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 mod 4 = 1\"</span>\n<span class=\"w\">        </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃x :: rat mat.(∑j ∈ {4..&lt;5}.</span>\n<span class=\"s\">               ((∑h ∈ {0..&lt;5}. of_int(N $$ (4-h,4-j)) * x $$ (4-h,0)) +</span>\n<span class=\"s\">               (∑h ∈ {5..&lt;𝗏}. of_int(N $$ (h,4-j)) * x $$ (h,0)))^2) =</span>\n<span class=\"s\">                of_nat Λ * (∑j ∈ {0..&lt;𝗏}.(x $$ (j, 0)))^2 +</span>\n<span class=\"s\">                of_nat (𝗄 - Λ) * (∑j ∈ {4..&lt;5}. (x $$ (4-j, 0))^2)\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">c</span><span class=\"w\"> </span><span class=\"n\">d</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"o\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">blocksize_gt_index</span><span class=\"w\"> </span><span class=\"n\">sum_of_four_squares</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">metis</span>\n\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">h</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">j</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat mat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">assm1</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 ≥ m\"</span><span class=\"w\"> </span><span class=\"s\">\"m &gt; 3\"</span><span class=\"w\"> </span><span class=\"s\">\"x0 = x $$ (m-4,0)\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x1 = x $$ (m-3,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x2 = x $$ (m-2,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x3 = x $$ (m-1,0)\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">assm2</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"m + 4*n = 𝗏\"</span>\n\n<span class=\"w\">    </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"∃e0 e1 e2 e3 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>\n<span class=\"s\">          e0 * y0 + e1 * y1 + e2 * y2 + e3 * y3 +</span>\n<span class=\"s\">          (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))\"</span>\n<span class=\"w\">      </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">linear_comb_of_y_part_2_i3</span><span class=\"w\"> </span><span class=\"n\">assm1</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n</code></pre></div>\n<p>Any ideas what could be causing this?</p>\n<p>The lemma being used in brc_v_1_mod_4 is the following, which was successfully proven:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">linear_comb_of_y_part_2_i3</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"a ∈ ℕ\"</span><span class=\"w\"> </span><span class=\"s\">\"b ∈ ℕ\"</span><span class=\"w\"> </span><span class=\"s\">\"c ∈ ℕ\"</span><span class=\"w\"> </span><span class=\"s\">\"d ∈ ℕ\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x0 ∈ ℚ\"</span><span class=\"w\"> </span><span class=\"s\">\"x1 ∈ ℚ\"</span><span class=\"w\"> </span><span class=\"s\">\"x2 ∈ ℚ\"</span><span class=\"w\"> </span><span class=\"s\">\"x3 ∈ ℚ\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"a^2 + b^2 + c^2 + d^2 = (𝗄 - Λ)\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x ∈ rat mat\"</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 ≥ m\"</span><span class=\"w\"> </span><span class=\"s\">\"m &gt; 3\"</span><span class=\"w\"> </span><span class=\"s\">\"i ∈ {0..&lt;4}\"</span><span class=\"w\"> </span><span class=\"s\">\"x0 = x $$ (m-4,0)\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x1 = x $$ (m-3,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x2 = x $$ (m-2,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x3 = x $$ (m-1,0)\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"y0 ∈ ℚ\"</span><span class=\"w\"> </span><span class=\"s\">\"y1 ∈ ℚ\"</span><span class=\"w\"> </span><span class=\"s\">\"y2 ∈ ℚ\"</span><span class=\"w\"> </span><span class=\"s\">\"y3 ∈ ℚ\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃e0 e1 e2 e3 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>\n<span class=\"s\">    e0 * y0 + e1 * y1 + e2 * y2 + e3 * y3 +</span>\n<span class=\"s\">    (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))\"</span>\n</code></pre></div>\n<p>Another question is what are the advantages of using fix instead of assume? As I recall, one of the experts in Zulip said I should be using fix instead of assume. Could the problem be I should have used fix in linear_comb_of_y_part_2_i3 instead of assume?</p>",
+        "id": 507611487,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742768080
+    },
+    {
+        "content": "<p><code>fix</code> is just a way to fix a variable.  So this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\"> </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">assm1</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 ≥ m\"</span>\n</code></pre></div>\n<p>just means \"let </p>\n<p><span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>m</mi><mo>∈</mo><mi mathvariant=\"double-struck\">N</mi></mrow><annotation encoding=\"application/x-tex\">m \\in \\mathbb{N}</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.5782em;vertical-align:-0.0391em;\"></span><span class=\"mord mathnormal\">m</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">∈</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.6889em;\"></span><span class=\"mord mathbb\">N</span></span></span></span></span></p>\n<p>such that </p>\n<p><span class=\"katex-display\"><span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>𝗏</mi><mo>≥</mo><mi>m</mi><mi mathvariant=\"normal\">.</mi></mrow><annotation encoding=\"application/x-tex\">𝗏 ≥ m.</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.7719em;vertical-align:-0.136em;\"></span><span class=\"mord mathsf\" style=\"margin-right:0.01389em;\">v</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span><span class=\"mrel\">≥</span><span class=\"mspace\" style=\"margin-right:0.2778em;\"></span></span><span class=\"base\"><span class=\"strut\" style=\"height:0.4306em;\"></span><span class=\"mord mathnormal\">m</span><span class=\"mord\">.</span></span></span></span></span></p>\n<p>So the question is not \"should I use fix\". The question is \"how does my proof look like on paper?\"</p>",
+        "id": 507655189,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742795196
+    },
+    {
+        "content": "<p>In a proof by hand you would never write an assume in a middle of a proof. So you should not do it in Isabelle either.</p>",
+        "id": 507655421,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742795280
+    },
+    {
+        "content": "<p>Remark that </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"s\">\"x1 = x $$ (m-3,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x2 = x $$ (m-2,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x3 = x $$ (m-1,0)\"</span>\n</code></pre></div>\n<p>look like definitions and not assumptions</p>",
+        "id": 507655554,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742795313
+    },
+    {
+        "content": "<p>Mathias, so all this is just cosmetic? I was hoping this would lead me to figure out why my proof isn’t working. In any case how would you rewrite the assume part in the middle of my proof so it looks cosmetically better?</p>",
+        "id": 507813855,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742832572
+    },
+    {
+        "content": "<p>I believe that unless you provide a method for others to run your proofs. It would be extremely hard for others to figure out modify/fix your proofs.</p>",
+        "id": 507835231,
+        "sender_full_name": "irvin",
+        "timestamp": 1742837049
+    },
+    {
+        "content": "<p>it is not a question about cosmetic. It is a question about how the proofs.</p>",
+        "id": 507854810,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742842767
+    },
+    {
+        "content": "<p>On paper, you would never write in the middle a proof \"oh and here let's assume that v &gt;= 4\".</p>",
+        "id": 507854953,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742842804
+    },
+    {
+        "content": "<p>You need to justify why you can do that</p>",
+        "id": 507854981,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742842813
+    },
+    {
+        "content": "<p>and one why to do that is to say: oh let's just give a name to this thing</p>",
+        "id": 507855171,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742842874
+    },
+    {
+        "content": "<p>this is not an assumption</p>",
+        "id": 507855213,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742842890
+    },
+    {
+        "content": "<p>But, Isabelle is not here to tell you how to do a proof, it is here to check the proof. <em>You</em> have to do the creative part of deciding how to do the proof.</p>",
+        "id": 507855403,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742842949
+    },
+    {
+        "content": "<p>Irvin, even though it looks complicated, the proof of brcv1mod4 follows from the other lemma by modes ponens. But I am having trouble getting Isabelle to recognize this.</p>",
+        "id": 507888522,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742855830
+    },
+    {
+        "content": "<p>Mathias I am putting inside the proof assumptions about variables that are not defined in the actual statement of the lemma. But they are necessary for proving existence in the lemma statement. How would you do this? By the way, this is all part of the last part of the standard proof of the Bruck Ryser Chowla theorem. This isn’t my proof. I’m just trying to translate it into Isabelle.</p>",
+        "id": 507892997,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742858051
+    },
+    {
+        "content": "<p>A lot of the literature looks like a proof but needs improvement to have a proper proof</p>",
+        "id": 507915353,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742871005
+    },
+    {
+        "content": "<p>So in your case: </p>\n<blockquote>\n<p>But they are necessary for proving existence in the lemma statement.</p>\n</blockquote>\n<p>Why can you assume them? Obviously you cannot assume False in the middle of a proof. So there must be some argument why you can do that</p>",
+        "id": 507915635,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742871202
+    },
+    {
+        "content": "<p>My guess is that:</p>\n<p>1. <code>x0</code> to <code>x4</code> are actually definitions <code>\"x0 = x $$ (m-4,0)\" \"x1 = x $$ (m-3,0)\" \"x2 = x $$ (m-2,0)\" \"x3 = x $$ (m-1,0)\"</code> (keyword in Isabelle: defines… and you do not need a proof to define things!)<br>\n  2. <code>m</code> and <code>n</code> are actually value you can obtain from <code>𝗏 mod 4 = 1</code> but you pick values such that <code>m&gt;3</code> intead of the smallest values (keyword in Isabelle: obtain… and you need a proof!)<br>\n  3. From 1 you can prove that the alternative definition with <code>one_of</code> ... <code>four_of</code> hold (keyword in Isabelle: have… and you need a proof und will use x0_def ... x4_def)</p>",
+        "id": 507916115,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742871534
+    },
+    {
+        "content": "<p>And if I am correct, something just happened: none of the things are <code>assume</code> in the middle of a proof. They have a proper justification. And none of the things are new fresh variables in the middle of a proof that need a <code>fix</code>.</p>",
+        "id": 507916237,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742871606
+    },
+    {
+        "content": "<p>The lemma claims there exist rational numbers which satisfy the equation- v and k and Lambda are properties of the symmetric design. The variables that are assumed and fixed are used to construct the solution.</p>",
+        "id": 508064963,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742918531
+    },
+    {
+        "content": "<p>Are there any other similar existence theorems in Isabelle?</p>",
+        "id": 508070030,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742919716
+    },
+    {
+        "content": "<p>Here are some examples of using define and obtain.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">DEFINE</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">n_def</span><span class=\"o\">:</span><span class=\"s\">\"(n :: nat) = 2\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃y. y * 2 = n\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">y</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">y_def</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"(y ::nat) = 1\"</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"y * 2 = n\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">y_def</span><span class=\"w\"> </span><span class=\"n\">n_def</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"∃y. y * 2 = n\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n\n<span class=\"k\">qed</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">OBTAIN</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"∃y. P y\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃x. P x\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">y</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\">  </span><span class=\"s\">\" P y \"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">assms</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"∃x. P x\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>Define requires no proof, obtain requires a proof</p>",
+        "id": 508082670,
+        "sender_full_name": "irvin",
+        "timestamp": 1742922747
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"736162\">Craig Alan Feinstein</span> <a href=\"#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/508064963\">said</a>:</p>\n<blockquote>\n<p>The lemma claims there exist rational numbers which satisfy the equation- v and k and Lambda are properties of the symmetric design. The variables that are assumed and fixed are used to construct the solution.</p>\n</blockquote>\n<p>in isabelle it would roughly be.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">rat1</span><span class=\"w\"> </span><span class=\"n\">rat2</span><span class=\"w\"> </span><span class=\"n\">rat3</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"property1\"</span><span class=\"w\"> </span><span class=\"s\">\"property2\"</span>\n<span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">proof_method</span>\n</code></pre></div>",
+        "id": 508083076,
+        "sender_full_name": "irvin",
+        "timestamp": 1742922859
+    },
+    {
+        "content": "<p>I would suggest starting with an Isabelle tutorial like the prog-prove (the beginning of the concrete semantics)</p>",
+        "id": 508105365,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742929314
+    },
+    {
+        "content": "<p>Irvin and Mathias, thank you that gives me something to work with.</p>",
+        "id": 508143737,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742943992
+    },
+    {
+        "content": "<p>I just tried the following:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">brc_v_1_mod_4</span><span class=\"o\">:</span>\n<span class=\"w\">      </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 mod 4 = 1\"</span>\n<span class=\"w\">        </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃x :: rat mat.(∑j ∈ {4..&lt;5}.</span>\n<span class=\"s\">               ((∑h ∈ {0..&lt;5}. of_int(N $$ (4-h,4-j)) * x $$ (4-h,0)) +</span>\n<span class=\"s\">               (∑h ∈ {5..&lt;𝗏}. of_int(N $$ (h,4-j)) * x $$ (h,0)))^2) =</span>\n<span class=\"s\">                of_nat Λ * (∑j ∈ {0..&lt;𝗏}.(x $$ (j, 0)))^2 +</span>\n<span class=\"s\">                of_nat (𝗄 - Λ) * (∑j ∈ {4..&lt;5}. (x $$ (4-j, 0))^2)\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">c</span><span class=\"w\"> </span><span class=\"n\">d</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"o\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">blocksize_gt_index</span><span class=\"w\"> </span><span class=\"n\">sum_of_four_squares</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">metis</span>\n\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat mat\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"(x0 :: rat) = x $$ (m-4,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"(x1 :: rat) = x $$ (m-3,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"(x2 :: rat) = x $$ (m-2,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x3</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"(x3 :: rat) = x $$ (m-1,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"(n :: nat) = (𝗏 - m) div 4\"</span>\n\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">assm1</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 ≥ m\"</span><span class=\"w\"> </span><span class=\"s\">\"m &gt; 3\"</span><span class=\"w\"> </span><span class=\"s\">\"i ∈ {0..&lt;4}\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n\n<span class=\"w\">    </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"∃e0 e1 e2 e3 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>\n<span class=\"s\">          e0 * y0 + e1 * y1 + e2 * y2 + e3 * y3 +</span>\n<span class=\"s\">          (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))\"</span>\n<span class=\"w\">      </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">linear_comb_of_y_part_2_i3</span><span class=\"w\"> </span><span class=\"n\">assm1</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n</code></pre></div>\n<p>Unfortunately, I got a \"linarith_split_limit exceeded (current value is 9)\" error repeated. The last have statement should follow from \"linear_comb_of_y_part_2_i3\" in the first post of this thread. It is just modes ponens.</p>",
+        "id": 508151249,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1742948290
+    },
+    {
+        "content": "<p>You're still assuming stuff that I assume you should be proving.<br>\nThis bit should be have</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">          </span><span class=\"s\">\"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">          </span><span class=\"s\">\"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n</code></pre></div>",
+        "id": 508167055,
+        "sender_full_name": "irvin",
+        "timestamp": 1742956979
+    },
+    {
+        "content": "<p>In fact <code>brc_v_1_mod_4</code> should not be using any assume keyword in the whole proof block</p>",
+        "id": 508180001,
+        "sender_full_name": "irvin",
+        "timestamp": 1742965048
+    },
+    {
+        "content": "<p>BTW isn't <code>linarith_split_limit exceeded</code> just a warning?</p>",
+        "id": 508184729,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742967641
+    },
+    {
+        "content": "<p>Mathias, linarith split limit exceeded was something that kept repeating itself to the point where I couldn’t tell what was happening. When I had my Isabelle in front of me last night I got a purple highlight over auto meaning it was still running without stopping.</p>",
+        "id": 508318959,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743004706
+    },
+    {
+        "content": "<p>Irvin the four equations that you posted are definitely assumptions. Or perhaps better to say definitions, but I don’t know how to make them definitions.</p>",
+        "id": 508322404,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743005345
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"736162\">Craig Alan Feinstein</span> <a href=\"#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/508318959\">said</a>:</p>\n<blockquote>\n<p>Mathias, linarith split limit exceeded was something that kept repeating itself to the point where I couldn’t tell what was happening. When I had my Isabelle in front of me last night I got a purple highlight over auto meaning it was still running without stopping.</p>\n</blockquote>\n<p>could be that the arith simplifier is spamming the interface with messages</p>",
+        "id": 508362009,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1743017439
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"736162\">Craig Alan Feinstein</span> <a href=\"#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/508322404\">said</a>:</p>\n<blockquote>\n<p>Irvin the four equations that you posted are definitely assumptions. Or perhaps better to say definitions, but I don’t know how to make them definitions.</p>\n</blockquote>\n<p>One last try: in the world of math I know where proofs are sequences of applications of theorems and axioms, there are no assumptions in the middle of a proof. Never. It just does not make sense.</p>\n<p>Apparently we cannot agree on that. Therefore, we cannot help you.</p>",
+        "id": 508362936,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1743017774
+    },
+    {
+        "content": "<p>Mathias I am not here to argue with you,  but learn from you. But I am coming from the perspective that you can say “assume” in a math proof. I learned this as a college freshman from a course in logic - if you want to prove that A implies B, then you can do this by assuming A and then proving B. In the case of the proof of the Bruck Ryser Chowla theorem, the idea is to prove a certain equation 1 has an rational solution. This is done by assuming that the variables in equation 2 satisfy certain conditions and then showing by induction that these conditions lead to a solution in equation 1. This is why I was using assume in the proof. But I really don’t care if you call what I am doing assume or something else. I just want my Isabelle proof to work.</p>",
+        "id": 508391208,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743029147
+    },
+    {
+        "content": "<blockquote>\n<p>if you want to prove that A implies B, then you can do this by assuming A and then proving B</p>\n</blockquote>\n<p>When you <em>prove</em> that theorem yes. When you <em>use</em> that theorem no. When you use it, you <em>show</em> that A holds. And from this you derive B.</p>\n<p>And here you are clearly trying to <em>use</em> it. You even using the keyword <code>using linear_comb_of_y_part_2_i3</code>.</p>",
+        "id": 508433149,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1743053885
+    },
+    {
+        "content": "<p>Also note that <code>its safe to assume ...</code>/ <code>without loss of generality assume ...</code> needs to be justified in isabelle.</p>",
+        "id": 508542609,
+        "sender_full_name": "irvin",
+        "timestamp": 1743087715
+    },
+    {
+        "content": "<p>Ok, now I understand where you are coming from. I have to think about this.</p>",
+        "id": 508563163,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743092265
+    },
+    {
+        "content": "<p>Before today, I thought your arguments were irrelevant semantic arguments. Now I see that yes they are semantic arguments but not irrelevant because in Isabelle, everything is semantics. I reread what you wrote and they make sense now. Thank you.</p>",
+        "id": 508640146,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743120195
+    },
+    {
+        "content": "<p>I've gotten to this point:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">brc_v_1_mod_4</span><span class=\"o\">:</span>\n<span class=\"w\">      </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 mod 4 = 1\"</span>\n<span class=\"w\">        </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃x :: rat mat.(∑j ∈ {4..&lt;5}.</span>\n<span class=\"s\">               ((∑h ∈ {0..&lt;5}. of_int(N $$ (4-h,4-j)) * x $$ (4-h,0)) +</span>\n<span class=\"s\">               (∑h ∈ {5..&lt;𝗏}. of_int(N $$ (h,4-j)) * x $$ (h,0)))^2) =</span>\n<span class=\"s\">                of_nat Λ * (∑j ∈ {0..&lt;𝗏}.(x $$ (j, 0)))^2 +</span>\n<span class=\"s\">                of_nat (𝗄 - Λ) * (∑j ∈ {4..&lt;5}. (x $$ (4-j, 0))^2)\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">c</span><span class=\"w\"> </span><span class=\"n\">d</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"o\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">blocksize_gt_index</span><span class=\"w\"> </span><span class=\"n\">sum_of_four_squares</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">metis</span>\n\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">h</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">j</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 ≥ m\"</span><span class=\"w\"> </span><span class=\"s\">\"m &gt; 3\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">assms</span><span class=\"w\"> </span><span class=\"n\">t_design_min_v</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">force</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"n = (𝗏-m) div 4\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x $$ (m-4,0) = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-3,0) = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-2,0) = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-1,0) = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x0 = x $$ (m-4,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x1 = x $$ (m-3,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x2 = x $$ (m-2,0)\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x3</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x3 = x $$ (m-1,0)\"</span>\n</code></pre></div>\n<p>The problem with it is I want x to be a rat mat but I'm not sure how to use the obtain statement to do this.</p>",
+        "id": 509830683,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743648327
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">…</span>\n</code></pre></div>",
+        "id": 509842084,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1743655063
+    },
+    {
+        "content": "<p>Thanks!</p>",
+        "id": 509927539,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743683833
+    },
+    {
+        "content": "<p>Irvin was right before when he said I would have to justify it in some way. I'm not sure what kind of justification it needs though. The function is a rational function, so the definition works. Perhaps that is the answer?</p>",
+        "id": 510061376,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743727286
+    },
+    {
+        "content": "<p>Yup that is \"proved\" by type inference.</p>",
+        "id": 510068533,
+        "sender_full_name": "irvin",
+        "timestamp": 1743731554
+    },
+    {
+        "content": "<p>Do you just say “using functionname” or “using functionnames”?</p>",
+        "id": 510302819,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743806687
+    },
+    {
+        "content": "<p>Or something like that?</p>",
+        "id": 510303045,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1743806799
+    },
+    {
+        "content": "<p>I looked up \"type inference\" but couldn't find anything that would solve the problem. Then I tried:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"n\">one</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"n\">two</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"n\">three</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"n\">four</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x $$ (m-4,0) = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-3,0) = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-2,0) = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-1,0) = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">one</span><span class=\"w\"> </span><span class=\"n\">two</span><span class=\"w\"> </span><span class=\"n\">three</span><span class=\"w\"> </span><span class=\"n\">four</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n</code></pre></div>\n<p>but Isabelle didn't accept any of the sentences. Any ideas?</p>",
+        "id": 511049717,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744159068
+    },
+    {
+        "content": "<p>For <code>one</code> to <code>four</code> I would expect that these numbers are automatically rational numbers because of the type, but it is hard to know without any definition.<br>\nFor <code>x</code> define <code>x</code> as the matrix (or the vector) with the 4 elements instead of talking about the elements directly</p>",
+        "id": 511086412,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744180009
+    },
+    {
+        "content": "<p>What do you mean “with the four elements”? The matrix is supposed to be an m by 1 matrix. (I found that Isabelle liked it better when it was a matrix instead of a vector.)</p>\n<p>one, two, three, four are just looking at the first, second, third, fourth elements of a vector while y_inv_of is just a linear transformation of a four element vector. There are only rational numbers in the definitions of the functions.</p>",
+        "id": 511159806,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744201964
+    },
+    {
+        "content": "<p>I just tried:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">h</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">j</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat\"</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">assm1</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"𝗏 ≥ m\"</span><span class=\"w\"> </span><span class=\"s\">\"m &gt; 3\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">assms</span><span class=\"w\"> </span><span class=\"n\">t_design_min_v</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">force</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"n = (𝗏-m) div 4\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">y3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">  </span><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x3</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-4,0) = x0\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-3,0) = x1\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-2,0) = x2\"</span>\n<span class=\"w\">                 </span><span class=\"s\">\"x $$ (m-1,0) = x3\"</span>\n<span class=\"w\">    </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n</code></pre></div>\n<p>with no luck. simp didn't work as well as sledgehammer.</p>",
+        "id": 511269907,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744236304
+    },
+    {
+        "content": "<p>The function definitions are:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">y_inv_reversible</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"s\">\"((nat × nat × nat × nat) × (rat × rat × rat × rat)) ⇒</span>\n<span class=\"s\">             ((nat × nat × nat × nat) × (rat × rat × rat × rat))\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"y_inv_reversible((a, b, c, d),(y0, y1, y2, y3)) = ((a, b, c, d),</span>\n<span class=\"s\">  ((of_nat a)*y0 - (of_nat b)*y1 - (of_nat c)*y2 - (of_nat d)*y3)/of_nat(a^2 + b^2 + c^2 + d^2),</span>\n<span class=\"s\">  ((of_nat b)*y0 + (of_nat a)*y1 + (of_nat d)*y2 - (of_nat c)*y3)/of_nat(a^2 + b^2 + c^2 + d^2),</span>\n<span class=\"s\">  ((of_nat c)*y0 + (of_nat a)*y2 + (of_nat b)*y3 - (of_nat d)*y1)/of_nat(a^2 + b^2 + c^2 + d^2),</span>\n<span class=\"s\">  ((of_nat d)*y0 + (of_nat c)*y1 + (of_nat a)*y3 - (of_nat b)*y2)/of_nat(a^2 + b^2 + c^2 + d^2))\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">y_inv_of</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"((nat × nat × nat × nat) × (rat × rat × rat × rat)) ⇒</span>\n<span class=\"s\">                  (rat × rat × rat × rat)\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"y_inv_of((a, b, c, d),(y0, y1, y2, y3)) =</span>\n<span class=\"s\">   rightside(y_inv_reversible((a, b, c, d),(y0, y1, y2, y3)))\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">one_of</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(rat × rat × rat × rat) ⇒ rat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"one_of(y0, y1, y2, y3) = y0\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">two_of</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(rat × rat × rat × rat) ⇒ rat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"two_of(y0, y1, y2, y3) = y1\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">three_of</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(rat × rat × rat × rat) ⇒ rat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"three_of(y0, y1, y2, y3) = y2\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">four_of</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(rat × rat × rat × rat) ⇒ rat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"four_of(y0, y1, y2, y3) = y3\"</span>\n</code></pre></div>",
+        "id": 511270227,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744236455
+    },
+    {
+        "content": "<p>Also this should probably be used so that a^2 + b^2 + c^2 + d^2 != 0:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">c</span><span class=\"w\"> </span><span class=\"n\">d</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"o\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">blocksize_gt_index</span><span class=\"w\"> </span><span class=\"n\">sum_of_four_squares</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">metis</span>\n</code></pre></div>",
+        "id": 511274360,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744238656
+    },
+    {
+        "content": "<p>Would anybody be interested in looking at my whole proof? I'm on the last hard-to-prove lemma and I've been stuck on it for a long time. When it gets done, it will be a nice addition to the AFP library.</p>",
+        "id": 511274590,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744238782
+    },
+    {
+        "content": "<p>Or are there any examples out there like this that I can look at and learn from?</p>",
+        "id": 511276594,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744239828
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"736162\">Craig Alan Feinstein</span> <a href=\"#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/511159806\">said</a>:</p>\n<blockquote>\n<p>What do you mean “with the four elements”? The matrix is supposed to be an m by 1 matrix. (I found that Isabelle liked it better when it was a matrix instead of a vector.)</p>\n<p>one, two, three, four are just looking at the first, second, third, fourth elements of a vector while y_inv_of is just a linear transformation of a four element vector. There are only rational numbers in the definitions of the functions.</p>\n</blockquote>\n<p>It is very strange to me to have a matrix <code>m x 1</code> where you care only about 4 values</p>",
+        "id": 511310604,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744259096
+    },
+    {
+        "content": "<p>But anyway, if you do not care about the value, you could pick one</p>",
+        "id": 511310640,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744259119
+    },
+    {
+        "content": "<p>So you could define x as:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">mat</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"n\">1</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">%i</span><span class=\"w\"> </span><span class=\"n\">j.</span>\n<span class=\"w\">   </span><span class=\"kp\">if</span><span class=\"w\"> </span><span class=\"n\">j</span><span class=\"o\">=</span><span class=\"n\">0</span><span class=\"w\"> </span><span class=\"k\">then</span>\n<span class=\"w\">      </span><span class=\"kp\">if</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"o\">-</span><span class=\"n\">4</span><span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"n\">x0</span><span class=\"w\"> </span><span class=\"n\">else</span><span class=\"w\"> </span><span class=\"kp\">if</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"o\">-</span><span class=\"n\">3</span><span class=\"w\"> </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"n\">x1</span><span class=\"w\"> </span><span class=\"n\">else</span><span class=\"w\"> </span><span class=\"kp\">if</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"o\">-</span><span class=\"n\">2</span><span class=\"w\"> </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"n\">x2</span><span class=\"w\"> </span><span class=\"n\">else</span><span class=\"w\"> </span><span class=\"kp\">if</span><span class=\"w\"> </span><span class=\"n\">i</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"n\">m</span><span class=\"o\">-</span><span class=\"n\">1</span><span class=\"w\"> </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"n\">x3</span>\n<span class=\"w\">      </span><span class=\"n\">else</span><span class=\"w\"> </span><span class=\"n\">0</span>\n<span class=\"w\">   </span><span class=\"n\">else</span><span class=\"w\"> </span><span class=\"n\">0</span><span class=\"o\">)</span>\n</code></pre></div>",
+        "id": 511310964,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744259283
+    },
+    {
+        "content": "<p>Here I picked 0, but any real number would do</p>",
+        "id": 511310985,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744259303
+    },
+    {
+        "content": "<p>Thank you, I’ll give that a shot.</p>",
+        "id": 511393031,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744287415
+    },
+    {
+        "content": "<p>I tried   </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">mat</span><span class=\"w\"> </span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"n\">1</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\">  </span><span class=\"s\">\"x = (λi j.</span>\n<span class=\"s\">     if j = 0 then</span>\n<span class=\"s\">       if i = m - 4 then x0</span>\n<span class=\"s\">       else if i = m - 3 then x1</span>\n<span class=\"s\">       else if i = m - 2 then x2</span>\n<span class=\"s\">       else if i = m - 1 then x3</span>\n<span class=\"s\">       else 0</span>\n<span class=\"s\">     else 0)\"</span>\n</code></pre></div>\n<p>but it didn't like it.</p>",
+        "id": 511538872,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744334538
+    },
+    {
+        "content": "<p>I have never used any matrices, but this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">define</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"rat mat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\">  </span><span class=\"s\">\"x = mat m 1 (λi j.</span>\n<span class=\"s\">     if j = 0 then</span>\n<span class=\"s\">       if i = m - 4 then x0</span>\n<span class=\"s\">       else if i = m - 3 then x1</span>\n<span class=\"s\">       else if i = m - 2 then x2</span>\n<span class=\"s\">       else if i = m - 1 then x3</span>\n<span class=\"s\">       else 0</span>\n<span class=\"s\">     else 0)\"</span>\n</code></pre></div>\n<p>is what I meant…</p>",
+        "id": 511575292,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744354675
+    },
+    {
+        "content": "<p>Thank you, I’ll try that</p>",
+        "id": 511602627,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744363281
+    },
+    {
+        "content": "<p>I just tried it but it didn't accept it. It said, </p>\n<p>\"Type unification failed: Clash of types \"nat\" and \"_ × _\"</p>\n<p>Type error in application: incompatible operand type</p>\n<p>Operator:  mat m 1 :: (nat × nat ⇒ ??'a) ⇒ ??'a mat<br>\nOperand:<br>\n  λi j. if j = 0<br>\n         then if i = m - 4 then x0 else if i = m - 3 then x1 else if i = m - 2 then x2 else if i = m - 1 then x3 else 0<br>\n         else 0 ::<br>\n  nat ⇒ ??'b ⇒ rat</p>\n<p>Coercion Inference:</p>\n<p>Local coercion insertion on the operand failed:<br>\nNo coercion known for type constructors: \"prod\" and \"nat\"\"</p>",
+        "id": 511715696,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744397772
+    },
+    {
+        "content": "<p>Change <code>λi j</code> to <code>λ(i, j).</code>. The error tells you that <code>map m 1</code> expects a function that takes a tuple.</p>",
+        "id": 511745891,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1744411212
+    },
+    {
+        "content": "<p>Jan, thank you, I just tried that and it worked.</p>",
+        "id": 512206633,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1744682786
+    }
+]

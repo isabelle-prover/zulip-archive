@@ -1,0 +1,58 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Unofficial fix to the LaTeX generation of Code... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unofficial.20fix.20to.20the.20LaTeX.20generation.20of.20Code.2E.2E.2E.html">[isabelle] Unofficial fix to the LaTeX generation of Code...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="561611143"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unofficial%20fix%20to%20the%20LaTeX%20generation%20of%20Code.../near/561611143" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unofficial.20fix.20to.20the.20LaTeX.20generation.20of.20Code.2E.2E.2E.html#561611143">(Dec 03 2025 at 10:34)</a>:</h4>
+<p><strong>From:</strong> Winston Ren &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear all,</p>
+<p>I have an unofficial fix to the  Code2HTML plugin in Isabelle. I noticed the plugin was not working properly with LaTeX generation due to out-of-date packages used and repeated object constructors. So I made some fixes:</p>
+<p>1.<br>
+Used package xcolor instead of color.<br>
+  2.<br>
+Abandoned the old package \\usepackage[latin1]{inputenc} for encoding special characters from Isabelle; instead, used a combination of \\setmainfont{Latin Modern Roman}, \\setmathfont{Latin Modern Math}, and \\setmonofont{JetBrains Mono} to display special characters. Accordingly, the compiler uses XeLaTeX instead of pdfLaTeX.<br>
+  3.<br>
+Fixed the indentation problem from the old version.<br>
+  4.<br>
+In GenericDocument.Java there was a repeated call to the style constructors, resulting in a repeated style definition export in the LaTeX script generated. This was fixed by adding a style detection method.</p>
+<p>The full source code can be found in the following GitHub repo, with a compiled working JAR file.<br>
+GitHub Repository: <a href="https://github.com/FullBackward/Code2HTML-Isabelle-version-">https://github.com/FullBackward/Code2HTML-Isabelle-version-</a><br>
+Please let me know if you find this fix useful or if you find any remaining problems.</p>
+<p>Winston Ren</p>
+<p>The University of Edinburgh is a charitable body, registered in Scotland, with registration number SC005336. Is e buidheann carthannais a th' ann an Oilthigh Dh?n ?ideann, cl?raichte an Alba, ?ireamh cl?raidh SC005336.</p>
+
+
+
+<a name="561635859"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unofficial%20fix%20to%20the%20LaTeX%20generation%20of%20Code.../near/561635859" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unofficial.20fix.20to.20the.20LaTeX.20generation.20of.20Code.2E.2E.2E.html#561635859">(Dec 03 2025 at 12:17)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 03/12/2025 11:23, Winston Ren (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>The full source code can be found in the following GitHub repo, with a <br>
+compiled working JAR file.<br>
+GitHub Repository: <a href="https://github.com/FullBackward/Code2HTML-Isabelle-version-">https://github.com/FullBackward/Code2HTML-Isabelle-version-</a> <br>
+&lt;<a href="https://github.com/FullBackward/Code2HTML-Isabelle-version-">https://github.com/FullBackward/Code2HTML-Isabelle-version-</a>&gt;<br>
+Please let me know if you find this fix useful or if you find any remaining <br>
+problems.</p>
+</blockquote>
+<p>You can make this official by contacting the jEdit project <br>
+<a href="https://www.jedit.org">https://www.jedit.org</a> and submit patches there. The jEdit guys might <br>
+eventually hand over the responsibility for the Code2HTML to you.</p>
+<p>Further note that starting with Isabelle2025-1 (December 2025), the bundled <br>
+version of jEdit no longer includes Code2HTML.jar (and Navigator.jar), so you <br>
+can use the normal jEdit plugin management without special considerations.</p>
+<p>The current approximation of the coming release is <br>
+<a href="https://isabelle.in.tum.de/website-Isabelle2025-1-RC3">https://isabelle.in.tum.de/website-Isabelle2025-1-RC3</a></p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

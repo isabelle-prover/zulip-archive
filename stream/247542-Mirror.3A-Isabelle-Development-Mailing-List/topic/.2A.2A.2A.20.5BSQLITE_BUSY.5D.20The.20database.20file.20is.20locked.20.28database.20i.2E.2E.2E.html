@@ -1,0 +1,56 @@
+<html>
+<head><meta charset="utf-8"><title>*** [SQLITE_BUSY] The database file is locked (database i... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20.5BSQLITE_BUSY.5D.20The.20database.20file.20is.20locked.20.28database.20i.2E.2E.2E.html">*** [SQLITE_BUSY] The database file is locked (database i...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="526854744"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%2A%2A%2A%20%5BSQLITE_BUSY%5D%20The%20database%20file%20is%20locked%20%28database%20i.../near/526854744" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20.5BSQLITE_BUSY.5D.20The.20database.20file.20is.20locked.20.28database.20i.2E.2E.2E.html#526854744">(Jul 02 2025 at 18:02)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+I am still using the plain old <a href="http://lxcisa0.informatik.tu-muenchen.de">lxcisa0.informatik.tu-muenchen.de</a> for <br>
+certain tasks</p>
+<p>Recently, a problem emerged:</p>
+<p>$ isabelle build -b Pure<br>
+*** [SQLITE_BUSY] The database file is locked (database is locked)</p>
+<p>I am using rev c8d92d4ced73 and a minimal ~/.isabelle/etc/settings:</p>
+<p>init_components <br>
+"${ISABELLE_COMPONENTS_BASE:-$USER_HOME/.isabelle/contrib}" <br>
+"$ISABELLE_HOME/Admin/components/main"</p>
+<p>What is going wrong here? Maybe NFS makes problems.</p>
+<p>Thanks for any hint,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/nJ40oNxZzbyG5EMFYHA0INVi/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/3LUA4Iy0XcRTCYp8IM7BMqfW/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="529220962"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%2A%2A%2A%20%5BSQLITE_BUSY%5D%20The%20database%20file%20is%20locked%20%28database%20i.../near/529220962" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20.5BSQLITE_BUSY.5D.20The.20database.20file.20is.20locked.20.28database.20i.2E.2E.2E.html#529220962">(Jul 17 2025 at 07:47)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>Recently, a problem emerged:</p>
+<p>$ isabelle build -b Pure<br>
+*** [SQLITE_BUSY] The database file is locked (database is locked)</p>
+<p>I am using rev c8d92d4ced73 and a minimal ~/.isabelle/etc/settings:</p>
+<p>init_components "${ISABELLE_COMPONENTS_BASE:-$USER_HOME/.isabelle/ <br>
+contrib}" "$ISABELLE_HOME/Admin/components/main"</p>
+<p>What is going wrong here? Maybe NFS makes problems.</p>
+</blockquote>
+<p>Redirecting ISABELLE_HEAPS to /tmp/… helps.</p>
+<p>Seems to be an issue with NFS.</p>
+<p>Indeed, sqlite has some reputation to pose problems with network file <br>
+systems, or certain configurations of them.</p>
+<p>Since there is a work-around, it is maybe not worth pursuing further.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/1bE0ee7ZzTx3ewvSswB5dWa3/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/mu0cZouIZ2uPrIwd_txNIYn7/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

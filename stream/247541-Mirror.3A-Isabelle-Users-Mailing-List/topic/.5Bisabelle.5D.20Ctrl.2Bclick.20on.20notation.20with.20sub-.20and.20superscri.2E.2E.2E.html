@@ -1,0 +1,43 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Ctrl+click on notation with sub- and superscri... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Ctrl.2Bclick.20on.20notation.20with.20sub-.20and.20superscri.2E.2E.2E.html">[isabelle] Ctrl+click on notation with sub- and superscri...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="555294116"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Ctrl%2Bclick%20on%20notation%20with%20sub-%20and%20superscri.../near/555294116" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Ctrl.2Bclick.20on.20notation.20with.20sub-.20and.20superscri.2E.2E.2E.html#555294116">(Nov 13 2025 at 08:38)</a>:</h4>
+<p>From: Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear all,</p>
+<p>I believe ctrl+click is not working with notation using sub- and <br>
+superscripts defined with bsub, esub, bsup, esup. Below are some <br>
+examples. I am using the latest Isabelle development version (db80ee4abed1).</p>
+<p>Is there anything I can do to make ctrl+click work in such cases?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">   </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="s">"bar x ≡ True"</span>
+<span class="k">notation</span><span class="w"> </span><span class="n">bar</span><span class="w"> </span><span class="o">(</span><span class="s">‹_⇘bar⇙›</span><span class="o">)</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="s">"foo x y ≡ True"</span>
+<span class="k">notation</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">(</span><span class="kp">infix</span><span class="w"> </span><span class="s">‹⊣⇘foo⇙›</span><span class="w"> </span><span class="n">50</span><span class="o">)</span>
+
+<span class="c">(*ctrl+click not working on either term*)</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"x⇘bar⇙"</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"x ⊣⇘foo⇙ y"</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"(⊣⇘foo⇙)"</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,122 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Issues with `polyc` on macOS · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Issues.20with.20.60polyc.60.20on.20macOS.html">[isabelle] Issues with `polyc` on macOS</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515716194"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Issues%20with%20%60polyc%60%20on%20macOS/near/515716194" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Issues.20with.20.60polyc.60.20on.20macOS.html#515716194">(May 02 2025 at 13:38)</a>:</h4>
+<p>From: Simon Wimmer &lt;<a href="mailto:wimmersimon@gmail.com">wimmersimon@gmail.com</a>&gt;<br>
+The executable <code>polyc</code> of Poly/ML 5.9.1 is broken in multiple ways on Mac.</p>
+<p>This pertains both to the versions bundled with Isabelle2025 as well as the<br>
+homebrew build.<br>
+This issue (<a href="https://github.com/polyml/polyml/issues/194">https://github.com/polyml/polyml/issues/194</a>) names the<br>
+problems, and suggests fixes (in <code>polyc</code>):</p>
+<ul>
+<li>Add <code>-ld_classic</code> to <code>EXTRALDFLAGS</code></li>
+<li>Remove quotes around <code>LINK</code></li>
+</ul>
+<p>I stumbled upon this since I wanted to compile exported SML code with<br>
+<code>polyc</code> in <code>compile_generated_files</code> for an AFP entry.<br>
+Until a new version of Poly/ML is released, what is a recommended<br>
+workaround?<br>
+Is there something like <code>theories [condition= ]</code> (in a ROOT file) to skip<br>
+the theory with the call to <code>compile_generated_files</code> on macOS?</p>
+<p>Thanks,<br>
+Simon</p>
+
+
+
+<a name="519845785"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Issues%20with%20%60polyc%60%20on%20macOS/near/519845785" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Issues.20with.20.60polyc.60.20on.20macOS.html#519845785">(May 22 2025 at 14:09)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 02/05/2025 15:37, Simon Wimmer wrote:</p>
+<blockquote>
+<p>The executable <code>polyc</code> of Poly/ML 5.9.1 is broken in multiple ways on Mac.</p>
+<p>This pertains both to the versions bundled with Isabelle2025 as well as the <br>
+homebrew build.<br>
+This issue (<a href="https://github.com/polyml/polyml/issues/194">https://github.com/polyml/polyml/issues/194</a> &lt;<a href="https://github.com/">https://github.com/</a> <br>
+polyml/polyml/issues/194&gt;) names the problems, and suggests fixes (in <code>polyc</code>):<br>
+- Add <code>-ld_classic</code> to <code>EXTRALDFLAGS</code><br>
+- Remove quotes around <code>LINK</code></p>
+<p>I stumbled upon this since I wanted to compile exported SML code with <code>polyc</code> <br>
+in <code>compile_generated_files</code> for an AFP entry.</p>
+</blockquote>
+<p>Note that polyc is inherently non-portable: it depends on many side-conditions <br>
+of the underlying C development environment.</p>
+<p>That is not included in the standard repertoire of Isabelle tools, and the AFP <br>
+editors should reject an entry that uses "polyc" (if they actually notice it).</p>
+<p>To test generated ML program text with Poly/ML, the usual approach is to use <br>
+the running Isabelle/ML environment, and essentially "eval" the source (as <br>
+done in LISP many decades ago). E.g. see the Isabelle/Isar command "value <br>
+[PolyML]".</p>
+<blockquote>
+<p>Until a new version of Poly/ML is released, what is a recommended workaround?<br>
+Is there something like <code>theories [condition= ]</code> (in a ROOT file) to skip the <br>
+theory with the call to <code>compile_generated_files</code> on macOS?</p>
+</blockquote>
+<p>There is no workaround, because using polyc is not supported.</p>
+<p>Makarius</p>
+
+
+
+<a name="521040928"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Issues%20with%20%60polyc%60%20on%20macOS/near/521040928" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Issues.20with.20.60polyc.60.20on.20macOS.html#521040928">(May 29 2025 at 07:59)</a>:</h4>
+<p>From: Simon Wimmer &lt;<a href="mailto:wimmersimon@gmail.com">wimmersimon@gmail.com</a>&gt;<br>
+Thanks, Makarius.</p>
+<p>I solved the issue by adding a switch (enabled by default) for "eval" with<br>
+the Isabelle//ML environment rather than compilation with <code>polyc</code>.</p>
+<p>I couldn't really work out what "value [PolyML]" refers to, but I found<br>
+some helpful breadcrumbs by looking at <code>HOL/Library/code_test.ML</code>.</p>
+<p>Simon</p>
+<p>Am Do., 22. Mai 2025 um 16:00 Uhr schrieb Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;:</p>
+<blockquote>
+<p>On 02/05/2025 15:37, Simon Wimmer wrote:</p>
+<blockquote>
+<p>The executable <code>polyc</code> of Poly/ML 5.9.1 is broken in multiple ways on<br>
+Mac.</p>
+<p>This pertains both to the versions bundled with Isabelle2025 as well as<br>
+the<br>
+homebrew build.<br>
+This issue (<a href="https://github.com/polyml/polyml/issues/194">https://github.com/polyml/polyml/issues/194</a> &lt;<br>
+<a href="https://github.com/">https://github.com/</a><br>
+polyml/polyml/issues/194&gt;) names the problems, and suggests fixes (in<br>
+<code>polyc</code>):<br>
+- Add <code>-ld_classic</code> to <code>EXTRALDFLAGS</code><br>
+- Remove quotes around <code>LINK</code></p>
+<p>I stumbled upon this since I wanted to compile exported SML code with<br>
+<code>polyc</code><br>
+in <code>compile_generated_files</code> for an AFP entry.</p>
+</blockquote>
+<p>Note that polyc is inherently non-portable: it depends on many<br>
+side-conditions<br>
+of the underlying C development environment.</p>
+<p>That is not included in the standard repertoire of Isabelle tools, and the<br>
+AFP<br>
+editors should reject an entry that uses "polyc" (if they actually notice<br>
+it).</p>
+<p>To test generated ML program text with Poly/ML, the usual approach is to<br>
+use<br>
+the running Isabelle/ML environment, and essentially "eval" the source (as<br>
+done in LISP many decades ago). E.g. see the Isabelle/Isar command "value<br>
+[PolyML]".</p>
+<blockquote>
+<p>Until a new version of Poly/ML is released, what is a recommended<br>
+workaround?<br>
+Is there something like <code>theories [condition= ]</code> (in a ROOT file) to<br>
+skip the<br>
+theory with the call to <code>compile_generated_files</code> on macOS?</p>
+</blockquote>
+<p>There is no workaround, because using polyc is not supported.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

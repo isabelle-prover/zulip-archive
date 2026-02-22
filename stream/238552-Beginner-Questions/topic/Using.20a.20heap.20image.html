@@ -1,0 +1,162 @@
+<html>
+<head><meta charset="utf-8"><title>Using a heap image · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html">Using a heap image</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="555740747"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/555740747" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#555740747">(Nov 15 2025 at 12:22)</a>:</h4>
+<p>I'm trying to make a "Session" so that loading up the work I've done already will be quicker. </p>
+<p>I've read through <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Issue.20opening.20with.20prebuilt.20parent.20session.20image/with/420472975">#Beginner Questions &gt; Issue opening with prebuilt parent session image</a>  and think I understand a bit more. I've even successfully built a heap image using the following ROOT file, because opening up Chapter1-3, which includes 1-1 and 1-2,  from another file currently takes a couple of minutes, and I'd like it to be quicker. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">CS1951Y2025</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span><span class="w"> </span><span class="o">+</span>
+<span class="n">sessions</span>
+<span class="w">  </span><span class="s">"HOL-Library"</span>
+<span class="w">  </span><span class="s">"HOL-Analysis"</span>
+<span class="n">theories</span>
+<span class="w">    </span><span class="s">"Chapter1-1"</span>
+<span class="w">    </span><span class="s">"Chapter1-2"</span>
+<span class="w">    </span><span class="s">"Chapter1-3"</span>
+
+<span class="w">  </span><span class="n">document_files</span>
+<span class="w">    </span><span class="s">"root.tex"</span>
+</code></pre></div>
+<p>with the result being that </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">ls</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">~/.isabelle/Isabelle2025/heaps/polyml</span><span class="o">-</span><span class="n">5.9.1_arm64_32</span><span class="o">-</span><span class="n">darwin/CS1951Y2025</span>
+</code></pre></div>
+<p>produces</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span><span class="n">@</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">jhughes</span><span class="w">  </span><span class="n">staff</span><span class="w">  </span><span class="n">97684232</span><span class="w"> </span><span class="n">Nov</span><span class="w"> </span><span class="n">15</span><span class="w"> </span><span class="n">06</span><span class="o">:</span><span class="n">49</span><span class="w"> </span><span class="n">/Users/jhughes/.isabelle/Isabelle2025/heaps/polyml</span><span class="o">-</span><span class="n">5.9.1_arm64_32</span><span class="o">-</span><span class="n">darwin/CS1951Y2025</span>
+</code></pre></div>
+<p>which indicates that this heap file was created about 10 minutes before I began typing this question. </p>
+<p>But when I start Isabelle in the usual way for me (use Spotlight-search on my Mac to find the Isabelle2025 app) and load up Chapter1-3.thy, it still takes about 2 minutes, suggesting to me that Isabelle is not using that prebuilt heap. I searched the Systems manual for the word heap, but didn't find anything about how to make sure a particular heap is loaded when I start jEdit. Looking through the Isabelle/jEdit documentation led me to try</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">/Applications/Isabelle2025.app/bin/isabelle</span><span class="w"> </span><span class="n">jEdit</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="ow">.</span>
+</code></pre></div>
+<p>from Terminal while in the directory where the ROOT file (above) is located. Still, when I opened Chapter1-3.thy, I see all the various subordinate theories slowly loading -- no speed improvement at all.:<br>
+<a href="/user_uploads/14278/cl9oeHcZclt_UCn2x73O8rwZ/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/cl9oeHcZclt_UCn2x73O8rwZ/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="910x780" src="/user_uploads/thumbnail/14278/cl9oeHcZclt_UCn2x73O8rwZ/image.png/840x560.webp"></a></div><p>I even discovered the dropdown at the upper right of the "Theories" panel and tried selecting CS1951Y2025:</p>
+<p><a href="/user_uploads/14278/xmCLkSaaKdPoSaTd_g6uAXwr/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/xmCLkSaaKdPoSaTd_g6uAXwr/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="614x64" src="/user_uploads/thumbnail/14278/xmCLkSaaKdPoSaTd_g6uAXwr/image.png/840x560.webp"></a></div><p>with no benefit. </p>
+<p>Is there some other invocation I should have used? Did I build the session wrong?</p>
+
+
+
+<a name="556602719"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556602719" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556602719">(Nov 15 2025 at 12:38)</a>:</h4>
+<p>After selecting the base session, you need to restart Isabelle do have any effect</p>
+
+
+
+<a name="556602743"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556602743" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556602743">(Nov 15 2025 at 12:39)</a>:</h4>
+<p>I prefer the terminal variant:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">/Applications/Isabelle2025.app/bin/isabelle</span><span class="w"> </span><span class="n">jEdit</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="ow">.</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">CS1951YS2025</span>
+</code></pre></div>
+
+
+
+<a name="556837432"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556837432" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556837432">(Nov 17 2025 at 14:00)</a>:</h4>
+<p>It turns out that I'm still (slightly) stuck. The terminal variant works, but when I select CS1951Y2025 in the Theory  Panel, and then quit, and then try to start Isabelle from SpotLight search (or the Applications menu), etc., I get an error. Let me repeat the steps I've taken (on a Mac M1):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">%</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="n n-Type">'export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s">"/Applications/Isabelle2025.app/bin:$PATH"</span><span class="n">'</span><span class="w"> </span><span class="n">&gt;&gt;</span><span class="w"> </span><span class="n">~/.zshrc</span>
+<span class="n">&lt;open</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">terminal</span><span class="w"> </span><span class="n">window&gt;</span>
+<span class="n">%</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="n">/Users/jhughes/Documents/Projects/CS1951Y</span><span class="o">-</span><span class="n">2025</span>
+<span class="n">%</span><span class="w"> </span><span class="n">ls</span><span class="w"> </span><span class="n">Chapter1*.thy</span>
+<span class="n">Chapter1</span><span class="o">-</span><span class="n">1</span><span class="o">-</span><span class="n">9</span><span class="o">-</span><span class="n">12.thy</span><span class="w"> </span><span class="n">Chapter1</span><span class="o">-</span><span class="n">1.thy</span><span class="w">      </span><span class="n">Chapter1</span><span class="o">-</span><span class="n">2.thy</span><span class="w">      </span><span class="n">Chapter1</span><span class="o">-</span><span class="n">3.thy</span>
+<span class="w"> </span><span class="n">%</span><span class="w"> </span><span class="n">ls</span><span class="w"> </span><span class="n">document</span>
+<span class="n">ls</span><span class="o">:</span><span class="w"> </span><span class="n">document</span><span class="o">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">such</span><span class="w"> </span><span class="kp">file</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">directory</span>
+<span class="n">%</span><span class="w"> </span><span class="n">isabelle</span><span class="w"> </span><span class="n">mkroot</span>
+
+<span class="n">Initializing</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="s">"CS1951Y-2025"</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="s">"/Users/jhughes/Documents/Projects/CS1951Y-2025"</span>
+<span class="w">  </span><span class="n">creating</span><span class="w"> </span><span class="s">"ROOT"</span>
+<span class="w">  </span><span class="n">creating</span><span class="w"> </span><span class="s">"document/root.tex"</span>
+
+<span class="n">Now</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">session</span><span class="o">:</span>
+
+<span class="w">  </span><span class="n">isabelle</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">-</span><span class="n">D</span><span class="w"> </span><span class="ow">.</span>
+<span class="n">%</span>
+<span class="n">&lt;edit</span><span class="w"> </span><span class="n">ROOT&gt;</span>
+<span class="n">%</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="n">ROOT</span>
+<span class="n">session</span><span class="w"> </span><span class="n">CS1951Y2025</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="c">(*options [document = root.tex, document_output = "output"]*)</span>
+<span class="n">sessions</span>
+<span class="w">  </span><span class="s">"HOL-Library"</span>
+<span class="w">  </span><span class="s">"HOL-Analysis"</span>
+<span class="n">theories</span>
+<span class="w">    </span><span class="s">"Chapter1-1"</span>
+<span class="w">    </span><span class="s">"Chapter1-2"</span>
+<span class="w">    </span><span class="s">"Chapter1-3"</span>
+
+<span class="w">  </span><span class="n">document_files</span>
+<span class="w">    </span><span class="s">"root.tex"</span>
+<span class="n">%</span><span class="w"> </span><span class="n">isabelle</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">-</span><span class="n">D</span><span class="w"> </span><span class="ow">.</span>
+<span class="n">0</span><span class="o">:</span><span class="n">00</span><span class="o">:</span><span class="n">03</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span>
+</code></pre></div>
+<p>That "elapsed time" troubles me, because previously it's been a couple of minutes. Also, even though it's now 8:48 AM, I see this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">%</span><span class="w"> </span><span class="n">ls</span><span class="w"> </span><span class="o">-</span><span class="n">lt</span><span class="w"> </span><span class="n">~/.isabelle/Isabelle2025/heaps/polyml</span><span class="o">-</span><span class="n">5.9.1_arm64_32</span><span class="o">-</span><span class="n">darwin/</span>
+
+<span class="n">total</span><span class="w"> </span><span class="n">190864</span>
+
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x@</span><span class="w"> </span><span class="n">6</span><span class="w"> </span><span class="n">jhughes</span><span class="w">  </span><span class="n">staff</span><span class="w">       </span><span class="n">192</span><span class="w"> </span><span class="n">Nov</span><span class="w"> </span><span class="n">17</span><span class="w"> </span><span class="n">08</span><span class="o">:</span><span class="n">08</span><span class="w"> </span><span class="n">log</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span><span class="n">@</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">jhughes</span><span class="w">  </span><span class="n">staff</span><span class="w">  </span><span class="n">97718836</span><span class="w"> </span><span class="n">Nov</span><span class="w"> </span><span class="n">17</span><span class="w"> </span><span class="n">08</span><span class="o">:</span><span class="n">08</span><span class="w"> </span><span class="n">CS1951Y2025</span>
+</code></pre></div>
+<p>but perhaps isabelle knows that nothing has changed and hence has figured out it doesn't need to rebuild anything. </p>
+<p>Onwards: I run isabelle from the terminal as you suggested</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">%</span><span class="w"> </span><span class="n">isabelle</span><span class="w"> </span><span class="n">jEdit</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="ow">.</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">CS1951Y2025</span>
+</code></pre></div>
+<p>and jEdit appears, and in the Theories panel, the dropdown at the top right shows my new whatever-it's-called (a Session? A heap file?):<br>
+<a href="/user_uploads/14278/BBfAteZrjyYVY-JwzS92Vx9J/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/BBfAteZrjyYVY-JwzS92Vx9J/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="369x396" src="/user_uploads/thumbnail/14278/BBfAteZrjyYVY-JwzS92Vx9J/image.png/840x560.webp"></a></div><p>I can load a theory that depends on Chapter1-3.thy and it happens almost instantly. So this <strong>seems</strong> like a success so far. But if I run Isabelle in the "normal" way (using SpotLight search), CS1951Y2025 is no longer listed in the Theories panel, and loading is once again slow. </p>
+<p>If I go back to </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">%</span><span class="w"> </span><span class="n">isabelle</span><span class="w"> </span><span class="n">jEdit</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="ow">.</span><span class="w"> </span><span class="o">-</span><span class="n">l</span><span class="w"> </span><span class="n">CS1951Y2025</span>
+</code></pre></div>
+<p>and select CS1951Y2025 from the dropdown, quit, and then start Isabelle from SpotLight search,  I get an error:<br>
+<a href="/user_uploads/14278/qr0qKvXMog_6dpNW0UVtMbsv/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/qr0qKvXMog_6dpNW0UVtMbsv/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="588x147" src="/user_uploads/thumbnail/14278/qr0qKvXMog_6dpNW0UVtMbsv/image.png/840x560.webp"></a></div><p>The "Theories" panel is no longer visible, so I can't <em>unselect</em> this choice, and the only way to get rid of the problem is to again run isabelle from the command line, unselect my session, and quit. After that I can run Isabelle...but with no access to my new 'session'. It seems as if a jar file should have gotten built somewhere but didn't. </p>
+<p>I apologize for the long question, but I wanted all the details to be available.</p>
+
+
+
+<a name="556844407"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556844407" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556844407">(Nov 17 2025 at 14:29)</a>:</h4>
+<p>You need to tell Isabelle to to search for CS1941Y2025</p>
+
+
+
+<a name="556844623"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556844623" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556844623">(Nov 17 2025 at 14:30)</a>:</h4>
+<p>exactly like when you install the AFP, you have to tell Isabelle that it has to search in the AFP directory</p>
+
+
+
+<a name="556845039"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556845039" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556845039">(Nov 17 2025 at 14:31)</a>:</h4>
+<p>This is what <code>-d .</code> does: it tells Isabelle to also search in the local directory.</p>
+
+
+
+<a name="556907411"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556907411" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556907411">(Nov 17 2025 at 18:50)</a>:</h4>
+<p>I've never installed the AFP, so that part doesn't help me, unfortunately. </p>
+<p>When I run Isabelle from spotlight search, I don't have to tell it where to look for Main or Complex_Main, or HOL-Algebra. I was hoping that after I'd done this build-stuff, I wouldn't have to tell it where to look for my CS1951Y2025 'heap' either. </p>
+<p>If it turns out that when I build my own heaps, I <em>have</em> to use the command line from now on, that's fine. Is this really what should be happening?</p>
+
+
+
+<a name="556923568"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556923568" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556923568">(Nov 17 2025 at 20:24)</a>:</h4>
+<p>Just follow the instruction for the AFP <a href="https://www.isa-afp.org/help/">https://www.isa-afp.org/help/</a> replacing the path to the AFP with the path to CS1941Y2025</p>
+
+
+
+<a name="556929711"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Using%20a%20heap%20image/near/556929711" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Using.20a.20heap.20image.html#556929711">(Nov 17 2025 at 21:00)</a>:</h4>
+<p>Thanks; I'll try that.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

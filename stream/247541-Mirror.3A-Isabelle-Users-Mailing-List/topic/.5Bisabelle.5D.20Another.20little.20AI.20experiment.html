@@ -1,0 +1,46 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Another little AI experiment · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Another.20little.20AI.20experiment.html">[isabelle] Another little AI experiment</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="532323992"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Another%20little%20AI%20experiment/near/532323992" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Another.20little.20AI.20experiment.html#532323992">(Aug 01 2025 at 14:57)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+I asked ChatGPT the following question (about the sine integral function Si) and got quite a reasonable answer. Theory Sinc_Integral indeed exists in HOL-Probability and develops the function’s theory. To be sure, if you look carefully, you will note some anomalies. Still I think it is pretty good!</p>
+<p>Larry</p>
+<p>Is Si(x) or anything related formalised in Isabelle/HOL?</p>
+<p>There is a formalization of the sine integral function </p>
+<p>S i ( x )  in Isabelle/HOL, embedded within its measure‑theory and complex‑analysis libraries.</p>
+<p><span aria-label="check" class="emoji emoji-2705" role="img" title="check">:check:</span> Formalization in Isabelle/HOL</p>
+<p>Isabelle/HOL includes a theory named Sinc_Integral (or similar), which defines and analyzes the sine integral function  S i ( x ) . Among other results, it formally establishes:</p>
+<p>*   The definition of  S i ( x ) = ∫ 0 x sin ⁡ t t   d t ,</p>
+<p>*   Its convergence as  x → ∞ , proving that  S i ( x ) → π 2  at infinity (cl.cam.ac.uk&lt;<a href="https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/library/HOL/HOL-Probability/Sinc_Integral.html?utm_source=chatgpt.com">https://www.cl.cam.ac.uk/research/hvg/Isabelle/dist/library/HOL/HOL-Probability/Sinc_Integral.html?utm_source=chatgpt.com</a>&gt;, diofant.readthedocs.io&lt;<a href="https://diofant.readthedocs.io/en/latest/modules/functions/special.html?utm_source=chatgpt.com">https://diofant.readthedocs.io/en/latest/modules/functions/special.html?utm_source=chatgpt.com</a>&gt;).</p>
+<p>This is built on top of Isabelle's formal Lebesgue integration and Bochner integration framework.</p>
+<p><span aria-label="books" class="emoji emoji-1f4da" role="img" title="books">:books:</span> Broader Context</p>
+<p>*   Complex analysis of sine/cosine: Isabelle's Complex_Transcendental.thy (in HOL/Analysis) includes rigorous development of complex sine, cosine, exponential, Taylor series for trigonometric functions, and related transcendental lemmas (ResearchGate&lt;<a href="https://www.researchgate.net/publication/221234907_On_the_Formalization_of_the_Lebesgue_Integration_Theory_in_HOL?utm_source=chatgpt.com">https://www.researchgate.net/publication/221234907_On_the_Formalization_of_the_Lebesgue_Integration_Theory_in_HOL?utm_source=chatgpt.com</a>&gt;, isabelle.in.tum.de&lt;<a href="https://isabelle.in.tum.de/repos/isabelle/diff/f03a01a18c6e/src/HOL/Analysis/Complex_Transcendental.thy?utm_source=chatgpt.com">https://isabelle.in.tum.de/repos/isabelle/diff/f03a01a18c6e/src/HOL/Analysis/Complex_Transcendental.thy?utm_source=chatgpt.com</a>&gt;).</p>
+<p>*   Integration theory: Isabelle’s libraries include comprehensive formalization of Lebesgue and interval integration, ported partially from HOL4 and expanded to support real and complex integrals, enabling the formal treatment of special integrals like Si (x) (ResearchGate&lt;<a href="https://www.researchgate.net/publication/221234907_On_the_Formalization_of_the_Lebesgue_Integration_Theory_in_HOL?utm_source=chatgpt.com">https://www.researchgate.net/publication/221234907_On_the_Formalization_of_the_Lebesgue_Integration_Theory_in_HOL?utm_source=chatgpt.com</a>&gt;).</p>
+<p><span aria-label="brain" class="emoji emoji-1f9e0" role="img" title="brain">:brain:</span> So to sum up:<br>
+Item    Formalized in Isabelle/HOL?<br>
+Definition of Si(x)     <span aria-label="check" class="emoji emoji-2705" role="img" title="check">:check:</span> Yes (integral from 0 to x)<br>
+Convergence to π/2      <span aria-label="check" class="emoji emoji-2705" role="img" title="check">:check:</span> Yes<br>
+Related complex/trigonometric internals <span aria-label="check" class="emoji emoji-2705" role="img" title="check">:check:</span> Yes (series, sin, cos, exp)</p>
+<hr>
+<p><span aria-label="push pin" class="emoji emoji-1f4cc" role="img" title="push pin">:push_pin:</span> If you're looking to work with Si (x) in Isabelle/HOL:</p>
+<p>*   Search for the Sinc_Integral theory in the Isabelle AFP or standard library (HOL-Probability or HOL/Analysis).</p>
+<p>*   You'll find definitions, lemmas like Si_at_top, and convergence proofs.</p>
+<p>*   You can then build on this to derive additional properties, asymptotic expansions, or differential identities.</p>
+<hr>
+<p><span aria-label="info" class="emoji emoji-2139" role="img" title="info">:info:</span> Additional note</p>
+<p>There doesn’t seem to be a dedicated named theory like Si_Func, but in context of sinc integrals and Trigonometric integrals, it's covered thoroughly under measure-integral infrastructure.</p>
+<p>Let me know if you'd like pointers to specific lemmas or examples of using Si(x) in Isabelle proofs!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

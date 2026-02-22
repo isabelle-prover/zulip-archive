@@ -1,0 +1,185 @@
+<html>
+<head><meta charset="utf-8"><title>A Missing Lemma Dual to nn_integral_FTC_atLeast · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/A.20Missing.20Lemma.20Dual.20to.20nn_integral_FTC_atLeast.html">A Missing Lemma Dual to nn_integral_FTC_atLeast</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="573278888"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/A%20Missing%20Lemma%20Dual%20to%20nn_integral_FTC_atLeast/near/573278888" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/A.20Missing.20Lemma.20Dual.20to.20nn_integral_FTC_atLeast.html#573278888">(Feb 11 2026 at 12:58)</a>:</h4>
+<p><strong>From:</strong> 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>Could you consider adding the following code<br>
+to Equivalence_Lebesgue_Henstock_Integration.thy?<br>
+This is the counterpart of the lemma nn_integral_FTC_atLeast.</p>
+<hr>
+<p>lemma nn_integral_FTC_atMost:<br>
+  fixes f :: "real \&lt;Rightarrow&gt; real"<br>
+  assumes f_borel: "f \&lt;in&gt; borel_measurable borel"<br>
+  assumes f: "\&lt;And&gt;x. x \&lt;le&gt; b \&lt;Longrightarrow&gt; DERIV F x :&gt; f x"<br>
+  assumes nonneg: "\&lt;And&gt;x. x \&lt;le&gt; b \&lt;Longrightarrow&gt; 0 \&lt;le&gt; f x"<br>
+  assumes lim: "(F \&lt;longlongrightarrow&gt; U) at_bot"<br>
+  shows "(\&lt;integral&gt;\&lt;^sup&gt;+x. ennreal (f x) * indicator {.. b} x<br>
+\&lt;partial&gt;lborel) = F b - U"<br>
+proof -<br>
+  let ?f = "\&lt;lambda&gt;(i::nat) (x::real). ennreal (f x) * indicator {b -<br>
+real i .. b} x"<br>
+  let ?fR = "\&lt;lambda&gt;x. ennreal (f x) * indicator {.. b} x"</p>
+<p>have F_mono: "y \&lt;le&gt; b \&lt;Longrightarrow&gt; x \&lt;le&gt; y \&lt;Longrightarrow&gt; F x<br>
+\&lt;le&gt; F y" for x y<br>
+    using f nonneg by (intro DERIV_nonneg_imp_nondecreasing[of x y F])<br>
+(auto intro: order_trans)<br>
+  then have F_ge_U: "x \&lt;le&gt; b \&lt;Longrightarrow&gt; F x \&lt;ge&gt; U" for x<br>
+    by (intro tendsto_upperbound[OF lim])<br>
+       (auto simp: eventually_at_bot_linorder)</p>
+<p>have "(SUP i. ?f i x) = ?fR x" for x<br>
+  proof (rule LIMSEQ_unique[OF LIMSEQ_SUP])<br>
+    obtain n where "b - x &lt; real n"<br>
+      using reals_Archimedean2[of "b - x"] ..<br>
+    then have "eventually (\&lt;lambda&gt;n. ?f n x = ?fR x) sequentially"<br>
+      by (auto simp: frequently_def intro!: eventually_sequentiallyI[where<br>
+c=n] split: split_indicator)<br>
+    then show "(\&lt;lambda&gt;n. ?f n x) \&lt;longlonglongrightarrow&gt; ?fR x"<br>
+      by (rule tendsto_eventually)<br>
+  qed (auto simp: nonneg incseq_def le_fun_def split: split_indicator)<br>
+  then have "integral\&lt;^sup&gt;N lborel ?fR = (\&lt;integral&gt;\&lt;^sup&gt;+ x. (SUP i.<br>
+?f i x) \&lt;partial&gt;lborel)"<br>
+    by simp<br>
+  also have "\&lt;dots&gt; = (SUP i. (\&lt;integral&gt;\&lt;^sup&gt;+ x. ?f i x<br>
+\&lt;partial&gt;lborel))"<br>
+  proof (rule nn_integral_monotone_convergence_SUP)<br>
+    show "incseq ?f"<br>
+      using nonneg by (auto simp: incseq_def le_fun_def split:<br>
+split_indicator)<br>
+    show "\&lt;And&gt;i. (?f i) \&lt;in&gt; borel_measurable lborel"<br>
+      using f_borel by auto<br>
+  qed<br>
+  also have "\&lt;dots&gt; = (SUP i. ennreal (F b - F (b - real i)))"<br>
+    by (subst nn_integral_FTC_Icc[OF f_borel f nonneg]) auto<br>
+  also have "\&lt;dots&gt; = F b - U"<br>
+  proof (rule LIMSEQ_unique[OF LIMSEQ_SUP])<br>
+    have "LIM n sequentially. b - real n :&gt; at_bot"<br>
+      by real_asymp<br>
+    then have "(\&lt;lambda&gt;n. F (b - real n)) \&lt;longlonglongrightarrow&gt; U"<br>
+      using filterlim_compose lim by force<br>
+    then show "(\&lt;lambda&gt;n. ennreal (F b - F (b - real n)) )<br>
+\&lt;longlonglongrightarrow&gt; ennreal (F b - U)"<br>
+      by (simp add: F_mono F_ge_U tendsto_diff)<br>
+  qed (auto simp: incseq_def intro!: ennreal_le_iff[THEN iffD2] F_mono)<br>
+  finally show ?thesis .<br>
+qed</p>
+<hr>
+<p>Best regards,</p>
+<p>-- <br>
+伊藤 洋介<br>
+Yosuke ITO<br>
++81 80-5057-6931<br>
+<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a></p>
+
+
+
+<a name="573891688"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/A%20Missing%20Lemma%20Dual%20to%20nn_integral_FTC_atLeast/near/573891688" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/A.20Missing.20Lemma.20Dual.20to.20nn_integral_FTC_atLeast.html#573891688">(Feb 14 2026 at 12:02)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>Thanks for the suggestion. I did this and I was able to find a proof by symmetry, avoiding a near-repetition of the previous proof.</p>
+<blockquote>
+<p>On 11 Feb 2026, at 12:57, 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt; wrote:</p>
+<p>Dear Isabelle developers,</p>
+<p>Could you consider adding the following code to Equivalence_Lebesgue_Henstock_Integration.thy?<br>
+This is the counterpart of the lemma nn_integral_FTC_atLeast.<br>
+</p>
+</blockquote>
+
+
+
+<a name="573892368"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/A%20Missing%20Lemma%20Dual%20to%20nn_integral_FTC_atLeast/near/573892368" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/A.20Missing.20Lemma.20Dual.20to.20nn_integral_FTC_atLeast.html#573892368">(Feb 14 2026 at 12:12)</a>:</h4>
+<p><strong>From:</strong> 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt;</p>
+<p>Hello,</p>
+<p>Thank you for the reply.<br>
+I was surprised since I could not find a proof by symmetry.<br>
+I am looking forward to seeing the proof.</p>
+<p>2026年2月14日(土) 21:02 Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;:</p>
+<blockquote>
+<p>Thanks for the suggestion. I did this and I was able to find a proof by<br>
+symmetry, avoiding a near-repetition of the previous proof.</p>
+<blockquote>
+<p>On 11 Feb 2026, at 12:57, 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt; wrote:</p>
+<p>Dear Isabelle developers,</p>
+<p>Could you consider adding the following code to<br>
+Equivalence_Lebesgue_Henstock_Integration.thy?<br>
+This is the counterpart of the lemma nn_integral_FTC_atLeast.<br>
+</p>
+</blockquote>
+</blockquote>
+<p>-- <br>
+伊藤 洋介<br>
+080-5057-6931<br>
+<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a></p>
+
+
+
+<a name="573892556"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/A%20Missing%20Lemma%20Dual%20to%20nn_integral_FTC_atLeast/near/573892556" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/A.20Missing.20Lemma.20Dual.20to.20nn_integral_FTC_atLeast.html#573892556">(Feb 14 2026 at 12:15)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>It took a little work to find the right lemmas. But it's worth having these lemmas in the long run.</p>
+<blockquote>
+<p>On 14 Feb 2026, at 12:12, 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt; wrote:</p>
+<p>Thank you for the reply.<br>
+I was surprised since I could not find a proof by symmetry.<br>
+I am looking forward to seeing the proof.</p>
+<p>2026年2月14日(土) 21:02 Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;:<br>
+Thanks for the suggestion. I did this and I was able to find a proof by symmetry, avoiding a near-repetition of the previous proof.</p>
+<blockquote>
+<p>On 11 Feb 2026, at 12:57, 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt; wrote:</p>
+<p>Dear Isabelle developers,</p>
+<p>Could you consider adding the following code to Equivalence_Lebesgue_Henstock_Integration.thy?<br>
+This is the counterpart of the lemma nn_integral_FTC_atLeast.<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="573892993"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/A%20Missing%20Lemma%20Dual%20to%20nn_integral_FTC_atLeast/near/573892993" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/A.20Missing.20Lemma.20Dual.20to.20nn_integral_FTC_atLeast.html#573892993">(Feb 14 2026 at 12:22)</a>:</h4>
+<p><strong>From:</strong> 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt;</p>
+<p><span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span></p>
+<p>伊藤洋介 さんが Gmail<br>
+&lt;<a href="https://www.google.com/gmail/about/?utm_source=gmail-in-product&amp;utm_medium=et&amp;utm_campaign=emojireactionemail#app">https://www.google.com/gmail/about/?utm_source=gmail-in-product&amp;utm_medium=et&amp;utm_campaign=emojireactionemail#app</a>&gt;<br>
+でリアクションしました</p>
+<p>2026年2月14日(土) 21:15 Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;:</p>
+<blockquote>
+<p>It took a little work to find the right lemmas. But it's worth having<br>
+these lemmas in the long run.</p>
+<blockquote>
+<p>On 14 Feb 2026, at 12:12, 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt; wrote:</p>
+<p>Thank you for the reply.<br>
+I was surprised since I could not find a proof by symmetry.<br>
+I am looking forward to seeing the proof.</p>
+<p>2026年2月14日(土) 21:02 Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;:<br>
+Thanks for the suggestion. I did this and I was able to find a proof by<br>
+symmetry, avoiding a near-repetition of the previous proof.</p>
+<blockquote>
+<p>On 11 Feb 2026, at 12:57, 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt; wrote:</p>
+<p>Dear Isabelle developers,</p>
+<p>Could you consider adding the following code to<br>
+Equivalence_Lebesgue_Henstock_Integration.thy?<br>
+This is the counterpart of the lemma nn_integral_FTC_atLeast.<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>-- <br>
+伊藤 洋介<br>
+080-5057-6931<br>
+<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

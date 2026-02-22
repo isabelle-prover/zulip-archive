@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Hi everyone,</p>\n<p>I’m trying to understand something, and I might be missing something basic. I’d really appreciate any insights.</p>\n<p>I ran <code>isabelle build -D .</code> to build some sessions in batch mode, and everything worked as expected. However, now when I start Isabelle/jEdit, it starts rebuilding the heap every time, which takes a long time. This never happened before. This happens <strong>every single time</strong> I start Isabelle/jEdit now. The output on the console says \"Build started for Isabelle/HOL..<br>\nBuilding Pure..<br>\nBuilding HOL..<br>\n.....\"</p>\n<p>Did I accidentally break my Isabelle installation, or is there something I need to configure to prevent this unnecessary recompilation?</p>",
+        "id": 504350607,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1741493687
+    },
+    {
+        "content": "<p>Not normal</p>",
+        "id": 504359474,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741501277
+    },
+    {
+        "content": "<p>are you sure that you are using the same <code>isabelle</code>?</p>",
+        "id": 504359478,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741501292
+    },
+    {
+        "content": "<p>aka when you run <code>isabelle jedit</code> do you also get rebuilds?</p>",
+        "id": 504359487,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741501309
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Isabelle.2FjEdit.20Rebuilding.20Heap.20Every.20Time/near/504359487\">said</a>:</p>\n<blockquote>\n<p>aka when you run <code>isabelle jedit</code> do you also get rebuilds?</p>\n</blockquote>\n<p>Yes, it is the same Isabelle installation. And when I run <code>isabelle jedit</code>, I am not seeing any rebuilds like that.</p>",
+        "id": 504360334,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1741502053
+    },
+    {
+        "content": "<p>You have to use option <code>-b</code> to build perisistent heap images, otherwise only inner nodes of the build graph will be persisted.</p>",
+        "id": 504504711,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1741595596
+    }
+]

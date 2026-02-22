@@ -1,0 +1,92 @@
+<html>
+<head><meta charset="utf-8"><title>Support of Isabelle VScode extension for latest vscode · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html">Support of Isabelle VScode extension for latest vscode</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="506721316"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/506721316" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> nnarek <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#506721316">(Mar 19 2025 at 13:00)</a>:</h4>
+<p>Hi there</p>
+<p>I am using VS Code 1.97.2<br>
+and when I try to install vscode_extension-20241002/isabelle-2.0.0.vsix then I get following error</p>
+<blockquote>
+<p>Error: Unable to install extension 'isabelle.isabelle' as it is not compatible with VS Code '1.97.2'.</p>
+</blockquote>
+<p>Even when I edit <strong>engines.vscode</strong> field from <strong>1.70.1</strong> to <strong>1.97.2</strong> in <strong>$ISABELLE_HOME/src/Tools/VSCode/extension/package.json</strong> file and compile the plugin manually then it successfully gets installed but the plugin does not work(maybe because incompatible API interfaces between 1.97.2 and 1.70.1 versions of vscode)</p>
+<p>vscode 1.70.1 is almost 3 year old</p>
+
+
+
+<a name="506721830"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/506721830" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#506721830">(Mar 19 2025 at 13:02)</a>:</h4>
+<p>You are supposed to use the version that is included in Isabelle (<code>isabelle vscodium</code>, not your version)</p>
+
+
+
+<a name="507698273"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507698273" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Poscat <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507698273">(Mar 24 2025 at 09:31)</a>:</h4>
+<p>I'm also interested in this. I made some modifications to make the extension work on latest vscode, would the upstream accept my patches?</p>
+<p>Or shall I maintain it as a fork?</p>
+
+
+
+<a name="507698714"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507698714" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507698714">(Mar 24 2025 at 09:33)</a>:</h4>
+<p>oh, where is your fork? <span aria-label="eyes" class="emoji emoji-1f440" role="img" title="eyes">:eyes:</span></p>
+
+
+
+<a name="507700454"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507700454" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507700454">(Mar 24 2025 at 09:40)</a>:</h4>
+<p>You mean modifications to <code>Component_VSCodium</code>? That would certainly be of interest.</p>
+
+
+
+<a name="507703387"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507703387" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Poscat <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507703387">(Mar 24 2025 at 09:50)</a>:</h4>
+<p>I've uploaded it here: <a href="https://github.com/poscat0x04/isabelle/tree/vscode-ext-update">https://github.com/poscat0x04/isabelle/tree/vscode-ext-update</a> (IDK how to use hg)</p>
+<p>It's a bit crude but it works.</p>
+
+
+
+<a name="507703727"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507703727" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Poscat <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507703727">(Mar 24 2025 at 09:52)</a>:</h4>
+<p>Also pardon the formatting changes cause I forgot to turn off the formatter</p>
+
+
+
+<a name="507707317"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507707317" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507707317">(Mar 24 2025 at 10:05)</a>:</h4>
+<p>While I appreciate the effort, there are some misconceptions here:</p>
+<ul>
+<li>for Isabelle/VScode we use a patched vscodium (see the <code>Component_VSCode</code> module) to include the symbol encoding needed, which can't be done as an extension.  Updating this is difficult due to build issues on Windows IIRC.</li>
+<li>The VSCode extension is built as a component to run on Isabelle/VSCode by the <code>Component_VSCode_Extension</code> module. What you see in <code>src/Tools/VSCode/extension</code> are sources for that module, not a standalone extension. This is why you will find things like <code> "ISABELLE_OPTIONS": {},</code> that are replaced in the build process.</li>
+</ul>
+
+
+
+<a name="507708598"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507708598" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507708598">(Mar 24 2025 at 10:10)</a>:</h4>
+<p>So patching an aextension like this and running it on a standard vscode(ium) has the following problems:</p>
+<ul>
+<li>Missing fonts, i.e. some symbols couldn't be rendered.</li>
+<li>Due to missing encoding, most symbols won't be rendered anyway and you'd be working with ASCII art.</li>
+<li>Hard-coded paths such as <code>/opt/isabelle</code> will lead to funny error messages (especially on different platforms).</li>
+<li>Isabelle options can't be controlled via the editor.</li>
+</ul>
+
+
+
+<a name="507709237"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Support%20of%20Isabelle%20VScode%20extension%20for%20latest%20vscode/near/507709237" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Support.20of.20Isabelle.20VScode.20extension.20for.20latest.20vscode.html#507709237">(Mar 24 2025 at 10:13)</a>:</h4>
+<p>So, any work that wants to be included in upstream needs to update <code>Component_VSCode</code> such that it produces a good Isabelle/VSCode binary on all platforms.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

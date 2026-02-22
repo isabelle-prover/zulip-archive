@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle/Scala component external package support · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html">Isabelle/Scala component external package support</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="516044974"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle/Scala%20component%20external%20package%20support/near/516044974" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Milan Tom <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html#516044974">(May 04 2025 at 16:34)</a>:</h4>
+<p>Is there any native support for using external packages within an Isabelle/Scala component (e.g. <code>py4j</code>). At present, I am using Gradle to download it and place it in a folder that I then add to my Isabelle classpath in the component settings.</p>
+<p>My understanding is that Gradle is used in Isabelle/Scala components just to import the project into common IDEs and get static analysis. Is there any way to specify external dependencies within the component settings itself? This way Gradle does not need to be used for setting up the component but rather only if someone wants to further develop the component.</p>
+
+
+
+<a name="516130616"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle/Scala%20component%20external%20package%20support/near/516130616" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html#516130616">(May 05 2025 at 07:54)</a>:</h4>
+<p>Yes, there is a standard mechanism for external components (not just jars), e.g. have a look at the <code>Component_XZ</code> module.</p>
+
+
+
+<a name="516133524"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle/Scala%20component%20external%20package%20support/near/516133524" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Milan Tom <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html#516133524">(May 05 2025 at 08:08)</a>:</h4>
+<p>Where is this <code>Component_XZ</code> module?</p>
+
+
+
+<a name="516134960"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle/Scala%20component%20external%20package%20support/near/516134960" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html#516134960">(May 05 2025 at 08:16)</a>:</h4>
+<p><code>~~/src/Pure/Admin</code> I believe</p>
+
+
+
+<a name="516139846"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle/Scala%20component%20external%20package%20support/near/516139846" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Milan Tom <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html#516139846">(May 05 2025 at 08:43)</a>:</h4>
+<p>Ah, I see that specific component is only in Isabelle2025. So, if I understand correctly, the standard mechanism is to create an Isabelle/Scala module to manage the download of the required package and then add that to the <code>sources</code> in the <code>build.props</code> for your component so it can be used by other parts of your component.</p>
+
+
+
+<a name="516170039"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle/Scala%20component%20external%20package%20support/near/516170039" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FScala.20component.20external.20package.20support.html#516170039">(May 05 2025 at 11:31)</a>:</h4>
+<p>Pretty much</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] DeepSeek experiment · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html">[isabelle] DeepSeek experiment</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="528164189"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/528164189" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#528164189">(Jul 10 2025 at 21:50)</a>:</h4>
+<p>From: Humam Alhusaini via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>I understand that the use of LLMs for formal proofs is an exciting and fascinating prospect, but it should be kept in mind that the majority of these LLMs suck up information from anywhere, without regard for licensing. This is why the Isabelle dev blog is restricted to accounts. I'd recommend that the maintainers revisit Anubis, as it is not as "nuclear" as restricting the dev blog to accounts.</p>
+<p>Jul 10, 2025, 05:42 by <a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>:</p>
+<blockquote>
+<p>Hello all, you may be interested in a little experiment I tried using the DeepSeek LLM yesterday. I asked whether it could translate a theorem header from n-dimensional real vectors to abstract Euclidean spaces. My query:</p>
+<blockquote>
+<p>The following theorem header fixes variable "a" to type "real^'n". Changing this type to "'a::euclidean_space" requires modifying the header, replacing $ and χ by their analogues for Euclidean spaces.</p>
+<p>proposition<br>
+fixes a :: "real^'n"<br>
+assumes "m ≠ n" and ab_ne: "cbox a b ≠ {}" and an: "0 ≤ a$n"<br>
+shows measurable_shear_interval: "(λx. χ i. if i = m then x$m + x$n else x$i) <code> (cbox a b) ∈ lmeasurable"
+and measure_shear_interval: "measure lebesgue ((λx. χ i. if i = m then x$m + x$n else x$i) </code> cbox a b)<br>
+= measure lebesgue (cbox a b)"<br>
+</p>
+</blockquote>
+<p>On its first attempt it produced something that seemed to be almost right but clunky and referred to something non-standard. Pushing it a little further, I got the following, which is far as I can tell is correct. (Isabelle accepts it.)</p>
+<blockquote>
+<p>proposition<br>
+fixes a :: "'a::euclidean_space"<br>
+assumes "m ≠ n"      and "m ∈ Basis" and "n ∈ Basis"<br>
+and ab_ne: "cbox a b ≠ {}"      and an: "0 ≤ a ∙ n"<br>
+shows measurable_shear_interval:          "(λx. ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                            else (x ∙ i)) *⇩R i) <code> (cbox a b) ∈ lmeasurable"
+and measure_shear_interval:          "measure lebesgue ((λx. ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                                          else (x ∙ i)) *⇩R i) </code> cbox a b)<br>
+= measure lebesgue (cbox a b)”<br>
+</p>
+</blockquote>
+<p>Everything was accompanied by quantities of plausible sounding narrative, e.g. "this version is more abstract and elegant”. A sample:</p>
+<blockquote>
+<p>This version is more type-safe because:<br>
+• No need to worry about index bounds<br>
+• The basis vectors are first-class entities<br>
+• The notation more clearly reflects the mathematical intent<br>
+Note that in this formulation:<br>
+• Basis is the canonical basis of the Euclidean space<br>
+• ∙ is the inner product (giving the component in a particular basis direction)<br>
+• *⇩R is the scalar multiplication<br>
+• The sum reconstructs the vector from its components<br>
+Would you like me to explain any part of this formulation in more detail? Or would you like assistance with proving this version of the theorem?<br>
+</p>
+</blockquote>
+<p>My impression is that it was grabbing material from a variety of places, in particular the AFP entry Ordinary_Differential_Equations. But the word "elegant" doesn't appear there and in fact appears in the entire distribution + AFP only 42 times.</p>
+<p>I recall doing the precise task above in the past and needing the better part of an hour to get it right. I didn't try to port the proof (which was long and complicated) and I would be surprised if it could get that right.</p>
+<p>I'm not sure how much more can be accomplished with the free version of DeepSeek. I have also seen Claude Sonnet 4 swallow entire Isabelle codebases and summarise them. These tools may already be useful for tasks such as identifying duplicate material.</p>
+<p>Larry<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

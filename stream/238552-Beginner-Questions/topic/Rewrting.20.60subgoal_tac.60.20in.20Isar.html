@@ -1,0 +1,135 @@
+<html>
+<head><meta charset="utf-8"><title>Rewrting `subgoal_tac` in Isar · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Rewrting.20.60subgoal_tac.60.20in.20Isar.html">Rewrting `subgoal_tac` in Isar</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="547635902"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Rewrting%20%60subgoal_tac%60%20in%20Isar/near/547635902" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> ws <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Rewrting.20.60subgoal_tac.60.20in.20Isar.html#547635902">(Oct 29 2025 at 06:15)</a>:</h4>
+<p>I wonder how to introduce a subgoal in Isar (or, <em>proof(state)</em> mode)  like the tactic <code>subgoal_tac</code> did, in an elegant way<span aria-label="upside down" class="emoji emoji-1f643" role="img" title="upside down">:upside_down:</span>.<br>
+Here is <a href="https://github.com/seL4/l4v/blob/master/proof/invariant-abstract/CSpaceInv_AI.thy">the example</a>, commented existing <code>apply ...</code> steps, as well as my current attempt:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="kn">lemma</span><span class="w"> </span><span class="n">gen_obj_refs_subset</span><span class="o">:</span>
+<span class="w">  </span><span class="s">"(gen_obj_refs cap ⊆ gen_obj_refs cap')</span>
+<span class="s">       = (obj_refs cap ⊆ obj_refs cap'</span>
+<span class="s">             ∧ cap_irqs cap ⊆ cap_irqs cap'</span>
+<span class="s">             ∧ arch_gen_refs cap ⊆ arch_gen_refs cap')"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">gen_obj_refs_def</span><span class="o">)</span>
+<span class="c">(*    apply (subgoal_tac "∀x y. Inl x ≠ Inr y") *)</span>
+<span class="c">(*   apply blast</span>
+<span class="c">  apply simp *)</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"(∀x y. Inl x ≠ Inr y) ⟹ ((ObjRef ` obj_refs cap ⊆ ObjRef ` obj_refs cap' ∪ IRQRef ` cap_irqs cap' ∪ ArchRef ` arch_gen_refs cap' ∧</span>
+<span class="s">     IRQRef ` cap_irqs cap ⊆ ObjRef ` obj_refs cap' ∪ IRQRef ` cap_irqs cap' ∪ ArchRef ` arch_gen_refs cap' ∧</span>
+<span class="s">     ArchRef ` arch_gen_refs cap ⊆ ObjRef ` obj_refs cap' ∪ IRQRef ` cap_irqs cap' ∪ ArchRef ` arch_gen_refs cap') =</span>
+<span class="s">    (obj_refs cap ⊆ obj_refs cap' ∧ cap_irqs cap ⊆ cap_irqs cap' ∧ arch_gen_refs cap ⊆ arch_gen_refs cap'))"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">b</span><span class="o">:</span><span class="w"> </span><span class="s">"∀x y. Inl x ≠ Inr y"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"(ObjRef ` obj_refs cap ⊆ ObjRef ` obj_refs cap' ∪ IRQRef ` cap_irqs cap' ∪ ArchRef ` arch_gen_refs cap' ∧</span>
+<span class="s">     IRQRef ` cap_irqs cap ⊆ ObjRef ` obj_refs cap' ∪ IRQRef ` cap_irqs cap' ∪ ArchRef ` arch_gen_refs cap' ∧</span>
+<span class="s">     ArchRef ` arch_gen_refs cap ⊆ ObjRef ` obj_refs cap' ∪ IRQRef ` cap_irqs cap' ∪ ArchRef ` arch_gen_refs cap') =</span>
+<span class="s">    (obj_refs cap ⊆ obj_refs cap' ∧ cap_irqs cap ⊆ cap_irqs cap' ∧ arch_gen_refs cap ⊆ arch_gen_refs cap')"</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="o">)</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p><code>(ObjRef ` obj_refs cap ⊆  ...</code> is just copied from the IDE output and its meaning does not matter.</p>
+
+
+
+<a name="547696883"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Rewrting%20%60subgoal_tac%60%20in%20Isar/near/547696883" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Rewrting.20.60subgoal_tac.60.20in.20Isar.html#547696883">(Oct 29 2025 at 12:00)</a>:</h4>
+<p>In this case <code>"∀x y. Inl x ≠ Inr y"</code> is already a theorem and you can just do <code>using Sum_type.Inl_not_Inr by blast</code></p>
+
+
+
+<a name="547795523"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Rewrting%20%60subgoal_tac%60%20in%20Isar/near/547795523" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Rewrting.20.60subgoal_tac.60.20in.20Isar.html#547795523">(Oct 29 2025 at 19:18)</a>:</h4>
+<p>I don't know exactly how subgoal tac works, but this looks like something you could do with presume:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">p</span><span class="o">:</span><span class="w"> </span><span class="n">P</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">pq</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ Q"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="kt">pr</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ R"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">rqs</span><span class="o">:</span><span class="w"> </span><span class="s">"R ⟹ Q ⟹ S"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">st</span><span class="o">:</span><span class="w"> </span><span class="s">"S ⟹ T"</span>
+<span class="kp">shows</span><span class="w"> </span><span class="n">T</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">presume</span><span class="w"> </span><span class="n">S</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">presume</span><span class="w"> </span><span class="s">"R ∧ Q"</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">rqs</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"R ∧ Q"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="kt">pr</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">p</span><span class="o">:</span><span class="w"> </span><span class="n">P</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">pq</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ Q"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="kt">pr</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ R"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">rqs</span><span class="o">:</span><span class="w"> </span><span class="s">"R ⟹ Q ⟹ S"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">st</span><span class="o">:</span><span class="w"> </span><span class="s">"S ⟹ T"</span>
+<span class="kp">shows</span><span class="w"> </span><span class="n">T</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">subgoal_tac</span><span class="w"> </span><span class="s">"S"</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">st</span><span class="o">,</span><span class="w"> </span><span class="n">assumption</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">subgoal_tac</span><span class="w"> </span><span class="s">"R ∧ Q"</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">rqs</span><span class="o">)</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">erule</span><span class="w"> </span><span class="n">conjE</span><span class="o">,</span><span class="w"> </span><span class="n">assumption</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">erule</span><span class="w"> </span><span class="n">conjE</span><span class="o">,</span><span class="w"> </span><span class="n">assumption</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conjI</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="kt">pr</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">p</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">pq</span><span class="o">)</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">p</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="547839421"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Rewrting%20%60subgoal_tac%60%20in%20Isar/near/547839421" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> ws <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Rewrting.20.60subgoal_tac.60.20in.20Isar.html#547839421">(Oct 30 2025 at 01:37)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="655321">David Wang</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Rewrting.20.60subgoal_tac.60.20in.20Isar/near/547795523">said</a>:</p>
+<blockquote>
+<p>I don't know exactly how subgoal tac works, but this looks like something you could do with presume:</p>
+<p><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">p</span><span class="o">:</span><span class="w"> </span><span class="n">P</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">pq</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ Q"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="kt">pr</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ R"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">rqs</span><span class="o">:</span><span class="w"> </span><span class="s">"R ⟹ Q ⟹ S"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">st</span><span class="o">:</span><span class="w"> </span><span class="s">"S ⟹ T"</span>
+<span class="kp">shows</span><span class="w"> </span><span class="n">T</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">presume</span><span class="w"> </span><span class="n">S</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">st</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">presume</span><span class="w"> </span><span class="s">"R ∧ Q"</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">rqs</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"R ∧ Q"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="kt">pr</span><span class="w"> </span><span class="n">pq</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">p</span><span class="o">:</span><span class="w"> </span><span class="n">P</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">pq</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ Q"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="kt">pr</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ R"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">rqs</span><span class="o">:</span><span class="w"> </span><span class="s">"R ⟹ Q ⟹ S"</span>
+<span class="w">  </span><span class="kp">and</span><span class="w"> </span><span class="n">st</span><span class="o">:</span><span class="w"> </span><span class="s">"S ⟹ T"</span>
+<span class="kp">shows</span><span class="w"> </span><span class="n">T</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">subgoal_tac</span><span class="w"> </span><span class="s">"S"</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">st</span><span class="o">,</span><span class="w"> </span><span class="n">assumption</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">subgoal_tac</span><span class="w"> </span><span class="s">"R ∧ Q"</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">rqs</span><span class="o">)</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">erule</span><span class="w"> </span><span class="n">conjE</span><span class="o">,</span><span class="w"> </span><span class="n">assumption</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">erule</span><span class="w"> </span><span class="n">conjE</span><span class="o">,</span><span class="w"> </span><span class="n">assumption</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conjI</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="kt">pr</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">p</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">pq</span><span class="o">)</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">p</span><span class="o">)</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>this looks nice! thanks</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

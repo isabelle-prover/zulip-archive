@@ -1,0 +1,176 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2025-1_RC0 code generation regression · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html">[isabelle] Isabelle2025-1_RC0 code generation regression</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="544586698"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/544586698" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#544586698">(Oct 13 2025 at 16:10)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+I experienced a failure of code generation using this pre-release, and have been able to isolate it to the following example:</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>export_code test</p>
+<p>The error message is</p>
+<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>
+*** No type arity word ::<br>
+*** discrete_linordered_semidom_with_range</p>
+<p>This example works in Isabelle2025. Thoughts?</p>
+<p>Larry</p>
+
+
+
+<a name="544595402"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/544595402" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#544595402">(Oct 13 2025 at 17:09)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 13/10/2025 18:10, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I experienced a failure of code generation using this pre-release, and have <br>
+been able to isolate it to the following example:</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>export_code test</p>
+<p>The error message is</p>
+<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>
+*** No type arity word ::<br>
+*** discrete_linordered_semidom_with_range</p>
+<p>This example works in Isabelle2025. Thoughts?</p>
+</blockquote>
+<p>Florian Haftmann has made many changes in the codegen setup recently.</p>
+<p>You might help him by making induction over the history, using "hg bisect".</p>
+<p>Makarius</p>
+
+
+
+<a name="544742939"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/544742939" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#544742939">(Oct 14 2025 at 13:02)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+The error goes away if I invoke</p>
+<p>declare discrete_linordered_semidom_with_range_class.atLeastAtMost_eq_range [code del]</p>
+<p>The code it generates for Standard ML takes up 22K. For Isabelle 2025, the same example generates 25K of code. There is very little overlap between the two. I did not try running them.</p>
+<hr>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Sent: 13 October 2025 17:10<br>
+To: cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Isabelle2025-1_RC0 code generation regression</p>
+<p>I experienced a failure of code generation using this pre-release, and have been able to isolate it to the following example:</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>export_code test</p>
+<p>The error message is</p>
+<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>
+*** No type arity word ::<br>
+*** discrete_linordered_semidom_with_range</p>
+<p>This example works in Isabelle2025. Thoughts?</p>
+<p>Larry</p>
+
+
+
+<a name="545233083"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/545233083" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#545233083">(Oct 16 2025 at 09:16)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Things like</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>work in Isabelle2025 but the code is very inefficient.</p>
+<p>I am currently testing a practically functioning code setup for ranges <br>
+on words as candidate for Isabelle2025-1.</p>
+<p>Doing that range stuff properly will require one further iteration.</p>
+<p>Florian</p>
+<p>Am 14.10.25 um 15:02 schrieb Lawrence Paulson:</p>
+<blockquote>
+<p>The error goes away if I invoke</p>
+<p>declare discrete_linordered_semidom_with_range_class.atLeastAtMost_eq_range [code del]</p>
+<p>The code it generates for Standard ML takes up 22K. For Isabelle 2025, the same example generates 25K of code. There is very little overlap between the two. I did not try running them.</p>
+<hr>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Sent: 13 October 2025 17:10<br>
+To: cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Isabelle2025-1_RC0 code generation regression</p>
+<p>I experienced a failure of code generation using this pre-release, and have been able to isolate it to the following example:</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>export_code test</p>
+<p>The error message is</p>
+<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>
+*** No type arity word ::<br>
+*** discrete_linordered_semidom_with_range</p>
+<p>This example works in Isabelle2025. Thoughts?</p>
+<p>Larry<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/TQCNVgpvbpR8n4e_-ElWXczg/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/WDRoDYS_c2q3HulpwmoB4WJk/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="545277643"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/545277643" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#545277643">(Oct 16 2025 at 11:23)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+See now <a href="https://isabelle.in.tum.de/repos/isabelle/rev/0bd014c32479">https://isabelle.in.tum.de/repos/isabelle/rev/0bd014c32479</a></p>
+<p>(The additional material should be easily usable stand-alone on top of RC0)</p>
+<p>Florian</p>
+<p>Am 16.10.25 um 11:10 schrieb Florian Haftmann:</p>
+<blockquote>
+<p>Things like</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>work in Isabelle2025 but the code is very inefficient.</p>
+<p>I am currently testing a practically functioning code setup for ranges <br>
+on words as candidate for Isabelle2025-1.</p>
+<p>Doing that range stuff properly will require one further iteration.</p>
+<p>Florian</p>
+<p>Am 14.10.25 um 15:02 schrieb Lawrence Paulson:</p>
+<blockquote>
+<p>The error goes away if I invoke</p>
+<p>declare <br>
+discrete_linordered_semidom_with_range_class.atLeastAtMost_eq_range <br>
+[code del]</p>
+<p>The code it generates for Standard ML takes up 22K. For Isabelle 2025, <br>
+the same example generates 25K of code. There is very little overlap <br>
+between the two. I did not try running them.</p>
+<hr>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Sent: 13 October 2025 17:10<br>
+To: cl-isabelle-users &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Isabelle2025-1_RC0 code generation regression</p>
+<p>I experienced a failure of code generation using this pre-release, and <br>
+have been able to isolate it to the following example:</p>
+<p>definition "test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)"</p>
+<p>export_code test</p>
+<p>The error message is</p>
+<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>
+*** No type arity word ::<br>
+*** discrete_linordered_semidom_with_range</p>
+<p>This example works in Isabelle2025. Thoughts?</p>
+<p>Larry</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/K3SVeLrB2GHkCqe-g19zNOHO/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/pgU0Sq46KoGeWgU3av8sBwfg/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="545538084"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/545538084" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#545538084">(Oct 17 2025 at 10:46)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+This looks great. In the examples, I changed the upper bound for the quantifiers from 31 to 32767 and the two tests still ran in well under a second.</p>
+<p>Larry<br>
+On 16 Oct 2025 at 12:14 +0100, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;, wrote:</p>
+<p>(The additional material should be easily usable stand-alone on top of RC0)</p>
+
+
+
+<a name="553445902"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1_RC0%20code%20generation%20regression/near/553445902" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1_RC0.20code.20generation.20regression.html#553445902">(Nov 03 2025 at 18:01)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+In bcc1001cbfbd, I concluded a series of adaptions which generalized <br>
+executability of (finite) set intervals further (cf. NEWS)</p>
+<p>You might want to check this with the upcoming RC1.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/WVhhMLSiEi03uqv5DgaP1Czb/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/rGPfep87bemAPWJRgTrxfhHd/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

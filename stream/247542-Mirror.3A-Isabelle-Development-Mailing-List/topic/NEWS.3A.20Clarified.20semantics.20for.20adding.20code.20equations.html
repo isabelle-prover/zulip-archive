@@ -1,0 +1,41 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Clarified semantics for adding code equations · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Clarified.20semantics.20for.20adding.20code.20equations.html">NEWS: Clarified semantics for adding code equations</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="526018120"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Clarified%20semantics%20for%20adding%20code%20equations/near/526018120" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Clarified.20semantics.20for.20adding.20code.20equations.html#526018120">(Jun 27 2025 at 06:08)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+In 2865a6618cba the semantics for adding code equations has been <br>
+clarified and also (for the first time) documented as such:</p>
+<ul>
+<li>Code equations from preceding theories are superseded.</li>
+<li>Code equations declared in the course of a theory are appended, not <br>
+prepended.</li>
+</ul>
+<p>This allows to write down code equations in a »natural« order as you <br>
+would expect in a functional programming language.</p>
+<p>For the case that an application needs transition, you may use</p>
+<p>declare [[code_prepend_allowed]] – ‹vanishes at end of theory›</p>
+<p>lemma [code prepend]:<br>
+     …</p>
+<p>to use the former prepend semantics. This is only a device for migration <br>
+and will vanish sooner or later.</p>
+<p>It is anyway very unlikely that this is actually needed – during the <br>
+migration of existing theories it turned out that most code equations <br>
+are declared in »natural« order anyway, which now fits perfectly to the <br>
+clarified semantics.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/JSlrxIQ4est9ktqcstwoHO-4/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/A4vqQHaMXuVw7LCHNpIxYOhZ/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

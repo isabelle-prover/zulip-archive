@@ -1,0 +1,239 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Simplifier fails when dealing with mix of Pure... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html">[isabelle] Simplifier fails when dealing with mix of Pure...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="560797877"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560797877" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560797877">(Nov 28 2025 at 14:23)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I made a little search. There are 115 occurrences of "simproc del: defined_all" in the distribution and AFP. I'm not sure what this thing does but perhaps it needs urgent attention.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 28 Nov 2025, at 11:00, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>This doesn't look like intended behaviour to me. I tracked the problem to the "defined_all" simproc, specifically to the ML function "Quantifier1.rearrange_all". If you remove that simproc from the simpset, the exception does not occur.</p>
+<p>Perhaps this helps somebody who knows that part of the code understand what is going on.<br>
+</p>
+</blockquote>
+
+
+
+<a name="560802484"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560802484" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560802484">(Nov 28 2025 at 14:48)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I think the exception is coming from a low-level function called yield_singleton, which is called by the version of prove_conv in Provers/quantifier1.ML. Several of the simprocs there contain the snippet</p>
+<p>SOME (prove_conv ctxt …) </p>
+<p>and each of these could raise exception List.Empty, which would not be caught and would blow up at the top level.</p>
+<p>So if it is not too late, I propose adding an exception handler to each </p>
+<p>handle List.Empty =&gt; NONE.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 28 Nov 2025, at 11:00, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>This doesn't look like intended behaviour to me. I tracked the problem to the "defined_all" simproc, specifically to the ML function "Quantifier1.rearrange_all". If you remove that simproc from the simpset, the exception does not occur.</p>
+<p>Perhaps this helps somebody who knows that part of the code understand what is going on.<br>
+</p>
+</blockquote>
+
+
+
+<a name="560812458"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560812458" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560812458">(Nov 28 2025 at 15:36)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>Unless I am very mistaken, it's fairly clear that the superficial issue <br>
+is that Quantifier1.rearrange_all sets up a goal and then tries to prove <br>
+it with the tactic "prove_one_point_All_tac", which fails. The code is <br>
+written in such a way that this is expected to never fail. But it does.</p>
+<p>As for the root issue causing this failure, looked at the code in some <br>
+detail and strongly suspect that the tactic relies on being able to <br>
+atomize the entire goal, i.e. convert any meta-logical operators or <br>
+quantifiers into their HOL equivalents. Once you have something in your <br>
+goal that cannot be atomised (like your "PROP P"), this of course fails.</p>
+<p>Some evidence that this is the case: You can trigger the same behaviour <br>
+by putting a "PROP U" in the goal:</p>
+<blockquote>
+<p>lemma ‹⋀x. (x = y) ∧ z ⟹ PROP U›<br>
+  apply simp</p>
+</blockquote>
+<p>My impression is that the simplifier setup for the HOL session is simply <br>
+somewhat brittle in the presence of things that cannot be atomised. <br>
+Whether that is intended or not I cannot say. Given the prevalence of <br>
+the "simproc del" invocations in the distribution and AFP, it seems that <br>
+it is a known issue and that it does cause problems in real-life <br>
+situations. So I would say it is at the very least not ideal and one <br>
+should do something about it.</p>
+<p>The easiest and best way would probably be to simply declare goals that <br>
+cannot be atomised as out of scope for the simproc and make it fail <br>
+gracefully in such cases rather than have such a spectacular crash (as I <br>
+think Larry suggested). On one hand, I for one don't see how this could <br>
+introduce any problems (but I am aware that saying this is tempting <br>
+fate). On the other hand, I don't think it is an urgent issue and can <br>
+probably wait until after the release.</p>
+<p>Incidentally, Florian Haftmann touched this code a few years ago, so <br>
+perhaps he can provide some further insights.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 28/11/2025 16:02, Becker, Hanno wrote:</p>
+<blockquote>
+<p>Thank you, all!</p>
+<p>Larry, can you explain how this relates to the presence of a <code>PROP P</code> term in the goal? Is the simproc somewhere expecting to find all premises of the form <code>HOL.Trueprop ...</code>?</p>
+<p>Best,<br>
+Hanno</p>
+<p>﻿On 28/11/2025, 14:51, "Lawrence Paulson" &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a> &lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt; wrote:</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>I think the exception is coming from a low-level function called yield_singleton, which is called by the version of prove_conv in Provers/quantifier1.ML. Several of the simprocs there contain the snippet</p>
+<p>SOME (prove_conv ctxt …)</p>
+<p>and each of these could raise exception List.Empty, which would not be caught and would blow up at the top level.</p>
+<p>So if it is not too late, I propose adding an exception handler to each</p>
+<p>handle List.Empty =&gt; NONE.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 28 Nov 2025, at 11:00, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a> &lt;mailto:<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;&gt; wrote:</p>
+<p>This doesn't look like intended behaviour to me. I tracked the problem to the "defined_all" simproc, specifically to the ML function "Quantifier1.rearrange_all". If you remove that simproc from the simpset, the exception does not occur.</p>
+<p>Perhaps this helps somebody who knows that part of the code understand what is going on.<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="560812460"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560812460" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560812460">(Nov 28 2025 at 15:36)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 28/11/2025 15:22, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>I made a little search. There are 115 occurrences of "simproc del: defined_all" in the distribution and AFP. I'm not sure what this thing does but perhaps it needs urgent attention.</p>
+</blockquote>
+<p>It has been there for 5 years already, so nothing is urgent here in terms of <br>
+the Isabelle2025-1 release.</p>
+<p>A proper stable release requires some discipline.</p>
+<p>Makarius</p>
+
+
+
+<a name="560814593"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560814593" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560814593">(Nov 28 2025 at 15:47)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I tested a patch a little bit. If we catch the exception, the simplifier still fails (as one would expect). The warning "cannot atomize goal" no longer appears. For some reason, “apply simp?” still fails.</p>
+<p>I investigated one theory where defined_all is suppressed (Auth/Guard/P1). From what I can tell, the reason was to keep the proof working as before and not that it was generating some sort of error.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 28 Nov 2025, at 15:36, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>The easiest and best way would probably be to simply declare goals that cannot be atomised as out of scope for the simproc and make it fail gracefully in such cases rather than have such a spectacular crash (as I think Larry suggested). On one hand, I for one don't see how this could introduce any problems (but I am aware that saying this is tempting fate). On the other hand, I don't think it is an urgent issue and can probably wait until after the release.</p>
+</blockquote>
+
+
+
+<a name="560853328"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560853328" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560853328">(Nov 28 2025 at 20:52)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 28/11/2025 16:47, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>I tested a patch a little bit. If we catch the exception, the simplifier still fails (as one would expect). The warning "cannot atomize goal" no longer appears. For some reason, “apply simp?” still fails.</p>
+</blockquote>
+<p>Please, no adhoc patches or "big fixes", which are usually wrong. I've spent <br>
+so many decades sorting out problems introduced by presumed "fixes".</p>
+<p>Step 0 is to use induction over the history of the sources (using "hg <br>
+bisect"). It reveals this notable point:</p>
+<p>The first bad revision is:<br>
+changeset:   71989:bad75618fb82<br>
+user:        haftmann<br>
+date:        Thu Jul 02 12:10:58 2020 +0000<br>
+summary:     extraction of equations x = t from premises beneath meta-all</p>
+<p>This change is not immediately obvious, it belongs to a greater context.</p>
+<p>Step 1 is to show this to the author, Florian Haftmann, in order to amend, <br>
+finish, improve on it.</p>
+<p>(It is certainly not relevant for the Isabelle2025-1 release, as a <br>
+non-regression from previous releases.)</p>
+<p>Makarius</p>
+
+
+
+<a name="560853861"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560853861" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560853861">(Nov 28 2025 at 20:59)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 28/11/2025 21:51, Makarius wrote:</p>
+<blockquote>
+<p>The first bad revision is:<br>
+changeset:   71989:bad75618fb82<br>
+user:        haftmann<br>
+date:        Thu Jul 02 12:10:58 2020 +0000<br>
+summary:     extraction of equations x = t from premises beneath meta-all</p>
+</blockquote>
+<p>See also this NEWS entry from Isabelle2021:</p>
+<ul>
+<li>
+<p>Simproc "defined_all" and rewrite rule "subst_all" perform more<br>
+aggressive substitution with variables from assumptions.<br>
+INCOMPATIBILITY, consider repairing proofs locally like this:</p>
+<p>supply subst_all [simp del] [[simproc del: defined_all]]</p>
+</li>
+</ul>
+<p>Which means that in these terms, the example by Hanno is "broken".</p>
+<p>It is up to discussion, together with Florian, if this is good or bad. But we <br>
+can definitely close the case as something urgent to be "fixed".</p>
+<p>Makarius</p>
+
+
+
+<a name="561845567"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/561845567" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#561845567">(Dec 04 2025 at 10:47)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<p>Hi all,</p>
+<p>Am 28.11.25 um 21:59 schrieb Makarius:</p>
+<blockquote>
+<p>On 28/11/2025 21:51, Makarius wrote:</p>
+<blockquote>
+<p>The first bad revision is:<br>
+changeset:   71989:bad75618fb82<br>
+user:        haftmann<br>
+date:        Thu Jul 02 12:10:58 2020 +0000<br>
+summary:     extraction of equations x = t from premises beneath meta-all</p>
+</blockquote>
+<p>See also this NEWS entry from Isabelle2021:</p>
+</blockquote>
+<p>Am 28.11.25 um 16:36 schrieb Manuel Eberl:</p>
+<blockquote>
+<p>As for the root issue causing this failure, looked at the code in some<br>
+detail and strongly suspect that the tactic relies on being able to<br>
+atomize the entire goal, i.e. convert any meta-logical operators or<br>
+quantifiers into their HOL equivalents. Once you have something in your<br>
+goal that cannot be atomised (like your "PROP P"), this of course fails.</p>
+<p>Some evidence that this is the case: You can trigger the same behaviour<br>
+by putting a "PROP U" in the goal:</p>
+<blockquote>
+<p>lemma ‹⋀x. (x = y) ∧ z ⟹ PROP U›<br>
+  apply simp</p>
+</blockquote>
+</blockquote>
+<p>Thanks for investigating it.</p>
+<p>As far as I remember, this was a suggestion by Tobias to generalize a <br>
+mechanism from ∀ to ⋀. For some reason ever I derived <br>
+prove_one_point_all_tac from prove_one_point_All_tac using atomization, <br>
+but as the example shows, this has been misleading.</p>
+<p>I’ll investigate this (maybe not in this year) and see whether the <br>
+atomization can be dropped or whether at least the simproc can fail <br>
+gracefully then.</p>
+<p>Am 28.11.25 um 15:22 schrieb Lawrence Paulson via isabelle-dev:</p>
+<blockquote>
+<p>I made a little search. There are 115 occurrences of "simproc del: <br>
+defined_all" in the distribution and AFP. I'm not sure what this thing <br>
+does but perhaps it needs urgent attention.</p>
+</blockquote>
+<p>These sporadic simproc del: occur in apply-style proofs and have been <br>
+inserted to avoid refactoring them; they are unconnected to the <br>
+implementation problem (it would be extremely strange if I had ignored <br>
+the problem if I had encountered it while adjusting proofs).</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/5bkFZEPFzQFQheFhfvRbKpIH/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/-uOPpGlv86gZMeBgs_omYk6M/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

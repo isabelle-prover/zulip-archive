@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>Why does the simple lemma shown not follow immediately from chain_rule. There's some weird type theoretic thing going on, but I'm not sure why:</p>\n<div class=\"codehilite\" data-code-language=\"Haskell\"><pre><span></span><code><span class=\"p\">(</span><span class=\"o\">*</span><span class=\"n\">abstract</span><span class=\"w\"> </span><span class=\"kt\">Frechet</span><span class=\"w\"> </span><span class=\"n\">derivative</span><span class=\"w\"> </span><span class=\"n\">operator</span><span class=\"o\">*</span><span class=\"p\">)</span>\n<span class=\"nf\">consts</span><span class=\"w\"> </span><span class=\"kt\">D</span><span class=\"w\"> </span><span class=\"ow\">::</span><span class=\"w\"> </span><span class=\"s\">\"('u ⇒ 'v) ⇒ 'u ⇒ ('u ⇒ 'v)\"</span>\n\n\n<span class=\"nf\">locale</span><span class=\"w\"> </span><span class=\"n\">differentiation</span><span class=\"w\"> </span><span class=\"ow\">=</span>\n<span class=\"w\">  </span><span class=\"n\">assumes</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"kt\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"⋀(f::'a⇒'b) (g::'b⇒'c) (x::'a). D (g ∘ f) x = (D g (f x)) ∘ (D f x)\"</span>\n\n<span class=\"nf\">begin</span>\n<span class=\"nf\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (D (g ∘ f) x)) = (λ x . (D g (f x)) ∘ (D f x))\"</span>\n<span class=\"w\">  </span><span class=\"n\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"w\"> </span><span class=\"n\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n\n<span class=\"nf\">end</span>\n</code></pre></div>",
+        "id": 560426716,
+        "sender_full_name": "Alex Hyman",
+        "timestamp": 1764172908
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (D (g ∘ f) x)) = (λ x . (D g (f x)) ∘ (D f x))\"</span><span class=\"w\"> </span><span class=\"kp\">for</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">::</span><span class=\"s\">\"'a⇒'b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'b⇒'c\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n</code></pre></div>",
+        "id": 560426803,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764172932
+    },
+    {
+        "content": "<p>if you specify the types it works</p>",
+        "id": 560426854,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764172950
+    },
+    {
+        "content": "<p>The issue is that 'a, 'b, and 'c fixed by the locale but the typing give a more general type</p>",
+        "id": 560426960,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764172983
+    },
+    {
+        "content": "<p>The \"weird type theoretic thing\" is that that locale do not allow to say <code>forall 'a, 'b, 'c, we have</code></p>",
+        "id": 560427388,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764173099
+    },
+    {
+        "content": "<p>Ok I see. Never knew about this \"for\" notation so thank you! <br>\nIs there a way to refactor this code so that I don't need to explicitly give types every time?</p>",
+        "id": 560427476,
+        "sender_full_name": "Alex Hyman",
+        "timestamp": 1764173116
+    },
+    {
+        "content": "<p>Depends on your application, you could add some abbreviation of D:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">abbreviation</span><span class=\"w\"> </span><span class=\"n\">Da</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">‹Da ≡ (D :: ('a ⇒ 'c) ⇒ 'a ⇒ 'a ⇒ 'c)›</span>\n\n<span class=\"k\">abbreviation</span><span class=\"w\"> </span><span class=\"n\">Db</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">‹Db ≡ (D:: ('b ⇒ 'c) ⇒ 'b ⇒ 'b ⇒ 'c)›</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (Da (g ∘ f) x)) = (λ x . (Db g (f x)) ∘ (D f x))\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n</code></pre></div>",
+        "id": 560428398,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764173361
+    },
+    {
+        "content": "<p>or if you always work with f and g, you could just fix them in the locale</p>",
+        "id": 560428608,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764173410
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">differentiation</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">::</span><span class=\"s\">\"'a⇒'b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"o\">::</span><span class=\"s\">\"'b⇒'c\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"⋀(f::'a⇒'b) (g::'b⇒'c) (x::'a). D (g ∘ f) x = (D g (f x)) ∘ (D f x)\"</span>\n\n<span class=\"k\">begin</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (D (g ∘ f) x)) = (λ x . (D g (f x)) ∘ (D f x))\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>or probably better, a context:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">differentiation</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">:</span>\n<span class=\"w\">    </span><span class=\"s\">\"⋀(f::'a⇒'b) (g::'b⇒'c) (x::'a). D (g ∘ f) x = (D g (f x)) ∘ (D f x)\"</span>\n\n<span class=\"k\">begin</span>\n<span class=\"k\">context</span>\n<span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">::</span><span class=\"s\">\"'a⇒'b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"o\">::</span><span class=\"s\">\"'b⇒'c\"</span>\n<span class=\"k\">begin</span>\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (D (g ∘ f) x)) = (λ x . (D g (f x)) ∘ (D f x))\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (D (g ∘ f) x)) = (λ x . (D g (f x)) ∘ (D f x))\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(λ x . (D (g ∘ f) x)) = (λ x . (D g (f x)) ∘ (D f x))\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">chain_rule</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">g</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n<span class=\"k\">end</span>\n<span class=\"k\">end</span>\n</code></pre></div>",
+        "id": 560428907,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764173487
+    }
+]

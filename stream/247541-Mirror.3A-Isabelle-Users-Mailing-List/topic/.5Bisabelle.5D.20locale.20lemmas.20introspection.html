@@ -1,0 +1,51 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] locale lemmas introspection · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20locale.20lemmas.20introspection.html">[isabelle] locale lemmas introspection</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="539556920"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20locale%20lemmas%20introspection/near/539556920" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20locale.20lemmas.20introspection.html#539556920">(Sep 15 2025 at 13:22)</a>:</h4>
+<p>From: "\"Putti, Edoardo (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear list,</p>
+<p>I am working on a tool to export a locale to PVL. PVL is a specification language [pvl] supported by the<br>
+deductive verifier VerCors. The outcome of this tool is to replace trusted axiomatic data types [axiomatic data types]<br>
+with equivalent that are automatically generated.</p>
+<p>Consider this example of a Tuple ADT in PVL. The constructor cons and selectors left and right<br>
+must satisfy the axioms listed after the names are declared.</p>
+<p>adt MyTuple {<br>
+   pure MyTuple cons(int l, int r);<br>
+   pure int left(MyTuple t);<br>
+   pure int right(MyTuple t);</p>
+<p>axiom (\forall int l, int r; left(cons(l, r)) == l);<br>
+  axiom (\forall int l, int r; right(cons(l, r)) == r);<br>
+  axiom (\forall int l1, int l2, int r1, int r2; (cons(l1, r1) == cons(l2, r2)) ==&gt; (l1 == l2 &amp;&amp; r1 == r2));<br>
+}</p>
+<p>This ADT can be generated from the following locale definition.</p>
+<p>locale MyPair =<br>
+   fixes cons :: "'a ⇒ 'b ⇒ 'pair"<br>
+     and left :: "'pair ⇒ 'a"<br>
+     and right :: "'pair ⇒ 'b"<br>
+   assumes L [simp]: "left (cons a b) = a"<br>
+   assumes R: "right (cons a b) = b"<br>
+   assumes "cons l1 r1 = cons l2 r2 ==&gt; l1 = l2 &amp;&amp; r1 = r2"<br>
+begin<br>
+   lemma test: "cons (left (cons a b)) b = cons a b" by (simp add: L R)<br>
+end</p>
+<p>The locale API allows me to access the names used in fixes and assumes as well as the terms<br>
+associated with the assumptions.</p>
+<p>I cannot access the test lemma from the locale API. What is the appropriate way to list<br>
+all theorems in a locale? If this is not possible what are the alternatives that I can use?</p>
+<p>Thanks for the help</p>
+<p>[pvl]: <a href="https://github.com/utwente-fmt/vercors/wiki/PVL-Syntax-Reference">https://github.com/utwente-fmt/vercors/wiki/PVL-Syntax-Reference</a><br>
+[axiomatic data types]: <a href="https://github.com/utwente-fmt/vercors/wiki/Axiomatic-Data-Types">https://github.com/utwente-fmt/vercors/wiki/Axiomatic-Data-Types</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

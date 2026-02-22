@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Strange behaviour with implicit coercions · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Strange.20behaviour.20with.20implicit.20coercions.html">[isabelle] Strange behaviour with implicit coercions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="506953703"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Strange%20behaviour%20with%20implicit%20coercions/near/506953703" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Strange.20behaviour.20with.20implicit.20coercions.html#506953703">(Mar 20 2025 at 12:02)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Consider the following function definition:</p>
+<p>lemma "quotient_of (rat_of_nat i) = (i, 1)"</p>
+<p>Here i has type nat while the result type of quotient_of is int*int, so the right hand side needs the coercion int to be inserted. The lemma is seemingly equivalent to</p>
+<p>lemma "quotient_of (rat_of_nat i) = (int i, 1)"</p>
+<p>But in fact what Isabelle displays is</p>
+<p>quotient_of (rat_of_nat i) = (case (i, 1) of (x, y) ⇒ (int x, y))</p>
+<p>Unexpected, to say the least!</p>
+<p>Larry</p>
+
+
+
+<a name="506984713"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Strange%20behaviour%20with%20implicit%20coercions/near/506984713" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Strange.20behaviour.20with.20implicit.20coercions.html#506984713">(Mar 20 2025 at 14:12)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Larry,</p>
+<p>This is a recurrent question, and I recall that you and me already had some discussions about coercions in the past.</p>
+<p>The guarantee of the coercion inference is two-fold</p>
+<ul>
+<li>well-typed terms will not be modified</li>
+<li>given an ill-typed term, you will get a well-typed term if it is possible to get one by inserting coercions and coercion maps (all registered ones are shown under print_coercions).</li>
+</ul>
+<p>There is no guarantee <em>where</em> coercions will be inserted (and this behavior is not easily amended without compromising the prior completeness statement).</p>
+<p>Thus you may or may not get the resulting well-typed term that you expect. (In your example, the two are equivalent, but in general they of course might even mean different things; coercion inference is purely syntactic.)  The best way to avoid any surprises is still to write well-typed terms.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 20 Mar 2025, at 13.01, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Consider the following function definition:</p>
+<p>lemma "quotient_of (rat_of_nat i) = (i, 1)"</p>
+<p>Here i has type nat while the result type of quotient_of is int*int, so the right hand side needs the coercion int to be inserted. The lemma is seemingly equivalent to</p>
+<p>lemma "quotient_of (rat_of_nat i) = (int i, 1)"</p>
+<p>But in fact what Isabelle displays is</p>
+<p>quotient_of (rat_of_nat i) = (case (i, 1) of (x, y) ⇒ (int x, y))</p>
+<p>Unexpected, to say the least!</p>
+<p>Larry<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,81 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Suggestion for HOLCF: simproc for continuity s... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Suggestion.20for.20HOLCF.3A.20simproc.20for.20continuity.20s.2E.2E.2E.html">[isabelle] Suggestion for HOLCF: simproc for continuity s...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="516856678"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Suggestion%20for%20HOLCF%3A%20simproc%20for%20continuity%20s.../near/516856678" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Suggestion.20for.20HOLCF.3A.20simproc.20for.20continuity.20s.2E.2E.2E.html#516856678">(May 08 2025 at 10:01)</a>:</h4>
+<p>From: Benoit Ballenghien &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi,<br>
+While working with HOLCF, Burkhart and I noticed that the simplifier often fails to automatically prove continuity goals of the form "cont (λx. f x z)", "cont (λx. f x y)", "cont (λx. f x y z)", etc. These continuity goals frequently act as a bottleneck: when the simplifier can't discharge them, it fails to make further progress on more complex goals that depend on them.<br>
+To address this, I’ve developed a simproc_setup that dynamically constructs the appropriate continuity rule (proved on the fly using metis). You’ll find it attached.<br>
+Would this be something worth integrating into HOLCF in future versions of Isabelle? Or is there perhaps an existing approach I've overlooked?<br>
+Best regards,<br>
+Benoît</p>
+<p><a href="/user_uploads/14278/n-9AMVXk1zJkr88nI08MTHDs/HOLCF_simproc.thy">HOLCF_simproc.thy</a></p>
+
+
+
+<a name="517279759"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Suggestion%20for%20HOLCF%3A%20simproc%20for%20continuity%20s.../near/517279759" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Suggestion.20for.20HOLCF.3A.20simproc.20for.20continuity.20s.2E.2E.2E.html#517279759">(May 10 2025 at 18:04)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Benoit,</p>
+<p>Thanks for this, it looks very useful but I need to take a closer look first. <br>
+I'll be back.</p>
+<p>Tobias</p>
+<p>On 08/05/2025 12:00, Benoit Ballenghien (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi,<br>
+While working with HOLCF, Burkhart and I noticed that the simplifier often fails <br>
+to automatically prove continuity goals of the form |"cont (λx. f x z)"|, "|cont <br>
+(λx. f x y)"|, "|cont (λx. f x y z)"|, etc. These continuity goals <br>
+frequently act as a bottleneck: when the simplifier can't discharge them, it <br>
+fails to make further progress on more complex goals that depend on them.<br>
+To address this, I’ve developed a |simproc_setup| that dynamically constructs <br>
+the appropriate continuity rule (proved on the fly using metis). You’ll find it <br>
+attached.<br>
+Would this be something worth integrating into HOLCF in future versions of <br>
+Isabelle? Or is there perhaps an existing approach I've overlooked?<br>
+Best regards,<br>
+Benoît</p>
+</blockquote>
+<p><a href="/user_uploads/14278/TOitM5TiSjYb8LST3Y85qnIc/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="517450843"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Suggestion%20for%20HOLCF%3A%20simproc%20for%20continuity%20s.../near/517450843" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Suggestion.20for.20HOLCF.3A.20simproc.20for.20continuity.20s.2E.2E.2E.html#517450843">(May 12 2025 at 07:26)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Hi Benoit,</p>
+<p>This looks very useful and I don't think there is anything that you overlooked. <br>
+It should definitely be integrated into HOLCF. We'll discuss that offline.</p>
+<p>Many thanks<br>
+Tobias</p>
+<p>On 08/05/2025 12:00, Benoit Ballenghien (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi,<br>
+While working with HOLCF, Burkhart and I noticed that the simplifier often fails <br>
+to automatically prove continuity goals of the form |"cont (λx. f x z)"|, "|cont <br>
+(λx. f x y)"|, "|cont (λx. f x y z)"|, etc. These continuity goals <br>
+frequently act as a bottleneck: when the simplifier can't discharge them, it <br>
+fails to make further progress on more complex goals that depend on them.<br>
+To address this, I’ve developed a |simproc_setup| that dynamically constructs <br>
+the appropriate continuity rule (proved on the fly using metis). You’ll find it <br>
+attached.<br>
+Would this be something worth integrating into HOLCF in future versions of <br>
+Isabelle? Or is there perhaps an existing approach I've overlooked?<br>
+Best regards,<br>
+Benoît</p>
+</blockquote>
+<p><a href="/user_uploads/14278/9UsLugh_S77Mu-NnQ6SNg5tZ/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

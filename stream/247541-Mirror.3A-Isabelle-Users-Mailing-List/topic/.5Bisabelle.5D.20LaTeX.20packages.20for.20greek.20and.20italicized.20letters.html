@@ -1,0 +1,57 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] LaTeX packages for greek and italicized letters · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20LaTeX.20packages.20for.20greek.20and.20italicized.20letters.html">[isabelle] LaTeX packages for greek and italicized letters</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="508372145"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20LaTeX%20packages%20for%20greek%20and%20italicized%20letters/near/508372145" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20LaTeX.20packages.20for.20greek.20and.20italicized.20letters.html#508372145">(Mar 26 2025 at 20:33)</a>:</h4>
+<p>From: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;<br>
+Dear Isabelle users,</p>
+<p>Which LaTeX packages do I need to include in my root.tex file to enable my<br>
+document to contain the greek and italicized letters from tabs "Greek" and<br>
+"Letter" of the "Symbols" panel - I mean, to make PDF document generation<br>
+work?<br>
+I apologize for asking a so trivial question, but I am by no means a LaTeX<br>
+expert, so your help would be much appreciated.</p>
+<p>Thank you very much, best regards,<br>
+Pasquale Noce</p>
+
+
+
+<a name="508378732"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20LaTeX%20packages%20for%20greek%20and%20italicized%20letters/near/508378732" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20LaTeX.20packages.20for.20greek.20and.20italicized.20letters.html#508378732">(Mar 26 2025 at 21:13)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 26/03/2025 21:32, Pasquale Noce wrote:</p>
+<blockquote>
+<p>Which LaTeX packages do I need to include in my root.tex file to enable my<br>
+document to contain the greek and italicized letters from tabs "Greek" and<br>
+"Letter" of the "Symbols" panel - I mean, to make PDF document generation<br>
+work?</p>
+</blockquote>
+<p>If you mean formal Isabelle symbols like \&lt;alpha&gt; in your informal text, you <br>
+merely need to ensure that you embed them into formal antiquotations. The most <br>
+basic antiquotation is called @{text} or @{cartouche}, but we stopped using <br>
+this archaic notation many years ago. Instead, you now write @{cartouche "α"} <br>
+with literal cartouche notation as ‹α›.</p>
+<p>Here is an example:</p>
+<p>theory Test imports Main<br>
+begin</p>
+<p>text ‹<br>
+   ▪ informal text: blah<br>
+   ▪ formal text: ‹α›<br>
+›</p>
+<p>end</p>
+<p>Other notable antiquotations are @{typ} @{term} @{thm} --- usually written as <br>
+\&lt;^term&gt;‹α› etc.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

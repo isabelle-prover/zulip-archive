@@ -1,0 +1,388 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [Isabelle2025-1-RC1] Porting Isabelle_LLVM · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html">[isabelle] [Isabelle2025-1-RC1] Porting Isabelle_LLVM</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="554767732"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/554767732" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#554767732">(Nov 10 2025 at 18:35)</a>:</h4>
+<p>From: "\"Kohlen, Bram (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear mailing list,</p>
+<p>we have successfully ported Isabelle_LLVM (minus some of the latest functionality, which Peter will port later) to the latest release candidate. We did not find any big problems but we would like to address the following minor things:</p>
+<p>*<br>
+Quite a large part of tactic.ML was moved to bires.ML, but this was not documented. We found it out by scanning the Isabelle files, but maybe this could be placed in the news as well.<br>
+  *<br>
+Pretty.writeln_chunks was separated into Pretty.writeln and Pretty.chunks, but not documented.<br>
+     *<br>
+Actually, I quite quickly found out many parts of Pure were renamed, but these were easy enough to port so I stopped making notes. Documentation is still appreciated though <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span><br>
+  *<br>
+Several proofs broke due to "take_update" being in the simp set. Removing it fixed these proofs. While take_update was in the simp set in the 2025 version already, it seems to cause trouble only now, maybe due to another change to the simp set?</p>
+<p>Thanks to the developers for the latest release candidate. I still have to get used to the updated GUI in jedit, but the user experience generally seems to be much better to me!</p>
+<p>Kind regards,<br>
+Bram</p>
+
+
+
+<a name="554770467"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/554770467" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#554770467">(Nov 10 2025 at 18:53)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Very likely because list_update_beyond is no longer in the simpset. It is not obvious that take_update is a sensible simprule, because it could be oriented either way.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Nov 2025, at 18:35, Kohlen, Bram (UT-EEMCS) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>• Several proofs broke due to "take_update" being in the simp set. Removing it fixed these proofs. While take_update was in the simp set in the 2025 version already, it seems to cause trouble only now, maybe due to another change to the simp set?<br>
+</p>
+</blockquote>
+
+
+
+<a name="554776021"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/554776021" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#554776021">(Nov 10 2025 at 19:30)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Okay, I changed the integration contour to what the Malaysian people <br>
+use. The adjustment was surprisingly easy. I did not have to touch the <br>
+main proof at all; I only had to prove that the two z1 and z2 that do <br>
+not follow the usual pattern (i.e. the endpoints of the very last arc) <br>
+satisfy the same properties as the other ones. That's a bit of <br>
+straightforward algebra.</p>
+<p>So I managed to get a sorry-free proof of the theorem. It's not quite <br>
+the same form as Apostol and the Malaysians and the remaining literature <br>
+have because I haven't integrated the closed-form expression for the <br>
+Bessel function yet. But I do have that (and much more on Bessel <br>
+functions), so morally it's there. The constants in the error bound may <br>
+also be different from what one might find in the literature (that said, <br>
+Apostol doesn't even give a constant, just a "Big-O" estimate).</p>
+<p>So to conclude, what we have shows that the infinite sum formula works. <br>
+And we could also easily derive the asymptotic estimate for p(n).</p>
+<p>I did however find that the constant one gets out of the proof is <br>
+really, really bad, since it's exponential in n. So according to our <br>
+bound, you need 2^O(n) terms of the sum to compute p(n), which is quite <br>
+absurd. The true number is much lower. Not sure how much work is <br>
+required to prove that. But neither Apostol nor the Malaysians care <br>
+about that.</p>
+<p>Manuel</p>
+<p>On 11/10/25 19:53, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Very likely because list_update_beyond is no longer in the simpset. It is not obvious that take_update is a sensible simprule, because it could be oriented either way.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Nov 2025, at 18:35, Kohlen, Bram (UT-EEMCS) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>• Several proofs broke due to "take_update" being in the simp set. Removing it fixed these proofs. While take_update was in the simp set in the 2025 version already, it seems to cause trouble only now, maybe due to another change to the simp set?<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="554776129"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/554776129" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#554776129">(Nov 10 2025 at 19:31)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Oops, sorry! That was <em>not</em> supposed to go on the mailing list.</p>
+<p>Manuel</p>
+<p>On 11/10/25 20:29, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Okay, I changed the integration contour to what the Malaysian people <br>
+use. The adjustment was surprisingly easy. I did not have to touch the <br>
+main proof at all; I only had to prove that the two z1 and z2 that do <br>
+not follow the usual pattern (i.e. the endpoints of the very last arc) <br>
+satisfy the same properties as the other ones. That's a bit of <br>
+straightforward algebra.</p>
+<p>So I managed to get a sorry-free proof of the theorem. It's not quite <br>
+the same form as Apostol and the Malaysians and the remaining <br>
+literature have because I haven't integrated the closed-form <br>
+expression for the Bessel function yet. But I do have that (and much <br>
+more on Bessel functions), so morally it's there. The constants in the <br>
+error bound may also be different from what one might find in the <br>
+literature (that said, Apostol doesn't even give a constant, just a <br>
+"Big-O" estimate).</p>
+<p>So to conclude, what we have shows that the infinite sum formula <br>
+works. And we could also easily derive the asymptotic estimate for p(n).</p>
+<p>I did however find that the constant one gets out of the proof is <br>
+really, really bad, since it's exponential in n. So according to our <br>
+bound, you need 2^O(n) terms of the sum to compute p(n), which is <br>
+quite absurd. The true number is much lower. Not sure how much work is <br>
+required to prove that. But neither Apostol nor the Malaysians care <br>
+about that.</p>
+<p>Manuel</p>
+<p>On 11/10/25 19:53, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Very likely because list_update_beyond is no longer in the simpset. <br>
+It is not obvious that take_update is a sensible simprule, because it <br>
+could be oriented either way.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Nov 2025, at 18:35, Kohlen, Bram (UT-EEMCS) <br>
+&lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>• Several proofs broke due to "take_update" being in the simp <br>
+set. Removing it fixed these proofs. While take_update was in the <br>
+simp set in the 2025 version already, it seems to cause trouble only <br>
+now, maybe due to another change to the simp set?<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="554905390"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/554905390" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#554905390">(Nov 11 2025 at 12:44)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Larry,</p>
+<p>I am a little surprised that you "Removed simp status from list_update_beyond" <br>
+(log entry).</p>
+<p>lemma list_update_beyond: "length xs &lt;= i ==&gt; xs[i:=x] = xs"</p>
+<p>It seems a useful rule to me (and I probably added it in the distant past). The <br>
+function is defined like this on purpose to avoids undefinedness. Figuring out <br>
+that the rule is applicable is not always onbious because of the precondition. <br>
+Thus I would be in favour of turning [simp] back on here.</p>
+<p>Tobias</p>
+<p>On 10/11/2025 19:53, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Very likely because list_update_beyond is no longer in the simpset. It is not obvious that take_update is a sensible simprule, because it could be oriented either way.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Nov 2025, at 18:35, Kohlen, Bram (UT-EEMCS) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>• Several proofs broke due to "take_update" being in the simp set. Removing it fixed these proofs. While take_update was in the simp set in the 2025 version already, it seems to cause trouble only now, maybe due to another change to the simp set?</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/dZT4tTnENvjOaenhoY_mIHld/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="555092528"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/555092528" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#555092528">(Nov 12 2025 at 11:21)</a>:</h4>
+<p>From: Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+The dependent projects lrat_isa and bernoulli-numbers where ported <br>
+easily, with only minor changes required.</p>
+<p>--</p>
+<p>Peter</p>
+<p>cf.</p>
+<p><a href="https://github.com/lammich/lrat_isa/tree/2025-1">https://github.com/lammich/lrat_isa/tree/2025-1</a></p>
+<p><a href="https://github.com/pruvisto/bernmm/tree/2025-1">https://github.com/pruvisto/bernmm/tree/2025-1</a></p>
+<p>On 10/11/2025 19:35, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users <br>
+Mailing List) wrote:</p>
+<blockquote>
+<p>Dear mailing list,</p>
+<p>we have successfully ported Isabelle_LLVM (minus some of the latest <br>
+functionality, which Peter will port later) to the latest release <br>
+candidate. We did not find any big problems but we would like to <br>
+address the following minor things:</p>
+<p>*<br>
+    Quite a large part of tactic.ML was moved to bires.ML, but this<br>
+    was not documented. We found it out by scanning the Isabelle<br>
+    files, but maybe this could be placed in the news as well.<br>
+ *<br>
+    Pretty.writeln_chunks was separated into Pretty.writeln and<br>
+    Pretty.chunks, but not documented.<br>
+     o<br>
+        Actually, I quite quickly found out many parts of Pure were<br>
+        renamed, but these were easy enough to port so I stopped<br>
+        making notes. Documentation is still appreciated though <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span><br>
+ *<br>
+    Several proofs broke due to "take_update" being in the simp set.<br>
+    Removing it fixed these proofs. While take_update was in the simp<br>
+    set in the 2025 version already, it seems to cause trouble only<br>
+    now, maybe due to another change to the simp set?</p>
+<p>Thanks to the developers for the latest release candidate. I still <br>
+have to get used to the updated GUI in jedit, but the user experience <br>
+generally seems to be much better to me!</p>
+<p>Kind regards,<br>
+Bram</p>
+</blockquote>
+
+
+
+<a name="556855191"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/556855191" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#556855191">(Nov 17 2025 at 15:06)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 10/11/2025 19:35, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>*<br>
+    Quite a large part of tactic.ML was moved to bires.ML, but this was not<br>
+    documented. We found it out by scanning the Isabelle files, but maybe this<br>
+    could be placed in the news as well.<br>
+  *<br>
+    Pretty.writeln_chunks was separated into Pretty.writeln and Pretty.chunks,<br>
+    but not documented.<br>
+      o<br>
+        Actually, I quite quickly found out many parts of Pure were renamed,<br>
+        but these were easy enough to port so I stopped making notes.<br>
+        Documentation is still appreciated though <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span></p>
+</blockquote>
+<p>I will see what needs to be added to NEWS on Isabelle/ML.</p>
+<blockquote>
+<p>I still have to get <br>
+used to the updated GUI in jedit, but the user experience generally seems to <br>
+be much better to me!</p>
+</blockquote>
+<p>Is there anything specific that needs to get used to? Many minor details have <br>
+been brushed up, but there could be also new drop-outs that were not intended.</p>
+<p>Makarius</p>
+
+
+
+<a name="558146613"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/558146613" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#558146613">(Nov 19 2025 at 09:04)</a>:</h4>
+<p>From: "\"Kohlen, Bram (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello Makarius,</p>
+<p>after using the new version for a couple of days I feel no features I use are missing. With the help of the mailing list I have now created a different try0 schedule for myself, so that has been resolved, thanks to everyone for the answers!</p>
+<p>The only thing I noticed is that sledgehammer seems to abort much earlier now (in about half the time).<br>
+The standard timeout for sledgehammer is 30 seconds, but I found sledgehammer to stop already after just under 15 seconds. If I increase the timeout to 60 seconds, it stops at just under 30 seconds.<br>
+And I am sure that it does not abort due to the lack of a proof, as I have at least one example where sledgehammer does not find a proof with 30 seconds timeout, in which case it terminates after about 15 seconds without a proof. However, with 60 seconds timeout, a proof is found after about 20 seconds.</p>
+<p>Typically I would provide a small example of said case, but I have failed to produce one of reasonable size so far. I do get this behaviour in my own formalization. However, it is easy to check that sledgehammer stops early on any lemma for which sledgehammer does not find a proof.</p>
+<p>Apart from that, I have not noticed anything strange so far.</p>
+<p>Kind regards,<br>
+Bram</p>
+<hr>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Sent: Monday, November 17, 2025 4:05 PM<br>
+To: Kohlen, Bram (UT-EEMCS) &lt;<a href="mailto:b.kohlen@utwente.nl">b.kohlen@utwente.nl</a>&gt;; isabelle-users &lt;<a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] [Isabelle2025-1-RC1] Porting Isabelle_LLVM</p>
+<p>On 10/11/2025 19:35, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users Mailing<br>
+List) wrote:</p>
+<blockquote>
+<p>*<br>
+    Quite a large part of tactic.ML was moved to bires.ML, but this was not<br>
+    documented. We found it out by scanning the Isabelle files, but maybe this<br>
+    could be placed in the news as well.<br>
+  *<br>
+    Pretty.writeln_chunks was separated into Pretty.writeln and Pretty.chunks,<br>
+    but not documented.<br>
+      o<br>
+        Actually, I quite quickly found out many parts of Pure were renamed,<br>
+        but these were easy enough to port so I stopped making notes.<br>
+        Documentation is still appreciated though <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span></p>
+</blockquote>
+<p>I will see what needs to be added to NEWS on Isabelle/ML.</p>
+<blockquote>
+<p>I still have to get<br>
+used to the updated GUI in jedit, but the user experience generally seems to<br>
+be much better to me!</p>
+</blockquote>
+<p>Is there anything specific that needs to get used to? Many minor details have<br>
+been brushed up, but there could be also new drop-outs that were not intended.</p>
+<p>Makarius</p>
+
+
+
+<a name="558148865"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/558148865" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#558148865">(Nov 19 2025 at 09:15)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>On 19-Nov-25 10:03 AM, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users <br>
+Mailing List) wrote:</p>
+<blockquote>
+<p>With the help of the mailing list I have now created a different try0 <br>
+schedule for myself, so that has been resolved, thanks to everyone for <br>
+the answers!<br>
+Can you describe your solution here? I think this is of a general <br>
+interest (the current default behavior of try0 feels strange to me), and <br>
+I do not see immediately the answer in the mailing list.</p>
+</blockquote>
+<p>Thanks.</p>
+<p>Stepan</p>
+
+
+
+<a name="558150358"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/558150358" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#558150358">(Nov 19 2025 at 09:22)</a>:</h4>
+<p>From: "\"Kohlen, Bram (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello Stepan,</p>
+<p>I simply moved satx and metis to the last batch.</p>
+<p>declare [[try0_schedule = "<br>
+  order presburger linarith algebra argo | simp auto blast fast fastforce force meson satx metis<br>
+"]]</p>
+<p>It seems to work well, but I am also considering moving everything into the same batch again (removing the pipe | ), as I do not notice an improvement from this setup compared to try0 in Isabelle2025. Maybe I am using it the wrong way though. Does anyone have any insights on this?</p>
+<p>Kind regards,<br>
+Bram</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: Wednesday, November 19, 2025 10:15 AM<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] [Isabelle2025-1-RC1] Porting Isabelle_LLVM</p>
+<p>On 19-Nov-25 10:03 AM, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users<br>
+Mailing List) wrote:</p>
+<blockquote>
+<p>With the help of the mailing list I have now created a different try0<br>
+schedule for myself, so that has been resolved, thanks to everyone for<br>
+the answers!<br>
+Can you describe your solution here? I think this is of a general<br>
+interest (the current default behavior of try0 feels strange to me), and<br>
+I do not see immediately the answer in the mailing list.</p>
+</blockquote>
+<p>Thanks.</p>
+<p>Stepan</p>
+
+
+
+<a name="558150475"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/558150475" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#558150475">(Nov 19 2025 at 09:22)</a>:</h4>
+<p>From: "\"Lammich, Peter (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+I'd prefer the old behaviour as standard, as it seems to be more likely to find proofs quickly. This is in particular important for auto-try0.</p>
+<p>What was the motivation behind the change?</p>
+<p>Peter</p>
+<p>On 19 Nov 2025 10:15, Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>On 19-Nov-25 10:03 AM, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users<br>
+Mailing List) wrote:</p>
+<blockquote>
+<p>With the help of the mailing list I have now created a different try0<br>
+schedule for myself, so that has been resolved, thanks to everyone for<br>
+the answers!<br>
+Can you describe your solution here? I think this is of a general<br>
+interest (the current default behavior of try0 feels strange to me), and<br>
+I do not see immediately the answer in the mailing list.</p>
+</blockquote>
+<p>Thanks.</p>
+<p>Stepan</p>
+
+
+
+<a name="558160850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20Porting%20Isabelle_LLVM/near/558160850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20Porting.20Isabelle_LLVM.html#558160850">(Nov 19 2025 at 10:12)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+I also experienced problems with this. My impression was that try0 <br>
+inexplicable <em>only</em> tried satx and metis and never tried any of the <br>
+others, but I didn't care enough to investigate further. It did not <br>
+occur to me that I ought to simply wait longer – in any case I would <br>
+have had to wait significantly longer than my patience allows when using <br>
+"try0", which I (in my usual workflow) expect to give an answer within 5 <br>
+seconds or so at most.</p>
+<p>So my impression is that the issue is mainly that one of "satx" and <br>
+"metis" sometimes does not terminate within a reasonable amount of time <br>
+and is also not killed within a reasonable amount of time, and then the <br>
+others are not even tried.</p>
+<p>Manuel</p>
+<p>On 19/11/2025 10:22, "Lammich, Peter (UT-EEMCS)" (via cl-isabelle-users <br>
+Mailing List) wrote:</p>
+<blockquote>
+<p>I'd prefer the old behaviour as standard, as it seems to be more <br>
+likely to find proofs quickly. This is in particular important for <br>
+auto-try0.</p>
+<p>What was the motivation behind the change?</p>
+<p>Peter</p>
+<p>On 19 Nov 2025 10:15, Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; <br>
+wrote:</p>
+<p>On 19-Nov-25 10:03 AM, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users<br>
+Mailing List) wrote:</p>
+<blockquote>
+<p>With the help of the mailing list I have now created a different try0<br>
+schedule for myself, so that has been resolved, thanks to everyone for<br>
+the answers!<br>
+Can you describe your solution here? I think this is of a general<br>
+interest (the current default behavior of try0 feels strange to me), and<br>
+I do not see immediately the answer in the mailing list.</p>
+</blockquote>
+<p>Thanks.</p>
+<p>Stepan<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,395 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Theorems about theorems · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Theorems.20about.20theorems.html">[isabelle] Theorems about theorems</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="546709719"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Theorems%20about%20theorems/near/546709719" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Theorems.20about.20theorems.html#546709719">(Oct 23 2025 at 15:23)</a>:</h4>
+<p>From: "John F. Hughes" &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt;<br>
+I need a little setup to ask this question. I'll try to make it brief:</p>
+<p>In projective geometry, there are four basic axioms, P1 ... P4, for a<br>
+projective plane. P1, for instance, says that given two distinct points,<br>
+there's a unique line containing both. P2 says that given two distinct<br>
+lines, there's at least one point that lies on both. A short proof using P1<br>
+shows that P2 can be strengthened to say that given two distinct lines,<br>
+there's a <em>unique</em> point lying on both.</p>
+<p>We can swap the words "point" and "line" and the phrases "lies on" and<br>
+"contains" in any statement about a projective plane to get a so-called<br>
+"dual" statement. So P2 is the dual to P1. As it happens, the duals to P3<br>
+and P4 are also true in any projective plane, so if we have a set Pts of<br>
+point and Lns of lines, and a 'liesOn' predicate which together constitute<br>
+a projective plane Pi,  then the set Lns, the set Pts, and 'contains'<br>
+<em>also</em> constitute<br>
+a projective plane, the 'dual' plane, called Pi*. I've got a locale,<br>
+"pplane" that takes a set of points, a set of lines, and a 'liesOn'<br>
+relation, so this can be stated as<br>
+theorem</p>
+<p>This also means that any theorem about projective planes also has a 'dual'<br>
+theorem, gotten by replacing "point" with "line" and vice-version, and<br>
+doing the same for "lies on" and "contains". Because the duals of the<br>
+axioms are also facts, we get a conclusion that if some theorem S is true<br>
+for all projective planes, then so is the dual statement.</p>
+<p>Hartshorne's little book about projective geometry says it like this<br>
+(please ignore the mention of P5):<br>
+[image: image.png]<br>
+More important is the corollary:<br>
+[image: image.png]</p>
+<p>My question is this: is it possible to formulate such a theorem in<br>
+Isabelle? The statement of the corollary could actually be strengthened to<br>
+say that the <em>proof</em> of S* consists of simply dualizing the proof of S<br>
+(i.e., swap point/line, etc., in every fact in that proof).</p>
+<p>I haven't, in my wanderings through Isabelle, seen anything that seems to<br>
+do this kind of introspection, i.e., that treats an Isabelle proof or<br>
+statement as an object that can be transformed/acted on by various<br>
+functions, etc. Then again, I may simply be looking in the wrong places.<br>
+I'd appreciate any suggestions, *or *reasons why this sort of thing cannot<br>
+be done.<br>
+--John</p>
+<p><a href="/user_uploads/14278/Nu0wZiHbZFQbpOGFul6A-je2/image.png">image.png</a><br>
+<a href="/user_uploads/14278/GaD5GsSEjLWceV9295PJI2da/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/Nu0wZiHbZFQbpOGFul6A-je2/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="539x93" src="/user_uploads/thumbnail/14278/Nu0wZiHbZFQbpOGFul6A-je2/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/GaD5GsSEjLWceV9295PJI2da/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="538x181" src="/user_uploads/thumbnail/14278/GaD5GsSEjLWceV9295PJI2da/image.png/840x560.webp"></a></div>
+
+
+
+<a name="546711847"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Theorems%20about%20theorems/near/546711847" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Theorems.20about.20theorems.html#546711847">(Oct 23 2025 at 15:32)</a>:</h4>
+<p>From: "John F. Hughes" &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt;<br>
+apologies...I cut myself off mid-edit. The claim was that I could write<br>
+this initial claim about duality as a small theorem:<br>
+[image: image.png]</p>
+<p>On Thu, Oct 23, 2025 at 11:22 AM John F. Hughes &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt; wrote:</p>
+<blockquote>
+<p>I need a little setup to ask this question. I'll try to make it brief:</p>
+<p>In projective geometry, there are four basic axioms, P1 ... P4, for a<br>
+projective plane. P1, for instance, says that given two distinct points,<br>
+there's a unique line containing both. P2 says that given two distinct<br>
+lines, there's at least one point that lies on both. A short proof using P1<br>
+shows that P2 can be strengthened to say that given two distinct lines,<br>
+there's a <em>unique</em> point lying on both.</p>
+<p>We can swap the words "point" and "line" and the phrases "lies on" and<br>
+"contains" in any statement about a projective plane to get a so-called<br>
+"dual" statement. So P2 is the dual to P1. As it happens, the duals to P3<br>
+and P4 are also true in any projective plane, so if we have a set Pts of<br>
+point and Lns of lines, and a 'liesOn' predicate which together constitute<br>
+a projective plane Pi,  then the set Lns, the set Pts, and 'contains'<br>
+<em>also</em> constitute a projective plane, the 'dual' plane, called Pi*. I've<br>
+got a locale, "pplane" that takes a set of points, a set of lines, and a<br>
+'liesOn' relation, so this can be stated as<br>
+theorem</p>
+<p>This also means that any theorem about projective planes also has a 'dual'<br>
+theorem, gotten by replacing "point" with "line" and vice-version, and<br>
+doing the same for "lies on" and "contains". Because the duals of the<br>
+axioms are also facts, we get a conclusion that if some theorem S is true<br>
+for all projective planes, then so is the dual statement.</p>
+<p>Hartshorne's little book about projective geometry says it like this<br>
+(please ignore the mention of P5):<br>
+[image: image.png]<br>
+More important is the corollary:<br>
+[image: image.png]</p>
+<p>My question is this: is it possible to formulate such a theorem in<br>
+Isabelle? The statement of the corollary could actually be strengthened to<br>
+say that the <em>proof</em> of S* consists of simply dualizing the proof of S<br>
+(i.e., swap point/line, etc., in every fact in that proof).</p>
+<p>I haven't, in my wanderings through Isabelle, seen anything that seems to<br>
+do this kind of introspection, i.e., that treats an Isabelle proof or<br>
+statement as an object that can be transformed/acted on by various<br>
+functions, etc. Then again, I may simply be looking in the wrong places.<br>
+I'd appreciate any suggestions, *or *reasons why this sort of thing<br>
+cannot be done.<br>
+--John</p>
+</blockquote>
+<p><a href="/user_uploads/14278/dVbpo2_obaapp3uiO65j6y0k/image.png">image.png</a><br>
+<a href="/user_uploads/14278/61vQeZGdnOpeZ9VSf3vbL84U/image.png">image.png</a><br>
+<a href="/user_uploads/14278/2K2SznzpD9ODloSjazi9Mg7J/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/dVbpo2_obaapp3uiO65j6y0k/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="539x93" src="/user_uploads/thumbnail/14278/dVbpo2_obaapp3uiO65j6y0k/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/61vQeZGdnOpeZ9VSf3vbL84U/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="538x181" src="/user_uploads/thumbnail/14278/61vQeZGdnOpeZ9VSf3vbL84U/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/2K2SznzpD9ODloSjazi9Mg7J/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="556x144" src="/user_uploads/thumbnail/14278/2K2SznzpD9ODloSjazi9Mg7J/image.png/840x560.webp"></a></div>
+
+
+
+<a name="546819030"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Theorems%20about%20theorems/near/546819030" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Theorems.20about.20theorems.html#546819030">(Oct 24 2025 at 06:32)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Your theorem can be stated exactly as below if pplane is formalized as a <br>
+locale. This would be the standard way in Isabelle, in my opinion.</p>
+<p>As for the proofs, the obvious problem is that in Isabelle "proof <br>
+objects" are not the preferred point of view, proving is rather a <br>
+computation (in the sense of LCF, logic for computable functions). <br>
+However, the fact that the locale can be interpreted in the dual way <br>
+"morally" means just what you want: any proof in the locale pplane is <br>
+exactly the same independently of how the parameters are instantiated. <br>
+To stress this you could call the parameters of the locale in some <br>
+abstract way, like objects_one, objects_two, myrelataion, and then to <br>
+show that both dual instantiations interpret your locale.</p>
+<p>Stepan</p>
+<p>On 23-Oct-25 5:31 PM, John F. Hughes wrote:</p>
+<blockquote>
+<p>apologies...I cut myself off mid-edit. The claim was that I could <br>
+write this initial claim about duality as a small theorem:<br>
+image.png</p>
+<p>On Thu, Oct 23, 2025 at 11:22 AM John F. Hughes &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt; wrote:</p>
+<p>I need a little setup to ask this question. I'll try to make it<br>
+    brief:</p>
+<p>In projective geometry, there are four basic axioms, P1 ... P4,<br>
+    for a projective plane. P1, for instance, says that given two<br>
+    distinct points, there's a unique line containing both. P2 says<br>
+    that given two distinct lines, there's at least one point that<br>
+    lies on both. A short proof using P1 shows that P2 can be<br>
+    strengthened to say that given two distinct lines, there's a<br>
+<em>unique</em> point lying on both.</p>
+<p>We can swap the words "point" and "line" and the phrases "lies on"<br>
+    and "contains" in any statement about a projective plane to get a<br>
+    so-called "dual" statement. So P2 is the dual to P1. As it<br>
+    happens, the duals to P3 and P4 are also true in any projective<br>
+    plane, so if we have a set Pts of point and Lns of lines, and a<br>
+    'liesOn' predicate which together constitute a projective plane<br>
+    Pi,  then the set Lns, the set Pts, and 'contains'<br>
+    /also/ constitute a projective plane, the 'dual' plane, called<br>
+    Pi*. I've got a locale, "pplane" that takes a set of points, a set<br>
+    of lines, and a 'liesOn' relation, so this can be stated as<br>
+    theorem</p>
+<p>This also means that any theorem about projective planes also has<br>
+    a 'dual' theorem, gotten by replacing "point" with "line" and<br>
+    vice-version, and doing the same for "lies on" and "contains".<br>
+    Because the duals of the axioms are also facts, we get a<br>
+    conclusion that if some theorem S is true for all projective<br>
+    planes, then so is the dual statement.</p>
+<p>Hartshorne's little book about projective geometry says it like<br>
+    this (please ignore the mention of P5):<br>
+    image.png<br>
+    More important is the corollary:<br>
+    image.png</p>
+<p>My question is this: is it possible to formulate such a theorem in<br>
+    Isabelle? The statement of the corollary could actually be<br>
+    strengthened to say that the /proof/ of S* consists of simply<br>
+    dualizing the proof of S (i.e., swap point/line, etc., in every<br>
+    fact in that proof).</p>
+<p>I haven't, in my wanderings through Isabelle, seen anything that<br>
+    seems to do this kind of introspection, i.e., that treats an<br>
+    Isabelle proof or statement as an object that can be<br>
+    transformed/acted on by various functions, etc. Then again, I may<br>
+    simply be looking in the wrong places. I'd appreciate any<br>
+    suggestions, *or *reasons why this sort of thing cannot be done.<br>
+    --John</p>
+</blockquote>
+<p><a href="/user_uploads/14278/OLqylslSvB1_-76Vgi5QJAKz/image.png">image.png</a><br>
+<a href="/user_uploads/14278/WXuTs5SMNEAP13X5cjoN0kMU/image.png">image.png</a><br>
+<a href="/user_uploads/14278/KBqMf1M1EG8jzaKnfvoOnitL/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/OLqylslSvB1_-76Vgi5QJAKz/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="556x144" src="/user_uploads/thumbnail/14278/OLqylslSvB1_-76Vgi5QJAKz/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/WXuTs5SMNEAP13X5cjoN0kMU/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="539x93" src="/user_uploads/thumbnail/14278/WXuTs5SMNEAP13X5cjoN0kMU/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/KBqMf1M1EG8jzaKnfvoOnitL/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="538x181" src="/user_uploads/thumbnail/14278/KBqMf1M1EG8jzaKnfvoOnitL/image.png/840x560.webp"></a></div>
+
+
+
+<a name="546853172"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Theorems%20about%20theorems/near/546853172" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Theorems.20about.20theorems.html#546853172">(Oct 24 2025 at 09:40)</a>:</h4>
+<p>From: "John F. Hughes" &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt;<br>
+Thanks for your comments.</p>
+<p>I have indeed made a locale called "pplane", and the "dual_is_plane"<br>
+theorem has been written and proved, so I've formalized Hartshorne's<br>
+Proposition 4.1.</p>
+<p>But it's his Corollary 4.2 that interests me (especially in the extended<br>
+form where one says "and the proof of the dual theorem is gotten by<br>
+dualizing each fact in the proof of the primal theorem") -- <em>that</em> is a<br>
+statement about theorems and proofs rather than about projective planes. As<br>
+a mathematician reading the book, I had no trouble believing Corr. 4.2, but<br>
+that's different from being able to formalize it.</p>
+<p>At this point, if I have proved a theorem like</p>
+<p>lemma prim: if Pi is a plane containing a line k and a point P not on k,<br>
+then there is a point Q such that Q is not on k and Q is not equal to P</p>
+<p>I can then <em>write</em> its dual theorem by hand:</p>
+<p>lemma dual: if Pi is a plane containing a point S and a line n not<br>
+containing S, then there is a line t such that t does not contain S and t<br>
+is not equal to n.</p>
+<p>and there's a one-line Isabelle proof, using "prim" and "dual_is_plane".<br>
+But I do not know how to express, in Isabelle, that "no matter what primal<br>
+lemma I write, I will <em>always</em> be able to prove the dual with this same<br>
+one-line proof," which is the content of Corr. 4.2.</p>
+<p>On Fri, Oct 24, 2025 at 2:26 AM Stepan Holub &lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt;<br>
+wrote:</p>
+<blockquote>
+<p>Your theorem can be stated exactly as below if pplane is formalized as a<br>
+locale. This would be the standard way in Isabelle, in my opinion.</p>
+<p>As for the proofs, the obvious problem is that in Isabelle "proof objects"<br>
+are not the preferred point of view, proving is rather a computation (in<br>
+the sense of LCF, logic for computable functions). However, the fact that<br>
+the locale can be interpreted in the dual way "morally" means just what you<br>
+want: any proof in the locale pplane is exactly the same independently of<br>
+how the parameters are instantiated. To stress this you could call the<br>
+parameters of the locale in some abstract way, like objects_one,<br>
+objects_two, myrelataion, and then to show that both dual instantiations<br>
+interpret your locale.</p>
+<p>Stepan</p>
+<p>On 23-Oct-25 5:31 PM, John F. Hughes wrote:</p>
+<p>apologies...I cut myself off mid-edit. The claim was that I could write<br>
+this initial claim about duality as a small theorem:<br>
+[image: image.png]</p>
+<p>On Thu, Oct 23, 2025 at 11:22 AM John F. Hughes &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt; wrote:</p>
+<blockquote>
+<p>I need a little setup to ask this question. I'll try to make it brief:</p>
+<p>In projective geometry, there are four basic axioms, P1 ... P4, for a<br>
+projective plane. P1, for instance, says that given two distinct points,<br>
+there's a unique line containing both. P2 says that given two distinct<br>
+lines, there's at least one point that lies on both. A short proof using P1<br>
+shows that P2 can be strengthened to say that given two distinct lines,<br>
+there's a <em>unique</em> point lying on both.</p>
+<p>We can swap the words "point" and "line" and the phrases "lies on" and<br>
+"contains" in any statement about a projective plane to get a so-called<br>
+"dual" statement. So P2 is the dual to P1. As it happens, the duals to P3<br>
+and P4 are also true in any projective plane, so if we have a set Pts of<br>
+point and Lns of lines, and a 'liesOn' predicate which together constitute<br>
+a projective plane Pi,  then the set Lns, the set Pts, and 'contains'<br>
+<em>also</em> constitute a projective plane, the 'dual' plane, called Pi*. I've<br>
+got a locale, "pplane" that takes a set of points, a set of lines, and a<br>
+'liesOn' relation, so this can be stated as<br>
+theorem</p>
+<p>This also means that any theorem about projective planes also has a<br>
+'dual' theorem, gotten by replacing "point" with "line" and vice-version,<br>
+and doing the same for "lies on" and "contains". Because the duals of the<br>
+axioms are also facts, we get a conclusion that if some theorem S is true<br>
+for all projective planes, then so is the dual statement.</p>
+<p>Hartshorne's little book about projective geometry says it like this<br>
+(please ignore the mention of P5):<br>
+[image: image.png]<br>
+More important is the corollary:<br>
+[image: image.png]</p>
+<p>My question is this: is it possible to formulate such a theorem in<br>
+Isabelle? The statement of the corollary could actually be strengthened to<br>
+say that the <em>proof</em> of S* consists of simply dualizing the proof of S<br>
+(i.e., swap point/line, etc., in every fact in that proof).</p>
+<p>I haven't, in my wanderings through Isabelle, seen anything that seems to<br>
+do this kind of introspection, i.e., that treats an Isabelle proof or<br>
+statement as an object that can be transformed/acted on by various<br>
+functions, etc. Then again, I may simply be looking in the wrong places.<br>
+I'd appreciate any suggestions, *or *reasons why this sort of thing<br>
+cannot be done.<br>
+--John</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/J3T7OUzwuWFcGqyKNo7e9tIR/image.png">image.png</a><br>
+<a href="/user_uploads/14278/OpiTA1mjibh0biD19h1h6Dwa/image.png">image.png</a><br>
+<a href="/user_uploads/14278/jS7hMREc7qKCKwvmoTfuZSqZ/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/J3T7OUzwuWFcGqyKNo7e9tIR/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="556x144" src="/user_uploads/thumbnail/14278/J3T7OUzwuWFcGqyKNo7e9tIR/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/OpiTA1mjibh0biD19h1h6Dwa/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="539x93" src="/user_uploads/thumbnail/14278/OpiTA1mjibh0biD19h1h6Dwa/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/jS7hMREc7qKCKwvmoTfuZSqZ/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="538x181" src="/user_uploads/thumbnail/14278/jS7hMREc7qKCKwvmoTfuZSqZ/image.png/840x560.webp"></a></div>
+
+
+
+<a name="546869764"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Theorems%20about%20theorems/near/546869764" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Theorems.20about.20theorems.html#546869764">(Oct 24 2025 at 11:09)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+Although theorems in Isabelle/HOL can represent proof rules, the actual <br>
+proofs are not part of the term language.</p>
+<p>Instead, the basic inference rules are functions of the meta-language <br>
+that produce objects of the (meta-level) type 'thm'. Objects of type <br>
+'thm' can only be produced by those inference rules, so every 'thm' is <br>
+correct by construction, and no actual proof is carried around in the <br>
+logical system.</p>
+<p>That means, in Isabelle/HOL you cannot express this property -- i.e., <br>
+that something is provable, or how -- as a theorem. You can only express <br>
+that something holds, e.g. that a property implies its dual.</p>
+<p>Fabian</p>
+<p>On 10/24/25 11:39, John F. Hughes wrote:</p>
+<blockquote>
+<p>Thanks for your comments.</p>
+<p>I have indeed made a locale called "pplane", and the "dual_is_plane" <br>
+theorem has been written and proved, so I've formalized Hartshorne's <br>
+Proposition 4.1.</p>
+<p>But it's his Corollary 4.2 that interests me (especially in the <br>
+extended form where one says "and the proof of the dual theorem is <br>
+gotten by dualizing each fact in the proof of the primal theorem") -- <br>
+/that/ is a statement about theorems and proofs rather than about <br>
+projective planes. As a mathematician reading the book, I had no <br>
+trouble believing Corr. 4.2, but that's different from being able to <br>
+formalize it.</p>
+<p>At this point, if I have proved a theorem like</p>
+<p>lemma prim: if Pi is a plane containing a line k and a point P not on <br>
+k, then there is a point Q such that Q is not on k and Q is not equal to P</p>
+<p>I can then /write/ its dual theorem by hand:</p>
+<p>lemma dual: if Pi is a plane containing a point S and a line n not <br>
+containing S, then there is a line t such that t does not contain S <br>
+and t is not equal to n.</p>
+<p>and there's a one-line Isabelle proof, using "prim" and <br>
+"dual_is_plane". But I do not know how to express, in Isabelle, that <br>
+"no matter what primal lemma I write, I will /always/ be able to prove <br>
+the dual with this same one-line proof," which is the content of Corr. <br>
+4.2.</p>
+<p>On Fri, Oct 24, 2025 at 2:26 AM Stepan Holub <br>
+&lt;<a href="mailto:holub@karlin.mff.cuni.cz">holub@karlin.mff.cuni.cz</a>&gt; wrote:</p>
+<p>Your theorem can be stated exactly as below if pplane is<br>
+    formalized as a locale. This would be the standard way in<br>
+    Isabelle, in my opinion.</p>
+<p>As for the proofs, the obvious problem is that in Isabelle "proof<br>
+    objects" are not the preferred point of view, proving is rather a<br>
+    computation (in the sense of LCF, logic for computable functions).<br>
+    However, the fact that the locale can be interpreted in the dual<br>
+    way "morally" means just what you want: any proof in the locale<br>
+    pplane is exactly the same independently of how the parameters are<br>
+    instantiated. To stress this you could call the parameters of the<br>
+    locale in some abstract way, like objects_one, objects_two,<br>
+    myrelataion, and then to show that both dual instantiations<br>
+    interpret your locale.</p>
+<p>Stepan</p>
+<p>On 23-Oct-25 5:31 PM, John F. Hughes wrote:</p>
+<blockquote>
+<p>apologies...I cut myself off mid-edit. The claim was that I could<br>
+    write this initial claim about duality as a small theorem:<br>
+    image.png</p>
+<p>On Thu, Oct 23, 2025 at 11:22 AM John F. Hughes<br>
+    &lt;<a href="mailto:jfh@cs.brown.edu">jfh@cs.brown.edu</a>&gt; wrote:</p>
+<p>I need a little setup to ask this question. I'll try to make<br>
+        it brief:</p>
+<p>In projective geometry, there are four basic axioms, P1 ...<br>
+        P4, for a projective plane. P1, for instance, says that given<br>
+        two distinct points, there's a unique line containing both.<br>
+        P2 says that given two distinct lines, there's at least one<br>
+        point that lies on both. A short proof using P1 shows that P2<br>
+        can be strengthened to say that given two distinct lines,<br>
+        there's a <em>unique</em> point lying on both.</p>
+<p>We can swap the words "point" and "line" and the phrases<br>
+        "lies on" and "contains" in any statement about a projective<br>
+        plane to get a so-called "dual" statement. So P2 is the dual<br>
+        to P1. As it happens, the duals to P3 and P4 are also true in<br>
+        any projective plane, so if we have a set Pts of point and<br>
+        Lns of lines, and a 'liesOn' predicate which together<br>
+        constitute a projective plane Pi,  then the set Lns, the set<br>
+        Pts, and 'contains' /also/ constitute a projective plane, the<br>
+        'dual' plane, called Pi*. I've got a locale, "pplane" that<br>
+        takes a set of points, a set of lines, and a 'liesOn'<br>
+        relation, so this can be stated as<br>
+        theorem</p>
+<p>This also means that any theorem about projective planes also<br>
+        has a 'dual' theorem, gotten by replacing "point" with "line"<br>
+        and vice-version, and doing the same for "lies on" and<br>
+        "contains". Because the duals of the axioms are also facts,<br>
+        we get a conclusion that if some theorem S is true for all<br>
+        projective planes, then so is the dual statement.</p>
+<p>Hartshorne's little book about projective geometry says it<br>
+        like this (please ignore the mention of P5):<br>
+        image.png<br>
+        More important is the corollary:<br>
+        image.png</p>
+<p>My question is this: is it possible to formulate such a<br>
+        theorem in Isabelle? The statement of the corollary could<br>
+        actually be strengthened to say that the /proof/ of S*<br>
+        consists of simply dualizing the proof of S (i.e., swap<br>
+        point/line, etc., in every fact in that proof).</p>
+<p>I haven't, in my wanderings through Isabelle, seen anything<br>
+        that seems to do this kind of introspection, i.e., that<br>
+        treats an Isabelle proof or statement as an object that can<br>
+        be transformed/acted on by various functions, etc. Then<br>
+        again, I may simply be looking in the wrong places. I'd<br>
+        appreciate any suggestions, *or *reasons why this sort of<br>
+        thing cannot be done.<br>
+        --John</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/fMB2w8Royb6wsQxBPQC84q-Y/image.png">image.png</a><br>
+<a href="/user_uploads/14278/YM-ZUXWAC5zA3RqmwzE4TGmy/image.png">image.png</a><br>
+<a href="/user_uploads/14278/0Hzuw49Opl5wVEY2s9OxVPRP/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/fMB2w8Royb6wsQxBPQC84q-Y/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="556x144" src="/user_uploads/thumbnail/14278/fMB2w8Royb6wsQxBPQC84q-Y/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/YM-ZUXWAC5zA3RqmwzE4TGmy/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="539x93" src="/user_uploads/thumbnail/14278/YM-ZUXWAC5zA3RqmwzE4TGmy/image.png/840x560.webp"></a></div><div class="message_inline_image"><a href="/user_uploads/14278/0Hzuw49Opl5wVEY2s9OxVPRP/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="538x181" src="/user_uploads/thumbnail/14278/0Hzuw49Opl5wVEY2s9OxVPRP/image.png/840x560.webp"></a></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

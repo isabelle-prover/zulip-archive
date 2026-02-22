@@ -1,0 +1,73 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: updates on Isabelle/VSCode · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20updates.20on.20Isabelle.2FVSCode.html">NEWS: updates on Isabelle/VSCode</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="556819426"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20updates%20on%20Isabelle/VSCode/near/556819426" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20updates.20on.20Isabelle.2FVSCode.html#556819426">(Nov 17 2025 at 12:40)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* General </strong>*</p>
+<ul>
+<li>A Prover IDE session, e.g. in Isabelle/jEdit or Isabelle/VSCode, is<br>
+now able to load markup and messages from the underlying session<br>
+database. Example: "isabelle jedit -l HOL src/HOL/Nat.thy" for theory<br>
+"HOL.Nat" in session "HOL". This information is read-only: editing<br>
+theory sources in the editor will invalidate formal markup, and replace<br>
+it by an error message. Output messages depend on system options<br>
+"show_results" (default true) and "show_states" (default false),<br>
+provided at build-time for the underlying session database.</li>
+</ul>
+<p><strong>* Isabelle/VSCode Prover IDE </strong>*</p>
+<ul>
+<li>
+<p>The command-line tool "isabelle vscode" builds its underlying logic<br>
+session before starting the VSCodium editor and its Isabelle language<br>
+server. Thus build progress, errors, and interrupts work more robustly<br>
+via the regular console.</p>
+</li>
+<li>
+<p>The command-line tool "isabelle vscode" supports new options -D and -J<br>
+to configure the underlying Java process of "isabelle vscode_server",<br>
+using the settings variable "VSCODE_JAVA_OPTIONS" as initial value to be<br>
+augmented. This is analogous to "JEDIT_JAVA_OPTIONS", but without<br>
+"JEDIT_JAVA_SYSTEM_OPTIONS"; regular "ISABELLE_JAVA_SYSTEM_OPTIONS" will<br>
+be used instead of "VSCODE_JAVA_SYSTEM_OPTIONS".</p>
+</li>
+<li>
+<p>Update to recent VSCode 1.105 / VSCodium 1.105.17075 (September 2025),<br>
+Electron 37.6.0, Chromium 138.0.7204.251, and Node.js 22.19.0. Note that<br>
+some Linux systems (e.g. Ubuntu 24.04) require special file permissions<br>
+to run "isabelle vscode" or "isabelle electron" like this:</p>
+<p>cd .../vscodium-1.105.17075/x86_64-linux<br>
+   sudo chown root:root chrome-sandbox<br>
+   sudo chmod 4755 chrome-sandbox</p>
+</li>
+</ul>
+<p>This refers to Isabelle/1bbd2dc9b80e.</p>
+<p>It is mostly the end of the many Isabelle/VSCode changes for this release --- <br>
+we could have spent our time in better ways, but I had promised a few people <br>
+to integrate things better and make a few improvements.</p>
+<p>Further remarks:</p>
+<p>* Loading theory "HOL.List" from the session image into the editor model <br>
+now works. There was a Java stack overflow that was hard to spot in VSCode <br>
+Output panel. I've addressed it in Isabelle/3673f8ce8f54.</p>
+<p>* vscodium-1.105.17075 is the "latest" version from that derivative project <br>
+of the official MicroSoft code base. Unless there are genuine problems with it <br>
+there will be no further update for this Isabelle release: with so many <br>
+releases of VSCode per year, every one will be outdated quickly, and the value <br>
+of new "latest" versions is somewhat diminished. (Building it on all platforms <br>
+takes hours.)</p>
+<p>* The odd problem with file permissions on Ubuntu 24.04 has disappeared <br>
+later on, e.g. in Ubuntu 25.10.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

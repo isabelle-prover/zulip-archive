@@ -1,0 +1,108 @@
+<html>
+<head><meta charset="utf-8"><title>Proving implications · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html">Proving implications</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="573810245"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573810245" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573810245">(Feb 13 2026 at 18:52)</a>:</h4>
+<p>I'm feeling particularly daft today. I need to prove a theorem of the form <code>P ==&gt; Q ==&gt; R</code>. I assumed that a way to do this would be to assume <code>P /\ Q</code> and then <code>show R</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">s</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"P ⟹ Q ⟹ R"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"P ∧ Q"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="n">R</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This leads to the dreaded "Local statement fails to refine any pending goal". An alternative form:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">s</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"P ⟹ Q ⟹ R"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"P"</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="s">" Q"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="n">R</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>works fine (once I use "sorry" as the proof for <code>R</code>). </p>
+<p>Can someone explain this to me? I'd <em>swear</em> that I've done things like this before, but apparently not.</p>
+
+
+
+<a name="573812035"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573812035" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573812035">(Feb 13 2026 at 19:04)</a>:</h4>
+<p>With <code>assume</code> you can get your hands on a premise of a goal. In your example, <code>P</code> and <code>Q</code> are premises of your goal. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>∧</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P \land Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span></span></span></span> is not a premise of your goal.</p>
+<p>If you insist on using  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>∧</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P \land Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span></span></span></span>, you can use <code>presume</code> and later show that  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>∧</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P \land Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span></span></span></span>  is implied by the premises of your goal. I discharge that obligation implicitly below by using <code>auto</code> after the final <code>qed</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"P ⟹ Q ⟹ R"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">presume</span><span class="w"> </span><span class="s">"P ∧ Q"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">qed</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+
+
+
+<a name="573815071"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573815071" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573815071">(Feb 13 2026 at 19:27)</a>:</h4>
+<p>OK...that makes some sense. I'm not sure what it was that I was remembering, but that clears it up. But it brings up another puzzling thing -- what <code>?thesis</code> refers to. Programming and Proving says this: </p>
+<p>"The unknown ?thesis is implicitly matched against any goal stated by lemma or show. Here is a typical example: ..." </p>
+<p>but in the midst of a rather messy proof, I have the following example of something that's confusing me:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">      </span><span class="k">show</span><span class="w"> </span><span class="s">"Q ∈ Points ⟹  Q ⊲ chain_begin (x # xs) ⟹ is_chain (x # xs)</span>
+<span class="s">         ⟹ is_chain c ⟹ xs ≠ [] ⟹ realization (x # xs) Q ⊲ chain_end (x # xs)"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Q</span>
+<span class="w">      </span><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">        </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+</code></pre></div>
+<p>I would have expected <code>?thesis</code> to be the thing written in the <code>show</code> just above, but instead it turns out to be <code>realization (x # xs) Q ⊲ chain_end (x # xs)</code>,  which I cannot prove, because that's only true if the five things before it are all true. </p>
+<p>What is going on here? </p>
+<p>[The actual proof has some steps between the <code>proof</code> and the <code>show ?thesis</code>, but I wanted a minimal example of the phenomenon.]</p>
+
+
+
+<a name="573816321"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573816321" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573816321">(Feb 13 2026 at 19:36)</a>:</h4>
+<p><code>?thesis</code> refers to <a href="https://isabelle.in.tum.de/doc/isar-ref.pdf#subsection.1.2.1">"the main conclusion of the innermost pending claim"</a></p>
+
+
+
+<a name="573817075"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573817075" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573817075">(Feb 13 2026 at 19:43)</a>:</h4>
+<p>So P&amp;P was oversimplifying, I guess. Is there a way to access the <em>assumptions</em> of the innermost pending claim?  Without that, it seems hard for me to prove anything.</p>
+
+
+
+<a name="573818046"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573818046" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573818046">(Feb 13 2026 at 19:50)</a>:</h4>
+<p>You can use meta implication + <code>assume</code>, as you already did above, or you can use a <code>for</code> clause for the premises, which you can then refer to by using <code>that</code>, by giving an explicit name, or by literal quotation:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">C</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"A ⟹ B ⟹ C"</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span>
+<span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">C</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="n">myprem</span><span class="o">:</span><span class="w"> </span><span class="n">B</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">    </span><span class="kt">thm</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="c">(*hover here*)</span>
+<span class="w">    </span><span class="kt">thm</span><span class="w"> </span><span class="n">myprem</span><span class="w"> </span><span class="c">(*hover here*)</span>
+<span class="w">    </span><span class="kt">thm</span><span class="w"> </span><span class="s">‹A›</span><span class="w"> </span><span class="c">(*hover here*)</span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="573820109"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20implications/near/573820109" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20implications.html#573820109">(Feb 13 2026 at 20:04)</a>:</h4>
+<p>Ah. I see. In the first half, I could also write <code>then show ?thesis</code> I find, which makes sense now.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

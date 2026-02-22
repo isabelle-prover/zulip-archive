@@ -1,0 +1,128 @@
+<html>
+<head><meta charset="utf-8"><title>Oddity with records and locales · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html">Oddity with records and locales</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="531422474"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/531422474" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#531422474">(Jul 28 2025 at 17:30)</a>:</h4>
+<p>Hoping to duplicate the structure of HOL/Algebra for using records as part of defining locales for algebraic objects (see also <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Should.20I.20always.20bundle.20the.20data.20in.20a.20locale.20into.20a.20record.3F/with/424326190">#Beginner Questions &gt; Should I always bundle the data in a locale into a record?</a> ), I've copied and slightly simplified the setup for a monoid:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">record</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">monoid</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">carrier</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="n">mult</span><span class="w">    </span><span class="o">::</span><span class="w"> </span><span class="s">"['a, 'a] ⇒ 'a"</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">‹⊗ı›</span><span class="w"> </span><span class="n">70</span><span class="o">)</span>
+<span class="w">  </span><span class="n">one</span><span class="w">     </span><span class="o">::</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="o">(</span><span class="s">‹𝟭ı›</span><span class="o">)</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">monoid</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">(</span><span class="kp">structure</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">m_closed</span><span class="w"> </span><span class="o">[</span><span class="n">intro</span><span class="o">,</span><span class="w"> </span><span class="n">simp</span><span class="o">]:</span>
+<span class="w">         </span><span class="s">"⟦x ∈ carrier G; y ∈ carrier G⟧ ⟹ x ⊗ y ∈ carrier G"</span>
+<span class="w">      </span><span class="kp">and</span><span class="w"> </span><span class="n">m_assoc</span><span class="o">:</span>
+<span class="w">         </span><span class="s">"⟦x ∈ carrier G; y ∈ carrier G; z ∈ carrier G⟧</span>
+<span class="s">          ⟹ (x ⊗ y) ⊗ z = x ⊗ (y ⊗ z)"</span>
+<span class="w">      </span><span class="kp">and</span><span class="w"> </span><span class="n">one_closed</span><span class="w"> </span><span class="o">[</span><span class="n">intro</span><span class="o">,</span><span class="w"> </span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"𝟭 ∈ carrier G"</span>
+<span class="w">      </span><span class="kp">and</span><span class="w"> </span><span class="n">l_one</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"x ∈ carrier G ⟹ 𝟭 ⊗ x = x"</span>
+<span class="w">      </span><span class="kp">and</span><span class="w"> </span><span class="n">r_one</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"x ∈ carrier G ⟹ x ⊗ 𝟭 = x"</span>
+<span class="k">begin</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Here the simplification was simply folding the "partial object" record into the monoid record. When I look at this in jEdit, the <code>G</code> in <code>fixes G (structure)</code> is shown in blue:<br>
+<a href="/user_uploads/14278/MhJ2il72FZUsRi8vpo0gc1Jp/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/MhJ2il72FZUsRi8vpo0gc1Jp/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="234x72" src="/user_uploads/thumbnail/14278/MhJ2il72FZUsRi8vpo0gc1Jp/image.png/840x560.webp"></a></div><p>When I try to replicate that approach, albeit with different names, like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">record</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'p</span><span class="o">,</span><span class="w"> </span><span class="n n-Type">'l</span><span class="o">)</span><span class="w"> </span><span class="n">affine_plane_r</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Points</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'p set"</span>
+<span class="w">  </span><span class="n">Lines</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'l set"</span>
+<span class="w">  </span><span class="n">incid</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'p ⇒ 'l ⇒ bool"</span><span class="w"> </span><span class="o">(</span><span class="kp">infix</span><span class="w"> </span><span class="s">"⊲"</span><span class="w"> </span><span class="n">60</span><span class="o">)</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">affine_plane_data</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="o">(</span><span class="kp">structure</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">contains</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"⟦ k ∈ Lines AP ; P ∈ Points AP⟧ ⟹ (P ⊲ k)"</span>
+<span class="c">(*  fixes join:: "'p ⇒ 'p ⇒ 'l"</span>
+<span class="c">  fixes find_parallel:: "'l ⇒ 'p ⇒ 'l" *)</span>
+<span class="k">begin</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>the <code>fixes AP (Structure)</code> shows <code>AP</code> in black instead:<br>
+<a href="/user_uploads/14278/ajnWRbWOIQlpMvKjlsfmlnjR/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/ajnWRbWOIQlpMvKjlsfmlnjR/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="550x106" src="/user_uploads/thumbnail/14278/ajnWRbWOIQlpMvKjlsfmlnjR/image.png/840x560.webp"></a></div><p>It also seems unhappy about my use of  <code> ⊲</code> as an infix operator, even though in the monoid example, the use of <code>⊗</code> as an infix operator works fine. </p>
+<p>I suppose that my problem could be that I have <strong>two</strong> types, <code>'p</code> and <code>'l</code>, while monoids have only <code>'a</code>,  but I'm hoping it's something simpler/stupider, and that I've made some sort of copy-paste error that'll be obvious to a trained eye. </p>
+<p>Can anyone explain what's going on here?</p>
+
+
+
+<a name="531425941"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/531425941" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#531425941">(Jul 28 2025 at 17:50)</a>:</h4>
+<p>...wait. I think I've partly answered my own question. When I simplify to this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">locale</span><span class="w"> </span><span class="n">affine_plane_data</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="o">(</span><span class="kp">structure</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">nonempty</span><span class="o">:</span><span class="w"> </span><span class="s">"Lines AP ≠ {}"</span>
+<span class="k">begin</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>then the <code>AP</code> turns blue. So perhaps the black vs blue problem is a symptom of the second problem: the fact my my <code>contains</code> assumption is generating a syntax error is causing the color problem as well. </p>
+<p>I'm still puzzled, however, about the problem with <code>⊲</code>, and why it doesn't work the way that multiplication seems to for monoids.</p>
+
+
+
+<a name="531426110"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/531426110" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Christian Pardillo Laursen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#531426110">(Jul 28 2025 at 17:51)</a>:</h4>
+<p>Adding the ı character to the infix definition seems to do the trick, though I'm not entirely sure why that might be - perhaps it hints at an implicit argument?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">record</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'p</span><span class="o">,</span><span class="w"> </span><span class="n n-Type">'l</span><span class="o">)</span><span class="w"> </span><span class="n">affine_plane_r</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Points</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'p set"</span>
+<span class="w">  </span><span class="n">Lines</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'l set"</span>
+<span class="w">  </span><span class="n">incid</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'p ⇒ 'l ⇒ bool"</span><span class="w"> </span><span class="o">(</span><span class="kp">infix</span><span class="w"> </span><span class="s">‹◃ı›</span><span class="w"> </span><span class="n">60</span><span class="o">)</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">affine_plane_data</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="o">(</span><span class="kp">structure</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">contains</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"⟦ k ∈ Lines AP ; P ∈ Points AP⟧ ⟹ (k ◃ P)"</span>
+<span class="c">(*  fixes join:: "'p ⇒ 'p ⇒ 'l"</span>
+<span class="c">  fixes find_parallel:: "'l ⇒ 'p ⇒ 'l" *)</span>
+</code></pre></div>
+<p>The original works if we pass AP as an argument to ◃:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">record</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'p</span><span class="o">,</span><span class="w"> </span><span class="n n-Type">'l</span><span class="o">)</span><span class="w"> </span><span class="n">affine_plane_r</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Points</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'p set"</span>
+<span class="w">  </span><span class="n">Lines</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'l set"</span>
+<span class="w">  </span><span class="n">incid</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'p ⇒ 'l ⇒ bool"</span><span class="w"> </span><span class="o">(</span><span class="kp">infix</span><span class="w"> </span><span class="s">‹◃›</span><span class="w"> </span><span class="n">60</span><span class="o">)</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">affine_plane_data</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">AP</span><span class="w"> </span><span class="o">(</span><span class="kp">structure</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">contains</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"⟦ k ∈ Lines AP ; P ∈ Points AP⟧ ⟹ ((◃) AP k P)"</span>
+</code></pre></div>
+<p>In both cases AP returns to blue - that only happens because of the error</p>
+
+
+
+<a name="531427030"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/531427030" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#531427030">(Jul 28 2025 at 17:56)</a>:</h4>
+<p>Wow. I have no idea what that character means, and figured it had something to do with writing a subscript of <code>G</code> on later uses of   <code>⊗</code>, which I didn't need.  As usual, I guess (a) that this takes me past this stumbling block, but (b) I've got more reading to do. </p>
+<p>Thanks!</p>
+
+
+
+<a name="539992022"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/539992022" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#539992022">(Sep 17 2025 at 11:41)</a>:</h4>
+<p>FYI some people consider the HOL-Algebra approach a bit old fashioned and prefer something like Ballarin's approach to algebra in the AFP. Also uses locales, but without records. Frankly I'm not convinced; to me it seems more like they both have their advantages and disadvantages.</p>
+
+
+
+<a name="539992353"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/539992353" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#539992353">(Sep 17 2025 at 11:42)</a>:</h4>
+<p>And yes, that weird character is basically a placeholder for the structure parameter. The syntax with the HOL-Algebra approach can get a bit clunky. That's one disadvantage over Ballarin's approach. Some better tool support could go a long way here...</p>
+
+
+
+<a name="540592994"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Oddity%20with%20records%20and%20locales/near/540592994" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Oddity.20with.20records.20and.20locales.html#540592994">(Sep 20 2025 at 15:28)</a>:</h4>
+<p>Thanks, Manuel. At this point I'm pretty much committed to the HOL-Algebra approach because with two types and a couple of functions, putting them all in a record just shortens all my "have" and "show" claims. :) I agree that a bit more tool support would be a nice thing.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

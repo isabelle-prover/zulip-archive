@@ -1,0 +1,269 @@
+<html>
+<head><meta charset="utf-8"><title>Locale semantics · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html">Locale semantics</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="503787620"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503787620" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503787620">(Mar 06 2025 at 13:03)</a>:</h4>
+<p>I have a terrible feeling that I'm asking the same question a second time (see <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Skolem.20confusion/with/502872022">#Beginner Questions &gt; Skolem confusion</a> ) but here goes. I've distilled this down from a larger example, but that means that in and of itself, it makes little sense. </p>
+<p>Anyhow, a locale of type "a1" consists of a set Items containing some nat-sets; to be an <code>a1</code>, the nat-sets must each have cardinality two. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">LocaleMWE3</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Items</span><span class="o">::</span><span class="w"> </span><span class="s">"nat set set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">ax1</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ card X = 2"</span><span class="w">  </span><span class="c">(* A *)</span>
+<span class="k">begin</span>
+<span class="k">end</span><span class="w"> </span><span class="c">(* a1 *)</span>
+</code></pre></div>
+<p>I believe that Axiom 1 (i.e. <code>ax1</code>) expresses this requirement. </p>
+<p>I'd like to establish that a particular set of items constitutes an <code>a1</code> using the locale predicate:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example1</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Items</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"Items = { {1::nat,4}, {2, 4}}"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+</code></pre></div>
+<p>To do so, I begin by saying that within this context, in which <code>Items</code> is associated with <code>{{1 , 4}, {2, 4}}</code>, axiom 1 holds true;  that should suffice to prove that <code>Items</code> satisfies the predicate called <code>a1</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span><span class="w"> </span><span class="c">(* AA *)</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a1_def</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w">  </span><span class="c">(* B but sledgehammer doesn't find a proof using 0 *)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>This proof doesn't work as expected. I've shown fact 0, which is exactly axiom 1, verbatim, but sledgehammer refuses to use it in proving the lemma. In an alternative version, I've put a <code>⋀ X .</code> in front of the assertion that axiom 1 holds, and everything works fine:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example2</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Items</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"Items = { {1::nat,4}, {2, 5}}"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">1</span><span class="o">:</span><span class="w"> </span><span class="s">"⋀ X .⟦X ∈ Items⟧ ⟹ (card X = 2)"</span><span class="w">  </span><span class="k">using</span><span class="w">  </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">a1_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span><span class="w"> </span><span class="c">(* C *)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>I've also done a third proof, using <code>∀</code>, and it works too, of course -- -I just did it to double-check:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example3</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 { {1::nat,3}, {2, 4}}"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"∀X. X ∈ {{1::nat, 3}, {2, 4}} ⟶ (card X = 2)"</span><span class="w"> </span><span class="k">by</span><span class="w">  </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">a1_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>So back in the first proof, can someone tell me what the line marked <code>(* AA *)</code> actually states? As in, "if you were writing this proof in natural language, what would this assertion say?" And can you contrast it with what like <code>(* A *)</code> expresses? </p>
+<p>At a mechanical level, I'm fine -- I can continue my proofs by adding in the <code>⋀ X .</code> stuff -- but I'd feel a  lot better if I knew what that (apparently useless) fact 0 is saying, so that I can avoid this particular hurdle in the future.</p>
+
+
+
+<a name="503826591"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503826591" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503826591">(Mar 06 2025 at 15:43)</a>:</h4>
+<p><del>I think (as you figured out) <code>ax1</code> doesn't say what you think it says ("forall X ..."). This is a mistake I've made several times (mentioning a variable in the locale assumptions which isn't fixed)... I think it ends up referring to whatever <code>X</code> is in the enclosing context, but the technical details of what exactly it means I'll leave for someone else to answer</del> (the mistake I made several times is the reverse situation, where there should be a <code>fixes</code> of a variable, but I left it out and it got universally quantified)</p>
+<p>wrong explanation, see Chelsea's below</p>
+
+
+
+<a name="503828947"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503828947" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Chelsea Edmonds <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503828947">(Mar 06 2025 at 15:53)</a>:</h4>
+<p>Here's a few examples I hope will help. This links to your question before, which highlights the difference between working with an established theorem (or locale context assumption) and an ongoing proof, as well as understanding the importance of quantifiers in assumptions. Lets go back to your original question. Consider the below example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example2</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="kt">thm</span><span class="w"> </span><span class="n">a1example2</span>
+</code></pre></div>
+<p>This lemma states "if for some x in Items, the cardinality of X is 2,  Items satisfies the assumptions of locale a1". Which can't actually be proven as this assumption isn't strong enough (hence the sorry), but we'll assume for now it dows. Inspect the lemma using <code>a1example2</code> as above. See how Isabelle has converted the free variable X into an unknown now we're outside the proof context? So if we now wanted to use this lemma, we would <em>instantiate</em> the x, which would mean we could give the theorem any set for X (including one that may not be in Items), and falsely show Items satisfies a1. E.g, the following example goes through, where Items contains one set of size 3.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example3</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 {{1::nat, 2, 3}}"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"{} ∈ {{1, 2, 3}} ⟹ card {} = 2"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a1example2</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="s">"{}"</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>This is why assumptions on a set need the forall, which I think is more relevant to your last question. But its important to keep in mind when looking at your current problem. For facts in the Isar proof, such as AA,  the free variables in fact 0 aren't even converted into unknowns (which is what your prog prove quote discussed for an actual theorem), so can't be instantiated to start with (compared to an actual theorem statement, such as lemma01 below - which can't be proven anyway). This is why we need to add the quantifier inline. E.g. see the difference in the two uses of thm in jedit with the below code.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">01</span><span class="o">:</span><span class="w">  </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="kt">thm</span><span class="w"> </span><span class="n">01</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">a1example1</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"Items = { {1::nat,4}, {2, 4}}"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">0</span>
+</code></pre></div>
+<p>Locale assumptions actually work slightly differently. When you assume something in the format of A, Isabelle's mechanisms implicitly adds the quantification. You can see this by applying the unfold locales tactic (see example below) which changes your proof to have all the assumptions of a1 as your goals. See how in the unfolded goals, it adds in the quantification.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example1</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"Items = { {1::nat,4}, {2, 4}}"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">unfold_locales</span><span class="o">)</span>
+</code></pre></div>
+<p>Of course you still need to be careful if you have an assumption in a locale which is an implication, which may in turn need to quantify over only part of that statement - this circles back around to the logical meaning discussed in the first examples. But in your case, your ax1 is perfectly fine.</p>
+
+
+
+<a name="503831319"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503831319" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503831319">(Mar 06 2025 at 16:03)</a>:</h4>
+<p>^ I deleted my answer which is incorrect</p>
+
+
+
+<a name="503845748"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503845748" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503845748">(Mar 06 2025 at 17:06)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="252023">Chelsea Edmonds</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Locale.20semantics/near/503828947">said</a>:<br>
+Thanks for your detailed answer, which I <em>think</em> probably addresses the essence of my confusion, but I can't quite piece it together yet. </p>
+<blockquote>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example2</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="kt">thm</span><span class="w"> </span><span class="n">a1example2</span>
+</code></pre></div>
+<p>This lemma states "if for some x in Items, the cardinality of X is 2,  Items satisfies the assumptions of locale a1".</p>
+</blockquote>
+<p>I don't understand why it says that. I've always read <code>P ==&gt; Q</code> as the metalogic version of "if P then Q"; in this case, that<br>
+becomes "if X is in Items, then its cardinality is 2." Can you explain why I should be reading it as  something different? I understand that it's in an <code>assumes</code>, so I should really be reading the <em>whole</em> lemma statement as "Suppose we know that if X is in items, it's cardinality is 2. Then <code>Items</code> is an example of an <code>a1</code> locale ". <br>
+But I still don't see where the "if <strong>for some</strong> x in Items..." comes from. Wouldn't that amount to an implicit existential quantifier? </p>
+<p>I think that in my example 2, </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">thm</span><span class="w"> </span><span class="n">a1example2</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">a1example1</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Items</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"Items = { {1::nat,4}, {2, 4}}"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a1_def</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w">  </span><span class="c">(* B but sledgehammer doesn't find a proof using 0 *)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>fact 0 really <em>does</em> mean the universal thing, because if I change the second set in Items in the assumptions to {2, 4, 5}, the fastforce proof suddenly fails. And yet there clearly still is <em>some</em> X  in items (namely {1, 4}) for which the cardinality is 2. </p>
+<p>Your later comment -- "Locale assumptions actually work slightly differently. When you assume something in the format of A, Isabelle's mechanisms implicitly adds the quantification" -- makes it clear that when I set about proving that some structure has the characteristics necessary to meet some locale-spec, I should prove not the stated "axioms" of the locale, but their quantified versions. (This does seem like a not-so-great design choice, but obviously I can't fix it.) </p>
+<p>The remaining stuff you wrote --- about free vars becoming unknowns once the theorem's proved (but not before) --- I already understand (or at least I'm aware of it and am sort of used to it). </p>
+<blockquote>
+<p>Which can't actually be proven as this assumption isn't strong enough (hence the sorry), but we'll assume for now it dows. Inspect the lemma using <code>a1example2</code> as above. See how Isabelle has converted the free variable X into an unknown now we're outside the proof context? So if we now wanted to use this lemma, we would <em>instantiate</em> the x, which would mean we could give the theorem any set for X (including one that may not be in Items), and falsely show Items satisfies a1. E.g, the following example goes through, where Items contains one set of size 3.</p>
+<p><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example3</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 {{1::nat, 2, 3}}"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"{} ∈ {{1, 2, 3}} ⟹ card {} = 2"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a1example2</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="s">"{}"</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+<span class="k">qed</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>This next bit, though -- I still can't quite get it.  I'll keep re-reading and see whether it sinks in. But in the meantime, can you address my earlier question, namely, "At point <code>AA</code> in my initial proof, what is an english-language translation of of that line (up to but not including the "using assms..." part), and why?"  I feel as if having <strong>that</strong> would really help me. It's a little upsetting to discover that I've proved something that doesn't, on reflection, even make sense to me!</p>
+<blockquote>
+<p>This is why assumptions on a set need the forall, which I think is more relevant to your last question. But its important to keep in mind when looking at your current problem. For facts in the Isar proof, such as AA,  the free variables in fact 0 aren't even converted into unknowns (which is what your prog prove quote discussed for an actual theorem), so can't be instantiated to start with (compared to an actual theorem statement, such as lemma01 below - which can't be proven anyway). This is why we need to add the quantifier inline. E.g. see the difference in the two uses of thm in jedit with the below code. [...]</p>
+</blockquote>
+
+
+
+<a name="503871083"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503871083" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503871083">(Mar 06 2025 at 19:13)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="699541">John  Hughes</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Locale.20semantics/near/503845748">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="252023">Chelsea Edmonds</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Locale.20semantics/near/503828947">said</a>:<br>
+Thanks for your detailed answer, which I <em>think</em> probably addresses the essence of my confusion, but I can't quite piece it together yet. </p>
+<blockquote>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example2</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"a1 Items"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="kt">thm</span><span class="w"> </span><span class="n">a1example2</span>
+</code></pre></div>
+<p>This lemma states "if for some x in Items, the cardinality of X is 2,  Items satisfies the assumptions of locale a1".</p>
+</blockquote>
+<p>I don't understand why it says that. I've always read <code>P ==&gt; Q</code> as the metalogic version of "if P then Q"; in this case, that<br>
+becomes "if X is in Items, then its cardinality is 2." Can you explain why I should be reading it as  something different? I understand that it's in an <code>assumes</code>, so I should really be reading the <em>whole</em> lemma statement as "Suppose we know that if X is in items, it's cardinality is 2. Then <code>Items</code> is an example of an <code>a1</code> locale ". <br>
+But I still don't see where the "if <strong>for some</strong> x in Items..." comes from. Wouldn't that amount to an implicit existential quantifier? </p>
+</blockquote>
+<p>It is<code>P ==&gt; Q ==&gt; R</code> vs <code>(P ==&gt; Q) ==&gt; R</code>.</p>
+<p>The lemma is the same as:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example2</span><span class="o">:</span>
+<span class="w">   </span><span class="s">"(⟦X ∈ Items⟧ ⟹ (card X = 2))      ⟹ a1 Items"</span>
+</code></pre></div>
+<p>And given how implication work, it means that:</p>
+<p>- either there is some X such that <code>(⟦X ∈ Items⟧ ⟹ (card X = 2)) </code> and then <code>a1 items</code> holds<br>
+   - or there is not such X (<code>False ==&gt; everything</code>)</p>
+
+
+
+<a name="503871844"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503871844" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503871844">(Mar 06 2025 at 19:17)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">fact</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">really</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">universal</span><span class="w"> </span><span class="n">thing</span><span class="o">,</span><span class="w"> </span><span class="n">because</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">change</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">Items</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">assumptions</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="ow">{</span><span class="n">2</span><span class="o">,</span><span class="w"> </span><span class="n">4</span><span class="o">,</span><span class="w"> </span><span class="n">5</span><span class="ow">}</span><span class="o">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fastforce</span><span class="w"> </span><span class="k">proof</span><span class="w"> </span><span class="n">suddenly</span><span class="w"> </span><span class="n">fails.</span><span class="w"> </span><span class="n">And</span><span class="w"> </span><span class="n">yet</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">clearly</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="kp">is</span><span class="w"> </span><span class="n">some</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="o">(</span><span class="n">namely</span><span class="w"> </span><span class="ow">{</span><span class="n">1</span><span class="o">,</span><span class="w"> </span><span class="n">4</span><span class="ow">}</span><span class="o">)</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">cardinality</span><span class="w"> </span><span class="kp">is</span><span class="w"> </span><span class="n">2.</span>
+</code></pre></div>
+<p>nearly, with a <code>for X</code> to have it forall-quantified it works:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span><span class="w">  </span><span class="kp">for</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+</code></pre></div>
+<p><a href="/user_uploads/14278/k_4te6chyyqdbmG1h40uQehx/image.png">image.png</a><br>
+Without the <code>for X</code> jEdit is actually using the weird color, which means "something is wrong here, this variable is free. However, you are logically allowed to do that, so I let you shoot yourself in the foot".</p>
+<div class="message_inline_image"><a href="/user_uploads/14278/k_4te6chyyqdbmG1h40uQehx/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="276x26" src="/user_uploads/thumbnail/14278/k_4te6chyyqdbmG1h40uQehx/image.png/840x560.webp"></a></div>
+
+
+
+<a name="503872634"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503872634" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503872634">(Mar 06 2025 at 19:21)</a>:</h4>
+<blockquote>
+<p>This next bit, though -- I still can't quite get it. I'll keep re-reading and see whether it sinks in. But in the meantime, can you address my earlier question, namely, "At point AA in my initial proof, what is an english-language translation of of that line (up to but not including the "using assms..." part), and why?" I feel as if having that would really help me. It's a little upsetting to discover that I've proved something that doesn't, on reflection, even make sense to me!</p>
+</blockquote>
+<p>The best way I think is to see it in action: try it out!</p>
+<p>Add some <code>thm X</code> in various places (it works on the named <code>have</code>s too! And assumes!) and see what happens to the variables. Are they changed to <code>?a</code>? are they kept?</p>
+
+
+
+<a name="503876814"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503876814" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503876814">(Mar 06 2025 at 19:44)</a>:</h4>
+<p>You say:</p>
+<blockquote>
+<p>The lemma is the same as:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">a1example2</span><span class="o">:</span>
+<span class="w">   </span><span class="s">"(⟦X ∈ Items⟧ ⟹ (card X = 2))      ⟹ a1 Items"</span>
+</code></pre></div>
+<p>And given how implication work, it means that:</p>
+<ul>
+<li>either there is some X such that <code>(⟦X ∈ Items⟧ ⟹ (card X = 2))</code>  and then <code>a1 items</code> holds</li>
+<li>or there is not such X (<code>False ==&gt; everything</code>)</li>
+</ul>
+</blockquote>
+<p>Where does the "some" come from here? I don't see an existential quantifier anywhere! <br>
+I'm not doubting you -- what you say is obviously true -- but I'm not sure how I'm supposed to know that from <code>   "(⟦X ∈ Items⟧ ⟹ (card X = 2))      ⟹ a1 Items"</code>. </p>
+<blockquote>
+<p>nearly, with a <code>for X</code> to have it forall-quantified it works:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"⟦X ∈ Items⟧ ⟹ (card X = 2)"</span><span class="w">  </span><span class="kp">for</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+</code></pre></div>
+<p>Without the <code>for X</code> jEdit is actually using the weird color, which means "something is wrong here, this variable is free. However, you are logically allowed to do that, so I let you shoot yourself in the foot".</p>
+</blockquote>
+<p>Using the "for X" is the same as putting <code>"⋀X .</code> in front, right? So I already understand that this is one route to making things work. </p>
+<p>And I see that the X is highlighted in jEdit at the point you mention, but I still don't know what the thing I proved <em>means</em> --- surely there's some meaning to it, or having "proved" it wouldn't make sense. </p>
+<p>As for "try it out", I have done that for about 12 hours now. I can see what's happening --- I just don't understand what it means. I've obviously got some mistaken notions about fix-assume-show statements of theorems or something, and about the meaning of formulas with free variables in them, but I don't know what those mistaken notions are.</p>
+
+
+
+<a name="503877748"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Locale%20semantics/near/503877748" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Locale.20semantics.html#503877748">(Mar 06 2025 at 19:50)</a>:</h4>
+<p>I think the fancy name is mini-scoping, but the argument is just how ∀ distributes over implication:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">‹(∀X. (P X ⟶ Q)) ⟷ ((∃X. P X) ⟶ Q)›</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

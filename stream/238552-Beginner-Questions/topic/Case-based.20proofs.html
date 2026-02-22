@@ -1,0 +1,67 @@
+<html>
+<head><meta charset="utf-8"><title>Case-based proofs · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Case-based.20proofs.html">Case-based proofs</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="516451164"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Case-based%20proofs/near/516451164" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Case-based.20proofs.html#516451164">(May 06 2025 at 13:53)</a>:</h4>
+<p>In programming-and-proving, page 45, there's a nice example of how to do a proof where there are two cases:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"P \/ Q"</span><span class="w"> </span><span class="n">&lt;proof&gt;</span>
+<span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span>
+<span class="k">proof</span>
+<span class="w">   </span><span class="k">assume</span><span class="w"> </span><span class="s">"P"</span>
+<span class="w">   </span><span class="ow">...</span>
+<span class="w">   </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span><span class="w"> </span><span class="n">&lt;proof&gt;</span>
+<span class="k">next</span>
+<span class="w">   </span><span class="k">assume</span><span class="w"> </span><span class="s">"Q"</span>
+<span class="w">   </span><span class="ow">...</span>
+<span class="w">   </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span><span class="w"> </span><span class="n">&lt;proof&gt;</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Is there something similar for a 3-way disjunction? I tried the natural thing:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">example</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"A ∨ B ∨ C"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"R"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"A ∨ B ∨ C"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="s">"A"</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="s">"B"</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="s">"C"</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"R"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>but Isabelle very reasonably complained, because the <code>A \/ B \/ C</code> was treated as a two-term disjunction, <code>A \/ (B \/ C)</code>. And I can obviously split that, and nest one level deeper, etc., but I'm wondering if there's something more naturally structured that I might use when working with something like trichotomy, where three disjoint cases arise very naturally.</p>
+
+
+
+<a name="516456242"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Case-based%20proofs/near/516456242" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Case-based.20proofs.html#516456242">(May 06 2025 at 14:12)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">begin</span>
+<span class="k">have</span><span class="w"> </span><span class="s">"P ∨ Q ∨ Q'"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"R"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">elim</span><span class="w"> </span><span class="n">disjE</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="521320711"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Case-based%20proofs/near/521320711" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Case-based.20proofs.html#521320711">(May 30 2025 at 15:28)</a>:</h4>
+<p>The <code>consider</code> keyword is also very powerful for such use cases</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

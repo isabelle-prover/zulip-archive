@@ -1,0 +1,56 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Redundant facts (inj_on_subset/subset_inj_on) ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Redundant.20facts.20.28inj_on_subset.2Fsubset_inj_on.29.20.2E.2E.2E.html">[isabelle] Redundant facts (inj_on_subset/subset_inj_on) ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="532557343"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Redundant%20facts%20%28inj_on_subset/subset_inj_on%29%20.../near/532557343" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Redundant.20facts.20.28inj_on_subset.2Fsubset_inj_on.29.20.2E.2E.2E.html#532557343">(Aug 03 2025 at 13:32)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+I just happened to notice the following within a few lines of each other in src/HOL/Fun.thy<br>
+(Isabelle 2025):</p>
+<p>lemma inj_on_subset:</p>
+<p>assumes "inj_on f A"</p>
+<p>and "B ⊆ A"</p>
+<p>shows "inj_on f B"</p>
+<p>proof (rule inj_onI)</p>
+<p>fix a b</p>
+<p>assume "a ∈ B" and "b ∈ B"</p>
+<p>with assms have "a ∈ A" and "b ∈ A"</p>
+<p>by auto</p>
+<p>moreover assume "f a = f b"</p>
+<p>ultimately show "a = b"</p>
+<p>using assms by (auto dest: inj_onD)</p>
+<p>qed</p>
+<p>lemma subset_inj_on: "inj_on f B ⟹ A ⊆ B ⟹ inj_on f A"</p>
+<p>unfolding inj_on_def by blast</p>
+<p>They seem to be completely redundant, and in fact the first version can be proved by<br>
+the shorter proof:</p>
+<p>using assms unfolding inj_on_def by blast</p>
+<p>which corresponds to the proof that appears for the second version.</p>
+<p>- Gene Stark</p>
+<p><a href="/user_uploads/14278/xWmBbr-VCcG7OAochhu-c2ES/OpenPGP_0x5C7344E4A8F23061.asc">OpenPGP_0x5C7344E4A8F23061.asc</a><br>
+<a href="/user_uploads/14278/AEifOSm3qa7-JlKy0KI91Gy1/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="532575173"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Redundant%20facts%20%28inj_on_subset/subset_inj_on%29%20.../near/532575173" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Redundant.20facts.20.28inj_on_subset.2Fsubset_inj_on.29.20.2E.2E.2E.html#532575173">(Aug 03 2025 at 16:29)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Thanks for pointing this out. I believe I got rid of it about four months ago, so it won't be in the next release.</p>
+<blockquote>
+<p>On 3 Aug 2025, at 14:06, Eugene W. Stark &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt; wrote:</p>
+<p>I just happened to notice the following within a few lines of each other in src/HOL/Fun.thy<br>
+(Isabelle 2025):<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

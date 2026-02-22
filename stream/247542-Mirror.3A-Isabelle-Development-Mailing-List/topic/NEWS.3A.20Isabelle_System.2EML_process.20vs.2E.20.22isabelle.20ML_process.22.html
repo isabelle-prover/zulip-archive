@@ -1,0 +1,63 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Isabelle_System.ML_process vs. &quot;isabelle ML_process&quot; · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle_System.2EML_process.20vs.2E.20.22isabelle.20ML_process.22.html">NEWS: Isabelle_System.ML_process vs. &quot;isabelle ML_process&quot;</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="558301868"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle_System.ML_process%20vs.%20%22isabelle%20ML_process%22/near/558301868" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle_System.2EML_process.20vs.2E.20.22isabelle.20ML_process.22.html#558301868">(Nov 19 2025 at 21:00)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* ML </strong>*</p>
+<ul>
+<li>Isabelle_System.ML_process and ML_Process.args allow to run an<br>
+external ML process directly via the current Isabelle/Scala context,<br>
+without running another bulky Java process of "isabelle ML_process" on<br>
+the command-line.</li>
+</ul>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>The former command-line tool "isabelle process" has been renamed to<br>
+"isabelle ML_process", with new options -C DIR and -r (redirect). The<br>
+old option option -T to load individual theories via the Isabelle/ML<br>
+"use_thy" function has been removed. It is still possible to use<br>
+"Thy_Info.use_thy_legacy" together with "isabelle ML_process -e ...",<br>
+but that low-level entry to the theory loader will be removed at a later<br>
+stage. The proper way to process individual theories under program<br>
+control is via "isabelle process_theories". INCOMPATIBILITY.</li>
+</ul>
+<p>This refers to Isabelle/baf75b1bf14a.</p>
+<p>It is a clarification of ancient terminology and concepts. Many decades ago, <br>
+an "Isabelle process" was indeed the Poly/ML runtime system with our modest <br>
+Pure/ROOT.ML or HOL/ROOT.ML pre-loaded. In the past 10 years, the "Isabelle <br>
+system process" has become a Java Virtual Machine running the bulky <br>
+isabelle.jar (11 MiB of JVM byte code). That Isabelle system process can start <br>
+any number of Isabelle/ML processes, using operations from the Scala modules <br>
+isabelle.ML_Process and isabelle.Bash. Isabelle/ML programs can now directly <br>
+invoke that as well, e.g. to run a generated SML program via Isabelle/HOL codegen.</p>
+<p>So ML-to-ML_process now goes via the already running Scala process, and not <br>
+ML-to-Bash.Server-to-java_process-to-ML_process.</p>
+<p>To see the wiring, it might help to use the Prover IDE:</p>
+<p>isabelle jedit -l Pure ~/Scratch.thy src/Pure/ROOT.ML</p>
+<p>and then explore this source snippet via C-hover-click:</p>
+<p>theory Scratch<br>
+   imports Pure<br>
+begin</p>
+<p>ML ‹<br>
+   Isabelle_System.ML_process;<br>
+   \&lt;^scala_function&gt;‹ML_process›;<br>
+›</p>
+<p>end</p>
+<p>We don't have a proper Isabelle/Scala IDE yet: One happy day it will be part <br>
+of the regular Isabelle/PIDE setup -- not the somewhat lacking IntelliJ IDEA <br>
+Scala plugin.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

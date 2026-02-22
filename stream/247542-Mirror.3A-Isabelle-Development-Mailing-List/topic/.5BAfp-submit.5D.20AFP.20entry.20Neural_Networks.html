@@ -1,0 +1,189 @@
+<html>
+<head><meta charset="utf-8"><title>[Afp-submit] AFP entry Neural_Networks · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BAfp-submit.5D.20AFP.20entry.20Neural_Networks.html">[Afp-submit] AFP entry Neural_Networks</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="558414648"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BAfp-submit%5D%20AFP%20entry%20Neural_Networks/near/558414648" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BAfp-submit.5D.20AFP.20entry.20Neural_Networks.html#558414648">(Nov 20 2025 at 12:14)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>It looks like what has changed is the pretty-printing. I think (just did <br>
+a quick check with Java) as a IEEE-32 value, both numbers are the same <br>
+(the closest IEEE-32 floating point number to this decimal <br>
+representation is the same, namely 3be810c5).</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 20/11/2025 12:35, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I find it surprising that the meaning of a specific bit pattern as a real number according to an established floating-point standard can change from year to year. How do we know it won't change again?</p>
+<p>Larry</p>
+<blockquote>
+<p>On 19 Nov 2025, at 22:37, Achim D. Brucker &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt; wrote:</p>
+<p>Hi,<br>
+I did a first investigation. Overall, this part of the theory is intended to serve as regression test. Thus, it worked as it should: acting as early warning for subtle changes that otherwise would go undetected, potentially creating "bit rot".</p>
+<p>The change is actually due to a difference in Poly/ML used in Isabelle 2025 vs the current development version (and, 2025-1, for that matter). Namely:</p>
+<p>ML\&lt;open&gt;<br>
+     PackReal32Little.fromBytes (Word8Vector.fromList [0wxC5, 0wx10, 0wxE8, 0wx3B])<br>
+\&lt;close&gt;</p>
+<p>returns a different value, namely:</p>
+<ul>
+<li>Isabelle 2025:                                  val it = 0.007082077209: PackReal32Little.real</li>
+<li>Isabelle development/2025-1:      val it = 0.007082077: PackReal32Little.real</li>
+</ul>
+<p>As the rule-of-thumb regarding the precision of 32 IEEE-745 floating point numbers is around 7-8 decimal digits, the new behaviour is OK. Hence, the fix to get the AFP entry working again is to update the theories to reflect the new values.<br>
+We will take care of this tomorrow.</p>
+<p>Best,<br>
+Achim (and Amy)</p>
+<p>On 19/11/2025 16:25, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>Neural_Networks is badly broken. I took a look and the failure is in a proof that tests whether a certain generated construction is equal to an explicit construction. They are supposed to be literally identical and are not. I think we should get back to the authors to find out why it failed and how it can be made robust.</p>
+<p>Larry</p>
+</blockquote>
+</blockquote>
+<hr>
+<p>Afp-submit mailing list<br>
+<a href="mailto:Afp-submit@mailman.proof.cit.tum.de">Afp-submit@mailman.proof.cit.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/afp-submit">https://mailman46.in.tum.de/mailman/listinfo/afp-submit</a></p>
+</blockquote>
+
+
+
+<a name="558428269"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BAfp-submit%5D%20AFP%20entry%20Neural_Networks/near/558428269" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BAfp-submit.5D.20AFP.20entry.20Neural_Networks.html#558428269">(Nov 20 2025 at 13:21)</a>:</h4>
+<p><strong>From:</strong> "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;</p>
+<p>Hi,<br>
+This is also my assumption.  The values used by me in the below example <br>
+are after pretty printing (i.e., convertio to strings).</p>
+<p>The actually value stored is 0.070820772089064121246337890625 (decoding <br>
+it "manually", following the standard). Trying to print it in a small C <br>
+programm gives 0.00708207720890641212, which seems to be the offical <br>
+decimal represenation according to the standard. IEEE754  is not easy ...</p>
+<p>Achim</p>
+<p>On 20/11/2025 12:14, Peter Lammich wrote:</p>
+<blockquote>
+<p>It looks like what has changed is the pretty-printing. I think (just <br>
+did a quick check with Java) as a IEEE-32 value, both numbers are the <br>
+same (the closest IEEE-32 floating point number to this decimal <br>
+representation is the same, namely 3be810c5).</p>
+<p>-- </p>
+<p>Peter</p>
+<p>On 20/11/2025 12:35, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I find it surprising that the meaning of a specific bit pattern as a <br>
+real number according to an established floating-point standard can <br>
+change from year to year. How do we know it won't change again?</p>
+<p>Larry</p>
+<blockquote>
+<p>On 19 Nov 2025, at 22:37, Achim D. Brucker &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt; wrote:</p>
+<p>Hi,<br>
+I did a first investigation. Overall, this part of the theory is <br>
+intended to serve as regression test. Thus, it worked as it should: <br>
+acting as early warning for subtle changes that otherwise would go <br>
+undetected, potentially creating "bit rot".</p>
+<p>The change is actually due to a difference in Poly/ML used in <br>
+Isabelle 2025 vs the current development version (and, 2025-1, for <br>
+that matter). Namely:</p>
+<p>ML\&lt;open&gt;<br>
+     PackReal32Little.fromBytes (Word8Vector.fromList [0wxC5, 0wx10, <br>
+0wxE8, 0wx3B])<br>
+\&lt;close&gt;</p>
+<p>returns a different value, namely:</p>
+<ul>
+<li>Isabelle 2025:                                  val it = <br>
+0.007082077209: PackReal32Little.real</li>
+<li>Isabelle development/2025-1:      val it = 0.007082077: <br>
+PackReal32Little.real</li>
+</ul>
+<p>As the rule-of-thumb regarding the precision of 32 IEEE-745 floating <br>
+point numbers is around 7-8 decimal digits, the new behaviour is OK. <br>
+Hence, the fix to get the AFP entry working again is to update the <br>
+theories to reflect the new values.<br>
+We will take care of this tomorrow.</p>
+<p>Best,<br>
+Achim (and Amy)</p>
+<p>On 19/11/2025 16:25, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>Neural_Networks is badly broken. I took a look and the failure is <br>
+in a proof that tests whether a certain generated construction is <br>
+equal to an explicit construction. They are supposed to be <br>
+literally identical and are not. I think we should get back to the <br>
+authors to find out why it failed and how it can be made robust.</p>
+<p>Larry</p>
+</blockquote>
+</blockquote>
+<hr>
+<p>Afp-submit mailing list<br>
+<a href="mailto:Afp-submit@mailman.proof.cit.tum.de">Afp-submit@mailman.proof.cit.tum.de</a><br>
+<a href="https://mailman46.in.tum.de/mailman/listinfo/afp-submit">https://mailman46.in.tum.de/mailman/listinfo/afp-submit</a></p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="558442449"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BAfp-submit%5D%20AFP%20entry%20Neural_Networks/near/558442449" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BAfp-submit.5D.20AFP.20entry.20Neural_Networks.html#558442449">(Nov 20 2025 at 14:21)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 20/11/2025 14:21, Achim D. Brucker wrote:</p>
+<blockquote>
+<p>The actually value stored is 0.070820772089064121246337890625 (decoding it <br>
+"manually", following the standard). Trying to print it in a small C programm <br>
+gives 0.00708207720890641212, which seems to be the offical decimal <br>
+represenation according to the standard. IEEE754  is not easy ...<br>
+Note that there have been changes on reals in polyml-5.9.1 (Isabelle2025) to <br>
+polyml-5.9.2 (Isabelle2025-1).</p>
+</blockquote>
+<p>An example changeset by David Matthews is here <br>
+<a href="https://github.com/polyml/polyml/commit/cc497eb585b0">https://github.com/polyml/polyml/commit/cc497eb585b0</a></p>
+<p>Maybe someone who understands the fine points can check if it has become more <br>
+correct or less correct.</p>
+<p>Makarius</p>
+
+
+
+<a name="558447497"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BAfp-submit%5D%20AFP%20entry%20Neural_Networks/near/558447497" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BAfp-submit.5D.20AFP.20entry.20Neural_Networks.html#558447497">(Nov 20 2025 at 14:41)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I know that converting a floating point number to decimal notation is tricky, but we must've had correct algorithms for decades now. I wonder whether anybody has formalised one :-)</p>
+<p>Larry<br>
+On 20 Nov 2025 at 13:21 +0000, Achim D. Brucker &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;, wrote:</p>
+<p>This is also my assumption.  The values used by me in the below example<br>
+are after pretty printing (i.e., convertio to strings).</p>
+<p>The actually value stored is 0.070820772089064121246337890625 (decoding<br>
+it "manually", following the standard). Trying to print it in a small C<br>
+programm gives 0.00708207720890641212, which seems to be the offical<br>
+decimal represenation according to the standard. IEEE754  is not easy ...</p>
+
+
+
+<a name="558459890"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BAfp-submit%5D%20AFP%20entry%20Neural_Networks/near/558459890" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BAfp-submit.5D.20AFP.20entry.20Neural_Networks.html#558459890">(Nov 20 2025 at 15:28)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>I remember having seen a talk about that ... but I cannot find any <br>
+matching papers :(</p>
+<p>On 20/11/2025 15:40, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I know that converting a floating point number to decimal notation is <br>
+tricky, but we must've had correct algorithms for decades now. I <br>
+wonder whether anybody has formalised one :-)</p>
+<p>Larry<br>
+On 20 Nov 2025 at 13:21 +0000, Achim D. Brucker &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;, <br>
+wrote:</p>
+<blockquote>
+<p>This is also my assumption.  The values used by me in the below example<br>
+are after pretty printing (i.e., convertio to strings).</p>
+<p>The actually value stored is 0.070820772089064121246337890625 (decoding<br>
+it "manually", following the standard). Trying to print it in a small C<br>
+programm gives 0.00708207720890641212, which seems to be the offical<br>
+decimal represenation according to the standard. IEEE754  is not easy ...</p>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

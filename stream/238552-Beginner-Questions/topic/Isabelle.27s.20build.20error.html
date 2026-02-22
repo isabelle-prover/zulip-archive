@@ -1,0 +1,99 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle&#x27;s build error · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html">Isabelle&#x27;s build error</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515684665"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515684665" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hongjian Jiang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515684665">(May 02 2025 at 10:35)</a>:</h4>
+<p>I am installing Isabelle 2025, and the recent version of afp. And when i run the <code>isabelle -e -D .</code> under the folder of FOL_Seq_Cal3, it raises an error: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">isabelle</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="o">-</span><span class="n">D</span><span class="w"> </span><span class="ow">.</span>
+<span class="n">Building</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="ow">...</span>
+<span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="n">see</span><span class="w"> </span><span class="k">also</span><span class="w"> </span><span class="s">"isabelle build_log -H Error HOL-Library"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="o">,</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Scala</span><span class="o">:</span><span class="w"> </span><span class="n">isabelle_scala</span><span class="w"> </span><span class="n">scalac</span><span class="w"> </span><span class="n">$ISABELLE_SCALAC_OPTIONS</span><span class="w"> </span><span class="n">ROOT.scala</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"export_code"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1408</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~~/src/HOL/Library/Finite_Map.thy"</span><span class="o">)</span>
+<span class="n">FOL_Seq_Calc3</span><span class="w"> </span><span class="n">CANCELLED</span>
+<span class="n">Unfinished</span><span class="w"> </span><span class="n">session</span><span class="o">(</span><span class="n">s</span><span class="o">):</span><span class="w"> </span><span class="n">FOL_Seq_Calc3</span><span class="o">,</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span>
+<span class="n">0</span><span class="o">:</span><span class="n">01</span><span class="o">:</span><span class="n">20</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">07</span><span class="o">:</span><span class="n">16</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">5.42</span>
+</code></pre></div>
+<p>While I test it with: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">isabelle</span><span class="w"> </span><span class="n">build_log</span><span class="w"> </span><span class="o">-</span><span class="n">H</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span>
+
+<span class="n">Theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="kp">in</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="o">):</span><span class="w"> </span><span class="n">MISSING</span>
+
+<span class="n">Theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="kp">in</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="o">):</span><span class="w"> </span><span class="n">MISSING</span>
+
+<span class="n">Build</span><span class="w"> </span><span class="n">errors</span><span class="o">:</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="o">,</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Scala</span><span class="o">:</span><span class="w"> </span><span class="n">isabelle_scala</span><span class="w"> </span><span class="n">scalac</span><span class="w"> </span><span class="n">$ISABELLE_SCALAC_OPTIONS</span><span class="w"> </span><span class="n">ROOT.scala</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"export_code"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1408</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~~/src/HOL/Library/Finite_Map.thy"</span><span class="o">)</span>
+
+<span class="n">Return</span><span class="w"> </span><span class="n">code</span><span class="o">:</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="o">(</span><span class="n">ERROR</span><span class="o">)</span>
+</code></pre></div>
+<p>Any idea what happens here?</p>
+
+
+
+<a name="515686181"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515686181" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515686181">(May 02 2025 at 10:45)</a>:</h4>
+<p>I assume your Isabelle and AFP versions don't match.</p>
+
+
+
+<a name="515698878"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515698878" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hongjian Jiang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515698878">(May 02 2025 at 12:06)</a>:</h4>
+<p>Well, I used afp-2025-05-01 and Isabelle2025 (March 2025)</p>
+
+
+
+<a name="515698983"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515698983" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hongjian Jiang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515698983">(May 02 2025 at 12:07)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Building</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="ow">...</span>
+<span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="n">see</span><span class="w"> </span><span class="k">also</span><span class="w"> </span><span class="s">"isabelle build_log -H Error HOL-Library"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="o">,</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Scala</span><span class="o">:</span><span class="w"> </span><span class="n">isabelle_scala</span><span class="w"> </span><span class="n">scalac</span><span class="w"> </span><span class="n">$ISABELLE_SCALAC_OPTIONS</span><span class="w"> </span><span class="n">ROOT.scala</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"export_code"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1408</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~~/src/HOL/Library/Finite_Map.thy"</span><span class="o">)</span>
+<span class="n">FOL_Seq_Calc3</span><span class="w"> </span><span class="n">CANCELLED</span>
+<span class="n">Unfinished</span><span class="w"> </span><span class="n">session</span><span class="o">(</span><span class="n">s</span><span class="o">):</span><span class="w"> </span><span class="n">FOL_Seq_Calc3</span><span class="o">,</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span>
+<span class="n">0</span><span class="o">:</span><span class="n">01</span><span class="o">:</span><span class="n">22</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">07</span><span class="o">:</span><span class="n">23</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">5.35</span>
+</code></pre></div>
+
+
+
+<a name="515701130"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515701130" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515701130">(May 02 2025 at 12:21)</a>:</h4>
+<p>Hm, those of course do match. Do you have some sort of non-standard config for that installation? E.g. what does <code>isabelle getenv ISABELLE_SCALAC_OPTIONS</code> return?</p>
+
+
+
+<a name="515701589"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515701589" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hongjian Jiang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515701589">(May 02 2025 at 12:24)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">ISABELLE_SCALAC_OPTIONS</span><span class="o">=-</span><span class="n">encoding</span><span class="w"> </span><span class="n">UTF</span><span class="o">-</span><span class="n">8</span><span class="w"> </span><span class="o">-</span><span class="n">feature</span><span class="w"> </span><span class="o">-</span><span class="n">java</span><span class="o">-</span><span class="kp">output</span><span class="o">-</span><span class="n">version</span><span class="w"> </span><span class="n">21</span><span class="w"> </span><span class="o">-</span><span class="n">source</span><span class="w"> </span><span class="n">3.3</span><span class="w"> </span><span class="o">-</span><span class="n">old</span><span class="o">-</span><span class="k">syntax</span><span class="w"> </span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">indent</span><span class="w"> </span><span class="o">-</span><span class="n">color</span><span class="w"> </span><span class="n">never</span><span class="w"> </span><span class="o">-</span><span class="n">pagewidth</span><span class="w"> </span><span class="n">78</span><span class="w"> </span><span class="o">-</span><span class="n">J</span><span class="o">-</span><span class="n">Xms512m</span><span class="w"> </span><span class="o">-</span><span class="n">J</span><span class="o">-</span><span class="n">Xmx4g</span><span class="w"> </span><span class="o">-</span><span class="n">J</span><span class="o">-</span><span class="n">Xss16m</span>
+</code></pre></div>
+
+
+
+<a name="515703286"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515703286" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515703286">(May 02 2025 at 12:34)</a>:</h4>
+<p>No, that looks good. Your problem doesn't seem to be related to the AFP -- I assume <code>isabelle build -e HOL-Library</code> would already fail.<br>
+If this is a unmodified Isabelle2025 installation then you should really report this problem to the mailing list, including more details about the system you're running this on</p>
+
+
+
+<a name="515703907"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%27s%20build%20error/near/515703907" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hongjian Jiang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.27s.20build.20error.html#515703907">(May 02 2025 at 12:38)</a>:</h4>
+<p>Okay, thanks for the help. I will try on my other pc to see whether the problem also exists, then write to the mailing list.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

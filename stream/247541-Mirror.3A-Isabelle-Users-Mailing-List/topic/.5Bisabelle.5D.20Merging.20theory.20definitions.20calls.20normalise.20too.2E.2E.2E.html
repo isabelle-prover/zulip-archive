@@ -1,0 +1,135 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Merging theory definitions calls normalise too... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html">[isabelle] Merging theory definitions calls normalise too...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525149985"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20theory%20definitions%20calls%20normalise%20too.../near/525149985" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html#525149985">(Jun 21 2025 at 10:12)</a>:</h4>
+<p>From: "\"Mulder, Ike\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory _ imports _ begin</code> header is taking anywhere from 5-20 seconds.<br>
+One of the two bottlenecks we’ve seen is the merging of definitions of two theories.</p>
+<p>Merging definitions happens in this function&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l254">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l254</a>&gt;, which adds the definitions in one theory to that of the other if they are not already present.<br>
+Whenever a new definition is found, the <code>dependencies</code> function is called, which in turn calls <code>normalize</code>.<br>
+The problem is that <code>normalize</code> is expensive, folding over all definitions to find reducts that must be reduced further (I think).<br>
+This makes it at least O(#definitions). <code>normalize</code> is called for _every_ newly inserted definition, so the complexity of merge becomes quadratic in the number of definitions.</p>
+<p>I have experimented with removing the call to <code>normalize</code> from <code>dependencies</code>, then <code>normalize</code>ing after all definitions have been added. Note that one must also add an explicit call to normalize at the other callsite of <code>dependencies</code> here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l279">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l279</a>&gt;. That seems to work and speed things up significantly.</p>
+<p>Best, Ike</p>
+
+
+
+<a name="526390315"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20theory%20definitions%20calls%20normalise%20too.../near/526390315" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html#526390315">(Jun 30 2025 at 12:32)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+The following paper is possibly relevant to the issue, although its authors are not the authors of the code:</p>
+<p><a href="https://eprints.whiterose.ac.uk/id/eprint/191505/1/Consistent_Foundation_IsabelleHOL_JAR_2019.pdf">https://eprints.whiterose.ac.uk/id/eprint/191505/1/Consistent_Foundation_IsabelleHOL_JAR_2019.pdf</a></p>
+<p>A consistent foundation for Isabelle/HOL&lt;<a href="https://eprints.whiterose.ac.uk/id/eprint/191505/1/Consistent_Foundation_IsabelleHOL_JAR_2019.pdf">https://eprints.whiterose.ac.uk/id/eprint/191505/1/Consistent_Foundation_IsabelleHOL_JAR_2019.pdf</a>&gt;<br>
+a [•] [•] [•] a [•]<br>
+<a href="http://eprints.whiterose.ac.uk">eprints.whiterose.ac.uk</a><br>
+Handling definitions correctly is critical to soundness, so we need to proceed carefully here.</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 20 June 2025 13:15<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] Merging theory definitions calls normalise too often - performance issue loading multiple theories</p>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory _ imports _ begin</code> header is taking anywhere from 5-20 seconds.</p>
+<p>One of the two bottlenecks we’ve seen is the merging of definitions of two theories.</p>
+<p>Merging definitions happens in this function&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l254">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l254</a>&gt;, which adds the definitions in one theory to that of the other if they are not already present.</p>
+<p>Whenever a new definition is found, the <code>dependencies</code> function is called, which in turn calls <code>normalize</code>.</p>
+<p>The problem is that <code>normalize</code> is expensive, folding over all definitions to find reducts that must be reduced further (I think).<br>
+This makes it at least O(#definitions). <code>normalize</code> is called for _every_ newly inserted definition, so the complexity of merge becomes quadratic in the number of definitions.</p>
+<p>I have experimented with removing the call to <code>normalize</code> from <code>dependencies</code>, then <code>normalize</code>ing after all definitions have been added. Note that one must also add an explicit call to normalize at the other callsite of <code>dependencies</code> here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l279">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/defs.ML#l279</a>&gt;. That seems to work and speed things up significantly.</p>
+<p>Best, Ike</p>
+
+
+
+<a name="526453944"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20theory%20definitions%20calls%20normalise%20too.../near/526453944" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html#526453944">(Jun 30 2025 at 17:54)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 20/06/2025 14:15, "Mulder, Ike" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory _ imports _ 
+begin</code> header is taking anywhere from 5-20 seconds.</p>
+<p>One of the two bottlenecks we’ve seen is the merging of definitions of two <br>
+theories.</p>
+<p>Merging definitions happens in this function &lt;<a href="https://isabelle.sketis.net/">https://isabelle.sketis.net/</a> <br>
+repos/isabelle/file/tip/src/Pure/defs.ML#l254&gt;, which adds the definitions in <br>
+one theory to that of the other if they are not already present.</p>
+<p>Whenever a new definition is found, the <code>dependencies</code> function is called, <br>
+which in turn calls <code>normalize</code>.</p>
+<p>The problem is that <code>normalize</code> is expensive, folding over all definitions to <br>
+find reducts that must be reduced further (I think).<br>
+This makes it at least O(#definitions). <code>normalize</code> is called for _/every/_ <br>
+newly inserted definition, so the complexity of merge becomes quadratic in the <br>
+number of definitions.</p>
+<p>I have experimented with removing the call to <code>normalize</code> from <code>dependencies</code>, <br>
+then <code>normalize</code>ing after all definitions have been added. Note that one must <br>
+also add an explicit call to normalize at the other callsite of <code>dependencies</code> <br>
+here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/</a> <br>
+defs.ML#l279&gt;. That seems to work and speed things up significantly.</p>
+</blockquote>
+<p>Sorry, "it seems to work" is not an acceptable quality standard for changes to <br>
+any serious piece of software, and especially not for the Isabelle/Pure kernel.</p>
+<p>The module defs.ML has reached a certain local optimum many years ago. It can <br>
+certainly be improved further, but that does not proceed by adhoc changes.</p>
+<p>In particular, the implementation needs to be reconciled with with work by <br>
+Kuncar/Popescu on overloaded definitions (written in LaTeX) and corresponding <br>
+formalizations by Gengelbach/Åman Pohjola (written in HOL4). That appears to <br>
+be great work, but it does not exactly correspond to the actual defs.ML.</p>
+<p>Re-opening that problem is important, but it won't happen now: It could easily <br>
+require a few more years.</p>
+<p>In the meantime, you can ask yourself if something can be done differently in <br>
+the application. Excessive numbers of defs normalization usually happen when <br>
+many constants are merely declared, but not properly specified (defined).</p>
+<p>And again, performance problems should be accompanied by proper examples, e.g. <br>
+ones seen in the Isabelle distribution or AFP.</p>
+<p>Makarius</p>
+
+
+
+<a name="526458205"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20theory%20definitions%20calls%20normalise%20too.../near/526458205" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20theory.20definitions.20calls.20normalise.20too.2E.2E.2E.html#526458205">(Jun 30 2025 at 18:12)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 30/06/2025 14:32, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>The following paper is possibly relevant to the issue, although its authors <br>
+are not the authors of the code:</p>
+<p><a href="https://eprints.whiterose.ac.uk/id/eprint/191505/1/">https://eprints.whiterose.ac.uk/id/eprint/191505/1/</a> <br>
+Consistent_Foundation_IsabelleHOL_JAR_2019.pdf &lt;https:// <br>
+<a href="http://eprints.whiterose.ac.uk/id/eprint/191505/1/">eprints.whiterose.ac.uk/id/eprint/191505/1/</a> <br>
+Consistent_Foundation_IsabelleHOL_JAR_2019.pdf&gt;</p>
+<p>A consistent foundation for Isabelle/HOL &lt;<a href="https://eprints.whiterose.ac.uk/id/">https://eprints.whiterose.ac.uk/id/</a> <br>
+eprint/191505/1/Consistent_Foundation_IsabelleHOL_JAR_2019.pdf&gt;<br>
+a [•] [•] [•] a [•]<br>
+<a href="http://eprints.whiterose.ac.uk">eprints.whiterose.ac.uk</a></p>
+<p>Handling definitions correctly is critical to soundness, so we need to proceed <br>
+carefully here.</p>
+</blockquote>
+<p>Yes, and we need to take into account what we have learned about that in the <br>
+past 11 years (since Vienna Summer of Logic 2014).</p>
+<p>* The work by Kuncar/Popescu is fine, but informal (LaTeX only). It also <br>
+deviates from the previous foundations of Isabelle/Pure (and HOL) in many <br>
+respects. The worst deviation is the very checker itself --- maybe that is <br>
+just an accident.</p>
+<p>* The work by Gengelbach/Åman Pohjola <br>
+<a href="https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ITP.2022.15">https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ITP.2022.15</a> is <br>
+great: it formalizes Kuncar/Popescu under the impression that this is what <br>
+Isabelle/Pure really does.</p>
+<p>So the next move is to study everything, together with the actual sources of <br>
+defs.ML --- which is ML text intended to be read by humans, and only <br>
+occasionally to be run by a machine. That might only require some weeks or <br>
+months, but the start of that interval is unclear.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

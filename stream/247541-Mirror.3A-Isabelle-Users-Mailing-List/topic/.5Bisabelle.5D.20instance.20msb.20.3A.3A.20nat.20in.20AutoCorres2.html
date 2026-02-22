@@ -1,0 +1,240 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] instance msb :: nat in AutoCorres2 · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html">[isabelle] instance msb :: nat in AutoCorres2</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="507434239"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/507434239" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#507434239">(Mar 22 2025 at 09:34)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi all,</p>
+<p>in</p>
+<p><a href="https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19">https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19</a></p>
+<p>there is an instance msb :: nat</p>
+<p>That is trivial, since ‹not (msb n)› for all natural numbers n.</p>
+<p>Given the context and history of that theory that appears to me as some <br>
+kind of accidental artifact. Is that instance actually deliberately used <br>
+somewhere?</p>
+<p>The reason why I ask is that I am conducting an experiment how to equip <br>
+msb with an abstract specification, and while it would surely be <br>
+possible to allow degenerated instances like msb :: nat, it would be <br>
+cleaner to base everything on ring_bit_operations, which does not <br>
+include nat.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/kXpi8uAh_WWUtDs8B0C55NnJ/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/heGumwm9gGBpPMnukCSiolQI/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="507505489"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/507505489" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#507505489">(Mar 23 2025 at 00:03)</a>:</h4>
+<p>From: Gerwin Klein &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+It’s not accidental,— msb is an operation introduced for Word, and AutoCorres has an option to lift Word arithmetic into nat.</p>
+<p>Cheers,<br>
+Gerwin</p>
+<blockquote>
+<p>On 22 Mar 2025, at 20:32, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt; wrote:</p>
+<p>Hi all,</p>
+<p>in</p>
+<p><a href="https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19">https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19</a></p>
+<p>there is an instance msb :: nat</p>
+<p>That is trivial, since ‹not (msb n)› for all natural numbers n.</p>
+<p>Given the context and history of that theory that appears to me as some kind of accidental artifact. Is that instance actually deliberately used somewhere?</p>
+<p>The reason why I ask is that I am conducting an experiment how to equip msb with an abstract specification, and while it would surely be possible to allow degenerated instances like msb :: nat, it would be cleaner to base everything on ring_bit_operations, which does not include nat.</p>
+<p>Cheers,<br>
+  Florian<br>
+&lt;OpenPGP_0xA707172232CFA4E9.asc&gt;</p>
+</blockquote>
+
+
+
+<a name="508758265"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/508758265" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#508758265">(Mar 28 2025 at 13:43)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi Gerwin,</p>
+<blockquote>
+<p>It’s not accidental,— msb is an operation introduced for Word, and AutoCorres has an option to lift Word arithmetic into nat.</p>
+</blockquote>
+<p>this statement does not wholly fit the picture as found in the sources.</p>
+<p>a) msb is not restricted to word types, it is generic (currently, purely <br>
+syntactic); there is an instance on int with ‹msb k &lt;--&gt; k &lt; 0›.</p>
+<p>b) In <br>
+<a href="https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19">https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19</a> <br>
+there is the mentioned degenerate instance for nat with ‹not (msb n)›.</p>
+<p>c) When lifting from word to nat, the corresponding operation is <em>not</em> msb:<br>
+    ‹msb w &lt;--&gt; msb (unat w)› does not hold<br>
+    but ‹msb w &lt;--&gt; msb (unat w) (size w - 1)› does</p>
+<p>d) At least concerning AutoCorres2, the degenerate instance nat :: msb <br>
+can be dropped safely: <br>
+&lt;<a href="https://build.proof.cit.tum.de/build?id=e2dd2a76-3b4f-43f9-a83c-564c26bfa910">https://build.proof.cit.tum.de/build?id=e2dd2a76-3b4f-43f9-a83c-564c26bfa910</a>&gt; <br>
+– there is no theorem in AutoCorres2 referring to that instance.  (I do <br>
+not know enough about the relationship between AutoCorres and <br>
+AutoCorres2 to judge how this observation transfers to AutoCorres).</p>
+<p>Going back to the original question: is the instance msb :: nat actually <br>
+used somewhere?  The evidence as found in the AFP suggests no, but this <br>
+might be illusive.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/J6qtwelaS9C7FEZnHQbQtZtx/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/naJx5sVa2pROaK2_UfMNqEU_/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="509145177"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/509145177" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#509145177">(Mar 31 2025 at 09:25)</a>:</h4>
+<p>From: Norbert Schirmer &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Florian,</p>
+<blockquote>
+<p>On 28. Mar 2025, at 14:42, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt; wrote:</p>
+<p>Going back to the original question: is the instance msb :: nat actually used somewhere?  The evidence as found in the AFP suggests no, but this might be illusive.</p>
+</blockquote>
+<p>Thanks for sorting this out. From our perspective and use cases feel free to remove the instance.</p>
+<p>Regards,<br>
+Norbert</p>
+<p>--</p>
+<p>Norbert Schirmer (<a href="mailto:nschirmer@apple.com">nschirmer@apple.com</a>)<br>
+ SEG Formal Verification</p>
+
+
+
+<a name="509317501"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/509317501" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#509317501">(Mar 31 2025 at 22:49)</a>:</h4>
+<p>From: Gerwin Klein &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>a) msb is not restricted to word types, it is generic (currently, purely syntactic); there is an instance on int with ‹msb k &lt;--&gt; k &lt; 0›.</p>
+</blockquote>
+<p>Yes, which was introduced later. The operation was originally written for the word type, like almost all bit operations that Isabelle currently supports.</p>
+<blockquote>
+<p>b) In <a href="https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19">https://isabelle.sketis.net/repos/afp-devel/file/tip/thys/AutoCorres2/lib/NatBitwise.thy#l19</a> there is the mentioned degenerate instance for nat with ‹not (msb n)›.</p>
+</blockquote>
+<p>Correct. And yes, I agree that it does not appear to be used in AutoCorres the way I thought it was.</p>
+<blockquote>
+<p>d) At least concerning AutoCorres2, the degenerate instance nat :: msb can be dropped safely: &lt;<a href="https://build.proof.cit.tum.de/build?id=e2dd2a76-3b4f-43f9-a83c-564c26bfa910">https://build.proof.cit.tum.de/build?id=e2dd2a76-3b4f-43f9-a83c-564c26bfa910</a>&gt; – there is no theorem in AutoCorres2 referring to that instance.  (I do not know enough about the relationship between AutoCorres and AutoCorres2 to judge how this observation transfers to AutoCorres).</p>
+</blockquote>
+<p>I don’t think the versions have deviated in that point, so that would not be a problem.</p>
+<blockquote>
+<p>Going back to the original question: is the instance msb :: nat actually used somewhere?  The evidence as found in the AFP suggests no, but this might be illusive.</p>
+</blockquote>
+<p>Whether it is used or not was not your original question, and it should not decide the whether the instance should be dropped or not. Your question was whether it was intentional, and it was.</p>
+<p>The real question is whether it is useful or not. I can see some scenarios where being able to write the term <code>msb n</code> for nat is useful, but since the instance is trivial, those can likely be avoided.</p>
+<p>On the other side of the equation: what is the added benefit we get from dropping the nat instance?</p>
+<p>Which instances are you intending for the new type class and which properties are you thinking to use for the axiomatisation? How much annoyance are we accepting if we want nat as an instance?</p>
+<p>I’m not saying we can’t remove it under any circumstances, but we should remove it for the right reasons. You might have those, but that’s what we should be discussing.</p>
+<p>Cheers,<br>
+Gerwin</p>
+
+
+
+<a name="509427371"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/509427371" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#509427371">(Apr 01 2025 at 11:37)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Am 01.04.25 um 00:48 schrieb Gerwin Klein (via cl-isabelle-users Mailing <br>
+List):</p>
+<blockquote>
+<p>The real question is whether it is useful or not. I can see some scenarios where being able to write the term <code>msb n</code> for nat is useful, but since the instance is trivial, those can likely be avoided.</p>
+<p>On the other side of the equation: what is the added benefit we get from dropping the nat instance?</p>
+<p>Which instances are you intending for the new type class and which properties are you thinking to use for the axiomatisation? How much annoyance are we accepting if we want nat as an instance?</p>
+</blockquote>
+<p>OK, that is actually the next step in this mail thread.</p>
+<p>For my currently favored proposal, see the attached theory.</p>
+<p>There is some history behind.</p>
+<p>The original motivation is to provide a type-agnostic abstract <br>
+specification for msb.</p>
+<p>a) One idea would have been to restrict msb to word types, where there <br>
+is always a highest bit index. AFAIR, we have discarded this idea – I <br>
+don’t recall the details but I think there was a mail thread on this.</p>
+<p>b) Another idea is purely hypothetical: There are a couple of operations <br>
+which conceptually exist in a »signed« and an »unsigned« variant on word <br>
+types. The signed variants correspond to counterparts on int (where <br>
+signed and unsigned coincide); but the syntax / type classes used on int <br>
+are used for the »unsigned« variants on word, breaking the <br>
+correspondence. Examples are (≤s, &gt;&gt;&gt;, signed_take_bit) on word which <br>
+correspond to (≤, &gt;&gt;, take_bit) on int.<br>
+Would ≤ be signed and hence correspond to ≤ on int, then ‹msb a ↔ a &lt; 0› <br>
+would hold. But this is just a theoretic observation: even if that <br>
+correspondence would justify to prefer the »signed« variants on word <br>
+types, it is now too late to change that.</p>
+<p>c) What is demonstrated in the attached theory: a rather abstract <br>
+specification which nevertheless allows to deduce generic results like <br>
+‹msb (a AND b) ↔ msb a ∧ msb b›</p>
+<p>The question is of course: how many instances of msb are around there <br>
+not part of the AFP?</p>
+<p>For nat, it is surely possible to widen the superclass from <br>
+ring_bit_operations to semiring_bit_operations. This does however not <br>
+answer whether there are further instances outside there that would <br>
+require appropriate treatment.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/6RaxnDPgs0s9H6AmlukigEqX/Most_significant_bit.thy">Most_significant_bit.thy</a><br>
+<a href="/user_uploads/14278/jqPB8Pc6u2ixwkJF8qj5O7du/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/Zof4RmvBh0qq5VqYvTtCViPj/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="513668202"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20instance%20msb%20%3A%3A%20nat%20in%20AutoCorres2/near/513668202" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20instance.20msb.20.3A.3A.20nat.20in.20AutoCorres2.html#513668202">(Apr 22 2025 at 17:38)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+This thread is still dangling.</p>
+<p>If there is no better conclusion at the moment, I would<br>
+a) remove the unused instance msb :: nat from AutoCorres2<br>
+b) base the abstract specification of msb on semiring_bit_operations <br>
+rather than to allow an instance msb :: nat nonetheless</p>
+<p>Florian</p>
+<p>Am 01.04.25 um 13:28 schrieb Florian Haftmann:</p>
+<blockquote>
+<p>Am 01.04.25 um 00:48 schrieb Gerwin Klein (via cl-isabelle-users Mailing <br>
+List):</p>
+<blockquote>
+<p>The real question is whether it is useful or not. I can see some <br>
+scenarios where being able to write the term <code>msb n</code> for nat is <br>
+useful, but since the instance is trivial, those can likely be avoided.</p>
+<p>On the other side of the equation: what is the added benefit we get <br>
+from dropping the nat instance?</p>
+<p>Which instances are you intending for the new type class and which <br>
+properties are you thinking to use for the axiomatisation? How much <br>
+annoyance are we accepting if we want nat as an instance?</p>
+</blockquote>
+<p>OK, that is actually the next step in this mail thread.</p>
+<p>For my currently favored proposal, see the attached theory.</p>
+<p>There is some history behind.</p>
+<p>The original motivation is to provide a type-agnostic abstract <br>
+specification for msb.</p>
+<p>a) One idea would have been to restrict msb to word types, where there <br>
+is always a highest bit index. AFAIR, we have discarded this idea – I <br>
+don’t recall the details but I think there was a mail thread on this.</p>
+<p>b) Another idea is purely hypothetical: There are a couple of operations <br>
+which conceptually exist in a »signed« and an »unsigned« variant on word <br>
+types. The signed variants correspond to counterparts on int (where <br>
+signed and unsigned coincide); but the syntax / type classes used on int <br>
+are used for the »unsigned« variants on word, breaking the <br>
+correspondence. Examples are (≤s, &gt;&gt;&gt;, signed_take_bit) on word which <br>
+correspond to (≤, &gt;&gt;, take_bit) on int.<br>
+Would ≤ be signed and hence correspond to ≤ on int, then ‹msb a ↔ a &lt; 0› <br>
+would hold. But this is just a theoretic observation: even if that <br>
+correspondence would justify to prefer the »signed« variants on word <br>
+types, it is now too late to change that.</p>
+<p>c) What is demonstrated in the attached theory: a rather abstract <br>
+specification which nevertheless allows to deduce generic results like <br>
+‹msb (a AND b) ↔ msb a ∧ msb b›</p>
+<p>The question is of course: how many instances of msb are around there <br>
+not part of the AFP?</p>
+<p>For nat, it is surely possible to widen the superclass from <br>
+ring_bit_operations to semiring_bit_operations. This does however not <br>
+answer whether there are further instances outside there that would <br>
+require appropriate treatment.</p>
+<p>Cheers,<br>
+     Florian</p>
+</blockquote>
+<p><a href="/user_uploads/14278/KgjZidMGIdTyYKreHXkYxn4b/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/iXEFfxmsq1yOEAQdYPxsBv0o/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

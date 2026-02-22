@@ -1,0 +1,106 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Word_Lib: Performance problem for proving ineq... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Word_Lib.3A.20Performance.20problem.20for.20proving.20ineq.2E.2E.2E.html">[isabelle] Word_Lib: Performance problem for proving ineq...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="511714590"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Word_Lib%3A%20Performance%20problem%20for%20proving%20ineq.../near/511714590" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Word_Lib.3A.20Performance.20problem.20for.20proving.20ineq.2E.2E.2E.html#511714590">(Apr 11 2025 at 18:49)</a>:</h4>
+<p>From: "\"Mulder, Ike\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>When using Word_Lib.More_Word (or anything that imports it), proving inequalities between concrete words can take an unacceptable amount of time. Consider</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span>
+<span class="w">    </span><span class="n">Word_Lib.Word_Lib_Sumo</span>
+<span class="k">begin</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">slow_ineq</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">‹(0xC00000 :: 64 word) ≠ 0xC10000›</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The cause seems to be an unfortunate interaction between the <code>unsigned_norm</code> simprocs, and the simplification rule <code>word_eq_numeral_iff_iszero</code> from the HOL.Word standard library. This simplification rule is basically <code>(a = b) &lt;-&gt; (a – b = 0)</code>. When this subtraction is further simplified, the word normalization procedure kicks in n times for words of length n, causing the slowdown.</p>
+<p>We have used two possible ‘fixes’ in our proofs so far:</p>
+<p>*   Disable the simprocs with <code>notes [[simproc del: unsigned_norm unsigned_norm_neg0 unsigned_norm_neg1]]</code><br>
+  *   Swap out <code> word_eq_numeral_iff_iszero</code> for <code>word_unat_eq_iff [where ?v=‹numeral _› and ?w=‹numeral _›]</code>. This avoids the subtraction – it normalizes the words, then compares them as naturals.</p>
+<p>For 64-bit words, these options seem to be about 34x faster and 13x faster than the default on my machine, respectively. The latter option keeps the normalization procedure around, so I think that one has the least impact on proofs, besides a possible speedup.</p>
+<p>I have also tried to modify the simpset used by <code>unsigned_word</code> to a completely determined one. This speeds up the normalization procedure itself about 3x, but is still very slow in conjunction with <code> word_eq_numeral_iff_iszero</code>. For reference, I ended up with something like <code>val ss = simpset_of (put_simpset HOL_ss @{context} addsimps @{thms bintrunc_numeral len_bit0 len_num1 One_nat_def mult_Suc_right mult_0_right add.right_neutral mult_num_simps numeral_times_numeral pred_numeral_simps bin_last_numeral_simps of_bool_eq Num.BitM.simps numeral_div_numeral divmod_cancel divmod_trivial prod.case prod.sel div_0 take_bit_0 times_int_code mult_1_right add.left_neutral one_plus_numeral add_num_simps minus_numeral_div_numeral minus_one_div_numeral Parity.adjust_div_eq odd_neg_numeral1 numeral_One one_neq_zero bintrunc_Suc_numeral of_int_numeral})</code>.</p>
+<p>If anyone else knows of a better solution, we’d be interested to hear it. A downside to both of our fixes is that I don’t think they propagate across theory files, since ‘simp del’ does not persist.</p>
+<p>Best, Ike</p>
+
+
+
+<a name="512251742"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Word_Lib%3A%20Performance%20problem%20for%20proving%20ineq.../near/512251742" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Word_Lib.3A.20Performance.20problem.20for.20proving.20ineq.2E.2E.2E.html#512251742">(Apr 15 2025 at 07:54)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi Ike,</p>
+<p>thanks for figuring that out.</p>
+<p>As far I can see, the best solution is to disregard <br>
+word_eq_numeral_iff_iszero [simp] and calculate equality on word values <br>
+in the same manner as &lt;= and &lt; is calculated by default in HOL-Library.Word.</p>
+<p>@list Any objections?</p>
+<blockquote>
+<p>* Swap out <code> word_eq_numeral_iff_iszero</code> for <code>word_unat_eq_iff[where ?
+    v=‹numeral _› and ?w=‹numeral _›]</code>. This avoids the subtraction – it<br>
+    normalizes the words, then compares them as naturals.</p>
+</blockquote>
+<blockquote>
+<p>I have also tried to modify the simpset used by <code>unsigned_word</code> to a <br>
+completely determined one. This speeds up the normalization procedure <br>
+itself about 3x, but is still very slow in conjunction with <code> 
+word_eq_numeral_iff_iszero</code>. For reference, I ended up with something <br>
+like <code>val ss = simpset_of (put_simpset HOL_ss @{context} addsimps @{thms 
+bintrunc_numeral len_bit0 len_num1 One_nat_def mult_Suc_right 
+mult_0_right add.right_neutral mult_num_simps numeral_times_numeral 
+pred_numeral_simps bin_last_numeral_simps of_bool_eq Num.BitM.simps 
+numeral_div_numeral divmod_cancel divmod_trivial prod.case prod.sel 
+div_0 take_bit_0 times_int_code mult_1_right add.left_neutral 
+one_plus_numeral add_num_simps minus_numeral_div_numeral 
+minus_one_div_numeral Parity.adjust_div_eq odd_neg_numeral1 numeral_One 
+one_neq_zero bintrunc_Suc_numeral of_int_numeral})</code>.</p>
+</blockquote>
+<p>By »completely determined« you mean static, with no effect of later simp <br>
+declarations? This would indeed by interesting to be included by default.</p>
+<p>@list Opinions?</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/kaAwjx8Dutae1LvP6rVw9bNQ/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/YlUH-bn-wtB7dVlnqKF-NQkE/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="512266222"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Word_Lib%3A%20Performance%20problem%20for%20proving%20ineq.../near/512266222" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Word_Lib.3A.20Performance.20problem.20for.20proving.20ineq.2E.2E.2E.html#512266222">(Apr 15 2025 at 09:05)</a>:</h4>
+<p>From: Gerwin Klein &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>On 15 Apr 2025, at 17:53, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt; wrote:</p>
+<p>As far I can see, the best solution is to disregard word_eq_numeral_iff_iszero [simp] and calculate equality on word values in the same manner as &lt;= and &lt; is calculated by default in HOL-Library.Word.</p>
+<p>@list Any objections?</p>
+</blockquote>
+<p>Yes, I think that makes sense. Generally word_eq_numeral_iff_iszero as [simp] has popped up as inconvenient a few times for us as well. </p>
+<blockquote>
+<blockquote>
+<ul>
+<li>Swap out <code> word_eq_numeral_iff_iszero</code> for <code>word_unat_eq_iff[where ?
+   v=‹numeral _› and ?w=‹numeral _›]</code>. This avoids the subtraction – it<br>
+   normalizes the words, then compares them as naturals.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>I have also tried to modify the simpset used by <code>unsigned_word</code> to a completely determined one. This speeds up the normalization procedure itself about 3x, but is still very slow in conjunction with <code> word_eq_numeral_iff_iszero</code>. For reference, I ended up with something like <code>val ss = simpset_of (put_simpset HOL_ss @{context} addsimps @{thms bintrunc_numeral len_bit0 len_num1 One_nat_def mult_Suc_right mult_0_right add.right_neutral mult_num_simps numeral_times_numeral pred_numeral_simps bin_last_numeral_simps of_bool_eq Num.BitM.simps numeral_div_numeral divmod_cancel divmod_trivial prod.case prod.sel div_0 take_bit_0 times_int_code mult_1_right add.left_neutral one_plus_numeral add_num_simps minus_numeral_div_numeral minus_one_div_numeral Parity.adjust_div_eq odd_neg_numeral1 numeral_One one_neq_zero bintrunc_Suc_numeral of_int_numeral})</code>.</p>
+</blockquote>
+<p>By »completely determined« you mean static, with no effect of later simp declarations? This would indeed by interesting to be included by default.</p>
+</blockquote>
+<p>Inside the unsigned_word procedure? Yes, having the simp set explicit there as above sounds like a good idea in any case — at least if there are good enough test cases to spot it breaking down if something changes in the background implementation (which hopefully is rare these days). It might even be useful to give this list of lemmas a name outside the procedure (just with lemmas ..  = ..),</p>
+<p>Cheers,<br>
+Gerwin</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

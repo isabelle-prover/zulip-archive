@@ -1,0 +1,88 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle 2025 import issues · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025.20import.20issues.html">[isabelle] Isabelle 2025 import issues</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="556753617"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%202025%20import%20issues/near/556753617" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025.20import.20issues.html#556753617">(Nov 17 2025 at 06:20)</a>:</h4>
+<p>From: Changyang Zeng &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi users of Isabelle,</p>
+<p>I am new to Isabelle and confused about importing the HOL-Library.Word<br>
+issue.</p>
+<p>I have a ROOT file as below:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="s">"Test"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"HOL-Library"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">theories</span>
+<span class="w">    </span><span class="s">"Test"</span>
+</code></pre></div>
+<p>The Test.thy is defined as below:<br>
+···<br>
+theory Test<br>
+  imports Main<br>
+  "HOL-Library.Word"<br>
+begin</p>
+<p>term "popcount"<br>
+value "(3 :: 32 word) + 5"  (* Simple test *)<br>
+value "shiftl (3 :: 8 word) 1"<br>
+value "0b1101 &gt;&gt; 2"<br>
+···</p>
+<p>The result of value "shiftl (3 :: 8 word) 1" in the output panel is:<br>
+"shiftl 3 1"<br>
+  :: "'b"</p>
+<p>I opened these two files in the Isabelle Jedit IDE.<br>
+The result of value "0b1101 &gt;&gt; 2" in the output panel is Inner syntax error<br>
+Failed to parse term.</p>
+<p>My guess is that I did not import HOL-Library.Word successfully,  therefore<br>
+Isabelle does not recognize the operators from HOL-Library.Word, even<br>
+though I did see this theory in the Theories panel. So I am wondering how<br>
+to import it correctly. Also I would like to confirm if popcount is a<br>
+built-in function in Isabelle, as suggested by the generative AI.</p>
+<p>Thank you so much for taking time on my doubts, I look forward to your help!</p>
+<p>Best,<br>
+Changyang</p>
+
+
+
+<a name="556786699"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%202025%20import%20issues/near/556786699" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025.20import.20issues.html#556786699">(Nov 17 2025 at 09:57)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/11/2025 07:19, Changyang Zeng (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>So I am wondering how to import it <br>
+correctly. Also I would like to confirm if popcount is a built-in function in <br>
+Isabelle, as suggested by the generative AI.</p>
+</blockquote>
+<p>At the end of the mail we have the actual problem.</p>
+<p>Please think for yourself and apply common-sense.</p>
+<p>Makarius</p>
+
+
+
+<a name="556976799"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%202025%20import%20issues/near/556976799" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025.20import.20issues.html#556976799">(Nov 18 2025 at 04:34)</a>:</h4>
+<p>From: Changyang Zeng &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Thanks Makarius I think I figured out these issues.</p>
+<p>On Mon, Nov 17, 2025 at 1:57 AM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>On 17/11/2025 07:19, Changyang Zeng (via cl-isabelle-users Mailing List)<br>
+wrote:</p>
+<blockquote>
+<p>So I am wondering how to import it<br>
+correctly. Also I would like to confirm if popcount is a built-in<br>
+function in<br>
+Isabelle, as suggested by the generative AI.</p>
+</blockquote>
+<p>At the end of the mail we have the actual problem.</p>
+<p>Please think for yourself and apply common-sense.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

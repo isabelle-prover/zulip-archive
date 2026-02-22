@@ -1,0 +1,64 @@
+<html>
+<head><meta charset="utf-8"><title>Is it me or does isabelle slows do after running fo a while? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html">Is it me or does isabelle slows do after running fo a while?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="497382625"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/497382625" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Poscat <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#497382625">(Feb 03 2025 at 09:54)</a>:</h4>
+<p>So after interactively editing a theory for a while in vscode, the proof checking becomes much slower. After restarting vscode though the problem disappeared. I've also observed that the polyml program memory usage goes down quite a bit after restarting (1.5G vs 8G before). Is this to be expected?</p>
+<p>I'm running isabelle 2024, using vscode and has 64bit polyml enabled (it was running out of RAM with 32bit version).</p>
+<p>edit: slows down... can't edit the title ugh :/</p>
+
+
+
+<a name="497384248"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/497384248" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#497384248">(Feb 03 2025 at 10:00)</a>:</h4>
+<p>I have the same problem :'/</p>
+
+
+
+<a name="497386757"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/497386757" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#497386757">(Feb 03 2025 at 10:10)</a>:</h4>
+<p>My observation is that PolyML works much better with 64_32 bit mode and max. 16G heap. Maybe you can build a heap image to decrease memory requirements -- 16GB works for everything in the AFP at least.</p>
+
+
+
+<a name="508237053"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/508237053" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#508237053">(Mar 26 2025 at 10:40)</a>:</h4>
+<p>If your problem appears after using "try" or "sledgehammer" multiple times, it might be due to eprover.exe not properly exiting.</p>
+<p>My workaround is to have a script pinned to the taskbar that kills eprover.exe and I run after every time I use "try". So far, it hasn't negatively impacted Isabelle.</p>
+
+
+
+<a name="508251315"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/508251315" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#508251315">(Mar 26 2025 at 11:44)</a>:</h4>
+<p>Note that if you're running polyml on machines with alot of ram there's a patch here. <a href="https://www.mail-archive.com/polyml@inf.ed.ac.uk/msg01908.html">https://www.mail-archive.com/polyml@inf.ed.ac.uk/msg01908.html</a> that's meant to improve things.</p>
+
+
+
+<a name="508319032"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/508319032" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#508319032">(Mar 26 2025 at 15:58)</a>:</h4>
+<p>I wonder why that was never adopted?</p>
+
+
+
+<a name="508541611"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/508541611" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#508541611">(Mar 27 2025 at 14:57)</a>:</h4>
+<p>I don't know.  I do know that it's applied on the regression machine for CakeML at UNSW(1 TB memory size).</p>
+
+
+
+<a name="508541797"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Is%20it%20me%20or%20does%20isabelle%20slows%20do%20after%20running%20fo%20a%20while%3F/near/508541797" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Is.20it.20me.20or.20does.20isabelle.20slows.20do.20after.20running.20fo.20a.20while.3F.html#508541797">(Mar 27 2025 at 14:58)</a>:</h4>
+<p>It might be the fact that it's a mitigation.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

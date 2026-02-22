@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>intro! and elim! · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/intro.21.20and.20elim.21.html">intro! and elim!</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="524069101"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/intro%21%20and%20elim%21/near/524069101" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/intro.21.20and.20elim.21.html#524069101">(Jun 14 2025 at 14:37)</a>:</h4>
+<p>I see these two modifiers -- <code>intro!</code> and <code>elim!</code> -- used in various places, e.g., in HOL-Algebra, in places like this</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">id_ring_hom</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"id ∈ ring_hom R R"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">intro</span><span class="o">!:</span><span class="w"> </span><span class="n">ring_hom_memI</span><span class="o">)</span>
+</code></pre></div>
+<p>but none of the standard documentation seems to say what they are. Can someone give a brief explanation of what they're doing, and how they differ from <code>intro</code> and <code>elim</code>?</p>
+
+
+
+<a name="524072092"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/intro%21%20and%20elim%21/near/524072092" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/intro.21.20and.20elim.21.html#524072092">(Jun 14 2025 at 15:34)</a>:</h4>
+<p>intro and elim are apply by auto with a bound (maximum 4 times and 2 times or something like that)</p>
+
+
+
+<a name="524072104"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/intro%21%20and%20elim%21/near/524072104" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/intro.21.20and.20elim.21.html#524072104">(Jun 14 2025 at 15:34)</a>:</h4>
+<p>intro! and elim! are applied unconditionnaly</p>
+
+
+
+<a name="524072687"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/intro%21%20and%20elim%21/near/524072687" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/intro.21.20and.20elim.21.html#524072687">(Jun 14 2025 at 15:46)</a>:</h4>
+<p>Thanks, Mathias.  Is there someplace I could have learned this without resorting to Zulip?</p>
+
+
+
+<a name="524072810"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/intro%21%20and%20elim%21/near/524072810" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/intro.21.20and.20elim.21.html#524072810">(Jun 14 2025 at 15:48)</a>:</h4>
+<p>It is mentioned in the tutorial:</p>
+<blockquote>
+<p>The exclamation mark (intro!) signifies<br>
+safe rules, which are applied aggressively. Rules given without the exclama-<br>
+tion mark are applied reluctantly and their uses can be undone if the search<br>
+backtracks. Here the unsafe rule expresses transitivity of the divides relation:</p>
+</blockquote>
+<p>(<a href="https://isabelle.in.tum.de/doc/tutorial.pdf">https://isabelle.in.tum.de/doc/tutorial.pdf</a>, p105)</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

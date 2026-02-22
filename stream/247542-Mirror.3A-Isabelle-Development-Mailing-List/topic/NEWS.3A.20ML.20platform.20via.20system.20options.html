@@ -1,0 +1,52 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: ML platform via system options · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20ML.20platform.20via.20system.20options.html">NEWS: ML platform via system options</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="524226279"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20ML%20platform%20via%20system%20options/near/524226279" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20ML.20platform.20via.20system.20options.html#524226279">(Jun 16 2025 at 10:39)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* System </strong>*</p>
+<ul>
+<li>
+<p>The traditional ML system settings have been reconsidered, and mostly<br>
+replaced by ML_Settings in Isabelle/Scala (e.g. via<br>
+ML_Settings.system(Options.init())). Potential INCOMPATIBILITY for old<br>
+shell scripts, which should be replaced by proper Isabelle/Scala tools<br>
+anyway. The following environment variables still have a purpose:</p>
+<ul>
+<li>
+<p>ML_SYSTEM, ML_PLATFORM, ML_HOME as provided to Isabelle/ML (see also<br>
+   structure ML_System).</p>
+</li>
+<li>
+<p>Optional ML_PLATFORM or ML_OPTIONS as input in user settings, which<br>
+   take precedence if assigned to a proper value. Otherwise,<br>
+   ML_PLATFORM is derived from system options ML_system_64 and<br>
+   ML_system_apple, and ML_OPTIONS is taken from ML_OPTIONS32 or<br>
+   ML_OPTIONS64 (depending on the effective ML_PLATFORM).</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Examples:</p>
+<p>isabelle build -o ML_system_64 -b HOL<br>
+     isabelle jedit -o ML_system_64</p>
+<ul>
+<li>System option "ML_platform" specifies the underlying Poly/ML platform<br>
+identifier explicitly: it takes precedence over all other options and<br>
+settings to determine the ML_PLATFORM (see above).</li>
+</ul>
+<p>This refers to Isabelle/d8986d88295e.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

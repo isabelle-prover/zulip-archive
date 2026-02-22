@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>Modular Arithmetic · Is there code for X? · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/index.html">Is there code for X?</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html">Modular Arithmetic</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="521067734"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Modular%20Arithmetic/near/521067734" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David E. Narváez <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html#521067734">(May 29 2025 at 10:41)</a>:</h4>
+<p>Are there specialized simprocs to deal with <code>[a_0+a_1+...+a_m = b_0+b_1+...+b_n](mod k)</code>? All the necessary theory is in <code>Cong.thy</code> but simply adding those lemmas to <code>simp</code> loops.</p>
+
+
+
+<a name="521321359"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Modular%20Arithmetic/near/521321359" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html#521321359">(May 30 2025 at 15:32)</a>:</h4>
+<p>Not to my knowledge. I typically just use the rules like <code>cong_add</code> etc. manually. What did you have in mind?</p>
+
+
+
+<a name="521329369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Modular%20Arithmetic/near/521329369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David E. Narváez <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html#521329369">(May 30 2025 at 16:15)</a>:</h4>
+<p>I was hoping for a simproc that does precisely what one would do when facing a congruence problem: check if there are terms that vanish, reduce terms that are over the modulus, etc. For the particular need I currently have it would be enough to detect numerals in the mod and in the terms and apply the necessary rules, I am a quarter of the way towards writing that. In general it would be good to have that for any reasonable term (so something like <code>[5m + k=z-m] (mod m)</code> would simplify to <code>[k=z] (mod m)</code> for example).</p>
+
+
+
+<a name="521360810"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Modular%20Arithmetic/near/521360810" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html#521360810">(May 30 2025 at 19:40)</a>:</h4>
+<p>The proper way to do this would be with a "rewriting modulo congruences" procedure, i.e. generalising the simplifier to work with congruences other than equality. This has been something that people have wanted to have for a long time, and I think there was even once a prototype implementation by <span class="user-mention" data-user-id="302181">@Simon Roßkopf</span>.</p>
+
+
+
+<a name="521360894"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Modular%20Arithmetic/near/521360894" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html#521360894">(May 30 2025 at 19:41)</a>:</h4>
+<p>One could probably make a custom-made procedure just for <code>Cong.cong</code> and package it as a simproc. I don't think anyone has ever done that.</p>
+
+
+
+<a name="521371053"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Modular%20Arithmetic/near/521371053" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David E. Narváez <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic.html#521371053">(May 30 2025 at 21:00)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="232736">Manuel Eberl</span> <a href="#narrow/channel/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic/near/521360810">said</a>:</p>
+<blockquote>
+<p>The proper way to do this would be with a "rewriting modulo congruences" procedure, i.e. generalising the simplifier to work with congruences other than equality. This has been something that people have wanted to have for a long time, and I think there was even once a prototype implementation by <span class="user-mention silent" data-user-id="302181">Simon Roßkopf</span>.</p>
+</blockquote>
+<p>Do you mean a <code>[cong]</code> rule?</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,158 @@
+<html>
+<head><meta charset="utf-8"><title>Equation is redundant (covered by preceding clauses) · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Equation.20is.20redundant.20.28covered.20by.20preceding.20clauses.29.html">Equation is redundant (covered by preceding clauses)</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="522342575"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Equation%20is%20redundant%20%28covered%20by%20preceding%20clauses%29/near/522342575" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Roland Coghetto <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Equation.20is.20redundant.20.28covered.20by.20preceding.20clauses.29.html#522342575">(Jun 04 2025 at 12:15)</a>:</h4>
+<p>When I define a data type and an associated function I get an unexpected error: <strong>Equation is redundant (covered by preceding clauses)</strong><br>
+Isabelle does not accept my <em>index_val</em> function.</p>
+<blockquote>
+<p>Equation is redundant (covered by preceding clauses):<br>
+index_val ni_112_62 = 11262 / 10⇧2</p>
+</blockquote>
+<p>I really can't find the reason for this error: I have many different cases in the definition of my <em>index_val</em> function.</p>
+<p>I rewrote the code with a simpler (naming) example, and this code is accepted. <br>
+I've indicated it in the datatype <em>my_data</em> and func <em>my_conversion</em> below, for the example. </p>
+<p>Help is welcome because I would like to keep the <em>ai_102_00</em> notation as much as possible.</p>
+<p>The complete code:</p>
+<blockquote>
+<p>theory Scratch</p>
+<p>imports HOL.Rat<br>
+begin</p>
+<p>datatype coefficient_index = <br>
+ai_102_00 | ai_104_04 | ai_160_84 | ai_164_06 | ai_167_34 |<br>
+ai_170_69 | ai_174_10 | ai_177_58 | ai_181_14 | ai_184_76 |<br>
+ai_188_45 | ai_192_22 | ai_196_07 | ai_199_99 | ai_203_99 |<br>
+ai_208_07 | ai_212_23 | ni_100_00 | ni_102_00 | ni_104_04 | <br>
+ni_106_12 | ni_108_24 | ni_110_41 | ni_112_62 | ni_114_87 | <br>
+ni_117_17 | ni_119_51 | ni_121_90 | ni_124_34</p>
+<p>fun index_val :: "coefficient_index⇒rat" where<br>
+ "index_val ai_102_00 = 102.00"<br>
+|"index_val ai_104_04 = 104.04"<br>
+|"index_val ai_160_84 = 160.84"<br>
+|"index_val ai_164_06 = 164.06"<br>
+|"index_val ai_167_34 = 167.34"<br>
+|"index_val ai_170_69 = 170.69"<br>
+|"index_val ai_174_10 = 174.10"<br>
+|"index_val ai_177_58 = 177.58"<br>
+|"index_val ai_181_14 = 181.14"<br>
+|"index_val ai_184_76 = 184.76"<br>
+|"index_val ai_188_45 = 188.45"<br>
+|"index_val ai_192_22 = 192.22"<br>
+|"index_val ai_196_07 = 196.07"<br>
+|"index_val ai_199_99 = 199.99"<br>
+|"index_val ai_203_99 = 203.99"<br>
+|"index_val ai_208_07 = 208.07"<br>
+|"index_val ai_212_23 = 212.23"<br>
+|"index_val ni_100_00 = 100.00"<br>
+|"index_val ni_102_00 = 102.00"<br>
+|"index_val ni_104_04 = 104.04"<br>
+|"index_val ni_106_12 = 106.12"<br>
+|"index_val ni_108_24 = 108.24"<br>
+|"index_val ni_110_42 = 110.42"<br>
+|"index_val ni_112_62 = 112.62"<br>
+|"index_val ni_114_87 = 114.87"<br>
+|"index_val ni_117_17 = 117.17"<br>
+|"index_val ni_119_51 = 119.51"<br>
+|"index_val ni_121_90 = 121.90"<br>
+|"index_val ni_124_34 = 124.34"</p>
+<p>value "index_val ai_212_23"<br>
+value "index_val ni_112_62"<br>
+ML ‹<br>
+real(5521) / real(50);<br>
+›</p>
+<p>datatype my_data =<br>
+d1|d2|d3|d4|d5|d6|d7|d8|d9|d10|<br>
+d11|d12|d13|d14|d15|d16|d17|d18|d19|d20|<br>
+d21|d22|d23|d24|d25|d26|d27|d28|d29|d30</p>
+<p>fun my_conversion :: "my_data ⇒ nat" where<br>
+"my_conversion d1 = 1"<br>
+|"my_conversion d2 = 2"<br>
+|"my_conversion d3 = 3"<br>
+|"my_conversion d4 = 4"<br>
+|"my_conversion d5 = 5"<br>
+|"my_conversion d6 = 6"<br>
+|"my_conversion d7 = 7"<br>
+|"my_conversion d8 = 8"<br>
+|"my_conversion d9 = 9"<br>
+|"my_conversion d10 = 10"<br>
+|"my_conversion d11 = 1"<br>
+|"my_conversion d12 = 2"<br>
+|"my_conversion d13 = 3"<br>
+|"my_conversion d14 = 4"<br>
+|"my_conversion d15 = 5"<br>
+|"my_conversion d16 = 6"<br>
+|"my_conversion d17 = 7"<br>
+|"my_conversion d18 = 8"<br>
+|"my_conversion d19 = 9"<br>
+|"my_conversion d20 = 10"<br>
+|"my_conversion d21 = 2"<br>
+|"my_conversion d22 = 2"<br>
+|"my_conversion d23 = 3"<br>
+|"my_conversion d24 = 4"<br>
+|"my_conversion d25 = 5"<br>
+|"my_conversion d26 = 6"<br>
+|"my_conversion d27 = 7"<br>
+|"my_conversion d28 = 8"<br>
+|"my_conversion d29 = 9"<br>
+|"my_conversion d30 = 10"</p>
+<p>value "my_conversion d25"</p>
+<p>fun my_conversion2 :: "my_data ⇒ rat" where<br>
+"my_conversion2 d1 = 1.0"<br>
+|"my_conversion2 d2 = 2.0"<br>
+|"my_conversion2 d3 = 3.0"<br>
+|"my_conversion2 d4 = 4.0"<br>
+|"my_conversion2 d5 = 5.0"<br>
+|"my_conversion2 d6 = 6.0"<br>
+|"my_conversion2 d7 = 7.0"<br>
+|"my_conversion2 d8 = 8.0"<br>
+|"my_conversion2 d9 = 9.0"<br>
+|"my_conversion2 d10 = 10.0"<br>
+|"my_conversion2 d11 = 1.0"<br>
+|"my_conversion2 d12 = 2.0"<br>
+|"my_conversion2 d13 = 3.0"<br>
+|"my_conversion2 d14 = 4.0"<br>
+|"my_conversion2 d15 = 5.0"<br>
+|"my_conversion2 d16 = 6.0"<br>
+|"my_conversion2 d17 = 7.0"<br>
+|"my_conversion2 d18 = 8.0"<br>
+|"my_conversion2 d19 = 9.0"<br>
+|"my_conversion2 d20 = 10.0"<br>
+|"my_conversion2 d21 = 2.0"<br>
+|"my_conversion2 d22 = 2.0"<br>
+|"my_conversion2 d23 = 3.0"<br>
+|"my_conversion2 d24 = 4.0"<br>
+|"my_conversion2 d25 = 5.0"<br>
+|"my_conversion2 d26 = 6.0"<br>
+|"my_conversion2 d27 = 7.0"<br>
+|"my_conversion2 d28 = 8.0"<br>
+|"my_conversion2 d29 = 9.0"<br>
+|"my_conversion2 d30 = 10.0"</p>
+<p>value "my_conversion2 d25"<br>
+end</p>
+</blockquote>
+
+
+
+<a name="522343996"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Equation%20is%20redundant%20%28covered%20by%20preceding%20clauses%29/near/522343996" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Equation.20is.20redundant.20.28covered.20by.20preceding.20clauses.29.html#522343996">(Jun 04 2025 at 12:21)</a>:</h4>
+<p>you have an equation <code>"index_val ni_110_42 = 110.42"</code> but there's no constructor <code>ni_110_42</code> (probably this is a typo for <code>ni_110_41</code>?)</p>
+<p>Since it's not a constant, it's regarded as a variable binding (this is indicated by having the name be a different colour in jedit), so this equation covers all cases &amp; everything subsequent is regarded as redundant.</p>
+
+
+
+<a name="522348190"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Equation%20is%20redundant%20%28covered%20by%20preceding%20clauses%29/near/522348190" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Roland Coghetto <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Equation.20is.20redundant.20.28covered.20by.20preceding.20clauses.29.html#522348190">(Jun 04 2025 at 12:41)</a>:</h4>
+<p>Thank you! That's exactly it.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

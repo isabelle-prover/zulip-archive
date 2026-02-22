@@ -1,0 +1,184 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] &quot;Duplicate use of directory in session&quot; error · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Duplicate.20use.20of.20directory.20in.20session.22.20error.html">[isabelle] &quot;Duplicate use of directory in session&quot; error</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="531316850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Duplicate%20use%20of%20directory%20in%20session%22%20error/near/531316850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Duplicate.20use.20of.20directory.20in.20session.22.20error.html#531316850">(Jul 28 2025 at 09:18)</a>:</h4>
+<p>From: Vincent Jackson &lt;<a href="mailto:vjjac@student.unimelb.edu.au">vjjac@student.unimelb.edu.au</a>&gt;<br>
+Hello all,</p>
+<p>Recently I tried to build an old project (in Isabelle 2025, but which <br>
+last built on Isabelle 2019), and got a "Duplicate use of directory" <br>
+error. This problem appears to show up whenever there are two sessions <br>
+in the same ROOT file, but which use different theory files from the <br>
+current directory.</p>
+<p>In which Isabelle edition did this error become a thing, and what is the <br>
+intended way we should structure our sessions now? I do not understand <br>
+why this is now an error; I find it strange that it now seems necessary <br>
+to mirror the session hierarchy in our directory hierarchy. Is there a <br>
+way to build different sessions from the same directory that I am not <br>
+aware of, or is this the intent of the change?</p>
+<p>Also, this behaviour does not seem to be documented in the Isabelle <br>
+System Manual (at least, not in §2.1), so that should be updated.</p>
+<p>Thanks,<br>
+Vincent Jackson<br>
+Ph.D. Student<br>
+School of Computing and Information Systems<br>
+The University of Melbourne</p>
+<p>P.S.</p>
+<p>I have constructed a minimal example of the problem as follows:</p>
+<p>$ cat A.thy<br>
+theory A<br>
+imports Main<br>
+begin<br>
+end<br>
+$ cat B.thy<br>
+theory B<br>
+imports A<br>
+begin<br>
+end<br>
+$ cat ROOT<br>
+session A = Main +<br>
+   theories<br>
+     "A"</p>
+<p>session B = A +<br>
+   theories<br>
+     "B"</p>
+<p>and the error that results is</p>
+<p>/home/admin/.isabelle/Isabelle2025/jedit/jars/isabelle_jedit_main.jar:<br>
+Cannot start:<br>
+*** Duplicate use of directory "/home/admin/Development/Isabelle/Theories"<br>
+***   for session "A" (line 2 of "/home/admin/Development/Isabelle/Theories/ROOT")<br>
+***   vs. session "B" (line 6 of "/home/admin/Development/Isabelle/Theories/ROOT")</p>
+
+
+
+<a name="531334152"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Duplicate%20use%20of%20directory%20in%20session%22%20error/near/531334152" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Duplicate.20use.20of.20directory.20in.20session.22.20error.html#531334152">(Jul 28 2025 at 10:44)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 28/07/2025 07:02, Vincent Jackson wrote:</p>
+<blockquote>
+<p>Recently I tried to build an old project (in Isabelle 2025, but which last <br>
+built on Isabelle 2019), and got a "Duplicate use of directory" error. This <br>
+problem appears to show up whenever there are two sessions in the same ROOT <br>
+file, but which use different theory files from the current directory.</p>
+<p>In which Isabelle edition did this error become a thing, and what is the <br>
+intended way we should structure our sessions now?</p>
+</blockquote>
+<p>See the NEWS file, as for any new Isabelle release. The relevant entry is:</p>
+<p>"""<br>
+New in Isabelle2020 (April 2020)</p>
+<hr>
+<p><strong>* General </strong>*</p>
+<ul>
+<li>Session ROOT files need to specify explicit 'directories' for import<br>
+of theory files. Directories cannot be shared by different sessions.<br>
+(Recall that import of theories from other sessions works via<br>
+session-qualified theory names, together with suitable 'sessions'<br>
+declarations in the ROOT.)<br>
+"""</li>
+</ul>
+<blockquote>
+<p>Also, this behaviour does not seem to be documented in the Isabelle System <br>
+Manual (at least, not in §2.1), so that should be updated.</p>
+</blockquote>
+<p>I do see this text in §2.1:</p>
+<p>"""<br>
+directories dirs specifies additional directories for import of theory files<br>
+via theories within ROOT or imports within a theory; dirs are relative<br>
+to the main session directory (cf. session . . . in dir). These directories<br>
+need to be exclusively assigned to a unique session, without implicit<br>
+sharing of file-system locations.<br>
+"""</p>
+<p>Makarius</p>
+
+
+
+<a name="531358518"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Duplicate%20use%20of%20directory%20in%20session%22%20error/near/531358518" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Duplicate.20use.20of.20directory.20in.20session.22.20error.html#531358518">(Jul 28 2025 at 12:37)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 28/07/2025 14:27, Vincent Jackson wrote:</p>
+<blockquote>
+<p>I think it would be good to note explicitly in the "session" <br>
+syntax documentation (or maybe the "session ... in ..." syntax documentation) <br>
+that every session has an associated directory (which, as already explained in <br>
+the documentation, is either explicitly given using the "in ..." syntax or <br>
+defaults to the current directory) and that each directory so associated must <br>
+be assigned to only one session.</p>
+</blockquote>
+<p>This documentation is unusually clear and explicit. I won't add even more text.</p>
+<p>Makarius</p>
+
+
+
+<a name="531790041"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Duplicate%20use%20of%20directory%20in%20session%22%20error/near/531790041" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Duplicate.20use.20of.20directory.20in.20session.22.20error.html#531790041">(Jul 30 2025 at 09:11)</a>:</h4>
+<p>From: Vincent Jackson &lt;<a href="mailto:vjjac@student.unimelb.edu.au">vjjac@student.unimelb.edu.au</a>&gt;<br>
+I see. Thanks for finding that.</p>
+<p>That documentation could be better placed. The listing you have <br>
+identified is for the "directories" syntax, which is why I, <br>
+unfortunately, overlooked it. (As I did not use that syntax element.) <br>
+The documentation also says these directories are "additional", but the <br>
+duplicate directory exclusion also applies to the default directory. <br>
+(And one can traverse additional directories via the "in ..." syntax too.)</p>
+<p>I think it would be good to note explicitly in the "session" <br>
+syntax documentation (or maybe the "session ... in ..." syntax <br>
+documentation) that every session has an associated directory (which, as <br>
+already explained in the documentation, is either explicitly given using <br>
+the "in ..." syntax or defaults to the current directory) and that each <br>
+directory so associated must be assigned to only one session.</p>
+<p>In any case, thanks for answering my questions.<br>
+Vincent</p>
+<p>On 28/7/25 20:44, Makarius wrote:</p>
+<blockquote>
+<p>On 28/07/2025 07:02, Vincent Jackson wrote:</p>
+<blockquote>
+<p>Recently I tried to build an old project (in Isabelle 2025, but which <br>
+last built on Isabelle 2019), and got a "Duplicate use of directory" <br>
+error. This problem appears to show up whenever there are two <br>
+sessions in the same ROOT file, but which use different theory files <br>
+from the current directory.</p>
+<p>In which Isabelle edition did this error become a thing, and what is <br>
+the intended way we should structure our sessions now?</p>
+</blockquote>
+<p>See the NEWS file, as for any new Isabelle release. The relevant entry <br>
+is:</p>
+<p>"""<br>
+New in Isabelle2020 (April 2020)</p>
+<hr>
+<p><strong>* General </strong>*</p>
+<ul>
+<li>Session ROOT files need to specify explicit 'directories' for import<br>
+of theory files. Directories cannot be shared by different sessions.<br>
+(Recall that import of theories from other sessions works via<br>
+session-qualified theory names, together with suitable 'sessions'<br>
+declarations in the ROOT.)<br>
+"""</li>
+</ul>
+<blockquote>
+<p>Also, this behaviour does not seem to be documented in the Isabelle <br>
+System Manual (at least, not in §2.1), so that should be updated.</p>
+</blockquote>
+<p>I do see this text in §2.1:</p>
+<p>"""<br>
+directories dirs specifies additional directories for import of theory <br>
+files<br>
+via theories within ROOT or imports within a theory; dirs are relative<br>
+to the main session directory (cf. session . . . in dir). These <br>
+directories<br>
+need to be exclusively assigned to a unique session, without implicit<br>
+sharing of file-system locations.<br>
+"""</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

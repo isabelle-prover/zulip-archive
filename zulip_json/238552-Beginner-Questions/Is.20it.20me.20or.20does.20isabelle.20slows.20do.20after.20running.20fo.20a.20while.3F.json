@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>So after interactively editing a theory for a while in vscode, the proof checking becomes much slower. After restarting vscode though the problem disappeared. I've also observed that the polyml program memory usage goes down quite a bit after restarting (1.5G vs 8G before). Is this to be expected?</p>\n<p>I'm running isabelle 2024, using vscode and has 64bit polyml enabled (it was running out of RAM with 32bit version).</p>\n<p>edit: slows down... can't edit the title ugh :/</p>",
+        "id": 497382625,
+        "sender_full_name": "Poscat",
+        "timestamp": 1738576466
+    },
+    {
+        "content": "<p>I have the same problem :'/</p>",
+        "id": 497384248,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1738576842
+    },
+    {
+        "content": "<p>My observation is that PolyML works much better with 64_32 bit mode and max. 16G heap. Maybe you can build a heap image to decrease memory requirements -- 16GB works for everything in the AFP at least.</p>",
+        "id": 497386757,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1738577447
+    },
+    {
+        "content": "<p>If your problem appears after using \"try\" or \"sledgehammer\" multiple times, it might be due to eprover.exe not properly exiting.</p>\n<p>My workaround is to have a script pinned to the taskbar that kills eprover.exe and I run after every time I use \"try\". So far, it hasn't negatively impacted Isabelle.</p>",
+        "id": 508237053,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1742985629
+    },
+    {
+        "content": "<p>Note that if you're running polyml on machines with alot of ram there's a patch here. <a href=\"https://www.mail-archive.com/polyml@inf.ed.ac.uk/msg01908.html\">https://www.mail-archive.com/polyml@inf.ed.ac.uk/msg01908.html</a> that's meant to improve things.</p>",
+        "id": 508251315,
+        "sender_full_name": "irvin",
+        "timestamp": 1742989494
+    },
+    {
+        "content": "<p>I wonder why that was never adopted?</p>",
+        "id": 508319032,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1743004725
+    },
+    {
+        "content": "<p>I don't know.  I do know that it's applied on the regression machine for CakeML at UNSW(1 TB memory size).</p>",
+        "id": 508541611,
+        "sender_full_name": "irvin",
+        "timestamp": 1743087470
+    },
+    {
+        "content": "<p>It might be the fact that it's a mitigation.</p>",
+        "id": 508541797,
+        "sender_full_name": "irvin",
+        "timestamp": 1743087513
+    }
+]

@@ -1,0 +1,93 @@
+<html>
+<head><meta charset="utf-8"><title>AFP entry Neural_Networks · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/AFP.20entry.20Neural_Networks.html">AFP entry Neural_Networks</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="558250382"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/AFP%20entry%20Neural_Networks/near/558250382" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/AFP.20entry.20Neural_Networks.html#558250382">(Nov 19 2025 at 16:26)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Neural_Networks is badly broken. I took a look and the failure is in a proof that tests whether a certain generated construction is equal to an explicit construction. They are supposed to be literally identical and are not. I think we should get back to the authors to find out why it failed and how it can be made robust.</p>
+<p>Larry</p>
+
+
+
+<a name="558317360"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/AFP%20entry%20Neural_Networks/near/558317360" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/AFP.20entry.20Neural_Networks.html#558317360">(Nov 19 2025 at 22:38)</a>:</h4>
+<p>From: "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;<br>
+Hi,<br>
+I did a first investigation. Overall, this part of the theory is <br>
+intended to serve as regression test. Thus, it worked as it should: <br>
+acting as early warning for subtle changes that otherwise would go <br>
+undetected, potentially creating "bit rot".</p>
+<p>The change is actually due to a difference in Poly/ML used in Isabelle <br>
+2025 vs the current development version (and, 2025-1, for that matter). <br>
+Namely:</p>
+<p>ML\&lt;open&gt;<br>
+     PackReal32Little.fromBytes (Word8Vector.fromList [0wxC5, 0wx10, <br>
+0wxE8, 0wx3B])<br>
+\&lt;close&gt;</p>
+<p>returns a different value, namely:</p>
+<ul>
+<li>Isabelle 2025:           val it = 0.007082077209: PackReal32Little.real</li>
+<li>Isabelle development/2025-1:      val it = 0.007082077: <br>
+PackReal32Little.real</li>
+</ul>
+<p>As the rule-of-thumb regarding the precision of 32 IEEE-745 floating <br>
+point numbers is around 7-8 decimal digits, the new behaviour is OK. <br>
+Hence, the fix to get the AFP entry working again is to update the <br>
+theories to reflect the new values.</p>
+<p>We will take care of this tomorrow.</p>
+<p>Best,</p>
+<p>Achim (and Amy)</p>
+<p>On 19/11/2025 16:25, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>Neural_Networks is badly broken. I took a look and the failure is in a <br>
+proof that tests whether a certain generated construction is equal to <br>
+an explicit construction. They are supposed to be literally identical <br>
+and are not. I think we should get back to the authors to find out why <br>
+it failed and how it can be made robust.</p>
+<p>Larry</p>
+</blockquote>
+
+
+
+<a name="558407522"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/AFP%20entry%20Neural_Networks/near/558407522" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/AFP.20entry.20Neural_Networks.html#558407522">(Nov 20 2025 at 11:36)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I find it surprising that the meaning of a specific bit pattern as a real number according to an established floating-point standard can change from year to year. How do we know it won't change again?</p>
+<p>Larry</p>
+<blockquote>
+<p>On 19 Nov 2025, at 22:37, Achim D. Brucker &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt; wrote:</p>
+<p>Hi,<br>
+I did a first investigation. Overall, this part of the theory is intended to serve as regression test. Thus, it worked as it should: acting as early warning for subtle changes that otherwise would go undetected, potentially creating "bit rot". </p>
+<p>The change is actually due to a difference in Poly/ML used in Isabelle 2025 vs the current development version (and, 2025-1, for that matter). Namely:</p>
+<p>ML\&lt;open&gt;<br>
+    PackReal32Little.fromBytes (Word8Vector.fromList [0wxC5, 0wx10, 0wxE8, 0wx3B])<br>
+\&lt;close&gt;</p>
+<p>returns a different value, namely:</p>
+<ul>
+<li>Isabelle 2025:                                  val it = 0.007082077209: PackReal32Little.real</li>
+<li>Isabelle development/2025-1:      val it = 0.007082077: PackReal32Little.real</li>
+</ul>
+<p>As the rule-of-thumb regarding the precision of 32 IEEE-745 floating point numbers is around 7-8 decimal digits, the new behaviour is OK. Hence, the fix to get the AFP entry working again is to update the theories to reflect the new values. <br>
+We will take care of this tomorrow. </p>
+<p>Best,<br>
+Achim (and Amy) </p>
+<p>On 19/11/2025 16:25, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>Neural_Networks is badly broken. I took a look and the failure is in a proof that tests whether a certain generated construction is equal to an explicit construction. They are supposed to be literally identical and are not. I think we should get back to the authors to find out why it failed and how it can be made robust.</p>
+<p>Larry<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,45 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle/VSCode: update to recent VSCodium 1.104 · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Isabelle.2FVSCode.3A.20update.20to.20recent.20VSCodium.201.2E104.html">Isabelle/VSCode: update to recent VSCodium 1.104</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="539164917"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Isabelle/VSCode%3A%20update%20to%20recent%20VSCodium%201.104/near/539164917" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Isabelle.2FVSCode.3A.20update.20to.20recent.20VSCodium.201.2E104.html#539164917">(Sep 12 2025 at 21:26)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* Isabelle/VSCode Prover IDE </strong>*</p>
+<ul>
+<li>Update to recent VSCode 1.104 / VSCodium 1.104.06131, Electron 37.3.1,<br>
+Chromium 138.0.7204.235, and Node.js 22.18.0. Note that some Linux<br>
+systems (e.g. Ubuntu 24.04) require special file permissions to run<br>
+"isabelle vscode" or "isabelle electron" like this:<p>cd .../vscodium-1.104.06131/x86_64-linux<br>
+   sudo chown root:root chrome-sandbox<br>
+   sudo chmod 4755 chrome-sandbox</p>
+</li>
+</ul>
+<p>This refers to Isabelle/de5f468de460.</p>
+<p>That is the result of struggling for approx. 2 weeks with the convoluted build <br>
+process for VSCode (or rather VSCodium). Until vscodium-1.70.1 from Aug-2022 <br>
+it was possible to build all platforms on Linux, even the native Windows <br>
+version. Now it is necessary to use a native platform with native build tools: <br>
+this is mildly annoying for macOS, and very challenging for Windows. It <br>
+requires full Visual Studio C++ with strange add-on libraries, a Python <br>
+installation for Windows, and a carefully crafted Msys2 environment.</p>
+<p>Thus even the dreaded "node-gyp rebuild node-pty" works eventually: resulting <br>
+in Unix-style Terminal experience in VSCode, on all platforms.</p>
+<p>I could tell more stories from the depths of the VSCode + Electron + Node.js <br>
+environment. To continue this much further we shall require substantial <br>
+resources eventually.</p>
+<p>For now, I will merely brush up Isabelle/VSCode a little bit for the coming <br>
+release, integrating the last 2-3 student projects properly.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

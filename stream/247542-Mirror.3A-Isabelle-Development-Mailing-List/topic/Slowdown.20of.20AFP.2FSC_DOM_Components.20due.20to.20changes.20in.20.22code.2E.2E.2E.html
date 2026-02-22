@@ -1,0 +1,79 @@
+<html>
+<head><meta charset="utf-8"><title>Slowdown of AFP/SC_DOM_Components due to changes in &quot;code... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Slowdown.20of.20AFP.2FSC_DOM_Components.20due.20to.20changes.20in.20.22code.2E.2E.2E.html">Slowdown of AFP/SC_DOM_Components due to changes in &quot;code...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="530967669"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Slowdown%20of%20AFP/SC_DOM_Components%20due%20to%20changes%20in%20%22code.../near/530967669" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Slowdown.20of.20AFP.2FSC_DOM_Components.20due.20to.20changes.20in.20.22code.2E.2E.2E.html#530967669">(Jul 26 2025 at 16:12)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Here is a notable slowdown of SC_DOM_Components from some months ago: <br>
+AFP/42327343c286. "hg bisect" in the interval of Isabelle/b69e4da2604b .. <br>
+32dd31062eaa says:</p>
+<p>The first bad revision is:<br>
+changeset:   82692:8f0b2daa7eaa<br>
+user:        haftmann<br>
+date:        Thu Jun 12 08:03:05 2025 +0200<br>
+summary:     reorganized more code-only operations</p>
+<p>Here are the timings on my local machine, before and after that change:</p>
+<p>Finished HOL (0:01:51 elapsed time, 0:05:49 cpu time, factor 3.14)<br>
+Finished HOL-Library (0:01:21 elapsed time, 0:05:50 cpu time, factor 4.33)<br>
+Finished Core_SC_DOM (0:01:17 elapsed time, 0:04:43 cpu time, factor 3.63)<br>
+Finished Shadow_SC_DOM (0:03:24 elapsed time, 0:13:24 cpu time, factor 3.94)<br>
+Finished SC_DOM_Components (0:01:54 elapsed time, 0:09:45 cpu time, factor 5.11)</p>
+<p>Finished HOL (0:01:49 elapsed time, 0:05:42 cpu time, factor 3.12)<br>
+Finished HOL-Library (0:01:21 elapsed time, 0:05:51 cpu time, factor 4.31)<br>
+Finished Core_SC_DOM (0:01:17 elapsed time, 0:04:39 cpu time, factor 3.62)<br>
+Finished Shadow_SC_DOM (0:03:22 elapsed time, 0:13:10 cpu time, factor 3.90)<br>
+Finished SC_DOM_Components (0:05:45 elapsed time, 0:14:29 cpu time, factor 2.52)</p>
+<p>That also demonstrates my "cheap midrange workstation" from some months ago, <br>
+with AMD Ryzen 9 7950X 16-Core Processor at almost 5.8 GHz. Only 8 threads <br>
+have been used above.</p>
+<p>Makarius</p>
+
+
+
+<a name="533332550"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Slowdown%20of%20AFP/SC_DOM_Components%20due%20to%20changes%20in%20%22code.../near/533332550" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Slowdown.20of.20AFP.2FSC_DOM_Components.20due.20to.20changes.20in.20.22code.2E.2E.2E.html#533332550">(Aug 07 2025 at 17:08)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Am 26.07.25 um 18:11 schrieb Makarius:</p>
+<blockquote>
+<p>Here is a notable slowdown of SC_DOM_Components from some months ago: <br>
+AFP/42327343c286. "hg bisect" in the interval of Isabelle/ <br>
+b69e4da2604b .. 32dd31062eaa says:</p>
+<p>The first bad revision is:<br>
+changeset:   82692:8f0b2daa7eaa<br>
+user:        haftmann<br>
+date:        Thu Jun 12 08:03:05 2025 +0200<br>
+summary:     reorganized more code-only operations<br>
+</p>
+</blockquote>
+<p>This is not easy to pin down.</p>
+<p>That session is very special: it provides monadic specifications <br>
+(presumably an error monad), and uses code_simp as a device to basically <br>
+unfold all (!) operations, leaving the resulting gigantic proof goal to <br>
+the mercy of the classical reasoner. The excessive use of the code_simp <br>
+also brings in a lot of things which are only intended for code <br>
+generation, e.g. class equal and a lot of auxiliary operations on lists.</p>
+<p>When I had to visit that session during the reorganization, I had the <br>
+impression that any proper migration would require to rework the whole <br>
+session, starting with elementary rules to conduct proofs on monadic <br>
+expressions.</p>
+<p>This is the reason why in AFP 4450de6d0858 I restric myself to remove <br>
+some simp rules in an ad-hoc manner to make things run again.</p>
+<p>Maybe I could risk a blind shot and just remove the simp rules added in <br>
+the change above and see if this gains something.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/TXddZfetKq9Fm3Jb02sIzai8/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/tLwpzPLK8zAabCp2t0WOlIUI/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

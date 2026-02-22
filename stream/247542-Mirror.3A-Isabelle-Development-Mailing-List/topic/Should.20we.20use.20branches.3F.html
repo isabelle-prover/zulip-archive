@@ -1,0 +1,144 @@
+<html>
+<head><meta charset="utf-8"><title>Should we use branches? · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html">Should we use branches?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="518511262"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518511262" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518511262">(May 16 2025 at 10:44)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+One thing I've noticed at Amazon is that they insist on a single threaded revision trail. They do this by requiring everybody to make their changes within a personal branch, which they then re-base to the main branch before pushing. Sometimes they also merge adjacent commits. In return for mastering a couple of extra commands, everybody benefits from a much cleaner revision history. Do we want to try this?</p>
+<p>Larry<br>
+[cid:6ce32522-80e2-4611-8cd1-3eecd6e69d1d@GBRP265.PROD.OUTLOOK.COM]</p>
+<p><a href="/user_uploads/14278/mPvVF6BFVgH7w_nVqg70Pbe4/hg.jpeg">hg.jpeg</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/mPvVF6BFVgH7w_nVqg70Pbe4/hg.jpeg" title="hg.jpeg"><img data-original-content-type="image/jpeg" data-original-dimensions="592x481" src="/user_uploads/thumbnail/14278/mPvVF6BFVgH7w_nVqg70Pbe4/hg.jpeg/840x560.webp"></a></div>
+
+
+
+<a name="518516057"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518516057" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518516057">(May 16 2025 at 11:06)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+The danger of such a model is that branches quickly become stale and a <br>
+nightmare to rebase. In my experience this model only really works well <br>
+if developers are well synchronized, so people work on largely distinct <br>
+pieces of code, or everybody integrates their changes with the trunk <br>
+frequently, e.g. once per day.</p>
+<p>The former doesn't really apply in this environment. The latter one can <br>
+already do when appropriate, since we have a trunk-based model.</p>
+<p>Note that in hg, /branches/ mean divergent lines of work that can't be <br>
+re-based. What you describe here are /topics/ in hg.</p>
+<p>Fabian</p>
+<p>On 5/16/25 12:34, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>One thing I've noticed at Amazon is that they insist on a single <br>
+threaded revision trail. They do this by requiring everybody to make <br>
+their changes within a personal branch, which they then re-base to the <br>
+main branch before pushing. Sometimes they also merge adjacent <br>
+commits. In return for mastering a couple of extra commands, everybody <br>
+benefits from a much cleaner revision history. Do we want to try this?</p>
+<p>Larry</p>
+</blockquote>
+<p><a href="/user_uploads/14278/4gDpl-2V8gNWtvh4vjjBz2LT/hg.jpeg">hg.jpeg</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/4gDpl-2V8gNWtvh4vjjBz2LT/hg.jpeg" title="hg.jpeg"><img data-original-content-type="image/jpeg" data-original-dimensions="592x481" src="/user_uploads/thumbnail/14278/4gDpl-2V8gNWtvh4vjjBz2LT/hg.jpeg/840x560.webp"></a></div>
+
+
+
+<a name="518517209"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518517209" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518517209">(May 16 2025 at 11:13)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Thanks for the correction regarding topics in hg. </p>
+<p>My impression is that developers do rebase daily in order to avoid merge issues. Of course, these rebase steps leave no trace in the commit history, and there are no visible merges either.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 16 May 2025, at 12:06, Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt; wrote:</p>
+<p>The danger of such a model is that branches quickly become stale and a nightmare to rebase. In my experience this model only really works well if developers are well synchronized, so people work on largely distinct pieces of code, or everybody integrates their changes with the trunk frequently, e.g. once per day.<br>
+The former doesn't really apply in this environment. The latter one can already do when appropriate, since we have a trunk-based model.<br>
+Note that in hg, branches mean divergent lines of work that can't be re-based. What you describe here are topics in hg.<br>
+</p>
+</blockquote>
+
+
+
+<a name="518518870"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518518870" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518518870">(May 16 2025 at 11:23)</a>:</h4>
+<p>From: Gerwin Klein via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+For seL4 we also have a rebase workflow in git. It’s possible to do in hg, but not as nicely and needs people who know how to deal with it.</p>
+<p>Given the problems people get into with just plain hg, I don’t think it would be a good idea for Isabelle or the AFP. It also doesn’t fit with our commit culture on Isabelle ("tuned;"). I would advise against.</p>
+<p>I do feel the need to point out that we have long-running branches in our rebase workflow (months, not years, but not daily) — that works perfectly fine if you rebase your branch frequently enough over the trunk, you don’t need to integrate back frequently. But the main benefit of rebase branches is a linear, rational commit history, i.e. a history that is not true but that is the history you would have had if you knew everything in the beginning and wrote the perfect commits. That’s not really the Isabelle model.</p>
+<p>There is a lot of benefit in recording the true history as we do in Isabelle, even if that history is less perfect.</p>
+<p>Cheers,<br>
+Gerwin</p>
+<p>On 16 May 2025, at 13:06, Fabian Huch [isabelle-dev-bounces@mailman.proof.cit.tum.de] &lt;<a href="mailto:forwarded_for@cse.unsw.edu.au">forwarded_for@cse.unsw.edu.au</a>&gt; wrote:</p>
+<p>The danger of such a model is that branches quickly become stale and a nightmare to rebase. In my experience this model only really works well if developers are well synchronized, so people work on largely distinct pieces of code, or everybody integrates their changes with the trunk frequently, e.g. once per day.</p>
+<p>The former doesn't really apply in this environment. The latter one can already do when appropriate, since we have a trunk-based model.</p>
+<p>Note that in hg, branches mean divergent lines of work that can't be re-based. What you describe here are topics in hg.</p>
+<p>Fabian</p>
+<p>On 5/16/25 12:34, Lawrence Paulson via isabelle-dev wrote:<br>
+One thing I've noticed at Amazon is that they insist on a single threaded revision trail. They do this by requiring everybody to make their changes within a personal branch, which they then re-base to the main branch before pushing. Sometimes they also merge adjacent commits. In return for mastering a couple of extra commands, everybody benefits from a much cleaner revision history. Do we want to try this?</p>
+<p>Larry<br>
+&lt;hg.jpeg&gt;</p>
+
+
+
+<a name="518519879"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518519879" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518519879">(May 16 2025 at 11:28)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>On 5/16/25 13:22, Gerwin Klein via isabelle-dev wrote:</p>
+<blockquote>
+<p>It’s possible to do in hg, but not as nicely</p>
+</blockquote>
+<p>Actually I find it much easier to do such operations in hg: Because it <br>
+allows you to simply talk about changesets, all the operations and <br>
+commands get a lot easier (especially for beginners!).</p>
+<p>E.g. to rebase one commit onto another you just do</p>
+<p>hg rebase --source xxx --dest yyy</p>
+<p>And the histedit extension allows you to do a lot more operations with <br>
+ease as well.</p>
+<blockquote>
+<p>and needs people who know how to deal with it. </p>
+</blockquote>
+<p>That's certainly a problem.</p>
+<p>Fabian</p>
+
+
+
+<a name="518529244"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518529244" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518529244">(May 16 2025 at 12:15)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 16/05/2025 12:34, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>One thing I've noticed at Amazon is that they insist on a single threaded <br>
+revision trail. They do this by requiring everybody to make their changes <br>
+within a personal branch, which they then re-base to the main branch before <br>
+pushing. Sometimes they also merge adjacent commits. In return for mastering a <br>
+couple of extra commands, everybody benefits from a much cleaner revision <br>
+history. Do we want to try this?</p>
+</blockquote>
+<p>No.</p>
+<p>Isabelle has a much better culture than most projects out there.</p>
+<p>See also README_REPOSITORY.</p>
+<p>Makarius</p>
+
+
+
+<a name="518529891"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Should%20we%20use%20branches%3F/near/518529891" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Should.20we.20use.20branches.3F.html#518529891">(May 16 2025 at 12:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 16/05/2025 13:22, Gerwin Klein via isabelle-dev wrote:</p>
+<blockquote>
+<p>There is a lot of benefit in recording the true history as we do in Isabelle, <br>
+even if that history is less perfect.</p>
+</blockquote>
+<p>True history is very important. I would call that more perfect than a history <br>
+that is manipulated to "look better".</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

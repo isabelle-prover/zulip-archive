@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] &quot;Find facts&quot; in Isabelle2025 · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Find.20facts.22.20in.20Isabelle2025.html">[isabelle] &quot;Find facts&quot; in Isabelle2025</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="506938071"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Find%20facts%22%20in%20Isabelle2025/near/506938071" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Find.20facts.22.20in.20Isabelle2025.html#506938071">(Mar 20 2025 at 10:52)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+This facility for locating theorems in theories that have not yet been loaded will be useful to many people. But it would be great to have some hints how to use it.</p>
+<p>It looks like one has to build an index first, then launch the server.</p>
+<blockquote>
+<p>isabelle find_facts_index HOL<br>
+isabelle find_facts_server -p 8080<br>
+open <a href="http://localhost:8080/find_facts#search?q=Hilbert">http://localhost:8080/find_facts#search?q=Hilbert</a></p>
+</blockquote>
+<p>So this gives us an index for HOL, but could one make an index for all of HOL+AFP?</p>
+<p>Larry</p>
+
+
+
+<a name="506941734"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Find%20facts%22%20in%20Isabelle2025/near/506941734" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Find.20facts.22.20in.20Isabelle2025.html#506941734">(Mar 20 2025 at 11:09)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>On 3/20/25 11:51, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>This facility for locating theorems in theories that have not yet been loaded will be useful to many people. But it would be great to have some hints how to use it.</p>
+<p>It looks like one has to build an index first, then launch the server.</p>
+<blockquote>
+<p>isabelle find_facts_index HOL<br>
+isabelle find_facts_server -p 8080<br>
+open <a href="http://localhost:8080/find_facts#search?q=Hilbert">http://localhost:8080/find_facts#search?q=Hilbert</a></p>
+</blockquote>
+</blockquote>
+<p>In general, yes; In the Isabelle release starting from Isabelle2025, <br>
+there is an index of the entire distribution already included, which you <br>
+launch with:</p>
+<p>isabelle find_facts_server -p 8080 -o find_facts_database_name=isabelle</p>
+<blockquote>
+<p>So this gives us an index for HOL, but could one make an index for all of HOL+AFP?</p>
+</blockquote>
+<p>Certainly, and it could be included in future AFP releases.</p>
+<p>Fabian</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

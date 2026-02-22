@@ -1,0 +1,30 @@
+<html>
+<head><meta charset="utf-8"><title>Proving things about a definition of a record · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20things.20about.20a.20definition.20of.20a.20record.html">Proving things about a definition of a record</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="520782240"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20things%20about%20a%20definition%20of%20a%20record/near/520782240" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Robert Shlyakhtenko <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20things.20about.20a.20definition.20of.20a.20record.html#520782240">(May 28 2025 at 01:09)</a>:</h4>
+<p>I have defined <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">Z</mi><mi mathvariant="normal">/</mi><mn>2</mn><mi mathvariant="double-struck">Z</mi></mrow><annotation encoding="application/x-tex">\mathbb{Z}/2\mathbb{Z}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathbb">Z</span><span class="mord">/2</span><span class="mord mathbb">Z</span></span></span></span> as follows:</p>
+<div class="codehilite" data-code-language="definition"><pre><span></span><code>  "Z2 = ⦇
+     carrier = {0,1},
+     mult = (λx y. (x + y) mod 2),
+     one = 0
+   ⦈"
+</code></pre></div>
+<p>I would like to prove certain things about Z2; for example, that it is a group. The following is giving me trouble: how do I prove that for any fixed <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo>∈</mo></mrow><annotation encoding="application/x-tex">x, y \in </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span></span></span></span> carrier Z2, </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="o">(</span><span class="n">mult</span><span class="w"> </span><span class="n">Z2</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">((</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="o">)</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="n">2</span><span class="o">)</span>
+</code></pre></div>
+<p>And in general, is there an easy way to convert a proof about addition mod 2 into a proof about the "mult Z2" that I have defined?</p>
+<p>Many thanks.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

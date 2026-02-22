@@ -1,0 +1,124 @@
+<html>
+<head><meta charset="utf-8"><title>Rewrite inside the premise of ⟹ in a custom method · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html">Rewrite inside the premise of ⟹ in a custom method</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="545777791"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/545777791" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shweta Rajiv <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#545777791">(Oct 18 2025 at 19:31)</a>:</h4>
+<p>Hi. I’m trying to write a proof method that recursively rewrites both sides of a logical equivalence.<br>
+For example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">add_zero</span><span class="o">:</span><span class="w"> </span><span class="s">"x = x + 0"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="n">method</span><span class="w"> </span><span class="n">lhs_rewrite</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">subst</span><span class="w"> </span><span class="n">add_zero</span><span class="o">)</span>
+
+<span class="n">method</span><span class="w"> </span><span class="n">recursive_rewrite</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">iffI;</span><span class="w"> </span><span class="n">recursive_rewrite</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+<span class="o">|</span><span class="w"> </span><span class="o">(</span><span class="n">match</span><span class="w"> </span><span class="n">premises</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">H</span><span class="o">:</span><span class="w"> </span><span class="s">"_ ⟹ _"</span><span class="w"> </span><span class="n">⇒</span><span class="w"> </span><span class="s">‹insert H, recursive_rewrite x›</span><span class="o">)</span>
+<span class="o">|</span><span class="w"> </span><span class="o">(</span><span class="n">lhs_rewrite</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+
+<span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(x = x) ⟷ (x = x)"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">recursive_rewrite</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+</code></pre></div>
+<p>This produces subgoals:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">1.</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">0</span>
+<span class="n">2.</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">0</span>
+</code></pre></div>
+<p>which is good, but I’d like the method to also rewrite inside the premise,<br>
+i.e. get both sides as <code>x + 0 = x + 0 ⟹ x + 0 = x + 0</code>.</p>
+<p>Is there a way to make a custom method rewrite inside the antecedent of implications as well? This is what I tried to do with the match premises but I don't think I'm using it correctly.</p>
+
+
+
+<a name="545777965"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/545777965" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#545777965">(Oct 18 2025 at 19:36)</a>:</h4>
+<p>You can also let the subst do the work:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">method</span><span class="w"> </span><span class="n">lhs_rewrite</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">((</span><span class="n">subst</span><span class="w"> </span><span class="o">(</span><span class="n">asm</span><span class="o">)</span><span class="w"> </span><span class="n">add_zero</span><span class="o">)?</span><span class="n">;</span><span class="w"> </span><span class="o">(</span><span class="n">subst</span><span class="w"> </span><span class="n">add_zero</span><span class="o">)?)</span>
+</code></pre></div>
+
+
+
+<a name="545781078"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/545781078" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shweta Rajiv <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#545781078">(Oct 18 2025 at 20:38)</a>:</h4>
+<p>I see. But suppose the rule was an implication.<br>
+For example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">less_imp_le_rule</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"x &lt; y ⟹ x ≤ y"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="n">method</span><span class="w"> </span><span class="n">rel_rewrite</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">less_imp_le_rule</span><span class="o">)</span>
+
+<span class="n">method</span><span class="w"> </span><span class="n">recursive_rewrite1</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">iffI;</span><span class="w"> </span><span class="n">recursive_rewrite1</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="o">)</span>
+<span class="o">|</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">impI;</span><span class="w"> </span><span class="n">recursive_rewrite1</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="o">)</span>
+<span class="o">|</span><span class="w"> </span><span class="o">(</span><span class="n">match</span><span class="w"> </span><span class="n">premises</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">H</span><span class="o">:</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">⇒</span><span class="w"> </span><span class="s">‹rel_rewrite x y›</span><span class="o">)</span>
+<span class="o">|</span><span class="w"> </span><span class="o">(</span><span class="n">rel_rewrite</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="o">)</span>
+
+<span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(x ≤ y) ⟷ (y ≤ x)"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">recursive_rewrite1</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="o">)</span>
+</code></pre></div>
+<p>After running this, the goal becomes:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">1.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">x</span>
+<span class="n">2.</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">y</span>
+</code></pre></div>
+<p>So, the rule has been applied in the conclusions.<br>
+However, I’d also like the premises (<code>x ≤ y</code> and <code>y ≤ x</code>) to be converted to <code>x &lt; y</code> and <code>y &lt; x</code>, respectively. So, I want the method to be applied to the premises as well.</p>
+
+
+
+<a name="545852055"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/545852055" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#545852055">(Oct 19 2025 at 19:32)</a>:</h4>
+<p>Wrong direction for the rule for implicatio</p>
+
+
+
+<a name="545852061"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/545852061" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#545852061">(Oct 19 2025 at 19:32)</a>:</h4>
+<p>you need the dest rule</p>
+
+
+
+<a name="545852158"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/545852158" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#545852158">(Oct 19 2025 at 19:34)</a>:</h4>
+<p>You want this, but it does not hold:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">less_imp_le_ruleD</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"x ≤ y ⟹ x &lt; y "</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+
+
+
+<a name="546122034"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/546122034" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shweta Rajiv <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#546122034">(Oct 21 2025 at 00:11)</a>:</h4>
+<p>Ah, sorry I didn’t mean that I wanted to use <code>x ≤ y ⟹ x &lt; y</code>. I was trying to come up with a simple toy example to illustrate a method definition issue.</p>
+<p>I’m using the Eisbach manual to try to implement a recursive method. I can apply my rules in the conclusion of each subgoal, but I’d also like to apply them inside the premises of implications. It seemed like that’s what <code>match premises</code> is intended for, but I couldn’t get it to work. </p>
+<p>After some more reading, my understanding is that <code>match premises</code> lets you lift the premise as a hypothetical theorem to use in other rules, but it doesn’t actually let you change or rewrite the premise itself. The match method allows selection of specific premises or conclusion patterns to apply other methods to. It does not alter the structure of the goal itself. So I suppose I’d need to use <code>subst</code> or some other mechanism if I really want to rewrite inside the premise?</p>
+
+
+
+<a name="548117182"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/548117182" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Edoardo Putti <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#548117182">(Oct 31 2025 at 09:58)</a>:</h4>
+<p>This can be taken care of with a conversion. Rewrite your lemma to use meta-equality and then you use it to  create a conversion (Conv.rewr_thm). Once you have a conversion there is a way to turn it into a tactic using CONVERSION.</p>
+
+
+
+<a name="553458836"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Rewrite%20inside%20the%20premise%20of%20%E2%9F%B9%20in%20a%20custom%20method/near/553458836" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Shweta Rajiv <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Rewrite.20inside.20the.20premise.20of.20.E2.9F.B9.20in.20a.20custom.20method.html#553458836">(Nov 03 2025 at 18:53)</a>:</h4>
+<p>Thank you! This certainly seems like it could work. I now have a minimal version that does what I want using conversion and I think I can extend it to my original problem.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

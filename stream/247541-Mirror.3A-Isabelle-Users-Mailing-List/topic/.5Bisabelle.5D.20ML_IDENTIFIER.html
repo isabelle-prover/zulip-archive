@@ -1,0 +1,71 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] ML_IDENTIFIER · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ML_IDENTIFIER.html">[isabelle] ML_IDENTIFIER</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="566095165"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ML_IDENTIFIER/near/566095165" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ML_IDENTIFIER.html#566095165">(Jan 02 2026 at 19:48)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>The environment variable ML_IDENTIFIER seems to have disappeared with 2025-1, <br>
+although I cannot find any mention of that in NEWS. What should I use instead?</p>
+<p>Thanks<br>
+Tobias</p>
+<p><a href="/user_uploads/14278/R1iPa9k1RdMErzFD9KYcj7eF/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="566101236"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ML_IDENTIFIER/near/566101236" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ML_IDENTIFIER.html#566101236">(Jan 02 2026 at 21:06)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/01/2026 20:47, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>The environment variable ML_IDENTIFIER seems to have disappeared with 2025-1, <br>
+although I cannot find any mention of that in NEWS. What should I use instead?</p>
+</blockquote>
+<p>This is the relevant NEWS section:</p>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>
+<p>The traditional ML system settings have been reconsidered, and mostly<br>
+replaced by ML_Settings in Isabelle/Scala (e.g. via<br>
+ML_Settings.system(Options.init())). Potential INCOMPATIBILITY for old<br>
+shell scripts, which should be replaced by proper Isabelle/Scala tools<br>
+anyway. The following environment variables still have a purpose:</p>
+<ul>
+<li>
+<p>ML_SYSTEM, ML_PLATFORM, ML_HOME as provided to Isabelle/ML (see also<br>
+   structure ML_System).</p>
+</li>
+<li>
+<p>Optional ML_PLATFORM or ML_OPTIONS as input in user settings, which<br>
+   take precedence if assigned to a proper value. Otherwise,<br>
+   ML_PLATFORM is derived from system options ML_system_64 and<br>
+   ML_system_apple, and ML_OPTIONS is taken from ML_OPTIONS32 or<br>
+   ML_OPTIONS64 (depending on the effective ML_PLATFORM).</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Examples:</p>
+<p>isabelle build -o ML_system_64 -b HOL<br>
+     isabelle jedit -o ML_system_64</p>
+<ul>
+<li>System option "ML_platform" specifies the underlying Poly/ML platform<br>
+identifier explicitly: it takes precedence over all other options and<br>
+settings to determine the ML_PLATFORM (see above).</li>
+</ul>
+<p>The default question is: What are you trying to do?</p>
+<p>To get rid of old shell scripts, it might help to inspect <br>
+Isabelle/src/Tools/Demo/.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,32 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] try-antiquotation: redundant pattern warning · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20try-antiquotation.3A.20redundant.20pattern.20warning.html">[isabelle] try-antiquotation: redundant pattern warning</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513157218"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20try-antiquotation%3A%20redundant%20pattern%20warning/near/513157218" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20try-antiquotation.3A.20redundant.20pattern.20warning.html#513157218">(Apr 19 2025 at 10:29)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hi list,</p>
+<p>I noticed that using the new \try antiquotation for a catch-all pattern <br>
+will always generate an ML-warning "Pattern 2 is redundant."</p>
+<p>While this is not a show-stopper, these warnings are annoying (I <br>
+typically aim for as few warnings as possible in my code).</p>
+<p>Is there a way to avoid this warning?</p>
+<p>-- </p>
+<p>Peter</p>
+<p>Minimal example:</p>
+<p>ML ‹<br>
+   fun error_wrapper f = \&lt;^try&gt;‹(f (); ()) catch exn =&gt;<br>
+     (tracing ("Raised " ^ General.exnMessage exn))›<br>
+›</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

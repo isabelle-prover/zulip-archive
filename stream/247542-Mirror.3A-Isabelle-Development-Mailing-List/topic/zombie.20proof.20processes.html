@@ -1,0 +1,594 @@
+<html>
+<head><meta charset="utf-8"><title>zombie proof processes · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html">zombie proof processes</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="554161580"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554161580" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554161580">(Nov 06 2025 at 18:25)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+While we are thinking about the next release, I thought I would bring up an intermittent issue. I use sledgehammer quite a lot, and sometimes things grind to a halt. Then I check the process monitor and find many copies of veriT seemingly looping. It's okay to just kill them. But I imagine this annoys a lot of people and I wonder if there is a way of preventing it. Does anybody else experience this?</p>
+<p>Larry</p>
+
+
+
+<a name="554166204"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554166204" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554166204">(Nov 06 2025 at 18:50)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+When I taught the Concrete Semantics course in Innsbruck this summer a <br>
+lot of my students had this problem on Windows, often to the extent that <br>
+they had to frequently reboot their laptops because they would be <br>
+rendered unusable. I don't remember whether it was Isabelle 2024 or 2025 <br>
+that caused that issue though.</p>
+<p>I for one have not encountered that problem on Linux. It's possible that <br>
+my machine is just beefy enough that a few veriT processes running amok <br>
+isn't even noticeable, so not sure. But I did definitely get the <br>
+impression that the problem is much more pronounced on Windows.</p>
+<p>Manuel</p>
+<p>On 06/11/2025 19:24, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>While we are thinking about the next release, I thought I would bring up an intermittent issue. I use sledgehammer quite a lot, and sometimes things grind to a halt. Then I check the process monitor and find many copies of veriT seemingly looping. It's okay to just kill them. But I imagine this annoys a lot of people and I wonder if there is a way of preventing it. Does anybody else experience this?</p>
+<p>Larry<br>
+</p>
+</blockquote>
+
+
+
+<a name="554171422"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554171422" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554171422">(Nov 06 2025 at 19:18)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 06/11/2025 19:50, Manuel Eberl wrote:</p>
+<blockquote>
+<p>When I taught the Concrete Semantics course in Innsbruck this summer a lot of <br>
+my students had this problem on Windows, often to the extent that they had to <br>
+frequently reboot their laptops because they would be rendered unusable. I <br>
+don't remember whether it was Isabelle 2024 or 2025 that caused that issue <br>
+though.</p>
+</blockquote>
+<p>Yes, that was due to E Prover, mostly in Isabelle2024. For Isabelle2025 we've <br>
+had this NEWS item:</p>
+<p>- Update of bundled provers:<br>
+       . E 3.1 -- with patch on Windows/Cygwin for proper interrupts</p>
+<p>It was due to bad project management on the side of Stephan Schulz: He had <br>
+accepted patches without looking closely enough.</p>
+<p>Makarius</p>
+
+
+
+<a name="554204662"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554204662" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554204662">(Nov 06 2025 at 23:02)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+I've, very rarely, some zombie atp processes keeping my CPU nice and warm, and<br>
+my battery draining (on Linux). I typically just kill them manually.</p>
+<p>Peter </p>
+<p>On 6 Nov 2025 20:18, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:  </p>
+<blockquote>
+<p>On 06/11/2025 19:50, Manuel Eberl wrote:  </p>
+<blockquote>
+<p>When I taught the Concrete Semantics course in Innsbruck this summer a<br>
+lot of  <br>
+my students had this problem on Windows, often to the extent that they<br>
+had to  <br>
+frequently reboot their laptops because they would be rendered unusable.<br>
+I  <br>
+don't remember whether it was Isabelle 2024 or 2025 that caused that<br>
+issue  <br>
+though.  </p>
+</blockquote>
+<p>Yes, that was due to E Prover, mostly in Isabelle2024. For Isabelle2025<br>
+we've  <br>
+ had this NEWS item:  </p>
+<p>\- Update of bundled provers:  <br>
+        . E 3.1 -- with patch on Windows/Cygwin for proper interrupts  </p>
+<p>It was due to bad project management on the side of Stephan Schulz: He had  <br>
+ accepted patches without looking closely enough.  </p>
+<p>Makarius  </p>
+</blockquote>
+
+
+
+<a name="554283491"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554283491" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554283491">(Nov 07 2025 at 10:14)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 07/11/2025 00:02, Peter Lammich wrote:</p>
+<blockquote>
+<p>I've, very rarely, some zombie atp processes keeping my CPU nice and warm, and <br>
+my battery draining (on Linux). I typically just kill them manually.</p>
+</blockquote>
+<p>So which ATPs (or SMTs) are they?</p>
+<p>Makarius</p>
+
+
+
+<a name="554291957"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/554291957" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#554291957">(Nov 07 2025 at 10:50)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>On 07/11/2025 11:13, Makarius wrote:</p>
+<blockquote>
+<p>On 07/11/2025 00:02, Peter Lammich wrote:</p>
+<blockquote>
+<p>I've, very rarely, some zombie atp processes keeping my CPU nice and <br>
+warm, and my battery draining (on Linux). I typically just kill them <br>
+manually.</p>
+</blockquote>
+<p>So which ATPs (or SMTs) are they?</p>
+</blockquote>
+<p>I do not remember, but will log them the next time I encounter one ... <br>
+(happens very rarely, as I said)</p>
+<blockquote>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<a name="556815880"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/556815880" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#556815880">(Nov 17 2025 at 12:23)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 06/11/2025 19:24, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>While we are thinking about the next release, I thought I would bring up an intermittent issue. I use sledgehammer quite a lot, and sometimes things grind to a halt. Then I check the process monitor and find many copies of veriT seemingly looping. It's okay to just kill them. But I imagine this annoys a lot of people and I wonder if there is a way of preventing it. Does anybody else experience this?</p>
+</blockquote>
+<p>This thread is still pending: I am presently busy elsewhere, but will revisit <br>
+it later.</p>
+<p>Just a brief summary of the situation in current Isabelle/4053d744316f. We have:</p>
+<p>- new arm64-darwin executable, and x86_64-darwin executable, both built <br>
+afresh on our current platform baseline (macOS 12)</p>
+<p>- replacement of the x86_64-windows executable: instead of our self-built <br>
+one from Oct-2021 (269a39b6c5f8), it is the official veriT download for <br>
+Windows --- thus we might have another chance to see old problems on Windows <br>
+disappear</p>
+<p>- arm64-linux and x86_64-linux as before, unchanged</p>
+<p>Some user of macOS 26 has reported privately, that the new arm64-darwin <br>
+executable does not make a difference, the problem persists.</p>
+<p>To sort this out in time for the Isabelle2025-1 release, we first need a few <br>
+reproducible examples.</p>
+<p>Makarius</p>
+
+
+
+<a name="558315058"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/558315058" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#558315058">(Nov 19 2025 at 22:23)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/11/2025 13:22, Makarius wrote:</p>
+<blockquote>
+<p>This thread is still pending: I am presently busy elsewhere, but will revisit <br>
+it later.</p>
+</blockquote>
+<blockquote>
+<p>Some user of macOS 26 has reported privately, that the new arm64-darwin <br>
+executable does not make a difference, the problem persists.</p>
+<p>To sort this out in time for the Isabelle2025-1 release, we first need a few <br>
+reproducible examples.<br>
+Same situation: I will busy for the next 2 days, and hope for someone else <br>
+(Larry?) to come up with reproducible examples with too many veriT processes <br>
+on macOS 26.</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<a name="558409937"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/558409937" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#558409937">(Nov 20 2025 at 11:49)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I have to say that it is rare. I use sledgehammer frequently (never try) and the odd thing is that usually you don't get any, but occasionally they seem to accumulate, almost as if a certain sort of proof interfered with correct termination. It's hard to imagine how that would work.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 19 Nov 2025, at 22:22, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Same situation: I will busy for the next 2 days, and hope for someone else (Larry?) to come up with reproducible examples with too many veriT processes on macOS 26.</p>
+</blockquote>
+
+
+
+<a name="560624592"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560624592" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560624592">(Nov 27 2025 at 15:32)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p>On 19 Nov 2025, at 22:22, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Same situation: I will busy for the next 2 days, and hope for someone else (Larry?) to come up with reproducible examples with too many veriT processes on macOS 26.<br>
+</p>
+</blockquote>
+</blockquote>
+<p>On 20/11/2025 12:49, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I have to say that it is rare. I use sledgehammer frequently (never try) <br>
+and the odd thing is that usually you don't get any, but occasionally they <br>
+seem to accumulate, almost as if a certain sort of proof interfered with <br>
+correct termination. It's hard to imagine how that would work.</p>
+</blockquote>
+<p>It still sounds like a serious problem, and I am still busy elsewhere. We do <br>
+need proper empirical proof / reproducible examples to sort it out.</p>
+<p>Makarius</p>
+
+
+
+<a name="560624604"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560624604" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560624604">(Nov 27 2025 at 15:32)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p>On 19 Nov 2025, at 22:22, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Same situation: I will busy for the next 2 days, and hope for someone else (Larry?) to come up with reproducible examples with too many veriT processes on macOS 26.<br>
+</p>
+</blockquote>
+</blockquote>
+<p>On 20/11/2025 12:49, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I have to say that it is rare. I use sledgehammer frequently (never try) <br>
+and the odd thing is that usually you don't get any, but occasionally they <br>
+seem to accumulate, almost as if a certain sort of proof interfered with <br>
+correct termination. It's hard to imagine how that would work.</p>
+</blockquote>
+<p>It still sounds like a serious problem, and I am still busy elsewhere. We do <br>
+need proper empirical proof / reproducible examples to sort it out.</p>
+<p>Makarius</p>
+
+
+
+<a name="560625729"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560625729" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560625729">(Nov 27 2025 at 15:38)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>Right now I am running sledgehammer almost continuously and they are not showing up. I'm afraid it's just weird.<br>
+Larry</p>
+<blockquote>
+<p>On 27 Nov 2025, at 15:32, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>It still sounds like a serious problem, and I am still busy elsewhere. We do need proper empirical proof / reproducible examples to sort it out.</p>
+</blockquote>
+
+
+
+<a name="560625734"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560625734" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560625734">(Nov 27 2025 at 15:38)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>Right now I am running sledgehammer almost continuously and they are not showing up. I'm afraid it's just weird.<br>
+Larry</p>
+<blockquote>
+<p>On 27 Nov 2025, at 15:32, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>It still sounds like a serious problem, and I am still busy elsewhere. We do need proper empirical proof / reproducible examples to sort it out.</p>
+</blockquote>
+
+
+
+<a name="560812953"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560812953" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560812953">(Nov 28 2025 at 15:39)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p>On 27 Nov 2025, at 15:32, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>It still sounds like a serious problem, and I am still busy elsewhere. We do need proper empirical proof / reproducible examples to sort it out.<br>
+On 27/11/2025 16:37, Lawrence Paulson wrote:<br>
+Right now I am running sledgehammer almost continuously and they are not <br>
+showing up. I'm afraid it's just weird.</p>
+</blockquote>
+</blockquote>
+<p>Did any other user of macOS 26 see veriT processes hanging around recently?</p>
+<p>This question <em>is</em> relevant for the Isabelle2025-1 release, because macOS 26 <br>
+is officially supported by it.</p>
+<p>Makarius</p>
+
+
+
+<a name="560816186"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560816186" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560816186">(Nov 28 2025 at 15:56)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>On 07/11/2025 11:50, Peter Lammich wrote:</p>
+<blockquote>
+<p>On 07/11/2025 11:13, Makarius wrote:</p>
+<blockquote>
+<p>On 07/11/2025 00:02, Peter Lammich wrote:</p>
+<blockquote>
+<p>I've, very rarely, some zombie atp processes keeping my CPU nice and <br>
+warm, and my battery draining (on Linux). I typically just kill them <br>
+manually.</p>
+</blockquote>
+<p>So which ATPs (or SMTs) are they?</p>
+</blockquote>
+<p>I do not remember, but will log them the next time I encounter one ... <br>
+(happens very rarely, as I said)</p>
+<p>Just happened (on Isabelle2025) ... veriT keeping one CPU busy, and <br>
+using tons of memory. Manually killing the process helps.</p>
+</blockquote>
+<p>PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM  TIME+ <br>
+COMMAND<br>
+   28257 peter     20   0   36.2g  31.1g   3084 R  99.7  33.1  7:03.43 <br>
+veriT</p>
+<p>On</p>
+<h1>System Details Report</h1>
+<hr>
+<h2>Report details</h2>
+<ul>
+<li><strong>Date generated:</strong>                              2025-11-28 16:55:53</li>
+</ul>
+<h2>Hardware Information:</h2>
+<ul>
+<li><strong>Hardware Model:</strong>                              TongFang GX5MRXL</li>
+<li><strong>Memory:</strong>                                      96.0 GiB</li>
+<li>
+<p><strong>Processor:</strong>                                   Intel® Core™ Ultra 7 <br>
+155H × 22</p>
+</li>
+<li>
+<p><strong>Graphics:</strong>                                    Intel® Arc™ Graphics <br>
+(MTL)</p>
+</li>
+<li>
+<p><strong>Disk Capacity:</strong>                               2.0 TB</p>
+</li>
+</ul>
+<h2>Software Information:</h2>
+<ul>
+<li><strong>Firmware Version:</strong>                            N.1.10PCS05</li>
+<li><strong>OS Name:</strong>                                     Ubuntu 24.04.3 LTS</li>
+<li><strong>OS Build:</strong>                                    (null)</li>
+<li><strong>OS Type:</strong>                                     64-bit</li>
+<li><strong>GNOME Version:</strong>                               46</li>
+<li><strong>Windowing System:</strong>                            Wayland</li>
+<li><strong>Kernel Version:</strong>                              Linux 6.14.0-36-generic</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Makarius<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="560820249"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560820249" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560820249">(Nov 28 2025 at 16:17)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>As it is intermittent, I was wondering whether certain characteristics of the goal might cause this.</p>
+<p>Is your example reproducible? </p>
+<p>Larry</p>
+<blockquote>
+<p>On 28 Nov 2025, at 15:56, Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt; wrote:</p>
+<p>Just happened (on Isabelle2025) ... veriT keeping one CPU busy, and using tons of memory. Manually killing the process helps.</p>
+</blockquote>
+
+
+
+<a name="560824821"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560824821" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560824821">(Nov 28 2025 at 16:40)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>On 28/11/2025 17:16, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>As it is intermittent, I was wondering whether certain characteristics of the goal might cause this.</p>
+<p>Is your example reproducible?</p>
+</blockquote>
+<p>Unfortunately not. I only realized that this process was running 7 <br>
+minutes after it was started ... no idea what I was sledgehammering at <br>
+this point :(</p>
+<p>I typically realize that only when I keep hearing my CPU fan, and my CPU <br>
+temperature keeps being high, although no proof or sledgehammer is running.</p>
+<p>--</p>
+<p>Peter</p>
+<blockquote>
+<p>Larry</p>
+<blockquote>
+<p>On 28 Nov 2025, at 15:56, Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt; wrote:</p>
+<p>Just happened (on Isabelle2025) ... veriT keeping one CPU busy, and using tons of memory. Manually killing the process helps.</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="560827226"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560827226" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560827226">(Nov 28 2025 at 16:57)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 28/11/2025 17:40, Peter Lammich wrote:</p>
+<blockquote>
+<p>On 28/11/2025 17:16, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>As it is intermittent, I was wondering whether certain characteristics of <br>
+the goal might cause this.</p>
+<p>Is your example reproducible?</p>
+</blockquote>
+<p>Unfortunately not. I only realized that this process was running 7 minutes <br>
+after it was started ... no idea what I was sledgehammering at this point :(</p>
+<p>I typically realize that only when I keep hearing my CPU fan, and my CPU <br>
+temperature keeps being high, although no proof or sledgehammer is running.</p>
+</blockquote>
+<p>Peter,</p>
+<p>that is new information: the problem happens on Linux, and for Isabelle2025 <br>
+already. So it is not specific to macOS 26, nor to any changes towards <br>
+Isabelle2025-1.</p>
+<p>I am still interested to learn about the reasons, but it is now more likely to <br>
+get ticked-off as "non-regression" towards Isabelle2025.</p>
+<p>Makarius</p>
+
+
+
+<a name="560848579"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560848579" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560848579">(Nov 28 2025 at 19:57)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>Another one. veriT. Somewhere in my proof exploration of the below.</p>
+<p>I'll try to re-sledgehammer all goals in there, maybe it provokes a <br>
+rogue veriT again...</p>
+<p>--</p>
+<p>Peter</p>
+<p>imports Complex_Main<br>
+begin</p>
+<p>lemma upt_fuse: "⟦l≤m; m&lt;h ⟧ ⟹ [l..&lt;m] @ [m..&lt;h] = [l..&lt;h]"<br>
+   by (metis less_imp_add_positive upt_add_eq_append)</p>
+<p>corollary harmonic_series_unbounded_aux: "n ≤ (∑i←[1..&lt;2^(2*n)+1]. 1/i)"<br>
+proof -</p>
+<p>have A: "(real n+1)/2 ≤ (∑i←[1..&lt;2^n+1]. 1/i)" for n<br>
+   proof (induction n)<br>
+     case 0<br>
+     then show ?case by simp<br>
+   next<br>
+     case (Suc n)</p>
+<p>(* It feels like we're working against the simplifier for [_ ..&lt; <br>
+Suc _], so we disable that rule *)<br>
+     find_theorems "[_..&lt;Suc _]"<br>
+     note [simp del] = upt_Suc</p>
+<p>have SPLIT: "[1..&lt; 2^Suc n + 1] = [1..&lt; 2^n + 1]@[2^n + 1 ..&lt; 2^Suc <br>
+n + 1]" (is "_ = ?l1@?l2")<br>
+       by (simp add: upt_fuse)</p>
+<p>from Suc.IH have "(real n+1)/2 ≤ (∑i←?l1. 1/i)" .<br>
+     moreover have "1/2 ≤ (∑i←?l2. 1/i)" proof -<br>
+       have 1: "(1/2 :: real) ≤ (∑i←?l2. 1/2^Suc n)" by (simp add: <br>
+sum_list_triv)<br>
+       have 2: "(∑i←?l2. 1/2^Suc n) ≤ (∑i←?l2. 1/i)"<br>
+         apply (rule sum_list_mono)<br>
+         apply (clarsimp simp: less_Suc_eq_le)<br>
+         apply (drule of_nat_mono[where j="2*2^_"])<br>
+         by (auto simp: field_simps)<br>
+       from order_trans[OF 1 2] show ?thesis .<br>
+     qed<br>
+     ultimately show ?case<br>
+       apply (subst SPLIT)<br>
+       by simp<br>
+   qed</p>
+<p>show ?thesis<br>
+     apply (rule order_trans[OF _ A])<br>
+     by auto<br>
+qed</p>
+<p>lemma harmonic_series_unbounded: "∃n. c ≤ (∑i←[1..&lt;n]. 1/i)"<br>
+proof -<br>
+   have "c ≤ (nat ¦⌈c⌉¦)" by linarith<br>
+   also note harmonic_series_unbounded_aux<br>
+   finally show ?thesis by blast<br>
+qed</p>
+<p>On 28/11/2025 17:56, Makarius wrote:</p>
+<blockquote>
+<p>On 28/11/2025 17:40, Peter Lammich wrote:</p>
+<blockquote>
+<p>On 28/11/2025 17:16, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>As it is intermittent, I was wondering whether certain <br>
+characteristics of the goal might cause this.</p>
+<p>Is your example reproducible?</p>
+</blockquote>
+<p>Unfortunately not. I only realized that this process was running 7 <br>
+minutes after it was started ... no idea what I was sledgehammering <br>
+at this point :(</p>
+<p>I typically realize that only when I keep hearing my CPU fan, and my <br>
+CPU temperature keeps being high, although no proof or sledgehammer <br>
+is running.</p>
+</blockquote>
+<p>Peter,</p>
+<p>that is new information: the problem happens on Linux, and for <br>
+Isabelle2025 already. So it is not specific to macOS 26, nor to any <br>
+changes towards Isabelle2025-1.</p>
+<p>I am still interested to learn about the reasons, but it is now more <br>
+likely to get ticked-off as "non-regression" towards Isabelle2025.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<a name="560852226"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/zombie%20proof%20processes/near/560852226" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/zombie.20proof.20processes.html#560852226">(Nov 28 2025 at 20:38)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>Just FYI, we have a lot of material on the harmonic numbers in the <br>
+distribution already. Including of course the fact that they're <br>
+unbounded. E.g. in HOL-Analysis.Summation_Tests:</p>
+<blockquote>
+<p>lemma not_summable_harmonic: "¬summable (λn. inverse (of_nat n) :: 'a <br>
+:: real_normed_field)"<br>
+Or, expressed in a different way:</p>
+</blockquote>
+<blockquote>
+<p>definition✐‹tag important› harm :: "nat ⇒ 'a :: real_normed_field" where<br>
+  "harm n = (∑k=1..n. inverse (of_nat k))"<br>
+theorem not_convergent_harm: "¬convergent (harm :: nat ⇒ 'a :: <br>
+real_normed_field)"<br>
+Or a more precise lower bound:</p>
+</blockquote>
+<blockquote>
+<p>lemma harm_ge_ln: "harm n ≥ ln (real n + 1)"<br>
+And a lot more.</p>
+</blockquote>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 11/28/25 20:57, Peter Lammich wrote:</p>
+<blockquote>
+<p>Another one. veriT. Somewhere in my proof exploration of the below.</p>
+<p>I'll try to re-sledgehammer all goals in there, maybe it provokes a <br>
+rogue veriT again...</p>
+<p>-- </p>
+<p>Peter</p>
+<p>imports Complex_Main<br>
+begin</p>
+<p>lemma upt_fuse: "⟦l≤m; m&lt;h ⟧ ⟹ [l..&lt;m] @ [m..&lt;h] = [l..&lt;h]"<br>
+  by (metis less_imp_add_positive upt_add_eq_append)</p>
+<p>corollary harmonic_series_unbounded_aux: "n ≤ (∑i←[1..&lt;2^(2*n)+1]. 1/i)"<br>
+proof -</p>
+<p>have A: "(real n+1)/2 ≤ (∑i←[1..&lt;2^n+1]. 1/i)" for n<br>
+  proof (induction n)<br>
+    case 0<br>
+    then show ?case by simp<br>
+  next<br>
+    case (Suc n)</p>
+<p>(* It feels like we're working against the simplifier for [_ ..&lt; <br>
+Suc _], so we disable that rule *)<br>
+    find_theorems "[_..&lt;Suc _]"<br>
+    note [simp del] = upt_Suc</p>
+<p>have SPLIT: "[1..&lt; 2^Suc n + 1] = [1..&lt; 2^n + 1]@[2^n + 1 ..&lt; <br>
+2^Suc n + 1]" (is "_ = ?l1@?l2")<br>
+      by (simp add: upt_fuse)</p>
+<p>from Suc.IH have "(real n+1)/2 ≤ (∑i←?l1. 1/i)" .<br>
+    moreover have "1/2 ≤ (∑i←?l2. 1/i)" proof -<br>
+      have 1: "(1/2 :: real) ≤ (∑i←?l2. 1/2^Suc n)" by (simp add: <br>
+sum_list_triv)<br>
+      have 2: "(∑i←?l2. 1/2^Suc n) ≤ (∑i←?l2. 1/i)"<br>
+        apply (rule sum_list_mono)<br>
+        apply (clarsimp simp: less_Suc_eq_le)<br>
+        apply (drule of_nat_mono[where j="2*2^_"])<br>
+        by (auto simp: field_simps)<br>
+      from order_trans[OF 1 2] show ?thesis .<br>
+    qed<br>
+    ultimately show ?case<br>
+      apply (subst SPLIT)<br>
+      by simp<br>
+  qed</p>
+<p>show ?thesis<br>
+    apply (rule order_trans[OF _ A])<br>
+    by auto<br>
+qed</p>
+<p>lemma harmonic_series_unbounded: "∃n. c ≤ (∑i←[1..&lt;n]. 1/i)"<br>
+proof -<br>
+  have "c ≤ (nat ¦⌈c⌉¦)" by linarith<br>
+  also note harmonic_series_unbounded_aux<br>
+  finally show ?thesis by blast<br>
+qed</p>
+<p>On 28/11/2025 17:56, Makarius wrote:</p>
+<blockquote>
+<p>On 28/11/2025 17:40, Peter Lammich wrote:</p>
+<blockquote>
+<p>On 28/11/2025 17:16, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>As it is intermittent, I was wondering whether certain <br>
+characteristics of the goal might cause this.</p>
+<p>Is your example reproducible?</p>
+</blockquote>
+<p>Unfortunately not. I only realized that this process was running 7 <br>
+minutes after it was started ... no idea what I was sledgehammering <br>
+at this point :(</p>
+<p>I typically realize that only when I keep hearing my CPU fan, and my <br>
+CPU temperature keeps being high, although no proof or sledgehammer <br>
+is running.</p>
+</blockquote>
+<p>Peter,</p>
+<p>that is new information: the problem happens on Linux, and for <br>
+Isabelle2025 already. So it is not specific to macOS 26, nor to any <br>
+changes towards Isabelle2025-1.</p>
+<p>I am still interested to learn about the reasons, but it is now more <br>
+likely to get ticked-off as "non-regression" towards Isabelle2025.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

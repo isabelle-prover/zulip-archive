@@ -1,0 +1,109 @@
+<html>
+<head><meta charset="utf-8"><title>searching for a tactic · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html">searching for a tactic</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="530976538"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/530976538" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanna Lachnitt <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#530976538">(Jul 26 2025 at 17:22)</a>:</h4>
+<p>I have a goal like this one:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="n">∀x≥0.</span><span class="w"> </span><span class="n">∀y</span><span class="o">::</span><span class="n">int.</span><span class="w"> </span><span class="n">boo</span><span class="w"> </span><span class="o">(</span><span class="n">nat</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">2</span><span class="o">::</span><span class="n">int</span><span class="o">)</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">3</span><span class="o">::</span><span class="n">int</span><span class="o">))</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">∀x≥0.</span><span class="w"> </span><span class="n">∀y</span><span class="o">::</span><span class="n">int.</span><span class="w"> </span><span class="n">lift_boo</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">2</span><span class="o">::</span><span class="n">int</span><span class="o">)</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">3</span><span class="o">::</span><span class="n">int</span><span class="o">))</span>
+</code></pre></div>
+<p>I want to find a tactic in ML that unifies as much as possible, i.e. gets me a new goal:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">boo</span><span class="w"> </span><span class="o">(</span><span class="n">nat</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lift_boo</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span>
+</code></pre></div>
+<p>Does anyone know how to do this? It is okay if the goal becomes non-valid, e.g. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">∃x.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">4</span><span class="o">::</span><span class="n">int</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="n">&gt;</span><span class="w"> </span><span class="n">∃x.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">5</span><span class="o">::</span><span class="n">int</span><span class="o">)</span>
+</code></pre></div>
+<p>would give <code>4=5</code>.</p>
+
+
+
+<a name="530989425"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/530989425" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#530989425">(Jul 26 2025 at 19:09)</a>:</h4>
+<p>I am sure there is a better solution but this might make do:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">method</span><span class="w"> </span><span class="n">my_tac</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="o">(</span><span class="n">intro</span><span class="w"> </span><span class="n">allI</span><span class="w"> </span><span class="n">impI</span><span class="w"> </span><span class="n">exI</span><span class="w"> </span><span class="n">bexI</span><span class="o">)+</span><span class="n">;</span>
+<span class="w">   </span><span class="o">(</span><span class="n">elim</span><span class="w"> </span><span class="n">allE</span><span class="w"> </span><span class="n">impE</span><span class="w"> </span><span class="n">exE</span><span class="w"> </span><span class="n">bexE</span><span class="o">)+</span><span class="n">;</span>
+<span class="w">    </span><span class="o">(</span><span class="n">assumption</span><span class="o">+)?</span><span class="w"> </span><span class="c">(*needs repetition due to assumptions*)</span><span class="n">;</span>
+<span class="w">   </span><span class="o">(</span><span class="n">erule</span><span class="w"> </span><span class="n">mysubst2</span><span class="o">),</span>
+<span class="w">   </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">refl</span><span class="o">)?</span><span class="w"> </span><span class="c">(*tries to solve the first goal*)</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">‹</span>
+<span class="s"> ∀x≥0. ∀y::int. boo (nat x) y = (x = (2::int) ∧ y = (3::int)) ⟹ ∀x≥0. ∀y::int. lift_boo x y = (x = (2::int) ∧ y = (3::int))›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">my_tac</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">‹∃x. x = (4::int) ==&gt; ∃x. x = (5::int)›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">my_tac</span>
+<span class="w">  </span><span class="gr">oops</span>
+</code></pre></div>
+
+
+
+<a name="531021125"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/531021125" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanna Lachnitt <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#531021125">(Jul 26 2025 at 23:28)</a>:</h4>
+<p>Thank you so much</p>
+
+
+
+<a name="531023486"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/531023486" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanna Lachnitt <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#531023486">(Jul 26 2025 at 23:47)</a>:</h4>
+<p>I realized that what I am trying to do (which is slightly different than what I described) can best be done with conversions. See this example from the Isabelle cookbook</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">true_conj1_conv</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">ctrm</span><span class="w"> </span><span class="o">=</span>
+<span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">Thm.term_of</span><span class="w"> </span><span class="n">ctrm</span><span class="o">)</span><span class="w"> </span><span class="n">of</span>
+<span class="n">@</span><span class="ow">{</span><span class="kt">term</span><span class="w"> </span><span class="s">"op ∧"</span><span class="ow">}</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="n">@</span><span class="ow">{</span><span class="kt">term</span><span class="w"> </span><span class="n">True</span><span class="ow">}</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span>
+<span class="o">(</span><span class="n">Conv.arg_conv</span><span class="w"> </span><span class="o">(</span><span class="n">true_conj1_conv</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="n">then_conv</span>
+<span class="n">Conv.rewr_conv</span><span class="w"> </span><span class="n">@</span><span class="ow">{</span><span class="kt">thm</span><span class="w"> </span><span class="n">true_conj1</span><span class="ow">}</span><span class="o">)</span><span class="w"> </span><span class="n">ctrm</span>
+<span class="o">|</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">Conv.comb_conv</span><span class="w"> </span><span class="o">(</span><span class="n">true_conj1_conv</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="n">ctrm</span>
+<span class="o">|</span><span class="w"> </span><span class="n">Abs</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">Conv.abs_conv</span><span class="w"> </span><span class="o">(</span><span class="n">fn</span><span class="w"> </span><span class="o">(_,</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">true_conj1_conv</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">ctrm</span>
+<span class="o">|</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">Conv.all_conv</span><span class="w"> </span><span class="n">ctrm</span>
+</code></pre></div>
+<p>where all occurrences of <code>True ∧ x</code> are rewritten to <code>x</code></p>
+
+
+
+<a name="531362092"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/531362092" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#531362092">(Jul 28 2025 at 12:53)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="477368">Hanna Lachnitt</span> <a href="#narrow/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic/near/530976538">said</a>:</p>
+<blockquote>
+<p>I have a goal like this one:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="n">∀x≥0.</span><span class="w"> </span><span class="n">∀y</span><span class="o">::</span><span class="n">int.</span><span class="w"> </span><span class="n">boo</span><span class="w"> </span><span class="o">(</span><span class="n">nat</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">2</span><span class="o">::</span><span class="n">int</span><span class="o">)</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">3</span><span class="o">::</span><span class="n">int</span><span class="o">))</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">∀x≥0.</span><span class="w"> </span><span class="n">∀y</span><span class="o">::</span><span class="n">int.</span><span class="w"> </span><span class="n">lift_boo</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">2</span><span class="o">::</span><span class="n">int</span><span class="o">)</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">3</span><span class="o">::</span><span class="n">int</span><span class="o">))</span>
+</code></pre></div>
+<p>I want to find a tactic in ML that unifies as much as possible, i.e. gets me a new goal:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">boo</span><span class="w"> </span><span class="o">(</span><span class="n">nat</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lift_boo</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span>
+</code></pre></div>
+<p>Does anyone know how to do this? It is okay if the goal becomes non-valid, e.g. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">∃x.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">4</span><span class="o">::</span><span class="n">int</span><span class="o">)</span><span class="w"> </span><span class="o">==</span><span class="n">&gt;</span><span class="w"> </span><span class="n">∃x.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">5</span><span class="o">::</span><span class="n">int</span><span class="o">)</span>
+</code></pre></div>
+<p>would give <code>4=5</code>.</p>
+</blockquote>
+<p>If you want to do really unification as much as possible I would highly recommend looking at the <a href="https://www.isa-afp.org/entries/ML_Unification.html">https://www.isa-afp.org/entries/ML_Unification.html</a>. See <a href="https://www.isa-afp.org/sessions/ml_unification/#E_Unification_Examples.html">https://www.isa-afp.org/sessions/ml_unification/#E_Unification_Examples.html</a> for some examples</p>
+
+
+
+<a name="531362911"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/531362911" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#531362911">(Jul 28 2025 at 12:56)</a>:</h4>
+<p>There are certain cases where writing proper code would be more efficient but that takes more time</p>
+
+
+
+<a name="531368813"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/531368813" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#531368813">(Jul 28 2025 at 13:20)</a>:</h4>
+<p>I'm just guessing but your example seems like the reification examples <a href="https://www.isa-afp.org/sessions/ml_unification/#Unification_Hints_Reification_Examples.html">https://www.isa-afp.org/sessions/ml_unification/#Unification_Hints_Reification_Examples.html</a></p>
+
+
+
+<a name="531414333"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/searching%20for%20a%20tactic/near/531414333" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanna Lachnitt <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/searching.20for.20a.20tactic.html#531414333">(Jul 28 2025 at 16:46)</a>:</h4>
+<p>Thanks <span class="user-mention" data-user-id="714722">@irvin</span>, I will look into it</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head><meta charset="utf-8"><title>Making sense out of the sessions library · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html">Making sense out of the sessions library</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="529683686"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529683686" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> hmijail <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529683686">(Jul 20 2025 at 11:59)</a>:</h4>
+<p>The HOL theory library in the Isabelle documentation page goes to a <a href="https://isabelle.in.tum.de/dist/library/HOL/index.html">list of sessions</a>.<br>
+Let's say I am looking for the Finite_Map theory. How am I supposed to know that it's part of the HOL-Probability session?<br>
+The only way I have found to find documentation is google online and grep locally. This surfaces stuff, but in isolated patches that don't allow me to get any idea of a bigger picture. <br>
+Am I missing something?</p>
+
+
+
+<a name="529701799"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529701799" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529701799">(Jul 20 2025 at 17:23)</a>:</h4>
+<p>Finite_Map is in HOL-Library, not HOL-Probability</p>
+
+
+
+<a name="529701990"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529701990" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529701990">(Jul 20 2025 at 17:26)</a>:</h4>
+<p>and Isabelle has no policy to move things one at a time. So when "library"-like version enters HOL it is usually with everything in it</p>
+
+
+
+<a name="529707810"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529707810" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529707810">(Jul 20 2025 at 19:16)</a>:</h4>
+<p>You can see it in the AFP with the number of <code>_More</code> theories</p>
+
+
+
+<a name="529728061"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529728061" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> hmijail <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529728061">(Jul 21 2025 at 00:20)</a>:</h4>
+<p>Huh... When I googled for Finite_Map, the result I got was in session HOL-Probability:  <a href="https://isabelle.in.tum.de/dist/library/HOL/HOL-Probability/HOL-Library.Finite_Map.html">HOL-Probability/HOL-Library.Finite_Map</a>. I see now:</p>
+<ul>
+<li>that it's <em>also</em> in the HOL-Library session, where it makes more sense</li>
+<li>that one file can be reflected in 2 positions of the session hierarchy</li>
+<li>that the "HOL-Library" part of its name seems to mean another session (at first I assumed it was a filepath)</li>
+</ul>
+<p>OK, so this all together hints at how to navigate sessions and search results a bit better... thank you.</p>
+
+
+
+<a name="529750490"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529750490" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529750490">(Jul 21 2025 at 04:33)</a>:</h4>
+<p>The issue is that an Isabelle session can only be built on top of one other session</p>
+
+
+
+<a name="529750537"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529750537" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529750537">(Jul 21 2025 at 04:34)</a>:</h4>
+<p>Until recently: you would usually pick the most important (slowest) one to avoid recompiling it each time you start the development</p>
+
+
+
+<a name="529750606"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Making%20sense%20out%20of%20the%20sessions%20library/near/529750606" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Making.20sense.20out.20of.20the.20sessions.20library.html#529750606">(Jul 21 2025 at 04:35)</a>:</h4>
+<p>(now you can declare in the ROOT file that some sessions should be known, so you do not have to recompile them each time... but it is not really merging several sessions and has weird side effects like you saw on Finite_Map)</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

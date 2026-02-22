@@ -1,0 +1,130 @@
+<html>
+<head><meta charset="utf-8"><title>Noteble slowdown of AFP/Native_Word · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Noteble.20slowdown.20of.20AFP.2FNative_Word.html">Noteble slowdown of AFP/Native_Word</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="530980695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Noteble%20slowdown%20of%20AFP/Native_Word/near/530980695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Noteble.20slowdown.20of.20AFP.2FNative_Word.html#530980695">(Jul 26 2025 at 17:58)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+There is a notable slowdown AFP/Native_Word:</p>
+<p>Isabelle/e4207dfa36b5 AFP/16cb1cb993ae<br>
+Finished HOL (0:01:46 elapsed time, 0:05:36 cpu time, factor 3.16)<br>
+Finished Word_Lib (0:00:26 elapsed time, 0:01:37 cpu time, factor 3.70)<br>
+Finished Native_Word (0:01:36 elapsed time, 0:01:23 cpu time, factor 0.86)</p>
+<p>Isabelle/3704717ed7bf AFP/ccc0b8182357<br>
+Finished HOL (0:01:47 elapsed time, 0:05:41 cpu time, factor 3.17)<br>
+Finished Word_Lib (0:00:25 elapsed time, 0:01:36 cpu time, factor 3.81)<br>
+Finished Native_Word (0:03:27 elapsed time, 0:03:16 cpu time, factor 0.94)</p>
+<p>In the above changeset intervals, I see many changes on words and code <br>
+generation setup by Florian Haftmann, both in Isabelle and AFP.</p>
+<p>He needs to say if the effect on Native_Word is to be expected, or if this a <br>
+problem that has been overlooked.</p>
+<p>Makarius</p>
+
+
+
+<a name="531179684"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Noteble%20slowdown%20of%20AFP/Native_Word/near/531179684" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Noteble.20slowdown.20of.20AFP.2FNative_Word.html#531179684">(Jul 27 2025 at 17:26)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi Makarius,</p>
+<blockquote>
+<p>Isabelle/e4207dfa36b5 AFP/16cb1cb993ae<br>
+Finished HOL (0:01:46 elapsed time, 0:05:36 cpu time, factor 3.16)<br>
+Finished Word_Lib (0:00:26 elapsed time, 0:01:37 cpu time, factor 3.70)<br>
+Finished Native_Word (0:01:36 elapsed time, 0:01:23 cpu time, factor 0.86)</p>
+<p>Isabelle/3704717ed7bf AFP/ccc0b8182357<br>
+Finished HOL (0:01:47 elapsed time, 0:05:41 cpu time, factor 3.17)<br>
+Finished Word_Lib (0:00:25 elapsed time, 0:01:36 cpu time, factor 3.81)<br>
+Finished Native_Word (0:03:27 elapsed time, 0:03:16 cpu time, factor 0.94)</p>
+</blockquote>
+<p>thanks for figuring that out.</p>
+<p>Honestely, these are things were I miss the plain old isatest with its <br>
+generated charts.</p>
+<p>Anyway, I will look after those issues, but it will take some time <br>
+before I can actually dive into.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/emzA8s0De688Yex1nWrUZX8o/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/v_KCVUobogGL-Ea23EtfNvGc/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="531184844"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Noteble%20slowdown%20of%20AFP/Native_Word/near/531184844" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Noteble.20slowdown.20of.20AFP.2FNative_Word.html#531184844">(Jul 27 2025 at 17:59)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 27/07/2025 19:25, Florian Haftmann wrote:</p>
+<blockquote>
+<p>Honestely, these are things were I miss the plain old isatest with its <br>
+generated charts.</p>
+</blockquote>
+<p>These charts are now here: <br>
+<a href="https://isatest.sketis.net/devel/build_status/index.html">https://isatest.sketis.net/devel/build_status/index.html</a></p>
+<p>The most reliable test hardware is presently:</p>
+<p>* mini3: macOS 13 Ventura (ARM)<br>
+   * studio1: macOS 14 Sonoma (ARM)</p>
+<p>When I have figured out how to rent an old-fashioned server room in Augsburg <br>
+for a reasonable price, I will put a proper Linux + Windows test machine <br>
+there, too.</p>
+<p>Makarius</p>
+
+
+
+<a name="532035051"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Noteble%20slowdown%20of%20AFP/Native_Word/near/532035051" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Noteble.20slowdown.20of.20AFP.2FNative_Word.html#532035051">(Jul 31 2025 at 10:20)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>There is a notable slowdown AFP/Native_Word:</p>
+<p>Isabelle/e4207dfa36b5 AFP/16cb1cb993ae<br>
+Finished HOL (0:01:46 elapsed time, 0:05:36 cpu time, factor 3.16)<br>
+Finished Word_Lib (0:00:26 elapsed time, 0:01:37 cpu time, factor 3.70)<br>
+Finished Native_Word (0:01:36 elapsed time, 0:01:23 cpu time, factor 0.86)</p>
+<p>Isabelle/3704717ed7bf AFP/ccc0b8182357<br>
+Finished HOL (0:01:47 elapsed time, 0:05:41 cpu time, factor 3.17)<br>
+Finished Word_Lib (0:00:25 elapsed time, 0:01:36 cpu time, factor 3.81)<br>
+Finished Native_Word (0:03:27 elapsed time, 0:03:16 cpu time, factor 0.94)</p>
+<p>In the above changeset intervals, I see many changes on words and code <br>
+generation setup by Florian Haftmann, both in Isabelle and AFP.</p>
+<p>He needs to say if the effect on Native_Word is to be expected, or if <br>
+this a problem that has been overlooked.</p>
+</blockquote>
+<p>This decay stems from calls to code_simp.</p>
+<p>The deviation comes from the code equations for int_of_integer: in the <br>
+previous situations, there was a compromise in the code setup which used <br>
+a variant of int_of_integer to speed up execution of code_simp in trade <br>
+for that the code setup would not be executable stand-alone in a plain <br>
+target language built would need additional modifications of the code setup.</p>
+<p>The equations in question are<br>
+   ‹int_of_integer 0 = 0›<br>
+   ‹int_of_integer (Code_Numeral.Pos n) = Int.Pos n›<br>
+   ‹int_of_integer (Code_Numeral.Neg n) = Int.Neg n›<br>
+   ‹int_of_integer k = …› (*)<br>
+where for real target languages only the last one is used (*), where the <br>
+conversion happens by explicit binary cuts, which is fine for an unknown <br>
+representation, but does not compute that well in the logic.<br>
+The first three equations are fine for abstract representations (Pure, <br>
+NBE). For NBE there is no decay, so it seems to work as intended there.</p>
+<p>But for some unknown reason, the simplifier prefers the last equation, <br>
+as can be seen in HOL-Main:</p>
+<p>declare int_of_integer_code_nbe [code nbe]<br>
+declare int_of_integer_code [code]<br>
+declare [[code_simp_trace]]</p>
+<p>lemma<br>
+   ‹P (int_of_integer (Code_Numeral.Pos Num.One))›<br>
+   apply code_simp</p>
+<p>Can anybody familiar with the simplifier explain what is going on?</p>
+<p>Bzw. the timing panel in Isabelle/jEdit is an excellent tool to pin down <br>
+such things.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/EpKSBrz1OA98SxZF0KkDk2xr/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/HZBKt5U-aBwCIEetuthu2rAs/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,80 @@
+[
+    {
+        "content": "<p>Dear Isabelle developers,</p>\n<p>I hope you are doing well. I am a student currently working on a university project regarding the reliability and testing of proof assistants. According to the project specification, my task is to test the interface between Isabelle/HOL and external provers, which are primarily invoked via Sledgehammer.</p>\n<p>My supervisor recommended that I consult this community to better understand the internal architecture. In particular, I would be very grateful if you could advise me on the following:</p>\n<ol>\n<li>What is the main ML entry point or API through which Sledgehammer invokes external provers (such as E, Vampire, Z3)?  </li>\n<li>\n<p>Which modules or functions in the Isabelle code base are responsible for:<br>\n   (a) preparing problems for external provers  <br>\n   (b) launching the external tools  <br>\n   (c) parsing and integrating their results back into Isabelle?</p>\n</li>\n<li>\n<p>If one wishes to instrument or fuzz the interface (for example, by injecting mutated prover calls or modified problem files), is there a recommended way to call this layer programmatically?</p>\n</li>\n</ol>\n<p>For context, I am working with Isabelle 2025, and this question is specifically motivated by Variant 3 of my project, which focuses on exercising the Sledgehammer–external prover interaction to search for crashes, miscommunication, hangs, or unexpected behaviours.</p>\n<p>Thank you very much for your time and guidance. I sincerely appreciate your help as I am still learning the internal structure of Isabelle.</p>\n<p>Kind regards,  <br>\nJiangjing Xu</p>",
+        "id": 560582201,
+        "sender_full_name": "Jiangjing Xu",
+        "timestamp": 1764245530
+    },
+    {
+        "content": "<p>Have a look at the function <code>Sledgehammer_Prover_ATP.run_atp</code> (In the file <code>src/HOL/Tools/Sledgehammer/sledgehammer_prover_atp.ML</code>), where all of this happens.</p>\n<p>This calls all the components, e.g. <code>ATP_Problem_Generate.generate_atp_problem</code> (in <code>src/HOL/Tools/ATP/atp_problem_generate.ML</code>).</p>\n<p>You can simply write Isabelle/ML code to call the involved functions yourself.</p>",
+        "id": 560586763,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1764247005
+    },
+    {
+        "content": "<p>If you're new to Isabelle/ML, have a look at the first few sections of the <a href=\"https://web.cs.wpi.edu/~dd/resources_isabelle/isabelle_programming.urban.pdf\">Isabelle/ML Cookbook</a>.</p>",
+        "id": 560587716,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1764247311
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/211483-Isabelle.2FML/topic/Entry.20point.20for.20Sledgehammer.E2.80.99s.20external.20prover.20interface/near/560587716\">said</a>:</p>\n<blockquote>\n<p>If you're new to Isabelle/ML, have a look at the first few sections of the <a href=\"https://web.cs.wpi.edu/~dd/resources_isabelle/isabelle_programming.urban.pdf\">Isabelle/ML Cookbook</a>.</p>\n</blockquote>\n<p>That's the 2013 version. Here's the most up-to-date version (2019): <a href=\"https://urbanchr.github.io/Cookbook/\">https://urbanchr.github.io/Cookbook/</a></p>",
+        "id": 560588047,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1764247420
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/211483-Isabelle.2FML/topic/Entry.20point.20for.20Sledgehammer.E2.80.99s.20external.20prover.20interface/near/560586763\">发言道</a>：</p>\n<blockquote>\n<p>Have a look at the function <code>Sledgehammer_Prover_ATP.run_atp</code> (In the file <code>src/HOL/Tools/Sledgehammer/sledgehammer_prover_atp.ML</code>), where all of this happens.</p>\n<p>This calls all the components, e.g. <code>ATP_Problem_Generate.generate_atp_problem</code> (in <code>src/HOL/Tools/ATP/atp_problem_generate.ML</code>).</p>\n<p>You can simply write Isabelle/ML code to call the involved functions yourself.</p>\n</blockquote>\n<p>Thank you very much, Mr.Huch — this is extremely helpful.</p>\n<p>I will look into <code>Sledgehammer_Prover_ATP.run_atp</code> and the related modules you mentioned, especially <code>ATP_Problem_Generate.generate_atp_problem</code>. This gives me a clear starting point for understanding the full invocation chain.</p>\n<p>I appreciate the guidance on calling these components directly from Isabelle/ML as well.</p>",
+        "id": 560624379,
+        "sender_full_name": "Jiangjing Xu",
+        "timestamp": 1764257509
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233154\">Kevin Kappelmann</span> <a href=\"#narrow/channel/211483-Isabelle.2FML/topic/Entry.20point.20for.20Sledgehammer.E2.80.99s.20external.20prover.20interface/near/560588047\">发言道</a>：</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/211483-Isabelle.2FML/topic/Entry.20point.20for.20Sledgehammer.E2.80.99s.20external.20prover.20interface/near/560587716\">said</a>:</p>\n<blockquote>\n<p>If you're new to Isabelle/ML, have a look at the first few sections of the <a href=\"https://web.cs.wpi.edu/~dd/resources_isabelle/isabelle_programming.urban.pdf\">Isabelle/ML Cookbook</a>.</p>\n</blockquote>\n<p>That's the 2013 version. Here's the most up-to-date version (2019): <a href=\"https://urbanchr.github.io/Cookbook/\">https://urbanchr.github.io/Cookbook/</a></p>\n</blockquote>\n<p>Thank you, Mr.Kappelmann, for the link to the updated Isabelle/ML Cookbook. I really appreciate it — I will study the 2019 version to familiarise myself with Isabelle/ML before diving deeper into the Sledgehammer interface.</p>",
+        "id": 560624686,
+        "sender_full_name": "Jiangjing Xu",
+        "timestamp": 1764257595
+    },
+    {
+        "content": "<p>It seems strange to me to try fuzzing E and Vampire this way, because Isabelle does not really try to reconstruct the proofs</p>",
+        "id": 560633254,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764260040
+    },
+    {
+        "content": "<p>Fuzzing the smt code that seems like a lot of fun :-)</p>",
+        "id": 560633403,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764260086
+    },
+    {
+        "content": "<p>But: I expect that will find a lot of proof reconstruction problems</p>",
+        "id": 560633489,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764260109
+    },
+    {
+        "content": "<p>before finding problems due to mutation</p>",
+        "id": 560633760,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764260196
+    },
+    {
+        "content": "<p>BTW, I have somewhere a <code>check_smt</code> method that parses an input and a proof file. That might be useful to start fuzzing (you can mutate text files, which is easier than attempting to mutate the file generation itself)</p>",
+        "id": 560634017,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1764260279
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/211483-Isabelle.2FML/topic/Entry.20point.20for.20Sledgehammer.E2.80.99s.20external.20prover.20interface/near/560633254\">发言道</a>：</p>\n<blockquote>\n<p>It seems strange to me to try fuzzing E and Vampire this way, because Isabelle does not really try to reconstruct the proofs</p>\n</blockquote>\n<p>Thank you very much, Mr.Fleury, for your thoughtful advice — I really appreciate it.</p>\n<p>Your points about proof reconstruction dominating the results and about focusing on SMT fuzzing are very helpful, and I will carefully take them into account when refining my direction. The <code>check_smt</code> method you mentioned also sounds like an excellent starting point.</p>\n<p>Many thanks again for your guidance.</p>",
+        "id": 562425458,
+        "sender_full_name": "Jiangjing Xu",
+        "timestamp": 1765187615
+    },
+    {
+        "content": "<p>Right, so the fork is at <a href=\"https://github.com/m-fleury/isabelle-emacs/tree/Isabelle2025-reconstruction\">https://github.com/m-fleury/isabelle-emacs/tree/Isabelle2025-reconstruction</a>. It contains changes related to add support for a newer cvc5 and the latest veriT version. I will try to merge the changes with the latest RC5 over the week-end.</p>",
+        "id": 562606102,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1765260853
+    }
+]

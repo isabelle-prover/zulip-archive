@@ -1,0 +1,33 @@
+<html>
+<head><meta charset="utf-8"><title>Problem with syntax · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Problem.20with.20syntax.html">Problem with syntax</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="565540129"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Problem%20with%20syntax/near/565540129" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Problem.20with.20syntax.html#565540129">(Dec 28 2025 at 01:17)</a>:</h4>
+<p>Why is it that this does not work</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">my_divides</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"my_divides n m = ∃k. m = k * n"</span>
+</code></pre></div>
+<p>but adding parentheses works</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">my_divides</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"my_divides n m = (∃k. m = k * n)"</span>
+</code></pre></div>
+<p>?</p>
+
+
+
+<a name="565991599"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Problem%20with%20syntax/near/565991599" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Christian Pardillo Laursen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Problem.20with.20syntax.html#565991599">(Jan 01 2026 at 17:54)</a>:</h4>
+<p>Bindings often need parentheses to know their scope - parsing is done before type checking so it can't use the type information to know what scope would make sense, and here the equality has quite low precedence so I think it leads to ambiguity</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

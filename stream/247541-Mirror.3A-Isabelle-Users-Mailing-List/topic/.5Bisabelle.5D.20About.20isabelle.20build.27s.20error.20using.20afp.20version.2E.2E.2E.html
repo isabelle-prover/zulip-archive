@@ -1,0 +1,244 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] About isabelle build&#x27;s error using afp version... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20About.20isabelle.20build.27s.20error.20using.20afp.20version.2E.2E.2E.html">[isabelle] About isabelle build&#x27;s error using afp version...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515712395"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20About%20isabelle%20build%27s%20error%20using%20afp%20version.../near/515712395" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20About.20isabelle.20build.27s.20error.20using.20afp.20version.2E.2E.2E.html#515712395">(May 02 2025 at 13:19)</a>:</h4>
+<p>From: Hongjian Jiang &lt;<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;<br>
+Hi all,</p>
+<p>I'm currently trying to learn how to generate executable code and understand<br>
+aspects of proof systems. For this purpose, I'm exploring the AFP entry<br>
+FOL_Seq_Calc (1–3).</p>
+<p>However, I encountered an error when attempting to build the theory using the<br>
+command listed in FOL_Seq_Calc3/export.thy: <code>isabelle build -e -D .</code>.</p>
+<p>The error message is as follows:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="n">see</span><span class="w"> </span><span class="k">also</span><span class="w"> </span><span class="s">"isabelle build_log -H Error HOL-Library"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-</span>
+<span class="s">Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-</span>
+<span class="s">Library.Disjoint_FSets"</span><span class="o">,</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Scala</span><span class="o">:</span><span class="w"> </span><span class="n">isabelle_scala</span><span class="w"> </span><span class="n">scalac</span>
+<span class="n">$ISABELLE_SCALAC_OPTIONS</span><span class="w"> </span><span class="n">ROOT.scala</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"export_code"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1408</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~~/src/HOL/Library/</span>
+<span class="s">Finite_Map.thy"</span><span class="o">)</span>
+<span class="n">FOL_Seq_Calc3</span><span class="w"> </span><span class="n">CANCELLED</span>
+<span class="n">Unfinished</span><span class="w"> </span><span class="n">session</span><span class="o">(</span><span class="n">s</span><span class="o">):</span><span class="w"> </span><span class="n">FOL_Seq_Calc3</span><span class="o">,</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span>
+<span class="n">0</span><span class="o">:</span><span class="n">04</span><span class="o">:</span><span class="n">50</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">22</span><span class="o">:</span><span class="n">20</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">4.61</span>
+</code></pre></div>
+<p>For your information, I tried this on two machines, and both fail:</p>
+<ol>
+<li>
+<p>A MacBook running macOS 14.6.1 with a 2.6 GHz 6-Core Intel Core i7</p>
+</li>
+<li>
+<p>A Mac Studio with an M1 chip</p>
+</li>
+</ol>
+
+
+
+<a name="515716560"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20About%20isabelle%20build%27s%20error%20using%20afp%20version.../near/515716560" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20About.20isabelle.20build.27s.20error.20using.20afp.20version.2E.2E.2E.html#515716560">(May 02 2025 at 13:39)</a>:</h4>
+<p>From: Asta Halkjær From &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi,</p>
+<p>This is my entry, but the error seems to happen before Isabelle even gets that far, so that seems to be irrelevant.<br>
+I cannot reproduce the issue with my Isabelle2025 on Intel hardware, where the listed command succeeds.</p>
+<p>Maybe it looks familiar to someone else?</p>
+<p>Best,<br>
+Asta</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Hongjian Jiang &lt;<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;<br>
+Sent: 02 May 2025 15:19:02<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+Subject: [isabelle] About isabelle build's error using afp version 2025 and isabelle 2025</p>
+<p>[Du får ikke ofte mails fra <a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>. Få mere at vide om, hvorfor dette er vigtigt, på <a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a> ]</p>
+<p>Hi all,</p>
+<p>I'm currently trying to learn how to generate executable code and understand<br>
+aspects of proof systems. For this purpose, I'm exploring the AFP entry<br>
+FOL_Seq_Calc (1–3).</p>
+<p>However, I encountered an error when attempting to build the theory using the<br>
+command listed in FOL_Seq_Calc3/export.thy: <code>isabelle build -e -D .</code>.</p>
+<p>The error message is as follows:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="n">see</span><span class="w"> </span><span class="k">also</span><span class="w"> </span><span class="s">"isabelle build_log -H Error HOL-Library"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-</span>
+<span class="s">Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-</span>
+<span class="s">Library.Disjoint_FSets"</span><span class="o">,</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Scala</span><span class="o">:</span><span class="w"> </span><span class="n">isabelle_scala</span><span class="w"> </span><span class="n">scalac</span>
+<span class="n">$ISABELLE_SCALAC_OPTIONS</span><span class="w"> </span><span class="n">ROOT.scala</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"export_code"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1408</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~~/src/HOL/Library/</span>
+<span class="s">Finite_Map.thy"</span><span class="o">)</span>
+<span class="n">FOL_Seq_Calc3</span><span class="w"> </span><span class="n">CANCELLED</span>
+<span class="n">Unfinished</span><span class="w"> </span><span class="n">session</span><span class="o">(</span><span class="n">s</span><span class="o">):</span><span class="w"> </span><span class="n">FOL_Seq_Calc3</span><span class="o">,</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span>
+<span class="n">0</span><span class="o">:</span><span class="n">04</span><span class="o">:</span><span class="n">50</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">22</span><span class="o">:</span><span class="n">20</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">4.61</span>
+</code></pre></div>
+<p>For your information, I tried this on two machines, and both fail:</p>
+<ol>
+<li>
+<p>A MacBook running macOS 14.6.1 with a 2.6 GHz 6-Core Intel Core i7</p>
+</li>
+<li>
+<p>A Mac Studio with an M1 chip</p>
+</li>
+</ol>
+
+
+
+<a name="516015675"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20About%20isabelle%20build%27s%20error%20using%20afp%20version.../near/516015675" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20About.20isabelle.20build.27s.20error.20using.20afp.20version.2E.2E.2E.html#516015675">(May 04 2025 at 10:29)</a>:</h4>
+<p>From: Hongjian Jiang &lt;<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;<br>
+Hi Asta,</p>
+<p>It appears to work on the Linux system. However, after compiling with <code>ghc
+-O2 -i./program Main.hs</code>.</p>
+<p>I receive the following error:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="o">[</span><span class="n">1</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="n">Compiling</span><span class="w"> </span><span class="n">Arith</span><span class="w">            </span><span class="o">(</span><span class="w"> </span><span class="n">program/Arith.hs</span><span class="o">,</span><span class="w"> </span><span class="n">program/Arith.o</span><span class="w"> </span><span class="o">)</span>
+
+<span class="n">program/Arith.hs</span><span class="o">:</span><span class="n">28</span><span class="o">:</span><span class="n">33</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Module</span><span class="w"> </span><span class="n">‘Data.Bits’</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">export</span><span class="w"> </span><span class="n">‘</span><span class="o">(</span><span class="ow">.</span><span class="n">^.</span><span class="o">)</span><span class="n">’</span>
+<span class="w">   </span><span class="o">|</span>
+<span class="n">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="n">Data.Bits</span><span class="w"> </span><span class="o">((</span><span class="ow">.</span><span class="n">&amp;.</span><span class="o">),</span><span class="w"> </span><span class="o">(</span><span class="ow">.</span><span class="o">|</span><span class="ow">.</span><span class="o">),</span><span class="w"> </span><span class="o">(</span><span class="ow">.</span><span class="n">^.</span><span class="o">))</span><span class="n">;</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                                 </span><span class="n">^^^^^</span>
+</code></pre></div>
+<p>Best</p>
+<p>Hongjian</p>
+<p>Asta Halkjær From &lt;<a href="mailto:asfr@di.ku.dk">asfr@di.ku.dk</a>&gt; 于2025年5月2日周五 15:39写道：</p>
+<blockquote>
+<p>Hi,</p>
+<p>This is my entry, but the error seems to happen before Isabelle even gets<br>
+that far, so that seems to be irrelevant.<br>
+I cannot reproduce the issue with my Isabelle2025 on Intel hardware, where<br>
+the listed command succeeds.</p>
+<p>Maybe it looks familiar to someone else?</p>
+<p>Best,<br>
+Asta</p>
+<hr>
+<p><em>From:</em> <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<br>
+<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Hongjian Jiang &lt;<br>
+<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;<br>
+<em>Sent:</em> 02 May 2025 15:19:02<br>
+<em>To:</em> <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+<em>Subject:</em> [isabelle] About isabelle build's error using afp version 2025<br>
+and isabelle 2025</p>
+<p>[Du får ikke ofte mails fra <a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>. Få mere at vide<br>
+om, hvorfor dette er vigtigt, på<br>
+<a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a> ]</p>
+<p>Hi all,</p>
+<p>I'm currently trying to learn how to generate executable code and<br>
+understand<br>
+aspects of proof systems. For this purpose, I'm exploring the AFP entry<br>
+FOL_Seq_Calc (1–3).</p>
+<p>However, I encountered an error when attempting to build the theory using<br>
+the<br>
+command listed in FOL_Seq_Calc3/export.thy: <code>isabelle build -e -D .</code>.</p>
+<p>The error message is as follows:<br>
+<code>
+HOL-Library FAILED (see also "isabelle build_log -H Error HOL-Library")
+*** Failed to load theory "HOL-Library.Disjoint_FSets" (unresolved "HOL-
+Library.Finite_Map")
+*** Failed to load theory "HOL-Library.Library" (unresolved "HOL-
+Library.Disjoint_FSets", "HOL-Library.Finite_Map")
+*** Code check failed for Scala: isabelle_scala scalac
+$ISABELLE_SCALAC_OPTIONS ROOT.scala
+*** At command "export_code" (line 1408 of "~~/src/HOL/Library/
+Finite_Map.thy")
+FOL_Seq_Calc3 CANCELLED
+Unfinished session(s): FOL_Seq_Calc3, HOL-Library
+0:04:50 elapsed time, 0:22:20 cpu time, factor 4.61
+</code></p>
+<p>For your information, I tried this on two machines, and both fail:</p>
+<ol>
+<li>
+<p>A MacBook running macOS 14.6.1 with a 2.6 GHz 6-Core Intel Core i7</p>
+</li>
+<li>
+<p>A Mac Studio with an M1 chip<br>
+</p>
+</li>
+</ol>
+</blockquote>
+
+
+
+<a name="516018659"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20About%20isabelle%20build%27s%20error%20using%20afp%20version.../near/516018659" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20About.20isabelle.20build.27s.20error.20using.20afp.20version.2E.2E.2E.html#516018659">(May 04 2025 at 11:12)</a>:</h4>
+<p>From: Asta Halkjær From &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi,</p>
+<p>Are you running an old GHC? I can compile the exported code on version 9.6.7.</p>
+<p>It seems you need at least base-4.17:</p>
+<p><a href="https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Bits.html#v:.-94-">https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Bits.html#v:.-94-</a>.</p>
+<p>Best,<br>
+Asta</p>
+<hr>
+<p>From: Hongjian Jiang &lt;<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;<br>
+Sent: 04 May 2025 12:29:03<br>
+To: Asta Halkjær From<br>
+Cc: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+Subject: Re: [isabelle] About isabelle build's error using afp version 2025 and isabelle 2025</p>
+<p>Du får ikke ofte mails fra <a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>. Få mere at vide om, hvorfor dette er vigtigt&lt;<a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a>&gt;</p>
+<p>Hi Asta,</p>
+<p>It appears to work on the Linux system. However, after compiling with <code>ghc -O2 -i./program Main.hs</code>.</p>
+<p>I receive the following error:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="o">[</span><span class="n">1</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="n">Compiling</span><span class="w"> </span><span class="n">Arith</span><span class="w">            </span><span class="o">(</span><span class="w"> </span><span class="n">program/Arith.hs</span><span class="o">,</span><span class="w"> </span><span class="n">program/Arith.o</span><span class="w"> </span><span class="o">)</span>
+
+<span class="n">program/Arith.hs</span><span class="o">:</span><span class="n">28</span><span class="o">:</span><span class="n">33</span><span class="o">:</span><span class="w"> </span><span class="n">error</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Module</span><span class="w"> </span><span class="n">‘Data.Bits’</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">export</span><span class="w"> </span><span class="n">‘</span><span class="o">(</span><span class="ow">.</span><span class="n">^.</span><span class="o">)</span><span class="n">’</span>
+<span class="w">   </span><span class="o">|</span>
+<span class="n">28</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="n">Data.Bits</span><span class="w"> </span><span class="o">((</span><span class="ow">.</span><span class="n">&amp;.</span><span class="o">),</span><span class="w"> </span><span class="o">(</span><span class="ow">.</span><span class="o">|</span><span class="ow">.</span><span class="o">),</span><span class="w"> </span><span class="o">(</span><span class="ow">.</span><span class="n">^.</span><span class="o">))</span><span class="n">;</span>
+<span class="w">   </span><span class="o">|</span><span class="w">                                 </span><span class="n">^^^^^</span>
+</code></pre></div>
+<p>Best</p>
+<p>Hongjian</p>
+<p>Asta Halkjær From &lt;asfr@di.ku.dk&lt;mailto:<a href="mailto:asfr@di.ku.dk">asfr@di.ku.dk</a>&gt;&gt; 于2025年5月2日周五 15:39写道：<br>
+Hi,</p>
+<p>This is my entry, but the error seems to happen before Isabelle even gets that far, so that seems to be irrelevant.<br>
+I cannot reproduce the issue with my Isabelle2025 on Intel hardware, where the listed command succeeds.</p>
+<p>Maybe it looks familiar to someone else?</p>
+<p>Best,<br>
+Asta</p>
+<hr>
+<p>From: cl-isabelle-users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; &lt;cl-isabelle-users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt;&gt; on behalf of Hongjian Jiang &lt;jianghongjian87@gmail.com&lt;mailto:<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;&gt;<br>
+Sent: 02 May 2025 15:19:02<br>
+To: cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] About isabelle build's error using afp version 2025 and isabelle 2025</p>
+<p>[Du får ikke ofte mails fra jianghongjian87@gmail.com&lt;mailto:<a href="mailto:jianghongjian87@gmail.com">jianghongjian87@gmail.com</a>&gt;. Få mere at vide om, hvorfor dette er vigtigt, på <a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a> ]</p>
+<p>Hi all,</p>
+<p>I'm currently trying to learn how to generate executable code and understand<br>
+aspects of proof systems. For this purpose, I'm exploring the AFP entry<br>
+FOL_Seq_Calc (1–3).</p>
+<p>However, I encountered an error when attempting to build the theory using the<br>
+command listed in FOL_Seq_Calc3/export.thy: <code>isabelle build -e -D .</code>.</p>
+<p>The error message is as follows:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span><span class="w"> </span><span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="n">see</span><span class="w"> </span><span class="k">also</span><span class="w"> </span><span class="s">"isabelle build_log -H Error HOL-Library"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Disjoint_FSets"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-</span>
+<span class="s">Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">load</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"HOL-Library.Library"</span><span class="w"> </span><span class="o">(</span><span class="n">unresolved</span><span class="w"> </span><span class="s">"HOL-</span>
+<span class="s">Library.Disjoint_FSets"</span><span class="o">,</span><span class="w"> </span><span class="s">"HOL-Library.Finite_Map"</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Code</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">failed</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">Scala</span><span class="o">:</span><span class="w"> </span><span class="n">isabelle_scala</span><span class="w"> </span><span class="n">scalac</span>
+<span class="n">$ISABELLE_SCALAC_OPTIONS</span><span class="w"> </span><span class="n">ROOT.scala</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"export_code"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1408</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~~/src/HOL/Library/</span>
+<span class="s">Finite_Map.thy"</span><span class="o">)</span>
+<span class="n">FOL_Seq_Calc3</span><span class="w"> </span><span class="n">CANCELLED</span>
+<span class="n">Unfinished</span><span class="w"> </span><span class="n">session</span><span class="o">(</span><span class="n">s</span><span class="o">):</span><span class="w"> </span><span class="n">FOL_Seq_Calc3</span><span class="o">,</span><span class="w"> </span><span class="n">HOL</span><span class="o">-</span><span class="n">Library</span>
+<span class="n">0</span><span class="o">:</span><span class="n">04</span><span class="o">:</span><span class="n">50</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">22</span><span class="o">:</span><span class="n">20</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">4.61</span>
+</code></pre></div>
+<p>For your information, I tried this on two machines, and both fail:</p>
+<ol>
+<li>
+<p>A MacBook running macOS 14.6.1 with a 2.6 GHz 6-Core Intel Core i7</p>
+</li>
+<li>
+<p>A Mac Studio with an M1 chip</p>
+</li>
+</ol>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

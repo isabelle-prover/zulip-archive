@@ -1,0 +1,39 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Datatype definition efficiency - workaround fo... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.20-.20workaround.20fo.2E.2E.2E.html">[isabelle] Datatype definition efficiency - workaround fo...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="529370266"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency%20-%20workaround%20fo.../near/529370266" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.20-.20workaround.20fo.2E.2E.2E.html#529370266">(Jul 17 2025 at 23:36)</a>:</h4>
+<p>From: Frédéric Tuong &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Dmitriy,</p>
+<p>Thank you very much! I find your nested datatype version to be equivalent to the mutually recursive version. This suggests to me that it can, in principle, serve as a substitute wherever the mutually recursive version is currently used. This could potentially apply to Isabelle/C, as well as to other entries on our side that have not yet been submitted to the AFP. However, the situation may be a bit more subtle. I realize that my previous communication might have fallen short in providing context for our research direction.</p>
+<p>There are several reasons why we chose not to change the C AST implementation too much (while still welcoming changes), as well as several reasons why we chose not to change the datatype command implementation too much (while still welcoming changes). These reasons stem from the fact that the research problems we initially aimed to address are somewhat orthogonal to the issue of improving the C AST performance.</p>
+<p>When we say "somewhat orthogonal", we also imply that they are "likely not entirely unrelated". The more we considered this, the more crystal clear it became that a solution to our initial problems could be general enough to alleviate concerns about the slow C AST issue altogether. This realization was compelling enough that we intentionally prioritized our research in that direction. It was appealing, even at the cost of temporarily sacrificing our ability to submit the slow C AST to the AFP and enduring longer evaluation times.</p>
+<p>Additionally, this trade-off was later supported by other favorable factors. For example, from an end-user perspective, a C AST is typically built as a fast-loaded persistent heap image only rarely --- and even more rarely if one is using for instance an "old" developer version of Isabelle that is intentionally not synchronized very often with the remote for the purpose of the exercise.</p>
+<p>Admittedly, achieving crystal clarity at its maximum brightness is nearly impossible without concrete machine proofs. At this stage, certain aspects of our research may still sound speculative --- even for us! This is why we have anticipated providing more technical presentations in future AFP submissions or so.</p>
+<p>We still have several unfinished entries in preparation on our side. While some entries should require moderate effort (or at least reduced effort, thanks to your nested C AST performance), other entries that we consider more fundamental and challenging will take more time to resolve, if they can be resolved at all. These challenging entries still depend somewhat on how a C AST is defined using datatypes, but they should be independent of the performance of the mutually C AST and the nested C AST. In any case, the discussion might veer off-topic here unless one is working on research problems of the same category as ours, or until our solutions in development are sufficiently generic to be reused for other same problems once they are better organized and polished.</p>
+<p>In summary, I believe the situation has improved with your fast C AST. It generally demonstrates how to rewrite large mutually datatypes into nested ones, serving as a valuable source of inspiration for other potentially problematic ASTs, say, more complex than C. On our side, it personally opens more doors than it closes; however, the fundamental challenges we initially faced remain present. Therefore, we will keep expanding our bulldozer operations until the last resisting doors are gently opened!</p>
+<p>Best,<br>
+Frédéric</p>
+<p>On Friday, July 11th, 2025 at 18:17, Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt; wrote:</p>
+<blockquote>
+<p>Thanks Frédéric, that’s an interesting example. Although a bit off-topic, if the topic is datatypes with many constructors. But at least it is an Isabelle example and moreover an interesting type from the type structure perspective.</p>
+<p>What kills this example is the type being highly mutual. Mutuality is a different dimension and as I have mentioned earlier the performance is for sure worse than quadratic in the number of mutual types. Already the type of the recursor here will be monstrous.</p>
+<p>There is a workaround: replace mutual recursion by nested recursion. Below I paste an isomorphic collection of types. (Modulo some trivial changes, such as defining the Either type as sum rather than using your definition and using the standard option type instead of the one from your library.) My thought process was as follows: 'a Expression was used by most types, so I moved it out to a separate type and replaced it by the extra type variable ‘e whenever it was used. Then the datatype command told me that the remaining types are not fully mutual and suggested that I split the types in the way that you see in the theory. Of these types none takes more than 10 seconds. Of course, now one has to write ('a, 'a Expression) CDeclaration instead of 'a CDeclaration from your version, but this can easily be hidden behind type synonyms.</p>
+<p>At some point Jasmin and I were working on automating such a mutual-to-nested reduction to alleviate performance problems with mutual types. This failed because we had the ambition to fully hide the nested view behind the mutual interface. But the issue was that the mutual interface itself became a bottleneck. So now we are advocating people to use nested types instead—they are beneficial not only for performance but also for abstraction: most of the time one does not want to reason about the entire language. Likely, there are things that can be said about a language's declarations without knowing precisely what the language’s expressions are.</p>
+<p>Dmitriy<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/kufA4XqEutE4Zk5hoIeFnc_g/signature.asc">signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

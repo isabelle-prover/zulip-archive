@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 30/06/2025 20:52, Manuel Eberl wrote:</p>\n<blockquote>\n<p>The entry in question is \"Padic_Field\", and the theory that is affected most <br>\nseverely is \"Padic_Field_Powers\". We talked about this entry quite a bit when <br>\nit was first submitted three years ago. Back then the performance problems <br>\nwere so severe I was wondering whether we could even accept it.</p>\n<p>The entire entry is still pretty slow for what it is. But it's not as <br>\nexcessive as it once was. I asked the author to try to reduce the context <br>\nswitches as much as possible and that already helped a lot. But I also think <br>\nsome of the other performance tuning you did to Isabelle since then also helped.</p>\n<p>As it stands now, there are still two \"context\" commands in there that take <br>\nabout 5 s (elapsed) on my machine, namely in line 41 and line 10404. The <br>\n\"lemma\" command on line 2837 and the subsequent \"blast\" call also take about 2 <br>\nseconds each, presumably due to the context switch induced by \"(in <br>\npadic_fields)\". As I recall, this used to be almost an order of magnitude worse.</p>\n<p>Of course, 2 or 5 seconds is not dramatic. But in a development that uses <br>\nlocales quite a bit, these numbers accumulate to an extent that makes working <br>\nwith such a development interactively (especially during refactoring) very <br>\nannoying.</p>\n</blockquote>\n<p>Thanks for the detailed report. I have looked around a bit in that session: it <br>\nrequires more work to understand its uses of locales and potential problems of <br>\nthat infrastructure (or the application).</p>\n<p>I am also including measurements from the past two years, always on the same <br>\nhardware: it shows that nothing has really changed so far.</p>\n<p>Makarius</p>\n<p><a href=\"/user_uploads/14278/fNxx359Ta4fRD1FHW0eacuzV/Padic_Field.csv\">Padic_Field.csv</a></p>",
+        "id": 533260979,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1754561479
+    },
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nSorting in the order of the build date, I get the following. It is a bit jagged, and the maximum value of timing_cpu is 777000.</p>\n<p>Larry<br>\n[PastedGraphic-2.png]<br>\nOn 7 Aug 2025, at 11:10, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>Thanks for the detailed report. I have looked around a bit in that session: it requires more work to understand its uses of locales and potential problems of that infrastructure (or the application).</p>\n<p>I am also including measurements from the past two years, always on the same hardware: it shows that nothing has really changed so far.</p>\n<p>Makarius<br>\n&lt;Padic_Field.csv&gt;</p>\n<p><a href=\"/user_uploads/14278/dWixtSsJiN0OW2ykA294l8pn/PastedGraphic-2.png\">PastedGraphic-2.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/dWixtSsJiN0OW2ykA294l8pn/PastedGraphic-2.png\" title=\"PastedGraphic-2.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"640x480\" src=\"/user_uploads/thumbnail/14278/dWixtSsJiN0OW2ykA294l8pn/PastedGraphic-2.png/840x560.webp\"></a></div>",
+        "id": 533317698,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1754580986
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 07/08/2025 17:35, Lawrence Paulson wrote:</p>\n<blockquote>\n<p>Sorting in the order of the build date, I get the following. It is a bit <br>\njagged, and the maximum value of timing_cpu is 777000.</p>\n</blockquote>\n<p>The build_date is somewhat accidental. Relevant is the pull_date, i.e. the <br>\ndate when a the nightly-build daemon has first seen a certain changeset (via <br>\n\"hg pull\").</p>\n<p>Makarius</p>",
+        "id": 533334548,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1754587433
+    }
+]

@@ -1,0 +1,116 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Lifting and Code Generator · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Lifting.20and.20Code.20Generator.html">[isabelle] Lifting and Code Generator</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525551598"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Lifting%20and%20Code%20Generator/near/525551598" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Lifting.20and.20Code.20Generator.html#525551598">(Jun 24 2025 at 16:05)</a>:</h4>
+<p>From: "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi List,</p>
+<p>I do have a question regarding the lifting package and in particular its impact on the code generator.</p>
+<p>Let’s say I have two datatypes A and B and I want to use the lifting package to transfer terms (and properties) from A to B.<br>
+Moreover, I have a function defined over B.<br>
+Then, after setting up the lifting package, the code generator gives an error that a constructor for B is not a constructor.</p>
+<p>Here is a minimal example:</p>
+<hr>
+<p>datatype A =<br>
+  Value</p>
+<p>datatype B =<br>
+  Value</p>
+<p>fun myfun where<br>
+"myfun Value = Value"</p>
+<p>fun A_to_B where<br>
+  "A_to_B (A.Value) = B.Value"</p>
+<p>fun B_to_A where<br>
+  "B_to_A (B.Value) = A.Value"</p>
+<p>fun T where<br>
+  "T (A.Value) (B.Value) = True"</p>
+<p>lemma q: "Quotient (=) A_to_B B_to_A T"<br>
+  sorry</p>
+<p>setup_lifting q</p>
+<p>lemma "myfun Value ≡ Value" apply eval</p>
+<hr>
+<p>The last line gives the error that B.Value is not a constructor.</p>
+<p>Any suggestions about what I am doing wrong here would be much appreciated.</p>
+<p>Thanks,</p>
+<p>Diego</p>
+<p>Diego Marmsoler<br>
+Senior Lecturer (Education and Research), Computer Science<br>
+PI of Secure Smart Contracts with Isabelle/Solidity (<a href="https://sites.exeter.ac.uk/isabelle-solidity/">https://sites.exeter.ac.uk/isabelle-solidity/</a>)<br>
+Deputy Director of Education and Student Experience<br>
+University of Exeter, Innovation 1, Room 10<br>
+www: marmsoler.com&lt;<a href="http://www.marmsoler.com/">http://www.marmsoler.com/</a>&gt;<br>
+Twitter: @DiegoMarmsoler&lt;<a href="https://twitter.com/DiegoMarmsoler">https://twitter.com/DiegoMarmsoler</a>&gt;</p>
+
+
+
+<a name="525556465"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Lifting%20and%20Code%20Generator/near/525556465" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Lifting.20and.20Code.20Generator.html#525556465">(Jun 24 2025 at 16:34)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi Diego,</p>
+<p>setup_lifting does some »smart« guessing whether and how the type <br>
+relationship can be employed towards code generation.</p>
+<p>I found no option to suppress what, but maybe somebody else knows about <br>
+this?</p>
+<p>You can restore the original code setup issuing</p>
+<p>code_datatype B.Value</p>
+<p>directly after setup_lifting.</p>
+<p>Hope this helps,<br>
+    Florian</p>
+<p>Am 24.06.25 um 18:04 schrieb "Marmsoler, Diego" (via cl-isabelle-users <br>
+Mailing List):</p>
+<blockquote>
+<p>Hi List,</p>
+<p>I do have a question regarding the lifting package and in particular its <br>
+impact on the code generator.</p>
+<p>Let’s say I have two datatypes A and B and I want to use the lifting <br>
+package to transfer terms (and properties) from A to B.</p>
+<p>Moreover, I have a function defined over B.</p>
+<p>Then, after setting up the lifting package, the code generator gives an <br>
+error that a constructor for B is not a constructor.</p>
+<p>Here is a minimal example:</p>
+<hr>
+<p>datatype A =</p>
+<p>Value</p>
+<p>datatype B =</p>
+<p>Value</p>
+<p>fun myfun where</p>
+<p>"myfun Value = Value"</p>
+<p>fun A_to_B where</p>
+<p>"A_to_B (A.Value) = B.Value"</p>
+<p>fun B_to_A where</p>
+<p>"B_to_A (B.Value) = A.Value"</p>
+<p>fun T where</p>
+<p>"T (A.Value) (B.Value) = True"</p>
+<p>lemma q: "Quotient (=) A_to_B B_to_A T"</p>
+<p>sorry</p>
+<p>setup_lifting q</p>
+<p>lemma "myfun Value ≡ Value" apply eval</p>
+<hr>
+<p>The last line gives the error that B.Value is not a constructor.</p>
+<p>Any suggestions about what I am doing wrong here would be much appreciated.</p>
+<p>Thanks,</p>
+<p>Diego</p>
+<p><em>Diego Marmsoler</em><br>
+Senior Lecturer (Education and Research), Computer Science<br>
+PI of Secure Smart Contracts with Isabelle/Solidity (https:// <br>
+<a href="http://sites.exeter.ac.uk/isabelle-solidity/">sites.exeter.ac.uk/isabelle-solidity/</a> &lt;<a href="https://sites.exeter.ac.uk/">https://sites.exeter.ac.uk/</a> <br>
+isabelle-solidity/&gt;)<br>
+Deputy Director of Education and Student Experience<br>
+University of Exeter, Innovation 1, Room 10</p>
+<p>www: <a href="http://marmsoler.com">marmsoler.com</a> &lt;<a href="http://www.marmsoler.com/">http://www.marmsoler.com/</a>&gt;<br>
+Twitter: @DiegoMarmsoler &lt;<a href="https://twitter.com/DiegoMarmsoler">https://twitter.com/DiegoMarmsoler</a>&gt;</p>
+</blockquote>
+<p><a href="/user_uploads/14278/ZnmFJJdXdShpE9IXX46AoP2C/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/cRy0_WbyZtA02cHaT3JnmT03/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

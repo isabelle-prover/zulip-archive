@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="utf-8"><title>Building Isabelle_setup · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html">Building Isabelle_setup</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="518682062"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518682062" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Myria <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518682062">(May 16 2025 at 14:43)</a>:</h4>
+<p>Hey there, I was just wondering if there was a general way to build the isabelle_setup jar from the source under <code>src/Tools/Setup/src</code>? I can see the build.props under the <code>src/Tools/Setup/etc</code> directory, but I'm not familar with how to use these, is there some tool that can parse this to use? Or is that just manually converted into a shell command with <code>jar</code>?</p>
+
+
+
+<a name="518684883"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518684883" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518684883">(May 16 2025 at 14:56)</a>:</h4>
+<p>For every component X (except for 1-2 from the very early days) there is a <code>Component_X</code>module that defines a command of shape <code>isabelle component_x</code>, which builds the component. Components and their <code>build.props</code> description are explained in the system manual.</p>
+
+
+
+<a name="518684999"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518684999" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518684999">(May 16 2025 at 14:56)</a>:</h4>
+<p>So in this case, you can just run <code>isabelle component_setup</code>.</p>
+
+
+
+<a name="518685070"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518685070" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518685070">(May 16 2025 at 14:57)</a>:</h4>
+<p>Note that such administrative tools are only present in the development version and not releases.</p>
+
+
+
+<a name="518689860"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518689860" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Myria <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518689860">(May 16 2025 at 15:18)</a>:</h4>
+<p>Ah, thank you! I'll have a look around for it</p>
+
+
+
+<a name="518761431"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518761431" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518761431">(May 16 2025 at 23:27)</a>:</h4>
+<p>if you want to bootstrap, you can do what i did for nixpkgs and build it only with javac: <a href="https://github.com/jvanbruegge/nixpkgs/blob/fa09ff7a7d38a618a9d8e2e614dae6b175993a37/pkgs/by-name/is/isabelle/package.nix#L180">https://github.com/jvanbruegge/nixpkgs/blob/fa09ff7a7d38a618a9d8e2e614dae6b175993a37/pkgs/by-name/is/isabelle/package.nix#L180</a></p>
+
+
+
+<a name="518785647"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Building%20Isabelle_setup/near/518785647" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Myria <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Building.20Isabelle_setup.html#518785647">(May 17 2025 at 05:14)</a>:</h4>
+<p>Ah, I didn't notice that when looking through your nixpkgs version. Gonna look at that more, thanks.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

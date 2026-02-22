@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Code printing underscores · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20printing.20underscores.html">Code printing underscores</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="562147175"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20printing%20underscores/near/562147175" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20printing.20underscores.html#562147175">(Dec 05 2025 at 17:02)</a>:</h4>
+<p>Hello,</p>
+<p>How do I make an underscore print when exporting code. Example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'a</span><span class="o">)</span><span class="w"> </span><span class="n">type1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Const_123</span><span class="w"> </span><span class="n n-Type">'a</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="s">"f1 x = undefined"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="s">"f2 x (y::int) = y + f1 x"</span>
+
+<span class="k">code_printing</span>
+<span class="w">  </span><span class="kp">constant</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="n">⇀</span><span class="w"> </span><span class="o">(</span><span class="n">SML</span><span class="o">)</span><span class="w"> </span><span class="s">"(fn Const_123 x =&gt; x)"</span>
+
+<span class="k">export_code</span><span class="w"> </span><span class="n">f2</span>
+<span class="w">  </span><span class="kp">in</span><span class="w"> </span><span class="n">Eval</span>
+</code></pre></div>
+<p>This results in:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arith.plus_int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">((</span><span class="n">fn</span><span class="w"> </span><span class="n">Constx123</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">))</span><span class="n">;</span>
+</code></pre></div>
+<p>I want it to be:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arith.plus_int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">((</span><span class="n">fn</span><span class="w"> </span><span class="n">Const_123</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="n">;</span>
+</code></pre></div>
+<p>Isabelle uses underscores for arguments when printing code.</p>
+
+
+
+<a name="562226110"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20printing%20underscores/near/562226110" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20printing.20underscores.html#562226110">(Dec 06 2025 at 07:50)</a>:</h4>
+<p>Like pretty-much every technical question like this: grep the Isabelle source code and look how it is done at other places</p>
+
+
+
+<a name="562226145"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20printing%20underscores/near/562226145" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20printing.20underscores.html#562226145">(Dec 06 2025 at 07:51)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">$</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="o">-</span><span class="n">A5</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="k">code_printing</span><span class="w"> </span><span class="n">*</span>
+<span class="ow">...</span>
+<span class="n">src/HOL/Code_Numeral.thy</span><span class="o">-</span><span class="w">    </span><span class="o">(</span><span class="n">SML</span><span class="o">)</span><span class="w"> </span><span class="s">"Bit'_Shifts.push"</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

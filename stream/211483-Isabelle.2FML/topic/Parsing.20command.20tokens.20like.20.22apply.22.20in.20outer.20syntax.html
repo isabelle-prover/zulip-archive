@@ -1,0 +1,89 @@
+<html>
+<head><meta charset="utf-8"><title>Parsing command tokens like &quot;apply&quot; in outer syntax · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html">Parsing command tokens like &quot;apply&quot; in outer syntax</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="540677257"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/540677257" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#540677257">(Sep 21 2025 at 18:58)</a>:</h4>
+<p>Hello,</p>
+<p>I am interested in writing a command which will parse entire apply scripts. For instance, I want something like</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"True ∧ (a ∨ ¬a)"</span>
+<span class="w">  </span><span class="n">my_command</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conjI</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">True</span><span class="o">])</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">auto</span><span class="o">[</span><span class="n">1</span><span class="o">]</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">done</span>
+</code></pre></div>
+<p>where <code>my_command</code> will be able to parse the entire apply script and e.g. do something with each tactic.</p>
+<p>If each <code>apply</code> is changed to a string that is not a command, like <code>apply'</code>, then I am able to use <code>Parse.reserved "apply'"</code> to parse this. However, this approach does not seem to be able to parse <code>apply</code> since it is already a command. I've tried other parser functions like <code>Parse.command_name</code> and <code>Parse.keyword_with</code>, but these do not seem to parse the <code>apply</code> commands either. Is what I am trying to do possible?</p>
+
+
+
+<a name="540962910"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/540962910" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#540962910">(Sep 23 2025 at 09:03)</a>:</h4>
+<p>Hi, I am afraid I do not understand your question. Do you want to parse <code>apply</code> commands? Have you tried <code>Method.parse</code>? You can see examples of parsers parsing methods and embedded keywords in <code>ISABELLE_HOME/src/HOL/ex/Sketch_and_Explore</code> and in <code>ISABELLE_HOME/src/HOL/Tools/Sledgehammer/sledgehammer_commands.ML</code></p>
+
+
+
+<a name="541115096"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/541115096" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#541115096">(Sep 23 2025 at 23:07)</a>:</h4>
+<p>Thank you for pointing me toward the Sketch_and_Explore. I actually did not know about that, and it looks interesting.</p>
+<p>Let me try and clarify what I want to do. I want a command which can examine an apply script and extract the list of tactics used. Currently. I can use <code>Scan.repeat (Parse.reserved "apply2" |-- (Method.parse)</code>, which will parse a sequence of <code>apply2 TACTIC</code> commands into the list of applied tactics. E.g., with</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"True ∧ (a ∨ ¬a)"</span>
+<span class="w">  </span><span class="n">my_command</span>
+<span class="w">  </span><span class="n">apply2</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conjI</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">True</span><span class="o">])</span>
+<span class="w">  </span><span class="n">apply2</span><span class="w"> </span><span class="n">auto</span><span class="o">[</span><span class="n">1</span><span class="o">]</span>
+<span class="w">  </span><span class="n">apply2</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">done</span>
+</code></pre></div>
+<p><code>my_command</code> will yield (with a little additional processing) something like <code>["rule conjI[of True]", "auto", "simp"]</code>. However, to actually apply <code>my_command</code> to a proof script,  I would have to change each <code>apply</code> to <code>apply2</code>. I'd like to make it so that I do not have to do this. E.g., given</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"True ∧ (a ∨ ¬a)"</span>
+<span class="w">  </span><span class="n">my_command</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conjI</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">True</span><span class="o">])</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">auto</span><span class="o">[</span><span class="n">1</span><span class="o">]</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">done</span>
+</code></pre></div>
+<p>I would like <code>my_command</code> to still produce the same list <code>["rule conjI[of True]", "auto", "simp"]</code>. However, simply changing <code>Parse.reserved "apply2"</code> to <code>Parse.reserved "apply"</code> does not work, I presume because <code>apply</code> is already a command/keyword. I also tried <code>Parse.command</code>, <code>Parse.keyword_with</code>, and <code>Parse.embedded</code>, but <code>my_command</code> just yields an empty list in all cases.</p>
+<p>FYI, I have the keyword <code>"my_command" :: prf_script % "proof"</code> at the beginning of the .thy file. Maybe something different is needed for what I want to do?</p>
+
+
+
+<a name="541208772"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/541208772" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#541208772">(Sep 24 2025 at 11:48)</a>:</h4>
+<p>Afaik reusing keywords is only possible if you patch isabelle</p>
+
+
+
+<a name="541244100"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/541244100" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#541244100">(Sep 24 2025 at 14:28)</a>:</h4>
+<p>Strictly speaking, I need to temporarily "forget" that <code>apply</code> is a keyword, but maybe that is not possible either...</p>
+
+
+
+<a name="541375710"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/541375710" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#541375710">(Sep 25 2025 at 06:08)</a>:</h4>
+<p>Yea that's want I meant by reusing a keyword. I know a project which patched isabelle for this functionality but I'm not sure how they did it</p>
+
+
+
+<a name="541431054"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/541431054" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#541431054">(Sep 25 2025 at 11:12)</a>:</h4>
+<p>I am not sure that what you want is stragihtforward with Isabelle/ML. The "official" solution would probably require a combination of Isabelle/Scala and Isabelle/ML. But If you are willing to change your approach a bit and do something (currently) brittle, I have written <a href="https://github.com/yonoteam/DeepIsaHOL/blob/1d07a30fae5164835b9aabde517f016663b31a8e/src/main/ml/json_maker.ML#L276">functionality</a> (develop branch) to retrieve the "user actions" from a <code>.thy</code> file up to a line number. You would need to make this <a href="https://github.com/yonoteam/DeepIsaHOL/blob/1d07a30fae5164835b9aabde517f016663b31a8e/src/main/ml/actions.ML#L91">function</a> dependent on the local <code> \&lt;^theory&gt;</code> and pass it as an argument.</p>
+
+
+
+<a name="541563836"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Parsing%20command%20tokens%20like%20%22apply%22%20in%20outer%20syntax/near/541563836" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Parsing.20command.20tokens.20like.20.22apply.22.20in.20outer.20syntax.html#541563836">(Sep 26 2025 at 00:30)</a>:</h4>
+<p>Fantastic, I will take a look at this. Thanks very much!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

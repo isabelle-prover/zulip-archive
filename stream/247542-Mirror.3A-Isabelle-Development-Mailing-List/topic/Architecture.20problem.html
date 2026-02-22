@@ -1,0 +1,830 @@
+<html>
+<head><meta charset="utf-8"><title>Architecture problem · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html">Architecture problem</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="546298032"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546298032" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546298032">(Oct 21 2025 at 17:57)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+On my M2 MacBook Pro, I’m getting</p>
+<p>I/O error: /Users/lp15/.isabelle/contrib/polyml-5.9.2/x86_64_32-darwin/poly (No such file or directory)</p>
+<p>And of course the x86 version isn’t the one I should be needing anyway.</p>
+<p>f08c8e96a2b4</p>
+<p>Larry</p>
+
+
+
+<a name="546299603"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546299603" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546299603">(Oct 21 2025 at 18:06)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/10/2025 19:57, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>On my M2 MacBook Pro, I’m getting</p>
+<p>I/O error: /Users/lp15/.isabelle/contrib/polyml-5.9.2/x86_64_32-darwin/poly <br>
+(No such file or directory)</p>
+<p>And of course the x86 version isn’t the one I should be needing anyway.</p>
+<p>f08c8e96a2b4</p>
+</blockquote>
+<p>I've actually forgotten to build the Intel/macOS platform: for Poly/ML we need <br>
+to do this on an actual Intel Mac, while e.g. for VSCodium this is a hybrid <br>
+build works on ARM64 for both platforms.</p>
+<p>What is still odd: Why does your local setup demand x86_64_32-darwin/poly? It <br>
+could be something in etc/preferences: ML_platform.</p>
+<p>On my usual ARM64 test machines, it works fine.</p>
+<p>And yes: We might rightly ask when the Intel Mac platform is to be <br>
+discontinued. Maybe in 2 years.</p>
+<p>Makarius</p>
+
+
+
+<a name="546300063"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546300063" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546300063">(Oct 21 2025 at 18:07)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/10/2025 20:05, Makarius wrote:</p>
+<blockquote>
+<p>What is still odd: Why does your local setup demand x86_64_32-darwin/poly? It <br>
+could be something in etc/preferences: ML_platform.</p>
+</blockquote>
+<p>This is how to query the local setup:</p>
+<p>isabelle getenv ML_PLATFORM<br>
+isabelle options -g ML_platform</p>
+<p>The default for both is empty: it means to use the standard platform, i.e. <br>
+arm64_32-darwin.</p>
+<p>Makarius</p>
+
+
+
+<a name="546302828"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546302828" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546302828">(Oct 21 2025 at 18:23)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Indeed, that was it. But why did it work before?</p>
+<p>Larry<br>
+On 21 Oct 2025 at 19:05 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<p>What is still odd: Why does your local setup demand x86_64_32-darwin/poly? It<br>
+could be something in etc/preferences: ML_platform.</p>
+
+
+
+<a name="546303728"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546303728" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546303728">(Oct 21 2025 at 18:29)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:05 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>What is still odd: Why does your local setup demand x86_64_32-darwin/poly? It<br>
+could be something in etc/preferences: ML_platform.</p>
+</blockquote>
+</blockquote>
+<p>On 21/10/2025 20:11, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Indeed, that was it. But why did it work before?</p>
+</blockquote>
+<p>Because your settings to demand x86_64_32-darwin/poly could be resolved <br>
+properly: You merely had a slightly slower Poly/ML, without taking notice.</p>
+<p>Of course, I will update the polyml component to provide the missing Intel <br>
+platforms.</p>
+<p>And yes, we do need to discontinue Intel macOS in approx. 2-3 years, when <br>
+Apple is going to ship macOS 28 without Rosetta 2. E.g. see <br>
+<a href="https://arstechnica.com/gadgets/2025/06/apple-details-the-end-of-intel-mac-support-and-a-phaseout-for-rosetta-2">https://arstechnica.com/gadgets/2025/06/apple-details-the-end-of-intel-mac-support-and-a-phaseout-for-rosetta-2</a></p>
+<p>That means me need to make more efforts to phase out remaining x86_64-darwin <br>
+executables, of some external tools. In particular:</p>
+<p>- spass<br>
+   - vampire<br>
+   - verit<br>
+   - smbc<br>
+   - zipperposition<br>
+   - z3</p>
+<p>Makarius</p>
+
+
+
+<a name="546304066"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546304066" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546304066">(Oct 21 2025 at 18:31)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Thanks. I surely hope that we have ARM versions of all of those.</p>
+<p>Larry<br>
+On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<p>That means me need to make more efforts to phase out remaining x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+
+
+
+<a name="546305185"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546305185" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546305185">(Oct 21 2025 at 18:39)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/10/2025 20:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>That means me need to make more efforts to phase out remaining x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Thanks. I surely hope that we have ARM versions of all of those.</p>
+</blockquote>
+<p>I also hope it, but this hope is sometimes unfounded.</p>
+<p>In recent years, I have tried hard to support arm64-linux, but a few <br>
+executables are still missing.</p>
+<p>This year, I have continued under the assumption that x86_64-darwin will stop <br>
+working soon, but did not yet manage to build all tools yet.</p>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, <br>
+or discontinue it altogether?</p>
+<p>Makarius</p>
+
+
+
+<a name="546306026"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546306026" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546306026">(Oct 21 2025 at 18:45)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Hi Makarius,</p>
+<blockquote>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, or discontinue it altogether?</p>
+</blockquote>
+<p>To summarize a discussion we had together one or two months ago: Z3 has moved on in 11 years, and it would probably be hard to support its new proofs. It's not hard enough for a research project and probably too hard for a BSc and possibly MSc (or at least very supervision-intensive). So we might consider getting rid of Z3 support.</p>
+<p>This means: (1) Sledgehammer should stop generating Z3-based "smt" proofs; (2) we should ask the AFP authors to get rid of their Z3-smt calls (using the more stable veriT or other proofs), maybe with some help from a task force (which I could lead). Do we agree?</p>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's under active development and is a more complex piece of software (i.e., harder to build). Do we also want to avoid it?</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 21. Oct 2025, at 20:38, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 21/10/2025 20:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>That means me need to make more efforts to phase out remaining x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Thanks. I surely hope that we have ARM versions of all of those.</p>
+</blockquote>
+<p>I also hope it, but this hope is sometimes unfounded.</p>
+<p>In recent years, I have tried hard to support arm64-linux, but a few executables are still missing.</p>
+<p>This year, I have continued under the assumption that x86_64-darwin will stop working soon, but did not yet manage to build all tools yet.</p>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, or discontinue it altogether?</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<a name="546306408"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546306408" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546306408">(Oct 21 2025 at 18:47)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Did you see the ITP paper "Improving the SMT Proof Reconstruction Pipeline in Isabelle/HOL”? It was for cvc5.</p>
+<p>Larry<br>
+On 21 Oct 2025 at 19:38 +0100, Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;, wrote:</p>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's under active development and is a more complex piece of software (i.e., harder to build). Do we also want to avoid it?</p>
+
+
+
+<a name="546306581"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546306581" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546306581">(Oct 21 2025 at 18:49)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Strangely, fixing this (leaving ML_PLATFORM unset) had no effect on build times.</p>
+<p>Larry<br>
+On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<p>Because your settings to demand x86_64_32-darwin/poly could be resolved<br>
+properly: You merely had a slightly slower Poly/ML, without taking notice.</p>
+
+
+
+<a name="546307859"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546307859" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546307859">(Oct 21 2025 at 18:58)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/10/2025 20:44, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's under <br>
+active development and is a more complex piece of software (i.e., harder to <br>
+build). Do we also want to avoid it?</p>
+</blockquote>
+<p>From my side, cvc5 is OK: we merely download the executables for all <br>
+platform. See also <a href="https://github.com/cvc5/cvc5/releases">https://github.com/cvc5/cvc5/releases</a></p>
+<p>Makarius</p>
+
+
+
+<a name="546324474"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546324474" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546324474">(Oct 21 2025 at 20:44)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Surely this paper addresses the issues with cvc5, and it’s supposed to be included in the next release.</p>
+<p><a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol352-itp2025/LIPIcs.ITP.2025.26/LIPIcs.ITP.2025.26.pdf">https://drops.dagstuhl.de/storage/00lipics/lipics-vol352-itp2025/LIPIcs.ITP.2025.26/LIPIcs.ITP.2025.26.pdf</a></p>
+<p>Larry<br>
+On 21 Oct 2025 at 20:44 +0100, wrote:</p>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's under<br>
+active development and is a more complex piece of software (i.e., harder to<br>
+build). Do we also want to avoid it?</p>
+
+
+
+<a name="546350198"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546350198" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546350198">(Oct 22 2025 at 01:10)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>On 22/10/2025 03:44, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<blockquote>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, <br>
+or discontinue it altogether?</p>
+</blockquote>
+<p>To summarize a discussion we had together one or two months ago: Z3 has moved on <br>
+in 11 years, and it would probably be hard to support its new proofs. It's not <br>
+hard enough for a research project and probably too hard for a BSc and possibly <br>
+MSc (or at least very supervision-intensive). So we might consider getting rid <br>
+of Z3 support.</p>
+</blockquote>
+<p>No problem from my perspective: cvc5 outperforms the current z3. And the new z3, <br>
+well, it would be nice, but I see the problem. Do any other ITPs use the latest z3?</p>
+<blockquote>
+<p>This means: (1) Sledgehammer should stop generating Z3-based "smt" proofs; (2) <br>
+we should ask the AFP authors to get rid of their Z3-smt calls (using the more <br>
+stable veriT or other proofs), maybe with some help from a task force (which I <br>
+could lead). Do we agree?</p>
+</blockquote>
+<p>I guess we haver to bite the bullet.</p>
+<blockquote>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's under active <br>
+development and is a more complex piece of software (i.e., harder to build). Do <br>
+we also want to avoid it?</p>
+</blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+<p>Tobias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 21. Oct 2025, at 20:38, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 21/10/2025 20:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>That means me need to make more efforts to phase out remaining x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Thanks. I surely hope that we have ARM versions of all of those.</p>
+</blockquote>
+<p>I also hope it, but this hope is sometimes unfounded.</p>
+<p>In recent years, I have tried hard to support arm64-linux, but a few <br>
+executables are still missing.</p>
+<p>This year, I have continued under the assumption that x86_64-darwin will stop <br>
+working soon, but did not yet manage to build all tools yet.</p>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, <br>
+or discontinue it altogether?</p>
+<p>Makarius</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/NjuSP802Hnf3qEHb_VqKYG-V/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="546378430"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546378430" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546378430">(Oct 22 2025 at 07:01)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Hi all,</p>
+<p>Tobias wrote:</p>
+<blockquote>
+<p>Do any other ITPs use the latest z3?</p>
+</blockquote>
+<p>SMTCoq (sic) only uses veriT and CVC4. I think HOLyHammer (for HOL4 and HOL Light) uses Z3 to find proofs, but so do we. Tjark Weber's Z3 proof reconstruction code (ITP 2010) might still be alive in HOL4, but I suspect it might not work with a recent Z3.</p>
+<blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+</blockquote>
+<p>To clarify, there are two uses of cvc5: for finding proofs and for reconstruction. I was talking about the latter. I see the consensus is for keeping cvc5, also in that role. Good! That will be less work for the "task force" (and more work for the developers of the "cvc5" integration to keep it somewhat up to date so we don't end up in the same situation as with Z3).</p>
+<p>To answer Larry: I have no doubts that the cvc5 pipeline has improved. But suppose it's not developed further for 10 years, during which time Apple invents a new processor architecture. We'll face the same choice we're facing now with Z3: try to compile old cvc5 sources from 10 years ago for the new architecture or port our integration code.</p>
+<p>Now, I just tried this example with Isabelle/a356fd7ca1c4:</p>
+<p>lemma "a = b ⟹ f a = f b"<br>
+      using [[smt_trace]]<br>
+      by (smt (cvc5))</p>
+<p>and it doesn't work. I get the error "Error in option parsing: proof-format=alethe is experimental in this version. If you know what you are doing, you can try --proof-alethe-experimental". So it doesn't look to me as if we can use cvc5 for reconstruction quite yet, which also postpones the work of the "task force".</p>
+<p>Could one of the multiple authors of Lachnitt et al. (ITP 2025) comment on the status of their project (hoping at least one of them is on this mailing list)?</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 22. Oct 2025, at 03:10, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>On 22/10/2025 03:44, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<blockquote>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, or discontinue it altogether?<br>
+To summarize a discussion we had together one or two months ago: Z3 has moved on in 11 years, and it would probably be hard to support its new proofs. It's not hard enough for a research project and probably too hard for a BSc and possibly MSc (or at least very supervision-intensive). So we might consider getting rid of Z3 support.</p>
+</blockquote>
+</blockquote>
+<p>No problem from my perspective: cvc5 outperforms the current z3. And the new z3, well, it would be nice, but I see the problem. Do any other ITPs use the latest z3?</p>
+<blockquote>
+<p>This means: (1) Sledgehammer should stop generating Z3-based "smt" proofs; (2) we should ask the AFP authors to get rid of their Z3-smt calls (using the more stable veriT or other proofs), maybe with some help from a task force (which I could lead). Do we agree?</p>
+</blockquote>
+<p>I guess we haver to bite the bullet.</p>
+<blockquote>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's under active development and is a more complex piece of software (i.e., harder to build). Do we also want to avoid it?</p>
+</blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+<p>Tobias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin<br>
+--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 21. Oct 2025, at 20:38, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 21/10/2025 20:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>That means me need to make more efforts to phase out remaining x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Thanks. I surely hope that we have ARM versions of all of those.</p>
+</blockquote>
+<p>I also hope it, but this hope is sometimes unfounded.</p>
+<p>In recent years, I have tried hard to support arm64-linux, but a few executables are still missing.</p>
+<p>This year, I have continued under the assumption that x86_64-darwin will stop working soon, but did not yet manage to build all tools yet.</p>
+<p>In particular, the z3 situation is very bad: Could we update that eventually, or discontinue it altogether?</p>
+<p>Makarius</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="546379713"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546379713" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546379713">(Oct 22 2025 at 07:07)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Just a random idea I just had: Apple might be discontinuing Rosetta, but <br>
+the fact that Rosetta exists in the first place shows that emulation of <br>
+x86_64 with ARM (and presumably also any other architecture with any <br>
+other architecture) can be done in a way that's not ridiculously slow.</p>
+<p>That ought to mean that one should be able to build a standalone tool <br>
+that does this as well, or take an existing executable and "wrap" it <br>
+with a kind of x86_64 interpreter that itself runs on ARM.</p>
+<p>Obviously I'm not suggesting any of us build such a tool, but I would <br>
+imagine somebody will, or perhaps already has. Then we could, as a last <br>
+resort if nothing else works, use that to e.g. provide an ARM version of <br>
+Z3 (or a version for whatever architecture of whatever software will <br>
+give us trouble in the future). It's probably going to be slower than a <br>
+native version, but even if it's slower by a factor of 2 or 3 it might <br>
+not be a show stopper, especially if there aren't that many uses of Z3.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 22/10/2025 09:00, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>Tobias wrote:</p>
+<blockquote>
+<p>Do any other ITPs use the latest z3?</p>
+</blockquote>
+<p>SMTCoq (sic) only uses veriT and CVC4. I think HOLyHammer (for HOL4 <br>
+and HOL Light) uses Z3 to find proofs, but so do we. Tjark Weber's Z3 <br>
+proof reconstruction code (ITP 2010) might still be alive in HOL4, but <br>
+I suspect it might not work with a recent Z3.</p>
+<blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+</blockquote>
+<p>To clarify, there are two uses of cvc5: for finding proofs and for <br>
+reconstruction. I was talking about the latter. I see the consensus is <br>
+for keeping cvc5, also in that role. Good! That will be less work for <br>
+the "task force" (and more work for the developers of the "cvc5" <br>
+integration to keep it somewhat up to date so we don't end up in the <br>
+same situation as with Z3).</p>
+<p>To answer Larry: I have no doubts that the cvc5 pipeline has improved. <br>
+But suppose it's not developed further for 10 years, during which time <br>
+Apple invents a new processor architecture. We'll face the same choice <br>
+we're facing now with Z3: try to compile old cvc5 sources from 10 <br>
+years ago for the new architecture or port our integration code.</p>
+<p>Now, I just tried this example with Isabelle/a356fd7ca1c4:</p>
+<p>lemma "a = b ⟹ f a = f b"<br>
+using [[smt_trace]]<br>
+by (smt (cvc5))</p>
+<p>and it doesn't work. I get the error "Error in option parsing: <br>
+proof-format=alethe is experimental in this version. If you know what <br>
+you are doing, you can try --proof-alethe-experimental". So it doesn't <br>
+look to me as if we can use cvc5 for reconstruction quite yet, which <br>
+also postpones the work of the "task force".</p>
+<p>Could one of the multiple authors of Lachnitt et al. (ITP 2025) <br>
+comment on the status of their project (hoping at least one of them is <br>
+on this mailing list)?</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 22. Oct 2025, at 03:10, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>On 22/10/2025 03:44, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<blockquote>
+<p>In particular, the z3 situation is very bad: Could we update that <br>
+eventually, or discontinue it altogether?<br>
+To summarize a discussion we had together one or two months ago: Z3 <br>
+has moved on in 11 years, and it would probably be hard to support <br>
+its new proofs. It's not hard enough for a research project and <br>
+probably too hard for a BSc and possibly MSc (or at least very <br>
+supervision-intensive). So we might consider getting rid of Z3 support.</p>
+</blockquote>
+</blockquote>
+<p>No problem from my perspective: cvc5 outperforms the current z3. And <br>
+the new z3, well, it would be nice, but I see the problem. Do any <br>
+other ITPs use the latest z3?</p>
+<blockquote>
+<p>This means: (1) Sledgehammer should stop generating Z3-based "smt" <br>
+proofs; (2) we should ask the AFP authors to get rid of their Z3-smt <br>
+calls (using the more stable veriT or other proofs), maybe with some <br>
+help from a task force (which I could lead). Do we agree?</p>
+</blockquote>
+<p>I guess we haver to bite the bullet.</p>
+<blockquote>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's <br>
+under active development and is a more complex piece of software <br>
+(i.e., harder to build). Do we also want to avoid it?</p>
+</blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+<p>Tobias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin<br>
+--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 21. Oct 2025, at 20:38, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 21/10/2025 20:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>That means me need to make more efforts to phase out remaining <br>
+x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Thanks. I surely hope that we have ARM versions of all of those.</p>
+</blockquote>
+<p>I also hope it, but this hope is sometimes unfounded.</p>
+<p>In recent years, I have tried hard to support arm64-linux, but a <br>
+few executables are still missing.</p>
+<p>This year, I have continued under the assumption that x86_64-darwin <br>
+will stop working soon, but did not yet manage to build all tools yet.</p>
+<p>In particular, the z3 situation is very bad: Could we update that <br>
+eventually, or discontinue it altogether?</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="546420028"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546420028" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546420028">(Oct 22 2025 at 10:32)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+I'm pretty sure Hanna said that this would be in the next release. Hanna, can you offer any more details?</p>
+<p>Larry</p>
+<blockquote>
+<p>On 22 Oct 2025, at 08:00, Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt; wrote:</p>
+<p>Now, I just tried this example with Isabelle/a356fd7ca1c4:</p>
+<p>lemma "a = b ⟹ f a = f b"<br>
+  using [[smt_trace]]<br>
+  by (smt (cvc5))</p>
+<p>and it doesn't work. I get the error "Error in option parsing: proof-format=alethe is experimental in this version. If you know what you are doing, you can try --proof-alethe-experimental". So it doesn't look to me as if we can use cvc5 for reconstruction quite yet, which also postpones the work of the "task force".</p>
+<p>Could one of the multiple authors of Lachnitt et al. (ITP 2025) comment on the status of their project (hoping at least one of them is on this mailing list)?<br>
+</p>
+</blockquote>
+
+
+
+<a name="546420756"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546420756" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546420756">(Oct 22 2025 at 10:35)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+They appeared to be nearly 1300 occurrences of “smt (z3" in over 300 different files. Ideally the change would be automated. One would like to think that one of the other solvers would be good enough to serve as a drop-in replacement for 15 year-old code, but maybe not.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 21 Oct 2025, at 19:44, Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt; wrote:</p>
+<p>So we might consider getting rid of Z3 support.</p>
+<p>This means: (1) Sledgehammer should stop generating Z3-based "smt" proofs; (2) we should ask the AFP authors to get rid of their Z3-smt calls (using the more stable veriT or other proofs), maybe with some help from a task force (which I could lead). Do we agree?</p>
+</blockquote>
+
+
+
+<a name="546449018"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546449018" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546449018">(Oct 22 2025 at 12:48)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi all,</p>
+<p>On 10/22/25 09:00, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>Tobias wrote:</p>
+<blockquote>
+<p>Do any other ITPs use the latest z3?</p>
+</blockquote>
+<p>SMTCoq (sic) only uses veriT and CVC4. I think HOLyHammer (for HOL4 <br>
+and HOL Light) uses Z3 to find proofs, but so do we. Tjark Weber's Z3 <br>
+proof reconstruction code (ITP 2010) might still be alive in HOL4, but <br>
+I suspect it might not work with a recent Z3.</p>
+</blockquote>
+<p>Irvin on Zulip (#General &gt; Making isabelle run on modern z3. <br>
+&lt;<a href="#narrow/channel/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E/with/546366457">https://isabelle.zulipchat.com/#narrow/channel/202961-General/topic/Making.20isabelle.20run.20on.20modern.20z3.2E/with/546366457</a>&gt;) <br>
+tried to update it and found how HOL4 is supporting the new version:</p>
+<p><a href="https://github.com/HOL-Theorem-Prover/HOL/commit/8f8bd67b8c5a3d799144a14206aa8d4266edd36b">https://github.com/HOL-Theorem-Prover/HOL/commit/8f8bd67b8c5a3d799144a14206aa8d4266edd36b</a><br>
+<a href="https://github.com/HOL-Theorem-Prover/HOL/commit/def62b7000cb313b19c84cabe8c1867e63a9c624">https://github.com/HOL-Theorem-Prover/HOL/commit/def62b7000cb313b19c84cabe8c1867e63a9c624</a> <br>
+<a href="https://github.com/HOL-Theorem-Prover/HOL/commit/4324a79a32b7cccf11efbef4ecee637784ad28c4">https://github.com/HOL-Theorem-Prover/HOL/commit/4324a79a32b7cccf11efbef4ecee637784ad28c4</a> <br>
+<a href="https://github.com/HOL-Theorem-Prover/HOL/commit/313365a0e83c847c9767d67ab52b2f69135dcaba">https://github.com/HOL-Theorem-Prover/HOL/commit/313365a0e83c847c9767d67ab52b2f69135dcaba</a> <br>
+<a href="https://github.com/HOL-Theorem-Prover/HOL/commit/4b763209b040de35cf9d408e76a9c4898ce848d5">https://github.com/HOL-Theorem-Prover/HOL/commit/4b763209b040de35cf9d408e76a9c4898ce848d5</a> <br>
+<a href="https://github.com/HOL-Theorem-Prover/HOL/commit/120e7bb43bc3ffcca4efb2cafbeed0605d620bff">https://github.com/HOL-Theorem-Prover/HOL/commit/120e7bb43bc3ffcca4efb2cafbeed0605d620bff</a> <br>
+<a href="https://github.com/HOL-Theorem-Prover/HOL/commit/525694a1f1c7016dea954894bea6e6e396f7d6b3">https://github.com/HOL-Theorem-Prover/HOL/commit/525694a1f1c7016dea954894bea6e6e396f7d6b3</a></p>
+<p>So it should be possible to port this to Isabelle. However, Irvin gave up.</p>
+<p>Mathias</p>
+<blockquote>
+<blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+</blockquote>
+<p>To clarify, there are two uses of cvc5: for finding proofs and for <br>
+reconstruction. I was talking about the latter. I see the consensus is <br>
+for keeping cvc5, also in that role. Good! That will be less work for <br>
+the "task force" (and more work for the developers of the "cvc5" <br>
+integration to keep it somewhat up to date so we don't end up in the <br>
+same situation as with Z3).</p>
+<p>To answer Larry: I have no doubts that the cvc5 pipeline has improved. <br>
+But suppose it's not developed further for 10 years, during which time <br>
+Apple invents a new processor architecture. We'll face the same choice <br>
+we're facing now with Z3: try to compile old cvc5 sources from 10 <br>
+years ago for the new architecture or port our integration code.</p>
+<p>Now, I just tried this example with Isabelle/a356fd7ca1c4:</p>
+<p>lemma "a = b ⟹ f a = f b"<br>
+using [[smt_trace]]<br>
+by (smt (cvc5))</p>
+<p>and it doesn't work. I get the error "Error in option parsing: <br>
+proof-format=alethe is experimental in this version. If you know what <br>
+you are doing, you can try --proof-alethe-experimental". So it doesn't <br>
+look to me as if we can use cvc5 for reconstruction quite yet, which <br>
+also postpones the work of the "task force".</p>
+<p>Could one of the multiple authors of Lachnitt et al. (ITP 2025) <br>
+comment on the status of their project (hoping at least one of them is <br>
+on this mailing list)?</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 22. Oct 2025, at 03:10, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>On 22/10/2025 03:44, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<blockquote>
+<p>In particular, the z3 situation is very bad: Could we update that <br>
+eventually, or discontinue it altogether?<br>
+To summarize a discussion we had together one or two months ago: Z3 <br>
+has moved on in 11 years, and it would probably be hard to support <br>
+its new proofs. It's not hard enough for a research project and <br>
+probably too hard for a BSc and possibly MSc (or at least very <br>
+supervision-intensive). So we might consider getting rid of Z3 support.</p>
+</blockquote>
+</blockquote>
+<p>No problem from my perspective: cvc5 outperforms the current z3. And <br>
+the new z3, well, it would be nice, but I see the problem. Do any <br>
+other ITPs use the latest z3?</p>
+<blockquote>
+<p>This means: (1) Sledgehammer should stop generating Z3-based "smt" <br>
+proofs; (2) we should ask the AFP authors to get rid of their Z3-smt <br>
+calls (using the more stable veriT or other proofs), maybe with some <br>
+help from a task force (which I could lead). Do we agree?</p>
+</blockquote>
+<p>I guess we haver to bite the bullet.</p>
+<blockquote>
+<p>Also unclear in all of this is the role of cvc5. Unlike veriT, it's <br>
+under active development and is a more complex piece of software <br>
+(i.e., harder to build). Do we also want to avoid it?</p>
+</blockquote>
+<p>Cvc5 is a major asset, we need it!</p>
+<p>Tobias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin<br>
+--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 21. Oct 2025, at 20:38, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 21/10/2025 20:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>On 21 Oct 2025 at 19:28 +0100, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, wrote:</p>
+<blockquote>
+<p>That means me need to make more efforts to phase out remaining <br>
+x86_64-darwin<br>
+executables, of some external tools. In particular:</p>
+<ul>
+<li>spass</li>
+<li>vampire</li>
+<li>verit</li>
+<li>smbc</li>
+<li>zipperposition</li>
+<li>z3</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Thanks. I surely hope that we have ARM versions of all of those.</p>
+</blockquote>
+<p>I also hope it, but this hope is sometimes unfounded.</p>
+<p>In recent years, I have tried hard to support arm64-linux, but a <br>
+few executables are still missing.</p>
+<p>This year, I have continued under the assumption that x86_64-darwin <br>
+will stop working soon, but did not yet manage to build all tools yet.</p>
+<p>In particular, the z3 situation is very bad: Could we update that <br>
+eventually, or discontinue it altogether?</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="546609144"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546609144" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546609144">(Oct 23 2025 at 07:37)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Hi Hanna,</p>
+<p>Thanks for the update. I wish you good luck with the last steps! The icing on the cake of any programming project is of course when it gets integrated upstream. Let me know if there's anything I can do to help (but I suspect the combined expertise of you and your coauthors is more than enough to succeed).</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 23. Oct 2025, at 02:13, Hanna Elif Lachnitt &lt;<a href="mailto:lachnitt@stanford.edu">lachnitt@stanford.edu</a>&gt; wrote:</p>
+<p>Hi everyone,</p>
+<p>unfortunately we don't think that we can have it ready for the RC1 in two weeks. We strive to put it in the official repo as soon as possible.</p>
+<p>We made extensive changes and additions to the code as cvc5's proofs are far more detailed than veriT's. We also want to optimize good performance before users start using it. Since parsing is slow, having more steps can be detrimental, so we are investigating how to improve the size of cvc5 proofs.</p>
+<p>Best,<br>
+Hanna</p>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a> &lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt;<br>
+Sent: Wednesday, October 22, 2025 03:32<br>
+To: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a> &lt;mailto:<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;&gt;; Hanna Elif Lachnitt &lt;<a href="mailto:lachnitt@stanford.edu">lachnitt@stanford.edu</a> &lt;mailto:<a href="mailto:lachnitt@stanford.edu">lachnitt@stanford.edu</a>&gt;&gt;<br>
+Cc: DEV Isabelle Mailinglist &lt;<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a> &lt;mailto:<a href="mailto:isabelle-dev@in.tum.de">isabelle-dev@in.tum.de</a>&gt;&gt;<br>
+Subject: Re: Architecture problem</p>
+<p>I'm pretty sure Hanna said that this would be in the next release. Hanna, can you offer any more details?</p>
+<p>Larry</p>
+<blockquote>
+<p>On 22 Oct 2025, at 08:00, Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a> &lt;mailto:<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;&gt; wrote:</p>
+<p>Now, I just tried this example with Isabelle/a356fd7ca1c4:</p>
+<p>lemma "a = b ⟹ f a = f b"<br>
+  using [[smt_trace]]<br>
+  by (smt (cvc5))</p>
+<p>and it doesn't work. I get the error "Error in option parsing: proof-format=alethe is experimental in this version. If you know what you are doing, you can try --proof-alethe-experimental". So it doesn't look to me as if we can use cvc5 for reconstruction quite yet, which also postpones the work of the "task force".</p>
+<p>Could one of the multiple authors of Lachnitt et al. (ITP 2025) comment on the status of their project (hoping at least one of them is on this mailing list)?<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="546665888"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546665888" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546665888">(Oct 23 2025 at 12:23)</a>:</h4>
+<p>From: Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt;<br>
+On Wed, 2025-10-22 at 09:00 +0200, Jasmin Blanchette wrote:<br>
+Tjark Weber's Z3 proof reconstruction code (ITP 2010) might still be alive in HOL4, but I suspect it might not work with a recent Z3.</p>
+<p>Ricardo Correia has made numerous improvements to that code and recently updated the supported Z3 version to 4.15.3 (the latest release).</p>
+<p>Best,<br>
+Tjark</p>
+<p>När du har kontakt med oss på Uppsala universitet med e-post så innebär det att vi behandlar dina personuppgifter. För att läsa mer om hur vi gör det kan du läsa här: <a href="http://www.uu.se/om-uu/dataskydd-personuppgifter/">http://www.uu.se/om-uu/dataskydd-personuppgifter/</a></p>
+<p>E-mailing Uppsala University means that we will process your personal data. For more information on how this is performed, please read here: <a href="http://www.uu.se/en/about-uu/data-protection-policy">http://www.uu.se/en/about-uu/data-protection-policy</a></p>
+
+
+
+<a name="546667909"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Architecture%20problem/near/546667909" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Architecture.20problem.html#546667909">(Oct 23 2025 at 12:32)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Thanks for the clarification!</p>
+<p>Inspired by this successful porting effort, we could consider updating our code to the latest Z3 as well. I have a bad memory of a previous such port (from 2010 to 2014), but maybe it would go more smoothly this time.</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 23. Oct 2025, at 14:22, Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt; wrote:</p>
+<p>On Wed, 2025-10-22 at 09:00 +0200, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Tjark Weber's Z3 proof reconstruction code (ITP 2010) might still be alive in HOL4, but I suspect it might not work with a recent Z3.</p>
+</blockquote>
+<p>Ricardo Correia has made numerous improvements to that code and recently updated the supported Z3 version to 4.15.3 (the latest release).</p>
+<p>Best,<br>
+Tjark</p>
+<p>När du har kontakt med oss på Uppsala universitet med e-post så innebär det att vi behandlar dina personuppgifter. För att läsa mer om hur vi gör det kan du läsa här: <a href="http://www.uu.se/om-uu/dataskydd-personuppgifter/">http://www.uu.se/om-uu/dataskydd-personuppgifter/</a> </p>
+<p>E-mailing Uppsala University means that we will process your personal data. For more information on how this is performed, please read here: <a href="http://www.uu.se/en/about-uu/data-protection-policy">http://www.uu.se/en/about-uu/data-protection-policy</a></p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,289 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Selector value with the value command · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html">[isabelle] Selector value with the value command</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="514676638"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514676638" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514676638">(Apr 27 2025 at 19:31)</a>:</h4>
+<p>From: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;<br>
+Dear Isabelle users,</p>
+<p>The following code listing:</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>results in the following actual output of the value command:</p>
+<p>"num (Test n)"<br>
+  :: "nat"</p>
+<p>instead of the output that I was expecting, namely:</p>
+<p>"n"<br>
+  :: "nat"</p>
+<p>What am I missing here to make the value command compute this selector value?<br>
+Thank you very much, best regards,<br>
+Pasquale Noce</p>
+
+
+
+<a name="514691775"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514691775" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514691775">(Apr 27 2025 at 22:45)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+In Isabelle 2025, importing only HOL.Main, I get "n", which is what you <br>
+want.</p>
+<p>But generally speaking, the "value" command's behaviour is sometimes a <br>
+bit weird when free variables are involved. By default, "value" uses the <br>
+code generator. When free variables are involved, this is not possible, <br>
+and it instead relies on either "normalisation by evaluation" or using <br>
+the simplifier. That sometimes leads odd-looking output, e.g. value "n + <br>
+3" gives "n + (1 + 1 + 1)".</p>
+<p>So, tl;dr ideally only use "value" on terms without free variables.</p>
+<p>Manuel</p>
+<p>On 27/04/2025 21:31, Pasquale Noce wrote:</p>
+<blockquote>
+<p>Dear Isabelle users,</p>
+<p>The following code listing:</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>results in the following actual output of the value command:</p>
+<p>"num (Test n)"<br>
+   :: "nat"</p>
+<p>instead of the output that I was expecting, namely:</p>
+<p>"n"<br>
+   :: "nat"</p>
+<p>What am I missing here to make the value command compute this selector value?<br>
+Thank you very much, best regards,<br>
+Pasquale Noce</p>
+</blockquote>
+
+
+
+<a name="514779368"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514779368" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514779368">(Apr 28 2025 at 10:43)</a>:</h4>
+<p>From: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;<br>
+Dear Manuel,</p>
+<p>Thanks a lot for your kind feedback.<br>
+Actually, your answer that you got the expected output by importing Main made<br>
+me suspect that I overlooked some relevant piece of information in my previous<br>
+message, since I had imported Main in my example as well. So, I found out that<br>
+the overlooked piece of information was that the unexpected outcome is<br>
+obtained if my code listing is placed inside a locale. That is to say, the<br>
+code listing:</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>placed in the global context, generates the expected output, namely:</p>
+<p>"n"<br>
+  :: "nat"</p>
+<p>On the contrary, the code listing:</p>
+<p>locale temp<br>
+begin</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>end</p>
+<p>generates the unexpected output, namely:</p>
+<p>"num (Test n)"<br>
+  :: "nat"</p>
+<p>Hence, my former, incomplete question can be reformulated as follows: how can<br>
+I get the expected output within a locale?<br>
+Thank you very much, best regards,<br>
+Pasquale</p>
+
+
+
+<a name="514789542"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514789542" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514789542">(Apr 28 2025 at 11:34)</a>:</h4>
+<p>From: "Thiemann, René" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear Pasquale,</p>
+<p>as far as I know, everything that is defined inside a locale does not have automatic<br>
+code generation. So, in particular if you define a function foo inside a locale bar, <br>
+you will need to declare</p>
+<p>declare bar.foo.simps[code]</p>
+<p>outside the locale, and similarly, you have to do this for definitions, partial_functions, etc. </p>
+<p>I imagine, that the situation is the same for datatypes.<br>
+Perhaps in your case </p>
+<p>declare locale_name.test.simps[code] </p>
+<p>will suffice, but I’m not sure.</p>
+<p>Best,<br>
+René</p>
+<blockquote>
+<p>Am 28.04.2025 um 12:42 schrieb Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;:</p>
+<p>Dear Manuel,</p>
+<p>Thanks a lot for your kind feedback.<br>
+Actually, your answer that you got the expected output by importing Main made<br>
+me suspect that I overlooked some relevant piece of information in my previous<br>
+message, since I had imported Main in my example as well. So, I found out that<br>
+the overlooked piece of information was that the unexpected outcome is<br>
+obtained if my code listing is placed inside a locale. That is to say, the<br>
+code listing:</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>placed in the global context, generates the expected output, namely:</p>
+<p>"n"<br>
+ :: "nat"</p>
+<p>On the contrary, the code listing:</p>
+<p>locale temp<br>
+begin</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>end</p>
+<p>generates the unexpected output, namely:</p>
+<p>"num (Test n)"<br>
+ :: "nat"</p>
+<p>Hence, my former, incomplete question can be reformulated as follows: how can<br>
+I get the expected output within a locale?<br>
+Thank you very much, best regards,<br>
+Pasquale</p>
+</blockquote>
+
+
+
+<a name="514888486"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514888486" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514888486">(Apr 28 2025 at 19:24)</a>:</h4>
+<p>From: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;<br>
+Dear René,</p>
+<p>Thanks a lot for your kind feedback, too.<br>
+Based on it, I have finally found out that the following code listing (which I am posting here in case it may be useful to other Isabelle users as well):</p>
+<p>locale sketch<br>
+begin</p>
+<p>datatype test = Test nat</p>
+<p>primrec test_num :: "test =&gt; nat" where<br>
+"test_num (Test n) = n"</p>
+<p>end</p>
+<p>code_datatype sketch.Test</p>
+<p>declare sketch.test_num.simps [code]</p>
+<p>value "sketch.test_num (sketch.Test n)"</p>
+<p>triggers the generation of the expected output on the part of the value command, namely:</p>
+<p>"n"<br>
+   :: "nat"</p>
+<p>Many thanks again to both you and Manuel.<br>
+Best regards,<br>
+Pasquale</p>
+<p>Il 28/04/2025 13:21, Thiemann, René ha scritto:</p>
+<blockquote>
+<p>Dear Pasquale,</p>
+<p>as far as I know, everything that is defined inside a locale does not have automatic<br>
+code generation. So, in particular if you define a function foo inside a locale bar,<br>
+you will need to declare</p>
+<p>declare bar.foo.simps[code]</p>
+<p>outside the locale, and similarly, you have to do this for definitions, partial_functions, etc.</p>
+<p>I imagine, that the situation is the same for datatypes.<br>
+Perhaps in your case</p>
+<p>declare locale_name.test.simps[code]</p>
+<p>will suffice, but I’m not sure.</p>
+<p>Best,<br>
+René</p>
+<blockquote>
+<p>Am 28.04.2025 um 12:42 schrieb Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;:</p>
+<p>Dear Manuel,</p>
+<p>Thanks a lot for your kind feedback.<br>
+Actually, your answer that you got the expected output by importing Main made<br>
+me suspect that I overlooked some relevant piece of information in my previous<br>
+message, since I had imported Main in my example as well. So, I found out that<br>
+the overlooked piece of information was that the unexpected outcome is<br>
+obtained if my code listing is placed inside a locale. That is to say, the<br>
+code listing:</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>placed in the global context, generates the expected output, namely:</p>
+<p>"n"<br>
+  :: "nat"</p>
+<p>On the contrary, the code listing:</p>
+<p>locale temp<br>
+begin</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>end</p>
+<p>generates the unexpected output, namely:</p>
+<p>"num (Test n)"<br>
+  :: "nat"</p>
+<p>Hence, my former, incomplete question can be reformulated as follows: how can<br>
+I get the expected output within a locale?<br>
+Thank you very much, best regards,<br>
+Pasquale<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="514888676"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514888676" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514888676">(Apr 28 2025 at 19:25)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+(This should have also gone to the list)</p>
+<p>-------- Weitergeleitete Nachricht --------<br>
+Betreff: Re: [isabelle] Selector value with the value command<br>
+Datum: Mon, 28 Apr 2025 20:25:44 +0200<br>
+Von: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+An: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;</p>
+<p>Hi Pasquale,</p>
+<p>note that there is no concept of »localized« code generation.</p>
+<p>You always get proper behavior after interpretation:</p>
+<blockquote>
+<p>locale triv<br>
+begin</p>
+<p>datatype test = Test (num: nat)</p>
+<p>end</p>
+<p>interpretation I: triv .</p>
+<p>value ‹I.num (I.Test n)›</p>
+</blockquote>
+<p>How to proceed from here depends significantly on what you want to <br>
+achieve in the first place.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/YBeTh2DAkZ6gfgXBlX26Dj7f/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/9orRZQiOltWzJhiBSGOrA6nc/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="514889239"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/514889239" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#514889239">(Apr 28 2025 at 19:29)</a>:</h4>
+<p>From: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;<br>
+Dear Florian,</p>
+<p>Thanks a lot for your feedback, too.<br>
+Best regards,<br>
+Pasquale</p>
+
+
+
+<a name="516367690"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Selector%20value%20with%20the%20value%20command/near/516367690" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Selector.20value.20with.20the.20value.20command.html#516367690">(May 06 2025 at 07:23)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>On 27/04/2025 22:53, Manuel Eberl wrote:</p>
+<blockquote>
+<p>In Isabelle 2025, importing only HOL.Main, I get "n", which is what you want.</p>
+<p>But generally speaking, the "value" command's behaviour is sometimes a bit weird <br>
+when free variables are involved. By default, "value" uses the code generator. <br>
+When free variables are involved, this is not possible, and it instead relies on <br>
+either "normalisation by evaluation" or using the simplifier. That sometimes <br>
+leads odd-looking output, e.g. value "n + 3" gives "n + (1 + 1 + 1)".</p>
+<p>So, tl;dr ideally only use "value" on terms without free variables.</p>
+</blockquote>
+<p>Otherwise expect the unexpected ;-)</p>
+<p>Tobias</p>
+<blockquote>
+<p>Manuel</p>
+<p>On 27/04/2025 21:31, Pasquale Noce wrote:</p>
+<blockquote>
+<p>Dear Isabelle users,</p>
+<p>The following code listing:</p>
+<p>datatype test = Test (num: nat)<br>
+value "num (Test n)"</p>
+<p>results in the following actual output of the value command:</p>
+<p>"num (Test n)"<br>
+   :: "nat"</p>
+<p>instead of the output that I was expecting, namely:</p>
+<p>"n"<br>
+   :: "nat"</p>
+<p>What am I missing here to make the value command compute this selector value?<br>
+Thank you very much, best regards,<br>
+Pasquale Noce</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/OZHT-mI0xBNRcgxmLzlR8cOW/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

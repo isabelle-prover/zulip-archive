@@ -1,0 +1,88 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Isabelle/jEdit: more robust and reactive mouse hand... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.3A.20more.20robust.20and.20reactive.20mouse.20hand.2E.2E.2E.html">NEWS: Isabelle/jEdit: more robust and reactive mouse hand...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="561217044"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%3A%20more%20robust%20and%20reactive%20mouse%20hand.../near/561217044" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.3A.20more.20robust.20and.20reactive.20mouse.20hand.2E.2E.2E.html#561217044">(Dec 01 2025 at 16:47)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* Isabelle/jEdit Prover IDE </strong>*</p>
+<ul>
+<li>Mouse event handling is now more robust and more reactive: this is<br>
+especially relevant for macOS with Magic Mouse. The mouse reacts on<br>
+pressing the button, and does not wait for its release. After jumping<br>
+around in the editor, e.g. when following hyperlinks, mouse drag events<br>
+are ignored (according to system option "editor_jump_delay", with<br>
+default 0.3 seconds): this avoids spurious text selection after editor<br>
+navigation.</li>
+</ul>
+<p>This refers to Isabelle/763ff9c96be2, which is from Isabelle-2025-1-RC3, but <br>
+now back on isabelle-dev. It is a refinement of earlier attempts on mouse <br>
+handling that did not work out properly.</p>
+<p>It is important to keep an eye on mouse handling within the next 2 weeks. If <br>
+there is anything seriously wrong, it needs to be addressed for the <br>
+Isabelle2025-1 release, before that becomes final.</p>
+<p>Makarius</p>
+
+
+
+<a name="561384304"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%3A%20more%20robust%20and%20reactive%20mouse%20hand.../near/561384304" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.3A.20more.20robust.20and.20reactive.20mouse.20hand.2E.2E.2E.html#561384304">(Dec 02 2025 at 11:15)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I have tried the new mouse handling with a magic mouse and I'd like it much, much more than the previous behaviour.</p>
+<p>This remind me of another mouse-related problem, intermittent unfortunately, but I think connected with typing/pasting over the current selection: it gets into a crazy state where it thinks the cursor position as one half of a selection and interprets any other mouse click as the other half. Generally, it goes berserk after this and often there's no alternative to closing the window or even quitting altogether, as sometimes it starts pasting and making an unrecoverable mess of your proof. Maybe this is just part of the magic of a magic mouse.</p>
+<hr>
+<ul>
+<li>Mouse event handling is now more robust and more reactive: this is<br>
+especially relevant for macOS with Magic Mouse. The mouse reacts on<br>
+pressing the button, and does not wait for its release. After jumping<br>
+around in the editor, e.g. when following hyperlinks, mouse drag events<br>
+are ignored (according to system option "editor_jump_delay", with<br>
+default 0.3 seconds): this avoids spurious text selection after editor<br>
+navigation.</li>
+</ul>
+
+
+
+<a name="561403779"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%3A%20more%20robust%20and%20reactive%20mouse%20hand.../near/561403779" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.3A.20more.20robust.20and.20reactive.20mouse.20hand.2E.2E.2E.html#561403779">(Dec 02 2025 at 12:53)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/12/2025 12:15, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>This remind me of another mouse-related problem, intermittent unfortunately, <br>
+but I think connected with typing/pasting over the current selection: it gets <br>
+into a crazy state where it thinks the cursor position as one half of a <br>
+selection and interprets any other mouse click as the other half. Generally, <br>
+it goes berserk after this and often there's no alternative to closing the <br>
+window or even quitting altogether, as sometimes it starts pasting and making <br>
+an unrecoverable mess of your proof. Maybe this is just part of the magic of a <br>
+magic mouse.</p>
+</blockquote>
+<p>There is a &gt; 0 chance that the new mouse handler prevents that.</p>
+<p>If it still happens again, can you make a screen recording on macOS and show <br>
+it to me?</p>
+<p>Makarius</p>
+
+
+
+<a name="561443051"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%3A%20more%20robust%20and%20reactive%20mouse%20hand.../near/561443051" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.3A.20more.20robust.20and.20reactive.20mouse.20hand.2E.2E.2E.html#561443051">(Dec 02 2025 at 15:21)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>Believe it or not, it happened just today (only with the current release). Possibly running for a long time and exhausting memory could be related. What you see here is my repeated mouse clicking, trying to clear the previous selection, but jEdit will not let go. Eventually it starts moving text and pasting wildly.</p>
+<hr>
+<p>If it still happens again, can you make a screen recording on macOS and show<br>
+it to me?</p>
+<p>Makarius</p>
+<p><a href="/user_uploads/14278/u13PP4Yz-DCVG_bx_3ThxIUZ/jedit-mouse-issue.mp4">jedit mouse issue.mp4</a></p>
+<div class="message_inline_image message_inline_video"><a href="/user_uploads/14278/u13PP4Yz-DCVG_bx_3ThxIUZ/jedit-mouse-issue.mp4" title="jedit mouse issue.mp4"><video preload="metadata" src="/user_uploads/14278/u13PP4Yz-DCVG_bx_3ThxIUZ/jedit-mouse-issue.mp4"></video></a></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Imports of HOL-Analysis not working after restart · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Imports.20of.20HOL-Analysis.20not.20working.20after.20restart.html">Imports of HOL-Analysis not working after restart</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="532605824"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Imports%20of%20HOL-Analysis%20not%20working%20after%20restart/near/532605824" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pristine <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Imports.20of.20HOL-Analysis.20not.20working.20after.20restart.html#532605824">(Aug 03 2025 at 22:17)</a>:</h4>
+<p>Hi everyone,</p>
+<p>I'm experiencing a problem with my Isabelle setup. Previously, I was able to import theories like <code>"HOL-Analysis.Analysis"</code>, <code>"HOL-Analysis.Interval_Integral"</code>, <code>"HOL-Probability.Distributions"</code>, and <code>"HOL-Probability.Distribution_Functions"</code> in my <code>.thy</code> files without any issues. My code hasn't changed at all.</p>
+<p>But after restarting Isabelle, suddenly all these imports fail (showing <strong>Bad Theory</strong> errors). Sometimes the error messages even disappear after a while, but the imports are still not working.</p>
+<p>Does anyone know what could cause this?<br>
+Why would these standard theories become unavailable after a restart, even though it worked before?</p>
+<p>Any tips on how to debug or fix this would be much appreciated!</p>
+<p>Thanks in advance!<br>
+<a href="/user_uploads/14278/CIi6j-guAkekah6GMM18Agi_/Screenshot-2025-08-03-at-23.13.17.png">Screenshot 2025-08-03 at 23.13.17.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/CIi6j-guAkekah6GMM18Agi_/Screenshot-2025-08-03-at-23.13.17.png" title="Screenshot 2025-08-03 at 23.13.17.png"><img data-original-content-type="image/png" data-original-dimensions="790x210" src="/user_uploads/thumbnail/14278/CIi6j-guAkekah6GMM18Agi_/Screenshot-2025-08-03-at-23.13.17.png/840x560.webp"></a></div>
+
+
+
+<a name="532645383"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Imports%20of%20HOL-Analysis%20not%20working%20after%20restart/near/532645383" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Imports.20of.20HOL-Analysis.20not.20working.20after.20restart.html#532645383">(Aug 04 2025 at 04:55)</a>:</h4>
+<blockquote>
+<p>Why would these standard theories become unavailable after a restart, even though it worked before?</p>
+</blockquote>
+<p>My guess: there are still here but these theories are now very slow to start because you changed the base session</p>
+
+
+
+<a name="532645436"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Imports%20of%20HOL-Analysis%20not%20working%20after%20restart/near/532645436" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Imports.20of.20HOL-Analysis.20not.20working.20after.20restart.html#532645436">(Aug 04 2025 at 04:56)</a>:</h4>
+<p>So: do those theories appear in the theory panel?</p>
+
+
+
+<a name="532782621"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Imports%20of%20HOL-Analysis%20not%20working%20after%20restart/near/532782621" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Pristine <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Imports.20of.20HOL-Analysis.20not.20working.20after.20restart.html#532782621">(Aug 04 2025 at 19:09)</a>:</h4>
+<p>I think you're right, after waiting for a long time, it worked.</p>
+
+
+
+<a name="532783238"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Imports%20of%20HOL-Analysis%20not%20working%20after%20restart/near/532783238" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Imports.20of.20HOL-Analysis.20not.20working.20after.20restart.html#532783238">(Aug 04 2025 at 19:14)</a>:</h4>
+<p>Usually you build a session image for big sessions like HOL-Analysis or HOL-Probability to avoid this.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

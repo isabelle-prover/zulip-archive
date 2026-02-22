@@ -1,0 +1,264 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Executing set comprehensions · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html">[isabelle] Executing set comprehensions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="537828378"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executing%20set%20comprehensions/near/537828378" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html#537828378">(Sep 05 2025 at 09:22)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Dear readers,</p>
+<p>For a change I would like to describe a solution rather than ask a question.</p>
+<p>If one is interested in executability, but wants to stay at an abstract level, <br>
+one is sometimes faced with the challenge of executing set comprehensions. Of <br>
+course there is no silver bullet for those, but often they feel almost <br>
+executable, but Isabelle fails to recognize this.</p>
+<p>A brute force approach is to define a second version on the list level and prove <br>
+the equivalence and execute the list version. Here I want to show how to stay on <br>
+the set level, yet make it executable.</p>
+<p>A typical example:</p>
+<p>definition f :: "(int * int) set ⇒ int set" where<br>
+"f M = {b. ∃a. (a,b) ∈ M ∧ a &gt; b}"</p>
+<p>This is not executable because of the EX. So we need to reformulate f:</p>
+<p>lemma f_exec[code]: "f M = (λ(a,b). b) ` {(a,b) ∈ M. a &gt; b}"<br>
+unfolding f_def f'_def by auto</p>
+<p>The equivalence is automatic and the result executable, eg</p>
+<p>value "f {(2,1), (1,2), (3,1)}"</p>
+<p>In general, you can make a set comprehension executable by transforming it into <br>
+compositions of ` (= map) and {a : M. ...} (= filter), where each component is <br>
+executable. (UN may also come in handy, but if frequently leads to "UN x : M. <br>
+{...}", which is better expressed with map and filter.)</p>
+<p>Note that the filter pattern is restricted:<br>
+It works for variables x in {x : M. ...}; in the latest distribution it also <br>
+works for pairs (see above) and triples. Arbitrary tuples would require a simproc.</p>
+<p>Best<br>
+Tobias</p>
+<p><a href="/user_uploads/14278/ebePzbKvxBzluYtVG3wGjx70/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="537828909"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executing%20set%20comprehensions/near/537828909" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html#537828909">(Sep 05 2025 at 09:25)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Sorry, ignore the "f'_def". - Tobias</p>
+<p>On 05/09/2025 11:22, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Dear readers,</p>
+<p>For a change I would like to describe a solution rather than ask a question.</p>
+<p>If one is interested in executability, but wants to stay at an abstract level, <br>
+one is sometimes faced with the challenge of executing set comprehensions. Of <br>
+course there is no silver bullet for those, but often they feel almost <br>
+executable, but Isabelle fails to recognize this.</p>
+<p>A brute force approach is to define a second version on the list level and prove <br>
+the equivalence and execute the list version. Here I want to show how to stay on <br>
+the set level, yet make it executable.</p>
+<p>A typical example:</p>
+<p>definition f :: "(int * int) set ⇒ int set" where<br>
+"f M = {b. ∃a. (a,b) ∈ M ∧ a &gt; b}"</p>
+<p>This is not executable because of the EX. So we need to reformulate f:</p>
+<p>lemma f_exec[code]: "f M = (λ(a,b). b) ` {(a,b) ∈ M. a &gt; b}"<br>
+unfolding f_def f'_def by auto</p>
+<p>The equivalence is automatic and the result executable, eg</p>
+<p>value "f {(2,1), (1,2), (3,1)}"</p>
+<p>In general, you can make a set comprehension executable by transforming it into <br>
+compositions of ` (= map) and {a : M. ...} (= filter), where each component is <br>
+executable. (UN may also come in handy, but if frequently leads to "UN x : M. <br>
+{...}", which is better expressed with map and filter.)</p>
+<p>Note that the filter pattern is restricted:<br>
+It works for variables x in {x : M. ...}; in the latest distribution it also <br>
+works for pairs (see above) and triples. Arbitrary tuples would require a simproc.</p>
+<p>Best<br>
+Tobias</p>
+</blockquote>
+<p><a href="/user_uploads/14278/ETqWZa0qO5F-QKrIQNFcZUni/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="537833943"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executing%20set%20comprehensions/near/537833943" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html#537833943">(Sep 05 2025 at 09:52)</a>:</h4>
+<p>From: "\"Lammich, Peter (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+So can we add some generic simp lemmas ( and later maybe a simproc) to the code preprocessor simpset? By default or as a library they?</p>
+<p>Peter</p>
+<p>On 5 Sept 2025 11:25, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:<br>
+Sorry, ignore the "f'_def". - Tobias</p>
+<p>On 05/09/2025 11:22, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Dear readers,</p>
+<p>For a change I would like to describe a solution rather than ask a question.</p>
+<p>If one is interested in executability, but wants to stay at an abstract level,<br>
+one is sometimes faced with the challenge of executing set comprehensions. Of<br>
+course there is no silver bullet for those, but often they feel almost<br>
+executable, but Isabelle fails to recognize this.</p>
+<p>A brute force approach is to define a second version on the list level and prove<br>
+the equivalence and execute the list version. Here I want to show how to stay on<br>
+the set level, yet make it executable.</p>
+<p>A typical example:</p>
+<p>definition f :: "(int * int) set ⇒ int set" where<br>
+"f M = {b. ∃a. (a,b) ∈ M ∧ a &gt; b}"</p>
+<p>This is not executable because of the EX. So we need to reformulate f:</p>
+<p>lemma f_exec[code]: "f M = (λ(a,b). b) ` {(a,b) ∈ M. a &gt; b}"<br>
+unfolding f_def f'_def by auto</p>
+<p>The equivalence is automatic and the result executable, eg</p>
+<p>value "f {(2,1), (1,2), (3,1)}"</p>
+<p>In general, you can make a set comprehension executable by transforming it into<br>
+compositions of ` (= map) and {a : M. ...} (= filter), where each component is<br>
+executable. (UN may also come in handy, but if frequently leads to "UN x : M.<br>
+{...}", which is better expressed with map and filter.)</p>
+<p>Note that the filter pattern is restricted:<br>
+It works for variables x in {x : M. ...}; in the latest distribution it also<br>
+works for pairs (see above) and triples. Arbitrary tuples would require a simproc.</p>
+<p>Best<br>
+Tobias</p>
+</blockquote>
+
+
+
+<a name="537846791"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executing%20set%20comprehensions/near/537846791" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html#537846791">(Sep 05 2025 at 11:16)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+DId something change about the code generator preprocessing here? In the <br>
+past I often explicitly put "Set.filter" into the code equations instead <br>
+of "{x. P x}" to make this sort of stuff work.</p>
+<p>On 05/09/2025 11:22, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Dear readers,</p>
+<p>For a change I would like to describe a solution rather than ask a <br>
+question.</p>
+<p>If one is interested in executability, but wants to stay at an <br>
+abstract level, one is sometimes faced with the challenge of executing <br>
+set comprehensions. Of course there is no silver bullet for those, but <br>
+often they feel almost executable, but Isabelle fails to recognize this.</p>
+<p>A brute force approach is to define a second version on the list level <br>
+and prove the equivalence and execute the list version. Here I want to <br>
+show how to stay on the set level, yet make it executable.</p>
+<p>A typical example:</p>
+<p>definition f :: "(int * int) set ⇒ int set" where<br>
+"f M = {b. ∃a. (a,b) ∈ M ∧ a &gt; b}"</p>
+<p>This is not executable because of the EX. So we need to reformulate f:</p>
+<p>lemma f_exec[code]: "f M = (λ(a,b). b) ` {(a,b) ∈ M. a &gt; b}"<br>
+unfolding f_def f'_def by auto</p>
+<p>The equivalence is automatic and the result executable, eg</p>
+<p>value "f {(2,1), (1,2), (3,1)}"</p>
+<p>In general, you can make a set comprehension executable by <br>
+transforming it into compositions of ` (= map) and {a : M. ...} (= <br>
+filter), where each component is executable. (UN may also come in <br>
+handy, but if frequently leads to "UN x : M. {...}", which is better <br>
+expressed with map and filter.)</p>
+<p>Note that the filter pattern is restricted:<br>
+It works for variables x in {x : M. ...}; in the latest distribution <br>
+it also works for pairs (see above) and triples. Arbitrary tuples <br>
+would require a simproc.</p>
+<p>Best<br>
+Tobias</p>
+</blockquote>
+
+
+
+<a name="537867039"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executing%20set%20comprehensions/near/537867039" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html#537867039">(Sep 05 2025 at 13:08)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>On 05/09/2025 13:16, Manuel Eberl wrote:</p>
+<blockquote>
+<p>DId something change about the code generator preprocessing here? In the past I <br>
+often explicitly put "Set.filter" into the code equations instead of "{x. P x}" <br>
+to make this sort of stuff work.</p>
+</blockquote>
+<p>Yes, Florian has recently modified this because I felt Set.filter" wasn't ideal.</p>
+<p>Tobias</p>
+<blockquote>
+<p>On 05/09/2025 11:22, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Dear readers,</p>
+<p>For a change I would like to describe a solution rather than ask a question.</p>
+<p>If one is interested in executability, but wants to stay at an abstract level, <br>
+one is sometimes faced with the challenge of executing set comprehensions. Of <br>
+course there is no silver bullet for those, but often they feel almost <br>
+executable, but Isabelle fails to recognize this.</p>
+<p>A brute force approach is to define a second version on the list level and <br>
+prove the equivalence and execute the list version. Here I want to show how to <br>
+stay on the set level, yet make it executable.</p>
+<p>A typical example:</p>
+<p>definition f :: "(int * int) set ⇒ int set" where<br>
+"f M = {b. ∃a. (a,b) ∈ M ∧ a &gt; b}"</p>
+<p>This is not executable because of the EX. So we need to reformulate f:</p>
+<p>lemma f_exec[code]: "f M = (λ(a,b). b) ` {(a,b) ∈ M. a &gt; b}"<br>
+unfolding f_def f'_def by auto</p>
+<p>The equivalence is automatic and the result executable, eg</p>
+<p>value "f {(2,1), (1,2), (3,1)}"</p>
+<p>In general, you can make a set comprehension executable by transforming it <br>
+into compositions of ` (= map) and {a : M. ...} (= filter), where each <br>
+component is executable. (UN may also come in handy, but if frequently leads <br>
+to "UN x : M. {...}", which is better expressed with map and filter.)</p>
+<p>Note that the filter pattern is restricted:<br>
+It works for variables x in {x : M. ...}; in the latest distribution it also <br>
+works for pairs (see above) and triples. Arbitrary tuples would require a <br>
+simproc.</p>
+<p>Best<br>
+Tobias</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/R-COITT8gVi3ToB-JiAUMCTZ/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="537868817"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executing%20set%20comprehensions/near/537868817" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executing.20set.20comprehensions.html#537868817">(Sep 05 2025 at 13:18)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>On 05/09/2025 11:52, "Lammich, Peter (UT-EEMCS)" (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>So can we add some generic simp lemmas ( and later maybe a simproc) to the code <br>
+preprocessor simpset? By default or as a library they?</p>
+</blockquote>
+<p>Correct. Like this:</p>
+<p>lemma Collect_triple_member [code_unfold, no_atp]:<br>
+   \&lt;open&gt;{(x, y, z). List.member xs (x, y, z) \&lt;and&gt; P x y z} = Set.filter <br>
+(\&lt;lambda&gt;(x, y, z). P x y z) (set xs)\&lt;close&gt;<br>
+   by auto</p>
+<p>Tobias</p>
+<blockquote>
+<p>Peter</p>
+<p>On 5 Sept 2025 11:25, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:<br>
+Sorry, ignore the "f'_def". - Tobias</p>
+<p>On 05/09/2025 11:22, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Dear readers,</p>
+<p>For a change I would like to describe a solution rather than ask a question.</p>
+<p>If one is interested in executability, but wants to stay at an abstract level, <br>
+one is sometimes faced with the challenge of executing set comprehensions. Of <br>
+course there is no silver bullet for those, but often they feel almost <br>
+executable, but Isabelle fails to recognize this.</p>
+<p>A brute force approach is to define a second version on the list level and prove<br>
+the equivalence and execute the list version. Here I want to show how to stay on<br>
+the set level, yet make it executable.</p>
+<p>A typical example:</p>
+<p>definition f :: "(int * int) set ⇒ int set" where<br>
+"f M = {b. ∃a. (a,b) ∈ M ∧ a &gt; b}"</p>
+<p>This is not executable because of the EX. So we need to reformulate f:</p>
+<p>lemma f_exec[code]: "f M = (λ(a,b). b) ` {(a,b) ∈ M. a &gt; b}"<br>
+unfolding f_def f'_def by auto</p>
+<p>The equivalence is automatic and the result executable, eg</p>
+<p>value "f {(2,1), (1,2), (3,1)}"</p>
+<p>In general, you can make a set comprehension executable by transforming it into<br>
+compositions of ` (= map) and {a : M. ...} (= filter), where each component is <br>
+executable. (UN may also come in handy, but if frequently leads to "UN x : M. <br>
+{...}", which is better expressed with map and filter.)</p>
+<p>Note that the filter pattern is restricted:<br>
+It works for variables x in {x : M. ...}; in the latest distribution it also <br>
+works for pairs (see above) and triples. Arbitrary tuples would require a simproc.</p>
+<p>Best<br>
+Tobias<br>
+</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/Y9Q-I1KmRm8rKoSET24rZkhC/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,251 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Low level simplifier failure · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html">[isabelle] Low level simplifier failure</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="569232695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569232695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569232695">(Jan 21 2026 at 11:39)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Consider the following theory:</p>
+<p>theory Scratch<br>
+  imports Main</p>
+<p>begin</p>
+<p>datatype a = A unit unit and b = B ‹unit ⇒ a›</p>
+<p>declare [[simp_trace]]<br>
+lemma "x = B (A ())"<br>
+  apply simp</p>
+<p>This produces the following output:</p>
+<p>[1]SIMPLIFIER INVOKED ON THE FOLLOWING TERM:<br>
+x = B (A ()) <br>
+exception UnequalLengths raised (line 553 of "library.ML”)</p>
+<p>The exception goes away if we eliminate the mutually recursive datatype in favour of separate declarations, but the original of this issue is necessarily mutually recursive. Perhaps there are simpprocs involved with datatypes?</p>
+<p>Larry</p>
+
+
+
+<a name="569243424"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569243424" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569243424">(Jan 21 2026 at 12:37)</a>:</h4>
+<p><strong>From:</strong> Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>This seems to be indeed coming from Manuel's datatype_no_proper_subterm simproc.</p>
+<p>using [[simproc del: datatype_no_proper_subterm]]</p>
+<p>removes the low-level exception.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 21 Jan 2026, at 12.39, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Consider the following theory:</p>
+<p>theory Scratch<br>
+ imports Main</p>
+<p>begin</p>
+<p>datatype a = A unit unit and b = B ‹unit ⇒ a›</p>
+<p>declare [[simp_trace]]<br>
+lemma "x = B (A ())"<br>
+ apply simp</p>
+<p>This produces the following output:</p>
+<p>[1]SIMPLIFIER INVOKED ON THE FOLLOWING TERM:<br>
+x = B (A ()) <br>
+exception UnequalLengths raised (line 553 of "library.ML”)</p>
+<p>The exception goes away if we eliminate the mutually recursive datatype in favour of separate declarations, but the original of this issue is necessarily mutually recursive. Perhaps there are simpprocs involved with datatypes?</p>
+<p>Larry<br>
+</p>
+</blockquote>
+
+
+
+<a name="569278994"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569278994" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569278994">(Jan 21 2026 at 15:05)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>Okay, I see what the problem is. The simproc breaks in the presence of <br>
+partially applied constructors. That kind of issue can only arise in <br>
+datatypes that have constructors whose arguments are functions returing <br>
+datatypes. Such datatypes are out of scope for the simproc anyway, since <br>
+they only have a "dummy" size function that always returns 0. If the <br>
+simproc didn't break at the "~~" (raising an UnequalLengths), it would <br>
+break later on at the "rule_by_tactic" since it would have to show "0 ≠ 0".</p>
+<p>I think the following two steps would make sense to make this more robust:</p>
+<p>– catch the Unequal_Lengths exception and just abort the simproc</p>
+<p>– make the "rule_by_tactic" fail more gracefully in case the "size" <br>
+function does not work as intended</p>
+<p>It might be even better to have a check at the beginning to make sure <br>
+that the datatype expression is in the "supported fragment" to begin <br>
+with. But I'm not sure how one would do that. Perhaps it was a bad idea <br>
+to create this simproc in the first place. But it <em>does</em> do something <br>
+useful, that users might reasonably expect Isabelle's automation to be <br>
+able to do. Namely automatically show that something like "xs = Cons a <br>
+(Cons b xs)" is false.</p>
+<p>Perhaps some of the datatype experts could comment on whether there is a <br>
+robust way to check if a datatype has a "proper" size function and not <br>
+just a "dummy" one.</p>
+<p>Manuel</p>
+<p>On 21/01/2026 13:36, Dmitriy Traytel (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>This seems to be indeed coming from Manuel's datatype_no_proper_subterm simproc.</p>
+<p>using [[simproc del: datatype_no_proper_subterm]]</p>
+<p>removes the low-level exception.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 21 Jan 2026, at 12.39, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Consider the following theory:</p>
+<p>theory Scratch<br>
+  imports Main</p>
+<p>begin</p>
+<p>datatype a = A unit unit and b = B ‹unit ⇒ a›</p>
+<p>declare [[simp_trace]]<br>
+lemma "x = B (A ())"<br>
+  apply simp</p>
+<p>This produces the following output:</p>
+<p>[1]SIMPLIFIER INVOKED ON THE FOLLOWING TERM:<br>
+x = B (A ())<br>
+exception UnequalLengths raised (line 553 of "library.ML”)</p>
+<p>The exception goes away if we eliminate the mutually recursive datatype in favour of separate declarations, but the original of this issue is necessarily mutually recursive. Perhaps there are simpprocs involved with datatypes?</p>
+<p>Larry<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="569289410"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569289410" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569289410">(Jan 21 2026 at 15:48)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt;</p>
+<p>Oops. I had a feeling that might be the culprit. I'll investigate.</p>
+<p>On 21/01/2026 13:36, Dmitriy Traytel wrote:</p>
+<blockquote>
+<p>This seems to be indeed coming from Manuel's datatype_no_proper_subterm simproc.</p>
+<p>using [[simproc del: datatype_no_proper_subterm]]</p>
+<p>removes the low-level exception.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 21 Jan 2026, at 12.39, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Consider the following theory:</p>
+<p>theory Scratch<br>
+  imports Main</p>
+<p>begin</p>
+<p>datatype a = A unit unit and b = B ‹unit ⇒ a›</p>
+<p>declare [[simp_trace]]<br>
+lemma "x = B (A ())"<br>
+  apply simp</p>
+<p>This produces the following output:</p>
+<p>[1]SIMPLIFIER INVOKED ON THE FOLLOWING TERM:<br>
+x = B (A ())<br>
+exception UnequalLengths raised (line 553 of "library.ML”)</p>
+<p>The exception goes away if we eliminate the mutually recursive datatype in favour of separate declarations, but the original of this issue is necessarily mutually recursive. Perhaps there are simpprocs involved with datatypes?</p>
+<p>Larry<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="569314815"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569314815" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569314815">(Jan 21 2026 at 17:32)</a>:</h4>
+<p><strong>From:</strong> Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Manuel,</p>
+<p>Something strange happened with your follow up response, which didn’t arrive in my inbox (nor in my spam filter). I do see it on Zulip’s mailing list mirror.</p>
+<p>Okay, I see what the problem is. The simproc breaks in the presence of partially applied constructors. That kind of issue can only arise in datatypes that have constructors whose arguments are functions returing datatypes. Such datatypes are out of scope for the simproc anyway, since they only have a "dummy" size function that always returns 0. If the simproc didn't break at the "~~" (raising an UnequalLengths), it would break later on at the "rule_by_tactic" since it would have to show "0 ≠ 0".</p>
+<p>I think the following two steps would make sense to make this more robust:</p>
+<p>– catch the Unequal_Lengths exception and just abort the simproc</p>
+<p>– make the "rule_by_tactic" fail more gracefully in case the "size" function does not work as intended</p>
+<p>It might be even better to have a check at the beginning to make sure that the datatype expression is in the "supported fragment" to begin with. But I'm not sure how one would do that. Perhaps it was a bad idea to create this simproc in the first place. But it <em>does</em> do something useful, that users might reasonably expect Isabelle's automation to be able to do. Namely automatically show that something like "xs = Cons a (Cons b xs)" is false.</p>
+<p>Perhaps some of the datatype experts could comment on whether there is a robust way to check if a datatype has a "proper" size function and not just a "dummy" one.</p>
+<p>The canonical way would be to query the size database and analyze the returned equations for whatever you precisely mean by being “proper”/“dummy” (I guess "all right-hand-sides = 0" is your definition of dummy):</p>
+<p>ML ‹BNF_LFP_Size.size_of @{context} @{type_name b}›</p>
+<p>Note that datatypes themselves know nothing about size functions; this is a separate plugin with a separate database. Datatypes do know through which type constructors they nest recursion. For example the following code checks whether recursion is nested through the function type.</p>
+<p>ML ‹BNF_FP_Def_Sugar.fp_sugar_of @{context} @{type_name b}<br>
+ |&gt; the |&gt; #fp_nesting_bnfs |&gt; map (Binding.name_of o BNF_Def.name_of_bnf)<br>
+ |&gt; Library.exists (fn T =&gt; T = @{type_name fun})›</p>
+<p>Although “fun” is perhaps just one example where this shows up; I think size functions returning 0 could have other origins, e.g., when codatatypes or other “too large" types are involved in datatype declarations.</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<p>On 21 Jan 2026, at 13.54, Manuel Eberl &lt;<a href="mailto:eberlm@in.tum.de">eberlm@in.tum.de</a>&gt; wrote:</p>
+<p>Oops. I had a feeling that might be the culprit. I'll investigate.</p>
+<p>On 21/01/2026 13:36, Dmitriy Traytel wrote:<br>
+This seems to be indeed coming from Manuel's datatype_no_proper_subterm simproc.</p>
+<p>using [[simproc del: datatype_no_proper_subterm]]</p>
+<p>removes the low-level exception.</p>
+<p>Dmitriy</p>
+<p>On 21 Jan 2026, at 12.39, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Consider the following theory:</p>
+<p>theory Scratch<br>
+ imports Main</p>
+<p>begin</p>
+<p>datatype a = A unit unit and b = B ‹unit ⇒ a›</p>
+<p>declare [[simp_trace]]<br>
+lemma "x = B (A ())"<br>
+ apply simp</p>
+<p>This produces the following output:</p>
+<p>[1]SIMPLIFIER INVOKED ON THE FOLLOWING TERM:<br>
+x = B (A ())<br>
+exception UnequalLengths raised (line 553 of "library.ML”)</p>
+<p>The exception goes away if we eliminate the mutually recursive datatype in favour of separate declarations, but the original of this issue is necessarily mutually recursive. Perhaps there are simpprocs involved with datatypes?</p>
+<p>Larry</p>
+
+
+
+<a name="569326512"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569326512" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569326512">(Jan 21 2026 at 18:28)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 21/01/2026 12:39, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>datatype a = A unit unit and b = B ‹unit ⇒ a›</p>
+<p>declare [[simp_trace]]<br>
+lemma "x = B (A ())"<br>
+   apply simp</p>
+<p>This produces the following output:</p>
+<p>[1]SIMPLIFIER INVOKED ON THE FOLLOWING TERM:<br>
+x = B (A ())<br>
+exception UnequalLengths raised (line 553 of "library.ML”)</p>
+</blockquote>
+<p>Side-remark: this is how to see more directly from where the failure comes from.</p>
+<p>declare [[simp_debug]]<br>
+lemma "x = B (A ())"<br>
+   apply simp<br>
+(*<br>
+...<br>
+[1]Trying procedure "BNF_Least_Fixpoint.datatype_no_proper_subterm" on:<br>
+x = B (A ())<br>
+exception UnequalLengths raised (line 553 of "library.ML")<br>
+*)</p>
+<p>Thus it becomes clear that this is not a "low level simplifier failure", but a <br>
+problem in the user-space library.</p>
+<p>Makarius</p>
+
+
+
+<a name="569449512"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Low%20level%20simplifier%20failure/near/569449512" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Low.20level.20simplifier.20failure.html#569449512">(Jan 22 2026 at 10:03)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>On 21/01/2026 18:31, Dmitriy Traytel (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>The canonical way would be to query the size database and analyze the <br>
+returned equations for whatever you precisely mean by being <br>
+“proper”/“dummy” (I guess "all right-hand-sides = 0" is your <br>
+definition of dummy):</p>
+</blockquote>
+<p>Hm, that still looks a bit brittle and ad-hoc. But it might work as a <br>
+first sanity check to abort early.</p>
+<p>I still need to rework the latter part as well though. Right now it <br>
+assumes that the proof with the "size" function will always go through <br>
+if a "size" function exists, and throws an exception if it doesn't. That <br>
+is probably an overly optimistic assumption considering the complexity <br>
+of the datatype/BNF package.</p>
+<p>A cleaner solution would be if the datatype package itself could provide <br>
+some kind of proper subterm relation and a proof that it is irreflexive. <br>
+But I assume that that's not straightforward to do or we would have done <br>
+it back then. Plus I think it is probably not a good idea to add even <br>
+more bulk to the datatype package.</p>
+<p>@Makarius: Thanks for the hint about simp_debug. I did not know about <br>
+that option.</p>
+<p>Manuel</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

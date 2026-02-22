@@ -1,0 +1,164 @@
+<html>
+<head><meta charset="utf-8"><title>Batch-mode proof output for app + smt crash on macOS · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html">Batch-mode proof output for app + smt crash on macOS</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="510307695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510307695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510307695">(Apr 04 2025 at 23:33)</a>:</h4>
+<p>Hi everyone, I'm in a bit of a bind </p>
+<p>So simply put, I’ve built a desktop app that allows users to check for some verification, the reasoning system is based in Isabelle, and I want it to call a script that runs proofs in batch mode (no GUI). My goal is to show users that certain named lemmas have been proved, sort of like auto-verifying a set of logical claims so there is no need for user interaction with isabelle. </p>
+<p>I hit the following error when building in batch mode: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">***</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">Fail</span><span class="w"> </span><span class="n">raised</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">55</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"System/isabelle_system.ML"</span><span class="o">):</span><span class="w"> </span><span class="n">Bad</span><span class="w"> </span><span class="n">bash_process</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">address</span>
+<span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"by"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1399</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"/Applications/Isabelle2024.app/src/HOL/Algebra/Group.thy"</span><span class="o">)</span>
+</code></pre></div>
+<p>It happens when I run </p>
+<p><code>isabelle build -o -D TheoryA</code> or basically any variant of this command. Everything works fine in jEdit. At first it would show errors wherever I used smt in my theories so I changed that because from what I’ve read, this seems related to <code>smt</code> or <code>verit</code> subprocesses on macOS being blocked in batch mode - not sure if that is accurate? Do I need to remove all smt usage? Or is there another solution like moving to Linux because I keep encountering issues in batch mode and sometimes even when there is no error in jEdit, I still come across this... I have checked the documentation but that has not helped much with this particular problem.</p>
+<p>I also want to know how isabelle build and isabelle process command is different - for example if I use <code>isabelle build -D .</code> <br>
+or <code>isabelle process -l HOL -e 'use_thy "theoryA";'</code> <br>
+How do they work? </p>
+<p>Any suggestions, tips, or "you’re totally doing this wrong" are very welcome.</p>
+
+
+
+<a name="510580512"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510580512" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510580512">(Apr 07 2025 at 07:22)</a>:</h4>
+<p>This is strange</p>
+
+
+
+<a name="510580646"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510580646" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510580646">(Apr 07 2025 at 07:23)</a>:</h4>
+<p>Especially since <code>isabelle build</code> is tested and everyone is using it (at least to build HOL)</p>
+
+
+
+<a name="510580959"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510580959" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510580959">(Apr 07 2025 at 07:24)</a>:</h4>
+<p>Does it also happen if you limit the number of threads?</p>
+
+
+
+<a name="510581060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510581060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510581060">(Apr 07 2025 at 07:25)</a>:</h4>
+<p><code>isabelle build -o "threads=4" -D TheoryA</code>?</p>
+
+
+
+<a name="510590195"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510590195" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510590195">(Apr 07 2025 at 08:06)</a>:</h4>
+<p>Is this in the environment of your 'desktop app', or does this happen when running a<code>build</code> through the command line?<br>
+Also (but probably unrelated) Isabelle2024 is outdated, we're at Isabelle2025.</p>
+
+
+
+<a name="510590911"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510590911" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510590911">(Apr 07 2025 at 08:09)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="874965">Sana I.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510307695">said</a>:</p>
+<blockquote>
+<p>I also want to know how isabelle build and isabelle process command is different - for example if I use <code>isabelle build -D .</code> <br>
+or <code>isabelle process -l HOL -e 'use_thy "theoryA";'</code> <br>
+How do they work? </p>
+</blockquote>
+<p>Isabelle <code>build</code> manages everything around the build (heap images, session structure, concurrent processes, presentation, etc.). <code>process</code> runs a single raw ML process.</p>
+
+
+
+<a name="510614163"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510614163" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510614163">(Apr 07 2025 at 09:46)</a>:</h4>
+<p>It happens when running a build through the command line. Actually, I should mention that <code>isabelle build -o "threads=4" -D TheoryA</code> gives a successful build.</p>
+<p>The output is </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Running</span><span class="w">  </span><span class="ow">...</span>
+
+<span class="n">Finished</span><span class="w"> </span><span class="ow">...</span><span class="w"> </span><span class="o">(</span><span class="n">0</span><span class="o">:</span><span class="n">00</span><span class="o">:</span><span class="n">14</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">00</span><span class="o">:</span><span class="n">46</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">3.28</span><span class="o">)</span>
+
+<span class="n">0</span><span class="o">:</span><span class="n">00</span><span class="o">:</span><span class="n">19</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="n">00</span><span class="o">:</span><span class="n">46</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="n">2.36</span>
+</code></pre></div>
+<p>but since I want to load a single theory and see the proof output, I am using isabelle process -T use_thy and thats where I am running into issues with smt, encoding errors and this..</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">1.295s</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">1.709s</span><span class="w"> </span><span class="n">cpu</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"> </span><span class="n">0.351s</span><span class="w"> </span><span class="n">GC</span><span class="w"> </span><span class="n">time</span>
+<span class="n">exception</span><span class="w"> </span><span class="n">Fail</span><span class="w"> </span><span class="n">raised</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">55</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"System/isabelle_system.ML"</span><span class="o">):</span><span class="w"> </span><span class="n">Bad</span><span class="w"> </span><span class="n">bash_process</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">address</span>
+<span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"by"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">1399</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"/Applications/Isabelle2024.app/src/HOL/Algebra/Group.thy"</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="510625016"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510625016" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510625016">(Apr 07 2025 at 10:30)</a>:</h4>
+<p>Does the error occur when running <code>isabelle build -D TheoryA</code>?</p>
+
+
+
+<a name="510788235"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510788235" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510788235">(Apr 08 2025 at 00:05)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510625016">said</a>:</p>
+<blockquote>
+<p>Does the error occur when running <code>isabelle build -D TheoryA</code>?</p>
+</blockquote>
+<p>No, it does not occur when I use `isabelle build -D TheoryA. I am not sure what is causing it. I have used it without issues in other small projects. As I mentioned before, it is happening when I load a single thoery using isabelle process and I am trying to print proof output via command line.. I am at a loss</p>
+
+
+
+<a name="510857230"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510857230" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510857230">(Apr 08 2025 at 07:25)</a>:</h4>
+<p>Well a raw ML process is really only a raw ML process. Some (very restricted) theories might run only using the ML side, but other parts (printing, external solvers such as smt, file handling, export, database etc.) need the whole Isabelle system, which is not initialized by <code>isabelle process</code>. This is what Isabelle build/jEdit do.  If you want to build your own special Isabelle application you'll have to do the same as well.</p>
+
+
+
+<a name="510857664"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510857664" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510857664">(Apr 08 2025 at 07:27)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="874965">Sana I.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510788235">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510625016">said</a>:</p>
+<blockquote>
+<p>Does the error occur when running <code>isabelle build -D TheoryA</code>?</p>
+</blockquote>
+<p>No, it does not occur when I use `isabelle build -D TheoryA. I am not sure what is causing it. I have used it without issues in other small projects. As I mentioned before, it is happening when I load a single thoery using isabelle process and I am trying to print proof output via command line.. I am at a loss</p>
+</blockquote>
+<p>If I recall correctly isabelle has a mechanism for sessions to produce build output. Just can't remember what it's called</p>
+
+
+
+<a name="510858678"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510858678" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510858678">(Apr 08 2025 at 07:32)</a>:</h4>
+<p>Do you mean the <code>Export</code>?</p>
+
+
+
+<a name="510858758"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510858758" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510858758">(Apr 08 2025 at 07:33)</a>:</h4>
+<p>That can be used to write results to the database, yes.</p>
+
+
+
+<a name="510966294"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510966294" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510966294">(Apr 08 2025 at 15:35)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510857230">said</a>:</p>
+<blockquote>
+<p>Well a raw ML process is really only a raw ML process. Some (very restricted) theories might run only using the ML side, but other parts (printing, external solvers such as smt, file handling, export, database etc.) need the whole Isabelle system, which is not initialized by <code>isabelle process</code>. This is what Isabelle build/jEdit do.  If you want to build your own special Isabelle application you'll have to do the same as well.</p>
+</blockquote>
+<p>Thank you so much, it makes more sense now and I feel quite stupid for not understanding the obvious. Thanks again</p>
+
+
+
+<a name="510966700"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/510966700" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#510966700">(Apr 08 2025 at 15:37)</a>:</h4>
+<p>No worries, these implementation details are certainly not obvious unless one is quite familiar with the code-base (at which point it is surprisingly self-explanatory).</p>
+
+
+
+<a name="511673280"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Batch-mode%20proof%20output%20for%20app%20%2B%20smt%20crash%20on%20macOS/near/511673280" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS.html#511673280">(Apr 11 2025 at 15:00)</a>:</h4>
+<p>Although I am able to build successfully, I still have a follow up question.</p>
+<p>I saw batch mode used like this in a paper and I was interested in finding out how we can use Isabelle like this..</p>
+<p><a href="/user_uploads/14278/9q1eLQ1__DF4Wt9pyYpTGffI/Screenshot-2025-04-11-at-10.32.43AM.png">Screenshot 2025-04-11 at 10.32.43 AM.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/9q1eLQ1__DF4Wt9pyYpTGffI/Screenshot-2025-04-11-at-10.32.43AM.png" title="Screenshot 2025-04-11 at 10.32.43 AM.png"><img data-original-content-type="image/png" data-original-dimensions="1041x728" src="/user_uploads/thumbnail/14278/9q1eLQ1__DF4Wt9pyYpTGffI/Screenshot-2025-04-11-at-10.32.43AM.png/840x560.webp"></a></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

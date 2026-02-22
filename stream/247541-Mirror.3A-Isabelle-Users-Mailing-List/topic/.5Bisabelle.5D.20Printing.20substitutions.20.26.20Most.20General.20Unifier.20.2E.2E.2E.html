@@ -1,0 +1,176 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Printing substitutions &amp; Most General Unifier ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Printing.20substitutions.20.26.20Most.20General.20Unifier.20.2E.2E.2E.html">[isabelle] Printing substitutions &amp; Most General Unifier ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="502846282"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Printing%20substitutions%20%26%20Most%20General%20Unifier%20.../near/502846282" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Printing.20substitutions.20.26.20Most.20General.20Unifier.20.2E.2E.2E.html#502846282">(Mar 02 2025 at 10:36)</a>:</h4>
+<p>From: Oleksandr Gavenko &lt;<a href="mailto:gavenkoa@gmail.com">gavenkoa@gmail.com</a>&gt;<br>
+I'm translating Prover9 proof into Isabelle and I find it difficult to<br>
+work with gigantic nesting expressions.</p>
+<p>To troubleshoot I'd like to have debugging tools:</p>
+<ul>
+<li>printing of substitution in expression</li>
+<li>finding MGU for a given expression and existing theorem</li>
+</ul>
+<p>=======</p>
+<p>Substitution printing is partially archivable via syntax:</p>
+<p>thm THM[where a=...]<br>
+  thm THM[of _ a _ "(b+c)"]</p>
+<p>But I'd like to write just something simple as:</p>
+<p>thm "a~e=e~a"[of "x+1" "z-1"]</p>
+<p>to see the result of substitution.</p>
+<p>I can define a temporary failed thm as a workaround:</p>
+<p>lemma x: "(((A ~ B) ~ C ~ B) ~ C ~ A)"<br>
+  sorry<br>
+  thm x[of "A~A" _ "(B~A)~A"]</p>
+<p>I tried something less invasive:</p>
+<p>notepad begin<br>
+  have x: "(((A ~ B) ~ C ~ B) ~ C ~ A)"<br>
+  sorry<br>
+  thm x<br>
+end</p>
+<p>but variables of the fact are not "placeholders", so substitution<br>
+results in an error:</p>
+<p>thm x[of a]<br>
+  More instantiations than variables in theorem</p>
+<p>===============</p>
+<p>I defined some syntax in a theory and want Isabelle to find MGU for an<br>
+expression to match against the existing theorem.</p>
+<p>For:</p>
+<p>op(520, infix_right, "~").<br>
+formulas(assumptions).<br>
+  % Rule Detachment.<br>
+  prop(P) &amp; prop(P~Q) -&gt; prop(Q)  #label(detachment).</p>
+<p>% Axioms<br>
+  prop((X~Y) ~ (Y~Z) ~ (X~Z))  #label(tran).<br>
+  prop((X~Y) ~ (Y~X))          #label(sym).<br>
+end_of_list.</p>
+<p>formulas(goals).<br>
+  prop(X~(X~Y)~Y).<br>
+end_of_list.</p>
+<p>Prover9 tells me:</p>
+<p>1 prop(A) &amp; prop(A ~ B) -&gt; prop(B) # label(detachment) #<br>
+label(non_clause).  [assumption].<br>
+2 prop(A ~ (A ~ B) ~ B) # label(non_clause) # label(goal).  [goal].<br>
+3 -prop(A) | -prop(A ~ B) | prop(B) # label(detachment).  [clausify(1)].<br>
+4 prop((A ~ B) ~ (B ~ C) ~ A ~ C) # label(tran).  [assumption].<br>
+5 prop((A ~ B) ~ B ~ A) # label(sym).  [assumption].<br>
+6 -prop(c1 ~ (c1 ~ c2) ~ c2).  [deny(2)].<br>
+8 prop(((A ~ B) ~ C ~ B) ~ C ~ A).  [hyper(3,a,4,a,b,5,a)].<br>
+15 prop(A ~ (A ~ B) ~ B).  [hyper(3,a,8,a,b,8,a)].<br>
+16 $F.  [resolve(15,a,6,a)].</p>
+<p>and I have a hard time understanding how hyperresolution happened at<br>
+line 15 (rule 3 applied on some instances of 8 2 times).</p>
+<p>hyperresolution is like Modus Ponens with <em>unification</em> and I'd like<br>
+to debug unifications of some expressions against some facts.</p>
+<p>I have no problems dealing with inline ML code, but Isabelle Cookbook<br>
+is gibberish for my level of knowledge of Isabelle - I cant find<br>
+functions I can call for printing substitution &amp; unification.</p>
+
+
+
+<a name="505367865"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Printing%20substitutions%20%26%20Most%20General%20Unifier%20.../near/505367865" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Printing.20substitutions.20.26.20Most.20General.20Unifier.20.2E.2E.2E.html#505367865">(Mar 13 2025 at 09:34)</a>:</h4>
+<p>From: Lukas Bartl &lt;<a href="mailto:lukas.bartl@uni-a.de">lukas.bartl@uni-a.de</a>&gt;<br>
+Hi Oleksandr,</p>
+<blockquote>
+<p>but variables of the fact are not "placeholders"</p>
+</blockquote>
+<p>If you add "for A B C" after the proposition, they become placeholders <br>
+(called "schematic variables" in Isabelle).</p>
+<p>An easy way to do substitution printing might be to use "let":</p>
+<p>notepad<br>
+begin<br>
+     let ?a = "x+1"<br>
+     let ?e = "z-1"<br>
+     term "?a ~ ?e"<br>
+end</p>
+<p>It can also do higher-order matching (but not full unification):</p>
+<p>notepad<br>
+begin<br>
+     let "(+) ?a ?b" = "0 + 1"<br>
+     term ?a<br>
+     term ?b<br>
+end</p>
+<p>If this is not enough, the Isabelle Cookbook is indeed the place to <br>
+start. Both substitution and unification are explained in Chapter 3 <br>
+(Isabelle Essentials).</p>
+<p>Best,<br>
+Lukas</p>
+<p>Am 27.02.25 um 23:57 schrieb Oleksandr Gavenko:</p>
+<blockquote>
+<p>I'm translating Prover9 proof into Isabelle and I find it difficult to<br>
+work with gigantic nesting expressions.</p>
+<p>To troubleshoot I'd like to have debugging tools:</p>
+<ul>
+<li>printing of substitution in expression</li>
+<li>finding MGU for a given expression and existing theorem</li>
+</ul>
+<p>=======</p>
+<p>Substitution printing is partially archivable via syntax:</p>
+<p>thm THM[where a=...]<br>
+   thm THM[of _ a _ "(b+c)"]</p>
+<p>But I'd like to write just something simple as:</p>
+<p>thm "a~e=e~a"[of "x+1" "z-1"]</p>
+<p>to see the result of substitution.</p>
+<p>I can define a temporary failed thm as a workaround:</p>
+<p>lemma x: "(((A ~ B) ~ C ~ B) ~ C ~ A)"<br>
+   sorry<br>
+   thm x[of "A~A" _ "(B~A)~A"]</p>
+<p>I tried something less invasive:</p>
+<p>notepad begin<br>
+   have x: "(((A ~ B) ~ C ~ B) ~ C ~ A)"<br>
+   sorry<br>
+   thm x<br>
+end</p>
+<p>but variables of the fact are not "placeholders", so substitution<br>
+results in an error:</p>
+<p>thm x[of a]<br>
+   More instantiations than variables in theorem</p>
+<p>===============</p>
+<p>I defined some syntax in a theory and want Isabelle to find MGU for an<br>
+expression to match against the existing theorem.</p>
+<p>For:</p>
+<p>op(520, infix_right, "~").<br>
+formulas(assumptions).<br>
+   % Rule Detachment.<br>
+   prop(P) &amp; prop(P~Q) -&gt; prop(Q)  #label(detachment).</p>
+<p>% Axioms<br>
+   prop((X~Y) ~ (Y~Z) ~ (X~Z))  #label(tran).<br>
+   prop((X~Y) ~ (Y~X))          #label(sym).<br>
+end_of_list.</p>
+<p>formulas(goals).<br>
+   prop(X~(X~Y)~Y).<br>
+end_of_list.</p>
+<p>Prover9 tells me:</p>
+<p>1 prop(A) &amp; prop(A ~ B) -&gt; prop(B) # label(detachment) #<br>
+label(non_clause).  [assumption].<br>
+2 prop(A ~ (A ~ B) ~ B) # label(non_clause) # label(goal).  [goal].<br>
+3 -prop(A) | -prop(A ~ B) | prop(B) # label(detachment).  [clausify(1)].<br>
+4 prop((A ~ B) ~ (B ~ C) ~ A ~ C) # label(tran).  [assumption].<br>
+5 prop((A ~ B) ~ B ~ A) # label(sym).  [assumption].<br>
+6 -prop(c1 ~ (c1 ~ c2) ~ c2).  [deny(2)].<br>
+8 prop(((A ~ B) ~ C ~ B) ~ C ~ A).  [hyper(3,a,4,a,b,5,a)].<br>
+15 prop(A ~ (A ~ B) ~ B).  [hyper(3,a,8,a,b,8,a)].<br>
+16 $F.  [resolve(15,a,6,a)].</p>
+<p>and I have a hard time understanding how hyperresolution happened at<br>
+line 15 (rule 3 applied on some instances of 8 2 times).</p>
+<p>hyperresolution is like Modus Ponens with <em>unification</em> and I'd like<br>
+to debug unifications of some expressions against some facts.</p>
+<p>I have no problems dealing with inline ML code, but Isabelle Cookbook<br>
+is gibberish for my level of knowledge of Isabelle - I cant find<br>
+functions I can call for printing substitution &amp; unification.</p>
+</blockquote>
+<p><a href="/user_uploads/14278/swGJMTP_goeb_GhaVJf7wNce/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

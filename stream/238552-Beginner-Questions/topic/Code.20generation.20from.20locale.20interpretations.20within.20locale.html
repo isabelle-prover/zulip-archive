@@ -1,0 +1,136 @@
+<html>
+<head><meta charset="utf-8"><title>Code generation from locale interpretations within locale · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html">Code generation from locale interpretations within locale</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="387617221"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20generation%20from%20locale%20interpretations%20within%20locale/near/387617221" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanno Becker <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html#387617221">(Aug 28 2023 at 07:51)</a>:</h4>
+<p>Hi. I've got two locales <code>A</code> and <code>B</code>. Every instance of <code>B</code> yields various instances of  <code>A</code>, defined via <code>interpretation</code> within the context of <code>B</code>. Later, I instantiate <code>B</code> using <code>global_interpretation</code>, naming a constant from <code>A</code> inherited in the context of <code>B</code>. However, code extraction fails for that constant. Fiddling a bit, I found a solution using <code>code_unfold</code>, but I don't know what I'm doing. So, my questions are: (a) Why is this not handled by <code>global_interpretation</code> already? (b) Why do I need to use <code>code_unfold</code> rather than <code>code</code>?</p>
+<p>Here's a minimal example (with just one interpretation of <code>A</code> within <code>B</code>, for simplicity; I only highlighted this to explain why I'm not using <code>sublocale</code>):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹'a::ab_semigroup_add ⇒ 'a›</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a_linear</span><span class="o">:</span><span class="w"> </span><span class="s">‹⋀x y. a (x+y) = a x + a y›</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">definition</span><span class="w"> </span><span class="s">"a_a"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">‹a_a ≡ a ∘ a›</span>
+<span class="k">end</span>
+
+<span class="kt">thm</span><span class="w"> </span><span class="n">A.a_a_def</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹'a::ab_semigroup_add ⇒ 'a›</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">b_linear</span><span class="o">:</span><span class="w"> </span><span class="s">‹⋀x y. b (x+y) = b x + b y›</span>
+
+<span class="k">context</span><span class="w"> </span><span class="n">B</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">definition</span><span class="w"> </span><span class="s">‹b_a ≡ λx. (b x) + (b x)›</span>
+<span class="w">  </span><span class="kn">interpretation</span><span class="w"> </span><span class="n">B_A</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">b_a</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">A_def</span><span class="w"> </span><span class="n">B.b_a_def</span><span class="w"> </span><span class="n">B.b_linear</span><span class="w"> </span><span class="n">B_axioms</span>
+<span class="w">      </span><span class="n">ab_semigroup_add_class.add_ac</span><span class="o">(</span><span class="n">1</span><span class="o">)</span><span class="w"> </span><span class="n">add.left_commute</span><span class="o">)</span>
+<span class="w">  </span><span class="k">lemmas</span><span class="w"> </span><span class="n">B_A_axioms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B_A.A_axioms</span>
+<span class="w">  </span><span class="k">definition</span><span class="w"> </span><span class="s">‹b_a_a ≡ B_A.a_a›</span>
+<span class="k">end</span>
+
+<span class="n">global_interpretation</span><span class="w"> </span><span class="n">IB</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="s">‹λ(x::nat). 2*x›</span>
+<span class="w">  </span><span class="kp">defines</span><span class="w"> </span><span class="n">b_a_export</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">‹IB.b_a›</span>
+<span class="w">      </span><span class="kp">and</span><span class="w"> </span><span class="n">a_a_export</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">‹IB.b_a_a›</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">B_def</span><span class="o">)</span>
+
+<span class="n">―‹No</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">equations</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">▩‹A.a_a››</span>
+<span class="k">export_code</span>
+<span class="w">  </span><span class="n">a_a_export</span>
+<span class="w">  </span><span class="kp">in</span><span class="w"> </span><span class="n">SML</span>
+
+<span class="n">―‹▩‹Partially</span><span class="w"> </span><span class="n">applied</span><span class="w"> </span><span class="kp">constant</span><span class="w"> </span><span class="s">"Scratch.b_a_export"</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="n">hand</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">equation</span><span class="o">,</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="kn">theorem</span><span class="o">:</span>
+<span class="n">A.a_a</span><span class="w"> </span><span class="n">b_a_export</span><span class="w"> </span><span class="n">≡</span><span class="w"> </span><span class="n">b_a_export</span><span class="w"> </span><span class="n">∘</span><span class="w"> </span><span class="n">b_a_export››</span>
+<span class="k">declare</span><span class="w"> </span><span class="n">A.a_a_def</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">IB.B_A_axioms</span><span class="o">,</span><span class="w"> </span><span class="n">code</span><span class="o">]</span>
+
+<span class="k">export_code</span>
+<span class="w">  </span><span class="n">a_a_export</span>
+<span class="w">  </span><span class="kp">in</span><span class="w"> </span><span class="n">SML</span>
+
+<span class="n">―‹Finally</span><span class="o">,</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">works</span><span class="o">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">don't</span><span class="w"> </span><span class="n">know</span><span class="w"> </span><span class="n">why.</span><span class="w"> </span><span class="n">Why</span><span class="w"> </span><span class="n">▩‹code_unfold›</span><span class="w"> </span><span class="n">rather</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">▩‹code›</span><span class="o">?</span>
+<span class="w">  </span><span class="n">Why</span><span class="w"> </span><span class="kp">is</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">taken</span><span class="w"> </span><span class="n">care</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">▩‹global_interpretation›</span><span class="o">?</span><span class="n">›</span>
+<span class="k">declare</span><span class="w"> </span><span class="n">A.a_a_def</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">IB.B_A_axioms</span><span class="o">,</span><span class="w"> </span><span class="n">code_unfold</span><span class="o">]</span>
+
+<span class="k">export_code</span>
+<span class="w">  </span><span class="n">a_a_export</span>
+<span class="w">  </span><span class="kp">in</span><span class="w"> </span><span class="n">SML</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="567999506"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20generation%20from%20locale%20interpretations%20within%20locale/near/567999506" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alexandra Graß <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html#567999506">(Jan 14 2026 at 14:27)</a>:</h4>
+<p>Hey <span class="user-mention" data-user-id="570503">@Hanno Becker</span>,</p>
+<p>I just came across this old thread and wanted to ask whether you ever found an answer? I currently struggle with a similar setup (or at least the same warnings and errors <span aria-label="wink" class="emoji emoji-1f609" role="img" title="wink">:wink:</span>) and would also like to understand what is going on.</p>
+<p>Regarding partially applied constants, I found <a href="https://stackoverflow.com/questions/52685662/how-to-fix-partially-applied-constant-on-left-hand-side-of-code-equation">this question on Stack Overflow</a>. I do get the answer by René Thiemann, yet do not know how to get a non-specific code equation when there are assumptions in the locale.</p>
+<p>Also, since I'm trying to export code for  a recursive function, using <code>code_unfold</code> is not an option – <code>export_code</code> gets stuck in an endless loop.</p>
+<p>Any suggestions are highly appreciated :)</p>
+
+
+
+<a name="568011963"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20generation%20from%20locale%20interpretations%20within%20locale/near/568011963" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanno Becker <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html#568011963">(Jan 14 2026 at 15:17)</a>:</h4>
+<p>Hey <span class="user-mention" data-user-id="604376">@Alexandra Graß</span>!</p>
+<p>This issue is still open, and there is an old report on it on the Isabelle mailing list: <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2024-01/msg00079.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2024-01/msg00079.html</a></p>
+<p>I think this is a bug in the constant folding in the context of <code>global_interpretation</code> + <code>sublocale/interpretation</code>.</p>
+<p>You can manually do the code equation extraction after the <code>global_interpretation</code>, but it is rather cumbersome. In the above example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="c">(* GOOD: b_a_export ≡ λx. 2 * x + 2 * x *)</span>
+<span class="kt">thm</span><span class="w"> </span><span class="n">IB.b_a_def</span>
+
+<span class="c">(* BAD: a_a_export ≡ A.a_a b_a_export *)</span>
+<span class="c">(* A.a_a b_a_export has not been unfolded. *)</span>
+<span class="kt">thm</span><span class="w"> </span><span class="n">IB.b_a_a_def</span>
+
+<span class="c">(* You need to manually unfold A.a_a, refering to the proof of A in B,</span>
+<span class="c">   and then register it as a code equation *)</span>
+<span class="k">declare</span><span class="w"> </span><span class="n">IB.b_a_a_def</span><span class="o">[</span><span class="n">simplified</span><span class="w"> </span><span class="n">A.a_a_def</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">IB.B_A_axioms</span><span class="o">],</span><span class="w"> </span><span class="n">code</span><span class="o">]</span>
+
+<span class="c">(* Hooray! *)</span>
+<span class="k">export_code</span><span class="w"> </span><span class="n">b_a_export</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">SML</span>
+</code></pre></div>
+
+
+
+<a name="568387322"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20generation%20from%20locale%20interpretations%20within%20locale/near/568387322" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alexandra Graß <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html#568387322">(Jan 16 2026 at 09:09)</a>:</h4>
+<p>Thank you for replying so quickly! Still didn't succeed in setting up everything s.t. there is no warnings when declaring the code equations, even with your helpful suggestions above (but again, slightly different setup). I'm currently trying to construct a MWE and will come back to this thread as soon as that exists :)</p>
+
+
+
+<a name="568394803"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20generation%20from%20locale%20interpretations%20within%20locale/near/568394803" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Hanno Becker <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html#568394803">(Jan 16 2026 at 09:51)</a>:</h4>
+<p><span class="user-mention" data-user-id="604376">@Alexandra Graß</span> Sure, happy to take a look once you have an MWE <span aria-label="thumbs up" class="emoji emoji-1f44d" role="img" title="thumbs up">:thumbs_up:</span></p>
+
+
+
+<a name="569251949"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Code%20generation%20from%20locale%20interpretations%20within%20locale/near/569251949" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alexandra Graß <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Code.20generation.20from.20locale.20interpretations.20within.20locale.html#569251949">(Jan 21 2026 at 13:18)</a>:</h4>
+<p>My MWE is now a write-up of the painful journey into the depths of Isabelle's code generation <span aria-label="smiling face" class="emoji emoji-263a" role="img" title="smiling face">:smiling_face:</span></p>
+<p>Characteristics of my problem were:</p>
+<ul>
+<li>locales with assumptions</li>
+<li>supplying code equations for mutually recursive, potentially non-terminating functions</li>
+<li>the locales come with different sort constrains</li>
+</ul>
+<p><strong>Tl;dr:</strong> <a href="https://isabelle.in.tum.de/doc/codegen.pdf#subsection.9.5">RTFM</a></p>
+<p>Hope my write-up will help some future confused code exporter! <span aria-label="map" class="emoji emoji-1f5fa" role="img" title="map">:map:</span></p>
+<p><a href="/user_uploads/14278/pysQc5YI4A-4DGfZn8ZmxbHJ/mwe.thy">mwe.thy</a><br>
+<em>Disclaimer:</em> The implementation does not really make sense but adequately represents our setup.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

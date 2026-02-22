@@ -1,0 +1,69 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Ignored {} sort constraint when using undersco... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Ignored.20.7B.7D.20sort.20constraint.20when.20using.20undersco.2E.2E.2E.html">[isabelle] Ignored {} sort constraint when using undersco...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="570286235"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Ignored%20%7B%7D%20sort%20constraint%20when%20using%20undersco.../near/570286235" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Ignored.20.7B.7D.20sort.20constraint.20when.20using.20undersco.2E.2E.2E.html#570286235">(Jan 27 2026 at 10:41)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi everyone,</p>
+<p>It seems that "{}" sort constraints are not respected when using <br>
+underscore type patterns. Examples:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">   </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+<span class="k">declare</span><span class="o">[[</span><span class="n">show_sorts</span><span class="o">]]</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"foo :: 'a :: {}"</span><span class="w"> </span><span class="c">(*check output window: "{}" sort constraint*)</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"foo :: _ :: {}"</span><span class="w"> </span><span class="c">(*got "type" sort constraint, but expected "{}"*)</span>
+<span class="kt">term</span><span class="w"> </span><span class="s">"foo :: _ :: ord"</span><span class="w"> </span><span class="c">(*"ord" sort constraint*)</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"foo (x :: 'a :: {}) ≡ x"</span><span class="w"> </span><span class="c">(*"{}" sort constraint*)</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"bar (x :: _ :: {}) ≡ x"</span><span class="w"> </span><span class="c">(*"type" sort constraint*)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>I am using the latest Isabelle development version.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+
+
+
+<a name="570287980"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Ignored%20%7B%7D%20sort%20constraint%20when%20using%20undersco.../near/570287980" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Ignored.20.7B.7D.20sort.20constraint.20when.20using.20undersco.2E.2E.2E.html#570287980">(Jan 27 2026 at 10:50)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 27/01/2026 11:41, Kevin Kappelmann (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I am using the latest Isabelle development version.</p>
+</blockquote>
+<p>So which one is it, actually? "Latest" is always many weeks months ago.</p>
+<p>Makarius</p>
+
+
+
+<a name="570288708"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Ignored%20%7B%7D%20sort%20constraint%20when%20using%20undersco.../near/570288708" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Ignored.20.7B.7D.20sort.20constraint.20when.20using.20undersco.2E.2E.2E.html#570288708">(Jan 27 2026 at 10:54)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>changeset:   16365:135f032810f4<br>
+date:        Mon Jan 26 21:01:41 2026 +0000</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>On 27.01.26 11:49, Makarius wrote:</p>
+<blockquote>
+<p>On 27/01/2026 11:41, Kevin Kappelmann (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>I am using the latest Isabelle development version.</p>
+</blockquote>
+<p>So which one is it, actually? "Latest" is always many weeks months ago.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

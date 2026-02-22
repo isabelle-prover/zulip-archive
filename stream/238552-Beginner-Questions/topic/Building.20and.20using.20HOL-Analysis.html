@@ -1,0 +1,62 @@
+<html>
+<head><meta charset="utf-8"><title>Building and using HOL-Analysis · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html">Building and using HOL-Analysis</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525091436"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525091436" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525091436">(Jun 20 2025 at 19:05)</a>:</h4>
+<p>I built HOL-Analysis with <code>isabelle build HOL-Analysis</code>, but after that, when I build my own session depending on HOL-Analysis, it builds HOL-Analysis again. Why?</p>
+<p>In the first place, why should we, end users, build these libraries?</p>
+
+
+
+<a name="525092952"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525092952" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525092952">(Jun 20 2025 at 19:19)</a>:</h4>
+<p>You can specify the base session in Isabelle (either through jEdit or with -l when starting it)</p>
+
+
+
+<a name="525092971"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525092971" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525092971">(Jun 20 2025 at 19:19)</a>:</h4>
+<p>in the theory panel, the dropbox</p>
+
+
+
+<a name="525097862"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525097862" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525097862">(Jun 20 2025 at 20:05)</a>:</h4>
+<p>When I started jedit with <code>-l "HOL-Analysis"</code> option, jedit started to build HOL-Analysis and it took about 15 minutes. If I close jedit and open it again with the same option, then it starts without rebuilding HOL-Analysis. Fine.</p>
+<p>After that, If I open jedit without <code>-l</code> option and set the base session to HOL-Analysis in the theory panel, it builds HOL-Analysis again...</p>
+<p>I don't know what is going on...</p>
+
+
+
+<a name="525098128"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525098128" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525098128">(Jun 20 2025 at 20:08)</a>:</h4>
+<p>It will do it only once</p>
+
+
+
+<a name="525099244"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525099244" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525099244">(Jun 20 2025 at 20:21)</a>:</h4>
+<p>Maybe I'm asking a stupid question, but what I want to understand is,</p>
+<p>Why sometimes isabelle doesn't reuse the heap which was obtained in previous build process?</p>
+<p>When I opened jedit with <code>-l "HOL-Analysis"</code> option, we already obtained the heap.<br>
+But, as I already said, it rebuilds HOL-Analysis if I use theory panel to set the base session to HOL-Analysis. Why is this necessary?</p>
+<p>I'm sorry if this is dumb question.</p>
+
+
+
+<a name="525099549"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Building%20and%20using%20HOL-Analysis/near/525099549" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Building.20and.20using.20HOL-Analysis.html#525099549">(Jun 20 2025 at 20:24)</a>:</h4>
+<p>I am not sure. I actually use a different version: I create ROOT files and use <code>-R</code> to focus on the session. It is a bit more work (as you have to update the ROOT file when importing new sessions), but it is way nicer and you can start isabelle in any folder you want</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

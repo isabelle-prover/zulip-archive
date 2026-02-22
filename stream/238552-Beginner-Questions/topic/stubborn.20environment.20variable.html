@@ -1,0 +1,181 @@
+<html>
+<head><meta charset="utf-8"><title>stubborn environment variable · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html">stubborn environment variable</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="507665589"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507665589" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507665589">(Mar 24 2025 at 06:59)</a>:</h4>
+<p>This is very confusing.<br>
+Execute the following shell script</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">export</span><span class="w"> </span><span class="n">ISABELLE_TOOL_JAVA_OPTIONS</span><span class="o">=</span><span class="s">"-Xms4g -Xmx64g -Xss64m"</span>
+<span class="n">isabelle</span><span class="w"> </span><span class="n">getenv</span><span class="w"> </span><span class="o">-</span><span class="n">b</span><span class="w"> </span><span class="n">ISABELLE_TOOL_JAVA_OPTIONS</span>
+<span class="n">#</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ISABELLE_TOOL_JAVA_OPTIONS</span><span class="w"> </span><span class="kp">is</span><span class="w"> </span><span class="n">unchanged</span><span class="o">!</span>
+</code></pre></div>
+<p>Let's try another way</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">ISABELLE_TOOL_JAVA_OPTIONS</span><span class="o">=</span><span class="s">"-Xms4g -Xmx64g -Xss64m"</span><span class="w"> </span><span class="n">isabelle</span><span class="w"> </span><span class="n">getenv</span><span class="w"> </span><span class="o">-</span><span class="n">b</span><span class="w"> </span><span class="n">ISABELLE_TOOL_JAVA_OPTIONS</span>
+<span class="n">#</span><span class="w"> </span><span class="n">It</span><span class="w"> </span><span class="kp">is</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">changed</span><span class="o">!</span>
+</code></pre></div>
+<p>It's very annoying. How can I change this stubborn environment variable?</p>
+
+
+
+<a name="507666577"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507666577" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507666577">(Mar 24 2025 at 07:05)</a>:</h4>
+<p>Okay, I see Isabelle's system.pdf</p>
+<blockquote>
+<p>These variables are not in-<br>
+tended to be set directly from the shell, but are provided by Isabelle compo-<br>
+nents within their settings files, as explained below.</p>
+</blockquote>
+<p>Sorry, but I must complain, this is really a terrible design. The reference manual admits, "okay, this is an environment variable" but a variable that is very unconventional and cannot changed from the shell environment.</p>
+
+
+
+<a name="507668535"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507668535" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507668535">(Mar 24 2025 at 07:18)</a>:</h4>
+<p>at least some warning or error message should be given because it is very easy to make mistakes here. But everything just silently works, and no one can realize, "oh damn, I didn't properly set the environment variable". No one could have imagined that Isabelle cannot support such conventional things.</p>
+
+
+
+<a name="507670148"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507670148" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507670148">(Mar 24 2025 at 07:28)</a>:</h4>
+<p>Okay, I tried to add a local settings file under the root path of my project </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">my</span><span class="o">-</span><span class="n">project/</span>
+<span class="o">|-</span><span class="w"> </span><span class="n">etc</span>
+<span class="w">   </span><span class="o">|-</span><span class="w"> </span><span class="n">settings</span>
+<span class="o">|-</span><span class="w"> </span><span class="n">ROOT</span>
+</code></pre></div>
+<p>Now, if I directly run <code>isabelle build -D. MY_PROJECT</code>, <code>etc/settings</code> will not be loaded and the building process will not use any env var settings in the file.<br>
+Unless you add <code>my-project</code> into Isabelle's components, the <code>etc/settings</code> will not take effect.<br>
+This is also confusing and more like a bug because I did say <code>-D. MY_PROJECT</code>, which should reasonably load the <code>etc/settings</code>.</p>
+
+
+
+<a name="507672504"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507672504" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507672504">(Mar 24 2025 at 07:41)</a>:</h4>
+<p>why would you ever set java options for a component and not globally?</p>
+
+
+
+<a name="507672802"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507672802" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507672802">(Mar 24 2025 at 07:42)</a>:</h4>
+<p><code>~/.isabelle/etc/settings</code> or <code>~/.isabelle/Isabelle2025/etc/settings</code> is the place to put those settings</p>
+
+
+
+<a name="507672906"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507672906" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507672906">(Mar 24 2025 at 07:42)</a>:</h4>
+<p>because 4GB mem is too small. I'm working on some machine learning experiment (especially reinforcement learning) and it would be beneficial to make a heap image for the entire AFP. So, I'm using a supercomputer (200GB+ mem) to build a very large bunch of theories (~2.4k theories). In this case, the default 4GB Java mem is far for sufficiency</p>
+
+
+
+<a name="507673006"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507673006" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507673006">(Mar 24 2025 at 07:43)</a>:</h4>
+<p>So far, while I have hit similar issues, it was only in places where I was like "Yeah, okay, this is something that I (as a expert want) but is too easy to misuse"</p>
+
+
+
+<a name="507673169"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507673169" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507673169">(Mar 24 2025 at 07:44)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="418224">Qiyuan Xu</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507672906">said</a>:</p>
+<blockquote>
+<p>because 4GB mem is too small. I'm working on some machine learning experiment (especially reinforcement learning) and it would be beneficial to make a heap image for the entire AFP. So, I'm using a supercomputer (200GB+ mem) to build a very large bunch of theories (~2.4k theories). In this case, the default 4GB Java mem is far for sufficiency</p>
+</blockquote>
+<p>… so the global etc/settings is what you want to have as sane option on that supercomputer</p>
+
+
+
+<a name="507673185"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507673185" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507673185">(Mar 24 2025 at 07:44)</a>:</h4>
+<p>Certainly you can put<br>
+ them into ~/.isabelle/Isabelle2025/etc/settings globally, but this kind of setting should (ideally) be set locally only</p>
+
+
+
+<a name="507673429"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507673429" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507673429">(Mar 24 2025 at 07:45)</a>:</h4>
+<p>… No, I don't think so.</p>
+
+
+
+<a name="507673508"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507673508" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507673508">(Mar 24 2025 at 07:45)</a>:</h4>
+<p>whenever you are on this computer you want the more memory</p>
+
+
+
+<a name="507674985"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507674985" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507674985">(Mar 24 2025 at 07:53)</a>:</h4>
+<p>well, this session is the only huge one that requires a lot of Java mem. In other cases, I'd prefer to leave memory to Poly/ML. For this reason, we don't want the Java to consume too much memory right? and want its GC more eagle to save mem. Therefore, I cannot set this globally.</p>
+<p>Anyway, where to put the setting file, this is really a small matter because I'm using some scripts and can always remove / reset the global setting.</p>
+<p>The thing is, for almost 100% engineers, if you mention environment variables to them, they will want to change them by <code>VAR=xxx command</code> or <code>export VAR = xxx; command</code>. Certainly, it's okay to have some special design to use some setting files, but the env var settings from the shell environment should also take effect because this is what is conventional and engineers would expect. If you want to introduce some unconventional things, it would be definitely appreciated if you warn users when they make mistakes.</p>
+
+
+
+<a name="507683764"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507683764" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507683764">(Mar 24 2025 at 08:33)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="418224">Qiyuan Xu</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507674985">said</a>:</p>
+<blockquote>
+<p>In other cases, I'd prefer to leave memory to Poly/ML. For this reason, we don't want the Java to consume too much memory right?</p>
+</blockquote>
+<p>No, Poly/ML is optimized for 16GB of heap memory max. Unless you explicitly change the ML system, it won't even be able to use more than that due to how values are represented.</p>
+
+
+
+<a name="507683854"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507683854" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507683854">(Mar 24 2025 at 08:33)</a>:</h4>
+<p>And be aware that changing this can have drastic performance implications.</p>
+
+
+
+<a name="507684454"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507684454" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507684454">(Mar 24 2025 at 08:36)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="418224">Qiyuan Xu</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507674985">said</a>:</p>
+<blockquote>
+<p>The thing is, for almost 100% engineers, if you mention environment variables to them, they will want to change them by <code>VAR=xxx command</code> or <code>export VAR = xxx; command</code>. Certainly, it's okay to have some special design to use some setting files, but the env var settings from the shell environment should also take effect because this is what is conventional and engineers would expect. If you want to introduce some unconventional things, it would be definitely appreciated if you warn users when they make mistakes.</p>
+</blockquote>
+<p>Engineers maybe, but this is theorem proving: We don't want our environment to be polluted by implicit variables (and the manual does warn you).</p>
+
+
+
+<a name="507684707"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507684707" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507684707">(Mar 24 2025 at 08:37)</a>:</h4>
+<p><code>Xmx</code> states a maximum memory usage, not a minimum. So you are likely to not see a change by setting the option.</p>
+
+
+
+<a name="507715991"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507715991" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507715991">(Mar 24 2025 at 10:38)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507684454">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="418224">Qiyuan Xu</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507674985">said</a>:</p>
+<blockquote>
+<p>The thing is, for almost 100% engineers, if you mention environment variables to them, they will want to change them by <code>VAR=xxx command</code> or <code>export VAR = xxx; command</code>. Certainly, it's okay to have some special design to use some setting files, but the env var settings from the shell environment should also take effect because this is what is conventional and engineers would expect. If you want to introduce some unconventional things, it would be definitely appreciated if you warn users when they make mistakes.</p>
+</blockquote>
+<p>Engineers maybe, but this is theorem proving: We don't want our environment to be polluted by implicit variables (and the manual does warn you).</p>
+</blockquote>
+<p>Hi, Fabian, I agree with the need to keep a specialized environment. I don't want to change the current design but only hope to add warning messages in the command line interface if the actual values taken by the system are different from the real environment variables.</p>
+<p>Moreover, environment variable is a <em>defined term</em> that has a specific meaning in today's computer systems.  You cannot call a variable as an environment variable just because it is determined by the environment. If the variables in Isabelle cannot be changed by the OS interfaces for environment variables, they are not environment variables but merely <em>configuration variables</em>. The system document shouldn't call them environment variables, which is a big misleading.</p>
+
+
+
+<a name="507742357"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507742357" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507742357">(Mar 24 2025 at 12:16)</a>:</h4>
+<p>I agree that a warning could be useful. In what sense do Isabelle environment variables not adhere to the POSIX standard?</p>
+
+
+
+<a name="507743092"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/stubborn%20environment%20variable/near/507743092" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/stubborn.20environment.20variable.html#507743092">(Mar 24 2025 at 12:19)</a>:</h4>
+<p>It specifically allows user-defined special implementations as well as readonly variables.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

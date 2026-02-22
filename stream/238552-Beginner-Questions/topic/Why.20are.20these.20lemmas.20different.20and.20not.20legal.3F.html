@@ -1,0 +1,115 @@
+<html>
+<head><meta charset="utf-8"><title>Why are these lemmas different and not legal? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html">Why are these lemmas different and not legal?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515421872"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515421872" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sebastian Davidson <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515421872">(May 01 2025 at 00:14)</a>:</h4>
+<p>I've having trouble getting a grasp on how to use the Isar part of Isabelle. So far, I've got this lemma working:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"A ∧ B ⟹ B ∧ A"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="k">thus</span><span class="w"> </span><span class="s">"B"</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="k">thus</span><span class="w"> </span><span class="s">"A"</span><span class="w"> </span><span class="ow">..</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>But it doesn't work when I try this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"A ∧ B ⟹ B ∧ A"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">ab</span><span class="o">:</span><span class="w"> </span><span class="s">"A ∧ B"</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">ba</span><span class="o">:</span><span class="w"> </span><span class="s">"B ∧ A"</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="n">ab</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"A"</span><span class="w"> </span><span class="ow">..</span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="n">ab</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">b</span><span class="o">:</span><span class="w"> </span><span class="s">"B"</span><span class="w"> </span><span class="ow">..</span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"B ∧ A"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="o">)</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Nor does this work, even though I copied it from an Isar manual.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="kp">shows</span><span class="w"> </span><span class="s">"B ∧ A"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"A ∧ B"</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"B"</span><span class="w"> </span><span class="ow">..</span>
+<span class="w">  </span><span class="k">moreover</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"A"</span><span class="w"> </span><span class="ow">..</span>
+<span class="w">  </span><span class="k">ultimately</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"B ∧ A"</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Is Isar not Isabelle/Isar? What ways would be the right ways to write the equivalent of the first lemma in Isabelle?</p>
+
+
+
+<a name="515450281"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515450281" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515450281">(May 01 2025 at 05:30)</a>:</h4>
+<p>In the second, it should be <code>show ba</code> not <code>have ba</code> and <code>proof -</code></p>
+
+
+
+<a name="515450419"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515450419" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515450419">(May 01 2025 at 05:32)</a>:</h4>
+<p>With only <code>proof</code>, look at the state panel: the conjunction was already split, so you need to also split the <code>show</code></p>
+
+
+
+<a name="515450494"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515450494" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515450494">(May 01 2025 at 05:33)</a>:</h4>
+<p>For the last one:</p>
+<p>- you assume something that is not in the context for proof. Either <code>  using assms</code> before the out-most proof or give it a name, remove the <code>assume</code> and use the name instead of <code>this</code>.<br>
+  - same issue splitting of the goal<br>
+  - at the point <code>have "A" ..</code>the assume is not in the context anymore. <code>have "A" using ‹A ∧ B› ..</code> works however</p>
+
+
+
+<a name="515531474"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515531474" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sebastian Davidson <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515531474">(May 01 2025 at 15:49)</a>:</h4>
+<p>Thanks for the response. Now I see how you're meant to write it. What does adding the <code>-</code> at the end of <code>proof</code> mean, by the way?<br>
+For the last one, I thought that <code>moreover</code> was meant for using the same context as the last thing you said, so you wouldn't have to restate the assumption <code>"A ∧B"</code> and then <code>ultimately</code> was to combine them. Since that seems not to be the case, how should you use it?<br>
+Also, any tips on remembering what keywords do, and connecting it to how Isabelle evaluates proofs? I feel like I'm having trouble understanding how keywords affect the state of the proof, and it reminds me of learning to program again, when I didn't know what <code>for</code> and <code>continue</code> meant. I barely understand the distinction between <code>have</code> and <code>show</code>, and I keep getting words mixed up like how <code>then</code> means <code>from this</code>, <code>hence</code> means <code>from this have</code>, and <code>thus</code> means <code>from this show</code>, particularly since <code>thus</code> and <code>hence</code> have similar meanings to me in real speech.</p>
+
+
+
+<a name="515636519"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515636519" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515636519">(May 02 2025 at 04:38)</a>:</h4>
+<p><code>proof</code> is short for <code>proof standard</code> where it default to apply something. With the <code>-</code> it applies nothing</p>
+
+
+
+<a name="515636591"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515636591" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515636591">(May 02 2025 at 04:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="902934">Sebastian Davidson</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F/near/515531474">said</a>:</p>
+<blockquote>
+<p>For the last one, I thought that <code>moreover</code> was meant for using the same context as the last thing you said, so you wouldn't have to restate the assumption <code>"A ∧B"</code> and then <code>ultimately</code> was to combine them. Since that seems not to be the case, how should you use it?</p>
+</blockquote>
+<p>It exactly like you said but the context is not shared. Sharing context does not make too much sense anyway since <code>have "A" and "B"</code> exists</p>
+
+
+
+<a name="515636913"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515636913" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515636913">(May 02 2025 at 04:42)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="902934">Sebastian Davidson</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F/near/515531474">said</a>:</p>
+<blockquote>
+<p>Also, any tips on remembering what keywords do, and connecting it to how Isabelle evaluates proofs? I feel like I'm having trouble understanding how keywords affect the state of the proof, and it reminds me of learning to program again, when I didn't know what <code>for</code> and <code>continue</code> meant. I barely understand the distinction between <code>have</code> and <code>show</code>, and I keep getting words mixed up like how <code>then</code> means <code>from this</code>, <code>hence</code> means <code>from this have</code>, and <code>thus</code> means <code>from this show</code>, particularly since <code>thus</code> and <code>hence</code> have similar meanings to me in real speech.</p>
+</blockquote>
+<p>Like programming you get used to it. My suggestion is to <em>always</em> start with a working sorry-ed proof. So:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span>
+<span class="w">   </span><span class="k">show</span><span class="w"> </span><span class="s">"B ∧ A"</span>
+<span class="w">     </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>this should work without errors. If it does not, you get the structure wrong. Once you get that, you only have to add <code>have</code> and also/finally/ultimately/from/...</p>
+
+
+
+<a name="515636968"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20are%20these%20lemmas%20different%20and%20not%20legal%3F/near/515636968" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20are.20these.20lemmas.20different.20and.20not.20legal.3F.html#515636968">(May 02 2025 at 04:43)</a>:</h4>
+<p>Also always go with the <code>assumes / shows</code> syntax unless the lemma is so trivial that you go apply style.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

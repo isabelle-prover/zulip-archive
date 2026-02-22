@@ -1,0 +1,478 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Preprint on grounded arithmetic (GA) metatheor... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html">[isabelle] Preprint on grounded arithmetic (GA) metatheor...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="570375745"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570375745" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570375745">(Jan 27 2026 at 17:06)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle users,</p>
+<p>I wanted to announce an arXiv preprint that might interest some of you:</p>
+<p>Have a thing? Reasoning around recursion with dynamic typing in grounded arithmetic<br>
+<a href="https://bford.info/pub/lang/ga/">https://bford.info/pub/lang/ga/</a></p>
+<p>This is about a development of the metatheory of grounded arithmetic (GA), a development of a paracomplete logic/arithmetic partly inspired by Kripke’s theory of truth, using Isabelle/HOL as the working metalogic.  It is currently about ~35K lines of Isabelle/HOL and counting, and includes quite a bit of recursion theory including a metacircular evaluator as foundations.  The code repository isn’t public yet but the plan is to make it public with the paper’s formal publication, and in the meantime is shareable privately with colleagues with particular interest and relevant expertise.  I also hope to submit at least the recursion theory part to the AFP, at some point, once it’s cleaned up and better documented.</p>
+<p>Isabelle has served this project extremely well so far — a big thanks to all you who built and continue to maintain it!  But I have built up a small “Isabelle wishlist” and wanted to ask if there might be support for a few potential improvements, which we would be happy to help with under Isabelle developer guidance:</p>
+<ul>
+<li>A few Unicode symbols not yet supported in Isabelle2025 that would be nice to have for mathematical logic purposes:</li>
+<li>The corners or “Quine quotes” — ⌜ and ⌝ — U+231C and U+231D.  Maybe nice to add the bottom corners U+231E and U+231F just for completeness/symmetry.</li>
+<li>The negated turnstile symbols ⊬ (U+22AC) “Does Not Prove” and ⊭ (U+22AD) “Not True”</li>
+<li>
+<p>The “Left Tack” symbol ⊣ (U+22A3), which would be nice to have for a nontraditional, GA-specific use related to the traditional “proves” turnstile but distinct from either that or its negated version.</p>
+</li>
+<li>
+<p>For purposes of proving interesting HOL functions primitive recursive (or even computable), it would be nice if the standard “default” semantics of undefined cases was uniformly to produce the well-known constant “undefined”.  This is already the semantics of the “case” statement, but is apparently not the semantics of “fun” and “primrec” definitions: an uncovered case effectively yields an undefined <em>function</em>, which could in principle be an arbitrary (non-primitive-recursive, non-computable) function.  Example: the “nth” function in List.thy, which intentionally omits the empty list case.  I have no argument against leaving this case intentionally-undefined, but the current HOL semantics makes this case an undefined <em>function</em> depending on the argument n, which could well be a non-computable function and hence obviously can’t be proven primitive-recursive for a pretty mundane but annoying reason having nothing to do with the normal, intended function of ’nth’, which certainly should be primitive-recursive.  If a future version of Isabelle could semantically treat undefined cases in ‘fun’ and ‘primrec’ definitions like it already treats those in ‘case’ constructs, consistently yielding “undefined” the <em>constant</em>, that would perfectly fix this annoyance.</p>
+</li>
+<li>
+<p>Finally a nitpick or clarification suggestion for the Isabelle locales tutoral (<a href="https://isabelle.in.tum.de/doc/locales.pdf">https://isabelle.in.tum.de/doc/locales.pdf</a>).  It’s great overall, and with the help of this document we’ve been using locales extremely extensively in this GA metatheory project (maybe overusing/abusing them ;) ).  One quirk of locales that took me a <em>very</em> long time to more-or-less figure out was the issue of when a ’sublocale’ or ‘interpretation’ statement does, and when it doesn’t, import the extensible Isabelle syntax/notation along with the definitions and theorems.  I finally figured out that this depends on whether <em>all</em> of the parameters provided in the sublocale/interpretation statement are in turn “raw” parameters of the current locale the statement appears in (i.e., parameters “passed through” directly), as opposed to values <em>derived indirectly</em> from the current locale’s parameters (via function definitions previously within this locale for example).  Before I figured this out, I regularly struggled with questions of the form, “why did my custom syntax mysteriously get lost in translation for no obvious reason, when all the definitions and theorems from the interpreted locale came through just fine?”  Maybe the locales document actually even talks about this somewhere, and I just missed it — but at least for the benefit of n00bz like me, it might be nice if a future version of the locales tutorial could clarify the rules for when syntax does or does not carry through a sublocale/interpretation.</p>
+</li>
+</ul>
+<p>None of these are urgent by any means, and again we’re happy to help by submitting concrete patches for example if there’s support for them.</p>
+<p>Thanks<br>
+Bryan</p>
+
+
+
+<a name="570779274"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570779274" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570779274">(Jan 29 2026 at 12:19)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Dear Bryan, many thanks for your suggestions. I second the request for Quine quotes, which are often used in some branches of logic, and I hope that is a straightforward thing to do. Similarly for the other symbols you name.</p>
+<p>As for “undefined", I'm not sure how difficult it would be to organise and it's not clear how useful it could be. There is nothing special about "undefined" and in particular you cannot conclude anything from “f x = undefined”. instead, we define x/0 = 0, from which we get a lot of algebraic identities to be unconditional. Lean regards even log as a total function, with ln(-x) = ln(x), which we have now adopted.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 27 Jan 2026, at 17:06, Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<ul>
+<li>A few Unicode symbols not yet supported in Isabelle2025 that would be nice to have for mathematical logic purposes:</li>
+<li>The corners or “Quine quotes” — ⌜ and ⌝ — U+231C and U+231D.  Maybe nice to add the bottom corners U+231E and U+231F just for completeness/symmetry.</li>
+<li>The negated turnstile symbols ⊬ (U+22AC) “Does Not Prove” and ⊭ (U+22AD) “Not True”</li>
+<li>
+<p>The “Left Tack” symbol ⊣ (U+22A3), which would be nice to have for a nontraditional, GA-specific use related to the traditional “proves” turnstile but distinct from either that or its negated version.</p>
+</li>
+<li>
+<p>For purposes of proving interesting HOL functions primitive recursive (or even computable), it would be nice if the standard “default” semantics of undefined cases was uniformly to produce the well-known constant “undefined”.</p>
+</li>
+</ul>
+</blockquote>
+
+
+
+<a name="570862031"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570862031" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570862031">(Jan 29 2026 at 17:57)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Thanks Larry for your feedback and support in the suggestions!</p>
+<blockquote>
+<p>On 29 Jan 2026, at 13:19, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Dear Bryan, many thanks for your suggestions. I second the request for Quine quotes, which are often used in some branches of logic, and I hope that is a straightforward thing to do. Similarly for the other symbols you name.</p>
+<p>As for “undefined", I'm not sure how difficult it would be to organise and it's not clear how useful it could be. There is nothing special about "undefined" and in particular you cannot conclude anything from “f x = undefined”. instead, we define x/0 = 0, from which we get a lot of algebraic identities to be unconditional. Lean regards even log as a total function, with ln(-x) = ln(x), which we have now adopted.</p>
+</blockquote>
+<p>For our purposes, the one useful thing about undefined is that it’s a <em>constant</em> — meaning anything equal to the “undefined” constant is also at least equal to anything else equal to the "undefined” constant, even if we can’t prove anything else about which member of a given type that constant might be.</p>
+<p>Why this matters for us is that if, for example, the nth function in List.thy returned the “undefined” constant when nth is invoked on an empty list, then we could prove nth to be primitive-recursive.  With Isabelle’s current semantics, however, we can’t even prove nth to be primitive-recursive, because “nth n []” is an arbitrary potentially-non-computable <em>function</em> of n, and not a constant.  We instead have to define a different function that behaves the same way as nth for all “valid” inputs and prove that primitive recursive.  We can also prove nth itself to be <em>conditionally</em> primitive recursive, conditioned on the inputs being valid (i.e., n &lt; length of the list), but that just creates other unnecessary pain in using that conditional primitive-recursiveness proof.</p>
+<p>With nth (or its equivalent) returning the undefined <em>constant</em> on invalid inputs, in contrast, we can Gödel-encode that undefined constant in any Gödel-encodable type, even if we don’t know precisely which value of that type “undefined” actually is, and we can prove that there exists a primitive-recursive function taking a natural number n and the Gödel code of a list and yielding the Gödel code of a list element; we simply arrange for that primitive recursive function to return the Gödel code of “undefined” of the appropriate type, whatever that is (we don’t care) in the case of invalid input arguments.  So our inability to prove anything about what the undefined constant is doesn’t get in the way of primitive-recursiveness proofs at all for our purposes; what gets in the way is the fact that “nth n []” for example is not any constant but an undefined function.  This is in fact inconsistent with how HOL already treats case statements, and it seems it would at least be better for the semantics to be consistent and “more-defined” in terms of at least producing the undefined constant and not an undefined function for undefined patterns.</p>
+<p>I don’t have any objection to making such functions even more defined when appropriate, e.g., the x/0 = 0 example you mentioned.  But in the case of the nth function, for example, it’s not clear to me what useful more-distinguished output value we might choose for invalid inputs like “nth n []”, since the list element type is polymorphic and doesn’t necessarily have an obvious distinguished “default” or “zero-like” element.  I would personally rather have nth always return some, any, constant in the case of undefined inputs rather than add unnecessary constraints to the list element type (or to the classes of element types for which we could prove it primitive recursive).</p>
+<p>Hope this clarifies our motivation for the “undefined constant” wishlist item.</p>
+<p>In any case, thanks again for your consideration and feedback.<br>
+Bryan</p>
+<blockquote>
+<p>Larry</p>
+<blockquote>
+<p>On 27 Jan 2026, at 17:06, Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<ul>
+<li>A few Unicode symbols not yet supported in Isabelle2025 that would be nice to have for mathematical logic purposes:</li>
+<li>The corners or “Quine quotes” — ⌜ and ⌝ — U+231C and U+231D.  Maybe nice to add the bottom corners U+231E and U+231F just for completeness/symmetry.</li>
+<li>The negated turnstile symbols ⊬ (U+22AC) “Does Not Prove” and ⊭ (U+22AD) “Not True”</li>
+<li>
+<p>The “Left Tack” symbol ⊣ (U+22A3), which would be nice to have for a nontraditional, GA-specific use related to the traditional “proves” turnstile but distinct from either that or its negated version.</p>
+</li>
+<li>
+<p>For purposes of proving interesting HOL functions primitive recursive (or even computable), it would be nice if the standard “default” semantics of undefined cases was uniformly to produce the well-known constant “undefined”.<br>
+</p>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+
+
+
+<a name="570878822"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570878822" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570878822">(Jan 29 2026 at 19:27)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi John,</p>
+<p>On 29 Jan 2026, at 19:49, Hughes, John &lt;<a href="mailto:john_hughes@brown.edu">john_hughes@brown.edu</a>&gt; wrote:</p>
+<p>datatype t = Base<br>
+[…]<br>
+In view of this, Bryan might also want to consider what he would want</p>
+<p>nth ([]::t list) 7</p>
+<p>to evaluate to. If it evaluates to "undefined", then it also evaluates to "Base", which doesn't seem to match the semantics of "nth".</p>
+<p>Thanks for your thoughts.  I have no objection to single-element types in principle, but what exactly the semantics of single-element types “should” be seems orthogonal to the semantic issue I raised.  In HOL, the only possible semantic value of <em>any</em> function returning a single-element type must be that it always yields the one and only value of that type, regardless of how you define the function, since HOL functions are always total.  They always return something, and if there’s only one thing they can return, then that’s the something they return no matter what.  Changing that characteristic of HOL would be a much, much, <em>much</em> more fundamental and universe-breaking change to HOL than the small change I’m proposing to the handling of uncovered patterns in ‘fun’ and ‘primrec’ definitions.</p>
+<p>B</p>
+<p>--John</p>
+<p>On Thu, Jan 29, 2026 at 12:57 PM Bryan Alexander Ford &lt;cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;&gt; wrote:<br>
+Thanks Larry for your feedback and support in the suggestions!</p>
+<blockquote>
+<p>On 29 Jan 2026, at 13:19, Lawrence Paulson &lt;lp15@cam.ac.uk&lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt; wrote:</p>
+<p>Dear Bryan, many thanks for your suggestions. I second the request for Quine quotes, which are often used in some branches of logic, and I hope that is a straightforward thing to do. Similarly for the other symbols you name.</p>
+<p>As for “undefined", I'm not sure how difficult it would be to organise and it's not clear how useful it could be. There is nothing special about "undefined" and in particular you cannot conclude anything from “f x = undefined”. instead, we define x/0 = 0, from which we get a lot of algebraic identities to be unconditional. Lean regards even log as a total function, with ln(-x) = ln(x), which we have now adopted.</p>
+</blockquote>
+<p>For our purposes, the one useful thing about undefined is that it’s a <em>constant</em> — meaning anything equal to the “undefined” constant is also at least equal to anything else equal to the "undefined” constant, even if we can’t prove anything else about which member of a given type that constant might be.</p>
+<p>Why this matters for us is that if, for example, the nth function in List.thy returned the “undefined” constant when nth is invoked on an empty list, then we could prove nth to be primitive-recursive.  With Isabelle’s current semantics, however, we can’t even prove nth to be primitive-recursive, because “nth n []” is an arbitrary potentially-non-computable <em>function</em> of n, and not a constant.  We instead have to define a different function that behaves the same way as nth for all “valid” inputs and prove that primitive recursive.  We can also prove nth itself to be <em>conditionally</em> primitive recursive, conditioned on the inputs being valid (i.e., n &lt; length of the list), but that just creates other unnecessary pain in using that conditional primitive-recursiveness proof.</p>
+<p>With nth (or its equivalent) returning the undefined <em>constant</em> on invalid inputs, in contrast, we can Gödel-encode that undefined constant in any Gödel-encodable type, even if we don’t know precisely which value of that type “undefined” actually is, and we can prove that there exists a primitive-recursive function taking a natural number n and the Gödel code of a list and yielding the Gödel code of a list element; we simply arrange for that primitive recursive function to return the Gödel code of “undefined” of the appropriate type, whatever that is (we don’t care) in the case of invalid input arguments.  So our inability to prove anything about what the undefined constant is doesn’t get in the way of primitive-recursiveness proofs at all for our purposes; what gets in the way is the fact that “nth n []” for example is not any constant but an undefined function.  This is in fact inconsistent with how HOL already treats case statements, and it seems it would at least be better for the semantics to be consistent and “more-defined” in terms of at least producing the undefined constant and not an undefined function for undefined patterns.</p>
+<p>I don’t have any objection to making such functions even more defined when appropriate, e.g., the x/0 = 0 example you mentioned.  But in the case of the nth function, for example, it’s not clear to me what useful more-distinguished output value we might choose for invalid inputs like “nth n []”, since the list element type is polymorphic and doesn’t necessarily have an obvious distinguished “default” or “zero-like” element.  I would personally rather have nth always return some, any, constant in the case of undefined inputs rather than add unnecessary constraints to the list element type (or to the classes of element types for which we could prove it primitive recursive).</p>
+<p>Hope this clarifies our motivation for the “undefined constant” wishlist item.</p>
+<p>In any case, thanks again for your consideration and feedback.<br>
+Bryan</p>
+<blockquote>
+<p>Larry</p>
+<blockquote>
+<p>On 27 Jan 2026, at 17:06, Bryan Alexander Ford &lt;cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;&gt; wrote:</p>
+<ul>
+<li>A few Unicode symbols not yet supported in Isabelle2025 that would be nice to have for mathematical logic purposes:</li>
+<li>The corners or “Quine quotes” — ⌜ and ⌝ — U+231C and U+231D.  Maybe nice to add the bottom corners U+231E and U+231F just for completeness/symmetry.</li>
+<li>The negated turnstile symbols ⊬ (U+22AC) “Does Not Prove” and ⊭ (U+22AD) “Not True”</li>
+<li>
+<p>The “Left Tack” symbol ⊣ (U+22A3), which would be nice to have for a nontraditional, GA-specific use related to the traditional “proves” turnstile but distinct from either that or its negated version.</p>
+</li>
+<li>
+<p>For purposes of proving interesting HOL functions primitive recursive (or even computable), it would be nice if the standard “default” semantics of undefined cases was uniformly to produce the well-known constant “undefined”.<br>
+</p>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+
+
+
+<a name="570913850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570913850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570913850">(Jan 29 2026 at 23:23)</a>:</h4>
+<p><strong>From:</strong> Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt;</p>
+<p>Bryan,</p>
+<p>On Thu, 2026-01-29 at 17:57 +0000, Bryan Alexander Ford wrote:</p>
+<blockquote>
+<p>Hope this clarifies our motivation for the “undefined constant”<br>
+wishlist item.</p>
+</blockquote>
+<p>Your motivation is clear. However, there are multiple approaches to<br>
+handling partial functions in HOL, where all functions are inherently<br>
+total, and the trade-offs between these approaches have been the<br>
+subject of extensive discussion.</p>
+<p>Personally, I favor leaving functions as under-specified as possible--<br>
+for example, avoiding even proving statements like "nth [] n =<br>
+undefined n", let alone "nth [] n = undefined".</p>
+<p>By contrast, many users prefer definitions that support stronger,<br>
+unconditional theorems. Isabelle's treatment of "x / 0 = 0" is a clear<br>
+example.</p>
+<p>Compared to that, your request seems relatively harmless, though it is<br>
+worth noting that it would still produce "accidental" theorems, such as<br>
+"nth [] n = last []".</p>
+<p>In any case, defining your own total function that extends nth is a<br>
+perfectly reasonable workaround for the time being.</p>
+<p>Best,<br>
+Tjark</p>
+<p>När du har kontakt med oss på Uppsala universitet med e-post så innebär det att vi behandlar dina personuppgifter. För att läsa mer om hur vi gör det kan du läsa här: <a href="http://www.uu.se/om-uu/dataskydd-personuppgifter/">http://www.uu.se/om-uu/dataskydd-personuppgifter/</a></p>
+<p>E-mailing Uppsala University means that we will process your personal data. For more information on how this is performed, please read here: <a href="http://www.uu.se/en/about-uu/data-protection-policy">http://www.uu.se/en/about-uu/data-protection-policy</a></p>
+
+
+
+<a name="570918751"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570918751" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570918751">(Jan 30 2026 at 00:11)</a>:</h4>
+<p><strong>From:</strong> Gerwin Klein &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>On 30 Jan 2026, at 10:22, Tjark Weber [cl-isabelle-users-bounces@lists.cam.ac.uk] &lt;<a href="mailto:forwarded_for@cse.unsw.edu.au">forwarded_for@cse.unsw.edu.au</a>&gt; wrote:</p>
+</blockquote>
+<blockquote>
+<p>Compared to that, your request seems relatively harmless, though it is<br>
+worth noting that it would still produce "accidental" theorems, such as<br>
+"nth [] n = last []”.</p>
+</blockquote>
+<p>I would be very much in favour of not being able to prove that. I’m perfectly fine with function completion for totality, but it should be designed not accidental.</p>
+<p>Given that you can’t remove the ability to prove this once the primrec package makes it true, but you <em>can</em> explicitly add the ability to prove it if you define your own function, I think it is clear that the current design is the right one, because it gives you the choice.</p>
+<p>Cheers,<br>
+Gerwin</p>
+<p>This email and any files transmitted with it may contain confidential information. If you believe you have received this email or any of its contents in error, please notify me immediately by return email and destroy this email. Do not use, disseminate, forward, print or copy any contents of an email received in error.</p>
+
+
+
+<a name="570957785"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570957785" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570957785">(Jan 30 2026 at 07:29)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Thanks Tjark and Gerwin for your follow-up thoughts.</p>
+<p>On 30 Jan 2026, at 01:06, Gerwin Klein &lt;<a href="mailto:kleing@unsw.edu.au">kleing@unsw.edu.au</a>&gt; wrote:</p>
+<p>On 30 Jan 2026, at 10:22, Tjark Weber [cl-isabelle-users-bounces@lists.cam.ac.uk] &lt;<a href="mailto:forwarded_for@cse.unsw.edu.au">forwarded_for@cse.unsw.edu.au</a>&gt; wrote:</p>
+<p>Compared to that, your request seems relatively harmless, though it is<br>
+worth noting that it would still produce "accidental" theorems, such as<br>
+"nth [] n = last []”.</p>
+<p>I would be very much in favour of not being able to prove that. I’m perfectly fine with function completion for totality, but it should be designed not accidental.</p>
+<p>I completely understand the desire not to have too many “unwanted” theorems in a formal system.  If we were working in ZFC, it would be full of so-called “junk theorems” like ‘2 ∈ 3’; Isabelle’s strong type system already takes us a tremendous distance in minimizing such unwanted theorems.  But the long-ago decisions in HOL to (a) make functions total and (b) make reflexivity unconditional means that we can always prove theorems like “undefined = undefined”, which from a “provability minimization” perspective seems like an undesirable junk theorem as well.  That horse bolted from the HOL barn decades ago.  Is "nth [] n = last []” so much more offensive than “undefined = undefined”?</p>
+<p>(Incidentally, if you don’t like "junk theorems" like these, you might be interested in the grounded reasoning system mentioned in the paper I pointed to in my original post, or its early-prototype embodiment in the “Isabelle/GD” (grounded deduction) built by Sascha Kehri (<a href="https://bford.info/thesis/2025-kehrli/">https://bford.info/thesis/2025-kehrli/</a>).  In this approach, reflexivity in fact isn’t a blanket assumption, and you actually can’t prove “x = x” for any term x until you first prove that x represents a <em>terminating</em> computation that yields something concrete (e.g., a natural number, and in particular not “bottom”).  But I digress…)</p>
+<p>The design of any formal system involves a lot of pragmatic tradeoffs, and HOL is far from an exception.  The consequence of taking a “provability minimization purist” stance on "nth [] n = last []” is that we <em>cannot</em> prove the “nth” function to be even computable, let alone primitive-recursive, even though it is completely inspired by corresponding <em>computable</em> functions in functional programming tradition (ML, Haskell, etc), and exactly the same definition expressed in exactly the same structural way as ’nth’ is in ML, Haskell, etc., will produce a computable (and even primitive-recursive) function!  Isabelle’s ‘primrec’ and ‘fun’ constructs were originally inspired by functional programming tradition; a big part of their appeal is that they make it easy to express functional <em>computations</em> in HOL and then reason about what those <em>computations</em> do; and a ton of effort has even gone into making functions like nth extractable into executable functional-program code again in languages like ML and Haskell!  Why go to all this effort to make it easy to express normally-computable functions in normal functional programming fashion in HOL, and to be able to reason about it and even extract executable functional code, but <em>not</em> make those “obviously computable” functions actually provably computable?</p>
+<p>All the other ‘fun’ and ‘primrec’ definitions I can think of at the moment in List.thy are provably computable and primitive-recursive.  This even includes ‘hd’ and ’tl’, despite their being “undefined” in the empty-list case, simply because “hd []” and “tl []” are constants by virtue of taking no arguments <em>other than</em> the list argument, and there is only one input argument yielding an undefined output.  Our recursion theory framework has no trouble with these cases.  Yes, “hd []” and “tl []” semantically yield unknown list elements whose values we can prove nothing about, but we can still take their Gödel code in the appropriate type and produce a genuinely (arithmetically, as in definable in Skolem’s PRA) primitive-recursive function that yields that Gödel code, whatever it is, when they get invoked with the empty list.  No problem; this undefined behavior is still <em>computably</em> undefined.</p>
+<p>But because it takes the additional argument n, the “nth” function is a quite rare exception (although I expect there are a few others hiding elsewhere in HOL’s functional-programming-inspired theories).  Despite being “obviously” computable and even primitive recursive by its structural definition, defined using the functional-programming-inspired construct “primrec”, and even fully exportable to genuinely-computable ML/Haskell code, it is not <em>provably</em> even computable due to this particular quirk of Isabelle’s incomplete-pattern-matching semantics.  Does a distaste for "nth [] n = last []” truly justify the obviously-computable nth function not being provably computable?</p>
+<p>And as I mentioned before, this semantic quirk is already inconsistent with Isabelle/HOL’s semantics for the “case” statement, which already yields the “undefined” constant in incomplete-pattern cases.  What is the principled justification of that semantic inconsistency?</p>
+<p>Thanks<br>
+Bryan</p>
+
+
+
+<a name="570962060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/570962060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#570962060">(Jan 30 2026 at 08:00)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>P.S. If we really wanted to avoid unwanted theorems like "nth [] n = last []” while also making “obviously-computable” functions like nth provably computable, an alternative would be to make each function defined by ‘fun’ or ‘primrec’ produce a <em>distinct</em> undefined constant, specific to that function, for that function’s undefined cases.  Then, “nth [] n” would effectively be equal to some constant symbol like “nth_undefined” but would not be provably equal to the  corresponding undefined constant for any other function with incomplete pattern coverage.  We would not get "nth [] n = last []” but we would still get “last [] = last []” and “nth [] n = nth [] n”, of course.  And from a provability-minimization-purist stance we would still get the arguably-unwanted theorem “nth [] n = nth [] m” even when n != m, but that’s the property we really need in order for the nth function to be provably computable.  Tradeoffs.</p>
+<p>I still feel however that "nth [] n = last []” is a small price to pay for “nth” being provably computable, and having every incompletely-defined function like nth produce its own undefined constant like “nth_undefined” sounds to me like more trouble than it's worth.  Especially when there’s already a standard “undefined” constant that’s already widely-used for other “undefinedy” purposes in HOL (such as what case statements produce when they don’t match a pattern).  And especially in comparison to the seemingly much more offensive but pragmatic decision “x/0 = 0” (not even “x/0 = undefined!”) that Larry brought up, a practical-utility compromise that HOL has been living with for a long time now.</p>
+<p>Cheers<br>
+Bryan</p>
+<p>On 30 Jan 2026, at 08:29, Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Thanks Tjark and Gerwin for your follow-up thoughts.</p>
+<p>On 30 Jan 2026, at 01:06, Gerwin Klein &lt;<a href="mailto:kleing@unsw.edu.au">kleing@unsw.edu.au</a>&gt; wrote:</p>
+<p>On 30 Jan 2026, at 10:22, Tjark Weber [cl-isabelle-users-bounces@lists.cam.ac.uk] &lt;<a href="mailto:forwarded_for@cse.unsw.edu.au">forwarded_for@cse.unsw.edu.au</a>&gt; wrote:</p>
+<p>Compared to that, your request seems relatively harmless, though it is<br>
+worth noting that it would still produce "accidental" theorems, such as<br>
+"nth [] n = last []”.</p>
+<p>I would be very much in favour of not being able to prove that. I’m perfectly fine with function completion for totality, but it should be designed not accidental.</p>
+<p>I completely understand the desire not to have too many “unwanted” theorems in a formal system.  If we were working in ZFC, it would be full of so-called “junk theorems” like ‘2 ∈ 3’; Isabelle’s strong type system already takes us a tremendous distance in minimizing such unwanted theorems.  But the long-ago decisions in HOL to (a) make functions total and (b) make reflexivity unconditional means that we can always prove theorems like “undefined = undefined”, which from a “provability minimization” perspective seems like an undesirable junk theorem as well.  That horse bolted from the HOL barn decades ago.  Is "nth [] n = last []” so much more offensive than “undefined = undefined”?</p>
+<p>(Incidentally, if you don’t like "junk theorems" like these, you might be interested in the grounded reasoning system mentioned in the paper I pointed to in my original post, or its early-prototype embodiment in the “Isabelle/GD” (grounded deduction) built by Sascha Kehri (<a href="https://bford.info/thesis/2025-kehrli/">https://bford.info/thesis/2025-kehrli/</a>).  In this approach, reflexivity in fact isn’t a blanket assumption, and you actually can’t prove “x = x” for any term x until you first prove that x represents a <em>terminating</em> computation that yields something concrete (e.g., a natural number, and in particular not “bottom”).  But I digress…)</p>
+<p>The design of any formal system involves a lot of pragmatic tradeoffs, and HOL is far from an exception.  The consequence of taking a “provability minimization purist” stance on "nth [] n = last []” is that we <em>cannot</em> prove the “nth” function to be even computable, let alone primitive-recursive, even though it is completely inspired by corresponding <em>computable</em> functions in functional programming tradition (ML, Haskell, etc), and exactly the same definition expressed in exactly the same structural way as ’nth’ is in ML, Haskell, etc., will produce a computable (and even primitive-recursive) function!  Isabelle’s ‘primrec’ and ‘fun’ constructs were originally inspired by functional programming tradition; a big part of their appeal is that they make it easy to express functional <em>computations</em> in HOL and then reason about what those <em>computations</em> do; and a ton of effort has even gone into making functions like nth extractable into executable functional-program code again in languages like ML and Haskell!  Why go to all this effort to make it easy to express normally-computable functions in normal functional programming fashion in HOL, and to be able to reason about it and even extract executable functional code, but <em>not</em> make those “obviously computable” functions actually provably computable?</p>
+<p>All the other ‘fun’ and ‘primrec’ definitions I can think of at the moment in List.thy are provably computable and primitive-recursive.  This even includes ‘hd’ and ’tl’, despite their being “undefined” in the empty-list case, simply because “hd []” and “tl []” are constants by virtue of taking no arguments <em>other than</em> the list argument, and there is only one input argument yielding an undefined output.  Our recursion theory framework has no trouble with these cases.  Yes, “hd []” and “tl []” semantically yield unknown list elements whose values we can prove nothing about, but we can still take their Gödel code in the appropriate type and produce a genuinely (arithmetically, as in definable in Skolem’s PRA) primitive-recursive function that yields that Gödel code, whatever it is, when they get invoked with the empty list.  No problem; this undefined behavior is still <em>computably</em> undefined.</p>
+<p>But because it takes the additional argument n, the “nth” function is a quite rare exception (although I expect there are a few others hiding elsewhere in HOL’s functional-programming-inspired theories).  Despite being “obviously” computable and even primitive recursive by its structural definition, defined using the functional-programming-inspired construct “primrec”, and even fully exportable to genuinely-computable ML/Haskell code, it is not <em>provably</em> even computable due to this particular quirk of Isabelle’s incomplete-pattern-matching semantics.  Does a distaste for "nth [] n = last []” truly justify the obviously-computable nth function not being provably computable?</p>
+<p>And as I mentioned before, this semantic quirk is already inconsistent with Isabelle/HOL’s semantics for the “case” statement, which already yields the “undefined” constant in incomplete-pattern cases.  What is the principled justification of that semantic inconsistency?</p>
+<p>Thanks<br>
+Bryan</p>
+
+
+
+<a name="571003617"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/571003617" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#571003617">(Jan 30 2026 at 11:30)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>This is, in fact, quite a niche request. It's unusual for people to want to prove that functions are computable, especially when applied outside of their actual domain.</p>
+<p>Note that if you write your own version of nth, you can easily prove that it coincides with the built-in one on its domain. So if it is automation that concerns you, this would give you easy access to everything already proved about nth.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 30 Jan 2026, at 07:59, Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>I still feel however that "nth [] n = last []” is a small price to pay for “nth” being provably computable</p>
+</blockquote>
+
+
+
+<a name="571041349"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/571041349" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#571041349">(Jan 30 2026 at 14:20)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Larry,</p>
+<blockquote>
+<p>On 30 Jan 2026, at 12:29, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>This is, in fact, quite a niche request. It's unusual for people to want to prove that functions are computable, especially when applied outside of their actual domain.</p>
+</blockquote>
+<p>Fair enough, but I have to say I’m surprised to hear this position from you in particular, given the support you expressed just earlier in this thread for adding symbols to Isabelle to support the formalization of mathematical logic in HOL.  Recursion theory is pretty fundamental to mathematical logic, as I know you’re perhaps more well-aware than almost anyone I can think of, given your own fantastic work formalizing Gödel’s incompleteness theorems in Isabelle/HOL — work I’m a huge fan of and learned so much from, by the way.</p>
+<blockquote>
+<p>Note that if you write your own version of nth, you can easily prove that it coincides with the built-in one on its domain. So if it is automation that concerns you, this would give you easy access to everything already proved about nth.</p>
+</blockquote>
+<p>That’s exactly what we already do — define our own version of “nth” that is actually primitive-recursive and prove the it behaves identically for all the in-domain inputs we care about — and yes of course it works fine.  If there’s really no support for making what seem like “obviously" primitive-recursive (or computable) HOL definitions actually provably primitive-recursive (computable), then that’s fine, we’ll just keep the ugly hack.</p>
+<p>Thanks for your support for adding the symbols anyway. I already have a partial Isabelle patch for that, which I just need to update and will propose when it’s ready.</p>
+<p>Bryan</p>
+<blockquote>
+<p>Larry</p>
+<blockquote>
+<p>On 30 Jan 2026, at 07:59, Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>I still feel however that "nth [] n = last []” is a small price to pay for “nth” being provably computable</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="571076297"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/571076297" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#571076297">(Jan 30 2026 at 16:42)</a>:</h4>
+<p><strong>From:</strong> "Hughes, John" &lt;<a href="mailto:john_hughes@brown.edu">john_hughes@brown.edu</a>&gt;</p>
+<p>Larry writes:  in particular you cannot conclude anything from “f x =<br>
+undefined”</p>
+<p>This is widely claimed, but it's not exactly true, as the following<br>
+example, meant to capture a bit of Bryan's intent w.r.t lists, demonstrates:</p>
+<p>theory Scratch<br>
+ imports Complex_Main<br>
+begin</p>
+<p>datatype t = Base</p>
+<p>fun example:: "('a list) ⇒ t" where<br>
+"example [] = undefined"<br>
+| "example (x # xs) = Base"</p>
+<p>lemma "example [] = example [1::nat]"<br>
+  using t.exhaust by auto<br>
+end</p>
+<p>=====<br>
+(I.e., you've just proved that "undefined" and "Base" are equal).</p>
+<p>One might reasonably say, "OK, sure, if you have a type so impoverished<br>
+that it has only one instance, then you CAN prove things about 'undefined',<br>
+but that's just stupid."</p>
+<p>Then again, if you come from a background in topology, as I do, a<br>
+topological space with a single element is right at the heart of the<br>
+Eilenberg-Steenrod axioms for homology, so maybe it's stupid, but it's also<br>
+pretty important. It's arguably the very first type that you'd want to<br>
+define.</p>
+<p>In view of this, Bryan might also want to consider what he would want</p>
+<p>nth ([]::t list) 7</p>
+<p>to evaluate to. If it evaluates to "undefined", then it also evaluates to<br>
+"Base", which doesn't seem to match the semantics of "nth".</p>
+<p>--John</p>
+<p>On Thu, Jan 29, 2026 at 12:57 PM Bryan Alexander Ford &lt;<br>
+<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Thanks Larry for your feedback and support in the suggestions!</p>
+<blockquote>
+<p>On 29 Jan 2026, at 13:19, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Dear Bryan, many thanks for your suggestions. I second the request for<br>
+Quine quotes, which are often used in some branches of logic, and I hope<br>
+that is a straightforward thing to do. Similarly for the other symbols you<br>
+name.</p>
+<p>As for “undefined", I'm not sure how difficult it would be to organise<br>
+and it's not clear how useful it could be. There is nothing special about<br>
+"undefined" and in particular you cannot conclude anything from “f x =<br>
+undefined”. instead, we define x/0 = 0, from which we get a lot of<br>
+algebraic identities to be unconditional. Lean regards even log as a total<br>
+function, with ln(-x) = ln(x), which we have now adopted.</p>
+</blockquote>
+<p>For our purposes, the one useful thing about undefined is that it’s a<br>
+<em>constant</em> — meaning anything equal to the “undefined” constant is also at<br>
+least equal to anything else equal to the "undefined” constant, even if we<br>
+can’t prove anything else about which member of a given type that constant<br>
+might be.</p>
+<p>Why this matters for us is that if, for example, the nth function in<br>
+List.thy returned the “undefined” constant when nth is invoked on an empty<br>
+list, then we could prove nth to be primitive-recursive.  With Isabelle’s<br>
+current semantics, however, we can’t even prove nth to be<br>
+primitive-recursive, because “nth n []” is an arbitrary<br>
+potentially-non-computable <em>function</em> of n, and not a constant.  We instead<br>
+have to define a different function that behaves the same way as nth for<br>
+all “valid” inputs and prove that primitive recursive.  We can also prove<br>
+nth itself to be <em>conditionally</em> primitive recursive, conditioned on the<br>
+inputs being valid (i.e., n &lt; length of the list), but that just creates<br>
+other unnecessary pain in using that conditional primitive-recursiveness<br>
+proof.</p>
+<p>With nth (or its equivalent) returning the undefined <em>constant</em> on invalid<br>
+inputs, in contrast, we can Gödel-encode that undefined constant in any<br>
+Gödel-encodable type, even if we don’t know precisely which value of that<br>
+type “undefined” actually is, and we can prove that there exists a<br>
+primitive-recursive function taking a natural number n and the Gödel code<br>
+of a list and yielding the Gödel code of a list element; we simply arrange<br>
+for that primitive recursive function to return the Gödel code of<br>
+“undefined” of the appropriate type, whatever that is (we don’t care) in<br>
+the case of invalid input arguments.  So our inability to prove anything<br>
+about what the undefined constant is doesn’t get in the way of<br>
+primitive-recursiveness proofs at all for our purposes; what gets in the<br>
+way is the fact that “nth n []” for example is not any constant but an<br>
+undefined function.  This is in fact inconsistent with how HOL already<br>
+treats case statements, and it seems it would at least be better for the<br>
+semantics to be consistent and “more-defined” in terms of at least<br>
+producing the undefined constant and not an undefined function for<br>
+undefined patterns.</p>
+<p>I don’t have any objection to making such functions even more defined when<br>
+appropriate, e.g., the x/0 = 0 example you mentioned.  But in the case of<br>
+the nth function, for example, it’s not clear to me what useful<br>
+more-distinguished output value we might choose for invalid inputs like<br>
+“nth n []”, since the list element type is polymorphic and doesn’t<br>
+necessarily have an obvious distinguished “default” or “zero-like”<br>
+element.  I would personally rather have nth always return some, any,<br>
+constant in the case of undefined inputs rather than add unnecessary<br>
+constraints to the list element type (or to the classes of element types<br>
+for which we could prove it primitive recursive).</p>
+<p>Hope this clarifies our motivation for the “undefined constant” wishlist<br>
+item.</p>
+<p>In any case, thanks again for your consideration and feedback.<br>
+Bryan</p>
+<blockquote>
+<p>Larry</p>
+<blockquote>
+<p>On 27 Jan 2026, at 17:06, Bryan Alexander Ford &lt;<br>
+<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<ul>
+<li>A few Unicode symbols not yet supported in Isabelle2025 that would be<br>
+nice to have for mathematical logic purposes:</li>
+<li>The corners or “Quine quotes” — ⌜ and ⌝ — U+231C and U+231D.  Maybe<br>
+nice to add the bottom corners U+231E and U+231F just for<br>
+completeness/symmetry.</li>
+<li>The negated turnstile symbols ⊬ (U+22AC) “Does Not Prove” and ⊭<br>
+(U+22AD) “Not True”</li>
+<li>
+<p>The “Left Tack” symbol ⊣ (U+22A3), which would be nice to have for a<br>
+nontraditional, GA-specific use related to the traditional “proves”<br>
+turnstile but distinct from either that or its negated version.</p>
+</li>
+<li>
+<p>For purposes of proving interesting HOL functions primitive recursive<br>
+(or even computable), it would be nice if the standard “default” semantics<br>
+of undefined cases was uniformly to produce the well-known constant<br>
+“undefined”.<br>
+</p>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="571092258"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/571092258" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#571092258">(Jan 30 2026 at 17:57)</a>:</h4>
+<p><strong>From:</strong> Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt;</p>
+<p>John,</p>
+<p>On Thu, 2026-01-29 at 13:49 -0500, Hughes, John wrote:<br>
+[...] as the following example, meant to capture a bit of Bryan's intent w.r.t lists, demonstrates:</p>
+<p>In your example, the culprit is not the definition of the function, but rather the one-element type t. Both "Base" and "undefined" are constants of type t; but this type only has one element, so they must be equal. Consider the following results:</p>
+<p>theory Scratch imports Main<br>
+begin</p>
+<p>datatype t = Base</p>
+<p>lemma "Base = undefined"<br>
+by (metis (full_types) t.exhaust)</p>
+<p>consts example:: "('a list) ⇒ t"</p>
+<p>lemma "example [] = example [1]"<br>
+by (metis (mono_tags) t.exhaust)</p>
+<p>end</p>
+<p>I suspect that the name "undefined" is misleading for a constant that is merely unspecified, though that is probably a discussion for another day.</p>
+<p>Best,<br>
+Tjark</p>
+<p>När du har kontakt med oss på Uppsala universitet med e-post så innebär det att vi behandlar dina personuppgifter. För att läsa mer om hur vi gör det kan du läsa här: <a href="http://www.uu.se/om-uu/dataskydd-personuppgifter/">http://www.uu.se/om-uu/dataskydd-personuppgifter/</a></p>
+<p>E-mailing Uppsala University means that we will process your personal data. For more information on how this is performed, please read here: <a href="http://www.uu.se/en/about-uu/data-protection-policy">http://www.uu.se/en/about-uu/data-protection-policy</a></p>
+
+
+
+<a name="571141050"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/571141050" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#571141050">(Jan 30 2026 at 23:26)</a>:</h4>
+<p><strong>From:</strong> Gerwin Klein &lt;<a href="mailto:gerwin.klein@proofcraft.systems">gerwin.klein@proofcraft.systems</a>&gt;</p>
+<p>On 30 Jan 2026, at 18:29, Bryan Alexander Ford &lt;<a href="mailto:bryan.ford@epfl.ch">bryan.ford@epfl.ch</a>&gt; wrote:</p>
+<p>Thanks Tjark and Gerwin for your follow-up thoughts.</p>
+<p>On 30 Jan 2026, at 01:06, Gerwin Klein &lt;<a href="mailto:kleing@unsw.edu.au">kleing@unsw.edu.au</a>&gt; wrote:</p>
+<p>On 30 Jan 2026, at 10:22, Tjark Weber [cl-isabelle-users-bounces@lists.cam.ac.uk] &lt;<a href="mailto:forwarded_for@cse.unsw.edu.au">forwarded_for@cse.unsw.edu.au</a>&gt; wrote:</p>
+<p>Compared to that, your request seems relatively harmless, though it is<br>
+worth noting that it would still produce "accidental" theorems, such as<br>
+"nth [] n = last []”.</p>
+<p>I would be very much in favour of not being able to prove that. I’m perfectly fine with function completion for totality, but it should be designed not accidental.</p>
+<p>I completely understand the desire not to have too many “unwanted” theorems in a formal system.  If we were working in ZFC, it would be full of so-called “junk theorems” like ‘2 ∈ 3’; Isabelle’s strong type system already takes us a tremendous distance in minimizing such unwanted theorems.  But the long-ago decisions in HOL to (a) make functions total and (b) make reflexivity unconditional means that we can always prove theorems like “undefined = undefined”, which from a “provability minimization” perspective seems like an undesirable junk theorem as well.  That horse bolted from the HOL barn decades ago.  Is "nth [] n = last []” so much more offensive than “undefined = undefined”?</p>
+<p>Yes, of course. I have a proof base with 2 million lines of proof. I want the tool to help me weed out junk, not add unnecessary junk. It’s an engineering question, not a foundational logic question.</p>
+<p>The design of any formal system involves a lot of pragmatic tradeoffs, and HOL is far from an exception.  The consequence of taking a “provability minimization purist” stance on "nth [] n = last []” is that we <em>cannot</em> prove the “nth” function to be even computable,</p>
+<p>In your formal definition and framework of computability. You can always just add assumptions and axioms if you need them instead of asking all of us to accept your additional assumptions that are not needed for what we want to prove. If those additional axioms are unpleasant, why are you asking me to accept them? Asking the function package to add a definition is after all precisely adding a new axiom to a logical system.</p>
+<p>All the other ‘fun’ and ‘primrec’ definitions I can think of at the moment in List.thy are provably computable and primitive-recursive.</p>
+<p>Looking at List.thy is quite a narrow view of what people do with a prover like Isabelle and for evaluating consequences of proposals like this.</p>
+<p>But because it takes the additional argument n, the “nth” function is a quite rare exception (although I expect there are a few others hiding elsewhere in HOL’s functional-programming-inspired theories).  Despite being “obviously” computable and even primitive recursive by its structural definition, defined using the functional-programming-inspired construct “primrec”, and even fully exportable to genuinely-computable ML/Haskell code, it is not <em>provably</em> even computable due to this particular quirk of Isabelle’s incomplete-pattern-matching semantics.  Does a distaste for "nth [] n = last []” truly justify the obviously-computable nth function not being provably computable?</p>
+<p>You misunderstand: I don’t care about nth and last. I care about the thousands of functions that people write in specifications where they might forget a clause and some automatic tool derives an equivalence that will take time to debug and track down when it was never necessary in the first place and would have been immediately obvious in the first proof about that function. It’s not about high-level properties that might become true, this is not a concern in practice. It’s about proofs running into dead ends for no recognisable reason. I have had that latter problem plenty of times, but I have never yet wished for knowing whether a primrec function is computable.</p>
+<p>I’m not saying that a framework for computability is not a desirable thing to have (for those who partake), I’m saying applications of provers like Isabelle are wide and diverse and people care about different things. Adding what you ask would prevent one without recourse, while not adding what you ask does still leave you with a number of workarounds.</p>
+<p>And as I mentioned before, this semantic quirk is already inconsistent with Isabelle/HOL’s semantics for the “case” statement, which already yields the “undefined” constant in incomplete-pattern cases.  What is the principled justification of that semantic inconsistency?</p>
+<p>It’s an implementation question. The primrec/fun packages derive new definitions from user specifications, so they can leave out equations when they do that. case statements are themselves functions that are applied, not something for which a new definition is generated each time. Maybe with a bit more work the default case of <code>case x</code> could be <code>undefined x</code> instead of <code>undefined</code>. I would welcome that change (as I would getting a warning for forgetting case clauses, which is probably harder to do).</p>
+<p>Cheers,<br>
+Gerwin</p>
+
+
+
+<a name="571211304"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Preprint%20on%20grounded%20arithmetic%20%28GA%29%20metatheor.../near/571211304" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E.html#571211304">(Jan 31 2026 at 16:19)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<ul>
+<li>The “Left Tack” symbol ⊣ (U+22A3), which would be nice to have...</li>
+</ul>
+</blockquote>
+<p>This one is already in Isabelle: \&lt;stileturn&gt;</p>
+<p>Kevin</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

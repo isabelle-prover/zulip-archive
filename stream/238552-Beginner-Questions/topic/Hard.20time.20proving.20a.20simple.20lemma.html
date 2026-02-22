@@ -1,0 +1,48 @@
+<html>
+<head><meta charset="utf-8"><title>Hard time proving a simple lemma · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Hard.20time.20proving.20a.20simple.20lemma.html">Hard time proving a simple lemma</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="560338175"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Hard%20time%20proving%20a%20simple%20lemma/near/560338175" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Hard.20time.20proving.20a.20simple.20lemma.html#560338175">(Nov 26 2025 at 09:07)</a>:</h4>
+<p>I'm trying to prove the following lemma:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">b</span>
+
+<span class="k">inductive</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"alpha list ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="n">emp</span><span class="o">:</span><span class="w"> </span><span class="s">"S []"</span><span class="w"> </span><span class="o">|</span>
+<span class="n">aSb</span><span class="o">:</span><span class="w"> </span><span class="s">"S w ⟹ S (a # w @ [b])"</span><span class="w"> </span><span class="o">|</span>
+<span class="n">SS</span><span class="o">:</span><span class="w"> </span><span class="s">"S w1 ⟹ S w2 ⟹ S (w1 @ w2)"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"S [a] ⟹ False"</span>
+</code></pre></div>
+<p>However I've had no success. A proof by cases or by induction  (<code>proof(cases rule: S.cases)</code>, <code>proof(induction rule: S.induct)</code>) doesn't seem to work - Isabelle generates goals that are impossible to prove. I suspect this is ultimately failing because technically <code>S [a]</code> could be made via <code>S [a] ⟹ S [] ⟹ S ([a] @ []) = S [a]</code>, and to prove this construction impossible you first have to proof <code>S [a]</code> impossible - a vicious cycle.</p>
+<p>I would be thankful for any tips and pointers for solving this.</p>
+
+
+
+<a name="560339111"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Hard%20time%20proving%20a%20simple%20lemma/near/560339111" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Hard.20time.20proving.20a.20simple.20lemma.html#560339111">(Nov 26 2025 at 09:11)</a>:</h4>
+<p>Try <code>induction "[a]" rule: S.induct</code></p>
+
+
+
+<a name="560340944"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Hard%20time%20proving%20a%20simple%20lemma/near/560340944" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Hard.20time.20proving.20a.20simple.20lemma.html#560340944">(Nov 26 2025 at 09:21)</a>:</h4>
+<p>Thank you! This worked very well. I suppose I should try to better understand all the various forms of induction, it's not the first time where changing the shape of induction made something from impossible to easy to prove.</p>
+
+
+
+<a name="560419229"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Hard%20time%20proving%20a%20simple%20lemma/near/560419229" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Hyman <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Hard.20time.20proving.20a.20simple.20lemma.html#560419229">(Nov 26 2025 at 15:30)</a>:</h4>
+<p>Removed - wrong conversation.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

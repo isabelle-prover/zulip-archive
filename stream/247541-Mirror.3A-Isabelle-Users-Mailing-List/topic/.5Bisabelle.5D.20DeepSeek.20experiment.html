@@ -1,0 +1,381 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] DeepSeek experiment · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html">[isabelle] DeepSeek experiment</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="528051284"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/528051284" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#528051284">(Jul 10 2025 at 10:42)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Hello all, you may be interested in a little experiment I tried using the DeepSeek LLM yesterday. I asked whether it could translate a theorem header from n-dimensional real vectors to abstract Euclidean spaces. My query:</p>
+<blockquote>
+<p>The following theorem header fixes variable "a" to type "real^'n". Changing this type to "'a::euclidean_space" requires modifying the header, replacing $ and χ by their analogues for Euclidean spaces.</p>
+<p>proposition<br>
+  fixes a :: "real^'n"<br>
+  assumes "m ≠ n" and ab_ne: "cbox a b ≠ {}" and an: "0 ≤ a$n"<br>
+  shows measurable_shear_interval: "(λx. χ i. if i = m then x$m + x$n else x$i) <code> (cbox a b) ∈ lmeasurable"
+   and measure_shear_interval: "measure lebesgue ((λx. χ i. if i = m then x$m + x$n else x$i) </code> cbox a b)<br>
+               = measure lebesgue (cbox a b)"</p>
+</blockquote>
+<p>On its first attempt it produced something that seemed to be almost right but clunky and referred to something non-standard. Pushing it a little further, I got the following, which is far as I can tell is correct. (Isabelle accepts it.)</p>
+<blockquote>
+<p>proposition<br>
+  fixes a :: "'a::euclidean_space"<br>
+  assumes "m ≠ n"      and "m ∈ Basis" and "n ∈ Basis"<br>
+    and ab_ne: "cbox a b ≠ {}"      and an: "0 ≤ a ∙ n"<br>
+  shows measurable_shear_interval:          "(λx. ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                            else (x ∙ i)) *⇩R i) <code> (cbox a b) ∈ lmeasurable"
+   and measure_shear_interval:          "measure lebesgue ((λx. ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                                          else (x ∙ i)) *⇩R i) </code> cbox a b)<br>
+         = measure lebesgue (cbox a b)”</p>
+</blockquote>
+<p>Everything was accompanied by quantities of plausible sounding narrative, e.g. "this version is more abstract and elegant”. A sample:</p>
+<blockquote>
+<p>This version is more type-safe because:<br>
+    • No need to worry about index bounds<br>
+    • The basis vectors are first-class entities<br>
+    • The notation more clearly reflects the mathematical intent<br>
+Note that in this formulation:<br>
+    • Basis is the canonical basis of the Euclidean space<br>
+    • ∙ is the inner product (giving the component in a particular basis direction)<br>
+    • *⇩R is the scalar multiplication<br>
+    • The sum reconstructs the vector from its components<br>
+Would you like me to explain any part of this formulation in more detail? Or would you like assistance with proving this version of the theorem?</p>
+</blockquote>
+<p>My impression is that it was grabbing material from a variety of places, in particular the AFP entry Ordinary_Differential_Equations. But the word "elegant" doesn't appear there and in fact appears in the entire distribution + AFP only 42 times.</p>
+<p>I recall doing the precise task above in the past and needing the better part of an hour to get it right. I didn't try to port the proof (which was long and complicated) and I would be surprised if it could get that right.</p>
+<p>I'm not sure how much more can be accomplished with the free version of DeepSeek. I have also seen Claude Sonnet 4 swallow entire Isabelle codebases and summarise them. These tools may already be useful for tasks such as identifying duplicate material.</p>
+<p>Larry</p>
+
+
+
+<a name="528624167"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/528624167" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#528624167">(Jul 14 2025 at 09:47)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Larry,</p>
+<p>I recently asked chatGPT if it could prove that $f(x) = x * ln (1 + 1/x)$ is <br>
+monotone, but the answer was not helpful. How is DeepSeek doing on this one?<br>
+(I think it can be proved easily via an alternating series for ln (1 + x)).</p>
+<p>Tobias</p>
+<p>On 10/07/2025 11:42, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Hello all, you may be interested in a little experiment I tried using the DeepSeek LLM yesterday. I asked whether it could translate a theorem header from n-dimensional real vectors to abstract Euclidean spaces. My query:</p>
+<blockquote>
+<p>The following theorem header fixes variable "a" to type "real^'n". Changing this type to "'a::euclidean_space" requires modifying the header, replacing $ and χ by their analogues for Euclidean spaces.</p>
+<p>proposition<br>
+   fixes a :: "real^'n"<br>
+   assumes "m ≠ n" and ab_ne: "cbox a b ≠ {}" and an: "0 ≤ a$n"<br>
+   shows measurable_shear_interval: "(λx. χ i. if i = m then x$m + x$n else x$i) <code> (cbox a b) ∈ lmeasurable"
+    and measure_shear_interval: "measure lebesgue ((λx. χ i. if i = m then x$m + x$n else x$i) </code> cbox a b)<br>
+                = measure lebesgue (cbox a b)"</p>
+</blockquote>
+<p>On its first attempt it produced something that seemed to be almost right but clunky and referred to something non-standard. Pushing it a little further, I got the following, which is far as I can tell is correct. (Isabelle accepts it.)</p>
+<blockquote>
+<p>proposition<br>
+   fixes a :: "'a::euclidean_space"<br>
+   assumes "m ≠ n"      and "m ∈ Basis" and "n ∈ Basis"<br>
+     and ab_ne: "cbox a b ≠ {}"      and an: "0 ≤ a ∙ n"<br>
+   shows measurable_shear_interval:          "(λx. ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                            else (x ∙ i)) *⇩R i) <code> (cbox a b) ∈ lmeasurable"
+    and measure_shear_interval:          "measure lebesgue ((λx. ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                                          else (x ∙ i)) *⇩R i) </code> cbox a b)<br>
+          = measure lebesgue (cbox a b)”</p>
+</blockquote>
+<p>Everything was accompanied by quantities of plausible sounding narrative, e.g. "this version is more abstract and elegant”. A sample:</p>
+<blockquote>
+<p>This version is more type-safe because:<br>
+     • No need to worry about index bounds<br>
+     • The basis vectors are first-class entities<br>
+     • The notation more clearly reflects the mathematical intent<br>
+Note that in this formulation:<br>
+     • Basis is the canonical basis of the Euclidean space<br>
+     • ∙ is the inner product (giving the component in a particular basis direction)<br>
+     • *⇩R is the scalar multiplication<br>
+     • The sum reconstructs the vector from its components<br>
+Would you like me to explain any part of this formulation in more detail? Or would you like assistance with proving this version of the theorem?</p>
+</blockquote>
+<p>My impression is that it was grabbing material from a variety of places, in particular the AFP entry Ordinary_Differential_Equations. But the word "elegant" doesn't appear there and in fact appears in the entire distribution + AFP only 42 times.</p>
+<p>I recall doing the precise task above in the past and needing the better part of an hour to get it right. I didn't try to port the proof (which was long and complicated) and I would be surprised if it could get that right.</p>
+<p>I'm not sure how much more can be accomplished with the free version of DeepSeek. I have also seen Claude Sonnet 4 swallow entire Isabelle codebases and summarise them. These tools may already be useful for tasks such as identifying duplicate material.</p>
+<p>Larry<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/1xMxlgZRZFCgGoHKL4pfpCPN/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="528703947"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/528703947" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#528703947">(Jul 14 2025 at 16:54)</a>:</h4>
+<p>From: Jason Gross &lt;<a href="mailto:jasongross9@gmail.com">jasongross9@gmail.com</a>&gt;<br>
+ChatGPT o3 seems able to prove that f(x) is monotone with a fairly direct<br>
+argument that the first derivative is positive:<br>
+<a href="https://chatgpt.com/share/68753563-d5a0-8007-aeea-4f48a3b55eb5">https://chatgpt.com/share/68753563-d5a0-8007-aeea-4f48a3b55eb5</a></p>
+<p>Cheers,<br>
+Jason</p>
+<p>On Mon, Jul 14, 2025, 02:51 Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<blockquote>
+<p>Larry,</p>
+<p>I recently asked chatGPT if it could prove that $f(x) = x * ln (1 + 1/x)$<br>
+is<br>
+monotone, but the answer was not helpful. How is DeepSeek doing on this<br>
+one?<br>
+(I think it can be proved easily via an alternating series for ln (1 + x)).</p>
+<p>Tobias</p>
+<p>On 10/07/2025 11:42, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Hello all, you may be interested in a little experiment I tried using<br>
+the DeepSeek LLM yesterday. I asked whether it could translate a theorem<br>
+header from n-dimensional real vectors to abstract Euclidean spaces. My<br>
+query:</p>
+<blockquote>
+<p>The following theorem header fixes variable "a" to type "real^'n".<br>
+Changing this type to "'a::euclidean_space" requires modifying the header,<br>
+replacing $ and χ by their analogues for Euclidean spaces.</p>
+<p>proposition<br>
+   fixes a :: "real^'n"<br>
+   assumes "m ≠ n" and ab_ne: "cbox a b ≠ {}" and an: "0 ≤ a$n"<br>
+   shows measurable_shear_interval: "(λx. χ i. if i = m then x$m + x$n<br>
+else x$i) <code> (cbox a b) ∈ lmeasurable"
+    and measure_shear_interval: "measure lebesgue ((λx. χ i. if i = m
+then x$m + x$n else x$i) </code> cbox a b)<br>
+                = measure lebesgue (cbox a b)"</p>
+</blockquote>
+<p>On its first attempt it produced something that seemed to be almost<br>
+right but clunky and referred to something non-standard. Pushing it a<br>
+little further, I got the following, which is far as I can tell is correct.<br>
+(Isabelle accepts it.)</p>
+<blockquote>
+<p>proposition<br>
+   fixes a :: "'a::euclidean_space"<br>
+   assumes "m ≠ n"      and "m ∈ Basis" and "n ∈ Basis"<br>
+     and ab_ne: "cbox a b ≠ {}"      and an: "0 ≤ a ∙ n"<br>
+   shows measurable_shear_interval:          "(λx. ∑i∈Basis. (if i = m<br>
+then (x ∙ i) + (x ∙ n)                            else (x ∙ i)) *⇩R i) <code>
+(cbox a b) ∈ lmeasurable"
+    and measure_shear_interval:          "measure lebesgue ((λx.
+∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)
+        else (x ∙ i)) *⇩R i) </code> cbox a b)<br>
+          = measure lebesgue (cbox a b)”</p>
+</blockquote>
+<p>Everything was accompanied by quantities of plausible sounding<br>
+narrative, e.g. "this version is more abstract and elegant”. A sample:</p>
+<blockquote>
+<p>This version is more type-safe because:<br>
+     • No need to worry about index bounds<br>
+     • The basis vectors are first-class entities<br>
+     • The notation more clearly reflects the mathematical intent<br>
+Note that in this formulation:<br>
+     • Basis is the canonical basis of the Euclidean space<br>
+     • ∙ is the inner product (giving the component in a particular<br>
+basis direction)<br>
+     • *⇩R is the scalar multiplication<br>
+     • The sum reconstructs the vector from its components<br>
+Would you like me to explain any part of this formulation in more<br>
+detail? Or would you like assistance with proving this version of the<br>
+theorem?</p>
+</blockquote>
+<p>My impression is that it was grabbing material from a variety of places,<br>
+in particular the AFP entry Ordinary_Differential_Equations. But the word<br>
+"elegant" doesn't appear there and in fact appears in the entire<br>
+distribution + AFP only 42 times.</p>
+<p>I recall doing the precise task above in the past and needing the better<br>
+part of an hour to get it right. I didn't try to port the proof (which was<br>
+long and complicated) and I would be surprised if it could get that right.</p>
+<p>I'm not sure how much more can be accomplished with the free version of<br>
+DeepSeek. I have also seen Claude Sonnet 4 swallow entire Isabelle<br>
+codebases and summarise them. These tools may already be useful for tasks<br>
+such as identifying duplicate material.</p>
+<p>Larry<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="528713200"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/528713200" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#528713200">(Jul 14 2025 at 17:53)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Interesting. This is very different from what I got about f'. Haven't checked <br>
+"your" proof ...</p>
+<p>Tobias</p>
+<p>On 14/07/2025 17:53, Jason Gross wrote:</p>
+<blockquote>
+<p>ChatGPT o3 seems able to prove that f(x) is monotone with a fairly direct <br>
+argument that the first derivative is positive: <a href="https://chatgpt.com/">https://chatgpt.com/</a> <br>
+share/68753563-d5a0-8007-aeea-4f48a3b55eb5 &lt;<a href="https://chatgpt.com/share/68753563-">https://chatgpt.com/share/68753563-</a> <br>
+d5a0-8007-aeea-4f48a3b55eb5&gt;</p>
+<p>Cheers,<br>
+Jason</p>
+<p>On Mon, Jul 14, 2025, 02:51 Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a> <br>
+&lt;mailto:<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;&gt; wrote:</p>
+<p>Larry,</p>
+<p>I recently asked chatGPT if it could prove that $f(x) = x * ln (1 + 1/x)$ is<br>
+    monotone, but the answer was not helpful. How is DeepSeek doing on this one?<br>
+    (I think it can be proved easily via an alternating series for ln (1 + x)).</p>
+<p>Tobias</p>
+<p>On 10/07/2025 11:42, Lawrence Paulson wrote:<br>
+     &gt; Hello all, you may be interested in a little experiment I tried using the<br>
+    DeepSeek LLM yesterday. I asked whether it could translate a theorem header<br>
+    from n-dimensional real vectors to abstract Euclidean spaces. My query:<br>
+     &gt;<br>
+     &gt;&gt; The following theorem header fixes variable "a" to type "real^'n".<br>
+    Changing this type to "'a::euclidean_space" requires modifying the header,<br>
+    replacing $ and χ by their analogues for Euclidean spaces.<br>
+     &gt;&gt;<br>
+     &gt;&gt; proposition<br>
+     &gt;&gt;    fixes a :: "real^'n"<br>
+     &gt;&gt;    assumes "m ≠ n" and ab_ne: "cbox a b ≠ {}" and an: "0 ≤ a$n"<br>
+     &gt;&gt;    shows measurable_shear_interval: "(λx. χ i. if i = m then x$m + x$n<br>
+    else x$i) <code> (cbox a b) ∈ lmeasurable"
+     &gt;&gt;     and measure_shear_interval: "measure lebesgue ((λx. χ i. if i = m
+    then x$m + x$n else x$i) </code> cbox a b)<br>
+     &gt;&gt;                 = measure lebesgue (cbox a b)"<br>
+     &gt;<br>
+     &gt; On its first attempt it produced something that seemed to be almost right<br>
+    but clunky and referred to something non-standard. Pushing it a little<br>
+    further, I got the following, which is far as I can tell is correct.<br>
+    (Isabelle accepts it.)<br>
+     &gt;<br>
+     &gt;&gt; proposition<br>
+     &gt;&gt;    fixes a :: "'a::euclidean_space"<br>
+     &gt;&gt;    assumes "m ≠ n"      and "m ∈ Basis" and "n ∈ Basis"<br>
+     &gt;&gt;      and ab_ne: "cbox a b ≠ {}"      and an: "0 ≤ a ∙ n"<br>
+     &gt;&gt;    shows measurable_shear_interval:          "(λx. ∑i∈Basis. (if i = m<br>
+    then (x ∙ i) + (x ∙ n)                            else (x ∙ i)) *⇩R i) <code>
+    (cbox a b) ∈ lmeasurable"
+     &gt;&gt;     and measure_shear_interval:          "measure lebesgue ((λx.
+    ∑i∈Basis. (if i = m then (x ∙ i) + (x ∙ n)                                 
+             else (x ∙ i)) *⇩R i) </code> cbox a b)<br>
+     &gt;&gt;           = measure lebesgue (cbox a b)”<br>
+     &gt;<br>
+     &gt;<br>
+     &gt; Everything was accompanied by quantities of plausible sounding narrative,<br>
+    e.g. "this version is more abstract and elegant”. A sample:<br>
+     &gt;<br>
+     &gt;&gt; This version is more type-safe because:<br>
+     &gt;&gt;      • No need to worry about index bounds<br>
+     &gt;&gt;      • The basis vectors are first-class entities<br>
+     &gt;&gt;      • The notation more clearly reflects the mathematical intent<br>
+     &gt;&gt; Note that in this formulation:<br>
+     &gt;&gt;      • Basis is the canonical basis of the Euclidean space<br>
+     &gt;&gt;      • ∙ is the inner product (giving the component in a particular<br>
+    basis direction)<br>
+     &gt;&gt;      • *⇩R is the scalar multiplication<br>
+     &gt;&gt;      • The sum reconstructs the vector from its components<br>
+     &gt;&gt; Would you like me to explain any part of this formulation in more<br>
+    detail? Or would you like assistance with proving this version of the theorem?<br>
+     &gt;<br>
+     &gt; My impression is that it was grabbing material from a variety of places,<br>
+    in particular the AFP entry Ordinary_Differential_Equations. But the word<br>
+    "elegant" doesn't appear there and in fact appears in the entire<br>
+    distribution + AFP only 42 times.<br>
+     &gt;<br>
+     &gt; I recall doing the precise task above in the past and needing the better<br>
+    part of an hour to get it right. I didn't try to port the proof (which was<br>
+    long and complicated) and I would be surprised if it could get that right.<br>
+     &gt;<br>
+     &gt; I'm not sure how much more can be accomplished with the free version of<br>
+    DeepSeek. I have also seen Claude Sonnet 4 swallow entire Isabelle codebases<br>
+    and summarise them. These tools may already be useful for tasks such as<br>
+    identifying duplicate material.<br>
+     &gt;<br>
+     &gt; Larry<br>
+     &gt;<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/ywbXOxaYfY2ljKrZRogyubhA/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="530822551"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/530822551" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#530822551">(Jul 25 2025 at 17:54)</a>:</h4>
+<p>From: "\"Vromen, H.J. (Huub)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Tobias,</p>
+<p>I submitted the question of the monotonicity of the function f(x) = x * ln (1 + 1/x) to Deepseek. To that, I received a particularly detailed answer with many explanations of the thinking steps. Since Deepseek does not have the ability to share a conversation, I have put the answer in this PDF document.<br>
+Huub</p>
+
+
+
+<a name="530951365"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/530951365" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#530951365">(Jul 26 2025 at 14:04)</a>:</h4>
+<p>From: "\"Vromen, H.J. (Huub)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Tobias,</p>
+<p>Here is the link to the PDF file.<br>
+<a href="https://surfdrive.surf.nl/files/index.php/s/lOFhqtRGMNYXx0Q">https://surfdrive.surf.nl/files/index.php/s/lOFhqtRGMNYXx0Q</a></p>
+<p>Huub</p>
+<p>Van: Vromen, H.J. (Huub) &lt;<a href="mailto:huub.vromen@ru.nl">huub.vromen@ru.nl</a>&gt;<br>
+Datum: vrijdag, 25 juli 2025 om 11:10<br>
+Aan: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Onderwerp: Re: [isabelle] DeepSeek experiment<br>
+Tobias,</p>
+<p>I submitted the question of the monotonicity of the function f(x) = x * ln (1 + 1/x) to Deepseek. To that, I received a particularly detailed answer with many explanations of the thinking steps. Since Deepseek does not have the ability to share a conversation, I have put the answer in this PDF document.<br>
+Huub</p>
+
+
+
+<a name="531324382"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20DeepSeek%20experiment/near/531324382" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20DeepSeek.20experiment.html#531324382">(Jul 28 2025 at 09:55)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Thanks, Huub. That DeeopSeek proof looks good (I only checked the case x &gt; 0). <br>
+Much better than what I had got out of chatGPT, but somebody else posted a <br>
+chatGPT proof that may be similar (I cannot find it just now).</p>
+<p>Below you find Larry's short proof (for positive x) he sent to me. But it relies <br>
+on this corollary</p>
+<p>corollary ln_diff_less: "0 &lt; x ⟹ 0 &lt; y ⟹ x ≠ y ⟹ ln x - ln y &lt; (x - y) / y"</p>
+<p>which in turn uses this lemma (from the library)</p>
+<p>lemma ln_eq_minus_one:<br>
+   assumes "0 &lt; x" "ln x = x - 1"<br>
+   shows "x = 1"</p>
+<p>Its proof (in the library) uses the derivative. So using a second derivative <br>
+appears not unreasonable.</p>
+<p>What I find interesting is that DeepSeek also considers<br>
+Alternative Approach: Using Series Expansion<br>
+that I had also toyed with. I think it yields the result directly w/o going via <br>
+derivatives (as DeepSeek does).</p>
+<p>Tobias</p>
+<p>Larry's proof:</p>
+<p>lemma<br>
+   defines "f ≡ (λx::real. x * ln (1 + 1/x))"<br>
+   shows "strict_mono_on {0&lt;..} f"<br>
+proof -<br>
+   have "∃y. (f has_real_derivative y) (at x) ∧ 0 &lt; y" if "x&gt;0" for x :: real<br>
+   proof -<br>
+     have "(f has_real_derivative ln(x+1) - ln(x) - 1 / (x+1)) (at x)"<br>
+       unfolding f_def using ‹x&gt;0›<br>
+       by (rule_tac derivative_eq_intros refl | force simp add: ln_div <br>
+divide_simps)+<br>
+     then show ?thesis<br>
+       using diff_gt_0_iff_gt ‹x&gt;0› ln_diff_less[of x "x+1"] by auto<br>
+   qed<br>
+   then have "f r &lt; f s" if "r &lt; s" "0 &lt; r" for r s::real<br>
+     by (simp add: DERIV_pos_imp_increasing dual_order.strict_trans1 that)<br>
+   then show ?thesis<br>
+     by (blast intro: strict_mono_onI)<br>
+qed</p>
+<p>On 26/07/2025 08:48, "Vromen, H.J. (Huub)" (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Tobias,</p>
+<p>Here is the link to the PDF file.</p>
+<p><a href="https://surfdrive.surf.nl/files/index.php/s/lOFhqtRGMNYXx0Q">https://surfdrive.surf.nl/files/index.php/s/lOFhqtRGMNYXx0Q</a> &lt;https:// <br>
+<a href="http://surfdrive.surf.nl/files/index.php/s/lOFhqtRGMNYXx0Q">surfdrive.surf.nl/files/index.php/s/lOFhqtRGMNYXx0Q</a>&gt;</p>
+<p>Huub</p>
+<p>*Van: *Vromen, H.J. (Huub) &lt;<a href="mailto:huub.vromen@ru.nl">huub.vromen@ru.nl</a>&gt;<br>
+*Datum: *vrijdag, 25 juli 2025 om 11:10<br>
+*Aan: *cl-isabelle-users@lists.cam.ac.uk &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+*Onderwerp: *Re: [isabelle] DeepSeek experiment</p>
+<p>Tobias,</p>
+<p>I submitted the question of the monotonicity of the function f(x) = x * ln (1 + <br>
+1/x) to Deepseek. To that, I received a particularly detailed answer with many <br>
+explanations of the thinking steps. Since Deepseek does not have the ability to <br>
+share a conversation, I have put the answer in this PDF document.</p>
+<p>Huub<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/_l2fk-Vsr_jJR1WoQ0vf5VEQ/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>I can do</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">commute</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"(m::nat) + n = n + m\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">meta_commute</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"⋀m n. (m::nat) + n = n + m\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">commute</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>What kind of automation is here under the hood? As I understand, commute's theorem form is with schematic variables:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">theorem</span><span class=\"w\"> </span><span class=\"n\">commute</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">m</span><span class=\"w\"> </span><span class=\"o\">+</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">n</span><span class=\"w\"> </span><span class=\"o\">+</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"n\">m</span>\n</code></pre></div>\n<p>which is a kind of universal quantification, which can be turned into meta universal quantification, and <code>by rule</code> does this. Could you elaborate the background?</p>",
+        "id": 521669196,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1748849916
+    },
+    {
+        "content": "<p>The schematic variables are just unification variables. And <code>rule</code> does (higher-order) unification. So here, Isabelle unifies <code>?m</code> with the forall-bound <code>m</code> and <code>?n</code> with <code>n</code>. This unification succeeds and thus the rule can be applied.</p>",
+        "id": 521695898,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1748857025
+    }
+]

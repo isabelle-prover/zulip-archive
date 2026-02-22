@@ -1,0 +1,142 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Simplifier fails when dealing with mix of Pure... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html">[isabelle] Simplifier fails when dealing with mix of Pure...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="560742376"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560742376" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560742376">(Nov 28 2025 at 09:37)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,</p>
+<p>Humbly asking to not get the “Why are you doing this?” question in return, is it expected that the following fails?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">‹⋀x. (True ⟶ x = y) ∧ z ⟹ PROP P ⟹ U›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="c">(* Tactic failed</span>
+<span class="c">The error(s) above occurred for the goal statement:</span>
+<span class="c">(⋀x. x = y ∧ z ⟹ PROP P ⟹ U) ≡ (⋀x. x = y ⟹ z ⟹ PROP P ⟹ U) *)</span>
+</code></pre></div>
+<p>It works as soon as you replace the <code>x=y</code> equality by another HOL term, or remove <code>PROP P</code>, or remove <code>z</code>.</p>
+<p>All the best,<br>
+Hanno</p>
+
+
+
+<a name="560745732"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560745732" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560745732">(Nov 28 2025 at 09:56)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Small correction: The <code> True ⟶ …</code> is not necessary, the following fails as well:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">‹⋀x. PROP P ⟹ (x = y) ∧ z ⟹ U›</span>
+<span class="w">     </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+<p>Also, note this is not an ‘ordinary’ tactic failure that can be caught by <code>?</code>: <code>apply (simp?)</code> still fails.</p>
+<p>From: &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of &lt;Becker&gt;, Hanno &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Reply-To: "Becker, Hanno" &lt;<a href="mailto:beckphan@amazon.co.uk">beckphan@amazon.co.uk</a>&gt;<br>
+Date: Friday, 28 November 2025 at 09:38<br>
+To: "<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [EXTERNAL] [isabelle] Simplifier fails when dealing with mix of Pure and HOL terms</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>Hi all,</p>
+<p>Humbly asking to not get the “Why are you doing this?” question in return, is it expected that the following fails?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">‹⋀x. (True ⟶ x = y) ∧ z ⟹ PROP P ⟹ U›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="c">(* Tactic failed</span>
+<span class="c">The error(s) above occurred for the goal statement:</span>
+<span class="c">(⋀x. x = y ∧ z ⟹ PROP P ⟹ U) ≡ (⋀x. x = y ⟹ z ⟹ PROP P ⟹ U) *)</span>
+</code></pre></div>
+<p>It works as soon as you replace the <code>x=y</code> equality by another HOL term, or remove <code>PROP P</code>, or remove <code>z</code>.</p>
+<p>All the best,<br>
+Hanno</p>
+
+
+
+<a name="560758340"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560758340" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560758340">(Nov 28 2025 at 11:00)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>This doesn't look like intended behaviour to me. I tracked the problem <br>
+to the "defined_all" simproc, specifically to the ML function <br>
+"Quantifier1.rearrange_all". If you remove that simproc from the <br>
+simpset, the exception does not occur.</p>
+<p>Perhaps this helps somebody who knows that part of the code understand <br>
+what is going on.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 28/11/2025 10:55, "Becker, Hanno" (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Small correction: The <code>True ⟶ …</code> is not necessary, the following fails <br>
+as well:</p>
+<p>```</p>
+<p>lemma</p>
+<p>shows ‹⋀x. PROP P ⟹(x = y) ∧z ⟹U›</p>
+<p>apply simp</p>
+<p>```</p>
+<p>Also, note this is not an ‘ordinary’ tactic failure that can be caught <br>
+by <code>?</code>: <code>apply (simp?)</code> still fails.</p>
+<p>*From: *&lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of <br>
+&lt;Becker&gt;, Hanno &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+*Reply-To: *"Becker, Hanno" &lt;<a href="mailto:beckphan@amazon.co.uk">beckphan@amazon.co.uk</a>&gt;<br>
+*Date: *Friday, 28 November 2025 at 09:38<br>
+*To: *"<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>" <br>
+&lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+*Subject: *[EXTERNAL] [isabelle] Simplifier fails when dealing with <br>
+mix of Pure and HOL terms</p>
+<p><em>CAUTION</em>: This email originated from outside of the organization. Do <br>
+not click links or open attachments unless you can confirm the sender <br>
+and know the content is safe.</p>
+<p>Hi all,</p>
+<p>Humbly asking to not get the “Why are you doing this?” question in <br>
+return, is it expected that the following fails?</p>
+<p>```Isabelle</p>
+<p>lemma</p>
+<p>shows ‹⋀x. (True ⟶x = y) ∧z ⟹PROP P ⟹U›</p>
+<p>apply simp</p>
+<p>(* Tactic failed</p>
+<p>The error(s) above occurred for the goal statement:</p>
+<p>(⋀x. x = y ∧z ⟹PROP P ⟹U) ≡ (⋀x. x = y ⟹z ⟹PROP P ⟹U) *)</p>
+<p>```</p>
+<p>It works as soon as you replace the <code>x=y</code> equality by another HOL <br>
+term, or remove <code>PROP P</code>, or remove <code>z</code>.</p>
+<p>All the best,</p>
+<p>Hanno<br>
+</p>
+</blockquote>
+
+
+
+<a name="560772812"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simplifier%20fails%20when%20dealing%20with%20mix%20of%20Pure.../near/560772812" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simplifier.20fails.20when.20dealing.20with.20mix.20of.20Pure.2E.2E.2E.html#560772812">(Nov 28 2025 at 12:18)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 28/11/2025 10:55, "Becker, Hanno" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Small correction: The <code>True ⟶ …</code> is not necessary, the following fails as well:</p>
+<p><code>
+lemma
+   shows ‹⋀x. PROP P ⟹(x = y) ∧z ⟹U›
+      apply simp
+</code></p>
+<p>Also, note this is not an ‘ordinary’ tactic failure that can be caught by <code>?</code>: <br>
+<code>apply (simp?)</code> still fails.</p>
+</blockquote>
+<p>I've quickly tried thy "apply simp?" variant as a test with recent stable <br>
+releases. Their is a change of behaviour from Isabelle2020 to Isabelle2021.</p>
+<p>All other recent releases are the same as Isabelle2025 and Isabelle2025-1-RC2, <br>
+so this is not a regression and thus it is not relevant for Isabelle2025-1 <br>
+(December 2025).</p>
+<p>Generally note, that the system can be driven into many unusual corner cases <br>
+with undefined or weakly defined behaviour.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

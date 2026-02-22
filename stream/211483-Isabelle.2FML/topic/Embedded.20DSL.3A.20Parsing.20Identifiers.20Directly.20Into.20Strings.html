@@ -1,0 +1,41 @@
+<html>
+<head><meta charset="utf-8"><title>Embedded DSL: Parsing Identifiers Directly Into Strings · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Embedded.20DSL.3A.20Parsing.20Identifiers.20Directly.20Into.20Strings.html">Embedded DSL: Parsing Identifiers Directly Into Strings</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="534730670"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Embedded%20DSL%3A%20Parsing%20Identifiers%20Directly%20Into%20Strings/near/534730670" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andrew Chen <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Embedded.20DSL.3A.20Parsing.20Identifiers.20Directly.20Into.20Strings.html#534730670">(Aug 16 2025 at 01:58)</a>:</h4>
+<p>I want to embed (via mixfix operators and perhaps <code>syntax</code> and <code>translation</code> definitions ) a DSL with arbitrary identifiers, and ingest them as Isabelle strings. While my DSL can be parsed if I wrap all identifiers with quotations so they are auto-ingested as strings, that's ugly. Further, even if all identifiers in my DSL are disambiguated with a cleaner, special symbol, there still doesn't appear to be a straight path. </p>
+<p>I think the following methods could work:</p>
+<ol>
+<li><code>translation</code> has access to outer syntax, so it's able to take in the special <code>id</code>, which doesn't seem to exist in the inner syntax level. With some additional ML code, could I directly convert an <code>id</code> to a string in a <code>translation</code>?</li>
+<li>If identifiers are untouched when they come in, then perhaps they will be a <code>Free</code>/<code>Bound</code> variable, which can be intercepted with a proper <code>Sign.parse_translation</code> registration.</li>
+</ol>
+<p>Is there an easier method? Would my proposed implementations work? Is there relevant code and docs I can be pointed to?</p>
+<p>Thanks!<br>
+Andrew</p>
+
+
+
+<a name="534730807"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Embedded%20DSL%3A%20Parsing%20Identifiers%20Directly%20Into%20Strings/near/534730807" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Andrew Chen <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Embedded.20DSL.3A.20Parsing.20Identifiers.20Directly.20Into.20Strings.html#534730807">(Aug 16 2025 at 02:00)</a>:</h4>
+<p>To be perfectly clear, if my DSL fragment was:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Var</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">7;</span>
+</code></pre></div>
+<p>I want <code>a</code> to be directly parsed into a string. I'm also cool if I must disambiguate with:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Var</span><span class="w"> </span><span class="n">&lt;a&gt;</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">7</span>
+</code></pre></div>
+<p>or better yet, with a suffix symbol. Just not the quotations themselves:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Var</span><span class="w"> </span><span class="n">''a''</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">7</span><span class="w"> </span><span class="o">--</span><span class="w"> </span><span class="n">too</span><span class="w"> </span><span class="n">much</span><span class="o">!</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

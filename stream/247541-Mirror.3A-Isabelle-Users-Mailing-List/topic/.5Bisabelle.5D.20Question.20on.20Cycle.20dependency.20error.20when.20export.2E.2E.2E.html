@@ -1,0 +1,254 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Question on Cycle dependency error when export... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20on.20Cycle.20dependency.20error.20when.20export.2E.2E.2E.html">[isabelle] Question on Cycle dependency error when export...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="545261621"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20on%20Cycle%20dependency%20error%20when%20export.../near/545261621" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20on.20Cycle.20dependency.20error.20when.20export.2E.2E.2E.html#545261621">(Oct 16 2025 at 10:36)</a>:</h4>
+<p>From: wangsl &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear Isabelle community,</p>
+<p>I'm using the verified ODE solver authored by Fabian Immler from the AFP <br>
+for code generation:</p>
+<p>export_code one_step_until_time_impl_aform in SML</p>
+<p>then it produces the following error information:</p>
+<p>Dependency "real" :: "metric_space" -&gt; "real" :: "t4_space" would <br>
+result in module dependency cycle</p>
+<p>I also tried the following:</p>
+<p>definition "fs = one_step_until_time_impl_aform optnS 2 <br>
+(init_ode_ops False False (the_odo e1_fas true_form)) x0 False 1"</p>
+<p>value fs</p>
+<p>It seems value generates code successfully but encounters an error at <br>
+run time, part of the compile information is shown below:</p>
+<p>Warning: Value identifier (x) has not been referenced.<br>
+     At (line 10565 of "generated code")<br>
+     Warning: Value identifier (dummy) has not been referenced.<br>
+     At (line 10669 of "generated code")<br>
+     Exception- Fail "division not by 2" raised</p>
+<p>Has anyone encountered similar cycle dependency issues when exporting <br>
+code from the verified ODE solver or similar AFP entries? Are there <br>
+known workarounds for such export problems, particularly for numerical <br>
+ODE solvers? I've observed that in the Isabelle libraries that <br>
+metric_space is a subclass of t4_space, which aligns with our <br>
+mathematical understanding.</p>
+<p>Also, does there exist pre-generated code implementations for this ODE <br>
+solver that we might have missed? We read Fabian Immler's work and <br>
+implementaton and only find tactics for proving bounds on exact <br>
+solutions of ODEs.</p>
+<p>Thank you very much for your time and help.</p>
+<p>Best regards,<br>
+Shuling Wang<br>
+Institute of Software, Chinese Academy of Sciences</p>
+
+
+
+<a name="545276369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20on%20Cycle%20dependency%20error%20when%20export.../near/545276369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20on.20Cycle.20dependency.20error.20when.20export.2E.2E.2E.html#545276369">(Oct 16 2025 at 11:19)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi,</p>
+<blockquote>
+<p>I'm using the verified ODE solver authored by Fabian Immler from the AFP <br>
+for code generation:</p>
+<p>export_code one_step_until_time_impl_aform in SML</p>
+<p>then it produces the following error information:</p>
+<p>Dependency "real" :: "metric_space" -&gt; "real" :: "t4_space" would <br>
+result in module dependency cycle</p>
+</blockquote>
+<p>Try</p>
+<blockquote>
+<p>export_code one_step_until_time_impl_aform in SML module_name Example</p>
+</blockquote>
+<p>instead</p>
+<blockquote>
+<p>I also tried the following:</p>
+<p>definition "fs = one_step_until_time_impl_aform optnS 2 <br>
+(init_ode_ops False False (the_odo e1_fas true_form)) x0 False 1"</p>
+<p>value fs</p>
+<p>It seems value generates code successfully but encounters an error at <br>
+run time, part of the compile information is shown below:</p>
+<p>Warning: Value identifier (x) has not been referenced.<br>
+     At (line 10565 of "generated code")<br>
+     Warning: Value identifier (dummy) has not been referenced.<br>
+     At (line 10669 of "generated code")<br>
+     Exception- Fail "division not by 2" raised</p>
+</blockquote>
+<p>It seems this can only be answered by the author of the entry providing <br>
+that particular code setup <br>
+(<a href="https://www.isa-afp.org/entries/Affine_Arithmetic.html">https://www.isa-afp.org/entries/Affine_Arithmetic.html</a>), which is also <br>
+Fabian Immler.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/hYGwWuj6RZBkpoJrZCCy4g_W/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/ReWd-pUQiK6RQhCYmb2-qEXN/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="545276497"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20on%20Cycle%20dependency%20error%20when%20export.../near/545276497" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20on.20Cycle.20dependency.20error.20when.20export.2E.2E.2E.html#545276497">(Oct 16 2025 at 11:19)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+I don't know what this "division not by 2" error is about, but I can <br>
+tell you that the trick to solve the circular module dependency problem <br>
+is to do</p>
+<p>export_code one_step_until_time_impl_aform in SML module_name Foo</p>
+<p>where "Foo" is a name of your choice. That way, everything will be <br>
+exported into a single module and there will be no circular dependency <br>
+issues. If you export to a language like Haskell, this problem does not <br>
+arise at all since Haskell has no problem with circular dependencies.</p>
+<p>Once you have successfully generated the code you can also search for <br>
+"division not by 2" in it and you might be able to figure out what the <br>
+issue is.</p>
+<p>Manuel</p>
+<p>On 16/10/2025 12:28, wangsl (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear Isabelle community,</p>
+<p>I'm using the verified ODE solver authored by Fabian Immler from the <br>
+AFP for code generation:</p>
+<p>export_code one_step_until_time_impl_aform in SML</p>
+<p>then it produces the following error information:</p>
+<p>Dependency "real" :: "metric_space" -&gt; "real" :: "t4_space" would <br>
+result in module dependency cycle</p>
+<p>I also tried the following:</p>
+<p>definition "fs = one_step_until_time_impl_aform optnS 2 <br>
+(init_ode_ops False False (the_odo e1_fas true_form)) x0 False 1"</p>
+<p>value fs</p>
+<p>It seems value generates code successfully but encounters an error at <br>
+run time, part of the compile information is shown below:</p>
+<p>Warning: Value identifier (x) has not been referenced.<br>
+    At (line 10565 of "generated code")<br>
+    Warning: Value identifier (dummy) has not been referenced.<br>
+    At (line 10669 of "generated code")<br>
+    Exception- Fail "division not by 2" raised</p>
+<p>Has anyone encountered similar cycle dependency issues when exporting <br>
+code from the verified ODE solver or similar AFP entries? Are there <br>
+known workarounds for such export problems, particularly for numerical <br>
+ODE solvers? I've observed that in the Isabelle libraries that <br>
+metric_space is a subclass of t4_space, which aligns with our <br>
+mathematical understanding.</p>
+<p>Also, does there exist pre-generated code implementations for this ODE <br>
+solver that we might have missed? We read Fabian Immler's work and <br>
+implementaton and only find tactics for proving bounds on exact <br>
+solutions of ODEs.</p>
+<p>Thank you very much for your time and help.</p>
+<p>Best regards,<br>
+Shuling Wang<br>
+Institute of Software, Chinese Academy of Sciences</p>
+</blockquote>
+
+
+
+<a name="545758213"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20on%20Cycle%20dependency%20error%20when%20export.../near/545758213" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20on.20Cycle.20dependency.20error.20when.20export.2E.2E.2E.html#545758213">(Oct 18 2025 at 14:01)</a>:</h4>
+<p>From: Fabian Immler &lt;<a href="mailto:fabian.immler@gmail.com">fabian.immler@gmail.com</a>&gt;<br>
+Hi,</p>
+<p>Glad to hear that you are trying to use my ODE solver :)</p>
+<p>My AFP entries modify the code setup for type “real”: reals are represented<br>
+as float, and not rat (as in the Isabelle distribution).<br>
+In this code setup, division is only defined for powers of 2, and if your<br>
+code attempts to divide by something else, it raises this exception.</p>
+<p>Did you perhaps specify some parameters in optnS (like stepsize or<br>
+tolerances) as a rational number (e.g. 0.1 or something like that)?</p>
+<p>Code for the ODE solver is generated only internally for the<br>
+@{computation_check …} oracle in theory Example_Utilities. If you do an<br>
+export_code … in module …</p>
+<p>for any of the constants involved in that oracle declaration, you should<br>
+get the “right” code generated (assuming you import Example_Utilities to<br>
+get the correct code setup).</p>
+<p>Hope this helps, best wishes,</p>
+<p>Fabian</p>
+<p>On Thu, Oct 16, 2025 at 13:19 Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<blockquote>
+<p>I'm using the verified ODE solver authored by Fabian Immler from the AFP<br>
+for code generation:</p>
+<p>export_code one_step_until_time_impl_aform in SML</p>
+<p>then it produces the following error information:</p>
+<p>Dependency "real" :: "metric_space" -&gt; "real" :: "t4_space" would<br>
+result in module dependency cycle</p>
+</blockquote>
+<p>Try</p>
+<blockquote>
+<p>export_code one_step_until_time_impl_aform in SML module_name Example</p>
+</blockquote>
+<p>instead</p>
+<blockquote>
+<p>I also tried the following:</p>
+<p>definition "fs = one_step_until_time_impl_aform optnS 2<br>
+(init_ode_ops False False (the_odo e1_fas true_form)) x0 False 1"</p>
+<p>value fs</p>
+<p>It seems value generates code successfully but encounters an error at<br>
+run time, part of the compile information is shown below:</p>
+<p>Warning: Value identifier (x) has not been referenced.<br>
+     At (line 10565 of "generated code")<br>
+     Warning: Value identifier (dummy) has not been referenced.<br>
+     At (line 10669 of "generated code")<br>
+     Exception- Fail "division not by 2" raised</p>
+</blockquote>
+<p>It seems this can only be answered by the author of the entry providing<br>
+that particular code setup<br>
+(<a href="https://www.isa-afp.org/entries/Affine_Arithmetic.html">https://www.isa-afp.org/entries/Affine_Arithmetic.html</a>), which is also<br>
+Fabian Immler.</p>
+<p>Cheers,<br>
+        Florian</p>
+</blockquote>
+
+
+
+<a name="545870047"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Question%20on%20Cycle%20dependency%20error%20when%20export.../near/545870047" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Question.20on.20Cycle.20dependency.20error.20when.20export.2E.2E.2E.html#545870047">(Oct 20 2025 at 01:23)</a>:</h4>
+<p>From: wangsl &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Thank you all for your assistance.</p>
+<p>Following your suggestion, we have resolved the export_code question and <br>
+try to debug the resulting runtime error.<br>
+We are also checking if the error stems from the rational value setup in <br>
+optnS, as Fabian Immler (author of the ODE solver) mentioned in another <br>
+email.</p>
+<p>Thanks,<br>
+Shuling</p>
+<p>在 2025-10-16 19:19，Florian Haftmann 写道：</p>
+<blockquote>
+<p>Hi,</p>
+<blockquote>
+<p>I'm using the verified ODE solver authored by Fabian Immler from the <br>
+AFP for code generation:</p>
+<p>export_code one_step_until_time_impl_aform in SML</p>
+<p>then it produces the following error information:</p>
+<p>Dependency "real" :: "metric_space" -&gt; "real" :: "t4_space" would <br>
+result in module dependency cycle</p>
+</blockquote>
+<p>Try</p>
+<blockquote>
+<p>export_code one_step_until_time_impl_aform in SML module_name Example</p>
+</blockquote>
+<p>instead</p>
+<blockquote>
+<p>I also tried the following:</p>
+<p>definition "fs = one_step_until_time_impl_aform optnS 2 <br>
+(init_ode_ops False False (the_odo e1_fas true_form)) x0 False 1"</p>
+<p>value fs</p>
+<p>It seems value generates code successfully but encounters an error at <br>
+run time, part of the compile information is shown below:</p>
+<p>Warning: Value identifier (x) has not been referenced.<br>
+     At (line 10565 of "generated code")<br>
+     Warning: Value identifier (dummy) has not been referenced.<br>
+     At (line 10669 of "generated code")<br>
+     Exception- Fail "division not by 2" raised</p>
+</blockquote>
+<p>It seems this can only be answered by the author of the entry providing <br>
+that particular code setup <br>
+(<a href="https://www.isa-afp.org/entries/Affine_Arithmetic.html">https://www.isa-afp.org/entries/Affine_Arithmetic.html</a>), which is also <br>
+Fabian Immler.</p>
+<p>Cheers,<br>
+  Florian</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

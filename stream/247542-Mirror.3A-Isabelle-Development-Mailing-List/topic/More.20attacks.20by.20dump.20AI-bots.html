@@ -1,0 +1,280 @@
+<html>
+<head><meta charset="utf-8"><title>More attacks by dump AI-bots · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html">More attacks by dump AI-bots</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="556721514"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/556721514" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#556721514">(Nov 16 2025 at 23:04)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+In the past few days we've had more attacks on our servers, presumably by dumb <br>
+AI-bots that cannot read robots.txt</p>
+<p>This happens mainly in the late evening (Royal Bavarian Time).</p>
+<p>Notable services that are compromised:</p>
+<p><a href="https://isabelle.sketis.net/components">https://isabelle.sketis.net/components</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle">https://isabelle.sketis.net/repos/isabelle</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release">https://isabelle.sketis.net/repos/isabelle-release</a></p>
+<p>I am presently busy to sort out genuine problems on Isabelle2025-1 release <br>
+candidates, and don't feel like participating in this non-sense out there. It <br>
+requires more research what can be done about it, to return to sanity.</p>
+<p>Makarius</p>
+
+
+
+<a name="556791214"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/556791214" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#556791214">(Nov 17 2025 at 10:20)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/11/2025 00:04, Makarius wrote:</p>
+<blockquote>
+<p>In the past few days we've had more attacks on our servers, presumably by dumb <br>
+AI-bots that cannot read robots.txt</p>
+<p>This happens mainly in the late evening (Royal Bavarian Time).</p>
+</blockquote>
+<p>In the past few days the situation had improved in the morning, but not today.</p>
+<blockquote>
+<p>Notable services that are compromised:</p>
+<p><a href="https://isabelle.sketis.net/components">https://isabelle.sketis.net/components</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle">https://isabelle.sketis.net/repos/isabelle</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release">https://isabelle.sketis.net/repos/isabelle-release</a><br>
+The problem are our hgweb servers (via Apache and its builtin Python engine), <br>
+this also applies to <a href="https://isabelle.in.tum.de/repos">https://isabelle.in.tum.de/repos</a> which is presently unusable.<br>
+We need to find a proper solution for hgweb + Apache specifically.</p>
+</blockquote>
+<p>For now I have disabled <a href="https://isabelle.sketis.net/repos">https://isabelle.sketis.net/repos</a> altogether. The main <br>
+Isabelle repositories are still available via <a href="https://isabelle-dev.sketis.net">https://isabelle-dev.sketis.net</a> <br>
+--- but that is for members only: I had to close it some months ago due to <br>
+dumb AI-bots (Phorge is even more vunerable due to its use of PHP + MySQL).</p>
+<p>It should be possible to work with <a href="http://isabelle-dev.sketis.net">isabelle-dev.sketis.net</a> under program <br>
+control using SSH URLs, after suitable SSH public keys have been uploaded. I <br>
+will see how to change the important isabelle_cronjob (nightly builds) <br>
+accordingly.</p>
+<p>In the mid 1990ies the Open Internet has emerged, where everybody could <br>
+participate easily with self-hosted servers. The AI War that started in <br>
+Jan-2025 has destroyed that --- but I am not going to participate in any war <br>
+of any kind.</p>
+<p>Makarius</p>
+
+
+
+<a name="556792943"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/556792943" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#556792943">(Nov 17 2025 at 10:29)</a>:</h4>
+<p>From: "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p><a href="https://isabelle.sketis.net/components">https://isabelle.sketis.net/components</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle">https://isabelle.sketis.net/repos/isabelle</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release">https://isabelle.sketis.net/repos/isabelle-release</a><br>
+The problem are our hgweb servers (via Apache and its builtin Python <br>
+engine), this also applies to <a href="https://isabelle.in.tum.de/repos">https://isabelle.in.tum.de/repos</a> which <br>
+is presently unusable.<br>
+We need to find a proper solution for hgweb + Apache specifically.</p>
+</blockquote>
+</blockquote>
+<p>I would not call it a "proper" solution, but I am currently using Anubis <br>
+(<a href="https://anubis.techaro.lol/">https://anubis.techaro.lol/</a>) with quite some success. Of course, it's <br>
+an arms race - computing the challenges set out by it are not that <br>
+expensive. Hence, when enough website use it, the crawlers will <br>
+implement the challenge solving part ...</p>
+<p>Achim</p>
+
+
+
+<a name="556795440"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/556795440" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#556795440">(Nov 17 2025 at 10:41)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/11/2025 11:28, Achim D. Brucker wrote:</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><a href="https://isabelle.sketis.net/components">https://isabelle.sketis.net/components</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle">https://isabelle.sketis.net/repos/isabelle</a><br>
+<a href="https://isabelle.sketis.net/repos/isabelle-release">https://isabelle.sketis.net/repos/isabelle-release</a><br>
+The problem are our hgweb servers (via Apache and its builtin Python <br>
+engine), this also applies to <a href="https://isabelle.in.tum.de/repos">https://isabelle.in.tum.de/repos</a> which is <br>
+presently unusable.<br>
+We need to find a proper solution for hgweb + Apache specifically.</p>
+</blockquote>
+</blockquote>
+<p>I would not call it a "proper" solution, but I am currently using Anubis <br>
+(<a href="https://anubis.techaro.lol/">https://anubis.techaro.lol/</a>) with quite some success. Of course, it's an arms <br>
+race - computing the challenges set out by it are not that expensive. Hence, <br>
+when enough website use it, the crawlers will implement the challenge solving <br>
+part ...</p>
+</blockquote>
+<p>Anubis emerged early 2025 as a counter-attack, and I don't like it. An "arms <br>
+race" is war against war, and ultimately won't work.</p>
+<p>There must be a proper solution. For us it means that our own programs (or <br>
+"daemons") can access the repository servers, without too much additional <br>
+complication.</p>
+<p>I am presently thinking of SSH and maybe RSYNC, as well-known non-HTTP <br>
+protocols. There is also an rsync server that hardly anybody remembers now (we <br>
+actually have one to mirror the Isabelle website).</p>
+<p>Makarius</p>
+
+
+
+<a name="556800850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/556800850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#556800850">(Nov 17 2025 at 11:07)</a>:</h4>
+<p>From: "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;<br>
+On 17/11/2025 10:41, Makarius wrote:</p>
+<blockquote>
+<p>On 17/11/2025 11:28, Achim D. Brucker wrote:</p>
+<blockquote>
+<p>I would not call it a "proper" solution, but I am currently using <br>
+Anubis (<a href="https://anubis.techaro.lol/">https://anubis.techaro.lol/</a>) with quite some success. Of <br>
+course, it's an arms race - computing the challenges set out by it <br>
+are not that expensive. Hence, when enough website use it, the <br>
+crawlers will implement the challenge solving part ...</p>
+</blockquote>
+<p>Anubis emerged early 2025 as a counter-attack, and I don't like it. An <br>
+"arms race" is war against war, and ultimately won't work.<br>
+</p>
+</blockquote>
+<p>I agree - but it does work at the moment as a relatively easy to install <br>
+workaround lowering the load on attacked servers a lot. And it allows to <br>
+provide web access for humans, for which I have not seen much better <br>
+solutions out there yet.  Needing a solution quickly, I either had to <br>
+swallow the "Anubis" pill, allow access only to authorised users, or <br>
+shut it down completely. Anubis was (and likely still is) the better of <br>
+the three evils.</p>
+<blockquote>
+<p>There must be a proper solution. For us it means that our own programs <br>
+(or "daemons") can access the repository servers, without too much <br>
+additional complication.</p>
+<p>I am presently thinking of SSH and maybe RSYNC, as well-known non-HTTP <br>
+protocols. There is also an rsync server that hardly anybody remembers <br>
+now (we actually have one to mirror the Isabelle website).</p>
+</blockquote>
+<p>For downloading Isabelle components, rsync seems to be a viable option - <br>
+on my servers, I have not seen high crawler scraping loads for <br>
+"data/software" archives (tgz/zip, etc) nor for REST APIs. I am using <br>
+Anubis purely for the web interfaces designed for human consumption.  <br>
+Again, this will likely change earlier than we all fear.</p>
+<p>For pure programmatic access, any form of weak authentication should <br>
+work at the moment.</p>
+<p>These AI crawlers are really a threat to the open web ...</p>
+<p>Achim</p>
+
+
+
+<a name="556904336"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/556904336" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#556904336">(Nov 17 2025 at 18:33)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/11/2025 11:20, Makarius wrote:</p>
+<blockquote>
+<p>We need to find a proper solution for hgweb + Apache specifically.</p>
+</blockquote>
+<p>The Mercurial mailing list has this thread "HELP: Fighting AI scrapers":<br>
+<a href="https://lists.mercurial-scm.org/pipermail/mercurial/2025-September/106698.html">https://lists.mercurial-scm.org/pipermail/mercurial/2025-September/106698.html</a></p>
+<p>It is interesting to read, but also converges to Anubis, without any brilliant <br>
+ideas. Brilliant ideas is what we need, though. I probably need to study the <br>
+hgweb implementation.</p>
+<p>Makarius</p>
+
+
+
+<a name="560459701"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/560459701" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#560459701">(Nov 26 2025 at 19:14)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 17/11/2025 19:32, Makarius wrote:</p>
+<blockquote>
+<p>On 17/11/2025 11:20, Makarius wrote:</p>
+<blockquote>
+<p>We need to find a proper solution for hgweb + Apache specifically.</p>
+</blockquote>
+<p>The Mercurial mailing list has this thread "HELP: Fighting AI scrapers":<br>
+<a href="https://lists.mercurial-scm.org/pipermail/mercurial/2025-September/106698.html">https://lists.mercurial-scm.org/pipermail/mercurial/2025-September/106698.html</a></p>
+<p>It is interesting to read, but also converges to Anubis, without any brilliant <br>
+ideas. Brilliant ideas is what we need, though. I probably need to study the <br>
+hgweb implementation.</p>
+</blockquote>
+<p>I've now invested 1h to study the hgweb implementation of <br>
+<a href="http://isabelle.sketis.net/repos">isabelle.sketis.net/repos</a>, notably mercurial-6.1.4/mercurial/hgweb/hgweb_mod.py</p>
+<p>The answer is rather plain and simple:</p>
+<p>changeset:   83654:52cd371a36dd<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Wed Nov 26 20:00:47 2025 +0100<br>
+files:       Admin/Mercurial/mercurial-6.1.4-hgweb.patch<br>
+description:<br>
+adhoc patch for hgweb.wsgi: provide "hg clone" via HTTP without suffering from <br>
+Denial-of-Service attacks on website content (e.g. by Non-Intelligent Agents);</p>
+<p>diff -r f152543f9e16 -r 52cd371a36dd Admin/Mercurial/mercurial-6.1.4-hgweb.patch<br>
+--- /dev/null   Thu Jan 01 00:00:00 1970 +0000<br>
++++ b/Admin/Mercurial/mercurial-6.1.4-hgweb.patch   Wed Nov 26 20:00:47 2025 +0100<br>
+@@ -0,0 +1,16 @@<br>
++diff -ru mercurial-6.1.4/mercurial/hgweb/hgweb_mod.py <br>
+mercurial-6.1.4-patched/mercurial/hgweb/hgweb_mod.py<br>
++--- mercurial-6.1.4/mercurial/hgweb/hgweb_mod.py   2022-06-16 <br>
+15:09:43.000000000 +0200<br>
+++++ mercurial-6.1.4-patched/mercurial/hgweb/hgweb_mod.py   2025-11-26 <br>
+19:40:54.320858407 +0100<br>
++@@ -371,6 +371,12 @@</p>
+<ul>
+<li>)</li>
+<li>if handled:</li>
+<li>
+<p>return res.sendresponse()<br>
+++        else:<br>
+++            rctx.tmpl = rctx.templater(req)<br>
+++            res.status = b'500 Internal Server Error'<br>
+++            res.headers[b'Content-Type'] = rctx.tmpl.render(b'mimetype', <br>
+{b'encoding': encoding.encoding})<br>
+++            return rctx.sendtemplate(b'error', error=b'Usage: hg clone URL DIR')<br>
+++<br>
++</p>
+</li>
+<li>
+<h1>Old implementations of hgweb supported dispatching the request via</h1>
+</li>
+<li>
+<h1>the initial query string parameter instead of using PATH_INFO.</h1>
+</li>
+</ul>
+<p>In other words: there is no longer a website to browse (nor to attack), only <br>
+the "wireprotocol" of the hg client via HTTP.</p>
+<p>Thus all-important automatic jobs with "hg clone <br>
+<a href="https://isabelle.sketis.net/repos/isabelle">https://isabelle.sketis.net/repos/isabelle</a>" should work again --- and perform <br>
+better than before, because we disregard the AI non-sense altogether.</p>
+<p>The error page could be a bit nicer, saying more clearly what is wrong and <br>
+what needs to be done instead, but the main focus is still the Isabelle2025-1 <br>
+release.</p>
+<p>Makarius</p>
+
+
+
+<a name="560467089"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/More%20attacks%20by%20dump%20AI-bots/near/560467089" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/More.20attacks.20by.20dump.20AI-bots.html#560467089">(Nov 26 2025 at 20:01)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 26/11/2025 20:14, Makarius wrote:</p>
+<blockquote>
+<p>The answer is rather plain and simple:</p>
+<p>In other words: there is no longer a website to browse (nor to attack), only <br>
+the "wireprotocol" of the hg client via HTTP.</p>
+</blockquote>
+<p>I should cite one of my sources for this approach: <br>
+<a href="https://www.fsf.org/bulletin/2025/spring/defending-savannah-from-ddos-attacks">https://www.fsf.org/bulletin/2025/spring/defending-savannah-from-ddos-attacks</a></p>
+<p>"""<br>
+To all of the companies crawling the Internet: there is a better way! Do not <br>
+scan code repositories over the web: clone them using version control tools <br>
+such as git, cvs, svn, Mercurial, or bzr. Follow the rules set forth in the <br>
+robots.txt files.<br>
+"""</p>
+<p>Such a friendly suggestion is not going to work, though. Instead, the policy <br>
+needs to be enforced, by not offering an open webspace in the first place.</p>
+<p>The rules in robots.txt used to be the foundation of the Free Internet. It was <br>
+a nice time, but it is over now.</p>
+<p>Instead we can eventually provide proper repository management and browsing as <br>
+part of the regular Prover IDE. Professional development works better on the <br>
+good old desktop, not on a web interface.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

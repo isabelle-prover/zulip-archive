@@ -1,0 +1,115 @@
+<html>
+<head><meta charset="utf-8"><title>Quotient involving real^3 · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20involving.20real.5E3.html">Quotient involving real^3</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="542992032"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20involving%20real%5E3/near/542992032" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20involving.20real.5E3.html#542992032">(Oct 03 2025 at 17:17)</a>:</h4>
+<p>I want to take a quotient of R^3 minus the origin to define the real projective 2-space RP^2. I did this once using <code>real×real×real</code>, but now I find that I'd like to use things like Analysis.Cross3, which seems to require vectors. </p>
+<p>I simply replaced the types everywhere (and I've "sorry"ed some proofs to make things shorter):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="s">"Chapter1-2-alt-quo"</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Complex_Main</span><span class="w"> </span><span class="s">"HOL-Analysis.Cross3"</span>
+<span class="k">begin</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="n">v3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"real^3"</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">map_vec</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"map_vec f g v = vec_lambda (map_fun g f (vec_nth v))"</span>
+<span class="k">functor</span><span class="w"> </span><span class="n">map_vec</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">map_vec_def</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">eq_id_iff</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">projrel</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"v3 ⇒ v3 ⇒ bool"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"projrel = (λx y. (x ≠ 0 ∧ y ≠ 0) ∧  (∃ (c::real) . c ≠ 0 ∧ (x =  c *⇩R y)))"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">exists_projrel_refl</span><span class="o">:</span><span class="w"> </span><span class="s">"∃x. projrel x x"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"vector[1, 0, 0] =  1 *⇩R vector[1, 0, 0]"</span><span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">projrel_def</span><span class="w"> </span><span class="n">scaleR_one</span><span class="w"> </span><span class="n">zero_neq_one</span><span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">nonzero_inverse</span><span class="o">:</span><span class="w"> </span><span class="s">"((c::real) ≠ 0) ⟹ ((1/c) ≠ 0)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">divide_through</span><span class="o">:</span><span class="w"> </span><span class="s">"((c::real) ≠ 0) ⟹ (a = c*q) ⟹ ((1/c)*a = q)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">symp_projrel</span><span class="o">:</span><span class="w"> </span><span class="s">"symp projrel"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">symp_def</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">clarify</span><span class="o">)</span>
+<span class="w">    </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"projrel x y"</span>
+<span class="w">    </span><span class="k">obtain</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">a1</span><span class="o">:</span><span class="s">"(x ≠ 0 ∧ y ≠ 0) ∧   c ≠ 0 ∧</span>
+<span class="s">         (x = c *⇩R y)"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">projrel_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">meson</span>
+<span class="w">    </span><span class="k">have</span><span class="w"> </span><span class="n">inv</span><span class="o">:</span><span class="w"> </span><span class="s">"(1/c) * c = 1"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"(1/c) *⇩R x = (1/c) *⇩R (c *⇩R y)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">    </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = 1 *⇩R y"</span><span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">    </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... =  y"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">    </span><span class="k">finally</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"(1/c) *⇩R  x = y"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">    </span><span class="k">then</span><span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"projrel y x"</span><span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="n">projrel_def</span><span class="w"> </span><span class="n">scaleR_zero_left</span><span class="o">)</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">transp_projrel</span><span class="o">:</span><span class="w"> </span><span class="s">"transp projrel"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">part_equivp_projrel</span><span class="o">:</span><span class="w"> </span><span class="s">"part_equivp projrel"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">part_equivpI</span><span class="w"> </span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">exists_projrel_refl</span><span class="w"> </span><span class="n">symp_projrel</span><span class="w"> </span><span class="n">transp_projrel</span><span class="o">])</span>
+
+<span class="kn">quotient_type</span><span class="w"> </span><span class="n">rp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v3</span><span class="w"> </span><span class="n">/</span><span class="w"> </span><span class="n">partial</span><span class="o">:</span><span class="w"> </span><span class="s">"projrel"</span>
+<span class="w">  </span><span class="kp">morphisms</span><span class="w"> </span><span class="n">Rep_Proj</span><span class="w"> </span><span class="n">Abs_Proj</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">part_equivp_projrel</span><span class="w"> </span><span class="ow">.</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">Domainp_cr_proj</span><span class="w"> </span><span class="o">[</span><span class="n">transfer_domain_rule</span><span class="o">]:</span><span class="w"> </span><span class="s">"Domainp pcr_rp2 = (λx .( (x ≠ 0) ∧ projrel x x))"</span>
+<span class="w">  </span><span class="k">using</span><span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+
+<span class="c">(*  by (simp add: projrel_def rp2.domain_eq) *)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>But after making the quotient type, I get an error</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Generation</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">parametrized</span><span class="w"> </span><span class="n">correspondence</span><span class="w"> </span><span class="n">relation</span><span class="w"> </span><span class="n">failed.</span>
+<span class="n">Reason</span><span class="o">:</span><span class="w">  </span><span class="n">No</span><span class="w"> </span><span class="n">relator</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="s">"Numeral_Type.bit1"</span><span class="w"> </span><span class="n">found.</span>
+</code></pre></div>
+<p>(the <code>map_vec</code> definition near the top is inserted because of an answer to an earlier version of this question at <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings/with/528733443">#Beginner Questions &gt; Quotient Basics and warnings</a> )</p>
+<p>As a novice, I have no idea what Numeral_Type.bit1 is, or why it would arise here. But more important, whatever is going on seems to have messed things up enough that <code>rp2.domain_eq</code>, which was automatically defined when I used <code>real×real×real</code>,is no longer available, so the commented-out proof at the end no longer works. </p>
+<p>Is my situation hopeless? Does Isabelle not want me to make quotients of real vector spaces?</p>
+
+
+
+<a name="543600502"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20involving%20real%5E3/near/543600502" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20involving.20real.5E3.html#543600502">(Oct 07 2025 at 18:46)</a>:</h4>
+<p>Just FYI, I do have a version of the cross product development that I intend to put in the distribution instead of the current one. Mine is strictly more general; it works for any three-dimensional real vector space with distinguished x, y, z axis.</p>
+
+
+
+<a name="543637830"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20involving%20real%5E3/near/543637830" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20involving.20real.5E3.html#543637830">(Oct 07 2025 at 23:41)</a>:</h4>
+<p>I eagerly await that. I'd still like to be able to do the quotient on <code>real^3</code>, but given the lack of answers to earlier questions, that may have to await another life where I have the time and energy to learn about dead variables and bounded natural functors, etc.</p>
+
+
+
+<a name="543818336"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20involving%20real%5E3/near/543818336" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20involving.20real.5E3.html#543818336">(Oct 08 2025 at 19:18)</a>:</h4>
+<p>Oh and by the way, I think you can ignore the message about the "parametrized correspondence relation". I don't think you need that.</p>
+
+
+
+<a name="543995388"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20involving%20real%5E3/near/543995388" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20involving.20real.5E3.html#543995388">(Oct 09 2025 at 15:48)</a>:</h4>
+<p>By altering that last lemma to </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">Domainp_cr_proj</span><span class="w"> </span><span class="o">[</span><span class="n">transfer_domain_rule</span><span class="o">]:</span><span class="w"> </span><span class="s">"Domainp cr_rp2 = (λx .( (x ≠ 0) ∧ projrel x x))"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">projrel_def</span><span class="w"> </span><span class="n">rp2.domain</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">presburger</span>
+</code></pre></div>
+<p>we actually get a quotient that's usable. (The difference is between <code>pcr_rp2</code> and <code>cr_rp2</code> for those who don't feel like playing "Where's Waldo" with the code.) </p>
+<p>My thanks to Richard Schmoetten for showing this to me.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,140 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] How to build a base heap containing both HOL-C... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20build.20a.20base.20heap.20containing.20both.20HOL-C.2E.2E.2E.html">[isabelle] How to build a base heap containing both HOL-C...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="512868501"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20to%20build%20a%20base%20heap%20containing%20both%20HOL-C.../near/512868501" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20build.20a.20base.20heap.20containing.20both.20HOL-C.2E.2E.2E.html#512868501">(Apr 17 2025 at 16:29)</a>:</h4>
+<p>From: Paolo Crisafulli &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi,</p>
+<p>I have the following ROOT file which allows me to quickly build session <br>
+HOL-CyberPhi, as it's built on top of a heap which contains session <br>
+HOL-CSPM and theory Ordinary_Differential_Equations.Linear_ODE, both of <br>
+which are very long to build.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="s">"HOL-CSP-ODE"</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="s">"HOL-CSP-ODE"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"HOL-CSPM"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">[</span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">false</span><span class="o">,</span><span class="w"> </span><span class="n">timeout</span><span class="o">=</span><span class="n">1200</span><span class="o">]</span>
+<span class="w">   </span><span class="n">sessions</span>
+<span class="w">     </span><span class="s">"Ordinary_Differential_Equations"</span>
+<span class="w">   </span><span class="n">theories</span>
+<span class="w">     </span><span class="s">"Ordinary_Differential_Equations.Linear_ODE"</span>
+
+<span class="n">session</span><span class="w"> </span><span class="s">"HOL-CyberPhi"</span><span class="w"> </span><span class="o">(</span><span class="n">AFP</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"HOL-CSP-ODE"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">   </span><span class="n">options</span><span class="w"> </span><span class="o">[</span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdf</span><span class="o">,</span><span class="w"> </span><span class="n">document_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"output"</span><span class="o">,</span><span class="w"> </span><span class="n">timeout</span><span class="o">=</span><span class="n">1200</span><span class="o">]</span>
+<span class="w">   </span><span class="n">directories</span><span class="w"> </span><span class="n">examples</span>
+<span class="w">   </span><span class="n">theories</span>
+<span class="w">     </span><span class="s">"CyberPhi_Core"</span>
+<span class="w">     </span><span class="s">"Safety_Props"</span>
+<span class="w">     </span><span class="s">"ODE_Kinematics"</span>
+<span class="w">     </span><span class="s">"Bouncing_Ball"</span>
+<span class="w">     </span><span class="s">"Oscillator"</span>
+<span class="w">   </span><span class="n">document_files</span>
+<span class="w">     </span><span class="s">"root.tex"</span>
+</code></pre></div>
+<p>As it is, HOL-CSP-ODE contains no thy file of its own. Nevertheless, I <br>
+have to keep an empty HOL-CSP-ODE dir, otherwise (after removing the 'in <br>
+"HOL-CSP-ODE"' clause) I'm getting:</p>
+<p>*** Duplicate use of directory "/home/paolo/dev/hol-cyberphi"<br>
+***   for session "HOL-CSP-ODE" (line 45 of <br>
+"/home/paolo/dev/hol-cyberphi/ROOT")<br>
+***   vs. session "HOL-CyberPhi" (line 52 of <br>
+"/home/paolo/dev/hol-cyberphi/ROOT")</p>
+<p>As a perfectionist, I'm wondering: is there a way to get rid of the <br>
+HOL-CSP-ODE dir/clause? Or is there another, better, way to achieve the <br>
+same goal (having a base heap to build fast)?</p>
+<p>In advance, thank you very much for your help!</p>
+<p>Cheers,</p>
+<p>Paolo</p>
+
+
+
+<a name="514116108"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20to%20build%20a%20base%20heap%20containing%20both%20HOL-C.../near/514116108" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20build.20a.20base.20heap.20containing.20both.20HOL-C.2E.2E.2E.html#514116108">(Apr 24 2025 at 12:47)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 17/04/2025 18:28, Paolo Crisafulli (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I have the following ROOT file which allows me to quickly build session HOL- <br>
+CyberPhi, as it's built on top of a heap which contains session HOL-CSPM and <br>
+theory Ordinary_Differential_Equations.Linear_ODE, both of which are very long <br>
+to build.</p>
+<p>As a perfectionist, I'm wondering: is there a way to get rid of the HOL-CSP- <br>
+ODE dir/clause? Or is there another, better, way to achieve the same goal <br>
+(having a base heap to build fast)?</p>
+</blockquote>
+<p>Every session requires its own unique directory, so there is presently no way <br>
+around it.</p>
+<p>You don't need the auxiliary session at all, if your motivation is to speed-up <br>
+the build for Isabelle/jEdit. See options -A and -R for "isabelle jedit", as <br>
+explained in the "isabelle doc jedit".</p>
+<p>Overall, performance is often improved by removing too many intermediate <br>
+sessions. Thus option -A, which could be as extreme as "-A HOL" to skip <br>
+everything in between and just load the requirements into the background image.</p>
+<p>Makarius</p>
+
+
+
+<a name="515501532"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20How%20to%20build%20a%20base%20heap%20containing%20both%20HOL-C.../near/515501532" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20How.20to.20build.20a.20base.20heap.20containing.20both.20HOL-C.2E.2E.2E.html#515501532">(May 01 2025 at 13:04)</a>:</h4>
+<p>From: Paolo Crisafulli &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Thank you very much for your answer.</p>
+<p>I'm now using the following ROOT file:</p>
+<p>session "HOL-CyberPhi" (AFP) = "HOL-CSPM" +<br>
+   options [document = pdf, document_output = "output", timeout=1200, <br>
+quick_and_dirty=true]<br>
+   sessions<br>
+     "Ordinary_Differential_Equations"<br>
+   directories examples<br>
+   theories<br>
+     "CyberPhi_Core"<br>
+     "Safety_Props"<br>
+     "ODE_Kinematics"<br>
+     "Bouncing_Ball"<br>
+     "Oscillator"<br>
+     "Forward_Stepwise_Kinematics"<br>
+   document_files<br>
+     "root.tex"</p>
+<p>The following command produces the expected result: JEdit starts without <br>
+recompiling Ordinary_Differential_Equations and its ancestors.</p>
+<p>isabelle jedit -d . -R HOL-CyberPhi ::</p>
+<p>Is there a way to get a similar speed up with "isabelle build"?</p>
+<p>Currently, without the intermediate session, all dependencies of <br>
+Ordinary_Differential_Equations get built each time I change a file in <br>
+my session and build again, which is huge.</p>
+<p>Thank you,</p>
+<p>Paolo</p>
+<p>On 24/04/2025 14:39, Makarius wrote:</p>
+<blockquote>
+<p>On 17/04/2025 18:28, Paolo Crisafulli (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>I have the following ROOT file which allows me to quickly build <br>
+session HOL- CyberPhi, as it's built on top of a heap which contains <br>
+session HOL-CSPM and theory <br>
+Ordinary_Differential_Equations.Linear_ODE, both of which are very <br>
+long to build.</p>
+<p>As a perfectionist, I'm wondering: is there a way to get rid of the <br>
+HOL-CSP- ODE dir/clause? Or is there another, better, way to achieve <br>
+the same goal (having a base heap to build fast)?</p>
+</blockquote>
+<p>Every session requires its own unique directory, so there is presently <br>
+no way around it.</p>
+<p>You don't need the auxiliary session at all, if your motivation is to <br>
+speed-up the build for Isabelle/jEdit. See options -A and -R for <br>
+"isabelle jedit", as explained in the "isabelle doc jedit".</p>
+<p>Overall, performance is often improved by removing too many <br>
+intermediate sessions. Thus option -A, which could be as extreme as <br>
+"-A HOL" to skip everything in between and just load the requirements <br>
+into the background image.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

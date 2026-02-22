@@ -1,0 +1,39 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Discontinue isabelle process -T / use_thy · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Discontinue.20isabelle.20process.20-T.20.2F.20use_thy.html">NEWS: Discontinue isabelle process -T / use_thy</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="546315479"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Discontinue%20isabelle%20process%20-T%20/%20use_thy/near/546315479" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Discontinue.20isabelle.20process.20-T.20.2F.20use_thy.html#546315479">(Oct 21 2025 at 19:47)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* System </strong>*</p>
+<ul>
+<li>The command-line tool "isabelle process" no longer supports option -T<br>
+to load individual theories via the "use_thy" function in Isabelle/ML.<br>
+The latter is still available as "Thy_Info.use_thy_legacy", notably for<br>
+"isabelle process -e ...", but it will be removed eventually. The proper<br>
+way to process individual theories under program control is via<br>
+"isabelle process_theories". INCOMPATIBILITY.</li>
+</ul>
+<p>This refers to Isabelle/7505b5e592b1.</p>
+<p>It needs to be understood in the context of the new "isabelle <br>
+process_theories", which is adjacent in the NEWS and provides a proper <br>
+Isabelle/Scala context for the Isabelle/ML process.</p>
+<p>At some point after the Isabelle2025-1 release, I will revisit the remaining <br>
+Thy_Info.use_theories, which is the ML entry point for "isabelle build". <br>
+Without the assumption of being a sequential ML toplevel operation, it can be <br>
+done more efficiently, e.g. commit presentation hooks when a theory is <br>
+finished, and delete its intermediate states on the spot (instead of at the <br>
+end of the build 'theories' section).</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

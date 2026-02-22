@@ -1,0 +1,34 @@
+<html>
+<head><meta charset="utf-8"><title>simproc for boolean algebra broken? · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/simproc.20for.20boolean.20algebra.20broken.3F.html">simproc for boolean algebra broken?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="508995659"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/simproc%20for%20boolean%20algebra%20broken%3F/near/508995659" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/simproc.20for.20boolean.20algebra.20broken.3F.html#508995659">(Mar 30 2025 at 06:21)</a>:</h4>
+<p>I may be wrong but it appears that the simproc for boolean_algebra are broken.<br>
+Small example</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"(A ⊔ B) ⊔ A = A ⊔ (B :: 'a :: boolean_algebra)"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(*fails*)</span>
+<span class="gr">oops</span>
+</code></pre></div>
+
+
+
+<a name="509019315"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/simproc%20for%20boolean%20algebra%20broken%3F/near/509019315" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/simproc.20for.20boolean.20algebra.20broken.3F.html#509019315">(Mar 30 2025 at 12:01)</a>:</h4>
+<p>Nevermind it appears that the simpproc only deals with<br>
+cancelling out negations.<br>
+lemma "(A ⊔ B) ⊔ - A = (B :: 'a :: boolean_algebra)"<br>
+supply [[simp_trace]]<br>
+  apply (simp ) (*simplifies to ⊤ = B *)</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

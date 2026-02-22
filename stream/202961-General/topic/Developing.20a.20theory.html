@@ -1,0 +1,26 @@
+<html>
+<head><meta charset="utf-8"><title>Developing a theory · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Developing.20a.20theory.html">Developing a theory</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="506098665"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Developing%20a%20theory/near/506098665" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Developing.20a.20theory.html#506098665">(Mar 17 2025 at 09:57)</a>:</h4>
+<p>Developing an Isabelle theory is an art. I have my experience in this but I would like to ask for advice.</p>
+<p>What I see is that writing good definitions and picking good lemmas are important.</p>
+<p>Good definitions: they need not only be correct but they should ease proving lemmas about them. One should be aware what proof support the ingredients have: fold combinators, definitional mechanisms.</p>
+<p>Picking lemmas: there are two basic schools on this: bottom-up and top-down. In bottom-up, you have your basic definitions, and first you prove properties of individual definitions as lemmas, and then "obvious" lemmas on combinations of function definitions. </p>
+<p>In top-down, you strive for the theorem you really need, and trying to use some automation on the goal you end up with some proof state where you can identify a needed lemma to advance the proof. When you try to prove that lemma you might identify new more low-level lemmas in turn, some of them are already proved in the Isabelle code base. You can do higher-order proving in top-down: you can say sorry for low-level, "trivial" lemmas and focus on the really interesting theorems to see whether your main ideas work.</p>
+<p>Unfolding: you need to unfold only one or two levels where you have relevant lemmas to use.</p>
+<p>Generalisation: if you need a lemma, try to state it in its most general form: it will be easier to prove, and it will be easier to use in later proofs.</p>
+<p>Is there any written wisdom on this? I would love to read your remarks on the above, especially what constitutes a good definition and how shall one write it. And, if you can extend it in any way.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

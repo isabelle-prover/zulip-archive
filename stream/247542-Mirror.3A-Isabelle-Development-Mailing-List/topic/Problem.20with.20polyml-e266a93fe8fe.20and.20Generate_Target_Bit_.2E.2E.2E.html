@@ -1,0 +1,79 @@
+<html>
+<head><meta charset="utf-8"><title>Problem with polyml-e266a93fe8fe and Generate_Target_Bit_... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20with.20polyml-e266a93fe8fe.20and.20Generate_Target_Bit_.2E.2E.2E.html">Problem with polyml-e266a93fe8fe and Generate_Target_Bit_...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="512035068"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problem%20with%20polyml-e266a93fe8fe%20and%20Generate_Target_Bit_.../near/512035068" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20with.20polyml-e266a93fe8fe.20and.20Generate_Target_Bit_.2E.2E.2E.html#512035068">(Apr 14 2025 at 09:49)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+I have tested a recent repository version of Poly/ML <br>
+<a href="https://github.com/polyml/polyml/commit/e266a93fe8fe">https://github.com/polyml/polyml/commit/e266a93fe8fe</a> with current <br>
+Isabelle/9e5f645d6000.</p>
+<p>This causes a problem in line 83 of theory <br>
+"Codegenerator_Test.Generate_Target_Bit_Operations.thy":</p>
+<p>*** Evaluation for PolyML failed:<br>
+*** exception Fail raised (line 5): Bad max</p>
+<p>Looking only superficially, I don't quite understand what is the intention of <br>
+the test.</p>
+<p>Note that there have been recent changes in Poly/ML on word arithmetic.</p>
+<p>Makarius</p>
+
+
+
+<a name="512035902"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problem%20with%20polyml-e266a93fe8fe%20and%20Generate_Target_Bit_.../near/512035902" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20with.20polyml-e266a93fe8fe.20and.20Generate_Target_Bit_.2E.2E.2E.html#512035902">(Apr 14 2025 at 09:53)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 14/04/2025 11:49, Makarius wrote:</p>
+<blockquote>
+<p>I have tested a recent repository version of Poly/ML <a href="https://github.com/">https://github.com/</a> <br>
+polyml/polyml/commit/e266a93fe8fe with current Isabelle/9e5f645d6000.</p>
+</blockquote>
+<p>I should also say that this can be built like this:</p>
+<p>isabelle component_polyml -V e266a93fe8fe</p>
+<p>Makarius</p>
+
+
+
+<a name="512248060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problem%20with%20polyml-e266a93fe8fe%20and%20Generate_Target_Bit_.../near/512248060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20with.20polyml-e266a93fe8fe.20and.20Generate_Target_Bit_.2E.2E.2E.html#512248060">(Apr 15 2025 at 07:36)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>I have tested a recent repository version of Poly/ML <a href="https://github.com/">https://github.com/</a> <br>
+polyml/polyml/commit/e266a93fe8fe with current Isabelle/9e5f645d6000.</p>
+<p>This causes a problem in line 83 of theory <br>
+"Codegenerator_Test.Generate_Target_Bit_Operations.thy":</p>
+<p>*** Evaluation for PolyML failed:<br>
+*** exception Fail raised (line 5): Bad max</p>
+<p>Looking only superficially, I don't quite understand what is the <br>
+intention of the test.</p>
+<p>Note that there have been recent changes in Poly/ML on word arithmetic.</p>
+</blockquote>
+<p>The explanation for this test can be found (admittedly, very indirect <br>
+and implicit) at</p>
+<p><a href="https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Code_Numeral.thy#l1014">https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Code_Numeral.thy#l1014</a></p>
+<p>reading</p>
+<p>val max_index = pow (fromInt 2, Int.- (Word.wordSize, 3)) - fromInt 1; <br>
+(<em>experimentally determined</em>)</p>
+<p>This is the maximum value usable as index in bit shifts.</p>
+<p>The check in Generate_Target_Bit_Operations.thy then asserts that this <br>
+is really the maximum.</p>
+<p>I am uncertain where to proceed from here. If this max_index is no <br>
+longer unique across different ML versions, it is maybe best to drop the <br>
+line</p>
+<p><a href="https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Codegenerator_Test/Generate_Target_Bit_Operations.thy#l76">https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Codegenerator_Test/Generate_Target_Bit_Operations.thy#l76</a></p>
+<p>Ie. just assert that the index is small enough.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/fMUsjIRzyf6-AiY4fa1C7WJO/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/KOO8lKaAo5SYaU3iIwcX5R_f/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

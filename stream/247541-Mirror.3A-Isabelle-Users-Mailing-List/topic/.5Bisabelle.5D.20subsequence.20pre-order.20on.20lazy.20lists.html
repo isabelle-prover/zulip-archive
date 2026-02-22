@@ -1,0 +1,238 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] subsequence pre-order on lazy lists · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20subsequence.20pre-order.20on.20lazy.20lists.html">[isabelle] subsequence pre-order on lazy lists</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="534248407"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20subsequence%20pre-order%20on%20lazy%20lists/near/534248407" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20subsequence.20pre-order.20on.20lazy.20lists.html#534248407">(Aug 13 2025 at 14:55)</a>:</h4>
+<p>From: Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear List,</p>
+<p>does anyone know if the subsequence preorder on lazy lists has been <br>
+formalized in Isabelle:</p>
+<p>lsubseq :: 'a llist =&gt; 'a llist =&gt; bool</p>
+<p>xs <code>lsubseq</code> ys, iff xs can be obtained by erasing an arbitrary number <br>
+of elements from ys</p>
+<p>It should be reflexive and transitive, but is not antisymmetric:</p>
+<p>1212... <code>lsubseq</code> 2121... <code>lsubseq</code> 1212...</p>
+<p>I'm trying with the following definition:</p>
+<p>definition "lsubseq a b ≡ ∃i. a = lmap snd (lfilter fst (lzip i b))"</p>
+<p>reflexivity is straightforward, but proving transitivity seems <br>
+non-straightforward (with my limited knowledge of coinductive).</p>
+<p>Any ideas, pointers to formalizations, etc?</p>
+<p>--</p>
+<p>Peter</p>
+
+
+
+<a name="534249838"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20subsequence%20pre-order%20on%20lazy%20lists/near/534249838" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20subsequence.20pre-order.20on.20lazy.20lists.html#534249838">(Aug 13 2025 at 15:02)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Yes. It's called "subseq" and it is available in HOL-Library.Sublist.</p>
+<p>It's a special case of the notion of the "homoeomorphic embedding" <br>
+list_emb, which lifts a relation R on list elements to a relation R on <br>
+lists, which basically works like the "list_all2" relator except that <br>
+you're also allowed to ignore elements in the second list entirely.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 13/08/2025 16:55, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear List,</p>
+<p>does anyone know if the subsequence preorder on lazy lists has been <br>
+formalized in Isabelle:</p>
+<p>lsubseq :: 'a llist =&gt; 'a llist =&gt; bool</p>
+<p>xs <code>lsubseq</code> ys, iff xs can be obtained by erasing an arbitrary number <br>
+of elements from ys</p>
+<p>It should be reflexive and transitive, but is not antisymmetric:</p>
+<p>1212... <code>lsubseq</code> 2121... <code>lsubseq</code> 1212...</p>
+<p>I'm trying with the following definition:</p>
+<p>definition "lsubseq a b ≡ ∃i. a = lmap snd (lfilter fst (lzip i b))"</p>
+<p>reflexivity is straightforward, but proving transitivity seems <br>
+non-straightforward (with my limited knowledge of coinductive).</p>
+<p>Any ideas, pointers to formalizations, etc?</p>
+<p>-- </p>
+<p>Peter</p>
+</blockquote>
+
+
+
+<a name="534251371"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20subsequence%20pre-order%20on%20lazy%20lists/near/534251371" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20subsequence.20pre-order.20on.20lazy.20lists.html#534251371">(Aug 13 2025 at 15:09)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+@Manuel: That one is on ordinary lists, whereas Peter asked for lazy lists.</p>
+<p>@Peter: There is the emb function on lazy lists here:</p>
+<p><a href="https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%23Lazy_List_Chain.emb|const&lt;https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%2523Lazy_List_Chain.emb%7Cconst">https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%23Lazy_List_Chain.emb|const&lt;https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%2523Lazy_List_Chain.emb%7Cconst</a>&gt;</p>
+<p>This one has the extra feature that finite lazy lists are only embedded in other finite lazy lists. To omit that one could simply drop the lfinite assumption in the first introduction rule.</p>
+<p>I don’t think we proved transitivity or reflexivity, but both should hold.</p>
+<p>Dmitriy</p>
+<p>On 13 Aug 2025, at 17.01, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Yes. It's called "subseq" and it is available in HOL-Library.Sublist.</p>
+<p>It's a special case of the notion of the "homoeomorphic embedding" list_emb, which lifts a relation R on list elements to a relation R on lists, which basically works like the "list_all2" relator except that you're also allowed to ignore elements in the second list entirely.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 13/08/2025 16:55, Peter (via cl-isabelle-users Mailing List) wrote:<br>
+Dear List,</p>
+<p>does anyone know if the subsequence preorder on lazy lists has been formalized in Isabelle:</p>
+<p>lsubseq :: 'a llist =&gt; 'a llist =&gt; bool</p>
+<p>xs <code>lsubseq</code> ys, iff xs can be obtained by erasing an arbitrary number of elements from ys</p>
+<p>It should be reflexive and transitive, but is not antisymmetric:</p>
+<p>1212... <code>lsubseq</code> 2121... <code>lsubseq</code> 1212...</p>
+<p>I'm trying with the following definition:</p>
+<p>definition "lsubseq a b ≡ ∃i. a = lmap snd (lfilter fst (lzip i b))"</p>
+<p>reflexivity is straightforward, but proving transitivity seems non-straightforward (with my limited knowledge of coinductive).</p>
+<p>Any ideas, pointers to formalizations, etc?</p>
+<p>--</p>
+<p>Peter</p>
+
+
+
+<a name="534260526"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20subsequence%20pre-order%20on%20lazy%20lists/near/534260526" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20subsequence.20pre-order.20on.20lazy.20lists.html#534260526">(Aug 13 2025 at 15:59)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Indeed:</p>
+<p>lemma emb_refl: "emb lxs lxs"<br>
+proof (coinduction arbitrary: lxs)<br>
+  case (emb lxs)<br>
+  then show ?case<br>
+    by (cases lxs) (auto intro!: exI[of _ "[]"])<br>
+qed</p>
+<p>lemma emb_prepedD: "emb (prepend xs lxs) lys ⟹ emb lxs lys"<br>
+  by (induct xs arbitrary: lys)<br>
+    (auto elim!: emb_LConsE simp add: emb_prepend prepend_LCons)</p>
+<p>lemma emb_trans: "emb lxs lys ⟹ emb lys lzs ⟹ emb lxs lzs"<br>
+proof (coinduction arbitrary: lxs lys lzs)<br>
+  case (emb lxs lys lzs)<br>
+  then show ?case<br>
+  proof (cases lxs rule: llist.exhaust)<br>
+    case LNil<br>
+    then show ?thesis<br>
+      using emb emb_lfinite by auto<br>
+  next<br>
+    case (LCons x lxs')<br>
+    with emb show ?thesis<br>
+      unfolding LCons<br>
+      by (auto dest!: emb_prepedD elim!: emb_LConsE)<br>
+  qed<br>
+qed</p>
+<p>Dmitriy</p>
+<p>On 13 Aug 2025, at 17.09, Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>@Manuel: That one is on ordinary lists, whereas Peter asked for lazy lists.</p>
+<p>@Peter: There is the emb function on lazy lists here:</p>
+<p><a href="https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%23Lazy_List_Chain.emb%7Cconst&lt;https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%2523Lazy_List_Chain.emb%7Cconst">https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%23Lazy_List_Chain.emb%7Cconst&lt;https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%2523Lazy_List_Chain.emb%7Cconst</a>&gt;</p>
+<p>This one has the extra feature that finite lazy lists are only embedded in other finite lazy lists. To omit that one could simply drop the lfinite assumption in the first introduction rule.</p>
+<p>I don’t think we proved transitivity or reflexivity, but both should hold.</p>
+<p>Dmitriy</p>
+<p>On 13 Aug 2025, at 17.01, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Yes. It's called "subseq" and it is available in HOL-Library.Sublist.</p>
+<p>It's a special case of the notion of the "homoeomorphic embedding" list_emb, which lifts a relation R on list elements to a relation R on lists, which basically works like the "list_all2" relator except that you're also allowed to ignore elements in the second list entirely.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 13/08/2025 16:55, Peter (via cl-isabelle-users Mailing List) wrote:<br>
+Dear List,</p>
+<p>does anyone know if the subsequence preorder on lazy lists has been formalized in Isabelle:</p>
+<p>lsubseq :: 'a llist =&gt; 'a llist =&gt; bool</p>
+<p>xs <code>lsubseq</code> ys, iff xs can be obtained by erasing an arbitrary number of elements from ys</p>
+<p>It should be reflexive and transitive, but is not antisymmetric:</p>
+<p>1212... <code>lsubseq</code> 2121... <code>lsubseq</code> 1212...</p>
+<p>I'm trying with the following definition:</p>
+<p>definition "lsubseq a b ≡ ∃i. a = lmap snd (lfilter fst (lzip i b))"</p>
+<p>reflexivity is straightforward, but proving transitivity seems non-straightforward (with my limited knowledge of coinductive).</p>
+<p>Any ideas, pointers to formalizations, etc?</p>
+<p>--</p>
+<p>Peter</p>
+
+
+
+<a name="534263970"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20subsequence%20pre-order%20on%20lazy%20lists/near/534263970" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20subsequence.20pre-order.20on.20lazy.20lists.html#534263970">(Aug 13 2025 at 16:19)</a>:</h4>
+<p>From: Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Nice, thank you!</p>
+<p>your proof works without adaptation on the version without lfinite.</p>
+<p>--</p>
+<p>Peter</p>
+<p>p.s.</p>
+<p>I was almost there, but didn't see that I needed to generalize over <br>
+lzs ... lack of experience with coinductive, as said ;)</p>
+<p>On 13/08/2025 17:59, Dmitriy Traytel (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Indeed:</p>
+<p>lemma emb_refl: "emb lxs lxs"<br>
+proof (coinduction arbitrary: lxs)<br>
+  case (emb lxs)<br>
+  then show ?case<br>
+    by (cases lxs) (auto intro!: exI[of _ "[]"])<br>
+qed</p>
+<p>lemma emb_prepedD: "emb (prepend xs lxs) lys ⟹ emb lxs lys"<br>
+  by (induct xs arbitrary: lys)<br>
+    (auto elim!: emb_LConsE simp add: emb_prepend prepend_LCons)</p>
+<p>lemma emb_trans: "emb lxs lys ⟹ emb lys lzs ⟹ emb lxs lzs"<br>
+proof (coinduction arbitrary: lxs lys lzs)<br>
+  case (emb lxs lys lzs)<br>
+  then show ?case<br>
+  proof (cases lxs rule: llist.exhaust)<br>
+    case LNil<br>
+    then show ?thesis<br>
+      using emb emb_lfinite by auto<br>
+  next<br>
+    case (LCons x lxs')<br>
+    with emb show ?thesis<br>
+      unfolding LCons<br>
+      by (auto dest!: emb_prepedD elim!: emb_LConsE)<br>
+  qed<br>
+qed</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 13 Aug 2025, at 17.09, Dmitriy Traytel <br>
+&lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>@Manuel: That one is on ordinary lists, whereas Peter asked for lazy <br>
+lists.</p>
+<p>@Peter: There is the emb function on lazy lists here:</p>
+<p><a href="https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%23Lazy_List_Chain.emb|const">https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%23Lazy_List_Chain.emb|const</a> <br>
+&lt;<a href="https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%2523Lazy_List_Chain.emb%7Cconst">https://www.isa-afp.org/sessions/ordered_resolution_prover/#Lazy_List_Chain.html%2523Lazy_List_Chain.emb%7Cconst</a>&gt;</p>
+<p>This one has the extra feature that finite lazy lists are only <br>
+embedded in other finite lazy lists. To omit that one could simply <br>
+drop the lfinite assumption in the first introduction rule.</p>
+<p>I don’t think we proved transitivity or reflexivity, but both should <br>
+hold.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 13 Aug 2025, at 17.01, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Yes. It's called "subseq" and it is available in HOL-Library.Sublist.</p>
+<p>It's a special case of the notion of the "homoeomorphic embedding" <br>
+list_emb, which lifts a relation R on list elements to a relation R <br>
+on lists, which basically works like the "list_all2" relator except <br>
+that you're also allowed to ignore elements in the second list entirely.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 13/08/2025 16:55, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear List,</p>
+<p>does anyone know if the subsequence preorder on lazy lists has been <br>
+formalized in Isabelle:</p>
+<p>lsubseq :: 'a llist =&gt; 'a llist =&gt; bool</p>
+<p>xs <code>lsubseq</code> ys, iff xs can be obtained by erasing an arbitrary <br>
+number of elements from ys</p>
+<p>It should be reflexive and transitive, but is not antisymmetric:</p>
+<p>1212... <code>lsubseq</code> 2121... <code>lsubseq</code> 1212...</p>
+<p>I'm trying with the following definition:</p>
+<p>definition "lsubseq a b ≡ ∃i. a = lmap snd (lfilter fst (lzip i b))"</p>
+<p>reflexivity is straightforward, but proving transitivity seems <br>
+non-straightforward (with my limited knowledge of coinductive).</p>
+<p>Any ideas, pointers to formalizations, etc?</p>
+<p>-- </p>
+<p>Peter</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

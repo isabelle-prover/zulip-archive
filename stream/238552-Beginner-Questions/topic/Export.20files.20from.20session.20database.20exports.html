@@ -1,0 +1,74 @@
+<html>
+<head><meta charset="utf-8"><title>Export files from session database exports · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Export.20files.20from.20session.20database.20exports.html">Export files from session database exports</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="540256615"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Export%20files%20from%20session%20database%20exports/near/540256615" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Export.20files.20from.20session.20database.20exports.html#540256615">(Sep 18 2025 at 15:02)</a>:</h4>
+<p>Hello,</p>
+<p>I am trying to export code to destinations relative to the session root after modifying them with <code>compile_generated_files</code>. I am calling <code>cp -r *</code> in the <code>where</code> block. Is there a way to avoid this?</p>
+<p>Thanks,</p>
+<p>David</p>
+<p>More info:</p>
+<p>The folder structure:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="ow">..</span>
+<span class="o">|</span><span class="w"> </span><span class="n">&lt;session</span><span class="w"> </span><span class="n">root&gt;</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">ROOT</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">F1.thy</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">F2.thy</span>
+</code></pre></div>
+<p>The files:</p>
+<p><code>ROOT</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">Scratch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">options</span><span class="w"> </span><span class="o">[</span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pdf</span><span class="o">,</span><span class="w"> </span><span class="n">document_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"output"</span><span class="o">]</span>
+<span class="w">  </span><span class="n">theories</span><span class="w"> </span><span class="o">[</span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">false</span><span class="o">]</span>
+<span class="w">    </span><span class="n">F1</span>
+<span class="w">  </span><span class="n">theories</span>
+<span class="w">    </span><span class="n">F2</span>
+<span class="w">  </span><span class="n">document_files</span>
+<span class="w">    </span><span class="s">"root.tex"</span>
+</code></pre></div>
+<p><code>F1</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">F1</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"test x ≡ STR ''123''"</span>
+
+<span class="k">export_code</span><span class="w"> </span><span class="n">test</span>
+<span class="kp">in</span><span class="w"> </span><span class="n">Eval</span><span class="w"> </span><span class="kp">module_name</span><span class="w"> </span><span class="n">Scratch</span><span class="w"> </span><span class="n">file_prefix</span><span class="w"> </span><span class="s">"out"</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p><code>F2</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">F2</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">F1</span>
+<span class="k">begin</span>
+
+<span class="n">compile_generated_files</span><span class="w"> </span><span class="s">"code/out.ML"</span><span class="w"> </span><span class="o">(</span><span class="kp">in</span><span class="w"> </span><span class="s">"F1"</span><span class="o">)</span>
+<span class="n">export_files</span><span class="w"> </span><span class="s">‹code/out.ML›</span><span class="w"> </span><span class="s">‹text.txt›</span>
+<span class="n">export_prefix</span><span class="w"> </span><span class="s">"d"</span>
+<span class="kp">where</span><span class="w">  </span><span class="s">‹fn dir =&gt;</span>
+<span class="s">    let</span>
+<span class="s">      val exec = Generated_Files.execute dir;</span>
+<span class="s">      val _ = exec ‹Modify› ("echo 'println \"here\"' &gt;&gt; code/out.ML");</span>
+
+<span class="s">      val _  = exec ‹Make file› "touch text.txt";</span>
+
+<span class="s">      val _ = exec ‹Move outside› ("cp -r * " ^ (Path.current |&gt; File.absolute_path |&gt; Path.implode));</span>
+<span class="s">    in ()</span>
+<span class="s">    end</span>
+<span class="s">›</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

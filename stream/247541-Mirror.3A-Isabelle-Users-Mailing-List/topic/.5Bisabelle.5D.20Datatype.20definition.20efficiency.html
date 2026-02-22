@@ -1,0 +1,271 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Datatype definition efficiency · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html">[isabelle] Datatype definition efficiency</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="527742815"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527742815" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527742815">(Jul 08 2025 at 17:27)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Hello all, the following email from John Harrison may be of interest.</p>
+<blockquote>
+<p>Begin forwarded message:</p>
+<p>From: John R Harrison &lt;<a href="mailto:jrh013@gmail.com">jrh013@gmail.com</a>&gt;<br>
+Subject: Datatype definition efficiency<br>
+Date: 8 July 2025 at 01:29:22 BST<br>
+To: Larry Paulson &lt;<a href="mailto:Larry.Paulson@cl.cam.ac.uk">Larry.Paulson@cl.cam.ac.uk</a>&gt;</p>
+<p>This is a real example in HOL Light from the domain mentioned,<br>
+of CPU ISA specification. It's currently at 79 constructors and<br>
+growing but not otherwise very interesting or challenging; it's not<br>
+actually recursive, for example.</p>
+<p><a href="https://github.com/awslabs/s2n-bignum/blob/main/x86/proofs/instruction.ml#L234-L317">https://github.com/awslabs/s2n-bignum/blob/main/x86/proofs/instruction.ml#L234-L317</a></p>
+<p>I did some tests of the following in HOL Light, defining simple<br>
+enumeration types with 2^n constructors:</p>
+<p>let test n =<br>
+    let s = String.make 1 (Char.chr (Char.code 'A' + n)) in<br>
+    let cnames = map (fun i -&gt; s^string_of_int i) (0--(1 lsl n - 1)) in<br>
+    let comstr = end_itlist (fun s t -&gt; s ^ " | " ^ t) cnames in<br>
+    time define_type ("Type_"^s^" = " ^ comstr);;</p>
+<p>do_list test (1--8);;</p>
+<p>and the performance is worse than quadratic, looking suspiciously as<br>
+if something in there is cubic:</p>
+<p>constructors | CPU time in seconds<br>
+             2       |       0.033<br>
+             4       |       0.039<br>
+             8       |       0.061<br>
+            16       |       0.133<br>
+            32       |       0.333<br>
+            64       |       1.104<br>
+           128       |       5.225<br>
+           256       |      33.499<br>
+           512       |     258.794</p>
+<p>My recollection is that when first writing this code (sharing an<br>
+office with Makarius in Munich!) I initially made an effort to keep<br>
+things subquadratic but at some point decided not to bother with the<br>
+extra complications since it was OK in most practical cases.<br>
+</p>
+</blockquote>
+
+
+
+<a name="527765694"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527765694" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527765694">(Jul 08 2025 at 20:13)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Hi Larry,</p>
+<p>it is good to collect more specimens from the greater HOL family. I will go <br>
+through some of the examples soon, although I am not directly responsible for <br>
+the actual datatype construction --- Dmitriy is.</p>
+<p>Nonetheless, we can expect some improvements in the underlying infrastructure. <br>
+I am half-through with some significant changes on the claset, after so many <br>
+decades of a certain status-quo that I never quite understood (due to <br>
+accumulated adhoc changes).</p>
+<p>Makarius</p>
+<p>On 08/07/2025 19:27, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Hello all, the following email from John Harrison may be of interest.</p>
+<blockquote>
+<p>Begin forwarded message:</p>
+<p>From: John R Harrison &lt;<a href="mailto:jrh013@gmail.com">jrh013@gmail.com</a>&gt;<br>
+Subject: Datatype definition efficiency<br>
+Date: 8 July 2025 at 01:29:22 BST<br>
+To: Larry Paulson &lt;<a href="mailto:Larry.Paulson@cl.cam.ac.uk">Larry.Paulson@cl.cam.ac.uk</a>&gt;</p>
+<p>This is a real example in HOL Light from the domain mentioned,<br>
+of CPU ISA specification. It's currently at 79 constructors and<br>
+growing but not otherwise very interesting or challenging; it's not<br>
+actually recursive, for example.</p>
+<p><a href="https://github.com/awslabs/s2n-bignum/blob/main/x86/proofs/instruction.ml#L234-L317">https://github.com/awslabs/s2n-bignum/blob/main/x86/proofs/instruction.ml#L234-L317</a></p>
+<p>I did some tests of the following in HOL Light, defining simple<br>
+enumeration types with 2^n constructors:</p>
+<p>let test n =<br>
+     let s = String.make 1 (Char.chr (Char.code 'A' + n)) in<br>
+     let cnames = map (fun i -&gt; s^string_of_int i) (0--(1 lsl n - 1)) in<br>
+     let comstr = end_itlist (fun s t -&gt; s ^ " | " ^ t) cnames in<br>
+     time define_type ("Type_"^s^" = " ^ comstr);;</p>
+<p>do_list test (1--8);;</p>
+<p>and the performance is worse than quadratic, looking suspiciously as<br>
+if something in there is cubic:</p>
+<p>constructors | CPU time in seconds<br>
+              2       |       0.033<br>
+              4       |       0.039<br>
+              8       |       0.061<br>
+             16       |       0.133<br>
+             32       |       0.333<br>
+             64       |       1.104<br>
+            128       |       5.225<br>
+            256       |      33.499<br>
+            512       |     258.794</p>
+<p>My recollection is that when first writing this code (sharing an<br>
+office with Makarius in Munich!) I initially made an effort to keep<br>
+things subquadratic but at some point decided not to bother with the<br>
+extra complications since it was OK in most practical cases.<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="527767141"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527767141" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527767141">(Jul 08 2025 at 20:23)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Indeed the real question is why the merging of clasets is slower than the merging of simpsets, when they use the same data structure.</p>
+<p>Dmitriy reminds me that the unwanted rules can just be deleted using [iff del].</p>
+<blockquote>
+<p>On 8 Jul 2025, at 21:12, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Nonetheless, we can expect some improvements in the underlying infrastructure. I am half-through with some significant changes on the claset, after so many decades of a certain status-quo that I never quite understood (due to accumulated adhoc changes).</p>
+</blockquote>
+
+
+
+<a name="527779557"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527779557" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527779557">(Jul 08 2025 at 22:19)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 08/07/2025 22:23, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Indeed the real question is why the merging of clasets is slower than the merging of simpsets, when they use the same data structure.</p>
+</blockquote>
+<p>At the very bottom there is type <a href="http://Net.net">Net.net</a> for both, but the claset has a lot of <br>
+extra complexity piled up on top of it. When I am through in reading/rewriting <br>
+it carefully, it should be all apparent: written in proper Isabelle/ML of <br>
+2025, not Cambridge SML from 1995.</p>
+<p>Makarius</p>
+
+
+
+<a name="527847581"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527847581" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527847581">(Jul 09 2025 at 09:38)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Looking forward to this. As I may have mentioned already, one of Isabelle's distinct advantages over "certain other trendy systems" is its ability to scale. That is something we should push to its limit.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 8 Jul 2025, at 23:18, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>At the very bottom there is type <a href="http://Net.net">Net.net</a> for both, but the claset has a lot of extra complexity piled up on top of it. When I am through in reading/rewriting it carefully, it should be all apparent: written in proper Isabelle/ML of 2025, not Cambridge SML from 1995.</p>
+</blockquote>
+
+
+
+<a name="527847999"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527847999" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527847999">(Jul 09 2025 at 09:40)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 09/07/2025 11:38, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Looking forward to this. As I may have mentioned already, one of Isabelle's distinct advantages over "certain other trendy systems" is its ability to scale. That is something we should push to its limit.</p>
+</blockquote>
+<p>"Push to its limits" is not conformant with decades of Isabelle culture. We <br>
+usually work more diligently. Isabelle is a non-violent system.</p>
+<p>Makarius</p>
+
+
+
+<a name="527850007"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527850007" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527850007">(Jul 09 2025 at 09:52)</a>:</h4>
+<p>From: "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Thank you for looking into this, Makarius.</p>
+<p>In addition to potential claset efficiency improvements: Can the datatype package be adjusted to allow the user to choose between the auto-generation of (in)equality lemmas (unmodified default) and alternative means such as a simproc? The package already has a plugin mechanism -- can it be extended to allow for this customization? </p>
+<p>Hanno</p>
+<p>﻿On 09/07/2025, 10:41, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Makarius" &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of <a href="mailto:makarius@sketis.net">makarius@sketis.net</a> &lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>On 09/07/2025 11:38, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Looking forward to this. As I may have mentioned already, one of Isabelle's distinct advantages over "certain other trendy systems" is its ability to scale. That is something we should push to its limit.</p>
+</blockquote>
+<p>"Push to its limits" is not conformant with decades of Isabelle culture. We<br>
+usually work more diligently. Isabelle is a non-violent system.</p>
+<p>Makarius</p>
+
+
+
+<a name="527861655"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/527861655" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#527861655">(Jul 09 2025 at 10:56)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 09/07/2025 11:51, Becker, Hanno wrote:</p>
+<blockquote>
+<p>In addition to potential claset efficiency improvements: Can the datatype package be adjusted to allow the user to choose between the auto-generation of (in)equality lemmas (unmodified default) and alternative means such as a simproc? The package already has a plugin mechanism -- can it be extended to allow for this customization?</p>
+</blockquote>
+<p>That particular question is for Dmitriy.</p>
+<p>Merely a reminder: any performance improvements of Isabelle need to be based <br>
+on concrete applications and/or benchmarks. This is required to provide <br>
+repeatable measurements, before and after attempts of improvements, and also <br>
+for future tests (sometimes years later).</p>
+<p>Otherwise, we would be flying blind, and nobody could say if something is <br>
+really better, or could be done differently later on.</p>
+<p>Makarius</p>
+
+
+
+<a name="528383022"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Datatype%20definition%20efficiency/near/528383022" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20efficiency.html#528383022">(Jul 11 2025 at 17:43)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi all,</p>
+<p>Sorry, I have been delaying the response to this thread due to being occupied otherwise.</p>
+<p>First, thanks to Larry and John for sharing the HOL Light benchmark. It inspired me to make my own measurements (not to compare to HOL Light but to get some understanding of whether there might be a problem). I paste the Isabelle snippet below. It produces the following results:</p>
+<p>No plugins:</p>
+<p>#Constructors 2: 83 ms</p>
+<p>#Constructors 4: 113 ms</p>
+<p>#Constructors 8: 164 ms</p>
+<p>#Constructors 16: 373 ms</p>
+<p>#Constructors 32: 1568 ms</p>
+<p>#Constructors 64: 11088 ms</p>
+<p>#Constructors 128: 109744 ms</p>
+<p>All standard plugins:</p>
+<p>#Constructors 2: 260 ms</p>
+<p>#Constructors 4: 345 ms</p>
+<p>#Constructors 8: 729 ms</p>
+<p>#Constructors 16: 1154 ms</p>
+<p>#Constructors 32: 5061 ms</p>
+<p>#Constructors 64: 41187 ms</p>
+<p>#Constructors 128: 692897 ms</p>
+<p>Some notes about these numbers:</p>
+<p>1) I consider myself primarily responsible for the runtime of datatypes with all plugins disabled. (Even there, frankly speaking, this is a shared responsibility between me and Jasmin, but at least in the past, we were both happy to look into each other's code.)</p>
+<p>2) The standard plugins add about a factor 4–6 to the runtime. I don’t know how this breaks down between the different plugins precisely, and need to investigate this further. Some of the plugins are somewhat essential for proper (i.e., recursive) datatypes, such as the size plugin that defines the size function; others are relevant for all datatypes, such as the code generation plugin that e.g., instantiates the equal type class (another quadratic theorem BTW). Others again are more exotic, such as the lifting and transfer plugins. Ultimately, it depends on the application whether one needs a particular plugin. The default in Isabelle is to have all plugins enabled. Perhaps we can discuss if this should be reconsidered.</p>
+<p>3) The measurements are taken with parallelism turned off. This is not representative of the average user experience. With parallelism, it is hard to get precise timings. For example, the no-plugins 128 constructors test reports 13107 ms (instead of 109774 ms), and the processing of the commands below that declaration proceeds after that time. However, the internal datatype proofs are forked, and PolyML is working hard on them in the background so that the system’s responsiveness is lowered for about a minute.</p>
+<p>4) The examples of the form T1 = A1 | … | A128 are very artificial. Here, I agree with Makarius that we lack real-world evidence of specific Isabelle examples that are too slow. I’ll reply to some of the pointers in the other thread. The original issue with the claset in the other thread has to my knowledge been resolved by adding a T.distinct[iff del] declaration for the offending type T.</p>
+<p>5) While it would be nice to bring the numbers (or even better the growth factor) down, I don’t think we are in a state that prohibits us from using large datatypes.</p>
+<p>Coming back to Hanno’s question: The plugins are already in users’ hands. So yes, you can add attributes like [simp del] or [iff del] to any theorem associated with (co)datatypes, e.g., if they have more than 100 constructors. However, not generating the properties in the first place is more difficult: distinctness is part of the standard interface of (co)datatypes and is already used by other tools for their internal work (I know of primcorec as one example, but there may be others too).</p>
+<p>Best wishes,</p>
+<p>Dmitriy</p>
+<p>ML ‹Multithreading.parallel_proofs := 0›</p>
+<p>local_setup ‹ fn lthy =&gt;</p>
+<p>let</p>
+<p>open BNF_FP_Def_Sugar;</p>
+<p>open BNF_FP_Util;</p>
+<p>open BNF_LFP;</p>
+<p>open BNF_Util;</p>
+<p>open BNF_Def;</p>
+<p>val time = time (Config.put bnf_timing true lthy);</p>
+<p>fun test filter b n lthy =</p>
+<p>let</p>
+<p>val timer = time (Timer.startRealTimer ());</p>
+<p>val ctr_specs = map (fn i =&gt;</p>
+<p>(((Binding.empty, Binding.suffix_name (string_of_int i) @{binding A}), []), NoSyn)) (0 upto Integer.pow n 2);</p>
+<p>val spec = ((((([], Binding.suffix_name (string_of_int n) b), NoSyn), ctr_specs),</p>
+<p>(Binding.empty, Binding.empty, Binding.empty)), []);</p>
+<p>val lthy = co_datatypes Least_FP construct_lfp ((filter, false), [spec]) lthy</p>
+<p>val timer = time (timer ("#Constructors " ^ string_of_int (Integer.pow n 2)));</p>
+<p>in</p>
+<p>lthy</p>
+<p>end;</p>
+<p>in</p>
+<p>lthy</p>
+<p>|&gt; (fn lthy =&gt; K lthy (warning "No plugins:"))</p>
+<p>|&gt; fold (test (Plugin_Name.make_filter lthy (K (K false))) @{binding T}) (1 upto 7)</p>
+<p>|&gt; (fn lthy =&gt; K lthy (warning "All standard plugins:"))</p>
+<p>|&gt; fold (test Plugin_Name.default_filter @{binding U}) (1 upto 7)</p>
+<p>end</p>
+<p>›</p>
+<p>On 9 Jul 2025, at 12.56, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 09/07/2025 11:51, Becker, Hanno wrote:<br>
+In addition to potential claset efficiency improvements: Can the datatype package be adjusted to allow the user to choose between the auto-generation of (in)equality lemmas (unmodified default) and alternative means such as a simproc? The package already has a plugin mechanism -- can it be extended to allow for this customization?</p>
+<p>That particular question is for Dmitriy.</p>
+<p>Merely a reminder: any performance improvements of Isabelle need to be based on concrete applications and/or benchmarks. This is required to provide repeatable measurements, before and after attempts of improvements, and also for future tests (sometimes years later).</p>
+<p>Otherwise, we would be flying blind, and nobody could say if something is really better, or could be done differently later on.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Extracting current proof state via Isabelle/Scala · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Extracting.20current.20proof.20state.20via.20Isabelle.2FScala.html">[isabelle] Extracting current proof state via Isabelle/Scala</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="504650215"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Extracting%20current%20proof%20state%20via%20Isabelle/Scala/near/504650215" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Extracting.20current.20proof.20state.20via.20Isabelle.2FScala.html#504650215">(Mar 10 2025 at 17:39)</a>:</h4>
+<p>From: Milan Tom &lt;<a href="mailto:mt904@cam.ac.uk">mt904@cam.ac.uk</a>&gt;<br>
+Dear all,</p>
+<p>If I have a headless session and directly update the document with some edits, how can I retrieve the current proof state of the document using Isabelle/Scala? For context, I am implementing a REPL to interact with Isabelle and this is the sort of function that I want to implement:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="n">step</span><span class="o">(</span><span class="n">isar_string</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="o">):</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">{</span>
+<span class="w">   </span><span class="n">println</span><span class="o">(</span><span class="n">session.tmp_dir_name</span><span class="o">)</span>
+<span class="w">   </span><span class="n">val</span><span class="w"> </span><span class="n">node_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Document.Node.Name</span><span class="o">(</span><span class="s">"Test"</span><span class="o">,</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Test"</span><span class="o">)</span>
+<span class="w">   </span><span class="n">val</span><span class="w"> </span><span class="n">edit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Text.Edit.insert</span><span class="o">(</span><span class="n">insertionPoint</span><span class="o">,</span><span class="w"> </span><span class="n">isar_string</span><span class="o">)</span>
+<span class="w">   </span><span class="n">val</span><span class="w"> </span><span class="n">node_edits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="o">((</span><span class="n">node_name</span><span class="o">,</span><span class="w"> </span><span class="n">Document.Node.Edits</span><span class="o">[</span><span class="n">Text.Edit</span><span class="o">,</span><span class="w"> </span><span class="n">Text.Perspective</span><span class="o">](</span><span class="n">List</span><span class="o">(</span><span class="n">edit</span><span class="o">))))</span>
+
+<span class="w">   </span><span class="n">session.update</span><span class="o">(</span><span class="n">Document.Blobs.empty</span><span class="o">,</span><span class="w"> </span><span class="n">node_edits</span><span class="o">)</span>
+<span class="w">   </span><span class="n">val</span><span class="w"> </span><span class="n">snapshot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session.await_stable_snapshot</span><span class="o">()</span><span class="ow">.</span><span class="n">switch</span><span class="o">(</span><span class="n">node_name</span><span class="o">)</span>
+<span class="w">   </span><span class="n">snapshot.node.source</span>
+<span class="ow">}</span>
+</code></pre></div>
+<p>This function seems to update the source correctly but I am unsure how to output the current proof state for a given node. I have tried:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">   </span><span class="n">println</span><span class="o">(</span><span class="n">snapshot.messages</span><span class="o">)</span>
+<span class="w">   </span><span class="n">println</span><span class="o">(</span>
+<span class="w">     </span><span class="n">snapshot.node.commands.foreach</span><span class="o">(</span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span>
+<span class="w">       </span><span class="n">println</span><span class="o">(</span><span class="n">snapshot.command_results</span><span class="o">(</span><span class="n">command</span><span class="o">))</span>
+<span class="w">     </span><span class="o">)</span>
+<span class="w">   </span><span class="o">)</span>
+</code></pre></div>
+<p>This is just outputting an empty list of messages and empty results for each command.</p>
+<p>Kindest regards,<br>
+Milan Tom</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

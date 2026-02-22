@@ -1,0 +1,113 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] cl-isabelle-users Digest Sun, 19 Oct 2025 (1/1) · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20cl-isabelle-users.20Digest.20Sun.2C.2019.20Oct.202025.20.281.2F1.29.html">[isabelle] cl-isabelle-users Digest Sun, 19 Oct 2025 (1/1)</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="545900592"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20cl-isabelle-users%20Digest%20Sun%2C%2019%20Oct%202025%20%281/1%29/near/545900592" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20cl-isabelle-users.20Digest.20Sun.2C.2019.20Oct.202025.20.281.2F1.29.html#545900592">(Oct 20 2025 at 07:41)</a>:</h4>
+<p>From: wangsl &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Fabian,</p>
+<p>Thank you for your response. Our work requires a rigorous numerical ODE <br>
+solver with adaptive step size control—precisely the ODE solver you have <br>
+implemented.<br>
+In our implementation, we import Example_Utilities and use the constant <br>
+function in oracle @{computation_check …} to generate code.</p>
+<p>As you noted, we did specify some parameters in optnS as rational <br>
+numbers, and the error has just been resolved in the generated code <br>
+after we modified them to float.</p>
+<p>Thanks again!</p>
+<p>Best,<br>
+Shuling</p>
+<p>在 2025-10-19 11:03，cl-isabelle-users-request@lists.cam.ac.uk 写道：</p>
+<blockquote>
+<p>cl-isabelle-users digest Sun, 19 Oct 2025</p>
+<p>Table of contents:</p>
+<ul>
+<li>1 - Re: [isabelle] Question on Cycle dependency error when exporting <br>
+code<br>
+  from verified ODE solver in AFP - Fabian Immler <br>
+&lt;<a href="mailto:fabian.immler@gmail.com">fabian.immler@gmail.com</a>&gt;</li>
+</ul>
+<hr>
+<p>Message-ID:<br>
+ &lt;CAHBFu06z6RYGrw8m=puBeO_ZbY9itXzZUuG08770rVwD3NczKg@mail.gmail.com&gt;<br>
+Date: Sat, 18 Oct 2025 16:00:46 +0200<br>
+From: Fabian Immler &lt;<a href="mailto:fabian.immler@gmail.com">fabian.immler@gmail.com</a>&gt;<br>
+Subject: Re: [isabelle] Question on Cycle dependency error when <br>
+exporting code<br>
+ from verified ODE solver in AFP</p>
+<p>Hi,</p>
+<p>Glad to hear that you are trying to use my ODE solver :)</p>
+<p>My AFP entries modify the code setup for type “real”: reals are <br>
+represented<br>
+as float, and not rat (as in the Isabelle distribution).<br>
+In this code setup, division is only defined for powers of 2, and if <br>
+your<br>
+code attempts to divide by something else, it raises this exception.</p>
+<p>Did you perhaps specify some parameters in optnS (like stepsize or<br>
+tolerances) as a rational number (e.g. 0.1 or something like that)?</p>
+<p>Code for the ODE solver is generated only internally for the<br>
+@{computation_check …} oracle in theory Example_Utilities. If you do an<br>
+export_code … in module …</p>
+<p>for any of the constants involved in that oracle declaration, you <br>
+should<br>
+get the “right” code generated (assuming you import Example_Utilities <br>
+to<br>
+get the correct code setup).</p>
+<p>Hope this helps, best wishes,</p>
+<p>Fabian</p>
+<p>On Thu, Oct 16, 2025 at 13:19 Florian Haftmann <br>
+&lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<blockquote>
+<p>I'm using the verified ODE solver authored by Fabian Immler from the AFP<br>
+for code generation:</p>
+<p>export_code one_step_until_time_impl_aform in SML</p>
+<p>then it produces the following error information:</p>
+<p>Dependency "real" :: "metric_space" -&gt; "real" :: "t4_space" would<br>
+result in module dependency cycle</p>
+</blockquote>
+<p>Try</p>
+<blockquote>
+<p>export_code one_step_until_time_impl_aform in SML module_name Example</p>
+</blockquote>
+<p>instead</p>
+<blockquote>
+<p>I also tried the following:</p>
+<p>definition "fs = one_step_until_time_impl_aform optnS 2<br>
+(init_ode_ops False False (the_odo e1_fas true_form)) x0 False 1"</p>
+<p>value fs</p>
+<p>It seems value generates code successfully but encounters an error at<br>
+run time, part of the compile information is shown below:</p>
+<p>Warning: Value identifier (x) has not been referenced.<br>
+     At (line 10565 of "generated code")<br>
+     Warning: Value identifier (dummy) has not been referenced.<br>
+     At (line 10669 of "generated code")<br>
+     Exception- Fail "division not by 2" raised</p>
+</blockquote>
+<p>It seems this can only be answered by the author of the entry <br>
+providing<br>
+that particular code setup<br>
+(<a href="https://www.isa-afp.org/entries/Affine_Arithmetic.html">https://www.isa-afp.org/entries/Affine_Arithmetic.html</a>), which is <br>
+also<br>
+Fabian Immler.</p>
+<p>Cheers,<br>
+        Florian</p>
+</blockquote>
+<hr>
+<hr>
+<p>End of cl-isabelle-users Digest Sun, 19 Oct 2025</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

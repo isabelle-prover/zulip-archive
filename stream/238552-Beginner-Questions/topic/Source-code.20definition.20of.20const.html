@@ -1,0 +1,48 @@
+<html>
+<head><meta charset="utf-8"><title>Source-code definition of const · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source-code.20definition.20of.20const.html">Source-code definition of const</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513280864"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Source-code%20definition%20of%20const/near/513280864" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yousef Alhessi <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source-code.20definition.20of.20const.html#513280864">(Apr 20 2025 at 14:51)</a>:</h4>
+<p>I'm interested in simulating the effect of going to the definition of a constant (ctrl + click) in Isabelle. So given a symbol, for example <code>AExp.plus</code> in <code>~~/src/HOL/IMP/AExp</code>, I want to recover the definition:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">plus</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"aexp ⇒ aexp ⇒ aexp"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"plus (N i⇩1) (N i⇩2) = N(i⇩1+i⇩2)"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"plus (N i) a = (if i=0 then a else Plus (N i) a)"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"plus a (N i) = (if i=0 then a else Plus a (N i))"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"plus a⇩1 a⇩2 = Plus a⇩1 a⇩2"</span>
+</code></pre></div>
+<p>My first attempt at doing this was extracting transitions and constants and trying to do some string matching in Python. This works for simple cases but doesn't generalize without getting very messy.</p>
+<p>It seems like like this should be doable with an ML block. One approach I'm exploring is using:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">            </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span><span class="w"> </span><span class="s">"~~/src/HOL/IMP/AExp"</span><span class="w"> </span><span class="k">begin</span>
+<span class="k">ML</span><span class="s">‹</span>
+<span class="s">val def = Defs.specifications_of (Theory.defs_of @{theory}) (Defs.Const, "AExp.plus")  ;</span>
+<span class="s">›</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This outputs:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">val</span><span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="o">[</span><span class="ow">{</span><span class="k">def</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SOME</span><span class="w"> </span><span class="s">"AExp.plus_def"</span><span class="o">,</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"AExp.plus_def"</span><span class="o">,</span><span class="w"> </span><span class="n">lhs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[],</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span>
+<span class="w">     </span><span class="ow">{</span><span class="n">offset</span><span class="o">=</span><span class="n">1</span><span class="o">,</span><span class="w"> </span><span class="n">end_offset</span><span class="o">=</span><span class="n">4</span><span class="o">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">command.fun</span><span class="o">,</span><span class="w"> </span><span class="n">id</span><span class="o">=</span><span class="n">17644</span><span class="ow">}</span><span class="o">,</span><span class="w"> </span><span class="n">rhs</span><span class="w"> </span><span class="o">=</span>
+<span class="w">     </span><span class="o">[((</span><span class="n">Const</span><span class="o">,</span><span class="w"> </span><span class="s">"Product_Type.Pair"</span><span class="o">),</span><span class="w"> </span><span class="o">[</span><span class="s">"AExp.aexp"</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.aexp"</span><span class="o">]),</span>
+<span class="w">      </span><span class="o">((</span><span class="n">Const</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.plus_sumC"</span><span class="o">),</span><span class="w"> </span><span class="o">[]),</span>
+<span class="w">      </span><span class="o">((</span><span class="n">Type</span><span class="o">,</span><span class="w"> </span><span class="s">"fun"</span><span class="o">),</span><span class="w"> </span><span class="o">[</span><span class="s">"AExp.aexp"</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.aexp × AExp.aexp"</span><span class="o">]),</span>
+<span class="w">      </span><span class="o">((</span><span class="n">Type</span><span class="o">,</span><span class="w"> </span><span class="s">"fun"</span><span class="o">),</span><span class="w"> </span><span class="o">[</span><span class="s">"AExp.aexp"</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.aexp ⇒ AExp.aexp × AExp.aexp"</span><span class="o">]),</span>
+<span class="w">      </span><span class="o">((</span><span class="n">Type</span><span class="o">,</span><span class="w"> </span><span class="s">"Product_Type.prod"</span><span class="o">),</span><span class="w"> </span><span class="o">[</span><span class="s">"AExp.aexp"</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.aexp"</span><span class="o">]),</span>
+<span class="w">      </span><span class="o">((</span><span class="n">Type</span><span class="o">,</span><span class="w"> </span><span class="s">"fun"</span><span class="o">),</span><span class="w"> </span><span class="o">[</span><span class="s">"AExp.aexp × AExp.aexp"</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.aexp"</span><span class="o">]),</span>
+<span class="w">      </span><span class="o">((</span><span class="n">Type</span><span class="o">,</span><span class="w"> </span><span class="s">"AExp.aexp"</span><span class="o">),</span><span class="w"> </span><span class="o">[])]</span><span class="ow">}</span><span class="o">]:</span>
+<span class="w">   </span><span class="n">Defs.spec</span><span class="w"> </span><span class="n">list</span>
+</code></pre></div>
+<p>Is this information sufficient to recover the definition as it appears in the source code? Or can I recover the definition using a different approach? Any guidance is highly appreciated!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

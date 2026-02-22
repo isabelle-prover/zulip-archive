@@ -1,0 +1,167 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Pretty-printing terms without syntactic sugar · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Pretty-printing.20terms.20without.20syntactic.20sugar.html">[isabelle] Pretty-printing terms without syntactic sugar</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="554113555"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Pretty-printing%20terms%20without%20syntactic%20sugar/near/554113555" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Pretty-printing.20terms.20without.20syntactic.20sugar.html#554113555">(Nov 06 2025 at 15:01)</a>:</h4>
+<p>From: Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear list,</p>
+<p>is there a simple way to pretty-print a term without any syntactic sugar <br>
+(except basic lambda %_._ and application f x ). Ideally in an <br>
+accessible way for beginners.</p>
+<p>For example, "{# x∈#S. x&lt;5 #}" should be printed as "filter_mset (λx. <br>
+less x 5) S" and "{ x∈S. x&lt;5 }" as "Collect (λx. x∈S ∧ less x 5)"</p>
+<p>The only way I know to get a rough impression is to use</p>
+<p>ML_val ‹\&lt;^term&gt;‹Collect (λx. x∈S ∧ less x 5)››</p>
+<p>but the output is pretty much unreadable.</p>
+<p>Background:</p>
+<ul>
+<li>
+<p>I'm explaining that there is a lot of syntactic sugar, but I don't <br>
+know what to tell students that want to know how certain syntactic sugar <br>
+is actually translated.</p>
+</li>
+<li>
+<p>Also, it's sometimes important to know what constants your term <br>
+comprises, e.g., to use find_theorems effectively, or to know what <br>
+definitions to unfold.</p>
+</li>
+</ul>
+<p>--</p>
+<p>Peter</p>
+
+
+
+<a name="554165950"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Pretty-printing%20terms%20without%20syntactic%20sugar/near/554165950" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Pretty-printing.20terms.20without.20syntactic.20sugar.html#554165950">(Nov 06 2025 at 18:48)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+I think I asked that question already a few years ago, and I once tried <br>
+building a command that does this but didn't get very far.</p>
+<p>Of course, the question is what you mean by "no syntactic sugar". Even <br>
+in your example, you still had "∈" and "∧" as syntax in the output. <br>
+Printing numerals without syntactic sugar will also lead to a lot of <br>
+clutter.</p>
+<p>Note however that since the last release (I think) you can actually <br>
+ctrl+click on any notation and it will take you to the place where it <br>
+was defined.</p>
+<p>Manuel</p>
+<p>On 06/11/2025 15:38, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear list,</p>
+<p>is there a simple way to pretty-print a term without any syntactic <br>
+sugar (except basic lambda %_._ and application f x ). Ideally in an <br>
+accessible way for beginners.</p>
+<p>For example, "{# x∈#S. x&lt;5 #}" should be printed as "filter_mset (λx. <br>
+less x 5) S" and "{ x∈S. x&lt;5 }" as "Collect (λx. x∈S ∧ less x 5)"</p>
+<p>The only way I know to get a rough impression is to use</p>
+<p>ML_val ‹\&lt;^term&gt;‹Collect (λx. x∈S ∧ less x 5)››</p>
+<p>but the output is pretty much unreadable.</p>
+<p>Background:</p>
+<ul>
+<li>
+<p>I'm explaining that there is a lot of syntactic sugar, but I don't <br>
+know what to tell students that want to know how certain syntactic <br>
+sugar is actually translated.</p>
+</li>
+<li>
+<p>Also, it's sometimes important to know what constants your term <br>
+comprises, e.g., to use find_theorems effectively, or to know what <br>
+definitions to unfold.</p>
+</li>
+</ul>
+<p>-- </p>
+<p>Peter</p>
+</blockquote>
+
+
+
+<a name="554172628"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Pretty-printing%20terms%20without%20syntactic%20sugar/near/554172628" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Pretty-printing.20terms.20without.20syntactic.20sugar.html#554172628">(Nov 06 2025 at 19:24)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 06/11/2025 19:47, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Note however that since the last release (I think) you can actually ctrl+click <br>
+on any notation and it will take you to the place where it was defined.</p>
+</blockquote>
+<p>Yes, see this NEWS entry from Isabelle2025:</p>
+<ul>
+<li>Blocks in mixfix annotations now support properties "open_block"<br>
+(bool) and "notation" (string as cartouche). When "open_block" is<br>
+enabled, the block has no impact on formatting, but it may carry markup<br>
+information via "notation". The latter uses formal kinds (e.g. "mixfix",<br>
+"infix", "binder") together with informal words to describe the<br>
+notation. This markup affects both parsing and printing --- it can be<br>
+explored via mouse hovering in the Prover IDE, or programmatically by<br>
+Isabelle/Scala tools. Markup for "infix" and "binder" declarations are<br>
+automatic, but general mixfix forms require manual annotations in the<br>
+theory library. Plenty of existing examples may be found in the Isabelle<br>
+sources by searching for "notation=" (without quotes and no extra<br>
+space). Occasional INCOMPATIBILITY for 'no_syntax' or 'no_notation'<br>
+declarations in user applications: the mixfix template needs to be<br>
+adapted accordingly, but it is often better to use "unbundle no<br>
+foobar_syntax", as explained for HOL libraries below.</li>
+</ul>
+<p>That might be a bit too much text, which also needs to be understood in the <br>
+greater context of other inner-syntax changes in that release.</p>
+<p>The short story:</p>
+<p>* infix and binder syntax get notation markup automatically<br>
+   * free-form mixfix syntax needs markup provided by the author of the theory <br>
+library</p>
+<p>I've done a lot of such annotations for basic Isabelle/HOL libraries already, <br>
+but there is plenty of room for further improvements, especially in AFP <br>
+library sessions.</p>
+<p>Makarius</p>
+
+
+
+<a name="555339952"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Pretty-printing%20terms%20without%20syntactic%20sugar/near/555339952" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Pretty-printing.20terms.20without.20syntactic.20sugar.html#555339952">(Nov 13 2025 at 12:18)</a>:</h4>
+<p>From: Mikhail Mandrykin &lt;<a href="mailto:schrodibear@gmail.com">schrodibear@gmail.com</a>&gt;<br>
+I sometimes use the attached hack to debug translations and checks. It<br>
+simply adds an early un-check that temporarily renames all constants  in<br>
+the printed terms and an AST print translation that renames them back<br>
+before printing. It only works if all printed terms are wrapped in either<br>
+‹Trueprop› or ‹Pure.term›, but that is often the case e.g. in proof states</p>
+<p>Mikhail</p>
+<p>On Thu, Nov 6, 2025 at 5:38 PM Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+wrote:</p>
+<blockquote>
+<p>Dear list,</p>
+<p>is there a simple way to pretty-print a term without any syntactic sugar<br>
+(except basic lambda %_._ and application f x ). Ideally in an<br>
+accessible way for beginners.</p>
+<p>For example, "{# x∈#S. x&lt;5 #}" should be printed as "filter_mset (λx.<br>
+less x 5) S" and "{ x∈S. x&lt;5 }" as "Collect (λx. x∈S ∧ less x 5)"</p>
+<p>The only way I know to get a rough impression is to use</p>
+<p>ML_val ‹\&lt;^term&gt;‹Collect (λx. x∈S ∧ less x 5)››</p>
+<p>but the output is pretty much unreadable.</p>
+<p>Background:</p>
+<ul>
+<li>
+<p>I'm explaining that there is a lot of syntactic sugar, but I don't<br>
+know what to tell students that want to know how certain syntactic sugar<br>
+is actually translated.</p>
+</li>
+<li>
+<p>Also, it's sometimes important to know what constants your term<br>
+comprises, e.g., to use find_theorems effectively, or to know what<br>
+definitions to unfold.</p>
+</li>
+</ul>
+<p>--</p>
+<p>Peter</p>
+</blockquote>
+<p><a href="/user_uploads/14278/iRroIX_CCvkwFFR8_whJnLVq/Test_Bypass_Translations.thy">Test_Bypass_Translations.thy</a><br>
+<a href="/user_uploads/14278/85ZqEgFORRUcRxBW3ajb-cwY/Bypass_Translations.thy">Bypass_Translations.thy</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,140 @@
+<html>
+<head><meta charset="utf-8"><title>result may not contain obtained parameters, why? · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html">result may not contain obtained parameters, why?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="569266012"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569266012" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569266012">(Jan 21 2026 at 14:17)</a>:</h4>
+<p>A student asked me why proofs of this form (never mind the abstract <code>P</code>, they had a concrete predicate in its place) are rejected:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"P x"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"P x"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>(the <code>show</code> here gives <code>Result contains obtained parameters: x</code>)</p>
+<p>And I had to admit that I have no idea why (I habitually start such proofs with <code>proof -</code>, in which case the goal does not contain the local <code>x</code>, and of course the result <code>∃x. P x</code> is perfectly provable from having obtained a concrete witness <code>x</code>) — i can see that in general, obtained variables should not occur in result statements, but here that restriction seems overzealous. Or could it be dangerous to permit this, and if so, how and when?</p>
+
+
+
+<a name="569302114"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569302114" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569302114">(Jan 21 2026 at 16:40)</a>:</h4>
+<p>An informal answer would be the one below (a more detailed answer might be more nuanced). The following three starts of the proof produce the same proof obligation:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">standard</span>
+<span class="w">  </span><span class="gr">oops</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">)</span>
+<span class="w">  </span><span class="gr">oops</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="gr">oops</span>
+</code></pre></div>
+<p>That is, when one writes <code>proof</code> without the <code>-</code>, there is an automatic attempt to apply an Isabelle rule/theorem. In the case of an existential quantifier, applying <code>proof</code> will automatically try to apply the fact <code>exI</code> (i.e. <code>?P ?x ⟹ ∃x. ?P x</code>), which says that to show an existential statement, one must provide a witness. However, after <code>apply (rule exI)</code>, your witness has already been chosen for you but it doesn't have a proper name (its provisional name is <code>?x</code>). You can see this yourself by checking the state after providing a witness as below and checking the state after deleting the square brackets and their content:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">[</span><span class="kp">where</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">c</span><span class="o">])</span>
+<span class="w">  </span><span class="gr">oops</span>
+</code></pre></div>
+<p>In other words, doing <code>apply (rule exI[where x=c])</code> is telling Isabelle: "the term c is the witness for my existential statement". Similarly, <code>apply (rule exI)</code> is telling Isabelle: "the term ?x is the witness for my existential statement". The problem then is that if you <code>obtain</code> a term <code>x</code>, this obtained one is not necessarily the same as the one introduced by a naive application of <code>exI</code> (i.e. ?x). If we allow the suggested proof-structure, we would implicitly be saying that <code>x = ?x</code> which is not true in all types. The correct conclusion for the proof-structure then should be <code>show "P ?x"</code> but in your local context the variable <code>?x</code> does not formally have an assigned value inside the type (thus the error <code>Unbound schematic variable: ?x</code>).</p>
+
+
+
+<a name="569324668"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569324668" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569324668">(Jan 21 2026 at 18:18)</a>:</h4>
+<p>This has nothing to do with <code>exI</code> or naming (<code>?x</code> is a regular schematic variable, there is no 'provisional name'), but is a consequence of how natural deduction works (which Isar implements) -- have a look at the ∃E rule: <br>
+<a href="/user_uploads/14278/dQ2XLptZ4WlwlIA1NvmHxDDd/image.png">image.png</a><br>
+y cannot appear free in B.</p>
+<div class="message_inline_image"><a href="/user_uploads/14278/dQ2XLptZ4WlwlIA1NvmHxDDd/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1328x249" src="/user_uploads/thumbnail/14278/dQ2XLptZ4WlwlIA1NvmHxDDd/image.png/840x560.webp"></a></div>
+
+
+
+<a name="569325402"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569325402" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569325402">(Jan 21 2026 at 18:22)</a>:</h4>
+<p>(here's a simple example without exI:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">refl2</span><span class="o">:</span><span class="w"> </span><span class="s">"x = x ⟹ True"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">True</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">refl2</span><span class="o">)</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"P x"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"x=x"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>returns <code>Result contains obtained parameters: x 
+Local statement fails to refine any pending goal</code>)</p>
+
+
+
+<a name="569370194"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569370194" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569370194">(Jan 21 2026 at 22:34)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="485021">terru</span> <a href="#narrow/channel/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F/near/569266012">said</a>:</p>
+<blockquote>
+<p>Or could it be dangerous to permit this, and if so, how and when?</p>
+</blockquote>
+<p>It would be unsound. Consider this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">good</span><span class="o">:</span><span class="w"> </span><span class="s">"∀(x :: bool). ∃y. x = y"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">allI</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">)</span><span class="w"> </span><span class="c">(*note: ?y may depend on x*)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">refl</span><span class="o">)</span>
+<span class="w">  </span><span class="k">done</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">bad</span><span class="o">:</span><span class="w"> </span><span class="s">"∃(x :: bool). ∀y. x = y"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">allI</span><span class="o">)</span><span class="w"> </span><span class="c">(*note: ?x may not depend on y*)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">refl</span><span class="o">)</span>
+<span class="w">  </span><span class="gr">oops</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">bad</span><span class="o">:</span><span class="w"> </span><span class="s">"∃(x :: bool). ∀y. x = y"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">,</span><span class="w"> </span><span class="n">rule</span><span class="w"> </span><span class="n">allI</span><span class="o">)</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"z = y"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"z = y"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span><span class="w"> </span><span class="c">(*note: ?x may not depend on new skolem variable z*)</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="569446589"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569446589" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569446589">(Jan 22 2026 at 09:49)</a>:</h4>
+<p>well, yes, this all makes sense to me. But I'm still struggling with the idea that the non-proof I gave should mean something fundamentally different, from, say:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"P x"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">)</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="s">‹P x›</span><span class="w"> </span><span class="ow">.</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Since I thought that an initial proof method should (modulo changes to the context, but that seems (?) unimportant here as the obtain only needs <code>P</code>, which is the same in both) do the same as applying it as the first step to <code>?thesis</code> &amp; then supplying intermediate facts (assuming they still make sense). So either more is going on in the context than I was aware of, or my understanding of initial proof methods is wrong?</p>
+
+
+
+<a name="569447566"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569447566" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569447566">(Jan 22 2026 at 09:54)</a>:</h4>
+<p>Now you only use the obtained variable within the subproof of B in the ND rule</p>
+
+
+
+<a name="569447722"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/result%20may%20not%20contain%20obtained%20parameters%2C%20why%3F/near/569447722" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/result.20may.20not.20contain.20obtained.20parameters.2C.20why.3F.html#569447722">(Jan 22 2026 at 09:55)</a>:</h4>
+<p>Here's an even simpler falsity without any existental introduction:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"(⋀y. x = y) ⟹ False"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">False</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">fix</span><span class="w"> </span><span class="n">y</span><span class="o">::</span><span class="n">bool</span><span class="w"> </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x=y"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"x=y"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">qed</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

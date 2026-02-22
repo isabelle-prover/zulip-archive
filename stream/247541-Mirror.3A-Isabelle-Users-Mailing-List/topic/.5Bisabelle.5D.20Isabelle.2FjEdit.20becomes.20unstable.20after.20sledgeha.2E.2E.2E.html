@@ -1,0 +1,135 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle/jEdit becomes unstable after sledgeha... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FjEdit.20becomes.20unstable.20after.20sledgeha.2E.2E.2E.html">[isabelle] Isabelle/jEdit becomes unstable after sledgeha...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="572127072"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/jEdit%20becomes%20unstable%20after%20sledgeha.../near/572127072" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FjEdit.20becomes.20unstable.20after.20sledgeha.2E.2E.2E.html#572127072">(Feb 05 2026 at 11:51)</a>:</h4>
+<p><strong>From:</strong> 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt;</p>
+<p>Hello,</p>
+<p>After updating to Isabelle2025-2, I noticed that Isabelle/jEdit becomes<br>
+unstable after using sledgehammer.<br>
+By "unstable" I mean the following:</p>
+<p>- The continuous checking of Isabelle/jEdit freezes for about 10 seconds.<br>
+   - After that, the continuous checking restarts from the beginning of the<br>
+   theory.</p>
+<p>Does anyone know how to fix this issue?</p>
+<p>My current workaround is to directly enter (by hand) the tactic generated<br>
+by sledgehammer;<br>
+If I avoid clicking the generated tactic, the jEdit remains stable.<br>
+However, I would like to fix the root cause of the problem because my<br>
+workaround is quite inconvenient.</p>
+<p>For reference, I am using a MacBook Air (M1, 2020) with 8 GB of memory.<br>
+The macOS is Tahoe 26.2.</p>
+<p>-- <br>
+伊藤 洋介<br>
+Yosuke ITO<br>
++81 80-5057-6931<br>
+<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a></p>
+
+
+
+<a name="572531629"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/jEdit%20becomes%20unstable%20after%20sledgeha.../near/572531629" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FjEdit.20becomes.20unstable.20after.20sledgeha.2E.2E.2E.html#572531629">(Feb 07 2026 at 13:23)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 05/02/2026 12:51, 伊藤洋介 wrote:</p>
+<blockquote>
+<p>After updating to Isabelle2025-2, I noticed that Isabelle/jEdit becomes <br>
+unstable after using sledgehammer.<br>
+By "unstable" I mean the following:</p>
+<p>* The continuous checking of Isabelle/jEdit freezes for about 10 seconds.<br>
+  * After that, the continuous checking restarts from the beginning of the theory.</p>
+<p>Does anyone know how to fix this issue?</p>
+</blockquote>
+<blockquote>
+<p>For reference, I am using a MacBook Air (M1, 2020) with 8 GB of memory.<br>
+The macOS is Tahoe 26.2.</p>
+</blockquote>
+<p>This is my guess from a distance:</p>
+<p>- 8GB is too little to use Isabelle + addon tools seriously. You may get <br>
+around by trimming some heap options of Java and/or Poly/ML, if you invest <br>
+time on it (which I won't).</p>
+<p>- macOS in particular has "compressed memory". I don't understand the <br>
+details, but high-end Isabelle users on macOS keep telling me, that it is in <br>
+conflict with the dynamic heap management of Java and/or Poly/ML, which are <br>
+essentially big LISP machines.</p>
+<p>Here is a blog article on the topic: <br>
+<a href="https://blog.greggant.com/posts/2024/07/03/macos-memory-management.html">https://blog.greggant.com/posts/2024/07/03/macos-memory-management.html</a></p>
+<p>Quote:<br>
+"""<br>
+How Memory Works in macOS (why Apple can get away with shipping computers with <br>
+8 GB of RAM).<br>
+"""</p>
+<p>I would say that it is futile to try Isabelle with 8GB: 16GB or 32GB is more <br>
+realistic. My regular workstation at home has 64GB, my mobile presentation <br>
+machine 32GB -- it is a very light and "airy" Linux machine.</p>
+<p>Makarius</p>
+
+
+
+<a name="572593185"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/jEdit%20becomes%20unstable%20after%20sledgeha.../near/572593185" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FjEdit.20becomes.20unstable.20after.20sledgeha.2E.2E.2E.html#572593185">(Feb 08 2026 at 05:42)</a>:</h4>
+<p><strong>From:</strong> 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt;</p>
+<p>Dear Makarius,</p>
+<p>Thank you for the detailed advice.<br>
+All right, I'll consider purchasing a new MacBook.<br>
+In fact, my project is becoming bigger recently.</p>
+<p>Best regards,</p>
+<p>2026年2月7日(土) 22:23 Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;:</p>
+<blockquote>
+<p>On 05/02/2026 12:51, 伊藤洋介 wrote:</p>
+<blockquote>
+<p>After updating to Isabelle2025-2, I noticed that Isabelle/jEdit becomes<br>
+unstable after using sledgehammer.<br>
+By "unstable" I mean the following:</p>
+<p>* The continuous checking of Isabelle/jEdit freezes for about 10<br>
+seconds.<br>
+  * After that, the continuous checking restarts from the beginning of<br>
+the theory.</p>
+<p>Does anyone know how to fix this issue?</p>
+</blockquote>
+<blockquote>
+<p>For reference, I am using a MacBook Air (M1, 2020) with 8 GB of memory.<br>
+The macOS is Tahoe 26.2.</p>
+</blockquote>
+<p>This is my guess from a distance:</p>
+<p>- 8GB is too little to use Isabelle + addon tools seriously. You may<br>
+get<br>
+around by trimming some heap options of Java and/or Poly/ML, if you invest<br>
+time on it (which I won't).</p>
+<p>- macOS in particular has "compressed memory". I don't understand the<br>
+details, but high-end Isabelle users on macOS keep telling me, that it is<br>
+in<br>
+conflict with the dynamic heap management of Java and/or Poly/ML, which<br>
+are<br>
+essentially big LISP machines.</p>
+<p>Here is a blog article on the topic:<br>
+<a href="https://blog.greggant.com/posts/2024/07/03/macos-memory-management.html">https://blog.greggant.com/posts/2024/07/03/macos-memory-management.html</a></p>
+<p>Quote:<br>
+"""<br>
+How Memory Works in macOS (why Apple can get away with shipping computers<br>
+with<br>
+8 GB of RAM).<br>
+"""</p>
+<p>I would say that it is futile to try Isabelle with 8GB: 16GB or 32GB is<br>
+more<br>
+realistic. My regular workstation at home has 64GB, my mobile presentation<br>
+machine 32GB -- it is a very light and "airy" Linux machine.</p>
+<p>Makarius</p>
+</blockquote>
+<p>-- <br>
+伊藤 洋介<br>
+Yosuke ITO<br>
++81 80-5057-6931<br>
+<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

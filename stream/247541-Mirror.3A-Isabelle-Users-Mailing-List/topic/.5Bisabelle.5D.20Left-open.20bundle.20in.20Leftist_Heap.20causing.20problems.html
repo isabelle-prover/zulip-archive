@@ -1,0 +1,94 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Left-open bundle in Leftist_Heap causing problems · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Left-open.20bundle.20in.20Leftist_Heap.20causing.20problems.html">[isabelle] Left-open bundle in Leftist_Heap causing problems</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="562529243"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Left-open%20bundle%20in%20Leftist_Heap%20causing%20problems/near/562529243" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Left-open.20bundle.20in.20Leftist_Heap.20causing.20problems.html#562529243">(Dec 08 2025 at 17:57)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>Hello List,</p>
+<p>the "HOL-Data_Structures.Leftist_Heap" contains an</p>
+<p>unbundle pattern_aliases</p>
+<p>at top level. This, unfortunately, causes problems with function <br>
+definitions later, see below for boiled-down example.</p>
+<p>Workaround: use "case ... of (_,_) =&gt; _" instead of "let (_,_) = ... in".</p>
+<p>Why not restrict opening the bundle to a local context? Anyway, this <br>
+might also be a deeper issue with Pattern_Aliases here?</p>
+<p>--</p>
+<p>Peter</p>
+<p>(Note, this is not a regression against 2025-1, it already occurs in <br>
+Isabelle2025)</p>
+<p>imports Main "HOL-Data_Structures.Leftist_Heap"<br>
+begin</p>
+<p>fun bfs :: "nat ⇒ unit × unit" where<br>
+   "bfs 0 = ((),())"<br>
+| "bfs (Suc n) = (let (V,F) = bfs n in ((),()))"</p>
+<hr>
+<p>exception THM 1 raised (line 706 of "drule.ML"):<br>
+   COMP<br>
+   (case h_fd n of (V, F) ⇒ ((), ())) = (case bfs_sumC n of (V, F) ⇒ <br>
+((), ()))<br>
+     [⋀z. bfs_rel z x_fd ⟹ ∃!y. bfs_graph z y, x_fd = Suc n, bfs_graph n <br>
+(h_fd n),<br>
+       bfs_rel ≡ ??.Week5_Heaps.bfs_rel, bfs_sumC ≡ <br>
+??.Week5_Heaps.bfs_sumC, bfs_graph ≡ ??.Week5_Heaps.bfs_graph]<br>
+   (case bfs_sumC n of (V, F) ⇒ ((), ())) = (case bfs_sumC n of (V, F) ⇒ <br>
+((), ())) ⟹<br>
+   let (V, F) = h_fd n in ((), ()) ≡ let (V, F) = bfs_sumC n in ((), ())<br>
+     [⋀z. bfs_rel z x_fd ⟹ ∃!y. bfs_graph z y, x_fd = Suc n, bfs_graph n <br>
+(h_fd n),<br>
+       bfs_rel ≡ ??.Week5_Heaps.bfs_rel, bfs_sumC ≡ <br>
+??.Week5_Heaps.bfs_sumC, bfs_graph ≡ ??.Week5_Heaps.bfs_graph]</p>
+
+
+
+<a name="562633564"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Left-open%20bundle%20in%20Leftist_Heap%20causing%20problems/near/562633564" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Left-open.20bundle.20in.20Leftist_Heap.20causing.20problems.html#562633564">(Dec 09 2025 at 09:25)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Thanks, yes, pattern_aliases is too naive here. I'll look into it (later).</p>
+<p>Tobias</p>
+<p>On 08/12/2025 18:56, Peter Lammich wrote:</p>
+<blockquote>
+<p>Hello List,</p>
+<p>the "HOL-Data_Structures.Leftist_Heap" contains an</p>
+<p>unbundle pattern_aliases</p>
+<p>at top level. This, unfortunately, causes problems with function definitions <br>
+later, see below for boiled-down example.</p>
+<p>Workaround: use "case ... of (_,_) =&gt; _" instead of "let (_,_) = ... in".</p>
+<p>Why not restrict opening the bundle to a local context? Anyway, this might also <br>
+be a deeper issue with Pattern_Aliases here?</p>
+<p>-- </p>
+<p>Peter</p>
+<p>(Note, this is not a regression against 2025-1, it already occurs in Isabelle2025)</p>
+<p>imports Main "HOL-Data_Structures.Leftist_Heap"<br>
+begin</p>
+<p>fun bfs :: "nat ⇒ unit × unit" where<br>
+   "bfs 0 = ((),())"<br>
+| "bfs (Suc n) = (let (V,F) = bfs n in ((),()))"</p>
+<hr>
+<p>exception THM 1 raised (line 706 of "drule.ML"):<br>
+   COMP<br>
+   (case h_fd n of (V, F) ⇒ ((), ())) = (case bfs_sumC n of (V, F) ⇒ ((), ()))<br>
+     [⋀z. bfs_rel z x_fd ⟹ ∃!y. bfs_graph z y, x_fd = Suc n, bfs_graph n (h_fd n),<br>
+       bfs_rel ≡ ??.Week5_Heaps.bfs_rel, bfs_sumC ≡ ??.Week5_Heaps.bfs_sumC, <br>
+bfs_graph ≡ ??.Week5_Heaps.bfs_graph]<br>
+   (case bfs_sumC n of (V, F) ⇒ ((), ())) = (case bfs_sumC n of (V, F) ⇒ ((), <br>
+())) ⟹<br>
+   let (V, F) = h_fd n in ((), ()) ≡ let (V, F) = bfs_sumC n in ((), ())<br>
+     [⋀z. bfs_rel z x_fd ⟹ ∃!y. bfs_graph z y, x_fd = Suc n, bfs_graph n (h_fd n),<br>
+       bfs_rel ≡ ??.Week5_Heaps.bfs_rel, bfs_sumC ≡ ??.Week5_Heaps.bfs_sumC, <br>
+bfs_graph ≡ ??.Week5_Heaps.bfs_graph]<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/KhDD8uZZZuvfwXFvH2iWHnhY/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

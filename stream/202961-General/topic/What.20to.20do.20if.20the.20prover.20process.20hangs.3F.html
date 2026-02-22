@@ -1,0 +1,69 @@
+<html>
+<head><meta charset="utf-8"><title>What to do if the prover process hangs? · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html">What to do if the prover process hangs?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="543475017"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543475017" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543475017">(Oct 07 2025 at 08:45)</a>:</h4>
+<p>Recently it has happened to me several times that the prover appears to "hang" in large projects, i.e. it initially gets stuck somewhere (perhaps in a long-running or non-terminating <code>auto</code>) and then doesn't seem to recover — even after removing the faulty invocation &amp; waiting for quite a while, jedit seems to no longer get "updates" on the document state from the prover, so while editing still works, new proofs won't be checked (nor terms type-checked, etc.).</p>
+<p>Is this a known problem, and is there a better way of dealing with this than restarting all of jedit (&amp; potentially having to re-check a large number of theories?). I've built heap images for parts of the project to at least reduce the cost of restarting, but that's only a stopgap solution ..</p>
+
+
+
+<a name="543528498"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543528498" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543528498">(Oct 07 2025 at 13:10)</a>:</h4>
+<p>This has been discussed before, see for example <a href="#narrow/channel/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Heavy.20memory.20use.20with.20sledgehammer">#Mirror: Isabelle Users Mailing List &gt; &#91;isabelle&#93; Heavy memory use with sledgehammer</a>.</p>
+<p>Unfortunately, this is a known issue that is probably related to memory leakage. You can improve the situation somewhat using a fine-grained session structure, preferring Isar proofs over apply scripts, or, ultimately, buying more powerful hardware.</p>
+
+
+
+<a name="543529021"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543529021" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543529021">(Oct 07 2025 at 13:12)</a>:</h4>
+<p>Also see <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/ML.20memory.20usage.20goes.20up/with/229089353">#Beginner Questions &gt; ML memory usage goes up</a></p>
+
+
+
+<a name="543557619"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543557619" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543557619">(Oct 07 2025 at 15:10)</a>:</h4>
+<p>polyml's garbage collection is also prone to this</p>
+
+
+
+<a name="543557680"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543557680" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543557680">(Oct 07 2025 at 15:11)</a>:</h4>
+<p>or at least was</p>
+
+
+
+<a name="543557738"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543557738" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543557738">(Oct 07 2025 at 15:11)</a>:</h4>
+<p>(I rarely do whole-day Isabelle anymore)</p>
+
+
+
+<a name="543557808"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543557808" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543557808">(Oct 07 2025 at 15:11)</a>:</h4>
+<p>but look at the system panel in Isabelle/jEdit, how much heap is left</p>
+
+
+
+<a name="543557929"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543557929" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543557929">(Oct 07 2025 at 15:12)</a>:</h4>
+<p>But the solution is the same: restarting</p>
+
+
+
+<a name="543558339"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/What%20to%20do%20if%20the%20prover%20process%20hangs%3F/near/543558339" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/What.20to.20do.20if.20the.20prover.20process.20hangs.3F.html#543558339">(Oct 07 2025 at 15:14)</a>:</h4>
+<p>well that's annoying, then; dealing with this is currently slowing down my work quite a bit (but thanks for the information to both of you!)</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

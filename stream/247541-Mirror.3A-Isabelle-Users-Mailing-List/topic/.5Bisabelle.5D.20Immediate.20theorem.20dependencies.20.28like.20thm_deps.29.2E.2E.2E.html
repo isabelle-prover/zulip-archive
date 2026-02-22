@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Immediate theorem dependencies (like thm_deps)... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Immediate.20theorem.20dependencies.20.28like.20thm_deps.29.2E.2E.2E.html">[isabelle] Immediate theorem dependencies (like thm_deps)...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="572325968"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Immediate%20theorem%20dependencies%20%28like%20thm_deps%29.../near/572325968" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Immediate.20theorem.20dependencies.20.28like.20thm_deps.29.2E.2E.2E.html#572325968">(Feb 06 2026 at 09:12)</a>:</h4>
+<p><strong>From:</strong> Andrea Vezzosi &lt;<a href="mailto:vezzosi.ndr@gmail.com">vezzosi.ndr@gmail.com</a>&gt;</p>
+<p>Dear Mailing list,</p>
+<p>the thm_deps command shows the lemmas used to prove a theorem, how hard<br>
+would it be to implement a version that also prints out the<br>
+instantiation of free variables, at least for a specified subset of theorems?</p>
+<p>An example below to clarify:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">right_id</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"x + 0 = x"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"1 + 0 = 1"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">right_id</span><span class="o">)</span>
+<span class="w">  </span><span class="k">done</span>
+</code></pre></div>
+<p>Here's what I get from <code>thm_deps test</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">dependencies</span><span class="o">:</span><span class="w"> </span><span class="n">3</span>
+<span class="w">    </span><span class="n">protectD</span>
+<span class="w">    </span><span class="n">protectI</span>
+<span class="w">    </span><span class="n">right_id</span>
+</code></pre></div>
+<p>what I would wish for:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">thm_deps</span><span class="w"> </span><span class="o">(</span><span class="n">with_instantiations</span><span class="w"> </span><span class="n">right_id</span><span class="o">)</span><span class="w"> </span><span class="n">test</span>
+<span class="c">(*</span>
+<span class="c">dependencies: 3</span>
+<span class="c">    protectD</span>
+<span class="c">    protectI</span>
+<span class="c">    right_id (x=1)</span>
+<span class="c">*)</span>
+</code></pre></div>
+<p>or actually just an equivalent Isabelle/ML function of a type like <br>
+<code>thm list -&gt; thm -&gt; (thm * term list) list</code>.</p>
+<p>Best regards,<br>
+Andrea</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

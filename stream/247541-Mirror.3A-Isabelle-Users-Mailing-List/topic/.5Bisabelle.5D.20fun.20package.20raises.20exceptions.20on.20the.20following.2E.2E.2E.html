@@ -1,0 +1,28 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] fun package raises exceptions on the following... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20fun.20package.20raises.20exceptions.20on.20the.20following.2E.2E.2E.html">[isabelle] fun package raises exceptions on the following...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="570779405"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20fun%20package%20raises%20exceptions%20on%20the%20following.../near/570779405" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20fun.20package.20raises.20exceptions.20on.20the.20following.2E.2E.2E.html#570779405">(Jan 29 2026 at 12:20)</a>:</h4>
+<p><strong>From:</strong> i n &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,<br>
+I've noticed that the function package raises an exception in the following functionfunction test :: "nat ⇒ nat" where<br>
+"test n = (if n = 0 then 0 else<br>
+          let x = (λn. test n) in<br>
+          test (x (n - 1)))"After posting this on the zulip see <a href="#narrow/channel/202961-General/topic/Isabelle's.20fun.20package.20raises.20an.20exception/">https://isabelle.zulipchat.com/#narrow/channel/202961-General/topic/Isabelle's.20fun.20package.20raises.20an.20exception/</a><br>
+Fabian Huch managed to reduce it to the followingfun f :: "nat ⇒ nat" where<br>
+  "f 0 = 0" |<br>
+  "f _ = (let x = f in f 0)"Thanks,<br>
+Irvin</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

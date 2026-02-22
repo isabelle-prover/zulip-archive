@@ -1,0 +1,137 @@
+<html>
+<head><meta charset="utf-8"><title>The future of macos vs. macos_arm · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html">The future of macos vs. macos_arm</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="569807931"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569807931" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569807931">(Jan 23 2026 at 21:49)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Since macOS 26 is the last version that supports the old Intel platform via <br>
+emulation, we need to reconsider our traditional approach to the macOS <br>
+platform, where the Isabelle distribution (and ".app") was "hybrid" for Intel <br>
+and ARM. Thus the same download worked on both platforms, but on ARM it <br>
+required Rosetta 2, which is going to disappear after macOS 26.</p>
+<p>Concerning Intel, I have now invested 360 EUR into a refurbished Mac Mini 2018 <br>
+(i3 with 4 cores, 16 GB RAM, 1 TB SSD). The 2018 line is the last one using <br>
+Intel CPUs, it supports macOS 12, 13, 14, 15, but not macOS 26. See also <br>
+<a href="https://everymac.com/systems/apple/mac_mini/specs/mac-mini-core-i3-3.6-late-2018-specs.html">https://everymac.com/systems/apple/mac_mini/specs/mac-mini-core-i3-3.6-late-2018-specs.html</a> <br>
+for details.</p>
+<p>Thus we can easily continue x86_64-darwin for Isabelle contrib executables, as <br>
+long as we have macOS 12..15 as our active baseline. There are many years <br>
+ahead, until the upper end macOS 15 will have to be discontinued. Only <br>
+afterwards, our support for macOS will be for ARM exclusively. Note that I <br>
+will soon discontinue macOS 12 and move to macOS 13, because it helps to <br>
+provide uniform VSCodium and GHC/stack executables.</p>
+<p>Concerning pure arm64-darwin support, there is still a lot of homework to do <br>
+concerning external provers and solvers. When that is done, we can split the <br>
+Isabelle application bundle into x86_64-darwin vs. arm64-darwin. That will <br>
+mark the beginning of the "macos" vs. "macos_arm" era, following the "linux" <br>
+vs. "linux_arm" from some years ago. (It will be many more years, until <br>
+windows_arm might become relevant.)</p>
+<p>I would like to see macos_arm already for Isabelle2026 (October 2026), but it <br>
+is probably more realistic for a subsequent Isabelle release in 2027. Note <br>
+that when macOS 27 hits the end-user market, people can no longer run Isabelle <br>
+with all its add-on tools.</p>
+<p>Makarius</p>
+
+
+
+<a name="569860987"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569860987" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569860987">(Jan 24 2026 at 12:06)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>On 23 Jan 2026, at 21:48, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Thus we can easily continue x86_64-darwin for Isabelle contrib executables,</p>
+</blockquote>
+<p>Might be worth asking how many people still need this.</p>
+<blockquote>
+<p>Note that when macOS 27 hits the end-user market, people can no longer run Isabelle with all its add-on tools.</p>
+</blockquote>
+<p>What’s this?</p>
+<p>Larry</p>
+
+
+
+<a name="569861093"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569861093" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569861093">(Jan 24 2026 at 12:07)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/01/2026 13:06, Lawrence Paulson wrote:</p>
+<blockquote>
+<blockquote>
+<p>Note that when macOS 27 hits the end-user market, people can no longer run Isabelle with all its add-on tools.</p>
+</blockquote>
+<p>What’s this?</p>
+</blockquote>
+<p>It is the next macOS release after current macOS 26. I don't know anything <br>
+about its planned timeline, though.</p>
+<p>Makarius</p>
+
+
+
+<a name="569865930"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569865930" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569865930">(Jan 24 2026 at 13:11)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/01/2026 14:00, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>I mean what’s this "people can no longer run Isabelle with all its add-on tools”?</p>
+</blockquote>
+<p>So far, the <a href="http://Isabelle.app">Isabelle.app</a> launcher insisted in Intel, to prompt for <br>
+installation of Rosetta 2. This will fail after macOS 26, and users need to <br>
+use <a href="http://Isabelle.app/isabelle/bin/isabelle">Isabelle.app/isabelle/bin/isabelle</a> jedit on the command-line.</p>
+<p>I can change that easily, and make the launcher hybrid on Intel or ARM. <br>
+Afterwards, there will be some add-on tools that still insist on Intel: we <br>
+need to sort that out, maybe this year or next year.</p>
+<p>Makarius</p>
+
+
+
+<a name="569866268"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569866268" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569866268">(Jan 24 2026 at 13:15)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>Oh that. I wonder if anybody uses the app? As it stands, it is very basic. It needs at least a drag and drop capability. It should not be difficult, but we need to find somebody who knows how to build these things.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 24 Jan 2026, at 13:11, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>So far, the <a href="http://Isabelle.app">Isabelle.app</a> launcher insisted in Intel, to prompt for installation of Rosetta 2. This will fail after macOS 26, and users need to use <a href="http://Isabelle.app/isabelle/bin/isabelle">Isabelle.app/isabelle/bin/isabelle</a> jedit on the command-line.</p>
+<p>I can change that easily, and make the launcher hybrid on Intel or ARM. Afterwards, there will be some add-on tools that still insist on Intel: we need to sort that out, maybe this year or next year.<br>
+</p>
+</blockquote>
+
+
+
+<a name="569874595"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569874595" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569874595">(Jan 24 2026 at 15:02)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/01/2026 14:15, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Oh that. I wonder if anybody uses the app? As it stands, it is very basic. It needs at least a drag and drop capability. It should not be difficult, but we need to find somebody who knows how to build these things.</p>
+</blockquote>
+<p>My guess is that most first-time Isabelle users on macOS use the desktop app, <br>
+because they don't know anything else.</p>
+<p>Concerning drag-and-drop, it should be possible to find open-source examples <br>
+out there and imitate them. I've always ignored drag-and-drop in particular, <br>
+because it reminds me on super-retro desktop interaction from the late 1980s <br>
+or early 1990s.</p>
+<p>Makarius</p>
+
+
+
+<a name="569878069"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/The%20future%20of%20macos%20vs.%20macos_arm/near/569878069" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/The.20future.20of.20macos.20vs.2E.20macos_arm.html#569878069">(Jan 24 2026 at 15:51)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>I can't think of a better way to open a particular theory that may be sitting in a deeply nested directory.</p>
+<blockquote>
+<p>On 24 Jan 2026, at 15:02, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Concerning drag-and-drop, it should be possible to find open-source examples out there and imitate them. I've always ignored drag-and-drop in particular, because it reminds me on super-retro desktop interaction from the late 1980s or early 1990s.</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

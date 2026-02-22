@@ -1,0 +1,1482 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Copilot (or other programming assistants) for ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html">[isabelle] Copilot (or other programming assistants) for ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="562548851"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562548851" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562548851">(Dec 08 2025 at 20:04)</a>:</h4>
+<p><strong>From:</strong> "\"Bisping, Benjamin\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive theorem proving is the future of mathematics and verification. (I'm sure many on this mailing list know this situation.) I intend to build some arguments around Terence Tao getting ten-thousands of people to watch him use Lean+Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will employ Isabelle/HOL for the demonstration, I strongly anticipate questions in the direction of how to hook it up with GitHub Copilot.</p>
+<div class="youtube-video message_inline_image"><a data-id="cyyR7j2ChCI" href="https://www.youtube.com/watch?v=cyyR7j2ChCI"><img src="https://uploads.zulipusercontent.net/0e5c80efbd7c87269bd3e04884f14b4765b18460/68747470733a2f2f692e7974696d672e636f6d2f76692f63797952376a32436843492f6d7164656661756c742e6a7067"></a></div><p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the incompatibilities introduced by Microsoft on one side and the Isabelle/Codium package on the other side.* This is a pity because, in principle, this year's LLM coding assistants appear to finally be quite decent at finding Isabelle proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can solve tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT promts) and JEdit is too clunky to be proposed in my “sales pitch” for ITPs. And if there's no easy automation for writing proofs in Isabelle, but there is in Lean, I already know how 100 % of the listeners will decide which of the two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on LLM-supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium <a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> . The 2025 message on the topic to this mailing list went unanswered <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a> .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code, which otherwise would at least be some answer. <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+
+
+
+<a name="562549256"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562549256" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562549256">(Dec 08 2025 at 20:07)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 08/12/2025 21:04, "Bisping, Benjamin" (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT <br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for ITPs. <br>
+And if there's no easy automation for writing proofs in Isabelle, but there is <br>
+in Lean, I already know how 100 % of the listeners will decide which of the <br>
+two systems to look into.</p>
+</blockquote>
+<p>Oh dear, better use Lean then.</p>
+<p>Side-remark: The tool of choice for proof automation is called "Sledgehammer".</p>
+<p>Makarius</p>
+
+
+
+<a name="562549921"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562549921" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562549921">(Dec 08 2025 at 20:12)</a>:</h4>
+<p><strong>From:</strong> Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Benjamin,</p>
+<p>You may find the I/Q plugin interesting.  It exposes Isabelle as an MCP server to LLMs and allows the agent to interactively edit files, query proof states, and so on.</p>
+<p>The code is available here: <a href="https://github.com/awslabs/autocorrode">https://github.com/awslabs/autocorrode</a></p>
+<p>It’s mainly been tested with Amazon’s Kiro CLI agent (formerly called Q CLI), but I believe at least one other person has used it in “anger” with another agent.</p>
+<p>Thanks,<br>
+Dominic</p>
+<blockquote>
+<p>On 8 Dec 2025, at 20:04, Bisping, Benjamin (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive theorem proving is the future of mathematics and verification. (I'm sure many on this mailing list know this situation.) I intend to build some arguments around Terence Tao getting ten-thousands of people to watch him use Lean+Copilot this year &lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will employ Isabelle/HOL for the demonstration, I strongly anticipate questions in the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the incompatibilities introduced by Microsoft on one side and the Isabelle/Codium package on the other side.* This is a pity because, in principle, this year's LLM coding assistants appear to finally be quite decent at finding Isabelle proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can solve tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT promts) and JEdit is too clunky to be proposed in my “sales pitch” for ITPs. And if there's no easy automation for writing proofs in Isabelle, but there is in Lean, I already know how 100 % of the listeners will decide which of the two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on LLM-supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium <a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> . The 2025 message on the topic to this mailing list went unanswered <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a> .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code, which otherwise would at least be some answer. <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+</blockquote>
+
+
+
+<a name="562550489"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562550489" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562550489">(Dec 08 2025 at 20:16)</a>:</h4>
+<p><strong>From:</strong> Wolfram Kahl &lt;<a href="mailto:kahl@cas.mcmaster.ca">kahl@cas.mcmaster.ca</a>&gt;</p>
+<p>On Mon, Dec 08, 2025 at 09:07:26PM +0100, Makarius wrote:</p>
+<blockquote>
+<p>Side-remark: The tool of choice for proof automation is called <br>
+"Sledgehammer".</p>
+</blockquote>
+<p>Does that SOUND elegant and/or sophisticated to you?</p>
+<p>Perhaps a marketing problem...  ;-)</p>
+<p>Wolfram</p>
+
+
+
+<a name="562551010"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562551010" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562551010">(Dec 08 2025 at 20:19)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 08/12/2025 21:16, Wolfram Kahl wrote:</p>
+<blockquote>
+<p>On Mon, Dec 08, 2025 at 09:07:26PM +0100, Makarius wrote:</p>
+<blockquote>
+<p>Side-remark: The tool of choice for proof automation is called<br>
+"Sledgehammer".</p>
+</blockquote>
+<p>Does that SOUND elegant and/or sophisticated to you?</p>
+</blockquote>
+<p>Yes. It has become a well-established name in the ITP community. There are <br>
+also many other "Hammer" projects, but not that successful.</p>
+<blockquote>
+<p>Perhaps a marketing problem...  ;-)<br>
+Who cares about marketing? I don't.</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<a name="562551203"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562551203" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562551203">(Dec 08 2025 at 20:21)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>There is a DARPA program called PROVERS where I know some people are trying<br>
+to come with such a feature for Isabelle. You may want to reach out to<br>
+performers of DARPA PROVERS. I believe that the Stanford University team<br>
+are cooking something for Isabelle.</p>
+<p>Although, computer scientists have to take a minute and remember that<br>
+undecidable problems such as finding proofs in HOL or finding invariants or<br>
+even writing a complete specification cannot be automated. This is what we<br>
+learned in 3rd semester of CS class, specifically under theory of<br>
+computation, more specifically under computability theory.</p>
+<p>The best solution figured are ITPs themselves, where we have humans in the<br>
+loop to create computer assisted abstractions combined with symbolic AI<br>
+tools (i.e., automated reasoning via for example natural deduction)to<br>
+increase automations.</p>
+<p>LLMs are the biggest imposters I have ever seen. They cannot be trusted to<br>
+even handle deterministic and repetitive processes. Let alone trusting them<br>
+to do reasoning.</p>
+<p>My 2 cents.</p>
+<p>Yakoub.</p>
+<p>On Mon, Dec 8, 2025 at 1:07 PM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>On 08/12/2025 21:04, "Bisping, Benjamin" (via cl-isabelle-users Mailing<br>
+List)<br>
+wrote:</p>
+<blockquote>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of<br>
+the<br>
+two systems to look into.</p>
+</blockquote>
+<p>Oh dear, better use Lean then.</p>
+<p>Side-remark: The tool of choice for proof automation is called<br>
+"Sledgehammer".</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="562554705"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562554705" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562554705">(Dec 08 2025 at 20:42)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>It is quite hard to beat the simple combination of the structured Isar language and sledgehammer. First, just try sledgehammer. If it fails, think of an intermediate formula and try using sledgehammer to close both gaps. If not, continue with more intermediate formulas. Many straightforward proofs can be found that way.</p>
+<p>Larry<br>
+On 8 Dec 2025 at 20:21 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;, wrote:</p>
+<p>The best solution figured are ITPs themselves, where we have humans in the loop to create computer assisted abstractions combined with symbolic AI tools (i.e., automated reasoning via for example natural deduction)to increase automations.</p>
+
+
+
+<a name="562558956"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562558956" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562558956">(Dec 08 2025 at 21:12)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>… and because the word AI is making the trend these days. Sledgehammer is<br>
+your symbolic AI tool. And humans with their brain cells brings<br>
+their neurons. And so the interaction between a human and an ITP such as<br>
+Isabelle gives you the most powerful neuro symbolic AI tool.</p>
+<p>On Mon, Dec 8, 2025 at 1:42 PM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>It is quite hard to beat the simple combination of the structured Isar<br>
+language and sledgehammer. First, just try sledgehammer. If it fails, think<br>
+of an intermediate formula and try using sledgehammer to close both gaps.<br>
+If not, continue with more intermediate formulas. Many straightforward<br>
+proofs can be found that way.</p>
+<p>Larry<br>
+On 8 Dec 2025 at 20:21 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;,<br>
+wrote:</p>
+<p>The best solution figured are ITPs themselves, where we have humans in the<br>
+loop to create computer assisted abstractions combined with symbolic AI<br>
+tools (i.e., automated reasoning via for example natural deduction)to<br>
+increase automations.</p>
+</blockquote>
+
+
+
+<a name="562559747"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562559747" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562559747">(Dec 08 2025 at 21:17)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Ben,</p>
+<p>You can use Isabelle/VSCode (i.e. use <code>isabelle vscode</code> instead of <code>isabelle jedit</code>) and then install any extension you like from the open-vsx marketplace [1], e.g. continue [2], which can be connected to GPT-5.1 (I believe).</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>[1] <a href="https://open-vsx.org/">https://open-vsx.org/</a><br>
+[2] <a href="https://open-vsx.org/extension/Continue/continue">https://open-vsx.org/extension/Continue/continue</a></p>
+<p>On 8 December 2025 21:04:32 CET, "Bisping, Benjamin" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive theorem proving is the future of mathematics and verification. (I'm sure many on this mailing list know this situation.) I intend to build some arguments around Terence Tao getting ten-thousands of people to watch him use Lean+Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will employ Isabelle/HOL for the demonstration, I strongly anticipate questions in the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the incompatibilities introduced by Microsoft on one side and the Isabelle/Codium package on the other side.* This is a pity because, in principle, this year's LLM coding assistants appear to finally be quite decent at finding Isabelle proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can solve tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT promts) and JEdit is too clunky to be proposed in my “sales pitch” for ITPs. And if there's no easy automation for writing proofs in Isabelle, but there is in Lean, I already know how 100 % of the listeners will decide which of the two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on LLM-supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium <a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> . The 2025 message on the topic to this mailing list went unanswered <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a> .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code, which otherwise would at least be some answer. <a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+</blockquote>
+
+
+
+<a name="562567420"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562567420" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562567420">(Dec 08 2025 at 22:11)</a>:</h4>
+<p><strong>From:</strong> Changyang Zeng &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Glad to see that some of us are building agents with Isabelle, I am just<br>
+wondering what kind of software or hardware people tend to use Isabelle to<br>
+prove?</p>
+<p>Thanks,<br>
+Changyang</p>
+<p>On Mon, Dec 8, 2025 at 2:05 PM Mete Polat &lt;<a href="mailto:metepolat2000@gmail.com">metepolat2000@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Currently building an agentic IDE at <a href="http://omergence.dev">omergence.dev</a> with Isabelle in the<br>
+backend and GitHub Copilot built in. Hit me up if you have any questions or<br>
+are interested.</p>
+<p>On Mon, Dec 8, 2025, 12:04 "Bisping, Benjamin" &lt;<br>
+<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that<br>
+interactive theorem proving is the future of mathematics and verification.<br>
+(I'm sure many on this mailing list know this situation.) I intend to build<br>
+some arguments around Terence Tao getting ten-thousands of people to<br>
+watch him use Lean+Copilot this year<br>
+&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will employ<br>
+Isabelle/HOL for the demonstration, I strongly anticipate questions in the<br>
+direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to<br>
+the incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium package on the other side.* This is a pity because, in<br>
+principle, this year's LLM coding assistants appear to finally be quite<br>
+decent at finding Isabelle proofs. If I open Isabelle/HOL theories in VS<br>
+Code, GPT-5.1-Codex can solve tricky stuff, for instance, find fitting<br>
+induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT promts) and JEdit is too clunky to be proposed in my “sales pitch”<br>
+for ITPs. And if there's no easy automation for writing proofs in Isabelle,<br>
+but there is in Lean, I already know how 100 % of the listeners will decide<br>
+which of the two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium<br>
+<a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> .<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+ .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+</blockquote>
+</blockquote>
+
+
+
+<a name="562569476"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562569476" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562569476">(Dec 08 2025 at 22:28)</a>:</h4>
+<p><strong>From:</strong> Mete Polat &lt;<a href="mailto:metepolat2000@gmail.com">metepolat2000@gmail.com</a>&gt;</p>
+<p>Currently building an agentic IDE at <a href="http://omergence.dev">omergence.dev</a> with Isabelle in the<br>
+backend and GitHub Copilot built in. Hit me up if you have any questions or<br>
+are interested.</p>
+<p>On Mon, Dec 8, 2025, 12:04 "Bisping, Benjamin" &lt;<br>
+<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure<br>
+many on this mailing list know this situation.) I intend to build some<br>
+arguments around Terence Tao getting ten-thousands of people to watch him<br>
+use Lean+Copilot this year &lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;.<br>
+As I will employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium package on the other side.* This is a pity because, in<br>
+principle, this year's LLM coding assistants appear to finally be quite<br>
+decent at finding Isabelle proofs. If I open Isabelle/HOL theories in VS<br>
+Code, GPT-5.1-Codex can solve tricky stuff, for instance, find fitting<br>
+induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs. And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is in Lean, I already know how 100 % of the listeners will decide<br>
+which of the two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium<br>
+<a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> .<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+ .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+</blockquote>
+
+
+
+<a name="562747605"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562747605" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562747605">(Dec 09 2025 at 17:16)</a>:</h4>
+<p><strong>From:</strong> Jonathan Julián Huerta y Munive &lt;<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt;</p>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the future<br>
+to adhere to Isabelle standards. However, for the demonstration purposes<br>
+you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems in<br>
+Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the manual<br>
+parts at the end of the video.</p>
+<div class="youtube-video message_inline_image"><a data-id="Uq7I5sGaHo0" href="https://youtu.be/Uq7I5sGaHo0"><img src="https://uploads.zulipusercontent.net/bf013da806a8d3abf8b775ac2f36c6dc7c386e1b/68747470733a2f2f692e7974696d672e636f6d2f76692f5571374935734761486f302f6d7164656661756c742e6a7067"></a></div><p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure<br>
+many<br>
+on this mailing list know this situation.) I intend to build some arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate questions<br>
+in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which<br>
+otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<p>-- </p>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning</p>
+
+
+
+<a name="562848387"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562848387" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562848387">(Dec 10 2025 at 03:02)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>It would be great if someone holding a position at academia does a study<br>
+specifically on ITPs. Comparing the amount of energy needed for<br>
+Sledgehammer to generate a proof. And the amount of energy consumed to<br>
+train  GPT agents and prompting them to generate the same proof. And study<br>
+the impact of energy consumption from prompting and training GPT agents on<br>
+societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<br>
+<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the future<br>
+to adhere to Isabelle standards. However, for the demonstration purposes<br>
+you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems in<br>
+Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the manual<br>
+parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for<br>
+Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure<br>
+many<br>
+on this mailing list know this situation.) I intend to build some<br>
+arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I<br>
+will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding<br>
+Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can<br>
+solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of<br>
+the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which<br>
+otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning<br>
+</p>
+</blockquote>
+
+
+
+<a name="562899038"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562899038" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562899038">(Dec 10 2025 at 08:47)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Sledgehammer run easily on a laptop and its energy consumption is essentially zero compared with the amount of energy consumed to train GPT agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;, wrote:<br>
+It would be great if someone holding a position at academia does a study specifically on ITPs. Comparing the amount of energy needed for Sledgehammer to generate a proof. And the amount of energy consumed to train  GPT agents and prompting them to generate the same proof. And study the impact of energy consumption from prompting and training GPT agents on societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;jonjulian23@gmail.com&lt;mailto:<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt;&gt; wrote:<br>
+Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the future to adhere to Isabelle standards. However, for the demonstration purposes you mention, it should suffice. For instance, here is a video&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems in Isabelle. The result is still interactive theorem proving, but the DeepIsaHOL project has support&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the manual parts at the end of the video.</p>
+<div class="youtube-video message_inline_image"><a data-id="Uq7I5sGaHo0" href="https://youtu.be/Uq7I5sGaHo0"><img src="https://uploads.zulipusercontent.net/bf013da806a8d3abf8b775ac2f36c6dc7c386e1b/68747470733a2f2f692e7974696d672e636f6d2f76692f5571374935734761486f302f6d7164656661756c742e6a7067"></a></div><p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<p>Message-ID: &lt;3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de&lt;mailto:<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;benjamin.bisping@tu-berlin.de&lt;mailto:<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure many<br>
+on this mailing list know this situation.) I intend to build some arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<div class="youtube-video message_inline_image"><a data-id="cyyR7j2ChCI" href="https://www.youtube.com/watch?v=cyyR7j2ChCI"><img src="https://uploads.zulipusercontent.net/0e5c80efbd7c87269bd3e04884f14b4765b18460/68747470733a2f2f692e7974696d672e636f6d2f76692f63797952376a32436843492f6d7164656661756c742e6a7067"></a></div><p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the<br>
+incompatibilities introduced by Microsoft on one side and the Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this year's<br>
+LLM coding assistants appear to finally be quite decent at finding Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium<br>
+<a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> .<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a> .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code, which<br>
+otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+<p>--</p>
+<p>Jonathan Julian Huerta y Munive</p>
+<p>Researcher on formal methods and automated reasoning</p>
+
+
+
+<a name="562963711"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/562963711" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#562963711">(Dec 10 2025 at 14:08)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>That was exactly my point, Larry.</p>
+<p>Someone needs to put the light on these GPT agents with data as evidence.<br>
+Sledgehammer used to give me an Isabelle proof with less energy and less<br>
+time for quite complicated statements. Most of the time when the statement<br>
+is complicated the GPT agents will consume more energy and more time<br>
+without even generating a proof. And because GPT agents are good liars they<br>
+still generate something and call it “ a profile of a proof”.</p>
+<p>Not only that, when I prompt them to translate some spec written in natural<br>
+language to Isabelle/HOL, even if they generate something that works it is<br>
+always looking clunky, not generic, can be better her and there. Namely, it<br>
+adds an unnecessary layer of distraction and time wasting for users.</p>
+<p>Maybe those GPT agents are good for certain tasks, but definitely not for<br>
+programming let alone reasoning.</p>
+<p>On Wed, Dec 10, 2025 at 1:47 AM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Sledgehammer run easily on a laptop and its energy consumption is<br>
+essentially zero compared with the amount of energy consumed to train GPT<br>
+agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;,<br>
+wrote:</p>
+<p>It would be great if someone holding a position at academia does a study<br>
+specifically on ITPs. Comparing the amount of energy needed for<br>
+Sledgehammer to generate a proof. And the amount of energy consumed to<br>
+train  GPT agents and prompting them to generate the same proof. And study<br>
+the impact of energy consumption from prompting and training GPT agents on<br>
+societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<br>
+<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the<br>
+future to adhere to Isabelle standards. However, for the demonstration<br>
+purposes you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems<br>
+in Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the<br>
+manual parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a></p>
+<blockquote>
+<p>Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for<br>
+Isabelle?</p>
+</blockquote>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that<br>
+interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure<br>
+many<br>
+on this mailing list know this situation.) I intend to build some<br>
+arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I<br>
+will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to<br>
+the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding<br>
+Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can<br>
+solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of<br>
+the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which<br>
+otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563007558"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563007558" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563007558">(Dec 10 2025 at 17:08)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Useful to know. I find them good for finding things in our libraries (both lemmas and obscure syntax). They also generate pretend proofs.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Dec 2025, at 14:07, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt; wrote:</p>
+<p>Not only that, when I prompt them to translate some spec written in natural language to Isabelle/HOL, even if they generate something that works it is always looking clunky, not generic, can be better her and there. Namely, it adds an unnecessary layer of distraction and time wasting for users. <br>
+</p>
+</blockquote>
+
+
+
+<a name="563010314"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563010314" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563010314">(Dec 10 2025 at 17:21)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>I agree. Using them “carefully” as an advanced search engine can be<br>
+helpful. Especially now we have a huge AFP repository and not all the users<br>
+are aware of it nor they setup it when they download Isabelle main<br>
+distribution.</p>
+<p>My answers are based on the assumption coming from this thread which is<br>
+people are using them to find proofs in HOL!</p>
+<p>Best wishes,<br>
+Yakoub.<br>
+On Wed, Dec 10, 2025 at 10:08 AM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Useful to know. I find them good for finding things in our libraries (both<br>
+lemmas and obscure syntax). They also generate pretend proofs.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Dec 2025, at 14:07, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt; wrote:</p>
+<p>Not only that, when I prompt them to translate some spec written in<br>
+natural language to Isabelle/HOL, even if they generate something that<br>
+works it is always looking clunky, not generic, can be better her and<br>
+there. Namely, it adds an unnecessary layer of distraction and time wasting<br>
+for users.<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563040229"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563040229" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563040229">(Dec 10 2025 at 20:10)</a>:</h4>
+<p><strong>From:</strong> Josef Urban &lt;<a href="mailto:josef.urban@gmail.com">josef.urban@gmail.com</a>&gt;</p>
+<p>I said recently in a talk that the ATP and hammer algorithms were<br>
+"generative AI" long before LLMs appeared [1]. For someone using a hammer<br>
+(or an efficient tactical prover like TacticToe/Tactician) routinely to get<br>
+correct proofs, "Chatgpt as a prover" felt like an expensive joke when it<br>
+first appeared. (I have started to call Chatgpt a "gateway drug to ML" :).</p>
+<p>I would hope the "magic of scaling up" hype is mostly over and even the<br>
+LLM/DL community has recently (e.g. with the Deepseek paper) acknowledged<br>
+that efficient search/reasoning and combinations of algorithms matter a lot<br>
+(cf "agentic AI" as the next emerging buzzword).</p>
+<p>Projects like Jonathan's should allow people in academia to eventually<br>
+rigorously evaluate which (combinations of) algorithms and architectures<br>
+work better than others. There has been plenty of decent and<br>
+interesting/innovative work done continuously by the AITP community in this<br>
+direction (e.g. [2,3] pointing to nice non-Transformer architectures).<br>
+Hopefully, some of the "super excited" mathematicians will eventually<br>
+realize that AI/TP is also a science ;-).</p>
+<p>Josef</p>
+<p>[1] <a href="https://github.com/JUrban/LMvsATP">https://github.com/JUrban/LMvsATP</a><br>
+[2] <a href="https://arxiv.org/abs/2401.02949">https://arxiv.org/abs/2401.02949</a><br>
+[3] <a href="https://arxiv.org/abs/2503.07792">https://arxiv.org/abs/2503.07792</a></p>
+<p>On Wed, Dec 10, 2025, 7:47 PM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Sledgehammer run easily on a laptop and its energy consumption is<br>
+essentially zero compared with the amount of energy consumed to train GPT<br>
+agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;,<br>
+wrote:</p>
+<p>It would be great if someone holding a position at academia does a study<br>
+specifically on ITPs. Comparing the amount of energy needed for<br>
+Sledgehammer to generate a proof. And the amount of energy consumed to<br>
+train  GPT agents and prompting them to generate the same proof. And study<br>
+the impact of energy consumption from prompting and training GPT agents on<br>
+societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<br>
+<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the<br>
+future to adhere to Isabelle standards. However, for the demonstration<br>
+purposes you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems<br>
+in Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the<br>
+manual parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a></p>
+<blockquote>
+<p>Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for<br>
+Isabelle?</p>
+</blockquote>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that<br>
+interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure<br>
+many<br>
+on this mailing list know this situation.) I intend to build some<br>
+arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I<br>
+will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to<br>
+the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding<br>
+Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can<br>
+solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of<br>
+the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which<br>
+otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563050087"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563050087" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563050087">(Dec 10 2025 at 20:52)</a>:</h4>
+<p><strong>From:</strong> "\"Lammich, Peter (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>I've seen ChatGPT hallucinating lemma and function names that do not exist. And coming up with pretty random looking 'proofs', that obviously don't work. Is there a better model for that than GPT?</p>
+<p>Peter</p>
+<p>On 10 Dec 2025 18:08, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:<br>
+Useful to know. I find them good for finding things in our libraries (both lemmas and obscure syntax). They also generate pretend proofs.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Dec 2025, at 14:07, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt; wrote:</p>
+<p>Not only that, when I prompt them to translate some spec written in natural language to Isabelle/HOL, even if they generate something that works it is always looking clunky, not generic, can be better her and there. Namely, it adds an unnecessary layer of distraction and time wasting for users.<br>
+</p>
+</blockquote>
+
+
+
+<a name="563050101"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563050101" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563050101">(Dec 10 2025 at 20:52)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>I think this is the right approach. Before introducing such a tool to<br>
+student, it is always good to remind the about foundations of computation,<br>
+and have the following reminder/disclaimer at the beginning:</p>
+<p>“In CS there is a set of problems called undecidable problems that cannot<br>
+be automated by any kind of algorithm, whether it is AI based or not. For<br>
+example, there is no algorithm that allows to systematically provide a yes<br>
+or no answer to all statements written in HOL and automatically know if a<br>
+proof exists, i.e., demonstrating automatically if the statement is true or<br>
+false for all HOL formulas. The best solution figured so far are ITPs<br>
+themselves ( including their backend consisting automated reasoning tools).<br>
+Now we have a new expansive toy in town, which is less efficient and way<br>
+more taxing for society, environment, and communities. If you guys really<br>
+want to use it anyways, here is how.  And by the way this is not the only<br>
+form of AI that exits, symbolic AI (i.e., automated reasoning tools)<br>
+existed for at least the last 50 years.”</p>
+<p>On Wed, Dec 10, 2025 at 1:10 PM Josef Urban &lt;<a href="mailto:josef.urban@gmail.com">josef.urban@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>I said recently in a talk that the ATP and hammer algorithms were<br>
+"generative AI" long before LLMs appeared [1]. For someone using a hammer<br>
+(or an efficient tactical prover like TacticToe/Tactician) routinely to get<br>
+correct proofs, "Chatgpt as a prover" felt like an expensive joke when it<br>
+first appeared. (I have started to call Chatgpt a "gateway drug to ML" :).</p>
+<p>I would hope the "magic of scaling up" hype is mostly over and even the<br>
+LLM/DL community has recently (e.g. with the Deepseek paper) acknowledged<br>
+that efficient search/reasoning and combinations of algorithms matter a lot<br>
+(cf "agentic AI" as the next emerging buzzword).</p>
+<p>Projects like Jonathan's should allow people in academia to eventually<br>
+rigorously evaluate which (combinations of) algorithms and architectures<br>
+work better than others. There has been plenty of decent and<br>
+interesting/innovative work done continuously by the AITP community in this<br>
+direction (e.g. [2,3] pointing to nice non-Transformer architectures).<br>
+Hopefully, some of the "super excited" mathematicians will eventually<br>
+realize that AI/TP is also a science ;-).</p>
+<p>Josef</p>
+<p>[1] <a href="https://github.com/JUrban/LMvsATP">https://github.com/JUrban/LMvsATP</a><br>
+[2] <a href="https://arxiv.org/abs/2401.02949">https://arxiv.org/abs/2401.02949</a><br>
+[3] <a href="https://arxiv.org/abs/2503.07792">https://arxiv.org/abs/2503.07792</a></p>
+<p>On Wed, Dec 10, 2025, 7:47 PM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Sledgehammer run easily on a laptop and its energy consumption is<br>
+essentially zero compared with the amount of energy consumed to train GPT<br>
+agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;,<br>
+wrote:</p>
+<p>It would be great if someone holding a position at academia does a study<br>
+specifically on ITPs. Comparing the amount of energy needed for<br>
+Sledgehammer to generate a proof. And the amount of energy consumed to<br>
+train  GPT agents and prompting them to generate the same proof. And study<br>
+the impact of energy consumption from prompting and training GPT agents on<br>
+societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<br>
+<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the<br>
+future to adhere to Isabelle standards. However, for the demonstration<br>
+purposes you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems<br>
+in Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the<br>
+manual parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<br>
+<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for<br>
+Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that<br>
+interactive<br>
+theorem proving is the future of mathematics and verification. (I'm<br>
+sure many<br>
+on this mailing list know this situation.) I intend to build some<br>
+arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I<br>
+will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to<br>
+the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding<br>
+Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can<br>
+solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of<br>
+the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered</p>
+<p><a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which<br>
+otherwise would at least be some answer.</p>
+<p><a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563057813"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563057813" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563057813">(Dec 10 2025 at 21:14)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 08/12/2025 21:07, Makarius wrote:</p>
+<blockquote>
+<p>better use Lean then.</p>
+</blockquote>
+<p>More side-remarks: The Lean community has enough money and manpower to follow <br>
+the latest and greatest trends quickly, even if they turn out dead ends. Thus <br>
+it is always interesting to attend the virtual Lean Together event, every year <br>
+in January. Non-Lean users are explicitly welcome.</p>
+<p>The website for Jan-2026 is here: <a href="https://leanprover-community.github.io/lt2026">https://leanprover-community.github.io/lt2026</a></p>
+<p>The past event from Jan-2025 is documented here: <br>
+<a href="https://leanprover-community.github.io/lt2025/schedule.html">https://leanprover-community.github.io/lt2025/schedule.html</a></p>
+<p>This particular talk from 15-Jan-2025 is relevant to the current mail thread:</p>
+<p>"""<br>
+Jason Rute (IBM Research)</p>
+<p>Title: The last mile: How do we make AI theorem provers which work in the real <br>
+world for real users and not just on benchmarks?</p>
+<p>Abstract: As AI research progresses, we are seeing massive gains on formal <br>
+math benchmarks like MiniF2F and challenges like the IMO. However, these gains <br>
+are not directly accessible to the typical ITP user, nor are they used to <br>
+build formal mathematical libraries. Is this because the technology is not as <br>
+good as promised or because there is a disconnect between research and the <br>
+day-to-day needs of users? I propose that even today, we have sufficient AI <br>
+technology to enhance the experience of proof assistant users significantly. I <br>
+approach this from the lens of product-focused software engineering. How do we <br>
+bridge “the last mile” to make a useful product for the end user?<br>
+"""</p>
+<p>E.g. see this introductory slide "Why don't we have AI assistants for real ITP <br>
+users?" <a href="https://youtu.be/Yr8dzfVkeHg?t=141">https://youtu.be/Yr8dzfVkeHg?t=141</a></p>
+<div class="youtube-video message_inline_image"><a data-id="Yr8dzfVkeHg" href="https://youtu.be/Yr8dzfVkeHg?t=141"><img src="https://uploads.zulipusercontent.net/b6f6457a0ce3de21445be6f2de56ad6060528140/68747470733a2f2f692e7974696d672e636f6d2f76692f597238647a66566b6548672f6d7164656661756c742e6a7067"></a></div><p>I have attended the talk virtually on that day. To me, the abstract sounded <br>
+more optimistic than the impression given in the talk. I have mentally <br>
+ticked-off the topic with the note: "Check again in 3-5 years, if they have <br>
+something that works properly, or have discovered that the very approach is a <br>
+bad idea".</p>
+<p>It will be still interesting to see what will be presented in a few weeks on <br>
+virtual Lean Together 2026.</p>
+<p>Makarius</p>
+
+
+
+<a name="563068249"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563068249" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563068249">(Dec 10 2025 at 22:00)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>Peter, if you want something serious I suggest you build your GPT agent<br>
+based on Mistral models. I trust tech coming from France because French<br>
+education system have a culture of looping in reasoning techniques for<br>
+computation in CS class, rather than teaching students engineering<br>
+ techniques that rely only on brute force computation.</p>
+<p>I always keep an eye on tech products coming from researchers or companies<br>
+based in France. They always end up finding a balance between powerful<br>
+computation and resource efficiency for their products because they loop in<br>
+reasoning in their R&amp;D. Maybe my perception is wrong but this is my<br>
+personal experience with other tech products.</p>
+<p>PS: I am Isabelle user not Coq user. But for example Isabelle/Naproche is<br>
+based on CNL model from Franch research institution. I am sure Sledgehammer<br>
+leverage a lot from french researchers.</p>
+<p>Best wishes,<br>
+Yakoub.</p>
+<p>On Wed, Dec 10, 2025 at 1:51 PM Lammich, Peter (UT-EEMCS) &lt;<br>
+<a href="mailto:p.lammich@utwente.nl">p.lammich@utwente.nl</a>&gt; wrote:</p>
+<blockquote>
+<p>I've seen ChatGPT hallucinating lemma and function names that do not<br>
+exist. And coming up with pretty random looking 'proofs', that obviously<br>
+don't work. Is there a better model for that than GPT?</p>
+<p>Peter</p>
+<p>On 10 Dec 2025 18:08, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:<br>
+Useful to know. I find them good for finding things in our libraries (both<br>
+lemmas and obscure syntax). They also generate pretend proofs.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 10 Dec 2025, at 14:07, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt; wrote:</p>
+<p>Not only that, when I prompt them to translate some spec written in<br>
+natural language to Isabelle/HOL, even if they generate something that<br>
+works it is always looking clunky, not generic, can be better her and<br>
+there. Namely, it adds an unnecessary layer of distraction and time wasting<br>
+for users.<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563086630"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563086630" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563086630">(Dec 11 2025 at 00:48)</a>:</h4>
+<p><strong>From:</strong> waldinge &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Plugging my recent paper on extracting programs from automatically discovered proofs.  (No LLMs used, but the matter is discussed).<br>
+<a href="https://arxiv.org/abs/2508.11136">https://arxiv.org/abs/2508.11136</a></p>
+<blockquote>
+<p>On Dec 10, 2025, at 12:51 PM, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt; wrote:</p>
+<p>I think this is the right approach. Before introducing such a tool to student, it is always good to remind the about foundations of computation, and have the following reminder/disclaimer at the beginning:</p>
+<p>“In CS there is a set of problems called undecidable problems that cannot be automated by any kind of algorithm, whether it is AI based or not. For example, there is no algorithm that allows to systematically provide a yes or no answer to all statements written in HOL and automatically know if a proof exists, i.e., demonstrating automatically if the statement is true or false for all HOL formulas. The best solution figured so far are ITPs themselves ( including their backend consisting automated reasoning tools). Now we have a new expansive toy in town, which is less efficient and way more taxing for society, environment, and communities. If you guys really want to use it anyways, here is how.  And by the way this is not the only form of AI that exits, symbolic AI (i.e., automated reasoning tools) existed for at least the last 50 years.”</p>
+<p>On Wed, Dec 10, 2025 at 1:10 PM Josef Urban &lt;<a href="mailto:josef.urban@gmail.com">josef.urban@gmail.com</a> &lt;mailto:<a href="mailto:josef.urban@gmail.com">josef.urban@gmail.com</a>&gt;&gt; wrote:</p>
+<blockquote>
+<p>I said recently in a talk that the ATP and hammer algorithms were "generative AI" long before LLMs appeared [1]. For someone using a hammer (or an efficient tactical prover like TacticToe/Tactician) routinely to get correct proofs, "Chatgpt as a prover" felt like an expensive joke when it first appeared. (I have started to call Chatgpt a "gateway drug to ML" :).</p>
+<p>I would hope the "magic of scaling up" hype is mostly over and even the LLM/DL community has recently (e.g. with the Deepseek paper) acknowledged that efficient search/reasoning and combinations of algorithms matter a lot (cf "agentic AI" as the next emerging buzzword).</p>
+<p>Projects like Jonathan's should allow people in academia to eventually rigorously evaluate which (combinations of) algorithms and architectures work better than others. There has been plenty of decent and interesting/innovative work done continuously by the AITP community in this direction (e.g. [2,3] pointing to nice non-Transformer architectures). Hopefully, some of the "super excited" mathematicians will eventually realize that AI/TP is also a science ;-).</p>
+<p>Josef </p>
+<p>[1] <a href="https://github.com/JUrban/LMvsATP">https://github.com/JUrban/LMvsATP</a><br>
+[2] <a href="https://arxiv.org/abs/2401.02949">https://arxiv.org/abs/2401.02949</a><br>
+[3] <a href="https://arxiv.org/abs/2503.07792">https://arxiv.org/abs/2503.07792</a></p>
+<p>On Wed, Dec 10, 2025, 7:47 PM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a> &lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt; wrote:</p>
+<blockquote>
+<p>Sledgehammer run easily on a laptop and its energy consumption is essentially zero compared with the amount of energy consumed to train GPT agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a> &lt;mailto:<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;&gt;, wrote:</p>
+<blockquote>
+<p>It would be great if someone holding a position at academia does a study specifically on ITPs. Comparing the amount of energy needed for Sledgehammer to generate a proof. And the amount of energy consumed to train  GPT agents and prompting them to generate the same proof. And study the impact of energy consumption from prompting and training GPT agents on societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a> &lt;mailto:<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt;&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project &lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the future to adhere to Isabelle standards. However, for the demonstration purposes you mention, it should suffice. For instance, here is a video &lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems in Isabelle. The result is still interactive theorem proving, but the DeepIsaHOL project has support &lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the manual parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<blockquote>
+<hr>
+<p>Message-ID: &lt;<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a> &lt;mailto:<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a> &lt;mailto:<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that interactive<br>
+theorem proving is the future of mathematics and verification. (I'm sure many<br>
+on this mailing list know this situation.) I intend to build some arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to the<br>
+incompatibilities introduced by Microsoft on one side and the Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this year's<br>
+LLM coding assistants appear to finally be quite decent at finding Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium<br>
+<a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a> .<br>
+The 2025 message on the topic to this mailing list went unanswered<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a> .<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code, which<br>
+otherwise would at least be some answer.<br>
+<a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></li>
+</ul>
+</blockquote>
+<p>&gt; </p>
+<p>--</p>
+<p>Jonathan Julian Huerta y Munive <br>
+Researcher on formal methods and automated reasoning</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563173540"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563173540" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563173540">(Dec 11 2025 at 12:22)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>Josef -</p>
+<p>Just for clarification. I am not questioning the value of Jonathan’s work<br>
+or others work.</p>
+<p>I am just trying to create some awareness for CS community in the middle of<br>
+this LLMs noise.</p>
+<p>Best,<br>
+Yakoub.</p>
+<p>On Wed, Dec 10, 2025 at 1:10 PM Josef Urban &lt;<a href="mailto:josef.urban@gmail.com">josef.urban@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>I said recently in a talk that the ATP and hammer algorithms were<br>
+"generative AI" long before LLMs appeared [1]. For someone using a hammer<br>
+(or an efficient tactical prover like TacticToe/Tactician) routinely to get<br>
+correct proofs, "Chatgpt as a prover" felt like an expensive joke when it<br>
+first appeared. (I have started to call Chatgpt a "gateway drug to ML" :).</p>
+<p>I would hope the "magic of scaling up" hype is mostly over and even the<br>
+LLM/DL community has recently (e.g. with the Deepseek paper) acknowledged<br>
+that efficient search/reasoning and combinations of algorithms matter a lot<br>
+(cf "agentic AI" as the next emerging buzzword).</p>
+<p>Projects like Jonathan's should allow people in academia to eventually<br>
+rigorously evaluate which (combinations of) algorithms and architectures<br>
+work better than others. There has been plenty of decent and<br>
+interesting/innovative work done continuously by the AITP community in this<br>
+direction (e.g. [2,3] pointing to nice non-Transformer architectures).<br>
+Hopefully, some of the "super excited" mathematicians will eventually<br>
+realize that AI/TP is also a science ;-).</p>
+<p>Josef</p>
+<p>[1] <a href="https://github.com/JUrban/LMvsATP">https://github.com/JUrban/LMvsATP</a><br>
+[2] <a href="https://arxiv.org/abs/2401.02949">https://arxiv.org/abs/2401.02949</a><br>
+[3] <a href="https://arxiv.org/abs/2503.07792">https://arxiv.org/abs/2503.07792</a></p>
+<p>On Wed, Dec 10, 2025, 7:47 PM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Sledgehammer run easily on a laptop and its energy consumption is<br>
+essentially zero compared with the amount of energy consumed to train GPT<br>
+agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;,<br>
+wrote:</p>
+<p>It would be great if someone holding a position at academia does a study<br>
+specifically on ITPs. Comparing the amount of energy needed for<br>
+Sledgehammer to generate a proof. And the amount of energy consumed to<br>
+train  GPT agents and prompting them to generate the same proof. And study<br>
+the impact of energy consumption from prompting and training GPT agents on<br>
+societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<br>
+<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the<br>
+future to adhere to Isabelle standards. However, for the demonstration<br>
+purposes you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems<br>
+in Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the<br>
+manual parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<br>
+<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for<br>
+Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that<br>
+interactive<br>
+theorem proving is the future of mathematics and verification. (I'm<br>
+sure many<br>
+on this mailing list know this situation.) I intend to build some<br>
+arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I<br>
+will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to<br>
+the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding<br>
+Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can<br>
+solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which of<br>
+the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions on<br>
+LLM-<br>
+supported proof generation in Isabelle I could report to advertise it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered</p>
+<p><a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS Code,<br>
+which<br>
+otherwise would at least be some answer.</p>
+<p><a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="563213557"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Copilot%20%28or%20other%20programming%20assistants%29%20for%20.../near/563213557" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Copilot.20.28or.20other.20programming.20assistants.29.20for.20.2E.2E.2E.html#563213557">(Dec 11 2025 at 15:18)</a>:</h4>
+<p><strong>From:</strong> Harry Butterworth &lt;<a href="mailto:heb1001@gmail.com">heb1001@gmail.com</a>&gt;</p>
+<p>I think the main thing missing from historical AI approaches in general is<br>
+the ability to create higher level abstractions from observations.</p>
+<p>IMO, creating higher level abstractions is a significant part of what maths<br>
+is about: observe a pattern, make a formal statement of the pattern, search<br>
+for a proof to determine if the pattern always holds.</p>
+<p>If you consider that mathematical expressions and statements are enumerable<br>
+then the interesting proofs are those that appear on the shortest paths<br>
+linking nodes of the tree of the enumeration where proofs linking nodes<br>
+closer to the root of the tree are more interesting and useful (because<br>
+they are more generic) than proofs linking nodes at more remote levels<br>
+(where they are more specific).</p>
+<p>Taking Euler’s identity as an example: it’s a statement that sits near the<br>
+root of the tree (because it’s short) that links expressions that also sit<br>
+near the root of the tree (because they are short too) and it’s an<br>
+abstraction — a shortcut — for its own proof which, in contrast, is a more<br>
+convoluted path that climbs high up into the branches of the tree before<br>
+coming back down again.</p>
+<p>The “noise” about LLMs has arisen because they are demonstrating the<br>
+ability to create higher level abstractions from observations (the training<br>
+data) during self-supervised learning without requiring explicit human<br>
+input.  This is abductive inference and it’s something that historical<br>
+approaches can’t do (AFAIK).</p>
+<p>LLMs are not necessarily the best architecture for abductive inference and<br>
+the scaffolding around current LLMs is not necessarily particularly<br>
+appropriate for doing mathematics but LLMs do represent a step change in<br>
+the right direction in terms of capability.</p>
+<p>Undecidability and Godel’s theorems do not restrict computers from becoming<br>
+superhuman at mathematics (even if you believe in some kind of substrate<br>
+dependence, which I don’t, it is possible to create biological computers).</p>
+<p>Another way of looking at Godel’s theorems is that every undecidable<br>
+proposition creates two new branches within mathematics and that this<br>
+branching tree is proved to be infinite.  You wouldn’t want it any other<br>
+way as there is an isomorphism between reality and a mathematical<br>
+description of reality and who would choose to live in a finite universe?</p>
+<p>In fact, if you subscribe to the simulation hypothesis (and consequentially<br>
+the dual aspect theory of information), the entire universe may simply be<br>
+the internal perspective of a theorem prover currently working on a<br>
+statement which is isomorphic to me winning this argument about the<br>
+significance of LLMs.  A statement somewhere almost inconceivably high up<br>
+in the branches of highly specific and asymptotically useless mathematics.</p>
+<p>Enjoy!</p>
+<p>On Thu, 11 Dec 2025 at 12:22, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Josef -</p>
+<p>Just for clarification. I am not questioning the value of Jonathan’s work<br>
+or others work.</p>
+<p>I am just trying to create some awareness for CS community in the middle<br>
+of this LLMs noise.</p>
+<p>Best,<br>
+Yakoub.</p>
+<p>On Wed, Dec 10, 2025 at 1:10 PM Josef Urban &lt;<a href="mailto:josef.urban@gmail.com">josef.urban@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>I said recently in a talk that the ATP and hammer algorithms were<br>
+"generative AI" long before LLMs appeared [1]. For someone using a hammer<br>
+(or an efficient tactical prover like TacticToe/Tactician) routinely to get<br>
+correct proofs, "Chatgpt as a prover" felt like an expensive joke when it<br>
+first appeared. (I have started to call Chatgpt a "gateway drug to ML" :).</p>
+<p>I would hope the "magic of scaling up" hype is mostly over and even the<br>
+LLM/DL community has recently (e.g. with the Deepseek paper) acknowledged<br>
+that efficient search/reasoning and combinations of algorithms matter a lot<br>
+(cf "agentic AI" as the next emerging buzzword).</p>
+<p>Projects like Jonathan's should allow people in academia to eventually<br>
+rigorously evaluate which (combinations of) algorithms and architectures<br>
+work better than others. There has been plenty of decent and<br>
+interesting/innovative work done continuously by the AITP community in this<br>
+direction (e.g. [2,3] pointing to nice non-Transformer architectures).<br>
+Hopefully, some of the "super excited" mathematicians will eventually<br>
+realize that AI/TP is also a science ;-).</p>
+<p>Josef</p>
+<p>[1] <a href="https://github.com/JUrban/LMvsATP">https://github.com/JUrban/LMvsATP</a><br>
+[2] <a href="https://arxiv.org/abs/2401.02949">https://arxiv.org/abs/2401.02949</a><br>
+[3] <a href="https://arxiv.org/abs/2503.07792">https://arxiv.org/abs/2503.07792</a></p>
+<p>On Wed, Dec 10, 2025, 7:47 PM Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Sledgehammer run easily on a laptop and its energy consumption is<br>
+essentially zero compared with the amount of energy consumed to train GPT<br>
+agents.</p>
+<p>Larry<br>
+On 10 Dec 2025 at 03:01 +0000, Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;,<br>
+wrote:</p>
+<p>It would be great if someone holding a position at academia does a study<br>
+specifically on ITPs. Comparing the amount of energy needed for<br>
+Sledgehammer to generate a proof. And the amount of energy consumed to<br>
+train  GPT agents and prompting them to generate the same proof. And study<br>
+the impact of energy consumption from prompting and training GPT agents on<br>
+societies, communities and environment.</p>
+<p>Best wishes,</p>
+<p>Yakoub.<br>
+On Tue, Dec 9, 2025 at 10:06 AM Jonathan Julián Huerta y Munive &lt;<br>
+<a href="mailto:jonjulian23@gmail.com">jonjulian23@gmail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Benjamin,</p>
+<p>You might want to try the resources in the DeepIsaHOL project<br>
+&lt;<a href="https://github.com/yonoteam/DeepIsaHOL">https://github.com/yonoteam/DeepIsaHOL</a>&gt;.<br>
+Currently it has support for ChatGPT, Gemini, Ollama, and HuggingFace<br>
+Transformers.<br>
+It is very much in a prototypical state and will be upgraded in the<br>
+future to adhere to Isabelle standards. However, for the demonstration<br>
+purposes you mention, it should suffice. For instance, here is a video<br>
+&lt;<a href="https://youtu.be/Uq7I5sGaHo0">https://youtu.be/Uq7I5sGaHo0</a>&gt; showing ChatGPT proving simple theorems<br>
+in Isabelle. The result is still interactive theorem proving, but the<br>
+DeepIsaHOL project has support<br>
+&lt;<a href="https://ieeexplore.ieee.org/document/11024329">https://ieeexplore.ieee.org/document/11024329</a>&gt; for automating the<br>
+manual parts at the end of the video.</p>
+<p>Best wishes,<br>
+Jonathan</p>
+<hr>
+<blockquote>
+<p>Message-ID: &lt;<br>
+<a href="mailto:3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de">3ee6efa75b672760cd3484fe2ca903abafddfdd5.camel@tu-berlin.de</a>&gt;<br>
+Date: Mon, 8 Dec 2025 20:04:32 +0000<br>
+From: "Bisping, Benjamin" &lt;<a href="mailto:benjamin.bisping@tu-berlin.de">benjamin.bisping@tu-berlin.de</a>&gt;<br>
+Subject: [isabelle] Copilot (or other programming assistants) for<br>
+Isabelle?</p>
+<p>Hello everybody,</p>
+<p>This week, I plan to convince a computer science audience that<br>
+interactive<br>
+theorem proving is the future of mathematics and verification. (I'm<br>
+sure many<br>
+on this mailing list know this situation.) I intend to build some<br>
+arguments<br>
+around Terence Tao getting ten-thousands of people to watch him use<br>
+Lean<br>
++Copilot this year&lt;<a href="https://www.youtube.com/watch?v=cyyR7j2ChCI">https://www.youtube.com/watch?v=cyyR7j2ChCI</a>&gt;. As I<br>
+will<br>
+employ Isabelle/HOL for the demonstration, I strongly anticipate<br>
+questions in<br>
+the direction of how to hook it up with GitHub Copilot.</p>
+<p>I tried it myself and Isabelle+Copilot seems highly non-trivial due to<br>
+the<br>
+incompatibilities introduced by Microsoft on one side and the<br>
+Isabelle/Codium<br>
+package on the other side.* This is a pity because, in principle, this<br>
+year's<br>
+LLM coding assistants appear to finally be quite decent at finding<br>
+Isabelle<br>
+proofs. If I open Isabelle/HOL theories in VS Code, GPT-5.1-Codex can<br>
+solve<br>
+tricky stuff, for instance, find fitting induction invariants.</p>
+<p>But of course, the workflow to co-edit theories between VSCode (or<br>
+ChatGPT<br>
+promts) and JEdit is too clunky to be proposed in my “sales pitch” for<br>
+ITPs.<br>
+And if there's no easy automation for writing proofs in Isabelle, but<br>
+there is<br>
+in Lean, I already know how 100 % of the listeners will decide which<br>
+of the<br>
+two systems to look into.</p>
+<p>I wonder whether people here have positive experiences / suggestions<br>
+on LLM-<br>
+supported proof generation in Isabelle I could report to advertise<br>
+it?**</p>
+<p>Kind regards,</p>
+<p>Ben</p>
+<ul>
+<li>Prior 2023 hacky solution for Copilot in Isabelle's VS Codium</li>
+</ul>
+<p><a href="https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html">https://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.2FVSCode.20Github.20Copilot.html</a><br>
+.<br>
+The 2025 message on the topic to this mailing list went unanswered</p>
+<p><a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2025-05/msg00002.html</a><br>
+.<br>
+** Prior discussion about the discontinued Isabelle plugin for VS<br>
+Code, which<br>
+otherwise would at least be some answer.</p>
+<p><a href="https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html">https://lists.cam.ac.uk/sympa/arc/cl-isabelle-users/2023-10/msg00005.html</a></p>
+</blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+<p>*Jonathan Julian Huerta y Munive *</p>
+<p>Researcher on formal methods and automated reasoning</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

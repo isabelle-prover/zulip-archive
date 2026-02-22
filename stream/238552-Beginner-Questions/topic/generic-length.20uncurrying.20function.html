@@ -1,0 +1,138 @@
+<html>
+<head><meta charset="utf-8"><title>generic-length uncurrying function · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html">generic-length uncurrying function</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515031373"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515031373" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alicia <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515031373">(Apr 29 2025 at 11:04)</a>:</h4>
+<p>Hello, be warned: I am not that deep into simple type theory so my question might be incredibly stupid from a theoretical standpoint alone... Is there a way to define a function that does generic length uncurrying? That is, I'm looking for a function that takes as argument any curried function  </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">t_1</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">t_2</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="ow">...</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">t_n</span>
+</code></pre></div>
+<p>of arbitrary length n and returns a function </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">g</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="o">(</span><span class="n">t_1</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">t_2</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">...</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">t_</span><span class="ow">{</span><span class="n">n</span><span class="o">-</span><span class="n">1</span><span class="ow">}</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">t_n</span>
+</code></pre></div>
+<p>Thank you very much in advance!</p>
+
+
+
+<a name="515060718"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515060718" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515060718">(Apr 29 2025 at 13:16)</a>:</h4>
+<p>No, that is not possible</p>
+
+
+
+<a name="515299985"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515299985" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515299985">(Apr 30 2025 at 13:06)</a>:</h4>
+<p>With overloading one can get pretty far actually.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">consts</span><span class="w"> </span><span class="n">uncurry</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('A ⇒ 'B) ⇒ 'C ⇒ 'D"</span>
+
+<span class="k">overloading</span><span class="w"> </span><span class="n">uncurry_fun</span><span class="w"> </span><span class="n">≡</span><span class="w"> </span><span class="s">"uncurry :: ('a ⇒ 'b ⇒ 'c) ⇒ 'a × 'B ⇒ 'C"</span>
+<span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">uncurry_fun</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'b ⇒ 'c) ⇒ 'a × 'B ⇒ 'C"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"uncurry_fun f = (λ(a, b). uncurry (f a) b)"</span>
+<span class="k">end</span>
+<span class="k">overloading</span><span class="w"> </span><span class="n">uncurry_unit</span><span class="w"> </span><span class="n">≡</span><span class="w"> </span><span class="s">"uncurry :: ('a ⇒ 'b) ⇒ (unit ⇒ 'a) ⇒ 'b"</span>
+<span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">uncurry_unit</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'b) ⇒ (unit ⇒ 'a) ⇒ 'b"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"uncurry_unit f g = f (g ())"</span>
+<span class="k">end</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, λ(). b) = f a b"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_unit_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">unit.case</span><span class="w"> </span><span class="ow">..</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, λ(). c) = f a b c"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_unit_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">unit.case</span><span class="w"> </span><span class="ow">..</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, c, λ(). d) = f a b c d"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_unit_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">unit.case</span><span class="w"> </span><span class="ow">..</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, c, d, λ(). e) = f a b c d e"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_unit_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">unit.case</span><span class="w"> </span><span class="ow">..</span>
+</code></pre></div>
+
+
+
+<a name="515300671"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515300671" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515300671">(Apr 30 2025 at 13:09)</a>:</h4>
+<p>Above I use the unit type to stop the overloaded recursion.</p>
+
+
+
+<a name="515300998"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515300998" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515300998">(Apr 30 2025 at 13:10)</a>:</h4>
+<p>Probably it would be safer to introduce a new dummy type for this purpose---the unit type might have other legitimate uses.</p>
+
+
+
+<a name="515302087"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515302087" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515302087">(Apr 30 2025 at 13:15)</a>:</h4>
+<p>I.e. something like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">consts</span><span class="w"> </span><span class="n">uncurry</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('A ⇒ 'B) ⇒ 'C ⇒ 'D"</span>
+<span class="k">datatype</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">stop_curry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Stop_Curry</span><span class="w"> </span><span class="o">(</span><span class="n">get_curry</span><span class="o">:</span><span class="w"> </span><span class="n n-Type">'a</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="s">"$_"</span><span class="o">)</span>
+
+<span class="k">overloading</span><span class="w"> </span><span class="n">uncurry_fun</span><span class="w"> </span><span class="n">≡</span><span class="w"> </span><span class="s">"uncurry :: ('a ⇒ 'b ⇒ 'c) ⇒ 'a × 'B ⇒ 'C"</span>
+<span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">uncurry_fun</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'b ⇒ 'c) ⇒ 'a × 'B ⇒ 'C"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"uncurry_fun f = (λ(a, b). uncurry (f a) b)"</span>
+<span class="k">end</span>
+<span class="k">overloading</span><span class="w"> </span><span class="n">uncurry_stop_curry</span><span class="w"> </span><span class="n">≡</span><span class="w"> </span><span class="s">"uncurry :: ('a ⇒ 'b) ⇒ 'a stop_curry ⇒ 'b"</span>
+<span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">uncurry_stop_curry</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'b) ⇒ 'a stop_curry ⇒ 'b"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"uncurry_stop_curry f g = f (get_curry g)"</span>
+<span class="k">end</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, $b) = f a b"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_stop_curry_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">stop_curry.sel</span><span class="w"> </span><span class="ow">..</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, $c) = f a b c"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_stop_curry_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">stop_curry.sel</span><span class="w"> </span><span class="ow">..</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, c, $d) = f a b c d"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_stop_curry_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">stop_curry.sel</span><span class="w"> </span><span class="ow">..</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, c, d, $e) = f a b c d e"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_stop_curry_def</span><span class="w"> </span><span class="n">prod.case</span><span class="w"> </span><span class="n">stop_curry.sel</span><span class="w"> </span><span class="ow">..</span>
+</code></pre></div>
+
+
+
+<a name="515312551"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515312551" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515312551">(Apr 30 2025 at 13:59)</a>:</h4>
+<p>ok, but that is not just one function, yes with workarounds one can achieve something similar. Usually in this cases however it is better to ask "what are you trying to achieve" and find a better wax to express it</p>
+
+
+
+<a name="515313426"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515313426" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515313426">(Apr 30 2025 at 14:02)</a>:</h4>
+<p>If you're willing to go down this route, I don't quite see why you need the extra marker to stop the recursion? You can replace the <code>uncurry_unit</code> of Dmitriy's first listing with:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">overloading</span><span class="w"> </span><span class="n">uncurry_unit</span><span class="w"> </span><span class="n">≡</span><span class="w"> </span><span class="s">"uncurry :: ('a ⇒ 'b) ⇒ 'a ⇒ 'b"</span>
+<span class="k">begin</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">uncurry_unit</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'b) ⇒ 'a ⇒ 'b"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"uncurry_unit f g = f (g)"</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>and still get</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry f (a, b, c, d) = f a b c d"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_unit_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+<p>as expected. However, note that type inference in the presence of this <code>uncurry</code> (and overloaded constants more generally) becomes supremely annoying:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">term</span><span class="w"> </span><span class="s">"uncurry f (a,b,c,d)"</span><span class="w"> </span><span class="c">(* infers 'g for this expression, instead of `'a =&gt; 'b =&gt; 'c =&gt; 'd =&gt; 'e` *)</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry (λa b c d. d) (a,b,c,d) = d"</span><span class="w"> </span><span class="gr">oops</span><span class="w"> </span><span class="c">(* unprovable since it infers different types for a,b,c,d each time *)</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"uncurry (λ(a::'a) (b::'b) (c::'c) (d::'d). d) (a::'a,b::'b,c::'c,d::'d) = (d::'d)"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">uncurry_fun_def</span><span class="w"> </span><span class="n">uncurry_unit_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(* goes through *)</span>
+</code></pre></div>
+<p>So this is a fun corner of Isabelle, but as Jan says, probably not what you actually want to do ;)</p>
+
+
+
+<a name="515356436"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/generic-length%20uncurrying%20function/near/515356436" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/generic-length.20uncurrying.20function.html#515356436">(Apr 30 2025 at 17:02)</a>:</h4>
+<p>Ah, I thought I need some special type as a marker to make the cases non-overlapping--- but indeed they already are non-overlapping. Nice <span class="user-mention" data-user-id="485021">@terru</span>.</p>
+<p>I agree that the entire overloading approach may not be what one should use, especially not as a beginner. But I felt triggered by Jan's categorical statement. <span aria-label="smile" class="emoji emoji-1f642" role="img" title="smile">:smile:</span></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

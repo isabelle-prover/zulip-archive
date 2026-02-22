@@ -1,0 +1,238 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: More uniform and scalable declarations of intro/eli... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20More.20uniform.20and.20scalable.20declarations.20of.20intro.2Feli.2E.2E.2E.html">NEWS: More uniform and scalable declarations of intro/eli...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="529918278"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20More%20uniform%20and%20scalable%20declarations%20of%20intro/eli.../near/529918278" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20More.20uniform.20and.20scalable.20declarations.20of.20intro.2Feli.2E.2E.2E.html#529918278">(Jul 21 2025 at 15:46)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* General </strong>*</p>
+<ul>
+<li>Declarations of intro/elim/dest rules for Pure and the Classical<br>
+Reasoner (e.g. HOL) are handled more uniformly and efficiently: the<br>
+order of rule declarations is maintained accurately, regardless of<br>
+intermediate [rule del] declarations. Furthermore, [dest] is now a<br>
+proper declaration on its own account, instead of the former expansion<br>
+[elim_format, elim]. Consequently, [rule del] no longer deletes the<br>
+[elim_format] of the given rule, only the original rule. Very rare<br>
+INCOMPATIBILITY: tools like "blast" and "auto" may fail in unusual<br>
+situations.</li>
+</ul>
+<p>This refers to Isabelle/372273ab6ebb and AFP/eae86974a665.</p>
+<p>That is the notable point, where all Isabelle + AFP applications essentially <br>
+work unchanged. Intermediately, in my desparation to get it done, I had <br>
+adjusted a few odd proofs. See this already backed-out changeset:</p>
+<p>changeset:   15842:d06954e7388a<br>
+user:        wenzelm<br>
+date:        Sun Jul 13 04:21:58 2025 +0200<br>
+files:       thys/Buchi_Complementation/Complementation_Implement.thy <br>
+thys/Tree_Enumeration/Rooted_Tree.thy<br>
+description:<br>
+adapted proofs to Isabelle/df2d774bcf21: spurious failures due to unclear reasons;</p>
+<p>diff -r ba30fe0ad97c -r d06954e7388a <br>
+thys/Buchi_Complementation/Complementation_Implement.thy<br>
+--- a/thys/Buchi_Complementation/Complementation_Implement.thy  Fri Jul 11 <br>
+15:02:29 2025 +0200<br>
++++ b/thys/Buchi_Complementation/Complementation_Implement.thy  Sun Jul 13 <br>
+04:21:58 2025 +0200<br>
+@@ -597,7 +597,9 @@<br>
+      fix a f g<br>
+      assume "g \&lt;in&gt; expand_map (get_4 A (bounds_3 A a (refresh_1 f)))"<br>
+      then show "g \&lt;in&gt; expand_map (get_3 A (bounds_3 A a (refresh_1 f)))"</p>
+<ul>
+<li>
+<p>unfolding get_4_def get_3_def items_4_def items_3_def <br>
+expand_map_alt_def by blast</p>
+</li>
+<li>
+<p>unfolding get_4_def get_3_def items_4_def items_3_def <br>
+expand_map_alt_def mem_Collect_eq</p>
+</li>
+<li>
+<p>supply not_None_eq [iff del] by blast<br>
++<br>
+    qed<br>
+    lemma complement_4_language_2: "language (complement_4 A) \&lt;subseteq&gt; <br>
+language (complement_3 A)"<br>
+      using language_mono complement_4_less by (auto dest: monoD)<br>
+diff -r ba30fe0ad97c -r d06954e7388a thys/Tree_Enumeration/Rooted_Tree.thy<br>
+--- a/thys/Tree_Enumeration/Rooted_Tree.thy Fri Jul 11 15:02:29 2025 +0200<br>
++++ b/thys/Tree_Enumeration/Rooted_Tree.thy Sun Jul 13 04:21:58 2025 +0200<br>
+@@ -554,7 +554,7 @@<br>
+  abbreviation "ltree_stree_subtrees ts \&lt;equiv&gt; SOME xs. fset_of_list xs = <br>
+ltree_stree |`| ts \&lt;and&gt; distinct xs \&lt;and&gt; sorted_wrt (\&lt;lambda&gt;t s. <br>
+tree_ltree t \&lt;le&gt; tree_ltree s) xs"</p>
+<p>lemma fset_of_list_ltree_stree_subtrees[simp]: "fset_of_list <br>
+(ltree_stree_subtrees ts) = ltree_stree |`| ts"</p>
+</li>
+<li>
+<p>using someI_ex[OF distinct_sorted_wrt_list] by fast</p>
+</li>
+<li>
+<p>using someI_ex[OF distinct_sorted_wrt_list] by force</p>
+<p>lemma set_ltree_stree_subtrees[simp]: "set (ltree_stree_subtrees ts) = <br>
+ltree_stree ` fset ts"<br>
+  using fset_of_list_ltree_stree_subtrees by (metis (mono_tags, lifting) <br>
+fset.set_map fset_of_list.rep_eq)</p>
+</li>
+</ul>
+<p>A bit later, the hidden failure of smt proof reconstruction prompted me to <br>
+revisit the whole affair once again, comparing netpair content more carefully, <br>
+and reconstructing/eliminating reasons for remaining deviations.</p>
+<p>Some of these oddities had been around for approx. 30 years: Delicate <br>
+diversions from the intention written as prose comments wrt. the actual <br>
+implementation in ML. I made the mistake to take the prose text more seriously <br>
+than the formal ML text. Ultimately, real-world applications found in AFP <br>
+determine what is right or wrong, and don't care about good intentions written <br>
+as comments.</p>
+<p>Here are some notable points in history, together with my present <br>
+interpretation of the archeological findings. This is going back to the depths <br>
+of time, when Isabelle was still an odd research experiment.</p>
+<ul>
+<li>b3f190995bc9 lcp 28-Apr-1995 "Recoded addSIs, etc., so that nets are built <br>
+incrementally instead of from scratch each time.  The old approach used <br>
+excessive time (&gt;1 sec for adding a rule to ZF_cs) and probably excessive <br>
+space.  Now rep_claset includes all record fields.  joinrules no longer sorts <br>
+the rules on number of subgoals, since it does not see the full set of them; <br>
+instead the number of subgoals modifies the priority."</li>
+</ul>
+<p>That is an early attempt to make things scale better. That version is notable <br>
+to assign integer "tags" for sorting rules according to the following <br>
+calculation of the length of intro vs. elim rules:</p>
+<p>fun insert (nI,nE) = insert_tagged_list o (tag_brls (~(2*nI+nE))) o joinrules;</p>
+<p>Still a bit inefficient (based on list length) and not quite correct, as <br>
+explained below.</p>
+<ul>
+<li>c06d01f75764 paulson 01-May-1996: "Provides merge_cs to support default <br>
+clasets".</li>
+</ul>
+<p>Here the comment says:</p>
+<p>(*Merge works by adding all new rules of the 2nd claset into the 1st claset.<br>
+   Merging the term nets may look more efficient, but the rather delicate<br>
+   treatment of priority might get muddled up.*)</p>
+<p>But the ML source says something different: It effectively orders all <br>
+declarations from the RHS of the merge according to their "rule kind" (using <br>
+current terminology). That is no problem for disjoint netpairs, but within a <br>
+single netpair, newly introduced elim rules now take precedence over intro rules.</p>
+<p>That odd ordering from 1996 made smt reconstruction fail now, because I <br>
+reimplemented the prose specification instead of the actual ML story.</p>
+<p>Further note that we still see quadratic complexity for the merge, because it <br>
+is based on plain lists (which implicitly retains the order of declarations).</p>
+<ul>
+<li>2425068fe13a wenzelm 14-May-2011: "slightly more efficient claset <br>
+operations, using Item_Net to maintain rules in canonical order".</li>
+</ul>
+<p>That was my attempt to address the complexity of extending/merging claset rule <br>
+declarations, but not a fully successful one. Its use of Item_Net.T instead of <br>
+a plain list was fine, because that is a scalable data structure with n*log(n) <br>
+complexity instead of n^2. My oversight in 2011 was the remaining linear <br>
+operation Item_Net.length to imitate the allocation of a "fresh" declaration <br>
+index for each rule.</p>
+<ul>
+<li>ca600cbfd4bf wenzelm 10-Jul-2025 "more accurate "next" counter for each <br>
+insert operation: subtle change of semantics wrt. Item_Net.length, due to <br>
+delete operation; avoid costly Item_Net.length, which is linear in size;"</li>
+</ul>
+<p>Approx. 2 weeks ago, I realized the core problem of inefficiency of the <br>
+claset, only after cleaning up the sources and saying clearly in ML what <br>
+really happens, instead of trusting odd comments. Apart from inefficiency of <br>
+length-based allocation of a "fresh" index, it was also wrong due to the <br>
+presence of "rule del" declarations: thus an old index could have been reused <br>
+later on --- it is not really fresh. Luckily, the more correct implementation <br>
+in this changeset did not affect any applications in Isabelle + AFP. So <br>
+ca600cbfd4bf remained the "stable status-quo" in subsequent struggles to <br>
+finish this renovation project.</p>
+<ul>
+<li>8aa1c98b948b wenzelm 11-Jul-2025 "maintain collective rule declarations via <br>
+type Bires.decls, with netpair operations derived from it;"</li>
+</ul>
+<p>This is where I switched over to a quite different background store for the <br>
+claset rules, with subtle differences in ordering of declarations (and a few <br>
+other problems that I introduced on the spot). The idea is plain and simple: <br>
+all rules are maintained in one scalable data structure Bires.decls, and the <br>
+netpairs derived from it can count on precise weight and index information for <br>
+the ordering. The reality turned out rather ugly, though: applications from <br>
+AFP that did not quite work yet.</p>
+<p>All these problems are resolved in Isabelle/372273ab6ebb and AFP/eae86974a665, <br>
+as far as I can tell. It recovers all visible applications, without odd <br>
+changes of proofs.</p>
+<p>We could still be a bit more ambitious, though, and eliminate the strange <br>
+Bires.decl_merge_ord that is there to imitate the merge ordering from 30 years <br>
+ago. Changing that would mean to take the user-provided declaration order <br>
+seriously, even for newly added rules in a merge.</p>
+<p>That further detail would require to go into the smt proof reconstruction, to <br>
+see where its invocations of fast_tac/blast_tac/auto_tac etc. actually fail, <br>
+or rather consume much more time than before --- and thus break (line 6705 of <br>
+"$AFP/Modular_arithmetic_LLL_and_HNF_algorithms/HNF_Mod_Det_Soundness.thy"), <br>
+for example.</p>
+<p>Makarius</p>
+
+
+
+<a name="530576515"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20More%20uniform%20and%20scalable%20declarations%20of%20intro/eli.../near/530576515" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20More.20uniform.20and.20scalable.20declarations.20of.20intro.2Feli.2E.2E.2E.html#530576515">(Jul 24 2025 at 14:26)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Just a side-remark:</p>
+<blockquote>
+<p>That further detail would require to go into the smt proof <br>
+reconstruction, to see where its invocations of fast_tac/blast_tac/ <br>
+auto_tac etc. actually fail, or rather consume much more time than <br>
+before --- and thus break (line 6705 of "$AFP/ <br>
+Modular_arithmetic_LLL_and_HNF_algorithms/HNF_Mod_Det_Soundness.thy"), <br>
+for example.</p>
+</blockquote>
+<p>I also stumbled over that proof and it can be dramatically simplified:</p>
+<blockquote>
+<ul>
+<li>have "A <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><msup><mi>A</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow><annotation encoding="application/x-tex"> (0, 0) = A&#x27;&#x27; </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′′</span></span></span></span></span></span></span></span></span></span></span></span> (0, 0)"</li>
+<li>by (smt (verit) add_gr_0 append_rows_def A_def A'' carrier_matD index_mat_four_block(1) mn n0 nat_SN.compat)</li>
+<li>from \&lt;open&gt;0 &lt; n\&lt;close&gt; \&lt;open&gt;0 &lt; m\&lt;close&gt; A'' have \&lt;open&gt;A <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mo>=</mo><msup><mi>A</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow><annotation encoding="application/x-tex"> (0, 0) = A&#x27;&#x27; </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7519em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′′</span></span></span></span></span></span></span></span></span></span></span></span> (0, 0)\&lt;close&gt;</li>
+<li>by (simp add: A_def append_rows_def)</li>
+</ul>
+</blockquote>
+<p>I will leave it »as it is« for the moment as long as it serves as an <br>
+important indicator for smt proof reconstruction.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/wuB8c8JYeBHHJdomaScQLIww/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/U1c91Ml8YABQSqSU3nTq6YCe/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="530959752"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20More%20uniform%20and%20scalable%20declarations%20of%20intro/eli.../near/530959752" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20More.20uniform.20and.20scalable.20declarations.20of.20intro.2Feli.2E.2E.2E.html#530959752">(Jul 26 2025 at 15:11)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/07/2025 17:45, Makarius wrote:</p>
+<blockquote>
+<p><strong>* General </strong>*</p>
+<ul>
+<li>Declarations of intro/elim/dest rules for Pure and the Classical<br>
+Reasoner (e.g. HOL) are handled more uniformly and efficiently: the<br>
+order of rule declarations is maintained accurately, regardless of<br>
+intermediate [rule del] declarations. Furthermore, [dest] is now a<br>
+proper declaration on its own account, instead of the former expansion<br>
+[elim_format, elim]. Consequently, [rule del] no longer deletes the<br>
+[elim_format] of the given rule, only the original rule. Very rare<br>
+INCOMPATIBILITY: tools like "blast" and "auto" may fail in unusual<br>
+situations.</li>
+</ul>
+<p>This refers to Isabelle/372273ab6ebb and AFP/eae86974a665.</p>
+</blockquote>
+<p>After a few days of accumulating Isabelle + AFP "flight telemetry data", I <br>
+have inspected <br>
+<a href="https://isatest.sketis.net/devel/build_status/AFP_macOS_(macOS_14_Sonoma_Apple_Silicon)/index.html">https://isatest.sketis.net/devel/build_status/AFP_macOS_(macOS_14_Sonoma_Apple_Silicon)/index.html</a> <br>
+closely, if anything good or bad is to be seen there.</p>
+<p>Conclusion: this change has now overall measurable effect on Isabelle/AFP, <br>
+despite significant lack of scalability.</p>
+<p>I found other performance changes elsewhere, and will report them separately.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

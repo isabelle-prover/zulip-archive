@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>datatype size · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/datatype.20size.html">datatype size</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="570777721"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/datatype%20size/near/570777721" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tobias Nipkow <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/datatype.20size.html#570777721">(Jan 29 2026 at 12:11)</a>:</h4>
+<p>I have this datatype:<br>
+<code>
+datatype ('n,'t) tree = Sym "('n,'t) sym"  | Rule 'n "('n,'t) tree list"
+datatype_compat tree
+</code><br>
+The size function I seem to get is not the one I get. I would have liked this one:<br>
+<code>
+fun size_pt :: "('n,'t)tree ⇒ nat" where
+"size_pt (Sym _) = 0" |
+"size_pt (Rule _ ts) = sum_list (map size_pt ts) + 1"
+</code><br>
+But ideally without the <code>_pt</code>, directly out of the datatype definition.</p>
+<p>I tried<br>
+<code>
+datatype (plugins del: size)
+</code><br>
+But now my own definition  of <code>size</code> fails, possibly because the recursive call <code>map size_pt ts</code> needs a size function for the termination proof.</p>
+<p>It is not a big issue but maybe there is a trick.</p>
+<p>Thanks<br>
+Tobias</p>
+
+
+
+<a name="570803993"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/datatype%20size/near/570803993" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/datatype.20size.html#570803993">(Jan 29 2026 at 14:07)</a>:</h4>
+<p>You could use <code>primrec</code> instead of <code>fun</code>.</p>
+
+
+
+<a name="570807188"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/datatype%20size/near/570807188" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tobias Nipkow <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/datatype.20size.html#570807188">(Jan 29 2026 at 14:18)</a>:</h4>
+<p>Of course! Thanks</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

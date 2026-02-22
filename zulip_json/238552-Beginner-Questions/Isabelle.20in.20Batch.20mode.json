@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I’m working on automating some reasoning tasks in Isabelle and looking to efficiently run and verify multiple theory files without relying on the interactive GUI (Batch mode?). My goal is to streamline proof execution and analyze results at scale.</p>\n<p>I’ve explored Isabelle’s batch mode using <code>isabelle build -D</code>  and tested some small theory files, but I’m looking for <strong>best practices</strong> on:</p>\n<ul>\n<li>Running <strong>automated proofs efficiently</strong> in batch mode.</li>\n<li>Generating <strong>logs or structured proof output</strong> for analysis.</li>\n<li>Handling <strong>proof method failures</strong> that occur in batch mode but not in interactive mode.</li>\n<li>Optimizing batch execution for larger sets of theory files.</li>\n</ul>\n<p>I’d love to hear from anyone who has experience using batch mode for automation. Are there any <strong>recommended workflows, debugging strategies, or useful resources</strong> for setting up batch execution effectively?</p>",
+        "id": 504144603,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1741367907
+    },
+    {
+        "content": "<blockquote>\n<p>Handling proof method failures that occur in batch mode but not in interactive mode.</p>\n</blockquote>\n<p>That should not happen</p>",
+        "id": 504160817,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741373090
+    },
+    {
+        "content": "<blockquote>\n<p>Optimizing batch execution for larger sets of theory files.</p>\n</blockquote>\n<p>You are limited by two things: the number of sessions you run in parallel (usually, the limit is given by your CPU/RAM) and the number of proofs you can run in parallel within your theory and the slowest proof path (usually the limit is given by your theory, but improving this is really really hard)</p>",
+        "id": 504161291,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741373232
+    },
+    {
+        "content": "<p>Thanks, that makes sense. Where can I learn more about this?</p>",
+        "id": 504184086,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1741381458
+    },
+    {
+        "content": "<p>I would like to mention isabelle also supports distributed builds. Generally any paper by Makarius <a href=\"https://files.sketis.net/wenzel_bib.html\">https://files.sketis.net/wenzel_bib.html</a> about parallel/ asynchronous would probably be relevant.</p>",
+        "id": 504265989,
+        "sender_full_name": "irvin",
+        "timestamp": 1741432875
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"714722\">irvin</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode/near/504265989\">said</a>:</p>\n<blockquote>\n<p>I would like to mention isabelle also supports distributed builds. Generally any paper by Makarius <a href=\"https://files.sketis.net/wenzel_bib.html\">https://files.sketis.net/wenzel_bib.html</a> about parallel/ asynchronous would probably be relevant.</p>\n</blockquote>\n<p>Thank you, this is helpful.</p>",
+        "id": 504347873,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1741491901
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"874965\">Sana I.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode/near/504184086\">said</a>:</p>\n<blockquote>\n<p>Thanks, that makes sense. Where can I learn more about this?</p>\n</blockquote>\n<p>mostly reading the documentation of <code>isabelle build</code> and trying stuff out</p>",
+        "id": 504359469,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741501271
+    }
+]

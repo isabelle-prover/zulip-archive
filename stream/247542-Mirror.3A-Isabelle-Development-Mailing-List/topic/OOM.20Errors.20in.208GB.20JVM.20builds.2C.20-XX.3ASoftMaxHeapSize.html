@@ -1,0 +1,86 @@
+<html>
+<head><meta charset="utf-8"><title>OOM Errors in 8GB JVM builds, -XX:SoftMaxHeapSize · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/OOM.20Errors.20in.208GB.20JVM.20builds.2C.20-XX.3ASoftMaxHeapSize.html">OOM Errors in 8GB JVM builds, -XX:SoftMaxHeapSize</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="560775534"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/OOM%20Errors%20in%208GB%20JVM%20builds%2C%20-XX%3ASoftMaxHeapSize/near/560775534" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/OOM.20Errors.20in.208GB.20JVM.20builds.2C.20-XX.3ASoftMaxHeapSize.html#560775534">(Nov 28 2025 at 12:32)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>We are recently seeing OOM errors for builds with 8GB heap memory, e.g.: <br>
+<a href="https://build.proof.cit.tum.de/build?name=user%2F2212">https://build.proof.cit.tum.de/build?name=user%2F2212</a></p>
+<p>Since we are using the Z garbage collector, I've now changed the build <br>
+manager to use its soft heap max size (8g) with a hard limit of 32g.</p>
+<p>This should mean that we won't see any OOM errors unless things really <br>
+go wrong. However, it is a bit concerning that we went from &lt;4g to &gt;8g <br>
+in the last few months.</p>
+<p>If the soft heap limit works well, we could also do this by default in <br>
+the distribution.</p>
+<p>Fabian</p>
+
+
+
+<a name="560787086"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/OOM%20Errors%20in%208GB%20JVM%20builds%2C%20-XX%3ASoftMaxHeapSize/near/560787086" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/OOM.20Errors.20in.208GB.20JVM.20builds.2C.20-XX.3ASoftMaxHeapSize.html#560787086">(Nov 28 2025 at 13:27)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 28/11/2025 13:32, Fabian Huch wrote:</p>
+<blockquote>
+<p>Since we are using the Z garbage collector, I've now changed the build manager <br>
+to use its soft heap max size (8g) with a hard limit of 32g.</p>
+</blockquote>
+<p>I was not aware of that fine point. Would you say that the Z garbage collector <br>
+is where high-end Java applications are going, and that its extra options work <br>
+properly?</p>
+<blockquote>
+<p>This should mean that we won't see any OOM errors unless things really go <br>
+wrong. However, it is a bit concerning that we went from &lt;4g to &gt;8g in the <br>
+last few months.</p>
+</blockquote>
+<p>We have accumulated a lot of extras in Isabelle/Scala, tons of markup, and <br>
+recently the online monitoring via Progress.Nodes_Status --- which is <br>
+immediately visible in the initial session build panel of Isabelle/jEdit, with <br>
+all these percentages and inverse status lines. The actual motivation behind <br>
+that was support for "long running commands" in regular progress output, for <br>
+batch builds, to see potential non-termination earlier.</p>
+<p>I hope this state of affairs is sufficient for the Isabelle2025-1 release, so <br>
+that further performance tuning can be postponed.</p>
+<blockquote>
+<p>If the soft heap limit works well, we could also do this by default in the <br>
+distribution.</p>
+</blockquote>
+<p>Yes, as long as it means "the Distribution after Isabelle2025-1".</p>
+<p>Makarius</p>
+
+
+
+<a name="560799722"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/OOM%20Errors%20in%208GB%20JVM%20builds%2C%20-XX%3ASoftMaxHeapSize/near/560799722" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/OOM.20Errors.20in.208GB.20JVM.20builds.2C.20-XX.3ASoftMaxHeapSize.html#560799722">(Nov 28 2025 at 14:33)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p>Since we are using the Z garbage collector, I've now changed the <br>
+build manager to use its soft heap max size (8g) with a hard limit of <br>
+32g.</p>
+</blockquote>
+<p>I was not aware of that fine point. Would you say that the Z garbage <br>
+collector is where high-end Java applications are going,<br>
+I would expect most desktop applications to migrate to generational ZGC. <br>
+Latency is better than G1GC, it's more efficient, and allows for desktop <br>
+applications with a low memory footprint. That solves all the main <br>
+problems with JVM garbage collection.<br>
+and that its extra options work properly?</p>
+</blockquote>
+<p>I have never seen JVM options misbehave. The only caveat is that this is <br>
+an XX option, i.e. subject to change without notice (but typically even <br>
+those remain stable).</p>
+<p>Fabian</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

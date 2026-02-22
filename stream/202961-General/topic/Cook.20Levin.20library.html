@@ -1,0 +1,336 @@
+<html>
+<head><meta charset="utf-8"><title>Cook Levin library · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html">Cook Levin library</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="524144385"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/524144385" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#524144385">(Jun 15 2025 at 17:05)</a>:</h4>
+<p>I’ve been trying to use AI to prove a simple theorem using the Cook Levin library - if a Turing machine outputs a certain bit at a certain location, then the Turing machine must read that bit. Chat GPT and Claude AI haven’t been able to do it. Anyone know how to do this?</p>
+
+
+
+<a name="524684946"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/524684946" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#524684946">(Jun 18 2025 at 11:29)</a>:</h4>
+<p>Hi,</p>
+<p>I'm interested in your question as well, and just to check whether I've understood it correctly: I can prove the following lemma by <code>simp</code>, is it somewhat relevant to what you are proving?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"|.| (act (w, Stay) tape) = w"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+
+
+
+<a name="524967209"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/524967209" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#524967209">(Jun 20 2025 at 01:54)</a>:</h4>
+<p>Yiran, the way I understand that statement, it means "If you write symbol w to a tape without moving the head, then reading from the tape returns w". When I asked my question, I meant if the Turing machine outputs w, then beforehand it must have read bit w. To give an idea of what I had in mind, I would like to use this to prove in Isabelle that if a Turing machine take the OR function of n bits and all n bits are zero, then the Turing machine must read all of the bits beforehand.</p>
+
+
+
+<a name="525181552"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525181552" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525181552">(Jun 21 2025 at 22:31)</a>:</h4>
+<p>Thank you for explaning it again! So is it something like the following (I randomly chose some tm_copy_paste as an example)?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">aux</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"t &lt; 10"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"fst (execute tm_copy_paste start_cfg t) = 0 ∧</span>
+<span class="s">         (execute tm_copy_paste start_cfg t) &lt;#&gt; 0 = t"</span>
+</code></pre></div>
+<p>Here's more details including my definition for <code>tm_copy_paste</code> and <code>start_cfg</code>, where I managed to prove this lemma above in my awkward way.</p>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>Scratch.thy</p>
+</div><div class="spoiler-content" aria-hidden="true">
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Cook_Levin.Basics</span>
+<span class="k">begin</span>
+
+<span class="k">text</span><span class="w"> </span><span class="s">‹"print_tape cfg n m" prints the first m symbols of n-th tape in cfg›</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">print_tape</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"config ⇒ nat ⇒ nat ⇒ symbol list"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"print_tape cfg n 0 = []"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"print_tape cfg n (Suc m) = (print_tape cfg n m) @ [(cfg &lt;:&gt; n) m]"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">copy_paste_command</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"copy_paste_command = (</span>
+<span class="s">    λ symbols_read_from_tapes.</span>
+<span class="s">      (if symbols_read_from_tapes ! 0 = □ then 1 else 0, ― ‹new state›</span>
+<span class="s">       [(symbols_read_from_tapes ! 0, Right), ― ‹0-th tape remains the same›</span>
+<span class="s">        (symbols_read_from_tapes ! 0, Right)]) ― ‹copies the symbol from 0-th tape to the 1st tape›</span>
+<span class="s">   )"</span>
+
+<span class="n">―</span><span class="w"> </span><span class="s">‹copy_paste_command is a well-formed command for a 2-tape TM with 1 state (excluding q_f)›</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"wf_command 2 1 copy_paste_command"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">copy_paste_command_def</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">wf_command_def</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="n">―</span><span class="w"> </span><span class="s">‹copy_paste_command is a Turing command for a 2-tape TM with 1 state (excluding q_f),</span>
+<span class="s">    and with the alphabet set containing only 4 symbols (□, ▹, 𝟬, 𝟭)›</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">cp_tm_cmd_214</span><span class="o">:</span><span class="w"> </span><span class="s">"turing_command 2 1 4 copy_paste_command"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">copy_paste_command_def</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">turing_command_def</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">wf_command_def</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">One_nat_def</span><span class="w"> </span><span class="n">diff_Suc_1</span><span class="w"> </span><span class="n">fst_conv</span><span class="w"> </span><span class="n">less_2_cases_iff</span><span class="w"> </span><span class="n">nth_Cons_0</span><span class="w"> </span><span class="n">nth_Cons_numeral</span><span class="w"> </span><span class="n">numerals</span><span class="o">(</span><span class="n">1</span><span class="o">))</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">tm_copy_paste</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">machine</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"tm_copy_paste = [copy_paste_command]"</span>
+
+<span class="n">―</span><span class="w"> </span><span class="s">‹The copy-paste machine is a well-formed 2-tape TM for the alphabet set of size 4›</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">turing_machine_tm_copy_paste</span><span class="o">:</span><span class="w"> </span><span class="s">"turing_machine 2 4 tm_copy_paste"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">turing_machine_def</span><span class="w"> </span><span class="n">tm_copy_paste_def</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">cp_tm_cmd_214</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">start_content</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"symbol list"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"start_content = [𝟭, 𝟬, 𝟭, 𝟬, 𝟬, 𝟬, 𝟭, 𝟬]"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">start_cfg</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"config"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"start_cfg = start_config 2 start_content"</span>
+
+<span class="kt">value</span><span class="w"> </span><span class="s">"print_tape start_cfg 0 10"</span>
+<span class="kt">value</span><span class="w"> </span><span class="s">"print_tape start_cfg 1 10"</span>
+<span class="kt">value</span><span class="w"> </span><span class="s">"print_tape (execute tm_copy_paste start_cfg 10) 1 10 = print_tape start_cfg 0 10"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">zip2</span><span class="o">:</span><span class="w"> </span><span class="s">"length xs ≥ 2 ⟹ zip [a, b] xs = [(a, xs ! 0), (b, xs ! 1)]"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">xs</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">Suc_le_length_iff</span><span class="w"> </span><span class="n">nth_Cons_0</span><span class="w"> </span><span class="n">zip_Cons_Cons</span><span class="w"> </span><span class="n">zip_Nil</span><span class="o">)</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">aux</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"t &lt; 10"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"fst (execute tm_copy_paste start_cfg t) = 0 ∧</span>
+<span class="s">         (execute tm_copy_paste start_cfg t) &lt;#&gt; 0 = t"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">t</span><span class="o">)</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">0</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">start_cfg_def</span><span class="w"> </span><span class="n">start_config_def</span><span class="o">)</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">Suc</span><span class="w"> </span><span class="n">t</span><span class="o">)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"□ ∉ set start_content"</span>
+<span class="w">    </span><span class="k">unfolding</span><span class="w"> </span><span class="n">start_content_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="o">?</span><span class="n">cfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"execute tm_copy_paste start_cfg t"</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"||?cfg|| = 2"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">execute_num_tapes</span><span class="w"> </span><span class="n">less_2_cases_iff</span><span class="w"> </span><span class="n">start_cfg_def</span><span class="w"> </span><span class="n">start_config_length</span><span class="w"> </span><span class="n">turing_machine_tm_copy_paste</span><span class="o">)</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">Suc</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">IH'</span><span class="o">:</span><span class="w"> </span><span class="s">"fst ?cfg = 0"</span><span class="w"> </span><span class="s">"?cfg &lt;#&gt; 0 = t"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="o">+</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">turing_machine_tm_copy_paste</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"?cfg &lt;:&gt; 0 = start_cfg &lt;:&gt; 0"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">input_tape_constant</span><span class="w"> </span><span class="n">start_cfg_def</span><span class="w"> </span><span class="n">start_config_length</span><span class="o">)</span>
+<span class="w">  </span><span class="k">with</span><span class="w"> </span><span class="n">IH'</span><span class="o">(</span><span class="n">2</span><span class="o">)</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"?cfg &lt;.&gt; 0 = (start_cfg &lt;:&gt; 0) t"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">presburger</span>
+<span class="w">  </span><span class="k">moreover</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"(start_cfg &lt;:&gt; 0) t ≠ □"</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="s">"t = 0"</span><span class="o">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">True</span>
+<span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">start_cfg_def</span><span class="w"> </span><span class="n">start_config2</span><span class="o">)</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">False</span>
+<span class="w">    </span><span class="k">from</span><span class="w"> </span><span class="s">‹Suc t &lt; 10›</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"t - 1 &lt; length start_content"</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">start_content_def</span><span class="o">)</span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="s">‹□ ∉ set start_content›</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"start_content ! (t - 1) ≠ □"</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">in_set_conv_nth</span><span class="o">)</span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">start_config3</span><span class="o">[</span><span class="kp">where</span><span class="w"> </span><span class="o">?</span><span class="n">cfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start_cfg</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="o">?</span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="o">?</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start_content</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="o">?</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">]</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">False</span><span class="w"> </span><span class="s">‹t - 1 &lt; length start_content›</span><span class="w"> </span><span class="n">start_cfg_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="w">  </span><span class="k">ultimately</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"?cfg &lt;.&gt; 0 ≠ □"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">argo</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"config_read ?cfg ! 0 ≠ □"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">execute_num_tapes</span><span class="w"> </span><span class="n">start_cfg_def</span><span class="w"> </span><span class="n">start_config_length</span>
+<span class="w">        </span><span class="n">tapes_at_read'</span><span class="w"> </span><span class="n">turing_machine_tm_copy_paste</span><span class="w"> </span><span class="n">zero_less_numeral</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"[*] copy_paste_command (config_read ?cfg) = 0"</span>
+<span class="w">    </span><span class="k">unfolding</span><span class="w"> </span><span class="n">copy_paste_command_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">1</span><span class="o">:</span><span class="w"> </span><span class="s">"fst (sem copy_paste_command ?cfg) = 0"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">sem'</span><span class="o">)</span>
+
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="n">Suc</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"execute tm_copy_paste start_cfg (Suc t) =</span>
+<span class="s">                 sem copy_paste_command ?cfg"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">exe_def</span><span class="w"> </span><span class="n">tm_copy_paste_def</span><span class="o">)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (fst (sem copy_paste_command ?cfg),</span>
+<span class="s">                    map (λ(a, tp). act a tp) (zip (snd (copy_paste_command (read (snd ?cfg)))) (snd ?cfg)))"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">sem'</span><span class="o">)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (0, map (λ(a, tp). act a tp) (zip (snd (copy_paste_command (read (snd ?cfg)))) (snd ?cfg)))"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (0, map (λ(a, tp). act a tp) (zip [(?cfg &lt;.&gt; 0, Right), (?cfg &lt;.&gt; 0, Right)] (snd ?cfg)))"</span>
+<span class="w">    </span><span class="k">unfolding</span><span class="w"> </span><span class="n">copy_paste_command_def</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">no_types</span><span class="o">,</span><span class="w"> </span><span class="n">lifting</span><span class="o">)</span><span class="w"> </span><span class="n">One_nat_def</span><span class="w"> </span><span class="n">Suc_1</span><span class="w"> </span><span class="n">execute_num_tapes</span>
+<span class="w">        </span><span class="n">less_add_Suc2</span><span class="w"> </span><span class="n">plus_1_eq_Suc</span><span class="w"> </span><span class="n">read_abbrev</span><span class="w"> </span><span class="n">sndI</span><span class="w"> </span><span class="n">start_cfg_def</span>
+<span class="w">        </span><span class="n">start_config_length</span><span class="w"> </span><span class="n">turing_machine_tm_copy_paste</span><span class="o">)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (0, [act (?cfg &lt;.&gt; 0, Right) (?cfg &lt;!&gt; 0), act (?cfg &lt;.&gt; 0, Right) (?cfg &lt;!&gt; 1)])"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="s">‹||?cfg|| = 2›</span><span class="w"> </span><span class="n">zip2</span><span class="o">[</span><span class="kp">where</span><span class="w"> </span><span class="o">?</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(?cfg &lt;.&gt; 0, Right)"</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="o">?</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(?cfg &lt;.&gt; 0, Right)"</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="o">?</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"snd ?cfg"</span><span class="o">]</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (0, [?cfg &lt;!&gt; 0 |+| 1, act (?cfg &lt;.&gt; 0, Right) (?cfg &lt;!&gt; 1)])"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">act_Right</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... &lt;#&gt; 0 = Suc (?cfg &lt;#&gt; 0)"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = Suc t"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="s">‹?cfg &lt;#&gt; 0 = t›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="k">finally</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"execute tm_copy_paste start_cfg (Suc t) &lt;#&gt; 0 = Suc t"</span><span class="w"> </span><span class="ow">.</span>
+<span class="w">  </span><span class="k">moreover</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="s">‹execute tm_copy_paste start_cfg (Suc t) = sem copy_paste_command ?cfg›</span><span class="w"> </span><span class="n">1</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"fst (execute tm_copy_paste start_cfg (Suc t)) = 0"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">presburger</span>
+<span class="w">  </span><span class="k">ultimately</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="k">qed</span>
+
+<span class="k">end</span>
+</code></pre></div>
+</div></div>
+<p>edit: provide a name for the lemma</p>
+
+
+
+<a name="525182212"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525182212" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525182212">(Jun 21 2025 at 22:54)</a>:</h4>
+<p>Lemma <code>aux</code> is much stronger than (what I understood from) your statement, but I guess it provides a way to easily prove your goal. However if the ultimate goal is to prove that the turing machine terminates with some results, I think there might be better ways without having to prove such intermediate lemmas explicitly (but that's beyond my current experience with the Cook_Levin entry; I would be happy if I get the chance to learn about it in this discussion)</p>
+
+
+
+<a name="525204242"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525204242" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525204242">(Jun 22 2025 at 09:43)</a>:</h4>
+<p>Yiran, It isn’t exactly what I was thinking, but it probably will be helpful. My question seems conceptually easy and obvious at first, but I couldn’t get ai to do it and it isn’t always true. What if Turing machine M prints out bit x? Then one might think M has to read bit x. But then what if it is mathematically provable that another bit y equals bit x. Then the Turing machine doesn’t have to read bit x. It could just read bit y and print it out. So there have to be extra assumptions.</p>
+
+
+
+<a name="525231494"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525231494" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525231494">(Jun 22 2025 at 20:12)</a>:</h4>
+<p>Yiran, to give a better example of what I have in mind, suppose you want to determine whether there exists a nonzero x such that given square matrix A, Ax=0, where A and x are composed of zeroes and ones and we are using mod 2 arithmetic. You don’t have to check all possibilities for x to get the answer. You can do Gaussian elimination on A to see if it is non singular. In other words if you consider a bit y for each x as to whether Ax = 0 and take the or operators of these bits y you get the answer, but you don’t have to do it this way and in fact it is better that you don’t do it this way. This is why you need extra assumptions for what I’m trying to do in Isabelle to work, namely that there are no other ways of formulating the problem other than taking the or operator. Does this make sense?</p>
+
+
+
+<a name="525245011"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525245011" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525245011">(Jun 23 2025 at 01:45)</a>:</h4>
+<p>Also, look up “adversary argument” as this is the type of argument that is necessary for this to work.</p>
+
+
+
+<a name="525428306"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525428306" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525428306">(Jun 24 2025 at 01:24)</a>:</h4>
+<p>Another problem I just realized is that to output bit x, a Turing machine can read not x. So technically the Turing machine doesn’t have to read bit x.</p>
+
+
+
+<a name="525430356"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/525430356" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#525430356">(Jun 24 2025 at 01:57)</a>:</h4>
+<p>But I think the assertion is correct in spirit.</p>
+
+
+
+<a name="526147345"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/526147345" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#526147345">(Jun 27 2025 at 20:18)</a>:</h4>
+<p>A better way of phrasing it - before a Turing machine outputs bit x, it must “know” what bit  x is. Similar to before a person speaks, he has to know what he is going to say.</p>
+
+
+
+<a name="526997707"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/526997707" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#526997707">(Jul 03 2025 at 13:32)</a>:</h4>
+<p>Hi, unfortunately I still fail to understand the conversation. I try to list some points that I'm not sure with, as follows:</p>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Cook.20Levin.20library/near/525231494">said</a>:</p>
+<blockquote>
+<p>... suppose you want to determine whether there exists a nonzero x such that given square matrix A, Ax=0, where A and x are composed of zeroes and ones and we are using mod 2 arithmetic. ... if you consider a bit y for each x as to whether Ax = 0 and take the or operators of these bits y you get the answer ...</p>
+</blockquote>
+<p>Are these words talking about the most brute-force method which tries all the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow><annotation encoding="application/x-tex"> 2^n </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6644em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span> possibilities of x (if the matrix A in this example is of shape <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex"> n \times n </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>)?</p>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Cook.20Levin.20library/near/525231494">said</a>:</p>
+<blockquote>
+<p>This is why you need extra assumptions for what I’m trying to do in Isabelle to work, namely that there are no other ways of formulating the problem other than taking the or operator. Does this make sense?</p>
+</blockquote>
+<p>Here I am completely lost. I have no idea what "the problem" is referring to (maybe I also have doubts about what "formulating" means here).</p>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Cook.20Levin.20library/near/526147345">said</a>:</p>
+<blockquote>
+<p>... before a Turing machine outputs bit x, it must “know” what bit  x is. ...</p>
+</blockquote>
+<p>Does this mean "work with deterministic Turing Machines"?</p>
+
+
+
+<a name="527226284"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/527226284" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#527226284">(Jul 04 2025 at 19:34)</a>:</h4>
+<p>Yiran said “Are these words talking about the most brute-force method which tries all the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">2n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mord mathnormal">n</span></span></span></span> possibilities of x (if the matrix A in this example is of shape <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n×n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>)?” Yes</p>
+
+
+
+<a name="527226711"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/527226711" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#527226711">(Jul 04 2025 at 19:42)</a>:</h4>
+<p>Yiran said “Here I am completely lost. I have no idea what "the problem" is referring to (maybe I also have doubts about what "formulating" means here).” I was saying that the matrix problem can be formulated as an “or” problem but it is not necessary to take the or operator of all 2 to the n possible solutions to determine whether there is a solution. One can just do Gaussian elimination. This is an example of an “or” problem in which it is not necessary to take the “or” operator explicitly. Hence a proof in Isabelle has to specify context of the “or” problem in order to prove that a Turing machine has to read all of the bits.</p>
+
+
+
+<a name="527226798"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/527226798" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#527226798">(Jul 04 2025 at 19:43)</a>:</h4>
+<p>Yiran said “Does this mean "work with deterministic Turing Machines"?” I was talking about deterministic Turing machines.</p>
+
+
+
+<a name="527894834"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/527894834" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#527894834">(Jul 09 2025 at 13:56)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Cook.20Levin.20library/near/527226798">said</a>:</p>
+<blockquote>
+<p>Yiran said “Does this mean "work with deterministic Turing Machines"?” I was talking about deterministic Turing machines.</p>
+</blockquote>
+<p>I don't think I can imagine how a deterministic Turing machine "doesn't know" the bit to be output (for a given configuration). Maybe I had a different understanding of "knowing a bit"?</p>
+
+
+
+<a name="528117084"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528117084" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528117084">(Jul 10 2025 at 16:10)</a>:</h4>
+<p>Yiran I would now define “knowing a bit” for a Turing machine as having the bit on the tape or the negation of the bit on the tape at a particular location. Then when the machine reads that particular location, it reads the bit or the not bit and then goes into another state in which the bit is encoded in it and then it outputs that bit.</p>
+
+
+
+<a name="528118235"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528118235" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528118235">(Jul 10 2025 at 16:17)</a>:</h4>
+<p>The nuance here is to know a yes/no fact, it really doesn’t matter whether one means yes or zero means yes, as long the machine is consistent.</p>
+
+
+
+<a name="528557373"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528557373" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528557373">(Jul 13 2025 at 21:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Cook.20Levin.20library/near/528117084">said</a>:</p>
+<blockquote>
+<p>Yiran I would now define “knowing a bit” for a Turing machine as having the bit on the tape or the negation of the bit on the tape at a particular location. Then when the machine reads that particular location, it reads the bit or the not bit and then goes into another state in which the bit is encoded in it and then it outputs that bit.</p>
+</blockquote>
+<p>That would mean the machine rewrites a bit at some "particular location" with itself or its negation, right?</p>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Cook.20Levin.20library/near/526147345">said</a>:</p>
+<blockquote>
+<p>A better way of phrasing it - before a Turing machine outputs bit x, it must “know” what bit  x is. Similar to before a person speaks, he has to know what he is going to say.</p>
+</blockquote>
+<p>I tried to replace the above informal definition of "knowing a bit" (along with a transition, sharing a fixed "particular location") into this statement, and I get the following:<br>
+"Before a machine outputs <code>x</code> at some position <code>head_pos</code>, the bit at <code>head_pos</code> must have been <code>x</code> or the negation of <code>x</code>"<br>
+Is that what you meant, or did I misunderstood something?</p>
+
+
+
+<a name="528559523"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528559523" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yiran Duan <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528559523">(Jul 13 2025 at 21:41)</a>:</h4>
+<p>Or, I guess it makes much more sense if there were actually some transitions that moves the tape head to different positions omitted; also consider working with multitape TMs, and add the constraint that contents on the first tape are never changed (which the Cook-Levin entry does), and we don't consider actions on the first tape (always rewriting with the original symbol) as an action of the machine "outputting" or "writing" something; thirdly, since we talked about bitwise or, I have always assumed that the tape alphabets only include something like 0 and 1 (and the blank symbol, or maybe also a start symbol).<br>
+In that case I would understand the goal as "when some bit <code>x</code> is output, it shows that <code>x</code> or its negation appears in the contents of the first tape (input)".<br>
+Then I must have missed something because based on this, I think it is basically to show that "if the machine ever writes a 0 or a 1 (on any tape other than the first one), the first tape must be non-empty (there is at least one 0 or 1 at any location)"?</p>
+
+
+
+<a name="528774368"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528774368" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528774368">(Jul 15 2025 at 03:47)</a>:</h4>
+<p>Yiran your last comment illustrates how this problem is not as easy as it looks. You did not misunderstand me. Thinking about things more, I actually want to do the following in a proof - I want to show that in order for a Turing machine T to decide whether x = y, it is necessary for T to read both f(x) and f(y), for some one to one function f. (Assume x and y are integers.)</p>
+
+
+
+<a name="528775984"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528775984" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528775984">(Jul 15 2025 at 04:10)</a>:</h4>
+<p>The proof is that if T did not read f(x) for some one to one function f, then T would behave the same way for some x’ not equal to x as it does for x. Therefore it could not decide whether x=y.</p>
+
+
+
+<a name="528901831"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Cook%20Levin%20library/near/528901831" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Cook.20Levin.20library.html#528901831">(Jul 15 2025 at 16:43)</a>:</h4>
+<p>The one to one function f encodes x and y as bits that the Turing machine reads.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

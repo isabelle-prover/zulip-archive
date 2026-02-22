@@ -1,0 +1,190 @@
+<html>
+<head><meta charset="utf-8"><title>I don&#x27;t know how to prove this simple lemma. · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html">I don&#x27;t know how to prove this simple lemma.</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525274558"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525274558" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525274558">(Jun 23 2025 at 07:58)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">my_lemma</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ ennreal"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"disjoint_family g"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(∑k∈(⋃i. g i). f k) = (∑i. ∑k∈g i. f k)"</span>
+</code></pre></div>
+<p>It's obvious intuitively, but I don't know how to formally prove it. Sledgehammer doesn't help. ChatGPT doesn't help too.</p>
+<p>Please somebody give me some hint!</p>
+<p>Thanks.</p>
+
+
+
+<a name="525295474"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525295474" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Christian Pardillo Laursen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525295474">(Jun 23 2025 at 09:58)</a>:</h4>
+<p>I think the issue here is that this theorem doesn't hold. Summing over sets (term sum), as you're doing on the left side, only works for finite sets. On the right side, you have a series (term suminf), which admits infinite series but needs convergence proofs.</p>
+<p>If you add assumption <code>finite (⋃i. g i)</code> it should be possible to prove this, but if you need an infinite g then you'll have to rephrase the conclusion</p>
+
+
+
+<a name="525302762"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525302762" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525302762">(Jun 23 2025 at 10:46)</a>:</h4>
+<p>Thank you for very helpful advice!!<br>
+I didn't know that LHS only works for finite sets.<br>
+Then the question is, what's the best way to rephrase LHS for infinite g??<br>
+I have some idea, but it's too verbose..</p>
+
+
+
+<a name="525306124"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525306124" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525306124">(Jun 23 2025 at 11:05)</a>:</h4>
+<p>I rephrased it:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">my_lemma</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ ennreal"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat set"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"disjoint_family g"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="s">"inj_on h UNIV"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="s">"range h = (⋃i. g i)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(∑k. f (h k)) = (∑i. ∑k∈g i. f k)"</span>
+</code></pre></div>
+<p>I still don't know how to prove it. <span aria-label="smiling face with tear" class="emoji emoji-1f972" role="img" title="smiling face with tear">:smiling_face_with_tear:</span></p>
+
+
+
+<a name="525307205"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525307205" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525307205">(Jun 23 2025 at 11:12)</a>:</h4>
+<p>Ah, I need to also change inner summation of RHS....<br>
+It's hard to make a correct statement...</p>
+
+
+
+<a name="525362673"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525362673" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525362673">(Jun 23 2025 at 15:53)</a>:</h4>
+<p>Now I know there is <code>∑⇩∞</code> notation for infinite sum, so my lemma becomes</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">my_lemma</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ ennreal"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"disjoint_family g"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(∑⇩∞k∈(⋃i. g i). f k) = (∑i. ∑⇩∞k∈g i. f k)"</span>
+</code></pre></div>
+
+
+
+<a name="525521741"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525521741" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525521741">(Jun 24 2025 at 13:40)</a>:</h4>
+<p>That doesn't really work either because infinite sums do not always exist. You will need summability as an additional assumption. Nested infinite sums are painful.</p>
+
+
+
+<a name="525526044"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525526044" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525526044">(Jun 24 2025 at 14:01)</a>:</h4>
+<p>All you need for this is there in the library. In the library, the theorems in question all use <code>Sigma A B</code>, which just means <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>∣</mo><mi>x</mi><mo>∈</mo><mi>A</mi><mo separator="true">,</mo><mi>y</mi><mo>∈</mo><mi>B</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{(x,y) \mid x\in A, y \in B(x)\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∣</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)}</span></span></span></span> (the dependent sum operator).</p>
+
+
+
+<a name="525526175"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525526175" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525526175">(Jun 24 2025 at 14:02)</a>:</h4>
+<p>You can derive theorems similar to what you want from the versions for <code>Sigma</code>, e.g. like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">has_sum_UN_D</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'b ⇒ 'a :: {topological_comm_monoid_add,t3_space}"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">disj</span><span class="o">:</span><span class="w"> </span><span class="s">"disjoint_family_on B A"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">g</span><span class="o">:</span><span class="w"> </span><span class="s">"⋀x. x ∈ A ⟹ (f has_sum g x) (B x)"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"(f has_sum S) (⋃x∈A. B x)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w">   </span><span class="s">"(g has_sum S) A"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"(⋃x∈A. B x) = snd ` (SIGMA x:A. B x)"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">force</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="n">bij</span><span class="o">:</span><span class="w"> </span><span class="s">"bij_betw snd (SIGMA x:A. B x) (⋃x∈A. B x)"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">disj</span><span class="w"> </span><span class="k">unfolding</span><span class="w"> </span><span class="n">bij_betw_def</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="n">inj_on_def</span><span class="w"> </span><span class="n">disjoint_family_on_def</span><span class="o">)</span>
+
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"(f has_sum S) (⋃x∈A. B x)"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">fact</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"?this ⟷ ((λ(x,y). f y) has_sum S) (SIGMA x:A. B x)"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">has_sum_reindex_bij_betw</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">bij</span><span class="o">,</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">S</span><span class="o">]</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">case_prod_unfold</span><span class="o">)</span>
+<span class="w">  </span><span class="k">finally</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">*</span><span class="o">:</span><span class="w"> </span><span class="s">"((λ(x,y). f y) has_sum S) (SIGMA x:A. B x)"</span><span class="w"> </span><span class="ow">.</span>
+
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="s">"(g has_sum S) A"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="n">has_sum_SigmaD</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">*</span><span class="o">,</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">g</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">infsum_UN</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'b ⇒ 'a ::</span>
+<span class="s">    {topological_comm_monoid_add,t3_space,uniform_topological_group_add, ab_group_add,</span>
+<span class="s">     complete_uniform_space}"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">disj</span><span class="o">:</span><span class="w"> </span><span class="s">"disjoint_family_on B A"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">summable</span><span class="o">:</span><span class="w"> </span><span class="s">"f summable_on (⋃x∈A. B x)"</span>
+<span class="w">  </span><span class="kp">defines</span><span class="w"> </span><span class="s">"S ≡ (∑⇩∞y∈(⋃x∈A. B x). f y)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w">   </span><span class="s">"((λx. ∑⇩∞y∈B x. f y) has_sum S) A"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">*</span><span class="o">:</span><span class="w"> </span><span class="s">"(f has_sum (∑⇩∞y∈B x. f y)) (B x)"</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">x</span><span class="o">:</span><span class="w"> </span><span class="s">"x ∈ A"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">    </span><span class="k">have</span><span class="w"> </span><span class="s">"f summable_on (B x)"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">summable</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">summable_on_subset</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">use</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">auto</span><span class="o">)</span>
+<span class="w">    </span><span class="k">thus</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">summable_iff_has_sum_infsum</span><span class="o">)</span>
+<span class="w">  </span><span class="k">qed</span>
+
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">**</span><span class="o">:</span><span class="w"> </span><span class="s">"(f has_sum S) (⋃x∈A. B x)"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">summable</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">S_def</span><span class="w"> </span><span class="n">summable_iff_has_sum_infsum</span><span class="o">)</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">disj</span><span class="w"> </span><span class="n">*</span><span class="w"> </span><span class="n">**</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">has_sum_UN_D</span><span class="o">)</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="525526369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525526369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525526369">(Jun 24 2025 at 14:02)</a>:</h4>
+<p>You will however have to establish summability, otherwise none of this is going to work. Whenever you have infinite sums, summability becomes a side condition to everything. And for nested sums it's especially tricky.</p>
+
+
+
+<a name="525526434"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525526434" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525526434">(Jun 24 2025 at 14:03)</a>:</h4>
+<p>Feel free to ask me if you need more guidance here. I co-wrote the library for indexed infinite sums in HOL-Analysis.</p>
+
+
+
+<a name="525821567"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/525821567" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> chem snu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#525821567">(Jun 26 2025 at 04:15)</a>:</h4>
+<p><span class="user-mention" data-user-id="232736">@Manuel Eberl</span>  Thank you very much! Using your lemma <code>has_sum_UN_D</code>, I almost completed my goal:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">instantiation</span><span class="w"> </span><span class="n">ennreal</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">t3_space</span>
+<span class="k">begin</span>
+
+<span class="kn">instance</span><span class="w"> </span><span class="gr">sorry</span>
+
+<span class="k">end</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">my_lemma</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ ennreal"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ 'a set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"disjoint_family g"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"(∑⇩∞k∈(⋃i. g i). f k) = (∑⇩∞i∈UNIV. ∑⇩∞k∈g i. f k)"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">*</span><span class="o">:</span><span class="w"> </span><span class="s">"⋀x. (f has_sum infsum f (g x)) (g x)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">nonneg_summable_on_complete</span><span class="o">)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"(f has_sum infsum f (⋃ (range g))) (⋃ (range g))"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">nonneg_summable_on_complete</span><span class="o">)</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"((λx. infsum f (g x)) has_sum infsum f (⋃ (range g))) UNIV"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">meson</span><span class="w"> </span><span class="s">"*"</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="n">has_sum_UN_D</span><span class="o">)</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">infsumI</span><span class="o">)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>As you can see, I skipped the proof that <code>ennreal</code> is a <code>t3_space</code>, but I think I can do this myself.</p>
+
+
+
+<a name="526044774"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/I%20don%27t%20know%20how%20to%20prove%20this%20simple%20lemma./near/526044774" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/I.20don.27t.20know.20how.20to.20prove.20this.20simple.20lemma.2E.html#526044774">(Jun 27 2025 at 09:24)</a>:</h4>
+<p>I just saw that you use <code>ennreal</code>. That indeed makes the summability assumptions go away, since everything is summable in <code>ennreal</code>.</p>
+<p>Everything becomes a lot easier in <code>ennreal</code>, since infinite sums can be expressed as suprema.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,707 @@
+<html>
+<head><meta charset="utf-8"><title>Questions about &quot;fix&quot; · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html">Questions about &quot;fix&quot;</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="507611487"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507611487" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507611487">(Mar 23 2025 at 22:14)</a>:</h4>
+<p>I haven't really used Isabelle heavily since last year and I'm just getting back into it now. The good news is I've learned so much since the summer of last year. Last year, someone in Zulip recommended the "fix" operator. I tried using it here but I got a "linarith_split_limited exceeded" error after the last line "by auto":</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">brc_v_1_mod_4</span><span class="o">:</span>
+<span class="w">      </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"𝗏 mod 4 = 1"</span>
+<span class="w">        </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃x :: rat mat.(∑j ∈ {4..&lt;5}.</span>
+<span class="s">               ((∑h ∈ {0..&lt;5}. of_int(N $$ (4-h,4-j)) * x $$ (4-h,0)) +</span>
+<span class="s">               (∑h ∈ {5..&lt;𝗏}. of_int(N $$ (h,4-j)) * x $$ (h,0)))^2) =</span>
+<span class="s">                of_nat Λ * (∑j ∈ {0..&lt;𝗏}.(x $$ (j, 0)))^2 +</span>
+<span class="s">                of_nat (𝗄 - Λ) * (∑j ∈ {4..&lt;5}. (x $$ (4-j, 0))^2)"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">lag_eq</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">blocksize_gt_index</span><span class="w"> </span><span class="n">sum_of_four_squares</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat mat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">assm1</span><span class="o">:</span><span class="w"> </span><span class="s">"𝗏 ≥ m"</span><span class="w"> </span><span class="s">"m &gt; 3"</span><span class="w"> </span><span class="s">"x0 = x $$ (m-4,0)"</span>
+<span class="w">          </span><span class="s">"x1 = x $$ (m-3,0)"</span><span class="w"> </span><span class="s">"x2 = x $$ (m-2,0)"</span><span class="w"> </span><span class="s">"x3 = x $$ (m-1,0)"</span>
+<span class="w">          </span><span class="s">"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">assm2</span><span class="o">:</span><span class="w"> </span><span class="s">"m + 4*n = 𝗏"</span>
+
+<span class="w">    </span><span class="k">have</span><span class="w"> </span><span class="s">"∃e0 e1 e2 e3 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>
+<span class="s">          e0 * y0 + e1 * y1 + e2 * y2 + e3 * y3 +</span>
+<span class="s">          (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">linear_comb_of_y_part_2_i3</span><span class="w"> </span><span class="n">assm1</span><span class="w"> </span><span class="n">lag_eq</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+<p>Any ideas what could be causing this?</p>
+<p>The lemma being used in brc_v_1_mod_4 is the following, which was successfully proven:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">linear_comb_of_y_part_2_i3</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"a ∈ ℕ"</span><span class="w"> </span><span class="s">"b ∈ ℕ"</span><span class="w"> </span><span class="s">"c ∈ ℕ"</span><span class="w"> </span><span class="s">"d ∈ ℕ"</span>
+<span class="w">          </span><span class="s">"x0 ∈ ℚ"</span><span class="w"> </span><span class="s">"x1 ∈ ℚ"</span><span class="w"> </span><span class="s">"x2 ∈ ℚ"</span><span class="w"> </span><span class="s">"x3 ∈ ℚ"</span>
+<span class="w">          </span><span class="s">"a^2 + b^2 + c^2 + d^2 = (𝗄 - Λ)"</span>
+<span class="w">          </span><span class="s">"x ∈ rat mat"</span><span class="w"> </span><span class="s">"𝗏 ≥ m"</span><span class="w"> </span><span class="s">"m &gt; 3"</span><span class="w"> </span><span class="s">"i ∈ {0..&lt;4}"</span><span class="w"> </span><span class="s">"x0 = x $$ (m-4,0)"</span>
+<span class="w">          </span><span class="s">"x1 = x $$ (m-3,0)"</span><span class="w"> </span><span class="s">"x2 = x $$ (m-2,0)"</span><span class="w"> </span><span class="s">"x3 = x $$ (m-1,0)"</span>
+<span class="w">          </span><span class="s">"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"y0 ∈ ℚ"</span><span class="w"> </span><span class="s">"y1 ∈ ℚ"</span><span class="w"> </span><span class="s">"y2 ∈ ℚ"</span><span class="w"> </span><span class="s">"y3 ∈ ℚ"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃e0 e1 e2 e3 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>
+<span class="s">    e0 * y0 + e1 * y1 + e2 * y2 + e3 * y3 +</span>
+<span class="s">    (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))"</span>
+</code></pre></div>
+<p>Another question is what are the advantages of using fix instead of assume? As I recall, one of the experts in Zulip said I should be using fix instead of assume. Could the problem be I should have used fix in linear_comb_of_y_part_2_i3 instead of assume?</p>
+
+
+
+<a name="507655189"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507655189" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507655189">(Mar 24 2025 at 05:46)</a>:</h4>
+<p><code>fix</code> is just a way to fix a variable.  So this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="k">fix</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="k">assume</span><span class="w"> </span><span class="n">assm1</span><span class="o">:</span><span class="w"> </span><span class="s">"𝗏 ≥ m"</span>
+</code></pre></div>
+<p>just means "let </p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>m</mi><mo>∈</mo><mi mathvariant="double-struck">N</mi></mrow><annotation encoding="application/x-tex">m \in \mathbb{N}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord mathbb">N</span></span></span></span></span></p>
+<p>such that </p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>𝗏</mi><mo>≥</mo><mi>m</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">𝗏 ≥ m.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathsf" style="margin-right:0.01389em;">v</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span><span class="mord">.</span></span></span></span></span></p>
+<p>So the question is not "should I use fix". The question is "how does my proof look like on paper?"</p>
+
+
+
+<a name="507655421"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507655421" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507655421">(Mar 24 2025 at 05:48)</a>:</h4>
+<p>In a proof by hand you would never write an assume in a middle of a proof. So you should not do it in Isabelle either.</p>
+
+
+
+<a name="507655554"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507655554" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507655554">(Mar 24 2025 at 05:48)</a>:</h4>
+<p>Remark that </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="s">"x1 = x $$ (m-3,0)"</span><span class="w"> </span><span class="s">"x2 = x $$ (m-2,0)"</span><span class="w"> </span><span class="s">"x3 = x $$ (m-1,0)"</span>
+</code></pre></div>
+<p>look like definitions and not assumptions</p>
+
+
+
+<a name="507813855"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507813855" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507813855">(Mar 24 2025 at 16:09)</a>:</h4>
+<p>Mathias, so all this is just cosmetic? I was hoping this would lead me to figure out why my proof isn’t working. In any case how would you rewrite the assume part in the middle of my proof so it looks cosmetically better?</p>
+
+
+
+<a name="507835231"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507835231" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507835231">(Mar 24 2025 at 17:24)</a>:</h4>
+<p>I believe that unless you provide a method for others to run your proofs. It would be extremely hard for others to figure out modify/fix your proofs.</p>
+
+
+
+<a name="507854810"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507854810" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507854810">(Mar 24 2025 at 18:59)</a>:</h4>
+<p>it is not a question about cosmetic. It is a question about how the proofs.</p>
+
+
+
+<a name="507854953"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507854953" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507854953">(Mar 24 2025 at 19:00)</a>:</h4>
+<p>On paper, you would never write in the middle a proof "oh and here let's assume that v &gt;= 4".</p>
+
+
+
+<a name="507854981"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507854981" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507854981">(Mar 24 2025 at 19:00)</a>:</h4>
+<p>You need to justify why you can do that</p>
+
+
+
+<a name="507855171"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507855171" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507855171">(Mar 24 2025 at 19:01)</a>:</h4>
+<p>and one why to do that is to say: oh let's just give a name to this thing</p>
+
+
+
+<a name="507855213"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507855213" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507855213">(Mar 24 2025 at 19:01)</a>:</h4>
+<p>this is not an assumption</p>
+
+
+
+<a name="507855403"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507855403" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507855403">(Mar 24 2025 at 19:02)</a>:</h4>
+<p>But, Isabelle is not here to tell you how to do a proof, it is here to check the proof. <em>You</em> have to do the creative part of deciding how to do the proof.</p>
+
+
+
+<a name="507888522"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507888522" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507888522">(Mar 24 2025 at 22:37)</a>:</h4>
+<p>Irvin, even though it looks complicated, the proof of brcv1mod4 follows from the other lemma by modes ponens. But I am having trouble getting Isabelle to recognize this.</p>
+
+
+
+<a name="507892997"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507892997" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507892997">(Mar 24 2025 at 23:14)</a>:</h4>
+<p>Mathias I am putting inside the proof assumptions about variables that are not defined in the actual statement of the lemma. But they are necessary for proving existence in the lemma statement. How would you do this? By the way, this is all part of the last part of the standard proof of the Bruck Ryser Chowla theorem. This isn’t my proof. I’m just trying to translate it into Isabelle.</p>
+
+
+
+<a name="507915353"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507915353" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507915353">(Mar 25 2025 at 02:50)</a>:</h4>
+<p>A lot of the literature looks like a proof but needs improvement to have a proper proof</p>
+
+
+
+<a name="507915635"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507915635" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507915635">(Mar 25 2025 at 02:53)</a>:</h4>
+<p>So in your case: </p>
+<blockquote>
+<p>But they are necessary for proving existence in the lemma statement.</p>
+</blockquote>
+<p>Why can you assume them? Obviously you cannot assume False in the middle of a proof. So there must be some argument why you can do that</p>
+
+
+
+<a name="507916115"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507916115" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507916115">(Mar 25 2025 at 02:58)</a>:</h4>
+<p>My guess is that:</p>
+<p>1. <code>x0</code> to <code>x4</code> are actually definitions <code>"x0 = x $$ (m-4,0)" "x1 = x $$ (m-3,0)" "x2 = x $$ (m-2,0)" "x3 = x $$ (m-1,0)"</code> (keyword in Isabelle: defines… and you do not need a proof to define things!)<br>
+  2. <code>m</code> and <code>n</code> are actually value you can obtain from <code>𝗏 mod 4 = 1</code> but you pick values such that <code>m&gt;3</code> intead of the smallest values (keyword in Isabelle: obtain… and you need a proof!)<br>
+  3. From 1 you can prove that the alternative definition with <code>one_of</code> ... <code>four_of</code> hold (keyword in Isabelle: have… and you need a proof und will use x0_def ... x4_def)</p>
+
+
+
+<a name="507916237"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/507916237" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#507916237">(Mar 25 2025 at 03:00)</a>:</h4>
+<p>And if I am correct, something just happened: none of the things are <code>assume</code> in the middle of a proof. They have a proper justification. And none of the things are new fresh variables in the middle of a proof that need a <code>fix</code>.</p>
+
+
+
+<a name="508064963"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508064963" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508064963">(Mar 25 2025 at 16:02)</a>:</h4>
+<p>The lemma claims there exist rational numbers which satisfy the equation- v and k and Lambda are properties of the symmetric design. The variables that are assumed and fixed are used to construct the solution.</p>
+
+
+
+<a name="508070030"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508070030" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508070030">(Mar 25 2025 at 16:21)</a>:</h4>
+<p>Are there any other similar existence theorems in Isabelle?</p>
+
+
+
+<a name="508082670"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508082670" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508082670">(Mar 25 2025 at 17:12)</a>:</h4>
+<p>Here are some examples of using define and obtain.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">DEFINE</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">n_def</span><span class="o">:</span><span class="s">"(n :: nat) = 2"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃y. y * 2 = n"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">y_def</span><span class="o">:</span><span class="w"> </span><span class="s">"(y ::nat) = 1"</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"y * 2 = n"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">y_def</span><span class="w"> </span><span class="n">n_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"∃y. y * 2 = n"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">OBTAIN</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"∃y. P y"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="kp">where</span><span class="w">  </span><span class="s">" P y "</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"∃x. P x"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Define requires no proof, obtain requires a proof</p>
+
+
+
+<a name="508083076"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508083076" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508083076">(Mar 25 2025 at 17:14)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/508064963">said</a>:</p>
+<blockquote>
+<p>The lemma claims there exist rational numbers which satisfy the equation- v and k and Lambda are properties of the symmetric design. The variables that are assumed and fixed are used to construct the solution.</p>
+</blockquote>
+<p>in isabelle it would roughly be.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">obtain</span><span class="w"> </span><span class="n">rat1</span><span class="w"> </span><span class="n">rat2</span><span class="w"> </span><span class="n">rat3</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"property1"</span><span class="w"> </span><span class="s">"property2"</span>
+<span class="k">by</span><span class="w"> </span><span class="n">proof_method</span>
+</code></pre></div>
+
+
+
+<a name="508105365"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508105365" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508105365">(Mar 25 2025 at 19:01)</a>:</h4>
+<p>I would suggest starting with an Isabelle tutorial like the prog-prove (the beginning of the concrete semantics)</p>
+
+
+
+<a name="508143737"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508143737" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508143737">(Mar 25 2025 at 23:06)</a>:</h4>
+<p>Irvin and Mathias, thank you that gives me something to work with.</p>
+
+
+
+<a name="508151249"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508151249" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508151249">(Mar 26 2025 at 00:18)</a>:</h4>
+<p>I just tried the following:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">brc_v_1_mod_4</span><span class="o">:</span>
+<span class="w">      </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"𝗏 mod 4 = 1"</span>
+<span class="w">        </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃x :: rat mat.(∑j ∈ {4..&lt;5}.</span>
+<span class="s">               ((∑h ∈ {0..&lt;5}. of_int(N $$ (4-h,4-j)) * x $$ (4-h,0)) +</span>
+<span class="s">               (∑h ∈ {5..&lt;𝗏}. of_int(N $$ (h,4-j)) * x $$ (h,0)))^2) =</span>
+<span class="s">                of_nat Λ * (∑j ∈ {0..&lt;𝗏}.(x $$ (j, 0)))^2 +</span>
+<span class="s">                of_nat (𝗄 - Λ) * (∑j ∈ {4..&lt;5}. (x $$ (4-j, 0))^2)"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">lag_eq</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">blocksize_gt_index</span><span class="w"> </span><span class="n">sum_of_four_squares</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat mat"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"(x0 :: rat) = x $$ (m-4,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"(x1 :: rat) = x $$ (m-3,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"(x2 :: rat) = x $$ (m-2,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"(x3 :: rat) = x $$ (m-1,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"(n :: nat) = (𝗏 - m) div 4"</span>
+
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">assm1</span><span class="o">:</span><span class="w"> </span><span class="s">"𝗏 ≥ m"</span><span class="w"> </span><span class="s">"m &gt; 3"</span><span class="w"> </span><span class="s">"i ∈ {0..&lt;4}"</span>
+<span class="w">          </span><span class="s">"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+
+<span class="w">    </span><span class="k">have</span><span class="w"> </span><span class="s">"∃e0 e1 e2 e3 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>
+<span class="s">          e0 * y0 + e1 * y1 + e2 * y2 + e3 * y3 +</span>
+<span class="s">          (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">linear_comb_of_y_part_2_i3</span><span class="w"> </span><span class="n">assm1</span><span class="w"> </span><span class="n">lag_eq</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+<p>Unfortunately, I got a "linarith_split_limit exceeded (current value is 9)" error repeated. The last have statement should follow from "linear_comb_of_y_part_2_i3" in the first post of this thread. It is just modes ponens.</p>
+
+
+
+<a name="508167055"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508167055" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508167055">(Mar 26 2025 at 02:42)</a>:</h4>
+<p>You're still assuming stuff that I assume you should be proving.<br>
+This bit should be have</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">          </span><span class="s">"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">          </span><span class="s">"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+</code></pre></div>
+
+
+
+<a name="508180001"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508180001" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508180001">(Mar 26 2025 at 04:57)</a>:</h4>
+<p>In fact <code>brc_v_1_mod_4</code> should not be using any assume keyword in the whole proof block</p>
+
+
+
+<a name="508184729"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508184729" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508184729">(Mar 26 2025 at 05:40)</a>:</h4>
+<p>BTW isn't <code>linarith_split_limit exceeded</code> just a warning?</p>
+
+
+
+<a name="508318959"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508318959" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508318959">(Mar 26 2025 at 15:58)</a>:</h4>
+<p>Mathias, linarith split limit exceeded was something that kept repeating itself to the point where I couldn’t tell what was happening. When I had my Isabelle in front of me last night I got a purple highlight over auto meaning it was still running without stopping.</p>
+
+
+
+<a name="508322404"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508322404" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508322404">(Mar 26 2025 at 16:09)</a>:</h4>
+<p>Irvin the four equations that you posted are definitely assumptions. Or perhaps better to say definitions, but I don’t know how to make them definitions.</p>
+
+
+
+<a name="508362009"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508362009" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508362009">(Mar 26 2025 at 19:30)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/508318959">said</a>:</p>
+<blockquote>
+<p>Mathias, linarith split limit exceeded was something that kept repeating itself to the point where I couldn’t tell what was happening. When I had my Isabelle in front of me last night I got a purple highlight over auto meaning it was still running without stopping.</p>
+</blockquote>
+<p>could be that the arith simplifier is spamming the interface with messages</p>
+
+
+
+<a name="508362936"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508362936" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508362936">(Mar 26 2025 at 19:36)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/508322404">said</a>:</p>
+<blockquote>
+<p>Irvin the four equations that you posted are definitely assumptions. Or perhaps better to say definitions, but I don’t know how to make them definitions.</p>
+</blockquote>
+<p>One last try: in the world of math I know where proofs are sequences of applications of theorems and axioms, there are no assumptions in the middle of a proof. Never. It just does not make sense.</p>
+<p>Apparently we cannot agree on that. Therefore, we cannot help you.</p>
+
+
+
+<a name="508391208"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508391208" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508391208">(Mar 26 2025 at 22:45)</a>:</h4>
+<p>Mathias I am not here to argue with you,  but learn from you. But I am coming from the perspective that you can say “assume” in a math proof. I learned this as a college freshman from a course in logic - if you want to prove that A implies B, then you can do this by assuming A and then proving B. In the case of the proof of the Bruck Ryser Chowla theorem, the idea is to prove a certain equation 1 has an rational solution. This is done by assuming that the variables in equation 2 satisfy certain conditions and then showing by induction that these conditions lead to a solution in equation 1. This is why I was using assume in the proof. But I really don’t care if you call what I am doing assume or something else. I just want my Isabelle proof to work.</p>
+
+
+
+<a name="508433149"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508433149" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508433149">(Mar 27 2025 at 05:38)</a>:</h4>
+<blockquote>
+<p>if you want to prove that A implies B, then you can do this by assuming A and then proving B</p>
+</blockquote>
+<p>When you <em>prove</em> that theorem yes. When you <em>use</em> that theorem no. When you use it, you <em>show</em> that A holds. And from this you derive B.</p>
+<p>And here you are clearly trying to <em>use</em> it. You even using the keyword <code>using linear_comb_of_y_part_2_i3</code>.</p>
+
+
+
+<a name="508542609"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508542609" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508542609">(Mar 27 2025 at 15:01)</a>:</h4>
+<p>Also note that <code>its safe to assume ...</code>/ <code>without loss of generality assume ...</code> needs to be justified in isabelle.</p>
+
+
+
+<a name="508563163"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508563163" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508563163">(Mar 27 2025 at 16:17)</a>:</h4>
+<p>Ok, now I understand where you are coming from. I have to think about this.</p>
+
+
+
+<a name="508640146"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/508640146" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#508640146">(Mar 28 2025 at 00:03)</a>:</h4>
+<p>Before today, I thought your arguments were irrelevant semantic arguments. Now I see that yes they are semantic arguments but not irrelevant because in Isabelle, everything is semantics. I reread what you wrote and they make sense now. Thank you.</p>
+
+
+
+<a name="509830683"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/509830683" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#509830683">(Apr 03 2025 at 02:45)</a>:</h4>
+<p>I've gotten to this point:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">brc_v_1_mod_4</span><span class="o">:</span>
+<span class="w">      </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"𝗏 mod 4 = 1"</span>
+<span class="w">        </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃x :: rat mat.(∑j ∈ {4..&lt;5}.</span>
+<span class="s">               ((∑h ∈ {0..&lt;5}. of_int(N $$ (4-h,4-j)) * x $$ (4-h,0)) +</span>
+<span class="s">               (∑h ∈ {5..&lt;𝗏}. of_int(N $$ (h,4-j)) * x $$ (h,0)))^2) =</span>
+<span class="s">                of_nat Λ * (∑j ∈ {0..&lt;𝗏}.(x $$ (j, 0)))^2 +</span>
+<span class="s">                of_nat (𝗄 - Λ) * (∑j ∈ {4..&lt;5}. (x $$ (4-j, 0))^2)"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">lag_eq</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">blocksize_gt_index</span><span class="w"> </span><span class="n">sum_of_four_squares</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"𝗏 ≥ m"</span><span class="w"> </span><span class="s">"m &gt; 3"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="n">t_design_min_v</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">force</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"n = (𝗏-m) div 4"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x $$ (m-4,0) = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-3,0) = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-2,0) = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-1,0) = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x0 = x $$ (m-4,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x1 = x $$ (m-3,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x2 = x $$ (m-2,0)"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x3 = x $$ (m-1,0)"</span>
+</code></pre></div>
+<p>The problem with it is I want x to be a rat mat but I'm not sure how to use the obtain statement to do this.</p>
+
+
+
+<a name="509842084"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/509842084" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#509842084">(Apr 03 2025 at 04:37)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat mat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">…</span>
+</code></pre></div>
+
+
+
+<a name="509927539"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/509927539" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#509927539">(Apr 03 2025 at 12:37)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<a name="510061376"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/510061376" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#510061376">(Apr 04 2025 at 00:41)</a>:</h4>
+<p>Irvin was right before when he said I would have to justify it in some way. I'm not sure what kind of justification it needs though. The function is a rational function, so the definition works. Perhaps that is the answer?</p>
+
+
+
+<a name="510068533"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/510068533" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#510068533">(Apr 04 2025 at 01:52)</a>:</h4>
+<p>Yup that is "proved" by type inference.</p>
+
+
+
+<a name="510302819"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/510302819" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#510302819">(Apr 04 2025 at 22:44)</a>:</h4>
+<p>Do you just say “using functionname” or “using functionnames”?</p>
+
+
+
+<a name="510303045"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/510303045" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#510303045">(Apr 04 2025 at 22:46)</a>:</h4>
+<p>Or something like that?</p>
+
+
+
+<a name="511049717"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511049717" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511049717">(Apr 09 2025 at 00:37)</a>:</h4>
+<p>I looked up "type inference" but couldn't find anything that would solve the problem. Then I tried:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">one</span><span class="o">:</span><span class="w"> </span><span class="s">"one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">two</span><span class="o">:</span><span class="w"> </span><span class="s">"two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">three</span><span class="o">:</span><span class="w"> </span><span class="s">"three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">four</span><span class="o">:</span><span class="w"> </span><span class="s">"four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3))) ∈ ℚ"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat mat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x $$ (m-4,0) = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-3,0) = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-2,0) = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-1,0) = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">three</span><span class="w"> </span><span class="n">four</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+<p>but Isabelle didn't accept any of the sentences. Any ideas?</p>
+
+
+
+<a name="511086412"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511086412" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511086412">(Apr 09 2025 at 06:26)</a>:</h4>
+<p>For <code>one</code> to <code>four</code> I would expect that these numbers are automatically rational numbers because of the type, but it is hard to know without any definition.<br>
+For <code>x</code> define <code>x</code> as the matrix (or the vector) with the 4 elements instead of talking about the elements directly</p>
+
+
+
+<a name="511159806"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511159806" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511159806">(Apr 09 2025 at 12:32)</a>:</h4>
+<p>What do you mean “with the four elements”? The matrix is supposed to be an m by 1 matrix. (I found that Isabelle liked it better when it was a matrix instead of a vector.)</p>
+<p>one, two, three, four are just looking at the first, second, third, fourth elements of a vector while y_inv_of is just a linear transformation of a four element vector. There are only rational numbers in the definitions of the functions.</p>
+
+
+
+<a name="511269907"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511269907" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511269907">(Apr 09 2025 at 22:05)</a>:</h4>
+<p>I just tried:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">assm1</span><span class="o">:</span><span class="w"> </span><span class="s">"𝗏 ≥ m"</span><span class="w"> </span><span class="s">"m &gt; 3"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="n">t_design_min_v</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">force</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"n = (𝗏-m) div 4"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">y3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x0 = one_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x1 = two_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x2 = three_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">x3</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"x3 = four_of(y_inv_of((a, b, c, d),(y0, y1, y2, y3)))"</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat mat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">                 </span><span class="s">"x $$ (m-4,0) = x0"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-3,0) = x1"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-2,0) = x2"</span>
+<span class="w">                 </span><span class="s">"x $$ (m-1,0) = x3"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+<p>with no luck. simp didn't work as well as sledgehammer.</p>
+
+
+
+<a name="511270227"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511270227" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511270227">(Apr 09 2025 at 22:07)</a>:</h4>
+<p>The function definitions are:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">y_inv_reversible</span><span class="w"> </span><span class="o">::</span><span class="s">"((nat × nat × nat × nat) × (rat × rat × rat × rat)) ⇒</span>
+<span class="s">             ((nat × nat × nat × nat) × (rat × rat × rat × rat))"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"y_inv_reversible((a, b, c, d),(y0, y1, y2, y3)) = ((a, b, c, d),</span>
+<span class="s">  ((of_nat a)*y0 - (of_nat b)*y1 - (of_nat c)*y2 - (of_nat d)*y3)/of_nat(a^2 + b^2 + c^2 + d^2),</span>
+<span class="s">  ((of_nat b)*y0 + (of_nat a)*y1 + (of_nat d)*y2 - (of_nat c)*y3)/of_nat(a^2 + b^2 + c^2 + d^2),</span>
+<span class="s">  ((of_nat c)*y0 + (of_nat a)*y2 + (of_nat b)*y3 - (of_nat d)*y1)/of_nat(a^2 + b^2 + c^2 + d^2),</span>
+<span class="s">  ((of_nat d)*y0 + (of_nat c)*y1 + (of_nat a)*y3 - (of_nat b)*y2)/of_nat(a^2 + b^2 + c^2 + d^2))"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">y_inv_of</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"((nat × nat × nat × nat) × (rat × rat × rat × rat)) ⇒</span>
+<span class="s">                  (rat × rat × rat × rat)"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"y_inv_of((a, b, c, d),(y0, y1, y2, y3)) =</span>
+<span class="s">   rightside(y_inv_reversible((a, b, c, d),(y0, y1, y2, y3)))"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">one_of</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(rat × rat × rat × rat) ⇒ rat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"one_of(y0, y1, y2, y3) = y0"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">two_of</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(rat × rat × rat × rat) ⇒ rat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"two_of(y0, y1, y2, y3) = y1"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">three_of</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(rat × rat × rat × rat) ⇒ rat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"three_of(y0, y1, y2, y3) = y2"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">four_of</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(rat × rat × rat × rat) ⇒ rat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"four_of(y0, y1, y2, y3) = y3"</span>
+</code></pre></div>
+
+
+
+<a name="511274360"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511274360" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511274360">(Apr 09 2025 at 22:44)</a>:</h4>
+<p>Also this should probably be used so that a^2 + b^2 + c^2 + d^2 != 0:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">lag_eq</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"a^2 + b^2 + c^2 + d^2 = 𝗄 - Λ"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">blocksize_gt_index</span><span class="w"> </span><span class="n">sum_of_four_squares</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">metis</span>
+</code></pre></div>
+
+
+
+<a name="511274590"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511274590" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511274590">(Apr 09 2025 at 22:46)</a>:</h4>
+<p>Would anybody be interested in looking at my whole proof? I'm on the last hard-to-prove lemma and I've been stuck on it for a long time. When it gets done, it will be a nice addition to the AFP library.</p>
+
+
+
+<a name="511276594"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511276594" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511276594">(Apr 09 2025 at 23:03)</a>:</h4>
+<p>Or are there any examples out there like this that I can look at and learn from?</p>
+
+
+
+<a name="511310604"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511310604" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511310604">(Apr 10 2025 at 04:24)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="736162">Craig Alan Feinstein</span> <a href="#narrow/channel/202961-General/topic/Questions.20about.20.22fix.22/near/511159806">said</a>:</p>
+<blockquote>
+<p>What do you mean “with the four elements”? The matrix is supposed to be an m by 1 matrix. (I found that Isabelle liked it better when it was a matrix instead of a vector.)</p>
+<p>one, two, three, four are just looking at the first, second, third, fourth elements of a vector while y_inv_of is just a linear transformation of a four element vector. There are only rational numbers in the definitions of the functions.</p>
+</blockquote>
+<p>It is very strange to me to have a matrix <code>m x 1</code> where you care only about 4 values</p>
+
+
+
+<a name="511310640"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511310640" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511310640">(Apr 10 2025 at 04:25)</a>:</h4>
+<p>But anyway, if you do not care about the value, you could pick one</p>
+
+
+
+<a name="511310964"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511310964" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511310964">(Apr 10 2025 at 04:28)</a>:</h4>
+<p>So you could define x as:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">mat</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="o">(</span><span class="n">%i</span><span class="w"> </span><span class="n">j.</span>
+<span class="w">   </span><span class="kp">if</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="n">0</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="kp">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="o">-</span><span class="n">4</span><span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="n">x0</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="o">-</span><span class="n">3</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="o">-</span><span class="n">2</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="n">else</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="n">m</span><span class="o">-</span><span class="n">1</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="n">x3</span>
+<span class="w">      </span><span class="n">else</span><span class="w"> </span><span class="n">0</span>
+<span class="w">   </span><span class="n">else</span><span class="w"> </span><span class="n">0</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="511310985"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511310985" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511310985">(Apr 10 2025 at 04:28)</a>:</h4>
+<p>Here I picked 0, but any real number would do</p>
+
+
+
+<a name="511393031"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511393031" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511393031">(Apr 10 2025 at 12:16)</a>:</h4>
+<p>Thank you, I’ll give that a shot.</p>
+
+
+
+<a name="511538872"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511538872" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511538872">(Apr 11 2025 at 01:22)</a>:</h4>
+<p>I tried   </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">define</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="kp">where</span><span class="w">  </span><span class="s">"x = (λi j.</span>
+<span class="s">     if j = 0 then</span>
+<span class="s">       if i = m - 4 then x0</span>
+<span class="s">       else if i = m - 3 then x1</span>
+<span class="s">       else if i = m - 2 then x2</span>
+<span class="s">       else if i = m - 1 then x3</span>
+<span class="s">       else 0</span>
+<span class="s">     else 0)"</span>
+</code></pre></div>
+<p>but it didn't like it.</p>
+
+
+
+<a name="511575292"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511575292" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511575292">(Apr 11 2025 at 06:57)</a>:</h4>
+<p>I have never used any matrices, but this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">define</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"rat mat"</span><span class="w"> </span><span class="kp">where</span><span class="w">  </span><span class="s">"x = mat m 1 (λi j.</span>
+<span class="s">     if j = 0 then</span>
+<span class="s">       if i = m - 4 then x0</span>
+<span class="s">       else if i = m - 3 then x1</span>
+<span class="s">       else if i = m - 2 then x2</span>
+<span class="s">       else if i = m - 1 then x3</span>
+<span class="s">       else 0</span>
+<span class="s">     else 0)"</span>
+</code></pre></div>
+<p>is what I meant…</p>
+
+
+
+<a name="511602627"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511602627" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511602627">(Apr 11 2025 at 09:21)</a>:</h4>
+<p>Thank you, I’ll try that</p>
+
+
+
+<a name="511715696"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511715696" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511715696">(Apr 11 2025 at 18:56)</a>:</h4>
+<p>I just tried it but it didn't accept it. It said, </p>
+<p>"Type unification failed: Clash of types "nat" and "_ × _"</p>
+<p>Type error in application: incompatible operand type</p>
+<p>Operator:  mat m 1 :: (nat × nat ⇒ ??'a) ⇒ ??'a mat<br>
+Operand:<br>
+  λi j. if j = 0<br>
+         then if i = m - 4 then x0 else if i = m - 3 then x1 else if i = m - 2 then x2 else if i = m - 1 then x3 else 0<br>
+         else 0 ::<br>
+  nat ⇒ ??'b ⇒ rat</p>
+<p>Coercion Inference:</p>
+<p>Local coercion insertion on the operand failed:<br>
+No coercion known for type constructors: "prod" and "nat""</p>
+
+
+
+<a name="511745891"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/511745891" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#511745891">(Apr 11 2025 at 22:40)</a>:</h4>
+<p>Change <code>λi j</code> to <code>λ(i, j).</code>. The error tells you that <code>map m 1</code> expects a function that takes a tuple.</p>
+
+
+
+<a name="512206633"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Questions%20about%20%22fix%22/near/512206633" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Craig Alan Feinstein <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Questions.20about.20.22fix.22.html#512206633">(Apr 15 2025 at 02:06)</a>:</h4>
+<p>Jan, thank you, I just tried that and it worked.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

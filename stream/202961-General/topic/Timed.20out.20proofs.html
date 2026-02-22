@@ -1,0 +1,72 @@
+<html>
+<head><meta charset="utf-8"><title>Timed out proofs · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html">Timed out proofs</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="505634813"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505634813" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505634813">(Mar 14 2025 at 10:16)</a>:</h4>
+<p>Sometimes Sledgehammer gives an answer with a timeout:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="o">(</span><span class="n">&gt;</span><span class="w"> </span><span class="n">1.0</span><span class="w"> </span><span class="n">s</span><span class="o">,</span><span class="w"> </span><span class="n">timed</span><span class="w"> </span><span class="n">out</span><span class="o">)</span>
+</code></pre></div>
+<p>What does this mean? When I click on the suggested one-liner, Isabelle/jEdit shows it in purple, and that means it is not an accepted proof by the kernel, possibly there is some looping.</p>
+<p>What is a strategy to find an accepted proof? Sometimes it works that I copy the lemmas in the suggested one-liners into a <code>using</code> clause and then invoke Sledgehammer again. But this does not work always.</p>
+<p>Shall I prove more intermediate lemmas?</p>
+
+
+
+<a name="505636679"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505636679" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505636679">(Mar 14 2025 at 10:25)</a>:</h4>
+<p>It means that sledgehammer tried the tactic for 1s and it did not finish</p>
+
+
+
+<a name="505637151"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505637151" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505637151">(Mar 14 2025 at 10:27)</a>:</h4>
+<p>There are a few possibilities:</p>
+<p>- the proof method actually works, but it takes more time (but sledgehammer does not know that)<br>
+  - the proof method actually does not work (taking forever), which is why sledgehammer is warning you about it</p>
+
+
+
+<a name="505637390"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505637390" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505637390">(Mar 14 2025 at 10:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="234198">Gergely Buday</span> <a href="#narrow/channel/202961-General/topic/Timed.20out.20proofs/near/505634813">said</a>:</p>
+<blockquote>
+<p>Shall I prove more intermediate lemmas?</p>
+</blockquote>
+<p>Exactly like if sledgehammer failed: you have to provide a proof by hand.</p>
+
+
+
+<a name="505640542"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505640542" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505640542">(Mar 14 2025 at 10:43)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="234198">Gergely Buday</span> <a href="#narrow/channel/202961-General/topic/Timed.20out.20proofs/near/505634813">said</a>:</p>
+<blockquote>
+<p>What is a strategy to find an accepted proof? Sometimes it works that I copy the lemmas in the suggested one-liners into a <code>using</code> clause and then invoke Sledgehammer again. But this does not work always.</p>
+</blockquote>
+<p>This way basically works if there is another way to find the proof. If this is an inherent problem (let's say a limitation of metis / an issue in smt), this will not solve the problem.</p>
+
+
+
+<a name="505640986"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505640986" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505640986">(Mar 14 2025 at 10:45)</a>:</h4>
+<p>Thanks. Sometimes giving a longer timeout also works, but not in the case I face now.</p>
+
+
+
+<a name="505720299"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Timed%20out%20proofs/near/505720299" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Timed.20out.20proofs.html#505720299">(Mar 14 2025 at 16:40)</a>:</h4>
+<p><span class="user-mention" data-user-id="233198">@Mathias Fleury</span> I have managed to prove the lemma.</p>
+<p>The strategy was to give a calculational proof of three steps. For every step the search space was smaller than for the original lemma so Sledgehammer was able to find a proper one-liner proof. </p>
+<p>I could visualise this as a square diagram where the square is created by the product of two transformations, and the original lemma was one side, while the calculational proof is going around on the other three sides.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

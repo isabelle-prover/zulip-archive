@@ -1,0 +1,253 @@
+<html>
+<head><meta charset="utf-8"><title>Function termination proof extremely slow · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html">Function termination proof extremely slow</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="506131365"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506131365" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506131365">(Mar 17 2025 at 12:06)</a>:</h4>
+<p>I have defined a Relation on symbols for a formalization in Theoretical computer science, but it takes on the order of half a 30 seconds and a 50 seconds on a decently speced macbook for Isabelle to accept the definition (hovering on the <code>fun</code> keyword gives these values, and they are indeed correct).<br>
+If i isolate the definitons it is alot faster (10 seconds and 20 seconds) but still not fast. Anything i can do?</p>
+<p>Here's the isolated version:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'n</span><span class="o">,</span><span class="n n-Type">'t</span><span class="o">)</span><span class="w"> </span><span class="n">sym</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Nt</span><span class="w"> </span><span class="n n-Type">'n</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Tm</span><span class="w"> </span><span class="n n-Type">'t</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'n</span><span class="o">,</span><span class="n n-Type">'t</span><span class="o">)</span><span class="w"> </span><span class="n">syms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"('n,'t) sym list"</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'n</span><span class="o">,</span><span class="n n-Type">'t</span><span class="o">)</span><span class="w"> </span><span class="n">prod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"'n × ('n,'t) syms"</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'n</span><span class="o">,</span><span class="n n-Type">'t</span><span class="o">)</span><span class="w"> </span><span class="n">prods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"('n,'t) prod list"</span>
+<span class="k">type_synonym</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'n</span><span class="o">,</span><span class="n n-Type">'t</span><span class="o">)</span><span class="w"> </span><span class="n">Prods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"('n,'t) prod set"</span>
+
+
+<span class="k">datatype</span><span class="w"> </span><span class="n">bracket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Op</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Cl</span>
+
+<span class="k">datatype</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">One</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Two</span>
+
+<span class="k">text</span><span class="s">‹after each (Op,A→a,1) comes a (Cl,A→a,1) and after each (Op,A→a,2) comes a (Cl,A→a,2)›</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">P4</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), One)) (Cl, ((X, [Tm y]), One)) = (X = A ∧ y = a)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), One)) in2  = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P4 (Op, ((A, [Tm a]), Two)) (Cl, ((X, [Tm y]), Two)) = (X = A ∧ y = a)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), Two)) in2 = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P4 x y = True›</span>
+
+
+<span class="k">fun</span><span class="w"> </span><span class="n">P4_sym</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹('n, bracket × ('n,'t) prod × version) sym ⇒ ('n, bracket × ('n,'t) prod × version) sym ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P4_sym (Tm (Op, ((A, [Tm a]), One))) (Tm (Cl, ((X, [Tm y]), One))) = (X = A ∧ y = a)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4_sym (Tm (Op, ((A, [Tm a]), One))) in2  = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P4_sym (Tm (Op, ((A, [Tm a]), Two))) (Tm (Cl, ((X, [Tm y]), Two))) = (X = A ∧ y = a)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4_sym (Tm (Op, ((A, [Tm a]), Two))) in2 = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P4_sym x y = True›</span>
+</code></pre></div>
+
+
+
+<a name="506132346"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506132346" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506132346">(Mar 17 2025 at 12:10)</a>:</h4>
+<p>P4.simps has length 96 after disambiguation…</p>
+
+
+
+<a name="506132617"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506132617" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506132617">(Mar 17 2025 at 12:12)</a>:</h4>
+<p>yes, and im not sure i can do anything about the complex pattern :(</p>
+
+
+
+<a name="506132720"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506132720" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506132720">(Mar 17 2025 at 12:12)</a>:</h4>
+<p>isn't this the same:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">text</span><span class="s">‹after each (Op,A→a,1) comes a (Cl,A→a,1) and after each (Op,A→a,2) comes a (Cl,A→a,2)›</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">P4</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), s)) (Cl, ((X, [Tm y]), t)) = (s = t ∧ X = A ∧ y = a)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), One)) in2  = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P4 (Op, ((A, [Tm a]), Two)) in2 = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P4 x y = True›</span>
+</code></pre></div>
+
+
+
+<a name="506132846"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506132846" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506132846">(Mar 17 2025 at 12:13)</a>:</h4>
+<p>(that cuts the patterns in half)</p>
+
+
+
+<a name="506133019"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506133019" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506133019">(Mar 17 2025 at 12:13)</a>:</h4>
+<p>ah yes! Good catch!</p>
+
+
+
+<a name="506133071"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506133071" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506133071">(Mar 17 2025 at 12:14)</a>:</h4>
+<p>and then this</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">text</span><span class="s">‹after each (Op,A→a,1) comes a (Cl,A→a,1) and after each (Op,A→a,2) comes a (Cl,A→a,2)›</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">P4</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), s)) (Cl, ((X, [Tm y]), t)) = (s = t ∧ X = A ∧ y = a)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4 (Op, ((A, [Tm a]), _)) in2  = False›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P4 x y = True›</span>
+</code></pre></div>
+
+
+
+<a name="506133459"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506133459" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506133459">(Mar 17 2025 at 12:15)</a>:</h4>
+<p>(I am not touching the list, I assume you really need more then 1 element and not just some/none)</p>
+
+
+
+<a name="506133950"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506133950" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506133950">(Mar 17 2025 at 12:17)</a>:</h4>
+<p>sorry, what list do you mean?</p>
+
+
+
+<a name="506134293"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506134293" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506134293">(Mar 17 2025 at 12:18)</a>:</h4>
+<p>[Tm a]</p>
+
+
+
+<a name="506134383"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506134383" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506134383">(Mar 17 2025 at 12:19)</a>:</h4>
+<p>Ah, yea that is the right side of a production, that needs to stay as a list</p>
+
+
+
+<a name="506134496"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506134496" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506134496">(Mar 17 2025 at 12:19)</a>:</h4>
+<p>Do you see any optimization potential for </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">text</span><span class="s">‹After each (Op,A→BC,1), always comes a (Op,(B, _),1),  And after each (Op,A→BC,2), always comes a (Op,(C, _),1)›</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">P3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P3 (Op, ((A, [Nt B, Nt C]), One)) (Op, ((X,y), One)) = (X = B)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P3 (Op, ((A, [Nt B, Nt C]), One)) in2  = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P3 (Op, ((A, [Nt B, Nt C]), Two)) (Op, ((X,y), One)) = (X = C)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P3 (Op, ((A, [Nt B, Nt C]), Two)) in2 = False›</span><span class="w"> </span><span class="o">|</span>
+
+<span class="s">‹P3 x y = True›</span>
+</code></pre></div>
+<p>aswell?</p>
+
+
+
+<a name="506135708"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506135708" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506135708">(Mar 17 2025 at 12:25)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">text</span><span class="s">‹After each (Op,A→BC,1), always comes a (Op,(B, _),1),  And after each (Op,A→BC,2), always comes a (Op,(C, _),1)›</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">P3'</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P3' (Op, ((A, [Nt B, Nt C]), One)) (p, ((X,y), t)) = (p = Op ∧ t = One ∧ X = B)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P3' (Op, ((A, [Nt B, Nt C]), Two)) (p, ((X,y), t)) = (p = Op ∧ t = One ∧ X = C)›</span><span class="w"> </span><span class="o">|</span>
+<span class="s">‹P3' x y = True›</span>
+</code></pre></div>
+
+
+
+<a name="506135766"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506135766" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506135766">(Mar 17 2025 at 12:25)</a>:</h4>
+<p>But you could also go for case:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">P3''</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">‹P3'' x y = (case (x, y) of</span>
+<span class="s">   ((Op, ((A, [Nt B, Nt C]), One)), (Op, ((X,y), t))) ⇒ (t = One ∧ X = B) |</span>
+<span class="s">   ((Op, ((A, [Nt B, Nt C]), One)), _)  ⇒ False |</span>
+<span class="s">   ((Op, ((A, [Nt B, Nt C]), Two)), (Op, ((X,y), t))) ⇒ (t = One ∧X = C) |</span>
+<span class="s">   ((Op, ((A, [Nt B, Nt C]), Two)), in2) ⇒ False |</span>
+<span class="s">   _ ⇒ True)›</span>
+</code></pre></div>
+
+
+
+<a name="506135817"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506135817" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506135817">(Mar 17 2025 at 12:25)</a>:</h4>
+<p>and prove the few simp rules that will be useful for your case</p>
+
+
+
+<a name="506136440"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506136440" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506136440">(Mar 17 2025 at 12:27)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="s">‹P3''  (Op, ((A, [Nt B, Nt C]), One)) (Op, ((X,y), One)) = (X = B)›</span>
+<span class="w">  </span><span class="s">‹P3'' (Op, ((A, [Nt B, Nt C]), Two)) (Op, ((X,y), One)) = (X = C)›</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="n">P3''_def</span><span class="w"> </span><span class="n">split</span><span class="o">:</span><span class="w"> </span><span class="n">bracket.splits</span><span class="w"> </span><span class="n">list.splits</span><span class="w"> </span><span class="n">sym.splits</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="506136553"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506136553" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506136553">(Mar 17 2025 at 12:28)</a>:</h4>
+<p>Usually during proofs, you will only get the matching pattern, not the other weird ones anyway</p>
+
+
+
+<a name="506137799"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506137799" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506137799">(Mar 17 2025 at 12:33)</a>:</h4>
+<p>Considering i will also need to throw this on some concrete strings, the function way would probably be less manual work right?</p>
+
+
+
+<a name="506139317"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506139317" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506139317">(Mar 17 2025 at 12:39)</a>:</h4>
+<p>If i put some constants like you did with Op and turn them to variables that are checked on the right side of the equation, that reduces the pattern match count, but in turn might also make me do more case splitting in induction proofs right?</p>
+
+
+
+<a name="506139728"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506139728" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506139728">(Mar 17 2025 at 12:41)</a>:</h4>
+<p>Yep</p>
+
+
+
+<a name="506139791"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506139791" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506139791">(Mar 17 2025 at 12:41)</a>:</h4>
+<p>but you can also define your own induction principle that does not have duplicates</p>
+
+
+
+<a name="506139894"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506139894" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506139894">(Mar 17 2025 at 12:41)</a>:</h4>
+<p>Although technically, you are only doing a case distinction, it is not really an induction…</p>
+
+
+
+<a name="506140234"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506140234" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506140234">(Mar 17 2025 at 12:43)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow/near/506139791">schrieb</a>:</p>
+<blockquote>
+<p>but you can also define your own induction principle that does not have duplicates</p>
+</blockquote>
+<p>But then i would have to write out all the 100 cases again? I guess there is no free lunch</p>
+
+
+
+<a name="506142285"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506142285" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506142285">(Mar 17 2025 at 12:51)</a>:</h4>
+<p>I am not sure that you need the 100 cases</p>
+
+
+
+<a name="506142513"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506142513" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506142513">(Mar 17 2025 at 12:52)</a>:</h4>
+<p>Usually in proofs you only have the meaningful cases, as the others are deleted by assumptions</p>
+
+
+
+<a name="506146994"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Function%20termination%20proof%20extremely%20slow/near/506146994" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow.html#506146994">(Mar 17 2025 at 13:10)</a>:</h4>
+<p>Thank you, you have been very helpful!<br>
+All the functions are now under 1 second (i have multiple of them) and it has become manageable again.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

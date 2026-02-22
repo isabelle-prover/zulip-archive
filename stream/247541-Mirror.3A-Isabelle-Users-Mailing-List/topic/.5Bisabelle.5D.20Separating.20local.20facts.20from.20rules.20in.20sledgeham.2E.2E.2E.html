@@ -1,0 +1,152 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Separating local facts from rules in sledgeham... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Separating.20local.20facts.20from.20rules.20in.20sledgeham.2E.2E.2E.html">[isabelle] Separating local facts from rules in sledgeham...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="520952684"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Separating%20local%20facts%20from%20rules%20in%20sledgeham.../near/520952684" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Separating.20local.20facts.20from.20rules.20in.20sledgeham.2E.2E.2E.html#520952684">(May 28 2025 at 18:35)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi all,</p>
+<p>in an example like</p>
+<p>notepad<br>
+begin<br>
+   fix xs :: ‹'a list›<br>
+   assume ‹distinct xs›<br>
+   have ‹card (Pow (set xs)) = 2 ^ length xs›<br>
+     …<br>
+end</p>
+<p>sledgehammer will generate a proof similar to:</p>
+<p>by (metis List.finite_set ‹distinct xs› card_Pow distinct_card)</p>
+<p>Would it be possible to separate local facts (from the current proof) <br>
+from generic rules (from the surrounding context)?</p>
+<p>using ‹distinct xs› by (metis List.finite_set card_Pow distinct_card)</p>
+<p>The reason why I ask is that this would make such proofs easier to read <br>
+and also easier to maintain.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/alrEXOapEfKnMdZsHHgVouEo/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/ccHrdwjDcG3irGyTXWWwv78_/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="520967176"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Separating%20local%20facts%20from%20rules%20in%20sledgeham.../near/520967176" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Separating.20local.20facts.20from.20rules.20in.20sledgeham.2E.2E.2E.html#520967176">(May 28 2025 at 20:14)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I support Florian's suggestion because I reorganize my proofs like that <br>
+manually. But I know there are only 25 hours in the day...</p>
+<p>Tobias</p>
+<p>On 28/05/2025 20:34, Florian Haftmann wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>in an example like</p>
+<p>notepad<br>
+begin<br>
+   fix xs :: ‹'a list›<br>
+   assume ‹distinct xs›<br>
+   have ‹card (Pow (set xs)) = 2 ^ length xs›<br>
+     …<br>
+end</p>
+<p>sledgehammer will generate a proof similar to:</p>
+<p>by (metis List.finite_set ‹distinct xs› card_Pow distinct_card)</p>
+<p>Would it be possible to separate local facts (from the current proof) from <br>
+generic rules (from the surrounding context)?</p>
+<p>using ‹distinct xs› by (metis List.finite_set card_Pow distinct_card)</p>
+<p>The reason why I ask is that this would make such proofs easier to read and also <br>
+easier to maintain.</p>
+<p>Cheers,<br>
+     Florian</p>
+</blockquote>
+<p><a href="/user_uploads/14278/WaxL1EMZRX1sbiIvsz3Vb8cy/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="520971021"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Separating%20local%20facts%20from%20rules%20in%20sledgeham.../near/520971021" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Separating.20local.20facts.20from.20rules.20in.20sledgeham.2E.2E.2E.html#520971021">(May 28 2025 at 20:42)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+We have a macro (and a keyboard shortcut) which transforms<br>
+by (metis  A B C D)<br>
+to<br>
+using A B C D metis<br>
+No distinction between local and global facts.<br>
+I find this macro close to necessary since I usually try to optimize the <br>
+proof.</p>
+<p>Stepan</p>
+<p>On 28-May-25 10:14 PM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>I support Florian's suggestion because I reorganize my proofs like <br>
+that manually. But I know there are only 25 hours in the day...</p>
+<p>Tobias</p>
+<p>On 28/05/2025 20:34, Florian Haftmann wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>in an example like</p>
+<p>notepad<br>
+begin<br>
+   fix xs :: ‹'a list›<br>
+   assume ‹distinct xs›<br>
+   have ‹card (Pow (set xs)) = 2 ^ length xs›<br>
+     …<br>
+end</p>
+<p>sledgehammer will generate a proof similar to:</p>
+<p>by (metis List.finite_set ‹distinct xs› card_Pow distinct_card)</p>
+<p>Would it be possible to separate local facts (from the current proof) <br>
+from generic rules (from the surrounding context)?</p>
+<p>using ‹distinct xs› by (metis List.finite_set card_Pow <br>
+distinct_card)</p>
+<p>The reason why I ask is that this would make such proofs easier to <br>
+read and also easier to maintain.</p>
+<p>Cheers,<br>
+     Florian<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="522289111"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Separating%20local%20facts%20from%20rules%20in%20sledgeham.../near/522289111" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Separating.20local.20facts.20from.20rules.20in.20sledgeham.2E.2E.2E.html#522289111">(Jun 04 2025 at 07:52)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Hi Florian,</p>
+<p>It's a good idea. I tend to do the same in my own proofs, and I'm glad to see I'm not alone. The change shouldn't be very difficult to implement, although there are some tricky aspects related to preplaying. (We don't want Sledgehammer to say "Try this:" and then the metis call fails.) I'll discuss this with Martin, who is Sledgehammer's de facto main maintainer these days.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 28. May 2025, at 20:34, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt; wrote:</p>
+<p>Hi all,</p>
+<p>in an example like</p>
+<p>notepad<br>
+begin<br>
+ fix xs :: ‹'a list›<br>
+ assume ‹distinct xs›<br>
+ have ‹card (Pow (set xs)) = 2 ^ length xs›<br>
+   …<br>
+end</p>
+<p>sledgehammer will generate a proof similar to:</p>
+<p>by (metis List.finite_set ‹distinct xs› card_Pow distinct_card)</p>
+<p>Would it be possible to separate local facts (from the current proof) from generic rules (from the surrounding context)?</p>
+<p>using ‹distinct xs› by (metis List.finite_set card_Pow distinct_card)</p>
+<p>The reason why I ask is that this would make such proofs easier to read and also easier to maintain.</p>
+<p>Cheers,<br>
+  Florian<br>
+￼</p>
+</blockquote>
+<p><a href="/user_uploads/14278/q9Uev0w2WX5nnhM8_ois_3qb/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/l9Rpn8l4pEcYRKQKJiu1n7sD/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

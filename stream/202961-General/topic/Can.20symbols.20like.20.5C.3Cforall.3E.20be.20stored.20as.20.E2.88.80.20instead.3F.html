@@ -1,0 +1,183 @@
+<html>
+<head><meta charset="utf-8"><title>Can symbols like \&lt;forall&gt; be stored as ∀ instead? · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html">Can symbols like \&lt;forall&gt; be stored as ∀ instead?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="567285118"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567285118" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567285118">(Jan 10 2026 at 01:45)</a>:</h4>
+<p>Will Isabelle work if are stored as the character they are displayed as, instead of using the Isabelle-specific encoding? I know this is handled by the encoding which is UTF-8-Isabelle. I noticed the completion menu does not pop up when using encoding UTF-8.</p>
+
+
+
+<a name="567310236"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567310236" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567310236">(Jan 10 2026 at 10:45)</a>:</h4>
+<p>It will lead to strange behaviours, e.g. Isabelle/jEdit might not complain. but <code>isabelle build</code> will fail. <br>
+See this thread <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Github/with/204994312">#Beginner Questions &gt; Github</a></p>
+
+
+
+<a name="567582794"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567582794" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567582794">(Jan 12 2026 at 16:25)</a>:</h4>
+<p>My REPL supports the conversion between Isabelle's ASCII encoding and Unicode. It reads the system and the user symbol file to parse the ASCII symbols, so almost identical to how the system handles it.</p>
+
+
+
+<a name="567772556"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567772556" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567772556">(Jan 13 2026 at 14:05)</a>:</h4>
+<p>Note on this topic: While there are UTF-8 codepoints for many Isabelle symbols (not for all), converting to UTF-8 only makes sense in specific contexts. For instance, <code>\&lt;^sup&gt;</code> has the unicode codepoint ⇧, but you really want to display the following symbol in superscript instead, unless you're e.g. directly editing the identifier that contains ⇧.</p>
+
+
+
+<a name="567772828"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567772828" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567772828">(Jan 13 2026 at 14:06)</a>:</h4>
+<p>And UTF-8 characters don't generally exist for superscipted/subscripted characters.</p>
+
+
+
+<a name="567877984"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567877984" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567877984">(Jan 13 2026 at 23:38)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/567772828">ha dicho</a>:</p>
+<blockquote>
+<p>And UTF-8 characters don't generally exist for superscipted/subscripted characters.</p>
+</blockquote>
+<p>Of course, but UTF-8 has subcripts and superscripts for digits, which is the most common use of subscripts and superscripts.</p>
+
+
+
+<a name="567928387"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567928387" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567928387">(Jan 14 2026 at 08:44)</a>:</h4>
+<p>Certainly not in general math -- that should be obvious, but you can just look into the AFP: <a href="https://search.isabelle.in.tum.de/#search?q=%5C%3C%5Esup%3E">list of ⇧ usage</a> (within the first three hits, you will find characters not representable by UTF-8, and you'll have to scroll far to find numbers).<br>
+The whole reason why UTF-8 does not support arbitrary superscript/subscript is that it is <em>not</em> meant for rich text representation, in particular not for mathematical formulae (proposals to add more sub/superscript characters were dismissed by the consortium for this exact reason).</p>
+
+
+
+<a name="567928736"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567928736" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567928736">(Jan 14 2026 at 08:46)</a>:</h4>
+<p>Another issue, when talking symbols more generally, is that having a symbol encoding is not good enough. There are plenty of superscript symbols that exist in UTF-8, but your font won't actually be able to render them. Let alone the font of some other user. And even if rendered at all, the symbol might be represented differently...</p>
+
+
+
+<a name="567929022"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/567929022" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#567929022">(Jan 14 2026 at 08:48)</a>:</h4>
+<p>The idea (which I have heard from people using other ITPs) that monospaced UTF-8 would be good enough for math seems crazy to me.</p>
+
+
+
+<a name="568109207"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568109207" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568109207">(Jan 15 2026 at 01:13)</a>:</h4>
+<p>I understand having a general notation that is not dependent on non-ASCII Unicode support. Nonetheless, Isabelle should use the existing Unicode characters for logical connectives like ∀, ∃, etc. All serious programming fonts include these characters.</p>
+
+
+
+<a name="568147728"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568147728" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568147728">(Jan 15 2026 at 08:33)</a>:</h4>
+<p>I don't really see how you can demand that it 'should' do that, when unicode is neither sufficient nor necessary here. In any case, monospaced programming fonts are not adequate at all for displaying logical connectives such as a long implication arrow -- you get a tiny =&gt; instead of the proper ==&gt; . Not to mention large operators such as a sum sign...</p>
+
+
+
+<a name="568147971"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568147971" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568147971">(Jan 15 2026 at 08:35)</a>:</h4>
+<p>In Isabelle we favor great technology over popular solutions. Use a different ITP if you want the latter, e.g. Lean.</p>
+
+
+
+<a name="568347046"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568347046" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568347046">(Jan 16 2026 at 02:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568147971">ha dicho</a>:</p>
+<blockquote>
+<p>In Isabelle we favor great technology over popular solutions. Use a different ITP if you want the latter, e.g. Lean.</p>
+</blockquote>
+<p>I like that philosophy and I chose Isabelle over Lean for that reason among others. I mean using Unicode characters for symbols that already exist in Unicode, not to change Isabelle to only use such symbols. The reason is so that when one sees theory files using tools other than Isabelle/jEdit, such symbols will be displayed properly. It is better to see <code>¬ (∀x. P x)</code> instead of <code>\&lt;not&gt; (\&lt;forall&gt;x. P x)</code>. In the case of <code>==&gt;</code>, Unicode has ⟹ <code>U+27F9 LONG RIGHTWARDS DOUBLE ARROW</code>. Note it displays longer than <code>⇒</code> in Zulip.</p>
+
+
+
+<a name="568381937"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568381937" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568381937">(Jan 16 2026 at 08:39)</a>:</h4>
+<p>The Zulip font selection is reasonably solid, it will display most Isabelle symbols (although some are displayed as wrong symbols, e.g. the \&lt;inverse&gt; becomes ¯ but should look something like ⁻¹). And of course the regular text font is not monospaced, only the programming font is: ⟹ becomes <code>⟹</code> and ⟶ becomes <code>⟶</code>.</p>
+<p>Using other tools to display Isabelle theories is of course a valid concern, e.g. for VCS diffs. But for that use-case it is much simpler, and technologically much more solid, to build a diff viewer that can display Isabelle symbols properly.<br>
+Or what is the application you have in mind?</p>
+
+
+
+<a name="568382809"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568382809" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568382809">(Jan 16 2026 at 08:44)</a>:</h4>
+<p>Huh, that is funny: ⟹ does not actually become much smaller in Zulip code mode, since the monospaced font does not have the symbol, so this is rendered in a different font in code which is not actually monospaced. So apparently mixing fonts like zulip does has its own pitfalls...</p>
+
+
+
+<a name="568462654"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568462654" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568462654">(Jan 16 2026 at 15:36)</a>:</h4>
+<p>Out of curiosity: Couldn't we have both of best worlds, if for example the encoding of ==&gt; in UTF8-Isabelle would be ⟹ instead of \&lt;Longrightarrow&gt; (Whenever something like this is possible). Then we have our nice symbols in Jedit but can also nicely read mercurial/git diffs for example.</p>
+
+
+
+<a name="568799798"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568799798" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568799798">(Jan 19 2026 at 13:21)</a>:</h4>
+<p>Well, but then you couldn't write actual ==&gt; in a theory. This might not be a problem for this character, but I doubt people would want to trade 'more readable diffs with no/bad tooling' with 'Not being able to write equations like <code>(a+b)=c</code> because the system interprets <code>)=</code> as <code>⊇</code>... ;)</p>
+
+
+
+<a name="568825171"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/568825171" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#568825171">(Jan 19 2026 at 15:14)</a>:</h4>
+<p>regarding readable diffs specifically (at least in git; i am less familiar with hg, which I don't use outside of Isabelle itself): you can tell git to consider <code>.thy</code> files as being "binary", and then set a <code>textconv</code> program which git will apply before diffing to make them readable (of course, this means they are no longer usable as patches). Of course <code>.thy</code> files are not actually binary, but that way you can replace the escape sequences with unicode symbols (in the cases where such symbols easily exist, at least)</p>
+
+
+
+<a name="569395556"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/569395556" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#569395556">(Jan 22 2026 at 02:22)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568799798">ha dicho</a>:</p>
+<blockquote>
+<p>Well, but then you couldn't write actual ==&gt; in a theory. This might not be a problem for this character, but I doubt people would want to trade 'more readable diffs with no/bad tooling' with 'Not being able to write equations like <code>(a+b)=c</code> because the system interprets <code>)=</code> as <code>⊇</code>... ;)</p>
+</blockquote>
+<p>That is rather an argument to use spaces as in <code>(a + b) = c</code> which is good practice anyway.</p>
+
+
+
+<a name="569395570"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/569395570" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#569395570">(Jan 22 2026 at 02:22)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568381937">ha dicho</a>:</p>
+<blockquote>
+<p>Using other tools to display Isabelle theories is of course a valid concern, e.g. for VCS diffs. But for that use-case it is much simpler, and technologically much more solid, to build a diff viewer that can display Isabelle symbols properly.<br>
+Or what is the application you have in mind?</p>
+</blockquote>
+<p>Yes, it is for VCS diffs, specifically in Mercurial.</p>
+
+
+
+<a name="569446674"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/569446674" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#569446674">(Jan 22 2026 at 09:49)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="992716">Mario Xerxes Castelán Castro</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/569395556">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568799798">ha dicho</a>:</p>
+<blockquote>
+<p>Well, but then you couldn't write actual ==&gt; in a theory. This might not be a problem for this character, but I doubt people would want to trade 'more readable diffs with no/bad tooling' with 'Not being able to write equations like <code>(a+b)=c</code> because the system interprets <code>)=</code> as <code>⊇</code>... ;)</p>
+</blockquote>
+<p>That is rather an argument to use spaces as in <code>(a + b) = c</code> which is good practice anyway.</p>
+</blockquote>
+<p>Right. And it would be kinda cool if terms like <code>(=)</code> can be lexed in three different ways ;)</p>
+
+
+
+<a name="569446852"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Can%20symbols%20like%20%5C%3Cforall%3E%20be%20stored%20as%20%E2%88%80%20instead%3F/near/569446852" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F.html#569446852">(Jan 22 2026 at 09:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="992716">Mario Xerxes Castelán Castro</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/569395570">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568381937">ha dicho</a>:</p>
+<blockquote>
+<p>Using other tools to display Isabelle theories is of course a valid concern, e.g. for VCS diffs. But for that use-case it is much simpler, and technologically much more solid, to build a diff viewer that can display Isabelle symbols properly.<br>
+Or what is the application you have in mind?</p>
+</blockquote>
+<p>Yes, it is for VCS diffs, specifically in Mercurial.</p>
+</blockquote>
+<p>I see. Yes, I do agree that we need better tooling for that.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

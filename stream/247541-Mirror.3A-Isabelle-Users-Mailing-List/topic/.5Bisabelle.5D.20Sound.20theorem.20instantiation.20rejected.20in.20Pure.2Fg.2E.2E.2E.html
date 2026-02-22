@@ -1,0 +1,408 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Sound theorem instantiation rejected in Pure/g... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html">[isabelle] Sound theorem instantiation rejected in Pure/g...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="534306172"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534306172" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534306172">(Aug 13 2025 at 21:21)</a>:</h4>
+<p>From: Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt;<br>
+Dear list,</p>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of a <br>
+check in Pure/goal.ML, function "prove_common" and in <br>
+Pure/Isar/proof.ML, function "conclude_goal".</p>
+<p>Both functions try to check if the proven theorem is an instance of the <br>
+originally passed theorem statement using "Unify.matcher". However, <br>
+Unify.matcher is incomplete for higher-order matching, e.g. it fails on <br>
+the matching problem<br>
+"(?f :: prop ⇒ prop) ((?x :: prop ⇒ prop) y) ≡ ?f y"<br>
+(one solution: ?x |-&gt; λ_. y).</p>
+<p>As a consequence, sound proofs get rejected e.g. when using Goal.prove <br>
+and when writing a proof in Isar. Below I append an example theory file <br>
+showcasing this, including a minimised version of a lemma that triggered <br>
+this behaviour in my development.</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I <br>
+am not aware of a simple algorithm for that (though I am by no means an <br>
+expert in this area). Checking the history of goal.ML and proof.ML <br>
+indicates that both have seen iterations trying to improve the <br>
+completeness of the instance check, i.e. this behaviour has been <br>
+considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of <br>
+Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with <br>
+a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">   </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(*error: Proved a different theorem*)</span>
+<span class="w">   </span><span class="gr">oops</span>
+
+<span class="k">ML</span><span class="s">‹</span>
+<span class="s">   val ctxt = @{context}</span>
+<span class="s">   val read = Proof_Context.read_term_pattern ctxt</span>
+<span class="s">   val [t1, t2] = Syntax.read_terms (Proof_Context.set_mode</span>
+<span class="s">Proof_Context.mode_schematic ctxt)</span>
+<span class="s">     ["(?f :: prop ⇒ prop) ((?x :: prop ⇒ prop) y)", "?f y"]</span>
+<span class="s">   val can_unif = Unify.matcher (Context.Proof ctxt) [t1] [t2] |&gt;</span>
+<span class="s">is_some (*false; no matcher found*)</span>
+<span class="s">›</span>
+
+<span class="k">ML</span><span class="s">‹</span>
+<span class="s">let</span>
+<span class="s">   val ctxt = @{context}</span>
+<span class="s">   val goal = read "(?f :: bool ⇒ bool) ((?x :: bool ⇒ bool) y) ≡ ?f (?x y)"</span>
+<span class="s">   val insts = [</span>
+<span class="s">       ((("x", 0), @{typ "bool ⇒ bool"}), read "λ_ :: bool. (y :: bool)")</span>
+<span class="s">     ] |&gt; map (apsnd (Thm.cterm_of ctxt))</span>
+<span class="s">in</span>
+<span class="s">  (*error: Proved a different theorem*)</span>
+<span class="s">   Goal.prove ctxt [] [] goal</span>
+<span class="s">     (fn _ =&gt; PRIMITIVE (Thm.instantiate (TVars.empty, Vars.make insts))</span>
+<span class="s">       THEN HEADGOAL (resolve0_tac @{thms reflexive}))</span>
+<span class="s">end</span>
+<span class="s">›</span>
+
+<span class="n">schematic_goal</span><span class="w"> </span><span class="s">"(?f :: bool ⇒ bool) ((?x :: bool ⇒ bool) y) ≡ ?f (?x y)"</span>
+<span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">tactic</span><span class="w"> </span><span class="s">‹</span>
+<span class="s">let</span>
+<span class="s">   val ctxt = @{context}</span>
+<span class="s">   val read = Proof_Context.read_term_pattern ctxt</span>
+<span class="s">   val insts = [</span>
+<span class="s">       ((("x", 0), @{typ "bool ⇒ bool"}), read "λ_ :: bool. (y :: bool)")</span>
+<span class="s">     ] |&gt; map (apsnd (Thm.cterm_of ctxt))</span>
+<span class="s">in PRIMITIVE (Thm.instantiate (TVars.empty, Vars.make insts)) end›</span><span class="o">)</span><span class="w"> </span><span class="c">(*OK*)</span>
+<span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">reflexive</span><span class="o">)</span><span class="w"> </span><span class="c">(*error: Proved a different theorem*)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="534455166"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534455166" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534455166">(Aug 14 2025 at 10:58)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Dear Kevin,</p>
+<p>Higher-order matching is undecidable. The check is necessary because a tactic replaces the proof state by a new proof state and could easily replace the goal by a different one. Matching is only necessary if the original goal contains schematic variables, which is these days extremely rare. Most of the time we only have to check for identity.</p>
+<blockquote>
+<p>lemma "∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"<br>
+ apply (rule exI)<br>
+ apply simp (<em>error: Proved a different theorem</em>)<br>
+ oops</p>
+</blockquote>
+<p>I tried your example, but that proof didn't work. I proved the theorem in a couple of different ways and did not get an error.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 13 Aug 2025, at 22:21, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I am not aware of a simple algorithm for that (though I am by no means an expert in this area). Checking the history of goal.ML and proof.ML indicates that both have seen iterations trying to improve the completeness of the instance check, i.e. this behaviour has been considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+
+
+
+<a name="534457121"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534457121" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534457121">(Aug 14 2025 at 11:11)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Higher-Order matchig modulo beta+eta (this is important) is decidable. This was <br>
+proved by Stirling in 2007 but is beside the point (partly because of the <br>
+complexity). The point that Kevin is making is this: the check has no logical <br>
+relevance, it is a sanity check, but it rules out perfectly sound proofs. Thus <br>
+there should be some way to say "the incomplete sanity check prevents this <br>
+operation, but trust me, I know what I am doing and you don't need to protect me <br>
+against doing something silly".</p>
+<p>Tobias</p>
+<p>On 14/08/2025 12:57, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Dear Kevin,</p>
+<p>Higher-order matching is undecidable. The check is necessary because a tactic replaces the proof state by a new proof state and could easily replace the goal by a different one. Matching is only necessary if the original goal contains schematic variables, which is these days extremely rare. Most of the time we only have to check for identity.</p>
+<blockquote>
+<p>lemma "∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"<br>
+  apply (rule exI)<br>
+  apply simp (<em>error: Proved a different theorem</em>)<br>
+  oops</p>
+</blockquote>
+<p>I tried your example, but that proof didn't work. I proved the theorem in a couple of different ways and did not get an error.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 13 Aug 2025, at 22:21, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I am not aware of a simple algorithm for that (though I am by no means an expert in this area). Checking the history of goal.ML and proof.ML indicates that both have seen iterations trying to improve the completeness of the instance check, i.e. this behaviour has been considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/UNJZjjXNHzR64uUreFeIBdeg/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="534525767"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534525767" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534525767">(Aug 14 2025 at 17:08)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+What do you mean by “no logical reference”? The check is what rules out the following “proof”:</p>
+<p>lemma "False"<br>
+  by (tactic ‹PRIMITIVE (fn thm =&gt; TrueI RS Drule.protectI)›)</p>
+<p>The tactic does what Larry suggested: replace the goal False by True.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 14 Aug 2025, at 13.10, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Higher-Order matchig modulo beta+eta (this is important) is decidable. This was proved by Stirling in 2007 but is beside the point (partly because of the complexity). The point that Kevin is making is this: the check has no logical relevance, it is a sanity check, but it rules out perfectly sound proofs. Thus there should be some way to say "the incomplete sanity check prevents this operation, but trust me, I know what I am doing and you don't need to protect me against doing something silly".</p>
+<p>Tobias</p>
+<p>On 14/08/2025 12:57, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Dear Kevin,<br>
+Higher-order matching is undecidable. The check is necessary because a tactic replaces the proof state by a new proof state and could easily replace the goal by a different one. Matching is only necessary if the original goal contains schematic variables, which is these days extremely rare. Most of the time we only have to check for identity.</p>
+<blockquote>
+<p>lemma "∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"<br>
+ apply (rule exI)<br>
+ apply simp (<em>error: Proved a different theorem</em>)<br>
+ oops<br>
+I tried your example, but that proof didn't work. I proved the theorem in a couple of different ways and did not get an error.<br>
+Larry<br>
+On 13 Aug 2025, at 22:21, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I am not aware of a simple algorithm for that (though I am by no means an expert in this area). Checking the history of goal.ML and proof.ML indicates that both have seen iterations trying to improve the completeness of the instance check, i.e. this behaviour has been considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="534526721"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534526721" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534526721">(Aug 14 2025 at 17:13)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+In meta-programming it is not relevant; in an Isar proof, one indeed <br>
+expect that the stated term was proven.</p>
+<p>But there could be a way to supply the correct instantiation manually: <br>
+For instance, via syntax like "qed[where ?x=...]".</p>
+<p>Fabian</p>
+<p>On 8/14/25 19:07, Dmitriy Traytel (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>What do you mean by “no logical reference”? The check is what rules out the following “proof”:</p>
+<p>lemma "False"<br>
+   by (tactic ‹PRIMITIVE (fn thm =&gt; TrueI RS Drule.protectI)›)</p>
+<p>The tactic does what Larry suggested: replace the goal False by True.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 14 Aug 2025, at 13.10, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Higher-Order matchig modulo beta+eta (this is important) is decidable. This was proved by Stirling in 2007 but is beside the point (partly because of the complexity). The point that Kevin is making is this: the check has no logical relevance, it is a sanity check, but it rules out perfectly sound proofs. Thus there should be some way to say "the incomplete sanity check prevents this operation, but trust me, I know what I am doing and you don't need to protect me against doing something silly".</p>
+<p>Tobias</p>
+<p>On 14/08/2025 12:57, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Dear Kevin,<br>
+Higher-order matching is undecidable. The check is necessary because a tactic replaces the proof state by a new proof state and could easily replace the goal by a different one. Matching is only necessary if the original goal contains schematic variables, which is these days extremely rare. Most of the time we only have to check for identity.</p>
+<blockquote>
+<p>lemma "∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"<br>
+  apply (rule exI)<br>
+  apply simp (<em>error: Proved a different theorem</em>)<br>
+  oops<br>
+I tried your example, but that proof didn't work. I proved the theorem in a couple of different ways and did not get an error.<br>
+Larry<br>
+On 13 Aug 2025, at 22:21, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I am not aware of a simple algorithm for that (though I am by no means an expert in this area). Checking the history of goal.ML and proof.ML indicates that both have seen iterations trying to improve the completeness of the instance check, i.e. this behaviour has been considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="534607257"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534607257" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534607257">(Aug 15 2025 at 06:58)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Fabian,</p>
+<p>I’m not sure what you mean by “in meta-programming it is not relevant”. The same (ruled-out) example:</p>
+<p>ML ‹<br>
+  Goal.prove @{context} [] [] (HOLogic.mk_Trueprop @{term False})<br>
+    (fn _ =&gt; PRIMITIVE (fn thm =&gt; TrueI RS Drule.protectI))<br>
+›</p>
+<p>Regarding the qed syntax proposal: Kevin’s original goal has no schematic variables, so there is nothing to instantiate.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 14 Aug 2025, at 19.12, Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt; wrote:</p>
+<p>In meta-programming it is not relevant; in an Isar proof, one indeed expect that the stated term was proven.</p>
+<p>But there could be a way to supply the correct instantiation manually: For instance, via syntax like "qed[where ?x=...]".</p>
+<p>Fabian</p>
+<p>On 8/14/25 19:07, Dmitriy Traytel (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>What do you mean by “no logical reference”? The check is what rules out the following “proof”:</p>
+<p>lemma "False"<br>
+  by (tactic ‹PRIMITIVE (fn thm =&gt; TrueI RS Drule.protectI)›)</p>
+<p>The tactic does what Larry suggested: replace the goal False by True.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 14 Aug 2025, at 13.10, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Higher-Order matchig modulo beta+eta (this is important) is decidable. This was proved by Stirling in 2007 but is beside the point (partly because of the complexity). The point that Kevin is making is this: the check has no logical relevance, it is a sanity check, but it rules out perfectly sound proofs. Thus there should be some way to say "the incomplete sanity check prevents this operation, but trust me, I know what I am doing and you don't need to protect me against doing something silly".</p>
+<p>Tobias</p>
+<p>On 14/08/2025 12:57, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Dear Kevin,<br>
+Higher-order matching is undecidable. The check is necessary because a tactic replaces the proof state by a new proof state and could easily replace the goal by a different one. Matching is only necessary if the original goal contains schematic variables, which is these days extremely rare. Most of the time we only have to check for identity.</p>
+<blockquote>
+<p>lemma "∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"<br>
+ apply (rule exI)<br>
+ apply simp (<em>error: Proved a different theorem</em>)<br>
+ oops<br>
+I tried your example, but that proof didn't work. I proved the theorem in a couple of different ways and did not get an error.<br>
+Larry<br>
+On 13 Aug 2025, at 22:21, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I am not aware of a simple algorithm for that (though I am by no means an expert in this area). Checking the history of goal.ML and proof.ML indicates that both have seen iterations trying to improve the completeness of the instance check, i.e. this behaviour has been considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="534615130"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534615130" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534615130">(Aug 15 2025 at 08:09)</a>:</h4>
+<p>From: Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt;<br>
+For my original proof (and the one in the shared theory file using <br>
+"simp"), I discovered in the meantime that the list to set comprehension <br>
+simproc in List.thy creates the instance that does not pass the matching <br>
+sanity check. The simproc can be modified to use Goal.prove_internal <br>
+(which uses no matching check) instead of Goal.prove. I shared a patch <br>
+with Tobias which will be published soon.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>On 13.08.25 23:21, Kevin Kappelmann wrote:</p>
+<blockquote>
+<p>Dear list,</p>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of a <br>
+check in Pure/goal.ML, function "prove_common" and in Pure/Isar/ <br>
+proof.ML, function "conclude_goal".</p>
+<p>Both functions try to check if the proven theorem is an instance of the <br>
+originally passed theorem statement using "Unify.matcher". However, <br>
+Unify.matcher is incomplete for higher-order matching, e.g. it fails on <br>
+the matching problem<br>
+"(?f :: prop ⇒ prop) ((?x :: prop ⇒ prop) y) ≡ ?f y"<br>
+(one solution: ?x |-&gt; λ_. y).</p>
+<p>As a consequence, sound proofs get rejected e.g. when using Goal.prove <br>
+and when writing a proof in Isar. Below I append an example theory file <br>
+showcasing this, including a minimised version of a lemma that triggered <br>
+this behaviour in my development.</p>
+<p>Optimally, one would like to have a complete higher-order matcher, but I <br>
+am not aware of a simple algorithm for that (though I am by no means an <br>
+expert in this area). Checking the history of goal.ML and proof.ML <br>
+indicates that both have seen iterations trying to improve the <br>
+completeness of the instance check, i.e. this behaviour has been <br>
+considered and refined in the past.</p>
+<p>Since the check happens in goal.ML and proof.ML, it affects users of <br>
+Isabelle/ML and Isabelle/Isar.<br>
+(1) I wonder if the check in goal.ML is necessary at all?<br>
+(2) Would it be conceivable to temporarily disable the check (e.g. with <br>
+a configuration option) in goal.ML and/or proof.ML for users?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>```isabelle<br>
+theory Scratch<br>
+   imports Main<br>
+begin</p>
+<p>lemma "∃f. set (case xs of [] ⇒ [] | _ ⇒ f xs) = set []"<br>
+   apply (rule exI)<br>
+   apply simp (<em>error: Proved a different theorem</em>)<br>
+   oops</p>
+<p>ML‹<br>
+   val ctxt = @{context}<br>
+   val read = Proof_Context.read_term_pattern ctxt<br>
+   val [t1, t2] = Syntax.read_terms (Proof_Context.set_mode <br>
+Proof_Context.mode_schematic ctxt)<br>
+     ["(?f :: prop ⇒ prop) ((?x :: prop ⇒ prop) y)", "?f y"]<br>
+   val can_unif = Unify.matcher (Context.Proof ctxt) [t1] [t2] |&gt; <br>
+is_some (<em>false; no matcher found</em>)<br>
+›</p>
+<p>ML‹<br>
+let<br>
+   val ctxt = @{context}<br>
+   val goal = read "(?f :: bool ⇒ bool) ((?x :: bool ⇒ bool) y) ≡ ?f (?x <br>
+y)"<br>
+   val insts = [<br>
+       ((("x", 0), @{typ "bool ⇒ bool"}), read "λ_ :: bool. (y :: bool)")<br>
+     ] |&gt; map (apsnd (Thm.cterm_of ctxt))<br>
+in<br>
+  (<em>error: Proved a different theorem</em>)<br>
+   Goal.prove ctxt [] [] goal<br>
+     (fn _ =&gt; PRIMITIVE (Thm.instantiate (TVars.empty, Vars.make insts))<br>
+       THEN HEADGOAL (resolve0_tac @{thms reflexive}))<br>
+end<br>
+›</p>
+<p>schematic_goal "(?f :: bool ⇒ bool) ((?x :: bool ⇒ bool) y) ≡ ?f (?x y)"<br>
+apply (tactic ‹<br>
+let<br>
+   val ctxt = @{context}<br>
+   val read = Proof_Context.read_term_pattern ctxt<br>
+   val insts = [<br>
+       ((("x", 0), @{typ "bool ⇒ bool"}), read "λ_ :: bool. (y :: bool)")<br>
+     ] |&gt; map (apsnd (Thm.cterm_of ctxt))<br>
+in PRIMITIVE (Thm.instantiate (TVars.empty, Vars.make insts)) end›) (<em>OK</em>)<br>
+by (rule reflexive) (<em>error: Proved a different theorem</em>)</p>
+<p>end<br>
+```</p>
+</blockquote>
+
+
+
+<a name="534638066"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sound%20theorem%20instantiation%20rejected%20in%20Pure/g.../near/534638066" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sound.20theorem.20instantiation.20rejected.20in.20Pure.2Fg.2E.2E.2E.html#534638066">(Aug 15 2025 at 11:30)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+This thread is already concluded, being mostly based on misunderstandings how <br>
+things work.</p>
+<p>I merely want to report the situation concerning the regular documentation of <br>
+Isabelle/ML, which is a combination of "isabelle doc implementation" + reading <br>
+the sources:</p>
+<p>* The implementation manual for talks conceptually about a "prove" <br>
+operation and then refers concretely to Goal.prove and Goal.prove_common. The <br>
+text for "prove" is this:</p>
+<p>The ‹prove› operation provides an interface for structured backwards<br>
+   reasoning under program control, with some explicit sanity checks of the<br>
+   result. [...]</p>
+<p>* The documentation in ML is as follows: src/Pure/goal.ML defines things <br>
+clearly from the bottom up. Before introducing Goal.prove_common (and more <br>
+"prove variations"), there is this notable explanation:</p>
+<p>(* prove_internal -- minimal checks, no normalization of result! *)</p>
+<p>fun prove_internal ctxt casms cprop tac =<br>
+   (case SINGLE (tac (map (Assumption.assume ctxt) casms)) (init cprop) of<br>
+     SOME th =&gt; Drule.implies_intr_list casms (finish ctxt th)<br>
+   | NONE =&gt; error "Tactic failed");</p>
+<p>A quick "induction over the sources" (via hypersearch in Isabelle/jEdit) shows <br>
+that Goal.prove_internal is only used in very few situations. So there is no <br>
+need to emphasize it in the LaTeX-based documentation; the ML-based <br>
+documentation is sufficient.</p>
+<p>That's it. Thread closed.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head><meta charset="utf-8"><title>Inner lexical error ? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F.html">Inner lexical error ?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="507149674"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Inner%20lexical%20error%20%3F/near/507149674" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F.html#507149674">(Mar 21 2025 at 05:58)</a>:</h4>
+<p>I'm trying to define a large set (hundreds/thousands of records) from an <code>.ML</code> file instead of bloating my <code>.thy</code> file.</p>
+<p>In my <code>.thy</code> file:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">context</span><span class="w"> </span><span class="n">MyDataset_A</span>
+<span class="k">begin</span>
+
+<span class="k">ML_file</span><span class="w"> </span><span class="s">"MyDataset_generator.ML"</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>In the generated ML file </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kp">structure</span><span class="w"> </span><span class="n">MyDataset_Generator_Set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">struct</span>
+<span class="n">val</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Theory.setup</span><span class="w"> </span><span class="o">(</span>
+<span class="w">    </span><span class="n">Local_Theory.map_background</span><span class="w"> </span><span class="o">(</span><span class="n">fn</span><span class="w"> </span><span class="n">lthy</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span>
+<span class="w">      </span><span class="k">let</span>
+<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="n">MyDataset_generator_term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">@</span><span class="ow">{</span><span class="kt">term</span>
+<span class="w">          </span><span class="s">"{{⟪Slabel1, Nat 42⟫, ⟪Slabel2, Bool True⟫}, {⟪Slabel1, Nat 55⟫, ⟪Slabel2, Bool False⟫},</span>
+<span class="s">{⟪Slabel1, Nat 42⟫, ⟪Slabel2, Bool True⟫}, {⟪Slabel1, Nat 55⟫, ⟪Slabel2, Bool False⟫}} :: sdatum set"</span><span class="ow">}</span><span class="n">;</span>
+<span class="w">        </span><span class="n">val</span><span class="w"> </span><span class="o">((_,</span><span class="w"> </span><span class="o">_),</span><span class="w"> </span><span class="n">lthy'</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Local_Theory.define</span><span class="w"> </span><span class="o">((</span><span class="n">Binding.name</span><span class="w"> </span><span class="s">"MyDataset_generator"</span><span class="o">,</span><span class="w"> </span><span class="n">NoSyn</span><span class="o">),</span>
+<span class="w">          </span><span class="o">((</span><span class="n">Thm.def_binding</span><span class="w"> </span><span class="o">(</span><span class="n">Binding.name</span><span class="w"> </span><span class="s">"MyDataset_generator_def"</span><span class="o">),</span><span class="w"> </span><span class="o">[]),</span><span class="w"> </span><span class="n">MyDataset_generator_term</span><span class="o">))</span><span class="w"> </span><span class="n">lthy;</span>
+<span class="w">      </span><span class="kp">in</span><span class="w"> </span><span class="n">lthy'</span><span class="w"> </span><span class="k">end</span><span class="o">)</span>
+<span class="w">  </span><span class="o">)</span>
+<span class="k">end</span><span class="n">;</span>
+<span class="k">end</span><span class="n">;</span>
+</code></pre></div>
+<p>However, the Ml file gives an error at line  where I have {{....}}<br>
+I</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">nner</span><span class="w"> </span><span class="n">lexical</span><span class="w"> </span><span class="n">error</span>
+<span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">parse</span><span class="w"> </span><span class="kt">term</span>
+</code></pre></div>
+<p>What is causing this? Is it the use of <code>@{term "...}</code> with large or nested terms? Is there a better way to load such constants?</p>
+
+
+
+<a name="507172437"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Inner%20lexical%20error%20%3F/near/507172437" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F.html#507172437">(Mar 21 2025 at 06:13)</a>:</h4>
+<p>Try <br>
+ML \&lt;open&gt;<br>
+@{term ....}<br>
+\&lt;close&gt;<br>
+in a theory file…</p>
+
+
+
+<a name="507172884"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Inner%20lexical%20error%20%3F/near/507172884" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F.html#507172884">(Mar 21 2025 at 06:13)</a>:</h4>
+<p>then you can minimize the term to see where it fails</p>
+
+
+
+<a name="507204088"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Inner%20lexical%20error%20%3F/near/507204088" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F.html#507204088">(Mar 21 2025 at 07:02)</a>:</h4>
+<p>(BTW, I suspect the issue is <code>⟫</code>)</p>
+
+
+
+<a name="507209405"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Inner%20lexical%20error%20%3F/near/507209405" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F.html#507209405">(Mar 21 2025 at 07:41)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F/near/507204088">said</a>:</p>
+<blockquote>
+<p>(BTW, I suspect the issue is <code>⟫</code>)</p>
+</blockquote>
+<p>Thanks for the help, Mathias. </p>
+<p>The <code>@{term ...}</code> approach works fine when I use <code>ML ‹...›</code> directly in a <code>.thy</code> file. But when I try to move the same definition into a separate <code>.ML</code> file (and include it via <code>ML_file</code> in my theory), I get a lexical error due to the Unicode angle brackets (⟪ ⟫), even though the same term works inline.</p>
+<p>Do you happen to know a workaround for this? Or maybe an alternative way to load structured definitions from an external file into the theory context?</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

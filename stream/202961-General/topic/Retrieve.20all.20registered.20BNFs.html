@@ -1,0 +1,76 @@
+<html>
+<head><meta charset="utf-8"><title>Retrieve all registered BNFs · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html">Retrieve all registered BNFs</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="505257035"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505257035" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505257035">(Mar 12 2025 at 21:44)</a>:</h4>
+<p>I'm not so familiar with the ML-side of Isabelle, so I'm not sure if there is an easy way to achieve what I want:</p>
+<p>I have a locale that could be interpreted by any BNF. Is it possible to get a list of all registered BNFs and interpret this locale for them?<br>
+I was looking into the implementation of the command <code>print_bnfs</code> but couldn't figure out how to get the list of BNFs and not just the pretty printed output</p>
+
+
+
+<a name="505351474"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505351474" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505351474">(Mar 13 2025 at 08:26)</a>:</h4>
+<p>I don't recall such a function being exported. The interface allows you to query whether a given type is a BNF.</p>
+<p>We are using plugins for (co)datatypes if we want to have something done for any type introduced by these commands. For basic BNFs (sums, products, functions, etc.) it would have to be done manually though.</p>
+<p>Can you give more hints about your application?</p>
+
+
+
+<a name="505418630"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505418630" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505418630">(Mar 13 2025 at 13:17)</a>:</h4>
+<p>I have a lifting of definitions and lemmas (regarding substitutions of terms) that works for natural functors. I don't need the bounded property. I have a locale specifying natural functors and it would be cool to automatically have bnfs interpret this locale, such that I do not have to do it manually</p>
+
+
+
+<a name="505422751"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505422751" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505422751">(Mar 13 2025 at 13:33)</a>:</h4>
+<p>When you say: "I have a locale specifying natural functors" do you mean some monomorphic version of the naturality/functoriality properties? I.e., what is the type of Fmap in your locale?</p>
+
+
+
+<a name="505428785"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505428785" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505428785">(Mar 13 2025 at 13:58)</a>:</h4>
+<p>Yes, it's a monomorphic version:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">locale</span><span class="w"> </span><span class="n">natural_functor</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span>
+<span class="w">    </span><span class="n">map</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'a) ⇒ 'b ⇒ 'b"</span><span class="w"> </span><span class="kp">and</span>
+<span class="w">    </span><span class="n">to_set</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'b ⇒ 'a set"</span>
+<span class="w">  </span><span class="kp">assumes</span>
+<span class="w">    </span><span class="n">map_comp</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"⋀b f g. map f (map g b) = map (λx. f (g x)) b"</span><span class="w"> </span><span class="kp">and</span>
+<span class="w">    </span><span class="n">map_ident</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"⋀b. map (λx. x) b = b"</span><span class="w"> </span><span class="kp">and</span>
+<span class="w">    </span><span class="n">map_cong0</span><span class="w"> </span><span class="o">[</span><span class="n">cong</span><span class="o">]:</span><span class="w"> </span><span class="s">"⋀b f g. (⋀a. a ∈ to_set b ⟹ f a = g a) ⟹ map f b = map g b"</span><span class="w"> </span><span class="kp">and</span>
+<span class="w">    </span><span class="n">to_set_map</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"⋀b f. to_set (map f b) = f ` to_set b"</span><span class="w"> </span><span class="kp">and</span>
+<span class="w">    </span><span class="n">exists_functor</span><span class="w"> </span><span class="o">[</span><span class="n">intro</span><span class="o">]:</span><span class="w"> </span><span class="s">"⋀a. ∃b. a ∈ to_set b"</span>
+</code></pre></div>
+
+
+
+<a name="505445761"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505445761" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505445761">(Mar 13 2025 at 14:58)</a>:</h4>
+<p>I see. You can use the following. It is a bit wasteful, because it looks at all types declared in a context, but as long as you are not doing this over and over again it should be fine.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="w"> </span><span class="s">‹fun all_bnfs ctxt = ctxt |&gt; Proof_Context.theory_of |&gt; Theory.defs_of |&gt; Defs.all_specifications_of</span>
+<span class="s">  |&gt; map_filter (fn ((kind, name), _) =&gt; if kind = Defs.Type then BNF_Def.bnf_of ctxt name else NONE)›</span>
+
+<span class="k">declare</span><span class="w"> </span><span class="o">[[</span><span class="n">ML_print_depth</span><span class="o">=</span><span class="n">100</span><span class="o">]]</span>
+<span class="k">ML</span><span class="w"> </span><span class="s">‹all_bnfs @{context} |&gt; map BNF_Def.T_of_bnf›</span>
+</code></pre></div>
+
+
+
+<a name="505449536"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Retrieve%20all%20registered%20BNFs/near/505449536" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Retrieve.20all.20registered.20BNFs.html#505449536">(Mar 13 2025 at 15:12)</a>:</h4>
+<p>I'll try that, thanks!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

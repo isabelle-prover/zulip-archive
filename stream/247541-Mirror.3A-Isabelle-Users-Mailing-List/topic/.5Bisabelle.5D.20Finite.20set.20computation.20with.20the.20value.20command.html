@@ -1,0 +1,48 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Finite set computation with the value command · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Finite.20set.20computation.20with.20the.20value.20command.html">[isabelle] Finite set computation with the value command</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="514062504"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Finite%20set%20computation%20with%20the%20value%20command/near/514062504" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Finite.20set.20computation.20with.20the.20value.20command.html#514062504">(Apr 24 2025 at 09:18)</a>:</h4>
+<p>From: Pasquale Noce &lt;<a href="mailto:pasquale.noce.lavoro@gmail.com">pasquale.noce.lavoro@gmail.com</a>&gt;<br>
+Dear Isabelle users,</p>
+<p>I would have a question for you, as follows.<br>
+The following command:</p>
+<p>value "{0 :: nat} Un {1}"</p>
+<p>outputs:</p>
+<p>"{0, 1}"<br>
+  :: "nat set"</p>
+<p>However, the following command:</p>
+<p>value "{a :: nat} Un {b}"</p>
+<p>outputs:</p>
+<p>"set (List.insert a [b])"<br>
+  :: "nat set"</p>
+<p>whereas the following command:</p>
+<p>value [simp] "{a :: nat} Un {b}"</p>
+<p>outputs:</p>
+<p>"set (if b = a | a : {} then [b] else [a, b])"<br>
+  :: "nat set"</p>
+<p>Upon using the value command, or the @{value} antiquotation, to compute a<br>
+finite set such as {a :: nat} Un {b}, I wonder whether there is any way to<br>
+rather obtain an output in the same form as the one resulting from the first<br>
+command above, namely:</p>
+<p>"{a, b}"<br>
+  :: "nat set"</p>
+<p>Do you know whether this is possible, and how? For example, is it possible to<br>
+pass an assumption such as "a ~= b" to the command or to the antiquotation, or<br>
+else to tell them to allow for the possible presence of multiple occurrences<br>
+of the same element in their output?</p>
+<p>Thank you very much, best regards,<br>
+Pasquale Noce</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

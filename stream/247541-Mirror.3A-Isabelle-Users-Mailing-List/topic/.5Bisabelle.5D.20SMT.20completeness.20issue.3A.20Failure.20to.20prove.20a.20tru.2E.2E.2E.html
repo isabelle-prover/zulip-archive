@@ -1,0 +1,755 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] SMT completeness issue: Failure to prove a tru... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html">[isabelle] SMT completeness issue: Failure to prove a tru...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="511668192"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/511668192" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#511668192">(Apr 11 2025 at 14:38)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA problem <br>
+(linear integer/real arithmetic). Usually "linarith" can solve these <br>
+just fine, but in this case it couldn't (at least not in a single step), <br>
+but I know "linarith" is incomplete for mixed integer/real problems. I <br>
+then turned to the "smt" method instead and to my surprise found that it <br>
+couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+   assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ x + <br>
+1 / 2"<br>
+   shows   "real_of_int m = 2 * x"<br>
+proof -<br>
+   have "m = 0 ∨ m = 1"<br>
+     using assms by linarith<br>
+   thus ?thesis<br>
+     using assms by linarith<br>
+qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and <br>
+"linarith" can solve it in two steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" all <br>
+fail, and Z3 even claims there's a (possibly spurious) counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise that <br>
+both the division on the reals and the type conversion "real_of_int" are <br>
+translated to uninterpreted functions, so it's not surprising that the <br>
+SMT solvers fail to prove it. It's easy to get rid of the division, of <br>
+course, but that doesn't make it work either (presumable because the <br>
+"of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+(set-option :produce-proofs true)<br>
+(declare-fun x () Real)<br>
+(declare-fun m () Int)<br>
+(assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2))  (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+(assert (not (= m (* 2 x))))<br>
+(check-sat)<br>
+(get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some <br>
+unresolved difficulty in replaying LIRA proofs?</p>
+<p>Manuel</p>
+
+
+
+<a name="511779890"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/511779890" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#511779890">(Apr 12 2025 at 05:47)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Hi Manuel,</p>
+<p>SMT was developed by Sascha Böhme, so I'm only partly qualified to answer.</p>
+<p>The fragment SMT solvers can decide is linear. Some SMT solvers also support division and have nonlinear solvers, but these are very slow. As a result, native division is not used, even when it's between constants like 1 and 2, apparently.</p>
+<p>As for "real_of_int", the uninterpreted symbol is definitely suboptimal. I'm not sure it's safe to just omit it everywhere and rely on implicit cast or subtyping. SMT-LIB seems to support overloading, so this is all rather scary.</p>
+<p>In "smt_real.ML", I'm seeing code like this:</p>
+<p>fun abstract abs t =<br>
+  (case t of<br>
+    (c as \&lt;^term&gt;\&lt;open&gt;Rings.divide :: real =&gt; _\&lt;close&gt;) $ t1 $ t2 =&gt;<br>
+      abs t1 ##&gt;&gt; abs t2 #&gt;&gt; (fn (u1, u2) =&gt; SOME (c $ u1 $ u2))<br>
+  | (c as \&lt;^term&gt;\&lt;open&gt;Int.of_int :: int =&gt; _\&lt;close&gt;) $ t =&gt;<br>
+      abs t #&gt;&gt; (fn u =&gt; SOME (c $ u))<br>
+  | _ =&gt; pair NONE)</p>
+<p>It seems to want to do something about division and Int.of_int, but maybe this setup is somehow bit-rotten or insufficient.</p>
+<p>I'm CC:ing Martin. Maybe he and I could look into both issues together, if he has time.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 11. Apr 2025, at 16:29, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA problem (linear integer/real arithmetic). Usually "linarith" can solve these just fine, but in this case it couldn't (at least not in a single step), but I know "linarith" is incomplete for mixed integer/real problems. I then turned to the "smt" method instead and to my surprise found that it couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+  assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ x + 1 / 2"<br>
+  shows   "real_of_int m = 2 * x"<br>
+proof -<br>
+  have "m = 0 ∨ m = 1"<br>
+    using assms by linarith<br>
+  thus ?thesis<br>
+    using assms by linarith<br>
+qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and "linarith" can solve it in two steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" all fail, and Z3 even claims there's a (possibly spurious) counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise that both the division on the reals and the type conversion "real_of_int" are translated to uninterpreted functions, so it's not surprising that the SMT solvers fail to prove it. It's easy to get rid of the division, of course, but that doesn't make it work either (presumable because the "of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+(set-option :produce-proofs true)<br>
+(declare-fun x () Real)<br>
+(declare-fun m () Int)<br>
+(assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2))  (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+(assert (not (= m (* 2 x))))<br>
+(check-sat)<br>
+(get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some unresolved difficulty in replaying LIRA proofs?</p>
+<p>Manuel</p>
+</blockquote>
+<p><a href="/user_uploads/14278/46X-Pdmyz4kJE5vPRsQEPfWK/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="511783219"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/511783219" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#511783219">(Apr 12 2025 at 06:34)</a>:</h4>
+<p>From: Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;<br>
+Hi Jasmin, Manuel and all,</p>
+<p>On 4/12/25 07:47, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Manuel,</p>
+<p>SMT was developed by Sascha Böhme, so I'm only partly qualified to answer.</p>
+<p>The fragment SMT solvers can decide is linear. Some SMT solvers also <br>
+support division and have nonlinear solvers, but these are very slow. <br>
+As a result, native division is not used, even when it's between <br>
+constants like 1 and 2, apparently.</p>
+</blockquote>
+<p>Getting the divide operator translated is easy to add actually.</p>
+<blockquote>
+<p>As for "real_of_int", the uninterpreted symbol is definitely <br>
+suboptimal. I'm not sure it's safe to just omit it everywhere and rely <br>
+on implicit cast or subtyping. SMT-LIB seems to support overloading, <br>
+so this is all rather scary.</p>
+</blockquote>
+<p>My understanding is that you cannot omit it due to equality requiring to <br>
+variables of the same sort. But SMT-Lib has the constant <code>to_real</code> for <br>
+casting. Some SMT solvers allow it.</p>
+<blockquote>
+<p>In "smt_real.ML", I'm seeing code like this:</p>
+<p>fun abstract abs t =<br>
+  (case t of<br>
+    (c as \&lt;^term&gt;\&lt;open&gt;Rings.divide :: real =&gt; _\&lt;close&gt;) $ t1 $ t2 =&gt;<br>
+      abs t1 ##&gt;&gt; abs t2 #&gt;&gt; (fn (u1, u2) =&gt; SOME (c $ u1 $ u2))<br>
+  | (c as \&lt;^term&gt;\&lt;open&gt;Int.of_int :: int =&gt; _\&lt;close&gt;) $ t =&gt;<br>
+      abs t #&gt;&gt; (fn u =&gt; SOME (c $ u))<br>
+  | _ =&gt; pair NONE)</p>
+<p>It seems to want to do something about division and Int.of_int, but <br>
+maybe this setup is somehow bit-rotten or insufficient.</p>
+</blockquote>
+<p>That code is to abstract over division to stay in the LIRA fragment, <br>
+e.g., if you have <code>a = 1 / b</code> then you need to get rid of the <code>1/b</code>.</p>
+<p>The better solution is to add a translation of division:</p>
+<p>fun mk_divides ts = Term.list_comb (\&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, ts)<br>
+   fun divides _ _ (ts as [a,b]) =<br>
+      if SMT_Util.is_number a andalso SMT_Util.is_number b<br>
+      then SOME ("/", 2, ts, mk_divides) else NONE<br>
+     | divides _ _ _ = NONE</p>
+<p>val setup_builtins =<br>
+   (*the current things followed by *) #&gt;<br>
+   SMT_Builtin.add_builtin_fun SMTLIB_Interface.smtlibC<br>
+     (Term.dest_Const \&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, divides) #&gt;<br>
+   fold (SMT_Builtin.add_builtin_fun' SMTLIB_Interface.smtlibC)<br>
+     [(\&lt;^Const&gt;‹of_int \&lt;^Type&gt;‹real››, "to_real"),<br>
+      (\&lt;^Const&gt;‹of_nat \&lt;^Type&gt;‹real››, "to_real")]</p>
+<p>Division seems to work but the <code>to_real</code> currently breaks the <br>
+reconstruction of proofs: on the Isabelle side, <code>of_int</code> is ambiguous <br>
+without looking at the rest of the term. I will look into it.</p>
+<blockquote>
+<p>I'm CC:ing Martin. Maybe he and I could look into both issues <br>
+together, if he has time.</p>
+</blockquote>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that <br>
+code (for the BV translation -- even if our changes are all out of <br>
+tree). But feel free to do looking into it with Martin if you prefer.</p>
+<p>Mathias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 11. Apr 2025, at 16:29, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA problem <br>
+(linear integer/real arithmetic). Usually "linarith" can solve these <br>
+just fine, but in this case it couldn't (at least not in a single <br>
+step), but I know "linarith" is incomplete for mixed integer/real <br>
+problems. I then turned to the "smt" method instead and to my <br>
+surprise found that it couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+  assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ x <br>
++ 1 / 2"<br>
+  shows   "real_of_int m = 2 * x"<br>
+proof -<br>
+  have "m = 0 ∨ m = 1"<br>
+    using assms by linarith<br>
+  thus ?thesis<br>
+    using assms by linarith<br>
+qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and <br>
+"linarith" can solve it in two steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" all <br>
+fail, and Z3 even claims there's a (possibly spurious) counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise that <br>
+both the division on the reals and the type conversion "real_of_int" <br>
+are translated to uninterpreted functions, so it's not surprising <br>
+that the SMT solvers fail to prove it. It's easy to get rid of the <br>
+division, of course, but that doesn't make it work either (presumable <br>
+because the "of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+(set-option :produce-proofs true)<br>
+(declare-fun x () Real)<br>
+(declare-fun m () Int)<br>
+(assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2))  (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+(assert (not (= m (* 2 x))))<br>
+(check-sat)<br>
+(get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some <br>
+unresolved difficulty in replaying LIRA proofs?</p>
+<p>Manuel</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="511783516"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/511783516" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#511783516">(Apr 12 2025 at 06:39)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+Hi Mathias,</p>
+<blockquote>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that code (for the BV translation -- even if our changes are all out of tree). But feel free to do looking into it with Martin if you prefer. </p>
+<p>By all means, you go ahead! Thank you so much. I knew you worked on reconstruction, but I didn't realize you had such extensive knowledge of the translation.</p>
+</blockquote>
+<p>Best,<br>
+Jasmin<br>
+--</p>
+<p>Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 12. Apr 2025, at 08:34, Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt; wrote:</p>
+<p>Hi Jasmin, Manuel and all,</p>
+<p>On 4/12/25 07:47, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Manuel,</p>
+<p>SMT was developed by Sascha Böhme, so I'm only partly qualified to answer.</p>
+<p>The fragment SMT solvers can decide is linear. Some SMT solvers also support division and have nonlinear solvers, but these are very slow. As a result, native division is not used, even when it's between constants like 1 and 2, apparently.<br>
+Getting the divide operator translated is easy to add actually.</p>
+</blockquote>
+<blockquote>
+<p>As for "real_of_int", the uninterpreted symbol is definitely suboptimal. I'm not sure it's safe to just omit it everywhere and rely on implicit cast or subtyping. SMT-LIB seems to support overloading, so this is all rather scary.<br>
+My understanding is that you cannot omit it due to equality requiring to variables of the same sort. But SMT-Lib has the constant <code>to_real</code> for casting. Some SMT solvers allow it.</p>
+</blockquote>
+<blockquote>
+<p>In "smt_real.ML", I'm seeing code like this:</p>
+<p>fun abstract abs t =<br>
+  (case t of<br>
+    (c as \&lt;^term&gt;\&lt;open&gt;Rings.divide :: real =&gt; _\&lt;close&gt;) $ t1 $ t2 =&gt;<br>
+      abs t1 ##&gt;&gt; abs t2 #&gt;&gt; (fn (u1, u2) =&gt; SOME (c $ u1 $ u2))<br>
+  | (c as \&lt;^term&gt;\&lt;open&gt;Int.of_int :: int =&gt; _\&lt;close&gt;) $ t =&gt;<br>
+      abs t #&gt;&gt; (fn u =&gt; SOME (c $ u))<br>
+  | _ =&gt; pair NONE)</p>
+<p>It seems to want to do something about division and Int.of_int, but maybe this setup is somehow bit-rotten or insufficient.</p>
+</blockquote>
+<p>That code is to abstract over division to stay in the LIRA fragment, e.g., if you have <code>a = 1 / b</code> then you need to get rid of the <code>1/b</code>.</p>
+<p>The better solution is to add a translation of division:</p>
+<p>fun mk_divides ts = Term.list_comb (\&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, ts)<br>
+  fun divides _ _ (ts as [a,b]) = <br>
+     if SMT_Util.is_number a andalso SMT_Util.is_number b<br>
+     then SOME ("/", 2, ts, mk_divides) else NONE<br>
+    | divides _ _ _ = NONE</p>
+<p>val setup_builtins =<br>
+  (*the current things followed by *) #&gt;<br>
+  SMT_Builtin.add_builtin_fun SMTLIB_Interface.smtlibC<br>
+    (Term.dest_Const \&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, divides) #&gt;<br>
+  fold (SMT_Builtin.add_builtin_fun' SMTLIB_Interface.smtlibC)<br>
+    [(\&lt;^Const&gt;‹of_int \&lt;^Type&gt;‹real››, "to_real"),<br>
+     (\&lt;^Const&gt;‹of_nat \&lt;^Type&gt;‹real››, "to_real")]</p>
+<p>Division seems to work but the <code>to_real</code> currently breaks the reconstruction of proofs: on the Isabelle side, <code>of_int</code> is ambiguous without looking at the rest of the term. I will look into it.</p>
+<blockquote>
+<p>I'm CC:ing Martin. Maybe he and I could look into both issues together, if he has time.</p>
+</blockquote>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that code (for the BV translation -- even if our changes are all out of tree). But feel free to do looking into it with Martin if you prefer. </p>
+<p>Mathias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 11. Apr 2025, at 16:29, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; &lt;mailto:<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA problem (linear integer/real arithmetic). Usually "linarith" can solve these just fine, but in this case it couldn't (at least not in a single step), but I know "linarith" is incomplete for mixed integer/real problems. I then turned to the "smt" method instead and to my surprise found that it couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+  assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ x + 1 / 2"<br>
+  shows   "real_of_int m = 2 * x"<br>
+proof -<br>
+  have "m = 0 ∨ m = 1"<br>
+    using assms by linarith<br>
+  thus ?thesis<br>
+    using assms by linarith<br>
+qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and "linarith" can solve it in two steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" all fail, and Z3 even claims there's a (possibly spurious) counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise that both the division on the reals and the type conversion "real_of_int" are translated to uninterpreted functions, so it's not surprising that the SMT solvers fail to prove it. It's easy to get rid of the division, of course, but that doesn't make it work either (presumable because the "of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+(set-option :produce-proofs true)<br>
+(declare-fun x () Real)<br>
+(declare-fun m () Int)<br>
+(assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2))  (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+(assert (not (= m (* 2 x))))<br>
+(check-sat)<br>
+(get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some unresolved difficulty in replaying LIRA proofs?</p>
+<p>Manuel</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/iOzOj4KvyEXhImb6MyHnDyDc/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="511812538"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/511812538" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#511812538">(Apr 12 2025 at 13:41)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Hello,</p>
+<p>thanks for the answers! The problem is not the least bit urgent for me, <br>
+so I don't really have much of a stake in this. I just wanted to know <br>
+whether this was a known issue or not, and see if someone is interested <br>
+in fixing it.</p>
+<p>So if you have the time and energy to do this, that's great – but no <br>
+pressure (at least not from me. :) ).</p>
+<p>I didn't know equality between integers and reals was a problem in SMT. <br>
+I do know that Nelson–Oppen doesn't like things like that, but I don't <br>
+know enough about the internals of SMT solvers to understand whether it <br>
+is an issue, and I expected SMT solvers to just "abstract away" from <br>
+this if need be and insert coercions like "to_real" in a preprocessing <br>
+step. I mean, my smtlib problem went through just fine without any <br>
+errors or warnings, and I even got a proof (although I don't understand <br>
+enough about SMT proof objects to be able to see whether it is actually <br>
+a proof that makes sense and proves what I want).</p>
+<p>Manuel</p>
+<p>On 12/04/2025 08:38, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Mathias,</p>
+<blockquote>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at <br>
+that code (for the BV translation -- even if our changes are all out <br>
+of tree). But feel free to do looking into it with Martin if you prefer.</p>
+<p>By all means, you go ahead! Thank you so much. I knew you worked on <br>
+reconstruction, but I didn't realize you had such extensive knowledge <br>
+of the translation.</p>
+</blockquote>
+<p>Best,<br>
+Jasmin</p>
+<p>--</p>
+<p>Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 12. Apr 2025, at 08:34, Mathias Fleury <br>
+&lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt; wrote:</p>
+<p>Hi Jasmin, Manuel and all,</p>
+<p>On 4/12/25 07:47, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Manuel,</p>
+<p>SMT was developed by Sascha Böhme, so I'm only partly qualified to <br>
+answer.</p>
+<p>The fragment SMT solvers can decide is linear. Some SMT solvers also <br>
+support division and have nonlinear solvers, but these are very <br>
+slow. As a result, native division is not used, even when it's <br>
+between constants like 1 and 2, apparently.</p>
+</blockquote>
+<p>Getting the divide operator translated is easy to add actually.</p>
+<blockquote>
+<p>As for "real_of_int", the uninterpreted symbol is definitely <br>
+suboptimal. I'm not sure it's safe to just omit it everywhere and <br>
+rely on implicit cast or subtyping. SMT-LIB seems to support <br>
+overloading, so this is all rather scary.</p>
+</blockquote>
+<p>My understanding is that you cannot omit it due to equality requiring <br>
+to variables of the same sort. But SMT-Lib has the constant <code>to_real</code> <br>
+for casting. Some SMT solvers allow it.</p>
+<blockquote>
+<p>In "smt_real.ML", I'm seeing code like this:</p>
+<p>fun abstract abs t =<br>
+  (case t of<br>
+    (c as \&lt;^term&gt;\&lt;open&gt;Rings.divide :: real =&gt; _\&lt;close&gt;) $ t1 $ t2 =&gt;<br>
+      abs t1 ##&gt;&gt; abs t2 #&gt;&gt; (fn (u1, u2) =&gt; SOME (c $ u1 $ u2))<br>
+  | (c as \&lt;^term&gt;\&lt;open&gt;Int.of_int :: int =&gt; _\&lt;close&gt;) $ t =&gt;<br>
+      abs t #&gt;&gt; (fn u =&gt; SOME (c $ u))<br>
+  | _ =&gt; pair NONE)</p>
+<p>It seems to want to do something about division and Int.of_int, but <br>
+maybe this setup is somehow bit-rotten or insufficient.</p>
+</blockquote>
+<p>That code is to abstract over division to stay in the LIRA fragment, <br>
+e.g., if you have <code>a = 1 / b</code> then you need to get rid of the <code>1/b</code>.</p>
+<p>The better solution is to add a translation of division:</p>
+<p>fun mk_divides ts = Term.list_comb (\&lt;^Const&gt;‹divide <br>
+\&lt;^Type&gt;‹real››, ts)<br>
+  fun divides _ _ (ts as [a,b]) =<br>
+     if SMT_Util.is_number a andalso SMT_Util.is_number b<br>
+     then SOME ("/", 2, ts, mk_divides) else NONE<br>
+    | divides _ _ _ = NONE</p>
+<p>val setup_builtins =<br>
+  (*the current things followed by *) #&gt;<br>
+  SMT_Builtin.add_builtin_fun SMTLIB_Interface.smtlibC<br>
+    (Term.dest_Const \&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, divides) #&gt;<br>
+  fold (SMT_Builtin.add_builtin_fun' SMTLIB_Interface.smtlibC)<br>
+    [(\&lt;^Const&gt;‹of_int \&lt;^Type&gt;‹real››, "to_real"),<br>
+     (\&lt;^Const&gt;‹of_nat \&lt;^Type&gt;‹real››, "to_real")]</p>
+<p>Division seems to work but the <code>to_real</code> currently breaks the <br>
+reconstruction of proofs: on the Isabelle side, <code>of_int</code> is ambiguous <br>
+without looking at the rest of the term. I will look into it.</p>
+<blockquote>
+<p>I'm CC:ing Martin. Maybe he and I could look into both issues <br>
+together, if he has time.</p>
+</blockquote>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at <br>
+that code (for the BV translation -- even if our changes are all out <br>
+of tree). But feel free to do looking into it with Martin if you prefer.</p>
+<p>Mathias</p>
+<blockquote>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 11. Apr 2025, at 16:29, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA <br>
+problem (linear integer/real arithmetic). Usually "linarith" can <br>
+solve these just fine, but in this case it couldn't (at least not <br>
+in a single step), but I know "linarith" is incomplete for mixed <br>
+integer/real problems. I then turned to the "smt" method instead <br>
+and to my surprise found that it couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+  assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ <br>
+x + 1 / 2"<br>
+  shows   "real_of_int m = 2 * x"<br>
+proof -<br>
+  have "m = 0 ∨ m = 1"<br>
+    using assms by linarith<br>
+  thus ?thesis<br>
+    using assms by linarith<br>
+qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and <br>
+"linarith" can solve it in two steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" <br>
+all fail, and Z3 even claims there's a (possibly spurious) <br>
+counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise <br>
+that both the division on the reals and the type conversion <br>
+"real_of_int" are translated to uninterpreted functions, so it's <br>
+not surprising that the SMT solvers fail to prove it. It's easy to <br>
+get rid of the division, of course, but that doesn't make it work <br>
+either (presumable because the "of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+(set-option :produce-proofs true)<br>
+(declare-fun x () Real)<br>
+(declare-fun m () Int)<br>
+(assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2)) (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+(assert (not (= m (* 2 x))))<br>
+(check-sat)<br>
+(get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some <br>
+unresolved difficulty in replaying LIRA proofs?</p>
+<p>Manuel</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="512079407"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/512079407" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#512079407">(Apr 14 2025 at 13:25)</a>:</h4>
+<p>From: Haniel Barbosa &lt;<a href="mailto:hbarbosa@dcc.ufmg.br">hbarbosa@dcc.ufmg.br</a>&gt;<br>
+Hello,</p>
+<p>Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; writes:</p>
+<blockquote>
+<p>I didn't know equality between integers and reals was a problem in SMT. I do know that Nelson–Oppen<br>
+doesn't like things like that, but I don't know enough about the internals of SMT solvers to understand<br>
+whether it is an issue, and I expected SMT solvers to just "abstract away" from this if need be and insert<br>
+coercions like "to_real" in a preprocessing step. I mean, my smtlib problem went through just fine without<br>
+any errors or warnings, and I even got a proof (although I don't understand enough about SMT proof objects<br>
+to be able to see whether it is actually a proof that makes sense and proves what I want).</p>
+</blockquote>
+<p>To clarify this point, internally SMT solvers do overlead arithmetic<br>
+operations to mix ints and reals. They are only (generally...) strict<br>
+for the input because SMT-LIB does not allow this overloading. And<br>
+some can be strict for the output because otherwise it can lead to<br>
+issues with some proof checkers or reconstruction in proof assistants.</p>
+<p>As soon as the problem is parsed solvers generally do not care about<br>
+mixing these types anymore. Which makes it a pain to <em>undo</em> these<br>
+implicit mixing if one wants to output proofs that have the explicit<br>
+casts, which are added in post-processing. With cvc5 this is done via<br>
+the option --proof-elim-subtypes, for example, which is not on by<br>
+default.</p>
+<p>Best,</p>
+<blockquote>
+<p>Manuel</p>
+<p>On 12/04/2025 08:38, Jasmin Blanchette wrote:</p>
+<p>Hi Mathias, </p>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that code (for the BV translation --<br>
+ even if our changes are all out of tree). But feel free to do looking into it with Martin if you prefer. </p>
+<p>By all means, you go ahead! Thank you so much. I knew you worked on reconstruction, but I didn't realize<br>
+ you had such extensive knowledge of the translation.</p>
+<p>Best,<br>
+ Jasmin</p>
+<p>--</p>
+<p>Prof. Dr. Jasmin Blanchette<br>
+ Chair of Theoretical Computer Science and Theorem Proving<br>
+ Ludwig-Maximilians-Universität München<br>
+ Oettingenstr. 67, 80538 München, Germany<br>
+ Tel.: +49 (0)89 2180 9341<br>
+ Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<p>On 12. Apr 2025, at 08:34, Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt; wrote:</p>
+<p>Hi Jasmin, Manuel and all,</p>
+<p>On 4/12/25 07:47, Jasmin Blanchette wrote:</p>
+<p>Hi Manuel, </p>
+<p>SMT was developed by Sascha Böhme, so I'm only partly qualified to answer.</p>
+<p>The fragment SMT solvers can decide is linear. Some SMT solvers also support division and have<br>
+ nonlinear solvers, but these are very slow. As a result, native division is not used, even when it's<br>
+ between constants like 1 and 2, apparently.</p>
+<p>Getting the divide operator translated is easy to add actually.</p>
+<p>As for "real_of_int", the uninterpreted symbol is definitely suboptimal. I'm not sure it's safe to just<br>
+ omit it everywhere and rely on implicit cast or subtyping. SMT-LIB seems to support overloading,<br>
+ so this is all rather scary.</p>
+<p>My understanding is that you cannot omit it due to equality requiring to variables of the same sort.<br>
+ But SMT-Lib has the constant <code>to_real</code> for casting. Some SMT solvers allow it.</p>
+<p>In "smt_real.ML", I'm seeing code like this:</p>
+<p>fun abstract abs t =<br>
+   (case t of<br>
+     (c as \&lt;^term&gt;\&lt;open&gt;Rings.divide :: real =&gt; _\&lt;close&gt;) $ t1 $ t2 =&gt;<br>
+       abs t1 ##&gt;&gt; abs t2 #&gt;&gt; (fn (u1, u2) =&gt; SOME (c $ u1 $ u2))<br>
+   | (c as \&lt;^term&gt;\&lt;open&gt;Int.of_int :: int =&gt; _\&lt;close&gt;) $ t =&gt;<br>
+       abs t #&gt;&gt; (fn u =&gt; SOME (c $ u))<br>
+   | _ =&gt; pair NONE)</p>
+<p>It seems to want to do something about division and Int.of_int, but maybe this setup is somehow<br>
+ bit-rotten or insufficient.</p>
+<p>That code is to abstract over division to stay in the LIRA fragment, e.g., if you have <code>a = 1 / b</code> then<br>
+ you need to get rid of the <code>1/b</code>.</p>
+<p>The better solution is to add a translation of division:</p>
+<p>fun mk_divides ts = Term.list_comb (\&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, ts)<br>
+   fun divides _ _ (ts as [a,b]) = <br>
+      if SMT_Util.is_number a andalso SMT_Util.is_number b<br>
+      then SOME ("/", 2, ts, mk_divides) else NONE<br>
+     | divides _ _ _ = NONE</p>
+<p>val setup_builtins =<br>
+   (*the current things followed by *) #&gt;<br>
+   SMT_Builtin.add_builtin_fun SMTLIB_Interface.smtlibC<br>
+     (Term.dest_Const \&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, divides) #&gt;<br>
+   fold (SMT_Builtin.add_builtin_fun' SMTLIB_Interface.smtlibC)<br>
+     [(\&lt;^Const&gt;‹of_int \&lt;^Type&gt;‹real››, "to_real"),<br>
+      (\&lt;^Const&gt;‹of_nat \&lt;^Type&gt;‹real››, "to_real")]</p>
+<p>Division seems to work but the <code>to_real</code> currently breaks the reconstruction of proofs: on the Isabelle<br>
+ side, <code>of_int</code> is ambiguous without looking at the rest of the term. I will look into it.</p>
+<p>I'm CC:ing Martin. Maybe he and I could look into both issues together, if he has time.</p>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that code (for the BV translation --<br>
+ even if our changes are all out of tree). But feel free to do looking into it with Martin if you prefer. </p>
+<p>Mathias</p>
+<p>Best,<br>
+ Jasmin</p>
+<p>--<br>
+ Prof. Dr. Jasmin Blanchette<br>
+ Chair of Theoretical Computer Science and Theorem Proving<br>
+ Ludwig-Maximilians-Universität München<br>
+ Oettingenstr. 67, 80538 München, Germany<br>
+ Tel.: +49 (0)89 2180 9341<br>
+ Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<p>On 11. Apr 2025, at 16:29, Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA problem (linear integer/real<br>
+ arithmetic). Usually "linarith" can solve these just fine, but in this case it couldn't (at least not<br>
+ in a single step), but I know "linarith" is incomplete for mixed integer/real problems. I then<br>
+ turned to the "smt" method instead and to my surprise found that it couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+   assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ x + 1 / 2"<br>
+   shows   "real_of_int m = 2 * x"<br>
+ proof -<br>
+   have "m = 0 ∨ m = 1"<br>
+     using assms by linarith<br>
+   thus ?thesis<br>
+     using assms by linarith<br>
+ qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and "linarith" can solve it in two<br>
+ steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" all fail, and Z3 even claims<br>
+ there's a (possibly spurious) counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise that both the division on the<br>
+ reals and the type conversion "real_of_int" are translated to uninterpreted functions, so it's not<br>
+ surprising that the SMT solvers fail to prove it. It's easy to get rid of the division, of course, but<br>
+ that doesn't make it work either (presumable because the "of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+ (set-option :produce-proofs true)<br>
+ (declare-fun x () Real)<br>
+ (declare-fun m () Int)<br>
+ (assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2))  (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+ (assert (not (= m (* 2 x))))<br>
+ (check-sat)<br>
+ (get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some unresolved difficulty in<br>
+ replaying LIRA proofs?</p>
+<p>Manuel</p>
+</blockquote>
+<p>-- <br>
+Haniel Barbosa<br>
+<a href="https://hanielbarbosa.com/">https://hanielbarbosa.com/</a></p>
+
+
+
+<a name="512140343"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20SMT%20completeness%20issue%3A%20Failure%20to%20prove%20a%20tru.../near/512140343" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20SMT.20completeness.20issue.3A.20Failure.20to.20prove.20a.20tru.2E.2E.2E.html#512140343">(Apr 14 2025 at 17:46)</a>:</h4>
+<p>From: Hanna Elif Lachnitt &lt;<a href="mailto:lachnitt@stanford.edu">lachnitt@stanford.edu</a>&gt;<br>
+Hi everyone,</p>
+<p>as Mathias wrote, we have been working on extending the translation of machine word problems to SMT-LIB. Our end goal is to support cvc5's proof certificates including those with bit-vectors. I hope we can make this functionality available soon.</p>
+<p>Recently, I have been looking into extending the embedding of natural numbers into integers to include not only constants but also variables and functions, so I have been learning a lot about the translation code.</p>
+<p>Thus, if you have any other benchmarks for which the translation is suboptimal, I'd be very grateful if you could send them to me (<a href="mailto:lachnitt@cs.stanford.edu">lachnitt@cs.stanford.edu</a>) or Mathias. Same with anything you think should be solvable by an SMT solver but isn't. The cvc5 team is eager to offer good integration with ITPs.</p>
+<p>Best,<br>
+Hanna</p>
+<p>TL;DR: please sent me your SMT benchmarks so I can add them to my test suite</p>
+<hr>
+<p>From: Jasmin Blanchette<br>
+Sent: Friday, April 11, 2025 23:38<br>
+To: Mathias Fleury<br>
+Cc: Manuel Eberl; <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>; Martin Desharnais; Hanna Elif Lachnitt<br>
+Subject: Re: [isabelle] SMT completeness issue: Failure to prove a true LIRA formula</p>
+<p>Hi Mathias,</p>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that code (for the BV translation -- even if our changes are all out of tree). But feel free to do looking into it with Martin if you prefer.</p>
+<p>By all means, you go ahead! Thank you so much. I knew you worked on reconstruction, but I didn't realize you had such extensive knowledge of the translation.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--</p>
+<p>Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<p>On 12. Apr 2025, at 08:34, Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt; wrote:</p>
+<p>Hi Jasmin, Manuel and all,</p>
+<p>On 4/12/25 07:47, Jasmin Blanchette wrote:<br>
+Hi Manuel,</p>
+<p>SMT was developed by Sascha Böhme, so I'm only partly qualified to answer.</p>
+<p>The fragment SMT solvers can decide is linear. Some SMT solvers also support division and have nonlinear solvers, but these are very slow. As a result, native division is not used, even when it's between constants like 1 and 2, apparently.</p>
+<p>Getting the divide operator translated is easy to add actually.</p>
+<p>As for "real_of_int", the uninterpreted symbol is definitely suboptimal. I'm not sure it's safe to just omit it everywhere and rely on implicit cast or subtyping. SMT-LIB seems to support overloading, so this is all rather scary.</p>
+<p>My understanding is that you cannot omit it due to equality requiring to variables of the same sort. But SMT-Lib has the constant <code>to_real</code> for casting. Some SMT solvers allow it.</p>
+<p>In "smt_real.ML", I'm seeing code like this:</p>
+<p>fun abstract abs t =<br>
+  (case t of<br>
+    (c as \&lt;^term&gt;\&lt;open&gt;Rings.divide :: real =&gt; _\&lt;close&gt;) $ t1 $ t2 =&gt;<br>
+      abs t1 ##&gt;&gt; abs t2 #&gt;&gt; (fn (u1, u2) =&gt; SOME (c $ u1 $ u2))<br>
+  | (c as \&lt;^term&gt;\&lt;open&gt;Int.of_int :: int =&gt; _\&lt;close&gt;) $ t =&gt;<br>
+      abs t #&gt;&gt; (fn u =&gt; SOME (c $ u))<br>
+  | _ =&gt; pair NONE)</p>
+<p>It seems to want to do something about division and Int.of_int, but maybe this setup is somehow bit-rotten or insufficient.</p>
+<p>That code is to abstract over division to stay in the LIRA fragment, e.g., if you have <code>a = 1 / b</code> then you need to get rid of the <code>1/b</code>.</p>
+<p>The better solution is to add a translation of division:</p>
+<p>fun mk_divides ts = Term.list_comb (\&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, ts)<br>
+  fun divides _ _ (ts as [a,b]) =<br>
+     if SMT_Util.is_number a andalso SMT_Util.is_number b<br>
+     then SOME ("/", 2, ts, mk_divides) else NONE<br>
+    | divides _ _ _ = NONE</p>
+<p>val setup_builtins =<br>
+  (*the current things followed by *) #&gt;<br>
+  SMT_Builtin.add_builtin_fun SMTLIB_Interface.smtlibC<br>
+    (Term.dest_Const \&lt;^Const&gt;‹divide \&lt;^Type&gt;‹real››, divides) #&gt;<br>
+  fold (SMT_Builtin.add_builtin_fun' SMTLIB_Interface.smtlibC)<br>
+    [(\&lt;^Const&gt;‹of_int \&lt;^Type&gt;‹real››, "to_real"),<br>
+     (\&lt;^Const&gt;‹of_nat \&lt;^Type&gt;‹real››, "to_real")]</p>
+<p>Division seems to work but the <code>to_real</code> currently breaks the reconstruction of proofs: on the Isabelle side, <code>of_int</code> is ambiguous without looking at the rest of the term. I will look into it.</p>
+<p>I'm CC:ing Martin. Maybe he and I could look into both issues together, if he has time.</p>
+<p>In all likelihood, Hanna (CC-ed) and I have looked more recently at that code (for the BV translation -- even if our changes are all out of tree). But feel free to do looking into it with Martin if you prefer.</p>
+<p>Mathias</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<p>On 11. Apr 2025, at 16:29, Manuel Eberl &lt;manuel@pruvisto.org&gt;&lt;mailto:<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt; wrote:</p>
+<p>Hello,</p>
+<p>yesterday I had a proof obligation that boils down to a LIRA problem (linear integer/real arithmetic). Usually "linarith" can solve these just fine, but in this case it couldn't (at least not in a single step), but I know "linarith" is incomplete for mixed integer/real problems. I then turned to the "smt" method instead and to my surprise found that it couldn't do it either.</p>
+<p>I boiled it down to the following minimal example:</p>
+<p>lemma<br>
+  assumes "0 ≤ x" "x ≤ 1 / 2" "x ≤ real_of_int m" "real_of_int m ≤ x + 1 / 2"<br>
+  shows   "real_of_int m = 2 * x"<br>
+proof -<br>
+  have "m = 0 ∨ m = 1"<br>
+    using assms by linarith<br>
+  thus ?thesis<br>
+    using assms by linarith<br>
+qed</p>
+<p>As you can see, it's a LIRA problem, it's a true statement, and "linarith" can solve it in two steps.</p>
+<p>However, "apply smt", "apply (smt (cvc5))" and "apply (smt (z3))" all fail, and Z3 even claims there's a (possibly spurious) counterexample.</p>
+<p>Looking at the generated smtlib problem, I found to my surprise that both the division on the reals and the type conversion "real_of_int" are translated to uninterpreted functions, so it's not surprising that the SMT solvers fail to prove it. It's easy to get rid of the division, of course, but that doesn't make it work either (presumable because the "of_int" UF is still there).</p>
+<p>I would have expected an encoding like the following:</p>
+<p>(set-logic AUFLIRA)<br>
+(set-option :produce-proofs true)<br>
+(declare-fun x () Real)<br>
+(declare-fun m () Int)<br>
+(assert (and (&lt;= 0 x)  (&lt;= x (/ 1 2))  (&lt;= x m)  (&lt;= m (+ x (/ 1 2)))))<br>
+(assert (not (= m (* 2 x))))<br>
+(check-sat)<br>
+(get-proof)</p>
+<p>Both CVC5 and Z3 can do this and produce proofs.</p>
+<p>So, is this some known limitation of the smt method? Is there some unresolved difficulty in replaying LIRA proofs?</p>
+<p>Manuel</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

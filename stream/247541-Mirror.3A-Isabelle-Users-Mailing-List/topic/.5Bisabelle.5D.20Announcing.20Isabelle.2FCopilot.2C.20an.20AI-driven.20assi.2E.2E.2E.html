@@ -1,0 +1,605 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Announcing Isabelle/Copilot, an AI-driven assi... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html">[isabelle] Announcing Isabelle/Copilot, an AI-driven assi...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="574116007"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Announcing%20Isabelle/Copilot%2C%20an%20AI-driven%20assi.../near/574116007" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html#574116007">(Feb 16 2026 at 13:59)</a>:</h4>
+<p><strong>From:</strong> Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear all,</p>
+<p>We are excited to announce the initial alpha release of Isabelle/Copilot,<br>
+an AI-driven assistant for Isabelle/HOL.  Copilot integrates foundation<br>
+models hosted on AWS Bedrock directly into the Isabelle/jEdit IDE,<br>
+providing both a dockable freeform chat interface and a dynamic,<br>
+right-click context menu for performing common theorem proving actions.<br>
+You can see Isabelle/Copilot in action via the GIFs embedded in the README,<br>
+here &lt;<a href="https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot">https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot</a>&gt;.</p>
+<p>Currently around 30 separate actions, including explaining definitions and<br>
+theorems in natural language, refactoring apply-style proofs to Isar,<br>
+automatically generating introduction and elimination rules for<br>
+definitions, explaining simplifier traces, and an initial implementation of<br>
+an "auto prove" functionality, performing gradual refinement-style proof of<br>
+a goal, are implemented.  More will follow.</p>
+<p>Isabelle/Copilot is built atop the I/Q functionality that we open-sourced<br>
+last year, exposing Isabelle prover functionality to LLMs via an MCP<br>
+server.  Copilot uses I/Q to check any proofs that it generates, refining<br>
+them iteratively in response to failures.</p>
+<p>We welcome collaboration and contributions, including support for other<br>
+foundation model providers besides AWS.</p>
+<p>Thanks,<br>
+Dominic and the AWS Bespoke Proofs team</p>
+
+
+
+<a name="574117966"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Announcing%20Isabelle/Copilot%2C%20an%20AI-driven%20assi.../near/574117966" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html#574117966">(Feb 16 2026 at 14:09)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>Sounds good.</p>
+<p>"</p>
+<p>Prerequisites</p>
+<p>&lt;<a href="https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot#prerequisites">https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot#prerequisites</a>&gt;</p>
+<p>* Isabelle2025-2 &lt;<a href="https://isabelle.in.tum.de/website-Isabelle2025-2/">https://isabelle.in.tum.de/website-Isabelle2025-2/</a>&gt;<br>
+  * AWS account withBedrock model access<br>
+    &lt;https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html&gt;(Claude<br>
+    recommended)</p>
+<p>* AWS credentials configured (|~/.aws/credentials|or environment<br>
+    variables)</p>
+<p>"</p>
+<p>So how do you get an "AWS account with Bedrock access" as a researcher, <br>
+and what does it cost? (There's not much information targeted at <br>
+researchers on the website behind the link)</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 16/02/2026 14:58, Dominic Mulligan (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>We are excited to announce the initial alpha release of <br>
+Isabelle/Copilot, an AI-driven assistant for Isabelle/HOL. Copilot <br>
+integrates foundation models hosted on AWS Bedrock directly into the <br>
+Isabelle/jEdit IDE, providing both a dockable freeform chat interface <br>
+and a dynamic, right-click context menu for performing common theorem <br>
+proving actions. You can see Isabelle/Copilot in action via the GIFs <br>
+embedded in the README, here <br>
+&lt;<a href="https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot">https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot</a>&gt;.</p>
+<p>Currently around 30 separate actions, including explaining definitions <br>
+and theorems in natural language, refactoring apply-style proofs to <br>
+Isar, automatically generating introduction and elimination rules for <br>
+definitions, explaining simplifier traces, and an initial <br>
+implementation of an "auto prove" functionality, performing gradual <br>
+refinement-style proof of a goal, are implemented.  More will follow.</p>
+<p>Isabelle/Copilot is built atop the I/Q functionality that we <br>
+open-sourced last year, exposing Isabelle prover functionality to LLMs <br>
+via an MCP server.  Copilot uses I/Q to check any proofs that it <br>
+generates, refining them iteratively in response to failures.</p>
+<p>We welcome collaboration and contributions, including support for <br>
+other foundation model providers besides AWS.</p>
+<p>Thanks,<br>
+Dominic and the AWS Bespoke Proofs team</p>
+</blockquote>
+
+
+
+<a name="574121492"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Announcing%20Isabelle/Copilot%2C%20an%20AI-driven%20assi.../near/574121492" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html#574121492">(Feb 16 2026 at 14:26)</a>:</h4>
+<p><strong>From:</strong> Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Quick rebrand after somebody pointed out we are probably too close to<br>
+Github Copilot: the tool is now called Isabelle Assistant!</p>
+<p>On Mon, 16 Feb 2026 at 13:58, Dominic Mulligan &lt;<br>
+<a href="mailto:dominic.p.mulligan@googlemail.com">dominic.p.mulligan@googlemail.com</a>&gt; wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>We are excited to announce the initial alpha release of Isabelle/Copilot,<br>
+an AI-driven assistant for Isabelle/HOL.  Copilot integrates foundation<br>
+models hosted on AWS Bedrock directly into the Isabelle/jEdit IDE,<br>
+providing both a dockable freeform chat interface and a dynamic,<br>
+right-click context menu for performing common theorem proving actions.<br>
+You can see Isabelle/Copilot in action via the GIFs embedded in the README,<br>
+here &lt;<a href="https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot">https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot</a>&gt;.</p>
+<p>Currently around 30 separate actions, including explaining definitions and<br>
+theorems in natural language, refactoring apply-style proofs to Isar,<br>
+automatically generating introduction and elimination rules for<br>
+definitions, explaining simplifier traces, and an initial implementation of<br>
+an "auto prove" functionality, performing gradual refinement-style proof of<br>
+a goal, are implemented.  More will follow.</p>
+<p>Isabelle/Copilot is built atop the I/Q functionality that we open-sourced<br>
+last year, exposing Isabelle prover functionality to LLMs via an MCP<br>
+server.  Copilot uses I/Q to check any proofs that it generates, refining<br>
+them iteratively in response to failures.</p>
+<p>We welcome collaboration and contributions, including support for other<br>
+foundation model providers besides AWS.</p>
+<p>Thanks,<br>
+Dominic and the AWS Bespoke Proofs team<br>
+</p>
+</blockquote>
+
+
+
+<a name="574124096"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Announcing%20Isabelle/Copilot%2C%20an%20AI-driven%20assi.../near/574124096" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html#574124096">(Feb 16 2026 at 14:39)</a>:</h4>
+<p><strong>From:</strong> Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Peter,</p>
+<p>To make use of Isabelle Assistant you will need to sign into the AWS<br>
+Console with a role that has Bedrock access (you can sign-up here<br>
+&lt;<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html">https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html</a>&gt; by<br>
+clicking the link in the top right-hand corner).  Bedrock itself is<br>
+essentially pay-as-you-go with each LLM call being charged individually<br>
+(see e.g. here &lt;<a href="https://aws.amazon.com/bedrock/pricing/">https://aws.amazon.com/bedrock/pricing/</a>&gt;).  Note according<br>
+to this, new AWS customers receive $200 of credit.  Specifically for<br>
+researchers, we also have Amazon Research Awards which, if awarded, give<br>
+out AWS Credits as well.  There is a dedicated Automated Reasoning ARA,<br>
+details of the last call here<br>
+&lt;<a href="https://www.amazon.science/research-awards/call-for-proposals/automated-reasoning-call-for-proposals-fall-2025">https://www.amazon.science/research-awards/call-for-proposals/automated-reasoning-call-for-proposals-fall-2025</a>&gt;<br>
+.</p>
+<p>Thanks,<br>
+Dominic</p>
+<p>On Mon, 16 Feb 2026 at 14:08, Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt; wrote:</p>
+<blockquote>
+<p>Sounds good.</p>
+<p>"<br>
+Prerequisites<br>
+&lt;<a href="https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot#prerequisites">https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot#prerequisites</a>&gt;</p>
+<p>- Isabelle2025-2 &lt;<a href="https://isabelle.in.tum.de/website-Isabelle2025-2/">https://isabelle.in.tum.de/website-Isabelle2025-2/</a>&gt;<br>
+   - AWS account with Bedrock model access<br>
+   &lt;<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html">https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html</a>&gt;<br>
+    (Claude recommended)<br>
+   - AWS credentials configured (~/.aws/credentials or environment<br>
+   variables)</p>
+<p>"</p>
+<p>So how do you get an "AWS account with Bedrock access" as a researcher,<br>
+and what does it cost? (There's not much information targeted at<br>
+researchers on the website behind the link)</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 16/02/2026 14:58, Dominic Mulligan (via cl-isabelle-users Mailing List)<br>
+wrote:</p>
+<p>Dear all,</p>
+<p>We are excited to announce the initial alpha release of Isabelle/Copilot,<br>
+an AI-driven assistant for Isabelle/HOL.  Copilot integrates foundation<br>
+models hosted on AWS Bedrock directly into the Isabelle/jEdit IDE,<br>
+providing both a dockable freeform chat interface and a dynamic,<br>
+right-click context menu for performing common theorem proving actions.<br>
+You can see Isabelle/Copilot in action via the GIFs embedded in the README,<br>
+here &lt;<a href="https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot">https://github.com/awslabs/AutoCorrode/tree/main/isabelle-copilot</a>&gt;.</p>
+<p>Currently around 30 separate actions, including explaining definitions and<br>
+theorems in natural language, refactoring apply-style proofs to Isar,<br>
+automatically generating introduction and elimination rules for<br>
+definitions, explaining simplifier traces, and an initial implementation of<br>
+an "auto prove" functionality, performing gradual refinement-style proof of<br>
+a goal, are implemented.  More will follow.</p>
+<p>Isabelle/Copilot is built atop the I/Q functionality that we open-sourced<br>
+last year, exposing Isabelle prover functionality to LLMs via an MCP<br>
+server.  Copilot uses I/Q to check any proofs that it generates, refining<br>
+them iteratively in response to failures.</p>
+<p>We welcome collaboration and contributions, including support for other<br>
+foundation model providers besides AWS.</p>
+<p>Thanks,<br>
+Dominic and the AWS Bespoke Proofs team</p>
+</blockquote>
+
+
+
+<a name="574898563"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Announcing%20Isabelle/Copilot%2C%20an%20AI-driven%20assi.../near/574898563" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html#574898563">(Feb 20 2026 at 09:30)</a>:</h4>
+<p><strong>From:</strong> Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>As a follow up to this—as there's been rapid development of this plugin<br>
+over the last week—I'm attaching the text of a theory file containing a<br>
+proof of the Urysohn metrization theorem.  The proof follows the argument<br>
+set forth by Monkres in the book, Topology.  It was developed by Larry<br>
+yesterday using Isabelle Assistant, which proved the result in about 2.5<br>
+hours with Larry feeding text taken from the book.  Larry was able to do<br>
+other things whilst it autoformalized the material in the background.  Once<br>
+it approached the end of the proof the agent realized it knew enough to go<br>
+ahead and finish the proof itself without further prompting.  This was<br>
+using the new Claude Opus 4.6 model.</p>
+<p>Note we chose this proof as a stress-testing example as we are aware of<br>
+similar tests being done by Josef Urban and John Harrison within the<br>
+context of different theorem proving systems.</p>
+<p>theory Urysohn_Met3 imports "HOL-Analysis.Analysis"<br>
+"Isabelle_Assistant.Assistant_Support" begin</p>
+<p>lemma metrizable_space_countable_product_of_reals:<br>
+  shows ‹metrizable_space (product_topology (λ_::nat. euclideanreal) UNIV)›<br>
+  by (simp add: euclidean_product_topology metrizable_space_euclidean)</p>
+<p>theorem Urysohn_metrization:<br>
+  fixes X :: ‹'a topology›<br>
+assumes ‹regular_space X› and ‹second_countable X› and ‹t1_space X›  shows<br>
+‹metrizable_space X›<br>
+proof -<br>
+  ― ‹Obtain a countable basis for X›<br>
+  obtain ℬ where ℬ_count: ‹countable ℬ›<br>
+    and ℬ_open: ‹∀V ∈ ℬ. openin X V›<br>
+    and ℬ_base: ‹∀U x. openin X U ∧ x ∈ U ⟶ (∃V ∈ ℬ. x ∈ V ∧ V ⊆ U)›<br>
+    using assms(2) second_countable_def by metis<br>
+  ― ‹X is normal (regular + Lindelöf ⟹ normal)›<br>
+  have normal: ‹normal_space X›<br>
+    using assms regular_Lindelof_imp_normal_space<br>
+second_countable_imp_Lindelof_space by blast<br>
+  ― ‹For each pair (Bn, Bm) from the basis with closure of Bn ⊆ Bm,<br>
+      apply Urysohn's lemma to obtain g Bn Bm : X → [0,1] continuous with<br>
+      g Bn Bm <code> (X closure_of Bn) ⊆ {1} and g Bn Bm </code> (topspace X - Bm) ⊆<br>
+{0}›<br>
+  define pairs where ‹pairs ≡ {(Bn, Bm). Bn ∈ ℬ ∧ Bm ∈ ℬ ∧ X closure_of Bn<br>
+⊆ Bm}›<br>
+  have pairs_count: ‹countable pairs›<br>
+    unfolding pairs_def using ℬ_count by (auto intro: countable_subset[OF _<br>
+countable_SIGMA[OF ℬ_count]])<br>
+  have ‹∀(Bn, Bm) ∈ pairs.<br>
+    ∃g::'a⇒real. continuous_map X (top_of_set {0..1}) g ∧<br>
+        g <code> (topspace X - Bm) ⊆ {0} ∧
+        g </code> (X closure_of Bn) ⊆ {1}›<br>
+  proof (clarsimp simp: pairs_def)<br>
+    fix Bn Bm<br>
+    assume Bn_in: ‹Bn ∈ ℬ› and Bm_in: ‹Bm ∈ ℬ› and sub: ‹X closure_of Bn ⊆<br>
+Bm›<br>
+    have cl_closed: ‹closedin X (X closure_of Bn)›<br>
+      by (rule closedin_closure_of)<br>
+    have comp_closed: ‹closedin X (topspace X - Bm)›<br>
+      using ℬ_open Bm_in by (simp add: closedin_diff)<br>
+    have disj: ‹disjnt (topspace X - Bm) (X closure_of Bn)›<br>
+      using sub closure_of_subset_topspace by (fastforce simp: disjnt_iff)<br>
+    show ‹∃g::'a⇒real. continuous_map X (top_of_set {0..1}) g ∧<br>
+              g <code> (topspace X - Bm) ⊆ {0} ∧
+              g </code> (X closure_of Bn) ⊆ {1}›<br>
+      using normal[unfolded normal_space_iff_Urysohn] comp_closed cl_closed<br>
+disj by blast<br>
+  qed<br>
+  then have ‹∀p ∈ pairs.<br>
+    ∃g::'a⇒real. continuous_map X (top_of_set {0..1}) g ∧<br>
+        g <code> (topspace X - snd p) ⊆ {0} ∧
+        g </code> (X closure_of fst p) ⊆ {1}›<br>
+    by (auto simp: case_prod_unfold)<br>
+  then obtain gp where gp: ‹⋀p. p ∈ pairs ⟹<br>
+      continuous_map X (top_of_set {0..1::real}) (gp p) ∧<br>
+      gp p <code> (topspace X - snd p) ⊆ {0} ∧
+      gp p </code> (X closure_of fst p) ⊆ {1}›<br>
+    by (meson bchoice)<br>
+  define g where ‹g ≡ λBn Bm. gp (Bn, Bm)›<br>
+  have g_cont: ‹⋀Bn Bm. (Bn, Bm) ∈ pairs ⟹<br>
+      continuous_map X (top_of_set {0..1::real}) (g Bn Bm)›<br>
+    and g_zero: ‹⋀Bn Bm. (Bn, Bm) ∈ pairs ⟹<br>
+      g Bn Bm <code> (topspace X - Bm) ⊆ {0}›
+    and g_one: ‹⋀Bn Bm. (Bn, Bm) ∈ pairs ⟹
+      g Bn Bm </code> (X closure_of Bn) ⊆ {1}›<br>
+    using gp unfolding g_def by (fastforce simp: image_subset_iff)+<br>
+  ― ‹The separation property of the family {g Bn Bm}: for any x0 in X and<br>
+      any open neighbourhood U of x0, there exist Bn, Bm in the basis with<br>
+      (Bn, Bm) ∈ pairs, g Bn Bm x0 = 1 &gt; 0, and g Bn Bm vanishes outside U.›<br>
+  have separation: ‹∃Bn Bm. (Bn, Bm) ∈ pairs ∧ g Bn Bm x0 = 1 ∧<br>
+      (∀x ∈ topspace X - U. g Bn Bm x = 0)›<br>
+    if ‹openin X U› and ‹x0 ∈ U› for x0 U<br>
+  proof -<br>
+    ― ‹Step 1: choose basis element Bm with x0 ∈ Bm ⊆ U›<br>
+    obtain Bm where Bm_in: ‹Bm ∈ ℬ› and x0_Bm: ‹x0 ∈ Bm› and Bm_sub: ‹Bm ⊆<br>
+U›<br>
+      using ℬ_base that ‹openin X U› ‹x0 ∈ U› by blast<br>
+    ― ‹Step 2: by regularity, find open U' and closed V with x0 ∈ U' ⊆ V ⊆<br>
+Bm›<br>
+    have ‹x0 ∈ topspace X›<br>
+      using that openin_subset by blast<br>
+    then obtain U' V where U'_open: ‹openin X U'› and V_closed: ‹closedin X<br>
+V›<br>
+      and x0_U': ‹x0 ∈ U'› and U'_V: ‹U' ⊆ V› and V_Bm: ‹V ⊆ Bm›<br>
+      using assms(1)[unfolded neighbourhood_base_of_closedin[symmetric]<br>
+        neighbourhood_base_of_def neighbourhood_base_at_def]<br>
+        ℬ_open Bm_in x0_Bm by meson<br>
+    ― ‹Step 3: choose basis element Bn with x0 ∈ Bn ⊆ U'›<br>
+    obtain Bn where Bn_in: ‹Bn ∈ ℬ› and x0_Bn: ‹x0 ∈ Bn› and Bn_sub: ‹Bn ⊆<br>
+U'›<br>
+      using ℬ_base U'_open x0_U' by blast<br>
+    ― ‹Bn ⊆ U' ⊆ V (closed), so closure_of Bn ⊆ V ⊆ Bm›<br>
+    have cl_Bn_Bm: ‹X closure_of Bn ⊆ Bm›<br>
+      using Bn_sub U'_V V_Bm V_closed closure_of_minimal by (meson<br>
+order_trans)<br>
+    ― ‹Hence (Bn, Bm) ∈ pairs›<br>
+    have pair_in: ‹(Bn, Bm) ∈ pairs›<br>
+      unfolding pairs_def using Bn_in Bm_in cl_Bn_Bm by blast<br>
+    ― ‹g Bn Bm x0 = 1 since x0 ∈ Bn ⊆ closure_of Bn›<br>
+    have ‹x0 ∈ X closure_of Bn›<br>
+      using x0_Bn closure_of_subset openin_subset ℬ_open Bn_in by (meson<br>
+in_mono)<br>
+    then have ‹g Bn Bm x0 = 1›<br>
+      using g_one[OF pair_in] by (auto simp: image_subset_iff)<br>
+    ― ‹g Bn Bm vanishes outside U since X - U ⊆ X - Bm›<br>
+    moreover have ‹∀x ∈ topspace X - U. g Bn Bm x = 0›<br>
+      using g_zero[OF pair_in] Bm_sub by (fastforce simp: image_subset_iff)<br>
+    ultimately show ?thesis<br>
+      using pair_in by blast<br>
+  qed<br>
+  ― ‹Reindex the countable family {gp p | p ∈ pairs} with natural numbers.<br>
+      Since pairs is countable, we can enumerate it using from_nat_into.›<br>
+  define f where ‹f ≡ λn. gp (from_nat_into pairs n)›<br>
+  have f_cont: ‹continuous_map X (top_of_set {0..1::real}) (f n)›<br>
+    if ‹pairs ≠ {}› for n<br>
+    using gp from_nat_into[OF that] unfolding f_def by blast<br>
+  have f_surj: ‹∀p ∈ pairs. ∃n. f n = gp p›<br>
+    using from_nat_into_surj[OF pairs_count] unfolding f_def by metis<br>
+  ― ‹The key separation property of the reindexed family:<br>
+      for any x0 ∈ X and open U ∋ x0, there exists n with f n x0 &gt; 0<br>
+      and f n vanishing outside U.›<br>
+  have f_sep: ‹∃n. f n x0 &gt; 0 ∧ (∀x ∈ topspace X - U. f n x = 0)›<br>
+    if ‹openin X U› and ‹x0 ∈ U› for x0 U<br>
+  proof -<br>
+    obtain Bn Bm where pair_in: ‹(Bn, Bm) ∈ pairs›<br>
+      and val1: ‹g Bn Bm x0 = 1› and van: ‹∀x ∈ topspace X - U. g Bn Bm x =<br>
+0›<br>
+      using separation that ‹openin X U› ‹x0 ∈ U› by blast<br>
+    obtain n where fn: ‹f n = gp (Bn, Bm)›<br>
+      using f_surj pair_in by blast<br>
+    have ‹f n = g Bn Bm›<br>
+      unfolding g_def using fn by simp<br>
+    then have ‹f n x0 &gt; 0 ∧ (∀x ∈ topspace X - U. f n x = 0)›<br>
+      using val1 van by simp<br>
+    then show ?thesis<br>
+      by blast<br>
+  qed  ― ‹Define F : X → ℝ^ω by F(x) = (f 0 x, f 1 x, f 2 x, ...)›<br>
+  define F where ‹F ≡ λx. λn. f n x›<br>
+    ― ‹If the topspace is nonempty, pairs is nonempty.›<br>
+  have pairs_nonempty: ‹pairs ≠ {}› if ‹topspace X ≠ {}›<br>
+    using separation that by blast<br>
+    ― ‹F is continuous: ℝ^ω has the product topology, so it suffices<br>
+      to show each component f n is continuous as a map X → ℝ.›<br>
+  have F_cont: ‹continuous_map X (product_topology (λ_::nat. euclideanreal)<br>
+UNIV) F›<br>
+    if nonempty: ‹topspace X ≠ {}›<br>
+  proof -<br>
+    have ‹continuous_map X euclideanreal (f n)› for n<br>
+      using f_cont[OF pairs_nonempty[OF nonempty]]<br>
+      by (rule continuous_map_into_fulltopology)<br>
+    then show ?thesis<br>
+      unfolding F_def<br>
+      by (subst continuous_map_componentwise_UNIV) auto<br>
+  qed<br>
+    ― ‹F is injective: given x ≠ y in X, since X is T1 there is an<br>
+      open set U containing y but not x. By f_sep there exists n<br>
+      with f n y &gt; 0 and f n x = 0, so F x ≠ F y.›<br>
+  have F_inj: ‹inj_on F (topspace X)›<br>
+  proof (rule inj_onI)<br>
+    fix x y<br>
+    assume xX: ‹x ∈ topspace X› and yX: ‹y ∈ topspace X› and Feq: ‹F x = F<br>
+y›<br>
+    show ‹x = y›<br>
+    proof (rule ccontr)<br>
+      assume ‹x ≠ y›<br>
+        ― ‹By T1, there exists an open set U containing y but not x›<br>
+      then obtain U where U_open: ‹openin X U› and yU: ‹y ∈ U› and xU: ‹x ∉<br>
+U›<br>
+        using ‹t1_space X›[unfolded t1_space_def, rule_format, OF yX xX] by<br>
+auto<br>
+          ― ‹By f_sep, there exists n with f n y &gt; 0 and f n x = 0›<br>
+      then obtain n where ‹f n y &gt; 0› and ‹f n x = 0›<br>
+        using f_sep[OF U_open yU] xU xX by auto<br>
+          ― ‹But F x = F y means f n x = f n y for all n, contradiction›<br>
+      then have ‹F x n ≠ F y n›<br>
+        unfolding F_def by simp<br>
+      then show False using Feq by (simp add: fun_eq_iff)<br>
+    qed<br>
+  qed<br>
+  show ‹metrizable_space X›<br>
+  proof (cases ‹topspace X = {}›)<br>
+    case True<br>
+    then show ?thesis<br>
+      using null_topspace_iff_trivial empty_metrizable_space by metis<br>
+  next<br>
+    case nonempty: False<br>
+    then have ne: ‹topspace X ≠ {}› by simp<br>
+    let ?Y = ‹product_topology (λ_::nat. euclideanreal) UNIV›<br>
+    have ts_Y: ‹topspace ?Y = UNIV›<br>
+      by simp    have F_open: ‹open_map X (subtopology ?Y (F <code> topspace X))
+F›
+    proof (unfold open_map_def, intro allI impI)
+      fix U assume U_open: ‹openin X U›
+      show ‹openin (subtopology ?Y (F </code> topspace X)) (F <code> U)›
+      proof (subst openin_subopen, intro ballI)
+        fix y assume ‹y ∈ F </code> U›<br>
+        then obtain x0 where x0U: ‹x0 ∈ U› and y_eq: ‹y = F x0› by auto<br>
+        obtain n where fn_pos: ‹f n x0 &gt; 0› and fn_van: ‹∀x ∈ topspace X -<br>
+U. f n x = 0›<br>
+          using f_sep[OF U_open x0U] by auto<br>
+        ― ‹The set W = {z ∈ topspace Y. z n &gt; 0} is open in Y›<br>
+        let ?W = ‹{z ∈ topspace ?Y. z n ∈ {0&lt;..}}›<br>
+        have W_open: ‹openin ?Y ?W›<br>
+          by (rule openin_continuo<br>
+[message truncated]</p>
+
+
+
+<a name="574907708"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Announcing%20Isabelle/Copilot%2C%20an%20AI-driven%20assi.../near/574907708" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Announcing.20Isabelle.2FCopilot.2C.20an.20AI-driven.20assi.2E.2E.2E.html#574907708">(Feb 20 2026 at 10:22)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Dominic,</p>
+<p>I have followed the recent work by Urban and Harrison a little and am delighted <br>
+to see that you are providing similar functionality in Isabelle, with comparable <br>
+results. Thank you!</p>
+<p>Tobias</p>
+<p>On 20/02/2026 10:29, Dominic Mulligan (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>As a follow up to this—as there's been rapid development of this plugin over the <br>
+last week—I'm attaching the text of a theory file containing a proof of the <br>
+Urysohn metrization theorem.  The proof follows the argument set forth by <br>
+Monkres in the book, Topology.  It was developed by Larry yesterday using <br>
+Isabelle Assistant, which proved the result in about 2.5 hours with Larry <br>
+feeding text taken from the book.  Larry was able to do other things whilst it <br>
+autoformalized the material in the background.  Once it approached the end of <br>
+the proof the agent realized it knew enough to go ahead and finish the proof <br>
+itself without further prompting.  This was using the new Claude Opus 4.6 model.</p>
+<p>Note we chose this proof as a stress-testing example as we are aware of similar <br>
+tests being done by Josef Urban and John Harrison within the context of <br>
+different theorem proving systems.</p>
+<p>theory Urysohn_Met3 imports "HOL-Analysis.Analysis" <br>
+"Isabelle_Assistant.Assistant_Support" begin</p>
+<p>lemma metrizable_space_countable_product_of_reals:<br>
+   shows ‹metrizable_space (product_topology (λ_::nat. euclideanreal) UNIV)›<br>
+   by (simp add: euclidean_product_topology metrizable_space_euclidean)</p>
+<p>theorem Urysohn_metrization:<br>
+   fixes X :: ‹'a topology›<br>
+assumes ‹regular_space X› and ‹second_countable X› and ‹t1_space X›  shows <br>
+‹metrizable_space X›<br>
+proof -<br>
+   ― ‹Obtain a countable basis for X›<br>
+   obtain ℬ where ℬ_count: ‹countable ℬ›<br>
+     and ℬ_open: ‹∀V ∈ ℬ. openin X V›<br>
+     and ℬ_base: ‹∀U x. openin X U ∧ x ∈ U ⟶ (∃V ∈ ℬ. x ∈ V ∧ V ⊆ U)›<br>
+     using assms(2) second_countable_def by metis<br>
+   ― ‹X is normal (regular + Lindelöf ⟹ normal)›<br>
+   have normal: ‹normal_space X›<br>
+     using assms regular_Lindelof_imp_normal_space <br>
+second_countable_imp_Lindelof_space by blast<br>
+   ― ‹For each pair (Bn, Bm) from the basis with closure of Bn ⊆ Bm,<br>
+       apply Urysohn's lemma to obtain g Bn Bm : X → [0,1] continuous with<br>
+       g Bn Bm <code> (X closure_of Bn) ⊆ {1} and g Bn Bm </code> (topspace X - Bm) ⊆ {0}›<br>
+   define pairs where ‹pairs ≡ {(Bn, Bm). Bn ∈ ℬ ∧ Bm ∈ ℬ ∧ X closure_of Bn ⊆ Bm}›<br>
+   have pairs_count: ‹countable pairs›<br>
+     unfolding pairs_def using ℬ_count by (auto intro: countable_subset[OF _ <br>
+countable_SIGMA[OF ℬ_count]])<br>
+   have ‹∀(Bn, Bm) ∈ pairs.<br>
+     ∃g::'a⇒real. continuous_map X (top_of_set {0..1}) g ∧<br>
+         g <code> (topspace X - Bm) ⊆ {0} ∧
+         g </code> (X closure_of Bn) ⊆ {1}›<br>
+   proof (clarsimp simp: pairs_def)<br>
+     fix Bn Bm<br>
+     assume Bn_in: ‹Bn ∈ ℬ› and Bm_in: ‹Bm ∈ ℬ› and sub: ‹X closure_of Bn ⊆ Bm›<br>
+     have cl_closed: ‹closedin X (X closure_of Bn)›<br>
+       by (rule closedin_closure_of)<br>
+     have comp_closed: ‹closedin X (topspace X - Bm)›<br>
+       using ℬ_open Bm_in by (simp add: closedin_diff)<br>
+     have disj: ‹disjnt (topspace X - Bm) (X closure_of Bn)›<br>
+       using sub closure_of_subset_topspace by (fastforce simp: disjnt_iff)<br>
+     show ‹∃g::'a⇒real. continuous_map X (top_of_set {0..1}) g ∧<br>
+               g <code> (topspace X - Bm) ⊆ {0} ∧
+               g </code> (X closure_of Bn) ⊆ {1}›<br>
+       using normal[unfolded normal_space_iff_Urysohn] comp_closed cl_closed <br>
+disj by blast<br>
+   qed<br>
+   then have ‹∀p ∈ pairs.<br>
+     ∃g::'a⇒real. continuous_map X (top_of_set {0..1}) g ∧<br>
+         g <code> (topspace X - snd p) ⊆ {0} ∧
+         g </code> (X closure_of fst p) ⊆ {1}›<br>
+     by (auto simp: case_prod_unfold)<br>
+   then obtain gp where gp: ‹⋀p. p ∈ pairs ⟹<br>
+       continuous_map X (top_of_set {0..1::real}) (gp p) ∧<br>
+       gp p <code> (topspace X - snd p) ⊆ {0} ∧
+       gp p </code> (X closure_of fst p) ⊆ {1}›<br>
+     by (meson bchoice)<br>
+   define g where ‹g ≡ λBn Bm. gp (Bn, Bm)›<br>
+   have g_cont: ‹⋀Bn Bm. (Bn, Bm) ∈ pairs ⟹<br>
+       continuous_map X (top_of_set {0..1::real}) (g Bn Bm)›<br>
+     and g_zero: ‹⋀Bn Bm. (Bn, Bm) ∈ pairs ⟹<br>
+       g Bn Bm <code> (topspace X - Bm) ⊆ {0}›
+     and g_one: ‹⋀Bn Bm. (Bn, Bm) ∈ pairs ⟹
+       g Bn Bm </code> (X closure_of Bn) ⊆ {1}›<br>
+     using gp unfolding g_def by (fastforce simp: image_subset_iff)+<br>
+   ― ‹The separation property of the family {g Bn Bm}: for any x0 in X and<br>
+       any open neighbourhood U of x0, there exist Bn, Bm in the basis with<br>
+       (Bn, Bm) ∈ pairs, g Bn Bm x0 = 1 &gt; 0, and g Bn Bm vanishes outside U.›<br>
+   have separation: ‹∃Bn Bm. (Bn, Bm) ∈ pairs ∧ g Bn Bm x0 = 1 ∧<br>
+       (∀x ∈ topspace X - U. g Bn Bm x = 0)›<br>
+     if ‹openin X U› and ‹x0 ∈ U› for x0 U<br>
+   proof -<br>
+     ― ‹Step 1: choose basis element Bm with x0 ∈ Bm ⊆ U›<br>
+     obtain Bm where Bm_in: ‹Bm ∈ ℬ› and x0_Bm: ‹x0 ∈ Bm› and Bm_sub: ‹Bm ⊆ U›<br>
+       using ℬ_base that ‹openin X U› ‹x0 ∈ U› by blast<br>
+     ― ‹Step 2: by regularity, find open U' and closed V with x0 ∈ U' ⊆ V ⊆ Bm›<br>
+     have ‹x0 ∈ topspace X›<br>
+       using that openin_subset by blast<br>
+     then obtain U' V where U'_open: ‹openin X U'› and V_closed: ‹closedin X V›<br>
+       and x0_U': ‹x0 ∈ U'› and U'_V: ‹U' ⊆ V› and V_Bm: ‹V ⊆ Bm›<br>
+       using assms(1)[unfolded neighbourhood_base_of_closedin[symmetric]<br>
+         neighbourhood_base_of_def neighbourhood_base_at_def]<br>
+         ℬ_open Bm_in x0_Bm by meson<br>
+     ― ‹Step 3: choose basis element Bn with x0 ∈ Bn ⊆ U'›<br>
+     obtain Bn where Bn_in: ‹Bn ∈ ℬ› and x0_Bn: ‹x0 ∈ Bn› and Bn_sub: ‹Bn ⊆ U'›<br>
+       using ℬ_base U'_open x0_U' by blast<br>
+     ― ‹Bn ⊆ U' ⊆ V (closed), so closure_of Bn ⊆ V ⊆ Bm›<br>
+     have cl_Bn_Bm: ‹X closure_of Bn ⊆ Bm›<br>
+       using Bn_sub U'_V V_Bm V_closed closure_of_minimal by (meson order_trans)<br>
+     ― ‹Hence (Bn, Bm) ∈ pairs›<br>
+     have pair_in: ‹(Bn, Bm) ∈ pairs›<br>
+       unfolding pairs_def using Bn_in Bm_in cl_Bn_Bm by blast<br>
+     ― ‹g Bn Bm x0 = 1 since x0 ∈ Bn ⊆ closure_of Bn›<br>
+     have ‹x0 ∈ X closure_of Bn›<br>
+       using x0_Bn closure_of_subset openin_subset ℬ_open Bn_in by (meson in_mono)<br>
+     then have ‹g Bn Bm x0 = 1›<br>
+       using g_one[OF pair_in] by (auto simp: image_subset_iff)<br>
+     ― ‹g Bn Bm vanishes outside U since X - U ⊆ X - Bm›<br>
+     moreover have ‹∀x ∈ topspace X - U. g Bn Bm x = 0›<br>
+       using g_zero[OF pair_in] Bm_sub by (fastforce simp: image_subset_iff)<br>
+     ultimately show ?thesis<br>
+       using pair_in by blast<br>
+   qed<br>
+   ― ‹Reindex the countable family {gp p | p ∈ pairs} with natural numbers.<br>
+       Since pairs is countable, we can enumerate it using from_nat_into.›<br>
+   define f where ‹f ≡ λn. gp (from_nat_into pairs n)›<br>
+   have f_cont: ‹continuous_map X (top_of_set {0..1::real}) (f n)›<br>
+     if ‹pairs ≠ {}› for n<br>
+     using gp from_nat_into[OF that] unfolding f_def by blast<br>
+   have f_surj: ‹∀p ∈ pairs. ∃n. f n = gp p›<br>
+     using from_nat_into_surj[OF pairs_count] unfolding f_def by metis<br>
+   ― ‹The key separation property of the reindexed family:<br>
+       for any x0 ∈ X and open U ∋ x0, there exists n with f n x0 &gt; 0<br>
+       and f n vanishing outside U.›<br>
+   have f_sep: ‹∃n. f n x0 &gt; 0 ∧ (∀x ∈ topspace X - U. f n x = 0)›<br>
+     if ‹openin X U› and ‹x0 ∈ U› for x0 U<br>
+   proof -<br>
+     obtain Bn Bm where pair_in: ‹(Bn, Bm) ∈ pairs›<br>
+       and val1: ‹g Bn Bm x0 = 1› and van: ‹∀x ∈ topspace X - U. g Bn Bm x = 0›<br>
+       using separation that ‹openin X U› ‹x0 ∈ U› by blast<br>
+     obtain n where fn: ‹f n = gp (Bn, Bm)›<br>
+       using f_surj pair_in by blast<br>
+     have ‹f n = g Bn Bm›<br>
+       unfolding g_def using fn by simp<br>
+     then have ‹f n x0 &gt; 0 ∧ (∀x ∈ topspace X - U. f n x = 0)›<br>
+       using val1 van by simp<br>
+     then show ?thesis<br>
+       by blast<br>
+   qed  ― ‹Define F : X → ℝ^ω by F(x) = (f 0 x, f 1 x, f 2 x, ...)›<br>
+   define F where ‹F ≡ λx. λn. f n x›<br>
+     ― ‹If the topspace is nonempty, pairs is nonempty.›<br>
+   have pairs_nonempty: ‹pairs ≠ {}› if ‹topspace X ≠ {}›<br>
+     using separation that by blast<br>
+     ― ‹F is continuous: ℝ^ω has the product topology, so it suffices<br>
+       to show each component f n is continuous as a map X → ℝ.›<br>
+   have F_cont: ‹continuous_map X (product_topology (λ_::nat. euclideanreal) <br>
+UNIV) F›<br>
+     if nonempty: ‹topspace X ≠ {}›<br>
+   proof -<br>
+     have ‹continuous_map X euclideanreal (f n)› for n<br>
+       using f_cont[OF pairs_nonempty[OF nonempty]]<br>
+       by (rule continuous_map_into_fulltopology)<br>
+     then show ?thesis<br>
+       unfolding F_def<br>
+       by (subst continuous_map_componentwise_UNIV) auto<br>
+   qed<br>
+     ― ‹F is injective: given x ≠ y in X, since X is T1 there is an<br>
+       open set U containing y but not x. By f_sep there exists n<br>
+       with f n y &gt; 0 and f n x = 0, so F x ≠ F y.›<br>
+   have F_inj: ‹inj_on F (topspace X)›<br>
+   proof (rule inj_onI)<br>
+     fix x y<br>
+     assume xX: ‹x ∈ topspace X› and yX: ‹y ∈ topspace X› and Feq: ‹F x = F y›<br>
+     show ‹x = y›<br>
+     proof (rule ccontr)<br>
+       assume ‹x ≠ y›<br>
+         ― ‹By T1, there exists an open set U containing y but not x›<br>
+       then obtain U where U_open: ‹openin X U› and yU: ‹y ∈ U› and xU: ‹x ∉ U›<br>
+         using ‹t1_space X›[unfolded t1_space_def, rule_format, OF yX xX] by auto<br>
+           ― ‹By f_sep, there exists n with f n y &gt; 0 and f n x = 0›<br>
+       then obtain n where ‹f n y &gt; 0› and ‹f n x = 0›<br>
+         using f_sep[OF U_open yU] xU xX by auto<br>
+           ― ‹But F x = F y means f n x = f n y for all n, contradiction›<br>
+       then have ‹F x n ≠ F y n›<br>
+         unfolding F_def by simp<br>
+       then show False using Feq by (simp add: fun_eq_iff)</p>
+<p>[message truncated]<br>
+<a href="/user_uploads/14278/xF0NyZjHk61TTw7whsMf8Jp8/smime.p7s">smime.p7s</a></p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

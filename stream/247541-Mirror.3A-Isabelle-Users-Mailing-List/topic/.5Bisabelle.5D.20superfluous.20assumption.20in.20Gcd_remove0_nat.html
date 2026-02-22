@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] superfluous assumption in Gcd_remove0_nat · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20superfluous.20assumption.20in.20Gcd_remove0_nat.html">[isabelle] superfluous assumption in Gcd_remove0_nat</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="510395320"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20superfluous%20assumption%20in%20Gcd_remove0_nat/near/510395320" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20superfluous.20assumption.20in.20Gcd_remove0_nat.html#510395320">(Apr 05 2025 at 17:47)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+The finiteness assumption in GCD.Gcd_remove0_nat can (and therefore <br>
+should) be omitted. Moreover, the claim holds in any semiring (probably <br>
+fits well after the lemma Gcd_Lcm)</p>
+<p>lemma "Gcd M = Gcd (M - {0 :: 'a :: semiring_Gcd})"<br>
+proof-<br>
+   have "(∀ m ∈ M. b dvd m) ⟷ (∀ m ∈ (M - {0}). b dvd m)" for b<br>
+     by blast+<br>
+   thus ?thesis<br>
+     unfolding Gcd_Lcm by presburger<br>
+qed</p>
+<p>Stepan</p>
+
+
+
+<a name="510400480"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20superfluous%20assumption%20in%20Gcd_remove0_nat/near/510400480" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20superfluous.20assumption.20in.20Gcd_remove0_nat.html#510400480">(Apr 05 2025 at 18:48)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Stepan,</p>
+<p>Thanks for that, I'll take care of it.</p>
+<p>Tobias</p>
+<p>On 05/04/2025 19:41, Stepan Holub (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>The finiteness assumption in GCD.Gcd_remove0_nat can (and therefore should) be <br>
+omitted. Moreover, the claim holds in any semiring (probably fits well after the <br>
+lemma Gcd_Lcm)</p>
+<p>lemma "Gcd M = Gcd (M - {0 :: 'a :: semiring_Gcd})"<br>
+proof-<br>
+   have "(∀ m ∈ M. b dvd m) ⟷ (∀ m ∈ (M - {0}). b dvd m)" for b<br>
+     by blast+<br>
+   thus ?thesis<br>
+     unfolding Gcd_Lcm by presburger<br>
+qed</p>
+<p>Stepan</p>
+</blockquote>
+<p><a href="/user_uploads/14278/w1s4BOvlPqyReeQaM0Voz_QB/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

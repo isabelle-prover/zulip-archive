@@ -1,0 +1,163 @@
+<html>
+<head><meta charset="utf-8"><title>Cardinality and indicator functions · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html">Cardinality and indicator functions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="527336953"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527336953" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527336953">(Jul 06 2025 at 09:57)</a>:</h4>
+<p>The following lemma seems obvious to me</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">card_indicator</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">U</span><span class="o">::</span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">P</span><span class="o">::</span><span class="s">"'a ⇒ bool"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"finite U"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w">  </span><span class="s">"card { u ∈ U .   (P u)} =  (∑ u ∈ U  .  (if (P u) then 1 else 0))"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+</code></pre></div>
+<p>but <code>sledgehammer</code> fails to find a proof. </p>
+<p>I was trying to mimic a Lean proof that if I have three 2-element subsets of a 4-element set <code>U</code>, then at least one element of <code>U</code> appears in at least two of them.; that proof starts out with this:</p>
+<div class="codehilite" data-code-language="Lean4"><pre><span></span><code><span class="w"> </span><span class="o">(</span><span class="n">U</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="w"> </span><span class="bp">_</span><span class="o">)</span><span class="w"> </span><span class="o">[</span><span class="n">Fintype</span><span class="w"> </span><span class="n">U</span><span class="o">]</span>
+<span class="w"> </span><span class="o">(</span><span class="n">U_card</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Fintype</span><span class="bp">.</span><span class="n">card</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">4</span><span class="o">)</span>
+<span class="w"> </span><span class="c1">-- `f` is an indicator function, mapping each element of `U` to the set of indices</span>
+<span class="w"> </span><span class="c1">-- of sets that contain that element.</span>
+<span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="bp">→</span><span class="w"> </span><span class="n">Finset</span><span class="w"> </span><span class="o">(</span><span class="n">Fin</span><span class="w"> </span><span class="mi">3</span><span class="o">))</span>
+<span class="w"> </span><span class="c1">-- Each of those sets contains exactly two elements.</span>
+<span class="w"> </span><span class="o">(</span><span class="n">h</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∀</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Fin</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="bp">#</span><span class="o">{</span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="bp">|</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="bp">∈</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="o">}</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">:</span>
+<span class="w"> </span><span class="c1">-- There is some element `u : U` that is an element of two distinct sets:</span>
+<span class="w"> </span><span class="c1">-- that is, `f u` contains two distinct indices.</span>
+<span class="w"> </span><span class="bp">∃</span><span class="w"> </span><span class="o">(</span><span class="n">u</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">U</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Fin</span><span class="w"> </span><span class="mi">3</span><span class="o">),</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="bp">≠</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="bp">∧</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="bp">∈</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="bp">∧</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="bp">∈</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="c1">-- begin our proof</span>
+
+<span class="w"> </span><span class="c1">-- the elements of `U` appear in the three sets with multiplicity 6,</span>
+<span class="w"> </span><span class="c1">-- since each set has cardinality 2</span>
+<span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∑</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Fin</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="bp">#</span><span class="o">{</span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="bp">|</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="bp">∈</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="o">}</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">6</span>
+<span class="w"> </span><span class="bp">·</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="o">[</span><span class="n">h</span><span class="o">]</span>
+
+<span class="w"> </span><span class="c1">-- we can also express this as a sum of sums of indicator functions;</span>
+<span class="w"> </span><span class="c1">-- importantly, we can swap the sum operators.</span>
+<span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="n">h2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="bp">∑</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Fin</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="bp">#</span><span class="o">{</span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="bp">|</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="bp">∈</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="o">}</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="bp">∑</span><span class="w"> </span><span class="n">u</span><span class="o">,</span><span class="w"> </span><span class="bp">∑</span><span class="w"> </span><span class="n">n</span><span class="o">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="bp">∈</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span>
+<span class="w"> </span><span class="bp">·</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">Finset</span><span class="bp">.</span><span class="n">sum_comm</span><span class="o">]</span><span class="bp">;</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+<p>and it was in the line labeled <code>h2</code> that I failed, and subsequently tried to simplify down to a minimal example, which is the one above. </p>
+<p>Given how often (in probability theory, for instance), cardinalities and indicator functions are tossed around, I felt that surely this must be straightforward....but apparently it's not. I tried <code>nitpick</code> to see whether I'd stupidly missed some hypothesis in the statement of the lemma, but nothing obvious came up. </p>
+<p>I also tried changing <code>(if (P u) then 1 else 0))"</code> to `(if (P u) then (1::nat) else 0))" in case that nudge would help, but it had no visible effect. </p>
+<p>Can someone suggest how to make this work?</p>
+
+
+
+<a name="527337545"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527337545" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527337545">(Jul 06 2025 at 10:10)</a>:</h4>
+<p>sledgehammer gave me this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">card_indicator</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">U</span><span class="o">::</span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">P</span><span class="o">::</span><span class="s">"'a ⇒ bool"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"finite U"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w">  </span><span class="s">"card { u ∈ U .   (P u)} =  (∑ u ∈ U  .  (if (P u) then 1 else 0))"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">no_types</span><span class="o">,</span><span class="w"> </span><span class="n">lifting</span><span class="o">)</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="n">card_eq_sum</span>
+<span class="w">      </span><span class="n">sum.inter_filter</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="527338182"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527338182" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527338182">(Jul 06 2025 at 10:24)</a>:</h4>
+<p>When I paste that in, it certainly works (and very quickly). </p>
+<p>I've just gone in and commented out the remainder of the file I was working on, and once I've done that, this tiny lemma (right at the top) can be handled by sledgehammer.  I'm not sure what's going on there, but I'm certainly happy to be able to proceed -- thank you. It's a relief to know that I didn't miss something stupid in the lemma statement. :)</p>
+
+
+
+<a name="527341713"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527341713" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527341713">(Jul 06 2025 at 11:38)</a>:</h4>
+<p>probably later in your file more lemmas got fed to sledgehammer so it timed out, you could have perhaps tried to increase the time limit on your sledgehammer call</p>
+
+
+
+<a name="527408200"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527408200" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527408200">(Jul 07 2025 at 06:32)</a>:</h4>
+<p>Also sledgehammer not finding a proof does not mean it's not easily provable. If you re-write the <code>card</code> to a sum (<code>subst card_eq_sum</code>) then <code>solve_direct</code> tells you that there already is a rule for this.</p>
+
+
+
+<a name="527733060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527733060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527733060">(Jul 08 2025 at 16:30)</a>:</h4>
+<p>Thanks, Fabian. There's a challenge for a beginner, namely, how to know that I <strong>can</strong> rewrite "card" to a sum.  I suppose that I could start at the very bottom of the chain of theories included in <code>Main</code> and read them all and try to remember everything I see, but it's hard to believe that this is a viable approach (esp. for those of us whose memory is already over-full and fast declining). Is there some other recommended way to know such things? </p>
+<p>Should I, for instance, say to myself "I seem to be having trouble with <code>card</code>, so I should look at its definition, and then do a <code>find_theorems</code> and look for anything with <code>card</code> in it."? Or is there some other way that you use when you start to use some part of Isabelle that you're not already familiar with?</p>
+
+
+
+<a name="527734225"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527734225" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527734225">(Jul 08 2025 at 16:37)</a>:</h4>
+<p>If I state a lemma like that I'd think: "surely there's something about card begin equal to a sum" so I'd search for the pattern</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">find_theorems</span><span class="w"> </span><span class="s">"card _ = sum _ _"</span>
+</code></pre></div>
+<p>But looking through a theory of a concept you're using isn't a bad idea either.</p>
+
+
+
+<a name="527734512"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527734512" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527734512">(Jul 08 2025 at 16:38)</a>:</h4>
+<p>Sledgehammer _usually_ also works well in finding lemmas, but sometimes it doesn't.</p>
+
+
+
+<a name="527737921"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527737921" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527737921">(Jul 08 2025 at 16:58)</a>:</h4>
+<p>Thanks. Can you bear with me for a few more beginner questions? </p>
+<ol>
+<li>After I write </li>
+</ol>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">subst</span><span class="w"> </span><span class="n">card_eq_sum</span><span class="o">)</span>
+</code></pre></div>
+<p>I would normally try to write something like <code>show ?thesis by sledgehammer</code>, but in this case the <code>subst</code> has changed the goal so this warns me that what I'm hoping to <code>show</code> isn't  (a refinement of) the current goal. So I end up copying the new goal and pasting it in, to get <br>
+<code>show " (∑x∈{u ∈ U. P u}. 1) = (∑u∈U. if P u then 1 else 0) " by sledgehammer</code>, and then I'm on my way.  But I keep wondering if there's some other way to refer to the changed goal without the copy-paste step. </p>
+<ol start="2">
+<li>After I write </li>
+</ol>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">subst</span><span class="w"> </span><span class="n">card_eq_sum</span><span class="o">)</span>
+</code></pre></div>
+<p>I might instead type <code>solve_direct</code> (something I didn't know I could do until 5 minutes ago). It tells  me that</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">goal</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">solved</span><span class="w"> </span><span class="n">directly</span><span class="w"> </span><span class="k">with</span>
+<span class="w">  </span><span class="n">Groups_Big.comm_monoid_add_class.sum.inter_filter</span><span class="o">:</span>
+</code></pre></div>
+<p>but I'm not sure what to do with that information. Is there a common set of steps one takes to use this information? </p>
+<p>I've seen this before in cases like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">h1</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"P 1"</span><span class="w"> </span><span class="gr">sorry</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">h2</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"P 1"</span>
+</code></pre></div>
+<p>where "auto solve_direct" says that the goal can be solved with <code>h1</code>. But I've never know exactly what sequence of steps I should follow to make use of this information. </p>
+<p>As I seem to often say in my questions, "You have no idea how little I know/understand about Isabelle, so please explain it to me as if I'm in kindergarten."</p>
+<p>Thanks in advance.</p>
+
+
+
+<a name="527742474"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527742474" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527742474">(Jul 08 2025 at 17:25)</a>:</h4>
+<ol>
+<li>If you want to have a structured proof there is no nice way around it. I simply do <code>apply ...</code> for exploration, and you can even start a <code>proof</code> after a few <code>apply</code> steps (just don't do that in anything you'd want to maintain).</li>
+<li><code>solve_direct</code> tells you when the conclusion of an existing rule unifies with your current goal IIRC, i.e., you can <code>apply (rule Groups_Big.comm_monoid_add_class.sum.inter_filter)</code> (shorten the name as appropriate) to apply that rule backwards.</li>
+</ol>
+
+
+
+<a name="527750058"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Cardinality%20and%20indicator%20functions/near/527750058" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Cardinality.20and.20indicator.20functions.html#527750058">(Jul 08 2025 at 18:13)</a>:</h4>
+<p>Ah...thank you.  Perhaps <code>solve_direct</code> was an early automation tool, perhaps even pre-Isar. </p>
+<p>I've tried pretty hard to stick to what I think of as "core Isar" and avoid apply-scripts, just as I avoided "asm" when writing C-code in the 1970s. :)  Perhaps I should actually get familiar with apply-scripts, but avoiding them has worked for me so far. </p>
+<p>It seems that in the first case, I can do this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">subst</span><span class="w"> </span><span class="n">card_eq_sum</span><span class="o">)</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">" (∑x∈{u ∈ U. P u}. 1) = (∑u∈U. if P u then 1 else 0) "</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">sum.inter_filter</span><span class="o">)</span><span class="w">    </span><span class="n">&lt;</span><span class="o">--------------</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"finite U"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+</code></pre></div>
+<p>where the marked line is kind of a structured-proof proxy for your <code>apply</code>.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

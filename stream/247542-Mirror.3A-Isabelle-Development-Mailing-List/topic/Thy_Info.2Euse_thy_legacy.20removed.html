@@ -1,0 +1,48 @@
+<html>
+<head><meta charset="utf-8"><title>Thy_Info.use_thy_legacy removed · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Thy_Info.2Euse_thy_legacy.20removed.html">Thy_Info.use_thy_legacy removed</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="568075527"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Thy_Info.use_thy_legacy%20removed/near/568075527" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Thy_Info.2Euse_thy_legacy.20removed.html#568075527">(Jan 14 2026 at 20:35)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* ML </strong>*</p>
+<ul>
+<li>Obsolete Thy_Info.use_thy_legacy has been removed. Rare<br>
+INCOMPATIBILITY: need to use formal PIDE session to load theories, e.g.<br>
+via "isabelle build" or "isabelle process_theories".</li>
+</ul>
+<p>This refers to Isabelle/955f8ac18136.</p>
+<p>The Isabelle2025-1 release already had this NEWS entry:</p>
+<ul>
+<li>The former command-line tool "isabelle process" has been renamed to<br>
+"isabelle ML_process", with new options -C DIR and -r (redirect). The<br>
+old option option -T to load individual theories via the Isabelle/ML<br>
+"use_thy" function has been removed. It is still possible to use<br>
+"Thy_Info.use_thy_legacy" together with "isabelle ML_process -e ...",<br>
+but that low-level entry to the theory loader will be removed at a later<br>
+stage. The proper way to process individual theories under program<br>
+control is via "isabelle process_theories". INCOMPATIBILITY.</li>
+</ul>
+<p>So that's finally it: no "use_thy" anymore. It was the central Isabelle/ML <br>
+operation since 1992, and already present in changeset 0 (Sep-1993):<br>
+<a href="https://isabelle.in.tum.de/repos/isabelle/file/a5a9c433f639/src/Pure/Thy/read.ML">https://isabelle.in.tum.de/repos/isabelle/file/a5a9c433f639/src/Pure/Thy/read.ML</a></p>
+<p>The implementation behind it has changed many times since then, but now we <br>
+have better ways to communicate between Isabelle/Scala and Isabelle/ML, <br>
+without the old toplevel loop.</p>
+<p>Rather soon, I will revisit the protocol function "build_theories" and its <br>
+underlying ML function Thy_Info.use_theories, in order to make it more <br>
+scalable and less sequential: meaning that intermediate states are removed <br>
+earlier in the process, and heap space is released.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

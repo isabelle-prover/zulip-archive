@@ -1,0 +1,2463 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Merging elimination rules of Claset is slow - ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html">[isabelle] Merging elimination rules of Claset is slow - ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525149986"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/525149986" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#525149986">(Jun 21 2025 at 10:12)</a>:</h4>
+<p>From: "\"Mulder, Ike\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of the Claset of two theories.</p>
+<p>The merging happens here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604</a>&gt; – merging safe elimination rules specifically turns out to be slow in our case. There are two reasons for that, I think:</p>
+<p>1.  The complexity of merging the rules seems higher than it should be<br>
+  2.  We apparently have a lot (about 20000) safe elimination rules. Most of these are automatically added when declaring <code>datatype</code>s<br>
+The safe elimination rules added by new datatypes have the form <code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic when defining enums with a lot of cases: the number of safe elimination rules added is quadratic in the number of cases in the enum. The addition of these elimination rules happens here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe elimination rules for newly defined <code>datatype</code>s. That seems to improve performance a lot.</p>
+<p>Best, Ike</p>
+
+
+
+<a name="525159475"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/525159475" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#525159475">(Jun 21 2025 at 13:38)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+I recall that there were some big performance problems in one of the AFP <br>
+entries on p-adic numbers as well. Switching in and out of locale <br>
+contexts sometimes takes a full minute. I wonder if this is related to <br>
+some of the issues you mention.</p>
+<p>Manuel</p>
+<p>On 20/06/2025 14:17, "Mulder, Ike" (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … 
+imports … begin</code> header is taking anywhere from 5-20 seconds.</p>
+<p>The second bottleneck we’re seeing is in the merging of elimination <br>
+rules of the Claset of two theories.</p>
+<p>The merging happens here <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604</a>&gt; <br>
+– merging safe elimination rules specifically turns out to be slow in <br>
+our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules.<br>
+    Most of these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI 
+= caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes <br>
+problematic when defining enums with a lot of cases: the number of <br>
+safe elimination rules added is quadratic in the number of cases in <br>
+the enum. The addition of these elimination rules happens here <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <br>
+<code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> <br>
+rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe <br>
+elimination rules for newly defined <code>datatype</code>s. That seems to improve <br>
+performance a lot.</p>
+<p>Best, Ike<br>
+</p>
+</blockquote>
+
+
+
+<a name="526388116"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526388116" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526388116">(Jun 30 2025 at 12:20)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Plenty of people have large datatype declarations. We need to find a way of handling them that doesn't generate a quadratic amount of anything. As a stopgap, the having the option of just relying on the (quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 20 June 2025 13:17<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] Merging elimination rules of Claset is slow - performance issue loading multiple theories</p>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … begin</code> header is taking anywhere from 5-20 seconds.</p>
+<p>The second bottleneck we’re seeing is in the merging of elimination rules of the Claset of two theories.</p>
+<p>The merging happens here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604</a>&gt; – merging safe elimination rules specifically turns out to be slow in our case. There are two reasons for that, I think:</p>
+<p>1.  The complexity of merging the rules seems higher than it should be<br>
+  2.  We apparently have a lot (about 20000) safe elimination rules. Most of these are automatically added when declaring <code>datatype</code>s</p>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic when defining enums with a lot of cases: the number of safe elimination rules added is quadratic in the number of cases in the enum. The addition of these elimination rules happens here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe elimination rules for newly defined <code>datatype</code>s. That seems to improve performance a lot.</p>
+<p>Best, Ike</p>
+
+
+
+<a name="526401974"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526401974" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526401974">(Jun 30 2025 at 13:27)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+I believe the behavior of mutually recursive datatypes might be worse than quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the LeanHammer on the simplest goals I could imagine: the subgoals emerging from an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] # xs", because the quadratic distinct rules are not generated as theorem in Lean (presumably because of their quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a way of handling them that doesn't generate a quadratic amount of anything. As a stopgap, the having the option of just relying on the (quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry<br>
+From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 20 June 2025 13:17<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] Merging elimination rules of Claset is slow - performance issue loading multiple theories</p>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of the Claset of two theories.</p>
+<p>The merging happens here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604</a>&gt; – merging safe elimination rules specifically turns out to be slow in our case. There are two reasons for that, I think:<br>
+The complexity of merging the rules seems higher than it should be<br>
+We apparently have a lot (about 20000) safe elimination rules. Most of these are automatically added when declaring <code>datatype</code>s<br>
+The safe elimination rules added by new datatypes have the form <code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic when defining enums with a lot of cases: the number of safe elimination rules added is quadratic in the number of cases in the enum. The addition of these elimination rules happens here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe elimination rules for newly defined <code>datatype</code>s. That seems to improve performance a lot.</p>
+<p>Best, Ike</p>
+</blockquote>
+
+
+
+<a name="526405683"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526405683" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526405683">(Jun 30 2025 at 13:44)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+What about generating a function that enumerates cases of the datatype, <br>
+and having a single distinctiveness theorem for that function? Then only <br>
+the proof of that theorem is expensive, and it can be used by <br>
+Sledgehammer (but proof search might take a bit longer).</p>
+<p>Fabian</p>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse <br>
+than quadratic. (For codatatypes, that's definitely the case.) Perhaps <br>
+Dmitriy could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the <br>
+LeanHammer on the simplest goals I could imagine: the subgoals <br>
+emerging from an induction proving "xs ~= x # xs". LeanHammer failed <br>
+to prove "[] ~= [] # xs", because the quadratic distinct rules are not <br>
+generated as theorem in Lean (presumably because of their quadratic <br>
+nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep <br>
+Sledgehammer in mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a <br>
+way of handling them that doesn't generate a quadratic amount of <br>
+anything. As a stopgap, the having the option of just relying on the <br>
+(quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for <br>
+large datatypes, since having lots of simprocs floating around causes <br>
+its own issues.</p>
+<p>Larry</p>
+<hr>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk <br>
+&lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, <br>
+Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Sent:</em>20 June 2025 13:17<br>
+<em>To:</em>cl-isabelle-users@lists.cam.ac.uk <br>
+&lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow - <br>
+performance issue loading multiple theories<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … 
+imports … begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination <br>
+rules of the Claset of two theories.</p>
+<p>The merging happenshere <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604&gt;–">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604&gt;–</a> <br>
+merging safe elimination rules specifically turns out to be slow in <br>
+our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules.<br>
+    Most of these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+<p>The safe elimination rules added by new datatypes have the form <br>
+<code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly <br>
+becomes problematic when defining enums with a lot of cases: the <br>
+number of safe elimination rules added is quadratic in the number of <br>
+cases in the enum. The addition of these elimination rules <br>
+happenshere <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <br>
+<code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> <br>
+rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these <br>
+safe elimination rules for newly defined <code>datatype</code>s. That seems to <br>
+improve performance a lot.</p>
+<p>Best, Ike<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="526408562"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526408562" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526408562">(Jun 30 2025 at 13:57)</a>:</h4>
+<p>From: Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;<br>
+You mean something like</p>
+<p>myfunc Nil = 0<br>
+    myfunc (Cons _ _) = 1</p>
+<p>? If you want to investigate this, be my guest. :) Otherwise, I'll keep it as a project idea for a BSc thesis.</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 15:44, Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt; wrote:</p>
+<p>What about generating a function that enumerates cases of the datatype, and having a single distinctiveness theorem for that function? Then only the proof of that theorem is expensive, and it can be used by Sledgehammer (but proof search might take a bit longer).</p>
+<p>Fabian </p>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse than quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the LeanHammer on the simplest goals I could imagine: the subgoals emerging from an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] # xs", because the quadratic distinct rules are not generated as theorem in Lean (presumably because of their quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; &lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a way of handling them that doesn't generate a quadratic amount of anything. As a stopgap, the having the option of just relying on the (quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry<br>
+From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 20 June 2025 13:17<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] Merging elimination rules of Claset is slow - performance issue loading multiple theories</p>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of the Claset of two theories.</p>
+<p>The merging happens here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604</a>&gt; – merging safe elimination rules specifically turns out to be slow in our case. There are two reasons for that, I think:<br>
+The complexity of merging the rules seems higher than it should be<br>
+We apparently have a lot (about 20000) safe elimination rules. Most of these are automatically added when declaring <code>datatype</code>s<br>
+The safe elimination rules added by new datatypes have the form <code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic when defining enums with a lot of cases: the number of safe elimination rules added is quadratic in the number of cases in the enum. The addition of these elimination rules happens here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe elimination rules for newly defined <code>datatype</code>s. That seems to improve performance a lot.</p>
+<p>Best, Ike<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="526421590"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526421590" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526421590">(Jun 30 2025 at 14:53)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+Exactly. This sounds like a good thesis project.</p>
+<p>Fabian</p>
+<p>On 6/30/25 15:56, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>You mean something like</p>
+<p>myfunc Nil = 0<br>
+myfunc (Cons _ _) = 1</p>
+<p>? If you want to investigate this, be my guest. :) Otherwise, I'll <br>
+keep it as a project idea for a BSc thesis.</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 15:44, Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt; wrote:</p>
+<p>What about generating a function that enumerates cases of the <br>
+datatype, and having a single distinctiveness theorem for that <br>
+function? Then only the proof of that theorem is expensive, and it <br>
+can be used by Sledgehammer (but proof search might take a bit longer).</p>
+<p>Fabian</p>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be <br>
+worse than quadratic. (For codatatypes, that's definitely the case.) <br>
+Perhaps Dmitriy could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out <br>
+the LeanHammer on the simplest goals I could imagine: the subgoals <br>
+emerging from an induction proving "xs ~= x # xs". LeanHammer failed <br>
+to prove "[] ~= [] # xs", because the quadratic distinct rules are <br>
+not generated as theorem in Lean (presumably because of their <br>
+quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep <br>
+Sledgehammer in mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find <br>
+a way of handling them that doesn't generate a quadratic amount of <br>
+anything. As a stopgap, the having the option of just relying on <br>
+the (quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for <br>
+large datatypes, since having lots of simprocs floating around <br>
+causes its own issues.</p>
+<p>Larry</p>
+<hr>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk <br>
+&lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, <br>
+Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Sent:</em>20 June 2025 13:17<br>
+<em>To:</em>cl-isabelle-users@lists.cam.ac.uk <br>
+&lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow - <br>
+performance issue loading multiple theories<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … 
+imports … begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination <br>
+rules of the Claset of two theories.</p>
+<p>The merging happenshere <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604&gt;–">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604&gt;–</a> <br>
+merging safe elimination rules specifically turns out to be slow in <br>
+our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules.<br>
+    Most of these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+<p>The safe elimination rules added by new datatypes have the form <br>
+<code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly <br>
+becomes problematic when defining enums with a lot of cases: the <br>
+number of safe elimination rules added is quadratic in the number <br>
+of cases in the enum. The addition of these elimination rules <br>
+happenshere <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <br>
+<code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> <br>
+rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these <br>
+safe elimination rules for newly defined <code>datatype</code>s. That seems to <br>
+improve performance a lot.</p>
+<p>Best, Ike</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="526428746"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526428746" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526428746">(Jun 30 2025 at 15:27)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I have the vague memory that that's what the HOL4 guys do. An "ord_t" function. <br>
+And a threshold for ord_t to kick in and replace the quadratically many rules <br>
+(which, as Jasmin pointed out, are much better for s/h).</p>
+<p>Tobias</p>
+<p>On 30/06/2025 15:44, Fabian Huch wrote:</p>
+<blockquote>
+<p>What about generating a function that enumerates cases of the datatype, and <br>
+having a single distinctiveness theorem for that function? Then only the proof <br>
+of that theorem is expensive, and it can be used by Sledgehammer (but proof <br>
+search might take a bit longer).</p>
+<p>Fabian</p>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse than <br>
+quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy <br>
+could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the <br>
+LeanHammer on the simplest goals I could imagine: the subgoals emerging from <br>
+an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] # <br>
+xs", because the quadratic distinct rules are not generated as theorem in Lean <br>
+(presumably because of their quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in <br>
+mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a way of <br>
+handling them that doesn't generate a quadratic amount of anything. As a <br>
+stopgap, the having the option of just relying on the (quadratically many) <br>
+simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large <br>
+datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry</p>
+<hr>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk &lt;cl-isabelle-users- <br>
+<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, Ike" &lt;cl-isabelle- <br>
+<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;<br>
+<em>Sent:</em>20 June 2025 13:17<br>
+<em>To:</em>cl-isabelle-users@lists.cam.ac.uk &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow - <br>
+performance issue loading multiple theories<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … 
+begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of <br>
+the Claset of two theories.</p>
+<p>The merging happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/">https://isabelle.sketis.net/repos/isabelle/file/tip/</a> <br>
+src/Provers/classical.ML#l604&gt;– merging safe elimination rules specifically <br>
+turns out to be slow in our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules. Most of<br>
+    these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI = 
+caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic <br>
+when defining enums with a lot of cases: the number of safe elimination rules <br>
+added is quadratic in the number of cases in the enum. The addition of these <br>
+elimination rules happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a> <br>
+file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <br>
+<code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that <br>
+scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe <br>
+elimination rules for newly defined <code>datatype</code>s. That seems to improve <br>
+performance a lot.</p>
+<p>Best, Ike<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/iVIrFiVag9JrdQKxosZZquLI/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="526432517"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526432517" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526432517">(Jun 30 2025 at 15:46)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Jasmin, all,</p>
+<p>It is correct that the behavior of the internal type construction for (co)datatypes is worse than quadratic in the numbers of mutual types and type variables. However the number of constructors does not influence the internal construction much (there one works with a single constructor anyway). For example, for the below type the internal construction takes 56 milliseconds whereas producing the rest (including 3540 high-level distinctness theorems) takes 27 seconds on my machine (with parallelism disabled for more precise time measurements).</p>
+<p>ML ‹Multithreading.parallel_proofs := 0›<br>
+declare [[bnf_timing]]<br>
+datatype a =<br>
+  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10 |<br>
+  B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10 |<br>
+  C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 |<br>
+  D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 |<br>
+  E1 | E2 | E3 | E4 | E5 | E6 | E7 | E8 | E9 | E10 |<br>
+  F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10</p>
+<p>But distinctness is only one of the culprits (and as discussed might be useful for proof automation): disabling the plugins brings the time down to 8 seconds:</p>
+<p>datatype (plugins only:) a = …</p>
+<p>Depending on the use case one can also try selectively disable plugins.</p>
+<p>Dmitriy</p>
+<p>On 30 Jun 2025, at 15.20, Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt; wrote:</p>
+<p>I believe the behavior of mutually recursive datatypes might be worse than quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the LeanHammer on the simplest goals I could imagine: the subgoals emerging from an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] # xs", because the quadratic distinct rules are not generated as theorem in Lean (presumably because of their quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a way of handling them that doesn't generate a quadratic amount of anything. As a stopgap, the having the option of just relying on the (quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Mulder, Ike" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 20 June 2025 13:17<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] Merging elimination rules of Claset is slow - performance issue loading multiple theories</p>
+<p>Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of the Claset of two theories.</p>
+<p>The merging happens here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Provers/classical.ML#l604</a>&gt; – merging safe elimination rules specifically turns out to be slow in our case. There are two reasons for that, I think:</p>
+<p>1.  The complexity of merging the rules seems higher than it should be<br>
+  2.  We apparently have a lot (about 20000) safe elimination rules. Most of these are automatically added when declaring <code>datatype</code>s</p>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI = caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic when defining enums with a lot of cases: the number of safe elimination rules added is quadratic in the number of cases in the enum. The addition of these elimination rules happens here&lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083">https://isabelle.sketis.net/repos/isabelle/file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083</a>&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe elimination rules for newly defined <code>datatype</code>s. That seems to improve performance a lot.</p>
+<p>Best, Ike</p>
+
+
+
+<a name="526451162"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526451162" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526451162">(Jun 30 2025 at 17:38)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 21/06/2025 15:35, Manuel Eberl wrote:</p>
+<blockquote>
+<p>I recall that there were some big performance problems in one of the AFP <br>
+entries on p-adic numbers as well. Switching in and out of locale contexts <br>
+sometimes takes a full minute. I wonder if this is related to some of the <br>
+issues you mention.</p>
+</blockquote>
+<p>Performance problems need constructive existance proofs, otherwise they don't <br>
+exist.</p>
+<p>Can you point to specific locations in AFP?</p>
+<p>Makarius</p>
+
+
+
+<a name="526452205"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526452205" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526452205">(Jun 30 2025 at 17:45)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 20/06/2025 14:17, "Mulder, Ike" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>We’ve been seeing performance problems where just the <code>theory … imports … 
+begin</code> header is taking anywhere from 5-20 seconds.</p>
+</blockquote>
+<p>I would not call this slow ...</p>
+<p>Many years ago we've seen theory merges &gt; 30 seconds occasionally, without <br>
+getting worried.</p>
+<blockquote>
+<p>The second bottleneck we’re seeing is in the merging of elimination rules of <br>
+the Claset of two theories.</p>
+<p>The merging happens here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/">https://isabelle.sketis.net/repos/isabelle/file/tip/</a> <br>
+src/Provers/classical.ML#l604&gt; – merging safe elimination rules specifically <br>
+turns out to be slow in our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules. Most of<br>
+    these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+</blockquote>
+<p>Whenever there is a performance bottleneck, it needs to be "proven <br>
+constructively" by some significant examples. This is important to reproduce <br>
+the problem, and cross-check any attempts to improve the situation.</p>
+<p>Anything else is just speculation ...</p>
+<blockquote>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI = caseJ 
+==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic when <br>
+defining enums with a lot of cases: the number of safe elimination rules added <br>
+is quadratic in the number of cases in the enum. The addition of these <br>
+elimination rules happens here &lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a> <br>
+file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging <code>simpset</code>s <br>
+still seems to be fast, even in the presence of <code>simp</code> rules that scale <br>
+quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe <br>
+elimination rules for newly defined <code>datatype</code>s. That seems to improve <br>
+performance a lot.</p>
+</blockquote>
+<p>Now the focus has changed to datatypes. This raise a few more questions:</p>
+<p>* Is the claset merge operation really slow, or are the involved clasets <br>
+just very big?</p>
+<p>* Could the datatype package do something differently, with significant <br>
+improvements and without too much extra complexity?</p>
+<p>* Could your application do something different? Where are the many <br>
+datatypes coming from, actually? Can you avoid the expensive merge operations, <br>
+e.g. by making the theory graph more linear?</p>
+<p>Makarius</p>
+
+
+
+<a name="526457796"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526457796" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526457796">(Jun 30 2025 at 18:10)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 30/06/2025 19:36, Makarius wrote:</p>
+<blockquote>
+<p>* Could your application do something different? Where are the many <br>
+datatypes coming from, actually?</p>
+</blockquote>
+<p>And more: Are the datatypes genuine datatypes (disjoint sums), or just record <br>
+types done with the somewhat bulky datatype_record package?</p>
+<p>Makarius</p>
+
+
+
+<a name="526466372"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526466372" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526466372">(Jun 30 2025 at 18:52)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+The entry in question is "Padic_Field", and the theory that is affected <br>
+most severely is "Padic_Field_Powers". We talked about this entry quite <br>
+a bit when it was first submitted three years ago. Back then the <br>
+performance problems were so severe I was wondering whether we could <br>
+even accept it.</p>
+<p>The entire entry is still pretty slow for what it is. But it's not as <br>
+excessive as it once was. I asked the author to try to reduce the <br>
+context switches as much as possible and that already helped a lot. But <br>
+I also think some of the other performance tuning you did to Isabelle <br>
+since then also helped.</p>
+<p>As it stands now, there are still two "context" commands in there that <br>
+take about 5 s (elapsed) on my machine, namely in line 41 and line <br>
+10404. The "lemma" command on line 2837 and the subsequent "blast" call <br>
+also take about 2 seconds each, presumably due to the context switch <br>
+induced by "(in padic_fields)". As I recall, this used to be almost an <br>
+order of magnitude worse.</p>
+<p>Of course, 2 or 5 seconds is not dramatic. But in a development that <br>
+uses locales quite a bit, these numbers accumulate to an extent that <br>
+makes working with such a development interactively (especially during <br>
+refactoring) very annoying.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 30/06/2025 19:38, Makarius wrote:</p>
+<blockquote>
+<p>On 21/06/2025 15:35, Manuel Eberl wrote:</p>
+<blockquote>
+<p>I recall that there were some big performance problems in one of the <br>
+AFP entries on p-adic numbers as well. Switching in and out of locale <br>
+contexts sometimes takes a full minute. I wonder if this is related <br>
+to some of the issues you mention.</p>
+</blockquote>
+<p>Performance problems need constructive existance proofs, otherwise <br>
+they don't exist.</p>
+<p>Can you point to specific locations in AFP?</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="526499233"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526499233" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526499233">(Jun 30 2025 at 23:13)</a>:</h4>
+<p>From: Michael Norrish &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+For what it’s worth, it’s only with enumerated types (consisting of only nullary constructors), where we use a conversion to solve equations between them. The conversion works by mapping the constructors into numbers.</p>
+<p>Michael</p>
+<p>On 1/7/2025, 01:30, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>" &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; wrote:<br>
+I have the vague memory that that's what the HOL4 guys do. An "ord_t" function.<br>
+And a threshold for ord_t to kick in and replace the quadratically many rules<br>
+(which, as Jasmin pointed out, are much better for s/h).</p>
+<p>Tobias</p>
+<p>On 30/06/2025 15:44, Fabian Huch wrote:</p>
+<blockquote>
+<p>What about generating a function that enumerates cases of the datatype, and<br>
+having a single distinctiveness theorem for that function? Then only the proof<br>
+of that theorem is expensive, and it can be used by Sledgehammer (but proof<br>
+search might take a bit longer).</p>
+<p>Fabian</p>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse than<br>
+quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy<br>
+could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the<br>
+LeanHammer on the simplest goals I could imagine: the subgoals emerging from<br>
+an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] #<br>
+xs", because the quadratic distinct rules are not generated as theorem in Lean<br>
+(presumably because of their quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in<br>
+mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;lp15@cam.ac.uk&lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a way of<br>
+handling them that doesn't generate a quadratic amount of anything. As a<br>
+stopgap, the having the option of just relying on the (quadratically many)<br>
+simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large<br>
+datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry</p>
+<hr>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; &lt;cl-isabelle-users-<br>
+request@lists.cam.ac.uk&lt;mailto:<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt;&gt; on behalf of "Mulder, Ike" &lt;cl-isabelle-<br>
+users@lists.cam.ac.uk&lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt;<br>
+<em>Sent:</em>20 June 2025 13:17<br>
+<em>To:</em>cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;&gt;<br>
+<em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow -<br>
+performance issue loading multiple theories<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports …
+begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of<br>
+the Claset of two theories.</p>
+<p>The merging happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/">https://isabelle.sketis.net/repos/isabelle/file/tip/</a><br>
+src/Provers/classical.ML#l604&gt;– merging safe elimination rules specifically<br>
+turns out to be slow in our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules. Most of<br>
+    these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI =
+caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic<br>
+when defining enums with a lot of cases: the number of safe elimination rules<br>
+added is quadratic in the number of cases in the enum. The addition of these<br>
+elimination rules happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a><br>
+file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging<br>
+<code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that<br>
+scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe<br>
+elimination rules for newly defined <code>datatype</code>s. That seems to improve<br>
+performance a lot.</p>
+<p>Best, Ike<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="526518330"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526518330" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526518330">(Jul 01 2025 at 03:34)</a>:</h4>
+<p>From: "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Can this be put into the user’s hand? Allow them to replace the autogeneration of (in)equality related lemmas by a simproc (perhaps through the existing plugin mechanism). This helps applications dealing with large datatypes (esp. enumerated types), while not enforcing change where the current approach works fine.</p>
+<p>Hanno</p>
+<p>From: &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Michael Norrish &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Reply-To: "<a href="mailto:Michael.Norrish@anu.edu.au">Michael.Norrish@anu.edu.au</a>" &lt;<a href="mailto:Michael.Norrish@anu.edu.au">Michael.Norrish@anu.edu.au</a>&gt;<br>
+Date: Tuesday, 1 July 2025 at 00:14<br>
+To: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;, "<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: RE: [EXTERNAL] [isabelle] Merging elimination rules of Claset is slow - performance issue loading multiple theories</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>For what it’s worth, it’s only with enumerated types (consisting of only nullary constructors), where we use a conversion to solve equations between them. The conversion works by mapping the constructors into numbers.</p>
+<p>Michael</p>
+<p>On 1/7/2025, 01:30, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>" &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; wrote:<br>
+I have the vague memory that that's what the HOL4 guys do. An "ord_t" function.<br>
+And a threshold for ord_t to kick in and replace the quadratically many rules<br>
+(which, as Jasmin pointed out, are much better for s/h).</p>
+<p>Tobias</p>
+<p>On 30/06/2025 15:44, Fabian Huch wrote:</p>
+<blockquote>
+<p>What about generating a function that enumerates cases of the datatype, and<br>
+having a single distinctiveness theorem for that function? Then only the proof<br>
+of that theorem is expensive, and it can be used by Sledgehammer (but proof<br>
+search might take a bit longer).</p>
+<p>Fabian</p>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse than<br>
+quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy<br>
+could comment on that.</p>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the<br>
+LeanHammer on the simplest goals I could imagine: the subgoals emerging from<br>
+an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] #<br>
+xs", because the quadratic distinct rules are not generated as theorem in Lean<br>
+(presumably because of their quadratic nature).</p>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in<br>
+mind. :)</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;lp15@cam.ac.uk&lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt; wrote:</p>
+<p>Plenty of people have large datatype declarations. We need to find a way of<br>
+handling them that doesn't generate a quadratic amount of anything. As a<br>
+stopgap, the having the option of just relying on the (quadratically many)<br>
+simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large<br>
+datatypes, since having lots of simprocs floating around causes its own issues.</p>
+<p>Larry</p>
+<hr>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; &lt;cl-isabelle-users-<br>
+request@lists.cam.ac.uk&lt;mailto:<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt;&gt; on behalf of "Mulder, Ike" &lt;cl-isabelle-<br>
+users@lists.cam.ac.uk&lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt;<br>
+<em>Sent:</em>20 June 2025 13:17<br>
+<em>To:</em>cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;&gt;<br>
+<em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow -<br>
+performance issue loading multiple theories<br>
+Hello,</p>
+<p>We’ve been seeing performance problems where just the <code>theory … imports …
+begin</code> header is taking anywhere from 5-20 seconds.<br>
+The second bottleneck we’re seeing is in the merging of elimination rules of<br>
+the Claset of two theories.</p>
+<p>The merging happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/">https://isabelle.sketis.net/repos/isabelle/file/tip/</a><br>
+src/Provers/classical.ML#l604&gt;– merging safe elimination rules specifically<br>
+turns out to be slow in our case. There are two reasons for that, I think:</p>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+<li>We apparently have a lot (about 20000) safe elimination rules. Most of<br>
+    these are automatically added when declaring <code>datatype</code>s</li>
+</ol>
+<p>The safe elimination rules added by new datatypes have the form <code>caseI =
+caseJ ==&gt; R</code> for all <code>i != j</code>. Therefore, this mainly becomes problematic<br>
+when defining enums with a lot of cases: the number of safe elimination rules<br>
+added is quadratic in the number of cases in the enum. The addition of these<br>
+elimination rules happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a><br>
+file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083&gt;.</p>
+<p>As for 1), I think the complexity could be improved because merging<br>
+<code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that<br>
+scale quadratically in the number of cases in an Enum.</p>
+<p>For now, I have written a small scrappy plugin that deletes these safe<br>
+elimination rules for newly defined <code>datatype</code>s. That seems to improve<br>
+performance a lot.</p>
+<p>Best, Ike<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="526534089"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526534089" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526534089">(Jul 01 2025 at 06:36)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Hi Michael,</p>
+<p>Thanks for the correction. You are using a conversion. One could also just <br>
+simplify with the thm</p>
+<p>ord_t x = ord_t y ==&gt; x = y</p>
+<p>The conversion is for efficiency? In particular because it only fires if x and y <br>
+are constructors?</p>
+<p>Tobias</p>
+<p>On 01/07/2025 01:12, Michael Norrish wrote:</p>
+<blockquote>
+<p>For what it’s worth, it’s only with enumerated types (consisting of only nullary <br>
+constructors), where we use a conversion to solve equations between them. The <br>
+conversion works by mapping the constructors into numbers.</p>
+<p>Michael</p>
+<p>On 1/7/2025, 01:30, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>" &lt;cl-isabelle- <br>
+<a href="mailto:users-request@lists.cam.ac.uk">users-request@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>I have the vague memory that that's what the HOL4 guys do. An "ord_t" function.</p>
+<p>And a threshold for ord_t to kick in and replace the quadratically many rules</p>
+<p>(which, as Jasmin pointed out, are much better for s/h).</p>
+<p>Tobias</p>
+<p>On 30/06/2025 15:44, Fabian Huch wrote:</p>
+<blockquote>
+<p>What about generating a function that enumerates cases of the datatype, and</p>
+</blockquote>
+<blockquote>
+<p>having a single distinctiveness theorem for that function? Then only the proof</p>
+</blockquote>
+<blockquote>
+<p>of that theorem is expensive, and it can be used by Sledgehammer (but proof</p>
+</blockquote>
+<blockquote>
+<p>search might take a bit longer).</p>
+</blockquote>
+<p>&gt;</p>
+<p>&gt;</p>
+<blockquote>
+<p>Fabian</p>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse than</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>could comment on that.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>LeanHammer on the simplest goals I could imagine: the subgoals emerging from</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] #</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>xs", because the quadratic distinct rules are not generated as theorem in Lean</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>(presumably because of their quadratic nature).</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>mind. :)</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Jasmin</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Prof. Dr. Jasmin Blanchette</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Chair of Theoretical Computer Science and Theorem Proving</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Ludwig-Maximilians-Universität München</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Oettingenstr. 67, 80538 München, Germany</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Tel.: +49 (0)89 2180 9341</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a> <br>
+&lt;<a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a> <br>
+&lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt; wrote:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Plenty of people have large datatype declarations. We need to find a way of</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>handling them that doesn't generate a quadratic amount of anything. As a</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>stopgap, the having the option of just relying on the (quadratically many)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>simprules would be good.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The alternative of generating a simproc is probably good only for large</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>datatypes, since having lots of simprocs floating around causes its own issues.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Larry</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt; </p>
+</blockquote>
+</blockquote>
+<hr>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk &lt;mailto:cl-isabelle-users- <br>
+<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt; &lt;cl-isabelle-users-</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt;&gt; on behalf of <br>
+"Mulder, Ike" &lt;cl-isabelle-</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>Sent:</em>20 June 2025 13:17</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>To:</em>cl-isabelle-users@lists.cam.ac.uk &lt;mailto:cl-isabelle- <br>
+<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt; &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;mailto:cl-isabelle- <br>
+<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow -</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>performance issue loading multiple theories</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Hello,</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>We’ve been seeing performance problems where just the `theory … imports …</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>begin` header is taking anywhere from 5-20 seconds.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The second bottleneck we’re seeing is in the merging of elimination rules of</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>the Claset of two theories.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The merging happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/">https://isabelle.sketis.net/repos/isabelle/file/</a> <br>
+tip/ &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/">https://isabelle.sketis.net/repos/isabelle/file/tip/</a>&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>src/Provers/classical.ML#l604&gt;– merging safe elimination rules specifically</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>turns out to be slow in our case. There are two reasons for that, I think:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>1. The complexity of merging the rules seems higher than it should be</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>2. We apparently have a lot (about 20000) safe elimination rules. Most of</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>these are automatically added when declaring <code>datatype</code>s</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The safe elimination rules added by new datatypes have the form `caseI =</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>caseJ ==&gt; R<code> for all </code>i != j`. Therefore, this mainly becomes problematic</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>when defining enums with a lot of cases: the number of safe elimination rules</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>added is quadratic in the number of cases in the enum. The addition of these</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>elimination rules happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a> <br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a>&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083&gt;.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>As for 1), I think the complexity could be improved because merging</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>scale quadratically in the number of cases in an Enum.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>For now, I have written a small scrappy plugin that deletes these safe</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>elimination rules for newly defined <code>datatype</code>s. That seems to improve</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>performance a lot.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Best, Ike</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;<br>
+</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/GfOM9rDwQpA0ThK3E-vqY4AN/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="526547451"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526547451" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526547451">(Jul 01 2025 at 07:59)</a>:</h4>
+<p>From: Michael Norrish &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+To be honest, I’m not sure of the historic motivation (it was me who wrote the code, but in 2002, and the commit message just says that I preferred to this to the unilateral use of your theorem as an iff, which is what had been being done).</p>
+<p>Of course, we could make the conversion fire on just the quadratically many constructor combinations (making the term-net bigger and grosser), but in fact we match against any equality on the type and then check to see that both sides are constants.  Only then do we apply the analogue of your ord_t.  Looking at the code I see we only do this for cases when #constructors &gt; 15, a number that I’m sure was pulled out of nowhere.  For smaller types, we just generate all the rewrites.</p>
+<p>Best wishes,<br>
+Michael</p>
+<p>On 1/7/2025, 16:36, "Tobias Nipkow" &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:<br>
+Hi Michael,</p>
+<p>Thanks for the correction. You are using a conversion. One could also just<br>
+simplify with the thm</p>
+<p>ord_t x = ord_t y ==&gt; x = y</p>
+<p>The conversion is for efficiency? In particular because it only fires if x and y<br>
+are constructors?</p>
+<p>Tobias</p>
+<p>On 01/07/2025 01:12, Michael Norrish wrote:</p>
+<blockquote>
+<p>For what it’s worth, it’s only with enumerated types (consisting of only nullary<br>
+constructors), where we use a conversion to solve equations between them. The<br>
+conversion works by mapping the constructors into numbers.</p>
+<p>Michael</p>
+<p>On 1/7/2025, 01:30, "cl-isabelle-users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt;" &lt;cl-isabelle-<br>
+users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:users-request@lists.cam.ac.uk">users-request@lists.cam.ac.uk</a>&gt;&gt; wrote:</p>
+<p>I have the vague memory that that's what the HOL4 guys do. An "ord_t" function.</p>
+<p>And a threshold for ord_t to kick in and replace the quadratically many rules</p>
+<p>(which, as Jasmin pointed out, are much better for s/h).</p>
+<p>Tobias</p>
+<p>On 30/06/2025 15:44, Fabian Huch wrote:</p>
+<blockquote>
+<p>What about generating a function that enumerates cases of the datatype, and</p>
+</blockquote>
+<blockquote>
+<p>having a single distinctiveness theorem for that function? Then only the proof</p>
+</blockquote>
+<blockquote>
+<p>of that theorem is expensive, and it can be used by Sledgehammer (but proof</p>
+</blockquote>
+<blockquote>
+<p>search might take a bit longer).</p>
+</blockquote>
+<p>&gt;</p>
+<p>&gt;</p>
+<blockquote>
+<p>Fabian</p>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>On 6/30/25 15:20, Jasmin Blanchette wrote:</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>I believe the behavior of mutually recursive datatypes might be worse than</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>quadratic. (For codatatypes, that's definitely the case.) Perhaps Dmitriy</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>could comment on that.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>I cannot resist inserting an anecdote here. Last week, I tried out the</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>LeanHammer on the simplest goals I could imagine: the subgoals emerging from</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>an induction proving "xs ~= x # xs". LeanHammer failed to prove "[] ~= [] #</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>xs", because the quadratic distinct rules are not generated as theorem in Lean</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>(presumably because of their quadratic nature).</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Lesson: Thinking about "simp" is good, but we should also keep Sledgehammer in</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>mind. :)</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Jasmin</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>--</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Prof. Dr. Jasmin Blanchette</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Chair of Theoretical Computer Science and Theorem Proving</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Ludwig-Maximilians-Universität München</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Oettingenstr. 67, 80538 München, Germany</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Tel.: +49 (0)89 2180 9341</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a><br>
+&lt;<a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html&gt;&lt;https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html%3e">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html&gt;&lt;https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html%3e</a>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>On 30. Jun 2025, at 14:20, Lawrence Paulson &lt;lp15@cam.ac.uk&lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+&lt;mailto:lp15@cam.ac.uk&lt;mailto:<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;&gt;&gt; wrote:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Plenty of people have large datatype declarations. We need to find a way of</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>handling them that doesn't generate a quadratic amount of anything. As a</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>stopgap, the having the option of just relying on the (quadratically many)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>simprules would be good.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The alternative of generating a simproc is probably good only for large</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>datatypes, since having lots of simprocs floating around causes its own issues.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Larry</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<hr>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>From:</em>cl-isabelle-users-request@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; &lt;mailto:cl-isabelle-users-<br>
+request@lists.cam.ac.uk&lt;mailto:<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt;&gt; &lt;cl-isabelle-users-</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>request@lists.cam.ac.uk&lt;mailto:<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt; &lt;mailto:request@lists.cam.ac.uk&lt;mailto:<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt;&gt;&gt; on behalf of<br>
+"Mulder, Ike" &lt;cl-isabelle-</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>users@lists.cam.ac.uk&lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt; &lt;mailto:users@lists.cam.ac.uk&lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt;&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>Sent:</em>20 June 2025 13:17</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>To:</em>cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;mailto:cl-isabelle-<br>
+users@lists.cam.ac.uk&lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt; &lt;cl-isabelle-users@lists.cam.ac.uk&lt;mailto:<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; &lt;mailto:cl-isabelle-<br>
+users@lists.cam.ac.uk&lt;mailto:<a href="mailto:users@lists.cam.ac.uk">users@lists.cam.ac.uk</a>&gt;&gt;&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>Subject:</em>[isabelle] Merging elimination rules of Claset is slow -</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>performance issue loading multiple theories</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Hello,</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>We’ve been seeing performance problems where just the `theory … imports …</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>begin` header is taking anywhere from 5-20 seconds.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The second bottleneck we’re seeing is in the merging of elimination rules of</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>the Claset of two theories.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The merging happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/">https://isabelle.sketis.net/repos/isabelle/file/</a><br>
+tip/ &lt;<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/&gt;&lt;https://isabelle.sketis.net/repos/isabelle/file/tip/%3e">https://isabelle.sketis.net/repos/isabelle/file/tip/&gt;&lt;https://isabelle.sketis.net/repos/isabelle/file/tip/%3e</a>&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>src/Provers/classical.ML#l604&gt;– merging safe elimination rules specifically</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>turns out to be slow in our case. There are two reasons for that, I think:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ol>
+<li>The complexity of merging the rules seems higher than it should be</li>
+</ol>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ol start="2">
+<li>We apparently have a lot (about 20000) safe elimination rules. Most of</li>
+</ol>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>these are automatically added when declaring <code>datatype</code>s</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The safe elimination rules added by new datatypes have the form `caseI =</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>caseJ ==&gt; R<code> for all </code>i != j`. Therefore, this mainly becomes problematic</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>when defining enums with a lot of cases: the number of safe elimination rules</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>added is quadratic in the number of cases in the enum. The addition of these</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>elimination rules happenshere &lt;<a href="https://isabelle.sketis.net/repos/isabelle/">https://isabelle.sketis.net/repos/isabelle/</a><br>
+&lt;<a href="https://isabelle.sketis.net/repos/isabelle/&gt;&lt;https://isabelle.sketis.net/repos/isabelle/%3e">https://isabelle.sketis.net/repos/isabelle/&gt;&lt;https://isabelle.sketis.net/repos/isabelle/%3e</a>&gt;</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>file/tip/src/HOL/Tools/Ctr_Sugar/ctr_sugar.ML#l1083&gt;.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>As for 1), I think the complexity could be improved because merging</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><code>simpset</code>s still seems to be fast, even in the presence of <code>simp</code> rules that</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>scale quadratically in the number of cases in an Enum.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>For now, I have written a small scrappy plugin that deletes these safe</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>elimination rules for newly defined <code>datatype</code>s. That seems to improve</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>performance a lot.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Best, Ike</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&gt;<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="526644312"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526644312" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526644312">(Jul 01 2025 at 16:23)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+(This thread covers a lot of topics which are not obviously covered by <br>
+the subject. I am replying to the message which opened this particular <br>
+thread, in the hope that it won’t add more confusion.)</p>
+<blockquote>
+<p>Plenty of people have large datatype declarations. We need to find a way <br>
+of handling them that doesn't generate a quadratic amount of anything. <br>
+As a stopgap, the having the option of just relying on the <br>
+(quadratically many) simprules would be good.</p>
+<p>The alternative of generating a simproc is probably good only for large <br>
+datatypes, since having lots of simprocs floating around causes its own <br>
+issues.</p>
+</blockquote>
+<p>Concerning the quadratic blowup of distinctness rules: there was once a <br>
+mechanism to generate those rules for code generation lazily, and as <br>
+early as 2009, we decided to drop it (very likely after a discussion <br>
+between Stefan Berghofer an me):</p>
+<p>hg log -r cda9a931a46b -p</p>
+<p>This seems to indicate that generating those rules is not a serious <br>
+issue, although different tools might still have their pitfalls to apply <br>
+those rules efficiently.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/8Wq84iN1dA_T3f0VN3mxuCLV/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/2TKHkK07Ydyg4I2dWEnTo5BD/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="526810351"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526810351" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526810351">(Jul 02 2025 at 14:06)</a>:</h4>
+<p>From: "\"Mulder, Ike\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+The datatypes are genuine <code>datatype</code>s. Using Dimitry's example from the other thread, the slowdown we are seeing can be reproduced with three simple files:</p>
+<p>File Scratch1.thy:</p>
+<p>theory Scratch1<br>
+  imports<br>
+    Main<br>
+begin</p>
+<p>datatype (plugins only:) enum1 =<br>
+  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10 |<br>
+  B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10 |<br>
+  C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 |<br>
+  D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 |<br>
+  E1 | E2 | E3 | E4 | E5 | E6 | E7 | E8 | E9 | E10 |<br>
+  F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 |<br>
+  G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 | G9 | G10 |<br>
+  H1 | H2 | H3 | H4 | H5 | H6 | H7 | H8 | H9 | H10 |<br>
+  I1 | I2 | I3 | I4 | I5 | I6 | I7 | I8 | I9 | I10 |<br>
+  J1 | J2 | J3 | J4 | J5 | J6 | J7 | J8 | J9 | J10</p>
+<p>datatype (plugins only:) enum2 =<br>
+  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10 |<br>
+  B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10 |<br>
+  C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 |<br>
+  D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 |<br>
+  E1 | E2 | E3 | E4 | E5 | E6 | E7 | E8 | E9 | E10 |<br>
+  F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 |<br>
+  G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 | G9 | G10 |<br>
+  H1 | H2 | H3 | H4 | H5 | H6 | H7 | H8 | H9 | H10 |<br>
+  I1 | I2 | I3 | I4 | I5 | I6 | I7 | I8 | I9 | I10 |<br>
+  J1 | J2 | J3 | J4 | J5 | J6 | J7 | J8 | J9 | J10</p>
+<p>end</p>
+<p>In file Scratch2.thy copy everything from Scratch1.thy, just replace the name of the theory with <code>Scratch2</code>.</p>
+<p>File Scratch3.thy:</p>
+<p>theory Scratch3<br>
+  imports<br>
+    Scratch1<br>
+    Scratch2<br>
+begin<br>
+(* loading the imports here is slower than I'd expect *)</p>
+<p>ML‹<br>
+  val safe_elims_of_ctx =<br>
+    Context.Proof #&gt;<br>
+    Classical.get_cs #&gt;<br>
+    Classical.rep_cs #&gt; #safeEs #&gt;<br>
+    Item_Net.content #&gt; <a href="http://List.map">List.map</a> #1 ;</p>
+<p>writeln ("I see " ^ (@{context} |&gt; safe_elims_of_ctx |&gt; List.length |&gt; Int.toString) ^ " elim rules\n")<br>
+›</p>
+<p>end</p>
+<p>Best, Ike</p>
+<p>﻿On 30/06/2025, 19:10, "Makarius" &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a> &lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>On 30/06/2025 19:36, Makarius wrote:</p>
+<blockquote>
+<ul>
+<li>Could your application do something different? Where are the many<br>
+datatypes coming from, actually?</li>
+</ul>
+</blockquote>
+<p>And more: Are the datatypes genuine datatypes (disjoint sums), or just record<br>
+types done with the somewhat bulky datatype_record package?</p>
+<p>Makarius</p>
+
+
+
+<a name="526855953"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526855953" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526855953">(Jul 02 2025 at 18:10)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi Ike,</p>
+<blockquote>
+<p>datatype (plugins only:) enum1 =<br>
+   A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10 |<br>
+   B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10 |<br>
+   C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 |<br>
+   D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 |<br>
+   E1 | E2 | E3 | E4 | E5 | E6 | E7 | E8 | E9 | E10 |<br>
+   F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 |<br>
+   G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 | G9 | G10 |<br>
+   H1 | H2 | H3 | H4 | H5 | H6 | H7 | H8 | H9 | H10 |<br>
+   I1 | I2 | I3 | I4 | I5 | I6 | I7 | I8 | I9 | I10 |<br>
+   J1 | J2 | J3 | J4 | J5 | J6 | J7 | J8 | J9 | J10</p>
+<p>datatype (plugins only:) enum2 =<br>
+   A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10 |<br>
+   B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10 |<br>
+   C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 |<br>
+   D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 |<br>
+   E1 | E2 | E3 | E4 | E5 | E6 | E7 | E8 | E9 | E10 |<br>
+   F1 | F2 | F3 | F4 | F5 | F6 | F7 | F8 | F9 | F10 |<br>
+   G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 | G9 | G10 |<br>
+   H1 | H2 | H3 | H4 | H5 | H6 | H7 | H8 | H9 | H10 |<br>
+   I1 | I2 | I3 | I4 | I5 | I6 | I7 | I8 | I9 | I10 |<br>
+   J1 | J2 | J3 | J4 | J5 | J6 | J7 | J8 | J9 | J10</p>
+</blockquote>
+<p>I don’t know your particular applications, but depending on the logical <br>
+needs such »enumerative« datatype declarations can be constructed <br>
+similar to type char in theory HOL.String. Or, if you don't need pattern <br>
+patching at all, specified as finite abstract type over natural numbers.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/ShWWX4JwpQmBtX6a3SCIyw9o/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/FHS90Ell3qX5QkLWXuHCivJd/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="526998126"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/526998126" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#526998126">(Jul 03 2025 at 13:33)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 01/07/2025 11:54, Mulder, Ike wrote:</p>
+<blockquote>
+<p>The datatypes are genuine <code>datatype</code>s. Using Dimitry's example from the other thread, the slowdown we are seeing can be reproduced with three simple files:</p>
+</blockquote>
+<p>Datatypes with 100 constructors are not very realistic. We need an actual <br>
+"constructive proof for performance problems", one that resembles a proper <br>
+application.</p>
+<p>I looked around in the Isabelle distribution, but did not find any. Even a <br>
+merge of the theories from session HOL-Datatype_Benchmark does not exhibit <br>
+anything that looks too slow.</p>
+<p>Makarius</p>
+
+
+
+<a name="527003603"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527003603" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527003603">(Jul 03 2025 at 13:58)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Believe me, these big datatypes exist, even if they are not in the public domain. Isabelle scales extraordinarily well to huge developments. It would be great if it could do so here as well, rather than forcing users into awkward workarounds.</p>
+<p>I was wondering how HOL4 and HOL Light coped. In the source files of the letter I found the following:</p>
+<blockquote>
+<p>(* ------------------------------------------------------------------------- *)<br>
+(* Also add a cached rewrite of distinctness and injectivity theorems. Since *)<br>
+(* there can be quadratically many distinctness clauses, it would really be  *)<br>
+(* preferable to have a conversion, but this seems OK up 100 constructors.   *)<br>
+(* ------------------------------------------------------------------------- *)</p>
+</blockquote>
+<p>Larry</p>
+<blockquote>
+<p>On 3 Jul 2025, at 14:33, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Datatypes with 100 constructors are not very realistic. We need an actual "constructive proof for performance problems", one that resembles a proper application.</p>
+<p>I looked around in the Isabelle distribution, but did not find any. Even a merge of the theories from session HOL-Datatype_Benchmark does not exhibit anything that looks too slow.</p>
+</blockquote>
+
+
+
+<a name="527011331"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527011331" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527011331">(Jul 03 2025 at 14:29)</a>:</h4>
+<p>From: Roland Lutz &lt;<a href="mailto:rlutz@hedmen.org">rlutz@hedmen.org</a>&gt;<br>
+On Thu, 3 Jul 2025, Makarius wrote:</p>
+<blockquote>
+<p>Datatypes with 100 constructors are not very realistic.</p>
+</blockquote>
+<p>This is an actual problem I ran into.  I wanted to prove some properties <br>
+of a particular state machine, but a datatype with ~50 states would never <br>
+finish compiling.</p>
+<p>Roland</p>
+
+
+
+<a name="527013184"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527013184" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527013184">(Jul 03 2025 at 14:37)</a>:</h4>
+<p>From: Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Huge datatypes also arise naturally in modelling the semantics of CPU<br>
+instruction sets.</p>
+<p>On Thu, 3 Jul 2025 at 15:29, Roland Lutz &lt;<a href="mailto:rlutz@hedmen.org">rlutz@hedmen.org</a>&gt; wrote:</p>
+<blockquote>
+<p>On Thu, 3 Jul 2025, Makarius wrote:</p>
+<blockquote>
+<p>Datatypes with 100 constructors are not very realistic.</p>
+</blockquote>
+<p>This is an actual problem I ran into.  I wanted to prove some properties<br>
+of a particular state machine, but a datatype with ~50 states would never<br>
+finish compiling.</p>
+<p>Roland</p>
+</blockquote>
+
+
+
+<a name="527013583"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527013583" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527013583">(Jul 03 2025 at 14:39)</a>:</h4>
+<p>From: i n &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+  I would like to mention that for HOL4, some parts of the CakeML compiler proofs face performance issues when case splitting's datatypes with many constructors. Work on refactoring the datatypes to reduce the number of constructors sped up some proofs by quite a alot. Taking the previous example of enum1 one could define the datatype like this instead.</p>
+<div class="codehilite" data-code-language="datatype"><pre><span></span><code>  A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9 | A10
+datatype B =
+  B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9 | B10
+datatype C =
+  C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10
+datatype D =
+  D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10
+
+...
+datatype J =
+  J1 | J2 | J3 | J4 | J5 | J6 | J7 | J8 | J9 | J10
+
+datatype enum1 =
+  A A | B B | C C | D D | E E | F F | G G | H H |
+  I I | J J
+
+```Irvin
+    On Thursday, 3 July 2025 at 01:58:21 pm UTC, Lawrence Paulson &lt;lp15@cam.ac.uk&gt; wrote:
+
+ Believe me, these big datatypes exist, even if they are not in the public domain. Isabelle scales extraordinarily well to huge developments. It would be great if it could do so here as well, rather than forcing users into awkward workarounds.
+
+I was wondering how HOL4 and HOL Light coped. In the source files of the letter I found the following:
+
+&gt; (* ------------------------------------------------------------------------- *)
+&gt; (* Also add a cached rewrite of distinctness and injectivity theorems. Since *)
+&gt; (* there can be quadratically many distinctness clauses, it would really be  *)
+&gt; (* preferable to have a conversion, but this seems OK up 100 constructors.  *)
+&gt; (* ------------------------------------------------------------------------- *)
+
+
+Larry
+
+&gt; On 3 Jul 2025, at 14:33, Makarius &lt;makarius@sketis.net&gt; wrote:
+&gt;
+&gt; Datatypes with 100 constructors are not very realistic. We need an actual "constructive proof for performance problems", one that resembles a proper application.
+&gt;
+&gt; I looked around in the Isabelle distribution, but did not find any. Even a merge of the theories from session HOL-Datatype_Benchmark does not exhibit anything that looks too slow.
+</code></pre></div>
+
+
+
+<a name="527032753"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527032753" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527032753">(Jul 03 2025 at 16:09)</a>:</h4>
+<p>From: "\"wolff@lmf.cnrsfr\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+My standard example is the C11 abstract syntax - a mutually dependant beast with around 60 constructors or so …<br>
+We had to adopt several simplifications to get it through, but at the cost of compatibility ...</p>
+<p>Best</p>
+<p>Burkhart</p>
+<blockquote>
+<p>On 3 Jul 2025, at 15:33, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 01/07/2025 11:54, Mulder, Ike wrote:</p>
+<blockquote>
+<p>The datatypes are genuine <code>datatype</code>s. Using Dimitry's example from the other thread, the slowdown we are seeing can be reproduced with three simple files:</p>
+</blockquote>
+<p>Datatypes with 100 constructors are not very realistic. We need an actual "constructive proof for performance problems", one that resembles a proper application.</p>
+<p>I looked around in the Isabelle distribution, but did not find any. Even a merge of the theories from session HOL-Datatype_Benchmark does not exhibit anything that looks too slow.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="527171049"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527171049" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527171049">(Jul 04 2025 at 12:24)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 03/07/2025 16:35, <a href="mailto:wolff@lmf.cnrsfr">wolff@lmf.cnrsfr</a> wrote:</p>
+<blockquote>
+<p>My standard example is the C11 abstract syntax - a mutually dependant beast with around 60 constructors or so …<br>
+We had to adopt several simplifications to get it through, but at the cost of compatibility ...</p>
+</blockquote>
+<p>So can you point to concrete locations in Isabelle/AFP to look at?</p>
+<p>Makarius</p>
+
+
+
+<a name="527171978"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527171978" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527171978">(Jul 04 2025 at 12:29)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 03/07/2025 16:36, Dominic Mulligan (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Huge datatypes also arise naturally in modelling the semantics of CPU <br>
+instruction sets.</p>
+</blockquote>
+<p>This sounds like bad modelling: too concrete, too many flat cases. Has anybody <br>
+done it in any other proof assistant?</p>
+<p>Makarius</p>
+
+
+
+<a name="527173049"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527173049" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527173049">(Jul 04 2025 at 12:36)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 03/07/2025 15:58, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Believe me, these big datatypes exist, even if they are not in the public domain. Isabelle scales extraordinarily well to huge developments. It would be great if it could do so here as well, rather than forcing users into awkward workarounds.</p>
+</blockquote>
+<p>I was asking for "constructive existence proofs of performance problems", in <br>
+order to be able to reproduce the problem and see where it really happens (and <br>
+if something can be done about it).</p>
+<p>People who have non-public applications need to do extra homework to produce <br>
+realistic examples that can be made public.</p>
+<blockquote>
+<p>I was wondering how HOL4 and HOL Light coped. In the source files of the letter I found the following:</p>
+<blockquote>
+<p>(* ------------------------------------------------------------------------- *)<br>
+(* Also add a cached rewrite of distinctness and injectivity theorems. Since *)<br>
+(* there can be quadratically many distinctness clauses, it would really be  *)<br>
+(* preferable to have a conversion, but this seems OK up 100 constructors.   *)<br>
+(* ------------------------------------------------------------------------- *)</p>
+</blockquote>
+</blockquote>
+<p>An interesting comment. I still wonder how to do proofs with so many cases <br>
+emerging over and over again ...</p>
+<p>Makarius</p>
+
+
+
+<a name="527175824"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527175824" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527175824">(Jul 04 2025 at 12:55)</a>:</h4>
+<p>From: Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt;<br>
+There are several examples in CompCert, e.g.</p>
+<p><a href="https://github.com/AbsInt/CompCert/blob/master/x86/Op.v#L73">https://github.com/AbsInt/CompCert/blob/master/x86/Op.v#L73</a></p>
+<p><a href="https://github.com/AbsInt/CompCert/blob/master/x86/Asm.v#L108">https://github.com/AbsInt/CompCert/blob/master/x86/Asm.v#L108</a></p>
+<p>Kevin</p>
+<p>On 04.07.25 14:29, Makarius wrote:</p>
+<blockquote>
+<p>On 03/07/2025 16:36, Dominic Mulligan (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Huge datatypes also arise naturally in modelling the semantics of CPU <br>
+instruction sets.</p>
+</blockquote>
+<p>This sounds like bad modelling: too concrete, too many flat cases. Has <br>
+anybody done it in any other proof assistant?</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="527522726"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/527522726" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#527522726">(Jul 07 2025 at 17:09)</a>:</h4>
+<p>From: Frédéric Tuong &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+On Monday, July 7th, 2025 at 9:39 AM, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>&gt; </p>
+<blockquote>
+<blockquote>
+<p>My standard example is the C11 abstract syntax - a mutually dependant beast with around 60 constructors or so …<br>
+We had to adopt several simplifications to get it through, but at the cost of compatibility ...<br>
+</p>
+</blockquote>
+</blockquote>
+<p>&gt; </p>
+<blockquote>
+<p>So can you point to concrete locations in Isabelle/AFP to look at?<br>
+</p>
+</blockquote>
+<p>Unfortunately, we refrained from submitting it to the AFP because the evaluation of the generated datatypes started to take too much time (we probably had to interrupt it at some point):<br>
+<a href="https://gitlab.lisn.upsaclay.fr/ftuong/citadelle-devel/-/blob/9dc12a1704f18dde1e493736875474d50404f5d0/doc/Meta_C_generated.thy#L775">https://gitlab.lisn.upsaclay.fr/ftuong/citadelle-devel/-/blob/9dc12a1704f18dde1e493736875474d50404f5d0/doc/Meta_C_generated.thy#L775</a></p>
+<p>which was generated from an ancestor version of this file:<br>
+<a href="https://github.com/visq/language-c/blob/2f7df0f9cbd48f6fa084b967c6fc0ac92c75eccc/src/Language/C/Syntax/AST.hs#L74">https://github.com/visq/language-c/blob/2f7df0f9cbd48f6fa084b967c6fc0ac92c75eccc/src/Language/C/Syntax/AST.hs#L74</a></p>
+<p>Best,<br>
+Frédéric</p>
+<p><a href="/user_uploads/14278/vn5gFHYjPyi8C0YJavkrHAys/signature.asc">signature.asc</a></p>
+
+
+
+<a name="528384697"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/528384697" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#528384697">(Jul 11 2025 at 17:56)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Thanks, Kevin. Not Isabelle, but still interesting. Without any change these examples, especially the second one with ~180 constructors, might be challenging in Isabelle. In this case, I would follow Irvin’s suggestion from this thread: split this type into palatable pieces. There are even comments in the CompCert type grouping the operations logically. So these comments could be formalized as separate datatypes.</p>
+<p>Dmitriy</p>
+<blockquote>
+<p>On 4 Jul 2025, at 14.49, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>There are several examples in CompCert, e.g.</p>
+<p><a href="https://github.com/AbsInt/CompCert/blob/master/x86/Op.v#L73">https://github.com/AbsInt/CompCert/blob/master/x86/Op.v#L73</a></p>
+<p><a href="https://github.com/AbsInt/CompCert/blob/master/x86/Asm.v#L108">https://github.com/AbsInt/CompCert/blob/master/x86/Asm.v#L108</a></p>
+<p>Kevin</p>
+<p>On 04.07.25 14:29, Makarius wrote:</p>
+<blockquote>
+<p>On 03/07/2025 16:36, Dominic Mulligan (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Huge datatypes also arise naturally in modelling the semantics of CPU instruction sets.<br>
+This sounds like bad modelling: too concrete, too many flat cases. Has anybody done it in any other proof assistant?<br>
+    Makarius</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="528387394"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/528387394" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#528387394">(Jul 11 2025 at 18:17)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Thanks Frédéric, that’s an interesting example. Although a bit off-topic, if the topic is datatypes with many constructors. But at least it is an Isabelle example and moreover an interesting type from the type structure perspective.</p>
+<p>What kills this example is the type being highly mutual. Mutuality is a different dimension and as I have mentioned earlier the performance is for sure worse than quadratic in the number of mutual types. Already the type of the recursor here will be monstrous.</p>
+<p>There is a workaround: replace mutual recursion by nested recursion. Below I paste an isomorphic collection of types. (Modulo some trivial changes, such as defining the Either type as sum rather than using your definition and using the standard option type instead of the one from your library.) My thought process was as follows: 'a Expression was used by most types, so I moved it out to a separate type and replaced it by the extra type variable ‘e whenever it was used. Then the datatype command told me that the remaining types are not fully mutual and suggested that I split the types in the way that you see in the theory. Of these types none takes more than 10 seconds. Of course, now one has to write ('a, 'a Expression) CDeclaration instead of 'a CDeclaration from your version, but this can easily be hidden behind type synonyms.</p>
+<p>At some point Jasmin and I were working on automating such a mutual-to-nested reduction to alleviate performance problems with mutual types. This failed because we had the ambition to fully hide the nested view behind the mutual interface. But the issue was that the mutual interface itself became a bottleneck. So now we are advocating people to use nested types instead—they are beneficial not only for performance but also for abstraction: most of the time one does not want to reason about the entire language. Likely, there are things that can be said about a language's declarations without knowing precisely what the language’s expressions are.</p>
+<p>Dmitriy</p>
+<p>theory Scratch<br>
+  imports Main<br>
+begin</p>
+<p>datatype Position = Position "int" "string" "int" "int"<br>
+                        | NoPosition <br>
+                        | BuiltinPosition <br>
+                        | InternalPosition<br>
+type_synonym PosLength = "(Position, int) <a href="http://Product_Type.prod">Product_Type.prod</a>"<br>
+datatype Name = Name "int"<br>
+datatype NodeInfo = OnlyPos "Position" "PosLength"<br>
+                        | NodeInfo "Position" "PosLength" "Name"<br>
+datatype Ident = Ident "string" "int" "NodeInfo"<br>
+datatype SUERef = AnonymousRef "Name"<br>
+                        | NamedRef "Ident"<br>
+datatype CChar = CChar "char" "HOL.bool"<br>
+                        | CChars "char List.list" "HOL.bool"<br>
+datatype CIntRepr = DecRepr <br>
+                        | HexRepr <br>
+                        | OctalRepr <br>
+datatype CIntFlag = FlagUnsigned <br>
+                        | FlagLong <br>
+                        | FlagLongLong <br>
+                        | FlagImag <br>
+datatype CFloat = CFloat "string"<br>
+datatype ClangCVersion = ClangCVersion "string"<br>
+datatype CString = CString "string" "HOL.bool"<br>
+datatype 'f Flags = Flags "int"<br>
+datatype CInteger = CInteger "int" "CIntRepr" "CIntFlag Flags"<br>
+datatype CAssignOp = CAssignOp <br>
+                        | CMulAssOp <br>
+                        | CDivAssOp <br>
+                        | CRmdAssOp <br>
+                        | CAddAssOp <br>
+                        | CSubAssOp <br>
+                        | CShlAssOp <br>
+                        | CShrAssOp <br>
+                        | CAndAssOp <br>
+                        | CXorAssOp <br>
+                        | COrAssOp <br>
+datatype CBinaryOp = CMulOp <br>
+                        | CDivOp <br>
+                        | CRmdOp <br>
+                        | CAddOp <br>
+                        | CSubOp <br>
+                        | CShlOp <br>
+                        | CShrOp <br>
+                        | CLeOp <br>
+                        | CGrOp <br>
+                        | CLeqOp <br>
+                        | CGeqOp <br>
+                        | CEqOp <br>
+                        | CNeqOp <br>
+                        | CAndOp <br>
+                        | CXorOp <br>
+                        | COrOp <br>
+                        | CLndOp <br>
+                        | CLorOp <br>
+datatype CUnaryOp = CPreIncOp <br>
+                        | CPreDecOp <br>
+                        | CPostIncOp <br>
+                        | CPostDecOp <br>
+                        | CAdrOp <br>
+                        | CIndOp <br>
+                        | CPlusOp <br>
+                        | CMinOp <br>
+                        | CCompOp <br>
+                        | CNegOp <br>
+datatype 'a CStorageSpecifier = CAuto "'a"<br>
+                        | CRegister "'a"<br>
+                        | CStatic "'a"<br>
+                        | CExtern "'a"<br>
+                        | CTypedef "'a"<br>
+                        | CThread "'a"<br>
+type_synonym CStorageSpec = "NodeInfo CStorageSpecifier"<br>
+datatype 'a CFunctionSpecifier = CInlineQual "'a"<br>
+                        | CNoreturnQual "'a"<br>
+type_synonym CFunSpec = "NodeInfo CFunctionSpecifier"<br>
+datatype CStructTag = CStructTag <br>
+                        | CUnionTag <br>
+datatype 'a CConstant = CIntConst "CInteger" "'a"<br>
+                        | CCharConst "CChar" "'a"<br>
+                        | CFloatConst "CFloat" "'a"<br>
+                        | CStrConst "CString" "'a"<br>
+type_synonym CConst = "NodeInfo CConstant"<br>
+type_synonym ('a, 'b) Either = "'a + 'b"<br>
+datatype 'a CStringLiteral = CStrLit "CString" "'a"</p>
+<p>datatype ('a, 'e) CAttribute = CAttr "Ident" "'e List.list" "'a"</p>
+<p>datatype ('a, 'e) CTypeQualifier = CConstQual "'a"<br>
+                        | CVolatQual "'a"<br>
+                        | CRestrQual "'a"<br>
+                        | CAtomicQual "'a"<br>
+                        | CAttrQual "('a, 'e) CAttribute"<br>
+                        | CNullableQual "'a"<br>
+                        | CNonnullQual "'a"<br>
+datatype ('a, 'e) CAssemblyOperand = CAsmOperand "Ident option" "'a CStringLiteral" "'e" "'a"<br>
+datatype ('a, 'e) CAssemblyStatement = CAsmStmt "('a, 'e) CTypeQualifier option" "'a CStringLiteral" "('a, 'e) CAssemblyOperand List.list" "('a, 'e) CAssemblyOperand List.list" "'a CStringLiteral List.list" "'a"</p>
+<p>datatype ('a, 'e) CEnumeration = CEnum "Ident option" "(Ident, 'e option) <a href="http://Product_Type.prod">Product_Type.prod</a> List.list option" "('a, 'e) CAttribute List.list" "'a"<br>
+datatype ('a, 'e) CPartDesignator = CArrDesig "'e" "'a"<br>
+                        | CMemberDesig "Ident" "'a"<br>
+                        | CRangeDesig "'e" "'e" "'a"<br>
+datatype ('a, 'e) CInitializer = CInitExpr "'e" "'a"<br>
+  | CInitList "(('a, 'e) CPartDesignator List.list, ('a, 'e) CInitializer) <a href="http://Product_Type.prod">Product_Type.prod</a> List.list" "'a"<br>
+datatype ('a, 'e) CArraySize = CNoArrSize "HOL.bool"<br>
+                        | CArrSize "HOL.bool" "'e"<br>
+datatype ('a, 'e) CDeclaration = CDecl "('a, 'e) CDeclarationSpecifier List.list" "((('a, 'e) CDeclarator option, ('a, 'e) CInitializer option) <a href="http://Product_Type.prod">Product_Type.prod</a>, 'e option) <a href="http://Product_Type.prod">Product_Type.prod</a> List.list" "'a"<br>
+                        | CStaticAssert "'e" "'a CStringLiteral" "'a"<br>
+and ('a, 'e) CDeclarator = CDeclr "Ident option" "('a, 'e) CDerivedDeclarator List.list" "'a CStringLiteral option" "('a, 'e) CAttribute List.list" "'a"<br>
+and ('a, 'e) CDerivedDeclarator = CPtrDeclr "('a, 'e) CTypeQualifier List.list" "'a"<br>
+                        | CArrDeclr "('a, 'e) CTypeQualifier List.list" "('a, 'e) CArraySize" "'a"<br>
+                        | CFunDeclr "(Ident List.list, (('a, 'e) CDeclaration List.list, HOL.bool) <a href="http://Product_Type.prod">Product_Type.prod</a>) Either" "('a, 'e) CAttribute List.list" "'a"<br>
+and ('a, 'e) CDeclarationSpecifier = CStorageSpec "'a CStorageSpecifier"<br>
+                        | CTypeSpec "('a, 'e) CTypeSpecifier"<br>
+                        | CTypeQual "('a, 'e) CTypeQualifier"<br>
+                        | CFunSpec "'a CFunctionSpecifier"<br>
+                        | CAlignSpec "('a, 'e) CAlignmentSpecifier"<br>
+and ('a, 'e) CTypeSpecifier = CVoidType "'a"<br>
+                        | CCharType "'a"<br>
+                        | CShortType "'a"<br>
+                        | CIntType "'a"<br>
+                        | CLongType "'a"<br>
+                        | CFloatType "'a"<br>
+                        | CDoubleType "'a"<br>
+                        | CSignedType "'a"<br>
+                        | CUnsigType "'a"<br>
+                        | CBoolType "'a"<br>
+                        | CComplexType "'a"<br>
+                        | CInt128Type "'a"<br>
+                        | CSUType "('a, 'e) CStructureUnion" "'a"<br>
+                        | CEnumType "('a, 'e) CEnumeration" "'a"<br>
+                        | CTypeDef "Ident" "'a"<br>
+                        | CTypeOfExpr "'e" "'a"<br>
+                        | CTypeOfType "('a, 'e) CDeclaration" "'a"<br>
+                        | CAtomicType "('a, 'e) CDeclaration" "'a"<br>
+and ('a, 'e) CAlignmentSpecifier = CAlignAsType "('a, 'e) CDeclaration" "'a"<br>
+                        | CAlignAsExpr "'e" "'a"<br>
+and ('a, 'e) CStructureUnion = CStruct "CStructTag" "Ident option" "('a, 'e) CDeclaration List.list option" "('a, 'e) CAttribute List.list" "'a"</p>
+<p>datatype ('a, 'e) CFunctionDef = CFunDef "('a, 'e) CDeclarationSpecifier List.list" "('a, 'e) CDeclarator" "('a, 'e) CDeclaration List.list" "('a, 'e) CStatement" "'a"<br>
+and ('a, 'e) CStatement = CLabel "Ident" "('a, 'e) CStatement" "('a, 'e) CAttribute List.list" "'a"<br>
+                        | CCase "'e" "('a, 'e) CStatement" "'a"<br>
+                        | CCases "'e" "'e" "('a, 'e)  CStatement" "'a"<br>
+                        | CDefault "('a, 'e) CStatement" "'a"<br>
+                        | CExpr "'e option" "'a"<br>
+                        | CCompound "Ident List.list" "('a, 'e) CCompoundBlockItem List.list" "'a"<br>
+                        | CIf "'e" "('a, 'e) CStatement" "('a, 'e) CStatement option" "'a"<br>
+                        | CSwitch "'e" "('a, 'e) CStatement" "'a"<br>
+                        | CWhile "'e" "('a, 'e) CStatement" "HOL.bool" "'a"<br>
+                        | CFor "('e option, ('a, 'e) CDeclaration<br>
+[message truncated]</p>
+
+
+
+<a name="528387784"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/528387784" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#528387784">(Jul 11 2025 at 18:21)</a>:</h4>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>On 3 Jul 2025, at 15.44, Roland Lutz &lt;<a href="mailto:rlutz@hedmen.org">rlutz@hedmen.org</a>&gt; wrote:</p>
+<p>On Thu, 3 Jul 2025, Makarius wrote:</p>
+<blockquote>
+<p>Datatypes with 100 constructors are not very realistic.</p>
+</blockquote>
+<p>This is an actual problem I ran into.  I wanted to prove some properties of a particular state machine, but a datatype with ~50 states would never finish compiling.</p>
+</blockquote>
+<p>Was that a datatype with 50 constructors (which should finish relatively quickly—if not, I’d like to see the example) or 50 mutually recursive datatypes (which has no chance)? If the latter, you could consider following the recipe from my response to Frédéric in this thread.</p>
+<p>Dmitriy</p>
+
+
+
+<a name="528457477"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/528457477" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#528457477">(Jul 12 2025 at 13:10)</a>:</h4>
+<p>From: Roland Lutz &lt;<a href="mailto:rlutz@hedmen.org">rlutz@hedmen.org</a>&gt;<br>
+On Fri, 11 Jul 2025, Dmitriy Traytel wrote:</p>
+<blockquote>
+<p>On 3 Jul 2025, at 15.44, Roland Lutz &lt;<a href="mailto:rlutz@hedmen.org">rlutz@hedmen.org</a>&gt; wrote:</p>
+<blockquote>
+<p>On Thu, 3 Jul 2025, Makarius wrote:</p>
+<blockquote>
+<p>Datatypes with 100 constructors are not very realistic.</p>
+</blockquote>
+<p>This is an actual problem I ran into.  I wanted to prove some <br>
+properties of a particular state machine, but a datatype with ~50 <br>
+states would never finish compiling.</p>
+</blockquote>
+<p>Was that a datatype with 50 constructors (which should finish relatively <br>
+quickly—if not, I’d like to see the example) or 50 mutually recursive <br>
+datatypes (which has no chance)? If the latter, you could consider <br>
+following the recipe from my response to Frédéric in this thread.</p>
+</blockquote>
+<p>It was something along the lines of</p>
+<p>datatype state = Start | Identifier | Comment | ...</p>
+<p>The threshold between "usable" and "unusable" performance lay between 11 <br>
+and 12 constructors on my machine; I would have needed significantly more. <br>
+This was with Isabelle 2022, if I recall correctly.</p>
+<p>This isn't just about this particular case, though.  I'd like to be able <br>
+to use Isabelle to automate and "forget about" things, similar to a test <br>
+suite.  So what I'd really wish for is that I could refactor my code and <br>
+have temporarily, say, 200 states, and the proof would still complete in <br>
+reasonable time.</p>
+<p>Roland</p>
+
+
+
+<a name="529921499"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Merging%20elimination%20rules%20of%20Claset%20is%20slow%20-%20.../near/529921499" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Merging.20elimination.20rules.20of.20Claset.20is.20slow.20-.20.2E.2E.2E.html#529921499">(Jul 21 2025 at 16:03)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 30/06/2025 19:36, Makarius wrote:</p>
+<blockquote>
+<p>Now the focus has changed to datatypes. This raise a few more questions:</p>
+<p>* Is the claset merge operation really slow, or are the involved clasets <br>
+just very big?</p>
+</blockquote>
+<p>To answer this question without inflating this thread once again, see now the <br>
+isabelle-dev repository <br>
+<a href="https://isabelle.sketis.net/repos/isabelle/rev/ca600cbfd4bf">https://isabelle.sketis.net/repos/isabelle/rev/ca600cbfd4bf</a></p>
+<p>changeset:   82833:ca600cbfd4bf<br>
+user:        wenzelm<br>
+date:        Thu Jul 10 17:29:25 2025 +0200<br>
+files:       src/Provers/classical.ML<br>
+description:<br>
+more accurate "next" counter for each insert operation: subtle change of <br>
+semantics wrt. Item_Net.length, due to delete operation;<br>
+avoid costly Item_Net.length, which is linear in size;</p>
+<p>That avoids a rather wasteful (and slightly wrong) allocation of a fresh index <br>
+for new rule declarations.</p>
+<p>The change could probably be applied to the isabelle-release version, but that <br>
+is not my job. Isabelle development has only one linear line of history, no <br>
+branches, and no actual merges.</p>
+<p>After that change (and in the coming release at the end of 2025), it still <br>
+remains a bad idea to introduce large flat datatypes without proper <br>
+substructure. Tons of individual cases will show up in proofs over and over <br>
+again. No performance tuning of basic data structures can avoid that complexity.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

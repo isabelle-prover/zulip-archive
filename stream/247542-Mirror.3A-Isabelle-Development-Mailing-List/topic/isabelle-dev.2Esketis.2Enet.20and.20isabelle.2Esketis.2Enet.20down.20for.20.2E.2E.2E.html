@@ -1,0 +1,185 @@
+<html>
+<head><meta charset="utf-8"><title>isabelle-dev.sketis.net and isabelle.sketis.net down for ... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html">isabelle-dev.sketis.net and isabelle.sketis.net down for ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="508356133"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508356133" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508356133">(Mar 26 2025 at 18:55)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+My Websites with Isabelle development resources are presently down for <br>
+maintenance. I need to figure out how to get rid of dumb "AI" bots --- This is <br>
+becoming a pest.</p>
+<p>The Caddy webserver has some add-ons specifically for that. Lets see if/how <br>
+this works ...</p>
+<p>Makarius</p>
+
+
+
+<a name="508376138"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508376138" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508376138">(Mar 26 2025 at 20:56)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 26/03/2025 19:55, Makarius wrote:</p>
+<blockquote>
+<p>My Websites with Isabelle development resources are presently down for <br>
+maintenance. I need to figure out how to get rid of dumb "AI" bots --- This is <br>
+becoming a pest.</p>
+<p>The Caddy webserver has some add-ons specifically for that. Lets see if/how <br>
+this works ...</p>
+</blockquote>
+<p>The websites are back for now. The bombardment is down to approx. 20% CPU load.</p>
+<p>I've had initial success with <br>
+<a href="https://github.com/JasonLovesDoggo/caddy-defender/tree/ranges-file">https://github.com/JasonLovesDoggo/caddy-defender/tree/ranges-file</a> and its <br>
+bundled address ranges <br>
+<a href="https://github.com/JasonLovesDoggo/caddy-defender/blob/ranges-file/ranges/data/generated.go">https://github.com/JasonLovesDoggo/caddy-defender/blob/ranges-file/ranges/data/generated.go</a><br>
+--- after some tinkering with the /etc/caddy/Caddyfile.</p>
+<p>It needs more research into fine points. E.g. I've had problems including <br>
+"aliyun" address space for Alibaba Cloud.</p>
+<p>Conclusions so far:</p>
+<p>* The Caddy webserver is very easy to extend and rebuild into a single <br>
+executable, using the "xcaddy" tool. The magic command line is:</p>
+<p>xcaddy build --with <a href="http://github.com/jasonlovesdoggo/caddy-defender">github.com/jasonlovesdoggo/caddy-defender</a> --with <br>
+<a href="http://github.com/mholt/caddy-ratelimit">github.com/mholt/caddy-ratelimit</a></p>
+<p>* This is my second encounter to the Go ecosystem, and it looks fairly nice <br>
+so far.</p>
+<p>* There is a major war out there: dumb machines against smart humans.</p>
+<p>Makarius</p>
+
+
+
+<a name="508382553"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508382553" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508382553">(Mar 26 2025 at 21:38)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 26/03/2025 21:56, Makarius wrote:</p>
+<blockquote>
+<p>* There is a major war out there: dumb machines against smart humans.</p>
+</blockquote>
+<p>That <em>is</em> a war, but more war does not present a solution. Here is an article <br>
+including "nuclear responses": <br>
+<a href="https://thelibre.news/foss-infrastructure-is-under-attack-by-ai-companies">https://thelibre.news/foss-infrastructure-is-under-attack-by-ai-companies</a></p>
+<p>Right now the very simple measures of caddy-defender are sufficient to keep <br>
+the "AI-noise" the webserver &lt; 10-20% CPU time.</p>
+<p>Makarius</p>
+
+
+
+<a name="508385243"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508385243" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508385243">(Mar 26 2025 at 21:58)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Here is another guy under fierce attack the "global AI gang":</p>
+<p><a href="https://drewdevault.com/2025/03/17/2025-03-17-Stop-externalizing-your-costs-on-me.html">https://drewdevault.com/2025/03/17/2025-03-17-Stop-externalizing-your-costs-on-me.html</a></p>
+<p>"""<br>
+Please stop legitimizing LLMs or AI image generators or GitHub Copilot or any <br>
+of this garbage. I am begging you to stop using them, stop talking about them, <br>
+stop making new ones, just stop. If blasting CO2 into the air and ruining all <br>
+of our freshwater and traumatizing cheap laborers and making every sysadmin <br>
+you know miserable and ripping off code and books and art at scale and ruining <br>
+our fucking democracy isn’t enough for you to leave this shit alone, what is?</p>
+<p>If you personally work on developing LLMs et al, know this: I will never work <br>
+with you again, and I will remember which side you picked when the bubble bursts.<br>
+"""</p>
+<p>This guy is running <a href="https://sourcehut.org">https://sourcehut.org</a></p>
+<p>Speaking of "the bubble bursts": Some days ago, I've had a discussion with a <br>
+non-tech person about the "AI hype". When she said "that AI is here to stay <br>
+for decades" I spontaneously answered "it is so hot already, that it might <br>
+have burnt down within 2 years".</p>
+<p>Anyway, the isabelle-dev website looks good for the moment ...</p>
+<p>Makarius</p>
+
+
+
+<a name="508520250"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508520250" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508520250">(Mar 27 2025 at 13:36)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+There have been a couple of private notes, hints, and recommendations. This is <br>
+my current understanding of possible approaches:</p>
+<p>(1) Block particular User-agent names from the other side, e.g. this list<br>
+<a href="https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt">https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt</a> --- not <br>
+via robots.txt (which is often ignored), but hardwired into the Webserver.</p>
+<p>Weakness: AI bots often don't identify themselves properly.</p>
+<p>(2) Block particular address ranges, e.g. according to this list <br>
+<a href="https://github.com/JasonLovesDoggo/caddy-defender/blob/main/ranges/data/generated.go">https://github.com/JasonLovesDoggo/caddy-defender/blob/main/ranges/data/generated.go</a></p>
+<p>Weakness: this is neither correct nor complete, i.e. legitimate users could <br>
+use a cloud address, bad addresses could be missing. Maybe it is better not to <br>
+block completely, but to reduce the bandwidth for such addresses.</p>
+<p>(3) Aggressive counterstrikes, e.g. via proof-of-work imposed on the other <br>
+side, e.g. see <a href="https://anubis.techaro.lol">https://anubis.techaro.lol</a></p>
+<p>Weakness: answering war by more war is not a winning strategy.</p>
+<p>Makarius</p>
+
+
+
+<a name="508521191"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508521191" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508521191">(Mar 27 2025 at 13:40)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Thank you for bringing all this up. This must also be the reason why some of our <br>
+servers (AFP, ...)  are sometimes unreachable. I knew that it has to do with <br>
+crawlers, but I was unaware of the global nature of the problem and that AI bots <br>
+are causing it.</p>
+<p>Tobias</p>
+<p>On 27/03/2025 14:34, Makarius wrote:</p>
+<blockquote>
+<p>There have been a couple of private notes, hints, and recommendations. This is <br>
+my current understanding of possible approaches:</p>
+<p>(1) Block particular User-agent names from the other side, e.g. this list<br>
+<a href="https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt">https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt</a> --- not via <br>
+robots.txt (which is often ignored), but hardwired into the Webserver.</p>
+<p>Weakness: AI bots often don't identify themselves properly.</p>
+<p>(2) Block particular address ranges, e.g. according to this list https:// <br>
+<a href="http://github.com/JasonLovesDoggo/caddy-defender/blob/main/ranges/data/generated.go">github.com/JasonLovesDoggo/caddy-defender/blob/main/ranges/data/generated.go</a></p>
+<p>Weakness: this is neither correct nor complete, i.e. legitimate users could <br>
+use a cloud address, bad addresses could be missing. Maybe it is better not to <br>
+block completely, but to reduce the bandwidth for such addresses.</p>
+<p>(3) Aggressive counterstrikes, e.g. via proof-of-work imposed on the other <br>
+side, e.g. see <a href="https://anubis.techaro.lol">https://anubis.techaro.lol</a></p>
+<p>Weakness: answering war by more war is not a winning strategy.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/6xmFu7Wzr2WAcddvq78_KElF/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="508636980"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/isabelle-dev.sketis.net%20and%20isabelle.sketis.net%20down%20for%20.../near/508636980" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/isabelle-dev.2Esketis.2Enet.20and.20isabelle.2Esketis.2Enet.20down.20for.20.2E.2E.2E.html#508636980">(Mar 27 2025 at 23:33)</a>:</h4>
+<p>From: 伊藤洋介 &lt;<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a>&gt;<br>
+Thanks, Makarius.<br>
+I didn't know that AI causes such serious problems...</p>
+<p>--<br>
+Yosuke ITO<br>
+伊藤 洋介<br>
+<a href="mailto:glacier345@gmail.com">glacier345@gmail.com</a></p>
+<p>2025年3月27日(木) 23:14 Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;:</p>
+<blockquote>
+<p>There have been a couple of private notes, hints, and recommendations.<br>
+This is<br>
+my current understanding of possible approaches:</p>
+<p>(1) Block particular User-agent names from the other side, e.g. this<br>
+list<br>
+<a href="https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt">https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt</a> ---<br>
+not<br>
+via robots.txt (which is often ignored), but hardwired into the Webserver.</p>
+<p>Weakness: AI bots often don't identify themselves properly.</p>
+<p>(2) Block particular address ranges, e.g. according to this list</p>
+<p><a href="https://github.com/JasonLovesDoggo/caddy-defender/blob/main/ranges/data/generated.go">https://github.com/JasonLovesDoggo/caddy-defender/blob/main/ranges/data/generated.go</a></p>
+<p>Weakness: this is neither correct nor complete, i.e. legitimate users<br>
+could<br>
+use a cloud address, bad addresses could be missing. Maybe it is better<br>
+not to<br>
+block completely, but to reduce the bandwidth for such addresses.</p>
+<p>(3) Aggressive counterstrikes, e.g. via proof-of-work imposed on the<br>
+other<br>
+side, e.g. see <a href="https://anubis.techaro.lol">https://anubis.techaro.lol</a></p>
+<p>Weakness: answering war by more war is not a winning strategy.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

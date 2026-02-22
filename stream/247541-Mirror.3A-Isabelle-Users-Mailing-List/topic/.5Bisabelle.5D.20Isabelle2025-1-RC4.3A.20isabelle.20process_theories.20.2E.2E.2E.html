@@ -1,0 +1,67 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2025-1-RC4: isabelle process_theories ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC4.3A.20isabelle.20process_theories.20.2E.2E.2E.html">[isabelle] Isabelle2025-1-RC4: isabelle process_theories ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="563072183"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1-RC4%3A%20isabelle%20process_theories%20.../near/563072183" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC4.3A.20isabelle.20process_theories.20.2E.2E.2E.html#563072183">(Dec 10 2025 at 22:27)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Dear Isabelle users,</p>
+<p>people often come to me with the request to make Isabelle appear more like a <br>
+plain-old command-line proof assistant from some decades ago. Short answer: We <br>
+have given up this model &gt; 10 years ago, and won't go back. Isabelle is a <br>
+document-oriented proof assistant instead.</p>
+<p>And in fact, asking the canonical questions: "What is your application? What <br>
+are you trying to do?" the answer is often something like this: "I want to <br>
+inspect intermediate states of processed theories (including proofs), but not <br>
+necessarily while the engine is still running".</p>
+<p>Here are some answers to that, from the NEWS of Isabelle2021-1:</p>
+<p>"""<br>
+<strong>* System </strong>*</p>
+<ul>
+<li>The command-line tool "isabelle process_theories" tool takes source<br>
+files and theories within a proper session context (like regular<br>
+"isabelle build"). Output of prover messages works roughly like<br>
+"isabelle build_log", while the theories are being processed.</li>
+</ul>
+<p>Examples:</p>
+<p>isabelle process_theories -U -O HOL-Library.Multiset</p>
+<p>isabelle process_theories -U -O -o show_states HOL-Library.Multiset</p>
+<p>isabelle process_theories -f '~~/src/HOL/Examples/Seq.thy'</p>
+<ul>
+<li>System option "record_theories" tells "isabelle build" to record<br>
+intermediate theory commands and results, at the cost of approx. 5 times<br>
+larger ML heap images. This allows to retrieve fine-grained semantic<br>
+information later on, using Thy_Info.get_theory_segments or<br>
+Thy_Info.get_theory_elements in Isabelle/ML.<br>
+"""</li>
+</ul>
+<p>That status-quo will be the starting point for any further discussions about <br>
+this topic (private or public).</p>
+<p>I do want to see Isabelle system tools eventually that work properly --- <br>
+<em>with</em> the system and not against it. My claim is that it can be done with a <br>
+little bit Isabelle/Scala, and maybe some tiny Isabelle/ML addons that are <br>
+loaded beforehand in a proper session context.</p>
+<p>Note that in the Isabelle System manual ("isabelle doc system") there is some <br>
+explanation on "isabelle scala_project", to use Java/Scala IDEs like IntelliJ <br>
+IDEA with Isabelle/Scala. There is also our src/Tools/Demo/ for the <br>
+Isabelle/Scala project setup via etc/build.props --- it is easier and more <br>
+robust than Maven / Gradle / sbt from the Java/Scala world.</p>
+<p>Further note that in Isabelle2025-1, the terminology "Isabelle Process" means <br>
+"Isabelle/Scala process running on the JVM" by default, and the old notion of <br>
+"Isabelle/ML process running on Poly/ML" is explicitly called "ML_Process" <br>
+(which is a module in Isabelle/Scala and Isabelle/ML). That has a command-line <br>
+interface "isabelle ML_process", although it is rarely useful, because it lack <br>
+the mandatory Isabelle/Scala/PIDE session context.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

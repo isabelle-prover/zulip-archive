@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>Nitpick seems to find invalid counterexample · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Nitpick.20seems.20to.20find.20invalid.20counterexample.html">Nitpick seems to find invalid counterexample</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="571390254"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Nitpick%20seems%20to%20find%20invalid%20counterexample/near/571390254" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tim <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Nitpick.20seems.20to.20find.20invalid.20counterexample.html#571390254">(Feb 02 2026 at 10:06)</a>:</h4>
+<p>Consider the following theory formalizing boolean circuits and weighted circuit satisfiability:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">DebugNitpick</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span><span class="w"> </span><span class="s">"HOL-Library.FSet"</span>
+<span class="k">begin</span>
+
+<span class="k">datatype</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">boolean_circuit</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Var</span><span class="w"> </span><span class="n n-Type">'a</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">Not</span><span class="w"> </span><span class="s">"'a boolean_circuit"</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">And</span><span class="w"> </span><span class="s">"'a boolean_circuit fset"</span>
+<span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">Or</span><span class="w"> </span><span class="s">"'a boolean_circuit fset"</span>
+
+<span class="kn">typedef</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">var_interpretation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"{var :: ('a ⇒ bool). finite {v. var v}}"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">not_finite_existsD</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="c">(* the number of variables that are assigned to True *)</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a var_interpretation ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"weight var = card {v. Rep_var_interpretation var v}"</span>
+
+<span class="kn">function</span><span class="w"> </span><span class="n">eval</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a var_interpretation ⇒ 'a boolean_circuit ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"eval var (Var v) = Rep_var_interpretation var v"</span>
+<span class="o">|</span><span class="w"> </span><span class="s">"eval var (Not circuit) = (¬eval var circuit)"</span>
+<span class="o">|</span><span class="w"> </span><span class="s">"eval var (And circuits) = fBall circuits (eval var)"</span>
+<span class="o">|</span><span class="w"> </span><span class="s">"eval var (Or circuits) = fBex circuits (eval var)"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">pat_completeness</span><span class="w"> </span><span class="n">auto</span>
+<span class="kn">termination</span><span class="w"> </span><span class="gr">sorry</span><span class="w"> </span><span class="c">(* this is provable, omitted here for simplicity *)</span>
+
+<span class="c">(* weighted circuit sat = is there a satisfying interpretation with weight k? *)</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">wcs</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a boolean_circuit ⇒ nat ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"wcs circuit k = (∃ var. weight var = k ∧ eval var circuit)"</span>
+
+<span class="k">datatype</span><span class="w"> </span><span class="n">debug_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">debug_el</span>
+
+<span class="k">declare</span><span class="o">[[</span><span class="n">show_types</span><span class="o">]]</span>
+
+<span class="c">(* "And {Or {}}" does not have a satisfying interpretation with weight 0,</span>
+<span class="c">    i.e. the empty interpretation *)</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"¬wcs (And {| Or (fempty :: debug_type boolean_circuit fset)|}) 0"</span>
+<span class="w">  </span><span class="kt">nitpick</span>
+<span class="w">  </span><span class="c">(* here, nitpick finds a counterexample with an empty variable interpretation</span>
+<span class="c">     in wcs, which should however have "eval var circuit" evaluate to False;</span>
+<span class="c">     so this counterexample is invalid *)</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">wcs_def</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="o">)</span>
+<span class="w">  </span><span class="k">done</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>Nitpick claims to find a counterexample for the lemma at the bottom, however the counterexample is invalid. Is this a bug in Nitpick (I am aware that it does not run inside the Isabelle kernel) or am I misunderstanding something here?</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,59 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Isabelle2025-2 supersedes Isabelle2025-1 · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle2025-2.20supersedes.20Isabelle2025-1.html">NEWS: Isabelle2025-2 supersedes Isabelle2025-1</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="568780943"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle2025-2%20supersedes%20Isabelle2025-1/near/568780943" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle2025-2.20supersedes.20Isabelle2025-1.html#568780943">(Jan 19 2026 at 11:39)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Due to a notable confusion of options for isabelle build, the release of <br>
+Isabelle2025-1 (December 2025) had to be replaced on the spot by <br>
+Isabelle2025-2 (January 2026).</p>
+<p>The relevant NEWS entries are as follows:</p>
+<p><strong>* General </strong>*</p>
+<ul>
+<li>Command 'sorry' is rejected by "isabelle build" as expected, with the<br>
+default option "quick_and_dirty=false". This was broken in<br>
+Isabelle2025-1: Isar commands were considered interactive due to the<br>
+default option "show_results=true". Proper behaviour could be recovered<br>
+in Isabelle2025-1 via "isabelle build -o show_results=false", but it is<br>
+better to use Isabelle2025-2. Both approaches result in minor changes of<br>
+result messages stored in session build databases.</li>
+</ul>
+<p><strong>* Isabelle/jEdit Prover IDE </strong>*</p>
+<ul>
+<li>Console/Scala: proper treatment of interrupts via "Stop" button. It<br>
+was broken since Isabelle2022: Scala interpreter thread became<br>
+inoperative afterwards.</li>
+</ul>
+<p>This refers to Isabelle/89701cf1768e.</p>
+<p>The release website requires some time to be fully updated, including all <br>
+mirrors. Afterwards, I will make a proper announcement on isabelle-users.</p>
+<p>The plan for Isabelle2026 (October 2026) remains unchanged: <br>
+<a href="https://sketis.net/2025/plan-for-isabelle2026-october-2026">https://sketis.net/2025/plan-for-isabelle2026-october-2026</a> --- thus we have <br>
+sufficient distance to the Christmas vacation.</p>
+<p>The last time we've had the awkward situation to have one release supersede <br>
+another was Isabelle2013-2: <br>
+<a href="https://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle2013-2/NEWS">https://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle2013-2/NEWS</a> --- <br>
+there were many more posthoc changes, and I was really worried about the <br>
+overall state of affairs.</p>
+<p>We have recovered from that pretty well in 2014/2015 by removing old system <br>
+variations that no longer had a purpose (TTY REPL and Proof General Emacs), <br>
+and by relying more on Isabelle/Scala than the somewhat accidental <br>
+operating-system environment.</p>
+<p>Abstractly, the same idea is still relevant: this time it will be the removal <br>
+of the remains of ML-toplevel build (use_thy), together with odd historic <br>
+options like "interactive mode" for Isar commands. Regular system options are <br>
+sufficient (module Options in Isabelle/ML and Isabelle/Scala).</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

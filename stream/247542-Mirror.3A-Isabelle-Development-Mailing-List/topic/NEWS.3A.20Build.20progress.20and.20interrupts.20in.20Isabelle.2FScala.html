@@ -1,0 +1,61 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Build progress and interrupts in Isabelle/Scala · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Build.20progress.20and.20interrupts.20in.20Isabelle.2FScala.html">NEWS: Build progress and interrupts in Isabelle/Scala</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="567419652"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Build%20progress%20and%20interrupts%20in%20Isabelle/Scala/near/567419652" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Build.20progress.20and.20interrupts.20in.20Isabelle.2FScala.html#567419652">(Jan 11 2026 at 22:23)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* Isabelle/jEdit Prover IDE </strong>*</p>
+<ul>
+<li>
+<p>Console/Scala: proper treatment of interrupts via "Stop" button. It<br>
+was broken since Isabelle2022: Scala interpreter thread became<br>
+inoperative afterwards.</p>
+</li>
+<li>
+<p>Console/Scala: more robust Scala_Console.Progress with local output<br>
+and interrupt handling (using thread interrupt, e.g. via "Stop" button).<br>
+For example:</p>
+<p>val progress = new Scala_Console.Progress(verbose = true)<br>
+ Build.build_logic(PIDE.options, "FOL", progress = progress)</p>
+</li>
+</ul>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>
+<p>Isabelle/Scala operations Build.build(), Build.build_logic() etc.<br>
+already include progress.interrupt_handler for the main loop. It is no<br>
+longer required as a separate wrapper for command-line tools etc.</p>
+</li>
+<li>
+<p>Isabelle/Scala operation Progress.interrupt_handler is now more<br>
+specific for different instances of class Progress, with mixins<br>
+Progress.Local_Interrupts (for thread interrupts) and<br>
+Progress.Global_Interrupts (for thread interrupts and process signals).<br>
+The latter is included in class Console_Progress, which is typically<br>
+used for a single command-line tool that is directly connected to the<br>
+system shell and its signals (e.g. CTRL-C). The default (new Progress)<br>
+does not change interrupt handling at all. Subtle INCOMPATIBILITY in<br>
+very rare situations.</p>
+</li>
+</ul>
+<p>This refers to Isabelle/174c4514438c.</p>
+<p>It is the result of several rounds of refinements in this area. Many years <br>
+ago, class Progress was rather primitive: <br>
+<a href="https://isabelle.in.tum.de/repos/isabelle/file/8a4bd05c1735/src/Pure/System/progress.scala">https://isabelle.in.tum.de/repos/isabelle/file/8a4bd05c1735/src/Pure/System/progress.scala</a></p>
+<p>Now it serves as an umbrella for many variants on message output and interrupt <br>
+handling. That required some reworking, which is hopefully sufficient for now, <br>
+although I can anticipate further refinements in the future.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

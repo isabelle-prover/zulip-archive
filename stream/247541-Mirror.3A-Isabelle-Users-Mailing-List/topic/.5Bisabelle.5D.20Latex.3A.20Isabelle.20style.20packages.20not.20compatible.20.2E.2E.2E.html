@@ -1,0 +1,63 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Latex: Isabelle style packages not compatible ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Latex.3A.20Isabelle.20style.20packages.20not.20compatible.20.2E.2E.2E.html">[isabelle] Latex: Isabelle style packages not compatible ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="508151948"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Latex%3A%20Isabelle%20style%20packages%20not%20compatible%20.../near/508151948" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Latex.3A.20Isabelle.20style.20packages.20not.20compatible.20.2E.2E.2E.html#508151948">(Mar 26 2025 at 00:26)</a>:</h4>
+<p>From: Peter Hoefner &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi all,</p>
+<p>It seems that the standard Isabelle packages (Isabelle.sty,isabellesym.sty) do not work with the package comment.<br>
+Minimal working example attached (comment in line 3 to see error message).<br>
+This is problematic since the document class of lipics requires comment.</p>
+<p>Cheers<br>
+Peter</p>
+<p>%\documentclass{lipics-v2021}<br>
+\documentclass{article}<br>
+% \usepackage{comment} % &lt;-- breaks if package comment is used;<br>
+% this package is used in lipics document class<br>
+\usepackage{isabelle,isabellesym}</p>
+<p>\begin{document}<br>
+\begin{isabelle}<br>
+    something<br>
+    \isadelimproof<br>
+%    %<br>
+    \endisadelimproof<br>
+\end{isabelle}<br>
+\end{document}</p>
+
+
+
+<a name="508234621"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Latex%3A%20Isabelle%20style%20packages%20not%20compatible%20.../near/508234621" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Latex.3A.20Isabelle.20style.20packages.20not.20compatible.20.2E.2E.2E.html#508234621">(Mar 26 2025 at 10:29)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 26/03/2025 01:25, Peter Hoefner (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>It seems that the standard Isabelle packages (Isabelle.sty,isabellesym.sty) do <br>
+not work with the package comment.<br>
+Minimal working example attached (comment in line 3 to see error message).<br>
+This is problematic since the document class of lipics requires comment.</p>
+</blockquote>
+<p>The Isabelle document preparation system requires the "comment" package on its <br>
+own account. It uses it in PlainTeX mode as follows:</p>
+<p>%plain TeX version of comment package -- much faster!<br>
+\let\isafmtname\fmtname\def\fmtname{plain}<br>
+\usepackage{comment}<br>
+\let\fmtname\isafmtname</p>
+<p>The regular LaTeX setup is available via "options [document_comment_latex]" in <br>
+the session ROOT configuration.</p>
+<p>(One happy day I will remove the need for "comment" in Isabelle document <br>
+output, and just do it directly in Isabelle/Scala instead of odd TeX programming.)</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Equality on word literals [was: Word_Lib: Perf... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Equality.20on.20word.20literals.20.5Bwas.3A.20Word_Lib.3A.20Perf.2E.2E.2E.html">[isabelle] Equality on word literals [was: Word_Lib: Perf...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513667951"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Equality%20on%20word%20literals%20%5Bwas%3A%20Word_Lib%3A%20Perf.../near/513667951" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Equality.20on.20word.20literals.20.5Bwas.3A.20Word_Lib.3A.20Perf.2E.2E.2E.html#513667951">(Apr 22 2025 at 17:37)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>As far I can see, the best solution is to disregard <br>
+word_eq_numeral_iff_iszero [simp] and calculate equality on word values <br>
+in the same manner as &lt;= and &lt; is calculated by default in HOL- <br>
+Library.Word.</p>
+</blockquote>
+<p>I started to re-arrange this but stumbled over an elementary issue: IMHO <br>
+non-trivial computations on word numerals should only be carried out if <br>
+the length is fixed – otherwise there will be artifacts of the <br>
+conversion to int in the resulting term. Practically, this could be <br>
+achieved using a precondition ‹LENGTH('a) = numeral n› on the <br>
+corresponding rewrites. @list Any opinions?</p>
+<p>Cheers,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/67EBstmp0DY27uHBSADLT4Ra/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/tPrP_2r3esR4Cz_QhlJUru10/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="513743305"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Equality%20on%20word%20literals%20%5Bwas%3A%20Word_Lib%3A%20Perf.../near/513743305" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Equality.20on.20word.20literals.20.5Bwas.3A.20Word_Lib.3A.20Perf.2E.2E.2E.html#513743305">(Apr 22 2025 at 23:18)</a>:</h4>
+<p>From: Gerwin Klein &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>On 23 Apr 2025, at 03:37, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt; wrote:</p>
+<blockquote>
+<p>As far I can see, the best solution is to disregard word_eq_numeral_iff_iszero [simp] and calculate equality on word values in the same manner as &lt;= and &lt; is calculated by default in HOL- Library.Word.</p>
+</blockquote>
+<p>I started to re-arrange this but stumbled over an elementary issue: IMHO non-trivial computations on word numerals should only be carried out if the length is fixed – otherwise there will be artifacts of the conversion to int in the resulting term. Practically, this could be achieved using a precondition ‹LENGTH('a) = numeral n› on the corresponding rewrites. @list Any opinions?</p>
+</blockquote>
+<p>I agree that restricting non-trivial numeric computation to instances makes sense (depending on what non-trivial turns out to be), but I’m not a fan of conditional rewrites like that. They will always apply and be rejected often. Even if it might not obviously impact performance immediately, it is an ingredient for performance problems later on and at the least it will make all simp traces involving words very annoying to read.</p>
+<p>If we’re in a simproc, could we match more explicitly on the type in the term?</p>
+<p>A bit less general: it might be enough to instantiate the corresponding rules to numeral type arguments. That would mean arithmetic only works on numeral word lengths, not other types people have built. We could alleviate that by providing a lemma set where the length type has a known consistent name so that it is easy to produce those instances with [where .. ] for people who are using non-numeral types for lengths (we do a few times for abstraction, but rarely).</p>
+<p>Cheers,<br>
+Gerwin</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,184 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Alignment of super- and subscripts in generate... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Alignment.20of.20super-.20and.20subscripts.20in.20generate.2E.2E.2E.html">[isabelle] Alignment of super- and subscripts in generate...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="570577506"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Alignment%20of%20super-%20and%20subscripts%20in%20generate.../near/570577506" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Alignment.20of.20super-.20and.20subscripts.20in.20generate.2E.2E.2E.html#570577506">(Jan 28 2026 at 14:46)</a>:</h4>
+<p><strong>From:</strong> Tassilo Lemke &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,</p>
+<p>not sure if this is the right place to ask, but I haven’t found any concrete answers on this so far. Is there a way to get superscripts and subscripts to align vertically above each other in the generated PDF document? For example, in plain LaTeX, "x^i_j" renders "i" and "j" aligned above/below the same symbol. However, in the generated PDF, they appear sequentially, one after the other.</p>
+<p>Since I haven’t found anything on this so far: is this currently not possible, or is it deliberately prevented in order to preserve semantic ordering? In my specific case, the ordering is relevant, although only one ordering results in a well-formed expression (and the correct ordering is also ensured via notation priorities). Still, having them vertically aligned would make the generated PDF much more readable.</p>
+<p>Thankful for any suggestions.</p>
+<p>Best,<br>
+Tassilo Lemke</p>
+
+
+
+<a name="570720772"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Alignment%20of%20super-%20and%20subscripts%20in%20generate.../near/570720772" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Alignment.20of.20super-.20and.20subscripts.20in.20generate.2E.2E.2E.html#570720772">(Jan 29 2026 at 07:30)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>What exactly does your Isabelle term look like? I am asking because it is not <br>
+clear to me if i or j are part of the name or if the power operator ^ is <br>
+involved or what.</p>
+<p>Tobias</p>
+<p>On 28/01/2026 15:45, Tassilo Lemke (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>not sure if this is the right place to ask, but I haven’t found any <br>
+concrete answers on this so far. Is there a way to get superscripts and <br>
+subscripts to align vertically above each other in the generated PDF document? <br>
+For example, in plain LaTeX, "x^i_j" renders "i" and "j" aligned above/below the <br>
+same symbol. However, in the generated PDF, they appear sequentially, one after <br>
+the other.</p>
+<p>Since I haven’t found anything on this so far: is this currently not possible, <br>
+or is it deliberately prevented in order to preserve semantic ordering? In my <br>
+specific case, the ordering is relevant, although only one ordering results in a <br>
+well-formed expression (and the correct ordering is also ensured via notation <br>
+priorities). Still, having them vertically aligned would make the generated PDF <br>
+much more readable.</p>
+<p>Thankful for any suggestions.</p>
+<p>Best,<br>
+Tassilo Lemke<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/VebxCxBVPRKoeUJz2GFd_LMo/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="570922489"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Alignment%20of%20super-%20and%20subscripts%20in%20generate.../near/570922489" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Alignment.20of.20super-.20and.20subscripts.20in.20generate.2E.2E.2E.html#570922489">(Jan 30 2026 at 00:58)</a>:</h4>
+<p><strong>From:</strong> Tassilo Lemke &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>To give a bit more context, I am working on a small project regarding social choice and the issue arises when defining the domain, i.e. the allowed preferene profiles of the voters.</p>
+<p>Take for example the following definitions:</p>
+<p>-- This takes a set of allowed preference relations (W) and allows all preference profiles, where each voter submits a preference relation of W.</p>
+<p>-- Practically, this turns a set of allowed preference relations to a set of allowed preference profiles.</p>
+<p>definition pp_pow :: "'a rel set ⇒ 'b set ⇒ ('a, 'b) pp set" (‹(_)(⇧_)› [99, 1000] 99) where<br>
+  "W⇧N ≡ {P. 𝒩⇘P⇙ = N ∧ (∀v∈N. P!v ∈ W)}"</p>
+<p>-- This only allows those preference relations of R, which are dichotomous (i.e. voters put alternatives only into one of two categories).</p>
+<p>-- Note that this works on a set of allowed preference relations, and not profiles.</p>
+<p>definition dom_dich :: "'a rel set ⇒ 'a rel set" (‹(_)⇘DICH⇙› [99] 100) where<br>
+  "R⇘DICH⇙ ≡ {r∈R. ∀x y z. x ≻⇘r⇙ y ⟶ z ∼⇘r⇙ x ∨ z ∼⇘r⇙ y}"</p>
+<p>-- Another domain of interest is restricting a set of profiles to only allow those, whose majority preference relation is transitive.<br>
+-- This requires D to be a set of preference profiles, because for the majority relation to be defined, we already need multiple voters.</p>
+<p>definition dom_trans :: "('a, 'b) pp set ⇒ ('a, 'b) pp set" (‹(_)⇘TRANS⇙› [99] 100) where<br>
+  "D⇘TRANS⇙ ≡ {P∈D. trans (majority P)}"</p>
+<p>Of course, the ordering in Isabelle itself is relevant, i.e. "(W⇧N)⇘TRANS⇙" and "W⇘DICH⇙⇧N" are well-formed expressions, but "(W⇧N)⇘DICH⇙" and "W⇘TRANS⇙⇧N" are not (W is a set of preference relations). But it would be neat to have both aligned above each other in the generated PDF, as it is always guaranteed to be unambiguous in the context and makes it much more readable.</p>
+<p>Best,<br>
+Tassilo</p>
+<hr>
+<p>Von: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; im Auftrag von Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Gesendet: Donnerstag, 29. Januar 2026 08:29:52<br>
+An: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+Betreff: Re: [isabelle] Alignment of super- and subscripts in generated PDF output</p>
+<p>What exactly does your Isabelle term look like? I am asking because it is not<br>
+clear to me if i or j are part of the name or if the power operator ^ is<br>
+involved or what.</p>
+<p>Tobias</p>
+<p>On 28/01/2026 15:45, Tassilo Lemke (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>not sure if this is the right place to ask, but I haven’t found any<br>
+concrete answers on this so far. Is there a way to get superscripts and<br>
+subscripts to align vertically above each other in the generated PDF document?<br>
+For example, in plain LaTeX, "x^i_j" renders "i" and "j" aligned above/below the<br>
+same symbol. However, in the generated PDF, they appear sequentially, one after<br>
+the other.</p>
+<p>Since I haven’t found anything on this so far: is this currently not possible,<br>
+or is it deliberately prevented in order to preserve semantic ordering? In my<br>
+specific case, the ordering is relevant, although only one ordering results in a<br>
+well-formed expression (and the correct ordering is also ensured via notation<br>
+priorities). Still, having them vertically aligned would make the generated PDF<br>
+much more readable.</p>
+<p>Thankful for any suggestions.</p>
+<p>Best,<br>
+Tassilo Lemke<br>
+</p>
+</blockquote>
+
+
+
+<a name="571224877"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Alignment%20of%20super-%20and%20subscripts%20in%20generate.../near/571224877" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Alignment.20of.20super-.20and.20subscripts.20in.20generate.2E.2E.2E.html#571224877">(Jan 31 2026 at 19:30)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Dear Tassilo,</p>
+<p>I don't think there is easy solution. I tried some latex trickery but the result <br>
+was ugly.</p>
+<p>My advice: don't spend more time on this, in particular as the output would be <br>
+ambiguous, as you say.</p>
+<p>Tobias</p>
+<p>On 30/01/2026 01:58, Tassilo Lemke (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>To give a bit more context, I am working on a small project regarding social <br>
+choice and the issue arises when defining the domain, i.e. the allowed preferene <br>
+profiles of the voters.</p>
+<p>Take for example the following definitions:</p>
+<p>-- This takes a set of allowed preference relations (W) and allows all <br>
+preference profiles, where each voter submits a preference relation of W.</p>
+<p>-- Practically, this turns a set of allowed preference relations to a set of <br>
+allowed preference profiles.</p>
+<p>definition pp_pow :: "'a rel set ⇒ 'b set ⇒ ('a, 'b) pp set" (‹(_)(⇧_)› [99, <br>
+1000] 99) where<br>
+   "W⇧N ≡ {P. 𝒩⇘P⇙ = N ∧ (∀v∈N. P!v ∈ W)}"</p>
+<p>-- This only allows those preference relations of R, which are dichotomous (i.e. <br>
+voters put alternatives only into one of two categories).</p>
+<p>-- Note that this works on a set of allowed preference relations, and not profiles.</p>
+<p>definition dom_dich :: "'a rel set ⇒ 'a rel set" (‹(_)⇘DICH⇙› [99] 100) where<br>
+   "R⇘DICH⇙ ≡ {r∈R. ∀x y z. x ≻⇘r⇙ y ⟶ z ∼⇘r⇙ x ∨ z ∼⇘r⇙ y}"</p>
+<p>-- Another domain of interest is restricting a set of profiles to only allow <br>
+those, whose majority preference relation is transitive.<br>
+-- This requires D to be a set of preference profiles, because for the majority <br>
+relation to be defined, we already need multiple voters.</p>
+<p>definition dom_trans :: "('a, 'b) pp set ⇒ ('a, 'b) pp set" (‹(_)⇘TRANS⇙› [99] <br>
+100) where<br>
+   "D⇘TRANS⇙ ≡ {P∈D. trans (majority P)}"</p>
+<p>Of course, the ordering in Isabelle itself is relevant, i.e. "(W⇧N)⇘TRANS⇙" and <br>
+"W⇘DICH⇙⇧N" are well-formed expressions, but "(W⇧N)⇘DICH⇙" and "W⇘TRANS⇙⇧N" are <br>
+not (W is a set of preference relations). But it would be neat to have both <br>
+aligned above each other in the generated PDF, as it is always guaranteed to be <br>
+unambiguous in the context and makes it much more readable.</p>
+<p>Best,<br>
+Tassilo</p>
+<hr>
+<p><em>Von:</em> <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;cl-isabelle-users- <br>
+<a href="mailto:request@lists.cam.ac.uk">request@lists.cam.ac.uk</a>&gt; im Auftrag von Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+<em>Gesendet:</em> Donnerstag, 29. Januar 2026 08:29:52<br>
+<em>An:</em> <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+<em>Betreff:</em> Re: [isabelle] Alignment of super- and subscripts in generated PDF <br>
+output<br>
+What exactly does your Isabelle term look like? I am asking because it is not<br>
+clear to me if i or j are part of the name or if the power operator ^ is<br>
+involved or what.</p>
+<p>Tobias</p>
+<p>On 28/01/2026 15:45, Tassilo Lemke (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>not sure if this is the right place to ask, but I haven’t found any <br>
+concrete answers on this so far. Is there a way to get superscripts and <br>
+subscripts to align vertically above each other in the generated PDF document? <br>
+For example, in plain LaTeX, "x^i_j" renders "i" and "j" aligned above/below the<br>
+same symbol. However, in the generated PDF, they appear sequentially, one after<br>
+the other.</p>
+<p>Since I haven’t found anything on this so far: is this currently not possible, <br>
+or is it deliberately prevented in order to preserve semantic ordering? In my <br>
+specific case, the ordering is relevant, although only one ordering results in a<br>
+well-formed expression (and the correct ordering is also ensured via notation <br>
+priorities). Still, having them vertically aligned would make the generated PDF<br>
+much more readable.</p>
+<p>Thankful for any suggestions.</p>
+<p>Best,<br>
+Tassilo Lemke</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/1aTgf4ikY2nctB1sWBMy79FB/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

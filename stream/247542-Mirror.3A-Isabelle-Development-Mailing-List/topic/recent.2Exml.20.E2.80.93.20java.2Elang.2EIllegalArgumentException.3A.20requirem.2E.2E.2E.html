@@ -1,0 +1,219 @@
+<html>
+<head><meta charset="utf-8"><title>recent.xml – java.lang.IllegalArgumentException: requirem... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/recent.2Exml.20.E2.80.93.20java.2Elang.2EIllegalArgumentException.3A.20requirem.2E.2E.2E.html">recent.xml – java.lang.IllegalArgumentException: requirem...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515754025"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/recent.xml%20%E2%80%93%20java.lang.IllegalArgumentException%3A%20requirem.../near/515754025" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/recent.2Exml.20.E2.80.93.20java.2Elang.2EIllegalArgumentException.3A.20requirem.2E.2E.2E.html#515754025">(May 02 2025 at 16:37)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+This refers to 0af7fe946bfd9543697a6736ce244f1b2e004060</p>
+<p>Quite often, jEdit refuses to start with the following traceback:</p>
+<blockquote>
+<p><code>11:38:49 [main] [error] Plugin: java.lang.IllegalArgumentException: requirement failed: GUI thread expected</code><br>
+<code>11:38:49 [main] [error] Plugin:  at scala.Predef$.require(Predef.scala:337)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.GUI_Thread$.require(gui_thread.scala:24)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.jedit.Isabelle_Navigator.init(isabelle_navigator.scala:158)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.jedit.Main_Plugin.start(main_plugin.scala:445)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.PluginJAR.startPlugin(PluginJAR.java:1737)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.PluginJAR.activatePlugin(PluginJAR.java:957)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.JARClassLoader._loadClass(JARClassLoader.java:393)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.JARClassLoader.loadClass(JARClassLoader.java:112)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.classpath.ClassManagerImpl.classForName(ClassManagerImpl.java:204)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.NameSpace.classForName(NameSpace.java:1320)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.NameSpace.getClassImpl(NameSpace.java:1220)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.NameSpace.getClass(NameSpace.java:1161)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.Name.consumeNextObjectField(Name.java:298)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.Name.toObject(Name.java:199)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.BSHAmbiguousName.toObject(BSHAmbiguousName.java:60)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.BSHAllocationExpression.objectAllocation(BSHAllocationExpression.java:86)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.BSHAllocationExpression.eval(BSHAllocationExpression.java:62)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.BSHPrimaryExpression.eval(BSHPrimaryExpression.java:102)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.BSHPrimaryExpression.eval(BSHPrimaryExpression.java:47)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:644)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:738)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:727)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BeanShellFacade._eval(BeanShellFacade.java:153)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BeanShellFacade.eval(BeanShellFacade.java:117)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BeanShell.eval(BeanShell.java:382)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.ServiceManager$Descriptor.getInstance(ServiceManager.java:337)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.ServiceManager.getService(ServiceManager.java:262)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.io.VFSManager.getVFSForProtocol(VFSManager.java:156)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.MiscUtilities.isURL(MiscUtilities.java:583)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.io.VFSManager.getVFSForPath(VFSManager.java:174)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.MiscUtilities.pathsEqual(MiscUtilities.java:1198)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BufferHistory.getEntry(BufferHistory.java:88)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.jEdit.composeBufferPropsFromHistory(jEdit.java:4409)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.jEdit.openTemporary(jEdit.java:1860)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.jEdit.openTemporary(jEdit.java:1826)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.jEdit.openTemporary(jEdit.java:1779)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BeanShell._runScript(BeanShell.java:328)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BeanShell._runScript(BeanShell.java:291)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.BeanShell.runScript(BeanShell.java:217)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.Macros$BeanShellHandler.runMacro(Macros.java:1115)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.jEdit.runStartupScripts(jEdit.java:3992)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at org.gjt.sp.jedit.jEdit.main(jEdit.java:553)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.jedit.JEdit_Main$.$anonfun$5(jedit_main.scala:126)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.jedit.JEdit_Main$.main(jedit_main.scala:135)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.jedit.JEdit_Main.main(jedit_main.scala)</code></p>
+</blockquote>
+<p>Remove ~/.isabelle/jedit/recent.xml restores proper behaviour.</p>
+<p>I have attached one problematic recent.xml</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/Wa50V0UVQ-YqXhM_67A94rxo/recent.xml">recent.xml</a><br>
+<a href="/user_uploads/14278/H6fS2rbhPNb9-CJfBb8cHZuw/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/qf5PqdGjv0J18QG2a5smxxDi/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="517047356"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/recent.xml%20%E2%80%93%20java.lang.IllegalArgumentException%3A%20requirem.../near/517047356" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/recent.2Exml.20.E2.80.93.20java.2Elang.2EIllegalArgumentException.3A.20requirem.2E.2E.2E.html#517047356">(May 09 2025 at 07:33)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Thanks for the hint (and thanks to Fabian for reminding me), I have also <br>
+encountered it now.</p>
+<p>Tobias</p>
+<p>On 02/05/2025 18:37, Florian Haftmann wrote:</p>
+<blockquote>
+<p>This refers to 0af7fe946bfd9543697a6736ce244f1b2e004060</p>
+<p>Quite often, jEdit refuses to start with the following traceback:</p>
+<blockquote>
+<p><code>11:38:49 [main] [error] Plugin: java.lang.IllegalArgumentException: 
+requirement failed: GUI thread expected</code><br>
+<code>11:38:49 [main] [error] Plugin:  at scala.Predef$.require(Predef.scala:337)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+isabelle.GUI_Thread$.require(gui_thread.scala:24)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+isabelle.jedit.Isabelle_Navigator.init(isabelle_navigator.scala:158)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+isabelle.jedit.Main_Plugin.start(main_plugin.scala:445)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.PluginJAR.startPlugin(PluginJAR.java:1737)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.PluginJAR.activatePlugin(PluginJAR.java:957)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.JARClassLoader._loadClass(JARClassLoader.java:393)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.JARClassLoader.loadClass(JARClassLoader.java:112)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at java.base/ 
+java.lang.ClassLoader.loadClass(ClassLoader.java:526)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.classpath.ClassManagerImpl.classForName(ClassManagerImpl.java:204)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.NameSpace.classForName(NameSpace.java:1320)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.NameSpace.getClassImpl(NameSpace.java:1220)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.NameSpace.getClass(NameSpace.java:1161)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.Name.consumeNextObjectField(Name.java:298)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.Name.toObject(Name.java:199)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.BSHAmbiguousName.toObject(BSHAmbiguousName.java:60)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.BSHAllocationExpression.objectAllocation(BSHAllocationExpression.java:86)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.BSHAllocationExpression.eval(BSHAllocationExpression.java:62)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.BSHPrimaryExpression.eval(BSHPrimaryExpression.java:102)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.BSHPrimaryExpression.eval(BSHPrimaryExpression.java:47)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:644)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:738)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:727)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BeanShellFacade._eval(BeanShellFacade.java:153)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BeanShellFacade.eval(BeanShellFacade.java:117)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BeanShell.eval(BeanShell.java:382)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.ServiceManager$Descriptor.getInstance(ServiceManager.java:337)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.ServiceManager.getService(ServiceManager.java:262)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.io.VFSManager.getVFSForProtocol(VFSManager.java:156)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.MiscUtilities.isURL(MiscUtilities.java:583)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.io.VFSManager.getVFSForPath(VFSManager.java:174)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.MiscUtilities.pathsEqual(MiscUtilities.java:1198)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BufferHistory.getEntry(BufferHistory.java:88)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.jEdit.composeBufferPropsFromHistory(jEdit.java:4409)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.jEdit.openTemporary(jEdit.java:1860)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.jEdit.openTemporary(jEdit.java:1826)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.jEdit.openTemporary(jEdit.java:1779)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BeanShell._runScript(BeanShell.java:328)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BeanShell._runScript(BeanShell.java:291)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.BeanShell.runScript(BeanShell.java:217)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.Macros$BeanShellHandler.runMacro(Macros.java:1115)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.jEdit.runStartupScripts(jEdit.java:3992)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+org.gjt.sp.jedit.jEdit.main(jEdit.java:553)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at isabelle.jedit.JEdit_Main$. 
+$anonfun$5(jedit_main.scala:126)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+isabelle.jedit.JEdit_Main$.main(jedit_main.scala:135)</code><br>
+<code>11:38:49 [main] [error] Plugin:  at 
+isabelle.jedit.JEdit_Main.main(jedit_main.scala)</code></p>
+</blockquote>
+<p>Remove ~/.isabelle/jedit/recent.xml restores proper behaviour.</p>
+<p>I have attached one problematic recent.xml</p>
+<p>Florian</p>
+</blockquote>
+<p><a href="/user_uploads/14278/4urcd__lSphaLoT3Gf9ltGVK/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="517346362"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/recent.xml%20%E2%80%93%20java.lang.IllegalArgumentException%3A%20requirem.../near/517346362" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/recent.2Exml.20.E2.80.93.20java.2Elang.2EIllegalArgumentException.3A.20requirem.2E.2E.2E.html#517346362">(May 11 2025 at 10:11)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 02/05/2025 18:37, Florian Haftmann wrote:</p>
+<blockquote>
+<p>This refers to 0af7fe946bfd9543697a6736ce244f1b2e004060</p>
+<p>Quite often, jEdit refuses to start with the following traceback:</p>
+<blockquote>
+<p>isabelle.jedit.Isabelle_Navigator.init(isabelle_navigator.scala:158)<code>
+</code>11:38:49 [main] [error] Plugin:  at <br>
+isabelle.jedit.Main_Plugin.start(main_plugin.scala:445)``</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Remove ~/.isabelle/jedit/recent.xml restores proper behaviour.</p>
+<p>I have attached one problematic recent.xml</p>
+</blockquote>
+<p>Thanks for the hint and the reproducible example. See now:</p>
+<p>changeset:   82619:bfc920530ae6<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Sun May 11 12:05:10 2025 +0200<br>
+files:       src/Tools/jEdit/src/isabelle_navigator.scala<br>
+description:<br>
+more robust (amending 4ca84abb16ef): Main_Plugin.start() could happen on other <br>
+thread, e.g. when $JEDIT_SETTINGS/recent.xml refers to "isabelle-export:" URL;</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

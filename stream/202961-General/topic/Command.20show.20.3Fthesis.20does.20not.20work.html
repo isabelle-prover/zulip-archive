@@ -1,0 +1,162 @@
+<html>
+<head><meta charset="utf-8"><title>Command show ?thesis does not work · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html">Command show ?thesis does not work</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="572162379"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572162379" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572162379">(Feb 05 2026 at 14:24)</a>:</h4>
+<p>I have a goal in the middle of a large proof (sorry I cannot copy it here or come up with a minimal non-working example). When I copy the goal into a show statement, I get</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">refine</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">pending</span><span class="w"> </span><span class="n">goal</span>
+<span class="n">Local</span><span class="w"> </span><span class="n">statement</span><span class="w"> </span><span class="n">fails</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">refine</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">pending</span><span class="w"> </span><span class="n">goal</span>
+<span class="n">Failed</span><span class="w"> </span><span class="n">attempt</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">solve</span><span class="w"> </span><span class="n">goal</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">exported</span><span class="w"> </span><span class="n">rule</span><span class="o">:</span>
+</code></pre></div>
+<p>I get the same when I use </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+</code></pre></div>
+<p>What can cause this? I have a fix and an assume statement in the beginning of the proof, and the original goal starts with </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">∀b∈</span><span class="ow">{</span><span class="n">xs.</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">⊆</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">distinct</span><span class="w"> </span><span class="n">xs</span><span class="ow">}</span><span class="w"> </span><span class="ow">.</span>
+</code></pre></div>
+
+
+
+<a name="572164549"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572164549" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572164549">(Feb 05 2026 at 14:33)</a>:</h4>
+<p>what is your <code>assume</code>? If you assume things which are not in the goal (&amp; I don't see your original goal having any assumptions), then Isabelle will accept the assumption (it will even accept <code>assume False</code>), but then give you this error when trying to use <code>show</code>, as what you are showing is not a refinement of the goal you actually wanted to prove (but instead <code>&lt;your assumption&gt; ==&gt; &lt;your actual goal&gt;</code>)</p>
+
+
+
+<a name="572165488"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572165488" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572165488">(Feb 05 2026 at 14:36)</a>:</h4>
+<p>I changed it to </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">ba</span><span class="o">:</span>
+<span class="w">    </span><span class="s">"(∀b. b∈{xs. set xs ⊆ B ∧ distinct xs} ⟶ conclusion        "</span>
+<span class="w">        </span><span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">          </span><span class="k">fix</span><span class="w"> </span><span class="n">b</span>
+<span class="w">          </span><span class="k">assume</span><span class="w"> </span><span class="n">b_assumption</span><span class="o">:</span><span class="w"> </span><span class="s">"b ∈ {xs. set xs ⊆ B ∧ distinct xs}"</span>
+</code></pre></div>
+<p>but I still get the same error message</p>
+
+
+
+<a name="572166060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572166060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572166060">(Feb 05 2026 at 14:38)</a>:</h4>
+<p>This happens also when I have </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">∀b∈</span><span class="ow">{</span><span class="n">xs.</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">⊆</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">distinct</span><span class="w"> </span><span class="n">xs</span><span class="ow">}</span><span class="w"> </span><span class="ow">.</span><span class="w"> </span><span class="n">conclusion</span>
+</code></pre></div>
+
+
+
+<a name="572168773"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572168773" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572168773">(Feb 05 2026 at 14:48)</a>:</h4>
+<p>the <code>proof -</code> will not change anything (the <code>-</code> means "do not do anything to the goal"). If you delete the <code>-</code>, a default proof method will be applied; for your second case that should transform <code>∀b∈{xs. set xs ⊆ B ∧ distinct xs} . conclusion</code> to <code>⋀b. b∈{xs. set xs ⊆ B ∧ distinct xs}  ⟹ conclusion</code>, at which point you can use <code>assume</code></p>
+<p>(note that <code>assume</code> only works with the meta-level <code>⟹</code>, not the object-level <code>⟶</code>, so sometimes you first have to convert one to the other)</p>
+
+
+
+<a name="572174369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572174369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572174369">(Feb 05 2026 at 15:08)</a>:</h4>
+<p>OK I go down to the simplest example I can come up:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"⋀a. P a ⟹ Q a"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"P a"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+</code></pre></div>
+<p>where I get</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Type</span><span class="w"> </span><span class="n">unification</span><span class="w"> </span><span class="n">failed</span><span class="o">:</span><span class="w"> </span><span class="n">Clash</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">types</span><span class="w"> </span><span class="s">"_ ⇒ _"</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="s">"bool"</span>
+
+<span class="n">Type</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">application</span><span class="o">:</span><span class="w"> </span><span class="n">incompatible</span><span class="w"> </span><span class="n">operand</span><span class="w"> </span><span class="n">type</span>
+
+<span class="n">Operator</span><span class="o">:</span><span class="w">  </span><span class="n">Trueprop</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="n">⇒</span><span class="w"> </span><span class="kt">prop</span>
+<span class="n">Operand</span><span class="o">:</span><span class="w">   </span><span class="o">?</span><span class="n">thesis</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">⇒</span><span class="w"> </span><span class="n">bool</span>
+</code></pre></div>
+<p>Why I get this?</p>
+
+
+
+<a name="572223801"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572223801" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572223801">(Feb 05 2026 at 18:39)</a>:</h4>
+<p>While do not know how exactly <code>?thesis</code> is constructed in general, you can inspect it using <code>term ?thesis</code> in the proof and you will obtain the result <code>"Q" :: "'a ⇒ bool"</code>.<br>
+So when you write <code>show ?thesis</code> you are trying to initiate a "proof of a function", but Isabelle expects a proof of a proposition.</p>
+
+
+
+<a name="572256944"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572256944" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572256944">(Feb 05 2026 at 22:05)</a>:</h4>
+<p>I'm also not a 100% sure how <code>?thesis</code> gets constructed, but here different ways of how your example works:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"⋀a. P a ⟹ Q a"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"P a"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"?thesis a"</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"⋀a. P a ⟹ Q a"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"P a"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"Q a"</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"P a"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"Q a"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"P a"</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"P a"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"Q a"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">a</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="572761260"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/572761260" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#572761260">(Feb 09 2026 at 12:22)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="433149">Maximilian Schäffeler</span> <a href="#narrow/channel/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work/near/572223801">said</a>:</p>
+<blockquote>
+<p>While do not know how exactly <code>?thesis</code> is constructed in general, you can inspect it using <code>term ?thesis</code> in the proof and you will obtain the result <code>"Q" :: "'a ⇒ bool"</code>.<br>
+So when you write <code>show ?thesis</code> you are trying to initiate a "proof of a function", but Isabelle expects a proof of a proposition.</p>
+</blockquote>
+<p>I have found the official statement about this in section 6.2.2 of the Isar Reference Manual:</p>
+<blockquote>
+<p>For any open goal, thesis refers to its object-level statement, abstracted over any<br>
+meta-level parameters (if present).</p>
+</blockquote>
+
+
+
+<a name="573760120"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/573760120" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#573760120">(Feb 13 2026 at 14:49)</a>:</h4>
+<p>If I recall correctly, <code>?thesis</code> is the last explicitly stated goal in either the lemma statement or a surrounding <code>show</code> command. When there is more than one (i.e. a lemma or <code>show</code> command that proves several things at once), there is no <code>?thesis</code>. If you modified the goal by writing something like <code>proof (rule …)</code> or <code>proof safe</code> or <code>proof (induction …)</code> etc., there is a <code>?thesis</code> but it will not match your actual goal, so it's not useful. For proof methods that don't change the goal such as <code>proof (cases …)</code>, it's fine.</p>
+
+
+
+<a name="573760774"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Command%20show%20%3Fthesis%20does%20not%20work/near/573760774" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Command.20show.20.3Fthesis.20does.20not.20work.html#573760774">(Feb 13 2026 at 14:52)</a>:</h4>
+<p>I do have to say though I have no idea what's going on in your particular case. I'm not sure if that's intended behaviour; perhaps one ought to ask Makarius on the mailing list.</p>
+<p>In any case, the problem doesn't happen if you omit the (unnecessary) meta-universal quantifier in the lemma statement, and I would encourage you to do so.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

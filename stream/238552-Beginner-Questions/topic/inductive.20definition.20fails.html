@@ -1,0 +1,136 @@
+<html>
+<head><meta charset="utf-8"><title>inductive definition fails · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html">inductive definition fails</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="510505283"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510505283" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jakob Schulz <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510505283">(Apr 06 2025 at 17:54)</a>:</h4>
+<p>Hi :)</p>
+<p>I have an inductive definition of the following form:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"P ≡ undefined"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f x = undefined"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"P a b ⟹ f a &lt; f b"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="k">inductive</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"f a = 0 ⟹ i a"</span>
+<span class="o">|</span><span class="w"> </span><span class="s">"P a b ⟹ ¬ i a ⟹ i b"</span>
+</code></pre></div>
+<p>Isabelle now failes at the inductive definition: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Proof</span><span class="w"> </span><span class="n">failed.</span>
+<span class="w"> </span><span class="n">1.</span><span class="w"> </span><span class="n">⋀x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">xa</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">(?</span><span class="n">x24</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">xa</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="n">⟶</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">(?</span><span class="n">x24</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">xa</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="o">)</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">⟶</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">a</span>
+<span class="n">The</span><span class="w"> </span><span class="n">error</span><span class="o">(</span><span class="n">s</span><span class="o">)</span><span class="w"> </span><span class="n">above</span><span class="w"> </span><span class="n">occurred</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">goal</span><span class="w"> </span><span class="n">statement⌂</span><span class="o">:</span>
+<span class="n">mono</span><span class="w"> </span><span class="o">(</span><span class="n">λp</span><span class="w"> </span><span class="n">x.</span><span class="w"> </span><span class="o">(</span><span class="n">∃a.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="o">)</span><span class="w"> </span><span class="n">∨</span><span class="w"> </span><span class="o">(</span><span class="n">∃a</span><span class="w"> </span><span class="n">b.</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">∧</span><span class="w"> </span><span class="n">¬</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="n">a</span><span class="o">))</span>
+</code></pre></div>
+<p>When I change the "¬ i a" to "i a", the definition succeeds. Does someone have an idea why this could be?</p>
+<p>Many thanks in advance :)</p>
+
+
+
+<a name="510506853"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510506853" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510506853">(Apr 06 2025 at 18:13)</a>:</h4>
+<p>It seems to be only the generation of the simplification theorem</p>
+
+
+
+<a name="510506947"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510506947" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510506947">(Apr 06 2025 at 18:14)</a>:</h4>
+<p>This already triggers it:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">inductive</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹nat ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="w"> </span><span class="s">‹j (Suc b)›</span><span class="w"> </span><span class="kp">if</span><span class="w">  </span><span class="s">‹¬j b›</span>
+</code></pre></div>
+
+
+
+<a name="510506965"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510506965" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510506965">(Apr 06 2025 at 18:14)</a>:</h4>
+<p>You should probably report that on the mailing list</p>
+
+
+
+<a name="510507022"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510507022" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510507022">(Apr 06 2025 at 18:15)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/inductive.20definition.20fails/near/510506853">said</a>:</p>
+<blockquote>
+<p>It seems to be only the generation of the simplification theorem</p>
+</blockquote>
+<p>However, I am actually not sure that it is possible to generate those theorems</p>
+
+
+
+<a name="510524454"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510524454" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510524454">(Apr 06 2025 at 22:03)</a>:</h4>
+<p>Isn't the problem here that these rules are not monotonic? There is no fixpoint (and thus no inductive predicate) of the rules if they are not monotonic</p>
+
+
+
+<a name="510676504"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510676504" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jakob Schulz <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510676504">(Apr 07 2025 at 13:48)</a>:</h4>
+<p>Thank you for your responses!</p>
+<p>Then it seems that an <code>inductive</code> definition might not be the correct choice here. I'm going to use a normal <code>function</code>instead:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">function</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"i a = ((f a = 0) ∨ (∃b. P b a ∧ i b))"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">simp_all</span>
+</code></pre></div>
+
+
+
+<a name="510677031"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510677031" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510677031">(Apr 07 2025 at 13:50)</a>:</h4>
+<p>Don't forget to prove termination of this</p>
+
+
+
+<a name="510678435"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510678435" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jakob Schulz <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510678435">(Apr 07 2025 at 13:54)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/inductive.20definition.20fails/near/510677031">said</a>:</p>
+<blockquote>
+<p>Don't forget to prove termination of this</p>
+</blockquote>
+<p>Oh, I thought this would only be required if I actually evaluate the function? <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span> </p>
+<p>I would not know how to do a termination proof in this case...the type of b is infinite, but there are only finitely many <code>b</code> that satisfy <code>P b a</code> (and they all satisfy <code>f b &lt; f a</code> by the lemma).</p>
+
+
+
+<a name="510678701"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510678701" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510678701">(Apr 07 2025 at 13:55)</a>:</h4>
+<blockquote>
+<p>Oh, I thought this would only be required if I actually evaluate the function? </p>
+</blockquote>
+<p>Or prove anything about it</p>
+
+
+
+<a name="510679459"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510679459" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510679459">(Apr 07 2025 at 13:58)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="422558">Jakob Schulz</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/inductive.20definition.20fails/near/510678435">said</a>:</p>
+<blockquote>
+<p>I would not know how to do a termination proof in this case...the type of b is infinite, but there are only finitely many <code>b</code> that satisfy <code>P b a</code> (and they all satisfy <code>f b &lt; f a</code> by the lemma).</p>
+</blockquote>
+<p>That sounds too weak to me. It should be possible to make it loop by having f 0 calling f 1 and f 1 calling f 0</p>
+
+
+
+<a name="510681079"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/inductive%20definition%20fails/near/510681079" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/inductive.20definition.20fails.html#510681079">(Apr 07 2025 at 14:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/inductive.20definition.20fails/near/510678701">said</a>:</p>
+<blockquote>
+<blockquote>
+<p>Oh, I thought this would only be required if I actually evaluate the function? </p>
+</blockquote>
+<p>Or prove anything about it</p>
+</blockquote>
+<p>Okay, in some cases you can get away with not proving termination, but having only termination on local fragments. But you need termination to even be able to unfold the definition.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

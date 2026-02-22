@@ -1,0 +1,121 @@
+<html>
+<head><meta charset="utf-8"><title>Induction on nonempty lists · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html">Induction on nonempty lists</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="572218217"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572218217" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572218217">(Feb 05 2026 at 18:09)</a>:</h4>
+<p>In Isar, I'm trying to do induction over nonempty lists. I've made up a tiny example reflecting this problem: show that the sum of a nonempty list of positive integers is in fact positive.  I'd like to do this <em>without</em> defining the sum of an empty list, because in my actual use-case, there's no reasonable way to define the function-value for an empty list. </p>
+<p>I wrote the following definitions:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">   </span><span class="kp">imports</span><span class="w"> </span><span class="n">Complex_Main</span>
+<span class="k">begin</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">listsum</span><span class="o">::</span><span class="w"> </span><span class="s">"(int list) ⇒ int"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"listsum [] = undefined"</span>
+<span class="o">|</span><span class="w"> </span><span class="s">"listsum [n] = n"</span>
+<span class="o">|</span><span class="w"> </span><span class="s">"listsum (n # ns) = n + listsum ns"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">good</span><span class="o">::</span><span class="s">"(int list) ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"good [] = undefined"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"good [n] = (n &gt; 0)"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"good (n # ns) = ((n &gt; 0) ∧ (good ns))"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"good ns ⟹ listsum ns &gt; 0"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">ns</span><span class="o">)</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">Nil</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">Cons</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">ns</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>Isabelle offered up the usual induction proof-structure (<code>case Nil</code> and <code>case (Cons a ns)</code>) but that obviously isn't the way to go here, because the lemma's assertion isn't even true for the <code>Nil</code> case. </p>
+<p>Programming and Proving doesn't seem to discuss this particular problem, so I'm at a bit of a loss.</p>
+
+
+
+<a name="572219939"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572219939" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572219939">(Feb 05 2026 at 18:18)</a>:</h4>
+<p>You may want to try to add the assumption that ns is non-empty to the lemma and then try: <code>proof (induction ns rule: list_nonempty_induct)</code>. You can find such specialized induction rules using e.g. <code>find_theorems name: induct name: list</code>.</p>
+
+
+
+<a name="572221203"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572221203" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572221203">(Feb 05 2026 at 18:25)</a>:</h4>
+<p>Thanks; that does, indeed, seem to work. And thanks for the tip about finding specialized induction rules --- "where to look" and "how to look" are my biggest beginning-user problems at this point.</p>
+
+
+
+<a name="572221776"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572221776" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572221776">(Feb 05 2026 at 18:28)</a>:</h4>
+<p>You can find a short tutorial on <code>find_theorems</code> here: <a href="https://isabelle.systems/cookbook/src/commands/">https://isabelle.systems/cookbook/src/commands/</a></p>
+
+
+
+<a name="572279004"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572279004" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Joe Watt <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572279004">(Feb 06 2026 at 01:35)</a>:</h4>
+<p>I just want to point here that knowing that the assumption <code>good ns</code> in the <code>Nil</code> case, i.e. when <code>ns = []</code> only lets us conclude that <code>true = good [] = undefined</code> which is unhelpful because we can't really say anything about <code>undefined</code>. This is why you need an extra nonempty assumption. I recall getting tripped up on <code>undefined</code> like so when I was newer to Isabelle.</p>
+<p>Regarding search, I also recommend using the <a href="https://search.isabelle.in.tum.de/#search">Find Facts search engine</a>, as it lets you do a more fuzzy search (think google search) over everything in the core libraries and the AFP. On the other hand, <code>find_theorems</code> is much better for targeted searches where you already have a pattern in mind, but it only searches over those theories which you already imported (directly or transitively).</p>
+
+
+
+<a name="572301829"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572301829" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572301829">(Feb 06 2026 at 06:27)</a>:</h4>
+<p>I would like to also note that in case your theorem state should seem to suggest that using functional induction via <code>good.induct</code> seems very natural to me.</p>
+
+
+
+<a name="572344383"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572344383" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572344383">(Feb 06 2026 at 10:43)</a>:</h4>
+<p>Joe Watt: "I just want to point here that knowing that the assumption <code>good ns</code> in the <code>Nil</code> case, i.e. when <code>ns = []</code> only lets us conclude that <code>true = good [] = undefined</code> which is unhelpful because we can't really say anything about <code>undefined</code>."</p>
+<p>You're completely right... I was trying to write an example parallel to my actual proof, and screwed up -- I should have written <code>good[] = False</code>, which is what I <em>did</em> write in the actual proof. </p>
+<p>Thanks for the pointer to "Find Facts" -- I'll have to give that a try.</p>
+
+
+
+<a name="572344932"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572344932" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572344932">(Feb 06 2026 at 10:46)</a>:</h4>
+<p>Irvin: I don't know what 'functional induction' is, and a search in Programming and Proving doesn't yield anything. Can you perhaps show what a "functional induction" proof looks like in this simple case, after altering my definition of <code>good</code> to say <code>good [] = False</code> ?</p>
+
+
+
+<a name="572345218"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572345218" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572345218">(Feb 06 2026 at 10:48)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="699541">John  Hughes</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists/near/572344932">said</a>:</p>
+<blockquote>
+<p>Irvin: I don't know what 'functional induction' is, and a search in Programming and Proving doesn't yield anything. Can you perhaps show what a "functional induction" proof looks like in this simple case, after altering my definition of <code>good</code> to say <code>good [] = false</code> ?</p>
+</blockquote>
+<p>I don't know it as functional induction but as computation induction. Anyways, it is the induction scheme that corresponds to the recursion scheme of a recursively defined function. For a function <code>f</code> the computation induction scheme is called <code>f.induct</code>.</p>
+
+
+
+<a name="572345803"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572345803" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572345803">(Feb 06 2026 at 10:51)</a>:</h4>
+<p>Lukas: As so often happens with Isabelle stuff, I feel as if I'm reading interesting things in a language that I don't actually know. I'll see whether a search on "computation induction" leads to any insight. I've tried typing <code>thm good.induct</code> and the resulting thing doesn't mean much to me; I'm a little surprised to not see <code>good</code> anywhere in the output, for instance. Perhaps when I'm a bit more awake it'll mean more. but thanks for the pointer.</p>
+<p>Ahh...I see it in Section 2.3.4 of P&amp;P. I'm off to read that carefully!</p>
+
+
+
+<a name="572346994"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572346994" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572346994">(Feb 06 2026 at 10:57)</a>:</h4>
+<p>The function <code>good</code> does not appear in the output since the induction rule is just derived from the <em>recursion scheme</em>. The recursion scheme is independent of the function itself. For example, if I have two functions defined as <code>f 0 = 0  | f n = Suc (f (n -1))</code> and <code>g 0 = 0 | g n = Suc (g (n -1))</code> both of them have the same recursion scheme and you get the same induction rule. In fact, for this simple example the induction rule <code>f.induct</code> is equivalent to <code>nat.induct</code>.</p>
+
+
+
+<a name="572370484"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Induction%20on%20nonempty%20lists/near/572370484" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists.html#572370484">(Feb 06 2026 at 13:00)</a>:</h4>
+<p>I think this is a relevant resource on functional induction <a href="https://link.springer.com/chapter/10.1007/BFb0028400">https://link.springer.com/chapter/10.1007/BFb0028400</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,71 @@
+<html>
+<head><meta charset="utf-8"><title>installing cvc5 · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html">installing cvc5</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="505430763"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505430763" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> elisabeth lemma <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505430763">(Mar 13 2025 at 14:05)</a>:</h4>
+<p>hi everyone, </p>
+<p>i'm trying to use cvc5 as an smt-solver to prove things with the smt-tactic. could somebody ELI5 which cvc5 version need to download (from here: <a href="https://github.com/cvc5/cvc5/releases/tag/cvc5-1.2.1">https://github.com/cvc5/cvc5/releases/tag/cvc5-1.2.1</a> i'm assuming? or do i need to build it myself?) and what i need to tell isabelle so that isabelle will find cvc5? i'm on linux </p>
+<div class="spoiler-block"><div class="spoiler-header">
+<p>my code and my error message for completion's sake</p>
+</div><div class="spoiler-content" aria-hidden="true">
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"2 + 2 = (4::int)"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="o">[[</span><span class="n">smt_solver</span><span class="o">=</span><span class="n">cvc5</span><span class="o">]]</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">smt</span>
+</code></pre></div>
+<p>output says: <code>The SMT solver "cvc5" is not installed</code></p>
+</div></div>
+
+
+
+<a name="505436042"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505436042" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505436042">(Mar 13 2025 at 14:23)</a>:</h4>
+<p>Can you elaborate on what you are trying to achieve? Isabelle2024 is shipped with cvc4. Isabelle2025, which was just released, comes with cvc5.</p>
+
+
+
+<a name="505436183"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505436183" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505436183">(Mar 13 2025 at 14:23)</a>:</h4>
+<p>So you might want to switch to Isabelle2025</p>
+
+
+
+<a name="505437465"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505437465" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> elisabeth lemma <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505437465">(Mar 13 2025 at 14:27)</a>:</h4>
+<p>oh <span aria-label="woman facepalming" class="emoji emoji-1f926-200d-2640" role="img" title="woman facepalming">:woman_facepalming:</span> i see, thanks for the quick response. i'll figure it out</p>
+
+
+
+<a name="505470809"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505470809" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505470809">(Mar 13 2025 at 16:32)</a>:</h4>
+<p>for cvc5 in the smt tactic: this is work in progress by Hanna and me (for the Isabelle side, there are more people on the cvc5 side)</p>
+
+
+
+<a name="505470866"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505470866" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505470866">(Mar 13 2025 at 16:33)</a>:</h4>
+<p>(outside repo)</p>
+
+
+
+<a name="505475862"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505475862" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505475862">(Mar 13 2025 at 16:55)</a>:</h4>
+<p>In Isabelle 2025, cvc5 is only used for sledgeghammer</p>
+
+
+
+<a name="505555143"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/installing%20cvc5/near/505555143" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> elisabeth lemma <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/installing.20cvc5.html#505555143">(Mar 14 2025 at 00:55)</a>:</h4>
+<p>yeah i'm currently hacking around in sledgehammer on some undetermined repo fork version, i wasn't aware that cvc5 was a WIP/new feature and misread the error message, so i just assumed i was missing something really obvious, that's why i asked here. sorry for the confusion <span aria-label="pray" class="emoji emoji-1f64f" role="img" title="pray">:pray:</span></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

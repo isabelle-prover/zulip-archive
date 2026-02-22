@@ -1,0 +1,143 @@
+<html>
+<head><meta charset="utf-8"><title>Basic facts about Cauchy sequences · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html">Basic facts about Cauchy sequences</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="543379946"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543379946" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Robert Shlyakhtenko <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543379946">(Oct 06 2025 at 18:05)</a>:</h4>
+<p>I am working towards a formal proof that every automorphism of the real numbers is trivial. The proof relies on the fact that all automorphisms of the rationals are trivial, that automorphisms of <code>R</code> must preserve order, and and that every real number is an equivalence class of Cauchy sequences of rational numbers.<br>
+I am stuck on the last part. Given a real number <code>x</code>, I can use the data in HOL-Real to obtain a Cauchy sequence which represents <code>x</code> with the following code snippet:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">     </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">real</span>
+<span class="w">    </span><span class="k">obtain</span><span class="w"> </span><span class="n">seq_x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ rat"</span>
+<span class="w">      </span><span class="kp">where</span><span class="w"> </span><span class="s">"seq_x = rep_real x ∧ Real.cauchy seq_x"</span>
+<span class="w">    </span><span class="c">(* here seq_x is a Cauchy sequence of rats *)</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">Domainp_pcr_real</span><span class="w"> </span><span class="n">Quotient_real</span><span class="w"> </span><span class="n">Quotient_rel_rep</span><span class="w"> </span><span class="n">real.domain_eq</span><span class="o">)</span>
+</code></pre></div>
+<p>However, I would like to obtain not just any Cauchy sequence representing <code>x,</code> but also impose some restrictions on the sequence. In particular, I need to obtain an <em>increasing</em> Cauchy sequence representing <code>x</code> and a <em>decreasing</em> Cauchy sequence doing the same.</p>
+<p>I haven't found anything in HOL-Real that would enable me to do this, and just running sledgehammer doesn't give a proof.  I'm wondering if there is another library that would have basic facts like this about Cauchy sequences. If not, is there a particularly easy way to set up a proof of this in Isabelle?</p>
+<p>Thanks!</p>
+
+
+
+<a name="543600629"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543600629" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543600629">(Oct 07 2025 at 18:47)</a>:</h4>
+<p>I would really not recommend using Cauchy sequences for this, especially not pulling apart the definition of real numbers in Isabelle to get to them.</p>
+<p>In any complete vector space, "Cauchy sequence" is the same as "convergent sequence", so I'd just work with a convergent increasing sequence.</p>
+
+
+
+<a name="543600695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543600695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543600695">(Oct 07 2025 at 18:47)</a>:</h4>
+<p>It's kind of considered bad style to look under the hood of the definitions of the real numbers. One should rather use their derived properties.</p>
+
+
+
+<a name="543604941"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543604941" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543604941">(Oct 07 2025 at 19:15)</a>:</h4>
+<p>One lemma from the standard library that is pretty close to what you want is <code>approx_from_above_dense_linorder</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">approx_from_above_dense_linorder</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="o">::</span><span class="s">"'a::{dense_linorder, linorder_topology, first_countable_topology}"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"x &lt; y"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃u. (∀n. u n &gt; x) ∧ (u ⇢ x)"</span>
+</code></pre></div>
+
+
+
+<a name="543605311"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543605311" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543605311">(Oct 07 2025 at 19:18)</a>:</h4>
+<p>However, this doesn't give you the strict monotonicity. The most straightforward way to get this without using a more general topological argument that I'm too lazy to come up with is to just use the axiom of dependent choice together with the density of the rationals in the reals.</p>
+<p>Basically: given a fixed real number <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>, we can always pick as the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>-th number in the sequence a number <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> that is less than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> (to ensure approach from below), greater than everything we picked so far (to ensure monotonicity), and also greater than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>−</mo><mfrac><mn>1</mn><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">x - \frac{1}{n+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.2484em;vertical-align:-0.4033em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4033em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> (to ensure convergence to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>).</p>
+<p>The variant where we approach from above instead follows by just plugging in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">-x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord mathnormal">x</span></span></span></span> to the below version and then flipping the sign of the resulting sequence.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">approx_from_below_real_strict_mono</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">real</span>
+<span class="w">  </span><span class="kp">obtains</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"strict_mono f"</span><span class="w"> </span><span class="s">"⋀n. of_rat (f n) &lt; x"</span><span class="w"> </span><span class="s">"(λn. of_rat (f n)) ⇢ x"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"∃f. ∀n. (of_rat (f n) &lt; x ∧ of_rat (f n) &gt; x - 1 / (real n + 1)) ∧ f n &lt; f (Suc n)"</span>
+<span class="w">  </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">dependent_nat_choice</span><span class="o">)</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"∃y. of_rat y &lt; x ∧ x - 1 / (real 0 + 1) &lt; of_rat y"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">of_rat_dense</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="s">"x - 1"</span><span class="w"> </span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"∃y. (of_rat y &lt; x ∧ of_rat y &gt; x - 1 / (real (Suc n) + 1)) ∧ y &gt; z"</span>
+<span class="w">      </span><span class="kp">if</span><span class="w"> </span><span class="s">"of_rat z &lt; x ∧ of_rat z &gt; x - 1 / (real n + 1)"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="n">n</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">of_rat_dense</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="s">"max (of_rat z) (x - 1 / (real (Suc n) + 1))"</span><span class="w"> </span><span class="n">x</span><span class="o">]</span><span class="w"> </span><span class="n">that</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="n">of_rat_less</span><span class="o">)</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">obtain</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">f</span><span class="o">:</span><span class="w"> </span><span class="s">"⋀n. of_rat (f n) ∈ {x - 1 / (real n + 1)&lt;..&lt;x} ∧ f n &lt; f (Suc n)"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"strict_mono f"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">strict_mono_Suc_iff</span><span class="o">)</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"(λn. of_rat (f n)) ⇢ x"</span>
+<span class="w">    </span><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">tendsto_sandwich</span><span class="o">)</span>
+<span class="w">      </span><span class="k">have</span><span class="w"> </span><span class="s">"of_rat (f n) ≤ x"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">n</span>
+<span class="w">        </span><span class="k">using</span><span class="w"> </span><span class="n">f</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">n</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">      </span><span class="k">thus</span><span class="w"> </span><span class="s">"eventually (λn. of_rat (f n) ≤ x) at_top"</span>
+<span class="w">        </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">intro</span><span class="o">!:</span><span class="w"> </span><span class="n">always_eventually</span><span class="o">)</span>
+<span class="w">    </span><span class="k">next</span>
+<span class="w">      </span><span class="k">have</span><span class="w"> </span><span class="s">"of_rat (f n) ≥ x - 1 / (real n + 1)"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">n</span>
+<span class="w">        </span><span class="k">using</span><span class="w"> </span><span class="n">f</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">n</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">      </span><span class="k">thus</span><span class="w"> </span><span class="s">"eventually (λn. of_rat (f n) ≥ x - 1 / (real n + 1)) at_top"</span>
+<span class="w">        </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">intro</span><span class="o">!:</span><span class="w"> </span><span class="n">always_eventually</span><span class="o">)</span>
+<span class="w">    </span><span class="k">next</span>
+<span class="w">      </span><span class="k">have</span><span class="w"> </span><span class="s">"(λn. x - 1 / (real n + 1)) ⇢ x - 0"</span>
+<span class="w">        </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">intro</span><span class="w"> </span><span class="n">tendsto_intros</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">use</span><span class="w"> </span><span class="n">LIMSEQ_inverse_real_of_nat</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="s">‹auto simp: field_simps›</span><span class="o">)</span>
+<span class="w">      </span><span class="k">thus</span><span class="w"> </span><span class="s">"(λn. x - 1 / (real n + 1)) ⇢ x"</span>
+<span class="w">        </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">    </span><span class="k">qed</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">qed</span><span class="w"> </span><span class="o">(</span><span class="n">use</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">auto</span><span class="o">)</span>
+<span class="k">qed</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">approx_from_above_real_strict_mono</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">real</span>
+<span class="w">  </span><span class="kp">obtains</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"strict_antimono_on UNIV f"</span><span class="w"> </span><span class="s">"⋀n. of_rat (f n) &gt; x"</span><span class="w"> </span><span class="s">"(λn. of_rat (f n)) ⇢ x"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">g</span><span class="o">:</span><span class="w"> </span><span class="s">"strict_mono g"</span><span class="w"> </span><span class="s">"⋀n. of_rat (g n) &lt; -x"</span><span class="w"> </span><span class="s">"(λn. of_rat (g n)) ⇢ -x"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">approx_from_below_real_strict_mono</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="s">"-x"</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"strict_antimono_on UNIV (λn. -g n)"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">g</span><span class="o">(</span><span class="n">1</span><span class="o">)</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="n">monotone_def</span><span class="o">)</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="s">"of_rat (-g n) &gt; x"</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">n</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">g</span><span class="o">(</span><span class="n">2</span><span class="o">)[</span><span class="n">of</span><span class="w"> </span><span class="n">n</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">of_rat_minus</span><span class="o">)</span>
+<span class="w">  </span><span class="k">next</span>
+<span class="w">    </span><span class="k">have</span><span class="w"> </span><span class="s">"(λn. -real_of_rat (g n)) ⇢ -(-x)"</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">intro</span><span class="w"> </span><span class="n">tendsto_intros</span><span class="w"> </span><span class="n">g</span><span class="o">(</span><span class="n">3</span><span class="o">))</span>
+<span class="w">    </span><span class="k">thus</span><span class="w"> </span><span class="s">"(λn. real_of_rat (-g n)) ⇢ x"</span>
+<span class="w">      </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">of_rat_minus</span><span class="o">)</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>If you have any questions about the proof, feel free to ask!</p>
+
+
+
+<a name="543605661"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543605661" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543605661">(Oct 07 2025 at 19:20)</a>:</h4>
+<p>Oh and just in case you really are interested in Cauchy sequences, there is the lemma <code>Cauchy_convergent_iff</code> which says that for any complete real vector space (in particular for the real numbers themselves), Cauchy convergence is equivalent to normal convergence. Where "normal" convergence is just "has some limit", and since the above lemmas show that the limit is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>, it would be easy to show that they are Cauchy sequences.</p>
+
+
+
+<a name="543605954"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543605954" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543605954">(Oct 07 2025 at 19:22)</a>:</h4>
+<p>All this <code>Real.cauchy</code> stuff you dug up is just some internal leftovers from the construction of the reals. It is not intended to be used by an "end user" such as you. The standard concept is <code>Cauchy</code>. The reason why these two are different is probably because <code>Cauchy</code> depends on the real numbers, so you need to bootstrap them somehow. But once you have them, you might as well forget about all the material used for bootstrapping.</p>
+
+
+
+<a name="543810115"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Basic%20facts%20about%20Cauchy%20sequences/near/543810115" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Robert Shlyakhtenko <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Basic.20facts.20about.20Cauchy.20sequences.html#543810115">(Oct 08 2025 at 18:27)</a>:</h4>
+<p>Thanks a lot! This was really helpful. I was able to prove what I needed, and it's a good lesson for me to avoid looking too deep into the internal definitions.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,291 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Minus on lists · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html">[isabelle] Minus on lists</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="521930197"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/521930197" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#521930197">(Jun 03 2025 at 07:57)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Larry recently needed a subtraction function on lists. Of course it is easy to <br>
+define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>One is geared towards sets, the othe one towards multisets. (Larry remarked that <br>
+the latter turns lists into a monus = monoid with minus, but we don't use the <br>
+class system on lists).</p>
+<p>Any comments? Should we have both of them? Names? Notation? Definition vs <br>
+abbreviation (definitions require more thms that are for free with abbrev.)? ...</p>
+<p>Tobias</p>
+<p><a href="/user_uploads/14278/v8PfBNEe_ClHv-DJJCzNOu8S/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="522198765"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/522198765" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#522198765">(Jun 03 2025 at 19:16)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+I like both, although both are ignoring the non-commutative nature of <br>
+the subtracted lists and, as Tobias said, they are more about sets <br>
+(therefore it is not clear to me immediately in  what sense we would get <br>
+a monus on lists).</p>
+<p>How about the third one geared towards non-commutativity of lists:</p>
+<p>fun minus_list_list :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_list xs [] = xs" |<br>
+"minus_list_list [] ys = []" |<br>
+"minus_list_list (x # xs) (y # ys) = (if x = y then minus_list_list xs <br>
+ys else x # (minus_list_list xs (y #  ys)))"</p>
+<p>I believe any of them should be a definition (if introduced), not <br>
+abbreviation. Not sure they deserve a special notation, but that would <br>
+depend on applications.</p>
+<p>Stepan</p>
+<p>On 03-Jun-25 9:57 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Larry recently needed a subtraction function on lists. Of course it is <br>
+easy to define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>One is geared towards sets, the othe one towards multisets. (Larry <br>
+remarked that the latter turns lists into a monus = monoid with minus, <br>
+but we don't use the class system on lists).</p>
+<p>Any comments? Should we have both of them? Names? Notation? Definition <br>
+vs abbreviation (definitions require more thms that are for free with <br>
+abbrev.)? ...</p>
+<p>Tobias</p>
+</blockquote>
+
+
+
+<a name="522311539"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/522311539" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#522311539">(Jun 04 2025 at 09:36)</a>:</h4>
+<p>From: 山田晃久 &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>I'd like to remark that minus_list_mset x y and minus_list_list x y are left divisors y\x rather than right x/y for @, in the sense</p>
+<ul>
+<li>x = y@(y\x) if y is a prefix of x, and</li>
+<li>x = y\(y@x).</li>
+</ul>
+<p>In this sense, the arguments may be flipped. Then minus_list_mset  would just be "foldr remove1" for which an abbreviation would suffice.<br>
+(of course, I do not propose \ as notation.)</p>
+<p>For naming, I'd propose something related to (left) factors. "minus" would be confusing when one sees strings as regular expressions.</p>
+<p>Best,<br>
+Akihisa</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: Wednesday, June 4, 2025 4:15<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] Minus on lists</p>
+<p>I like both, although both are ignoring the non-commutative nature of<br>
+the subtracted lists and, as Tobias said, they are more about sets<br>
+(therefore it is not clear to me immediately in  what sense we would get<br>
+a monus on lists).</p>
+<p>How about the third one geared towards non-commutativity of lists:</p>
+<p>fun minus_list_list :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_list xs [] = xs" |<br>
+"minus_list_list [] ys = []" |<br>
+"minus_list_list (x # xs) (y # ys) = (if x = y then minus_list_list xs<br>
+ys else x # (minus_list_list xs (y #  ys)))"</p>
+<p>I believe any of them should be a definition (if introduced), not<br>
+abbreviation. Not sure they deserve a special notation, but that would<br>
+depend on applications.</p>
+<p>Stepan</p>
+<p>On 03-Jun-25 9:57 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Larry recently needed a subtraction function on lists. Of course it is<br>
+easy to define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>One is geared towards sets, the othe one towards multisets. (Larry<br>
+remarked that the latter turns lists into a monus = monoid with minus,<br>
+but we don't use the class system on lists).</p>
+<p>Any comments? Should we have both of them? Names? Notation? Definition<br>
+vs abbreviation (definitions require more thms that are for free with<br>
+abbrev.)? ...</p>
+<p>Tobias</p>
+</blockquote>
+
+
+
+<a name="522440082"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/522440082" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#522440082">(Jun 04 2025 at 19:56)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Am 03.06.25 um 09:57 schrieb Tobias Nipkow:</p>
+<blockquote>
+<p>Larry recently needed a subtraction function on lists. Of course it is <br>
+easy to define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+</blockquote>
+<p>Just two further remarks:</p>
+<ul>
+<li>
+<p>In Isabelle/ML, there is a counterpart to minus_list_set names <br>
+subtract <br>
+<a href="https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/library.ML#l179">https://isabelle.sketis.net/repos/isabelle/file/tip/src/Pure/library.ML#l179</a></p>
+</li>
+<li>
+<p>I don’t know the envisaged application, but it can also be defined as <br>
+symmetric difference:</p>
+</li>
+</ul>
+<p>definition symmetric_remove1 :: ‹'a ⇒ 'a list ⇒ 'a list›<br>
+   where ‹symmetric_remove1 x xs =<br>
+     (if x \&lt;in&gt; set xs then remove1 x xs else x # xs)›</p>
+<p>definition symmetric_subtract :: ‹'a list ⇒ 'a list ⇒ 'a list›<br>
+   where ‹symmetric_subtract = foldr symmetric_remove1›</p>
+<p>value ‹symmetric_subtract [2, 3, 4, 3] [1, 2, 3, 2, 1 :: int]›</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/Z90FTTODCeOzbvVoYz0dqTyF/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/nNE4qfbYlkTSHld7g5uBQAFB/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="522704334"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/522704334" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#522704334">(Jun 06 2025 at 04:56)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Stepan,</p>
+<p>Do you have some application of minus_list_list in mind or was it more for <br>
+completeness?</p>
+<p>Tobias</p>
+<p>On 03/06/2025 21:15, Stepan Holub (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I like both, although both are ignoring the non-commutative nature of the <br>
+subtracted lists and, as Tobias said, they are more about sets (therefore it is <br>
+not clear to me immediately in  what sense we would get a monus on lists).</p>
+<p>How about the third one geared towards non-commutativity of lists:</p>
+<p>fun minus_list_list :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_list xs [] = xs" |<br>
+"minus_list_list [] ys = []" |<br>
+"minus_list_list (x # xs) (y # ys) = (if x = y then minus_list_list xs ys else x </p>
+<h1>(minus_list_list xs (y #  ys)))"</h1>
+<p>I believe any of them should be a definition (if introduced), not abbreviation. <br>
+Not sure they deserve a special notation, but that would depend on applications.</p>
+<p>Stepan</p>
+<p>On 03-Jun-25 9:57 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Larry recently needed a subtraction function on lists. Of course it is easy to <br>
+define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>One is geared towards sets, the othe one towards multisets. (Larry remarked <br>
+that the latter turns lists into a monus = monoid with minus, but we don't use <br>
+the class system on lists).</p>
+<p>Any comments? Should we have both of them? Names? Notation? Definition vs <br>
+abbreviation (definitions require more thms that are for free with abbrev.)? ...</p>
+<p>Tobias</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/btulyeeq1k2HC0F1Lo8moItd/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="522708293"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/522708293" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#522708293">(Jun 06 2025 at 05:47)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+I have no direct application in mind. My motivation:</p>
+<ul>
+<li>
+<p>it occurred to me as the most natural meaning of "minus on lists" <br>
+(/qua /lists)</p>
+</li>
+<li>
+<p>it is closely related to the ordering "(scattered) subword": x - y <br>
+then means "remove the first scattered occurrence of (a prefix of) y from x"<br>
+That ordering, needless to say, is important, see for example<br>
+<a href="https://link.springer.com/chapter/10.1007/978-3-540-85780-8_38">https://link.springer.com/chapter/10.1007/978-3-540-85780-8_38</a></p>
+</li>
+</ul>
+<p>Stepan</p>
+<p>On 06-Jun-25 6:55 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Stepan,</p>
+<p>Do you have some application of minus_list_list in mind or was it more <br>
+for completeness?</p>
+<p>Tobias</p>
+<p>On 03/06/2025 21:15, Stepan Holub (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>I like both, although both are ignoring the non-commutative nature of <br>
+the subtracted lists and, as Tobias said, they are more about sets <br>
+(therefore it is not clear to me immediately in  what sense we would <br>
+get a monus on lists).</p>
+<p>How about the third one geared towards non-commutativity of lists:</p>
+<p>fun minus_list_list :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_list xs [] = xs" |<br>
+"minus_list_list [] ys = []" |<br>
+"minus_list_list (x # xs) (y # ys) = (if x = y then minus_list_list <br>
+xs ys else x # (minus_list_list xs (y #  ys)))"</p>
+<p>I believe any of them should be a definition (if introduced), not <br>
+abbreviation. Not sure they deserve a special notation, but that <br>
+would depend on applications.</p>
+<p>Stepan</p>
+<p>On 03-Jun-25 9:57 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Larry recently needed a subtraction function on lists. Of course it <br>
+is easy to define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>One is geared towards sets, the othe one towards multisets. (Larry <br>
+remarked that the latter turns lists into a monus = monoid with <br>
+minus, but we don't use the class system on lists).</p>
+<p>Any comments? Should we have both of them? Names? Notation? <br>
+Definition vs abbreviation (definitions require more thms that are <br>
+for free with abbrev.)? ...</p>
+<p>Tobias</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="524064883"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Minus%20on%20lists/near/524064883" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Minus.20on.20lists.html#524064883">(Jun 14 2025 at 13:23)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I have now added</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = foldr removeAll ys xs"</p>
+<p>(and supporting lemmas) to theory List. I have also located a few theories in <br>
+the AFP that defined their own versions of the above and replaced the local <br>
+versions. [Fabian's flexible search tool <a href="https://search.isabelle.in.tum.de/">https://search.isabelle.in.tum.de/</a> was <br>
+very helpful here.]</p>
+<p>Enjoy.</p>
+<p>Tobias</p>
+<p>On 03/06/2025 09:57, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Larry recently needed a subtraction function on lists. Of course it is easy to <br>
+define, but there are at least two alternatives:</p>
+<p>definition minus_list_set :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_set xs ys = filter (λx. x ∉ set ys) xs"</p>
+<p>definition minus_list_mset :: "'a list ⇒ 'a list ⇒ 'a list" where<br>
+"minus_list_mset xs ys = foldr remove1 ys xs"</p>
+<p>One is geared towards sets, the othe one towards multisets. (Larry remarked that <br>
+the latter turns lists into a monus = monoid with minus, but we don't use the <br>
+class system on lists).</p>
+<p>Any comments? Should we have both of them? Names? Notation? Definition vs <br>
+abbreviation (definitions require more thms that are for free with abbrev.)? ...</p>
+<p>Tobias</p>
+</blockquote>
+<p><a href="/user_uploads/14278/xOKSg2I7SyQ_-QldqcnTjwIK/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

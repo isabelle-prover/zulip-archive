@@ -1,0 +1,64 @@
+<html>
+<head><meta charset="utf-8"><title>Performance gains of having bicompose/biresolution in kernel · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html">Performance gains of having bicompose/biresolution in kernel</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="561280234"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561280234" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561280234">(Dec 01 2025 at 21:37)</a>:</h4>
+<p>Does anyone have a rough idea of the speedup obtained by having Thm.bicompose and Thm.biresolution in the kernel?</p>
+
+
+
+<a name="561281450"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561281450" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561281450">(Dec 01 2025 at 21:43)</a>:</h4>
+<p>And is performance being slow outside of the kernel a natural consequence of the tactics being implemented via thm's compared to hol4 <code>(term list * term)</code> and hol-light's <code>(string * thm) list * term</code></p>
+
+
+
+<a name="561342197"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561342197" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561342197">(Dec 02 2025 at 07:41)</a>:</h4>
+<p>I think the most expensive step would be the certification of the unifier.<br>
+I once tried to move the unifier out of the trusted code base of <code>bicompose_aux</code>, resulting in an overhead of 1.5 (check if unifier returns convertible results) up to 1.9 (unifier returns an equality theorem explicitly).</p>
+<p>But those have not been thorough experiments. Maybe you can do much better with some engineering.</p>
+
+
+
+<a name="561508799"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561508799" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561508799">(Dec 02 2025 at 20:04)</a>:</h4>
+<p>Was that a measure of just the raw performance or building a bunch of isabelle theories? I would think the bi net will filter out most candidates anyway</p>
+
+
+
+<a name="561537198"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561537198" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561537198">(Dec 02 2025 at 23:12)</a>:</h4>
+<p>Total build time of session HOL</p>
+
+
+
+<a name="561945291"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561945291" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561945291">(Dec 04 2025 at 18:07)</a>:</h4>
+<p>Didn't Simon Wimmer and his student investigate this thoroughly like 8 years ago or so?</p>
+
+
+
+<a name="561945334"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561945334" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561945334">(Dec 04 2025 at 18:08)</a>:</h4>
+<p>And aren't flex flex pairs another issue?</p>
+
+
+
+<a name="561965001"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Performance%20gains%20of%20having%20bicompose/biresolution%20in%20kernel/near/561965001" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Performance.20gains.20of.20having.20bicompose.2Fbiresolution.20in.20kernel.html#561965001">(Dec 04 2025 at 20:03)</a>:</h4>
+<p>Yes, there was a BSc thesis attempting to move bicompose_aux out of the kernel. The thesis isn't publicly available I believe. The final CPU build time increased by a factor of 2.4 and flex-flex pairs were smashed as a simplifying step indeed (some sessions did not build anymore as a result).<br>
+Related work on flex-flex pairs by Simon: <a href="https://home.cit.tum.de/~wimmers/papers/Smashing_Isabelle.pdf">https://home.cit.tum.de/~wimmers/papers/Smashing_Isabelle.pdf</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

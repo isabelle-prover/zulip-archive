@@ -1,0 +1,104 @@
+<html>
+<head><meta charset="utf-8"><title>Problem in AFP / AutoCorres2_Main · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20in.20AFP.20.2F.20AutoCorres2_Main.html">Problem in AFP / AutoCorres2_Main</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="546627355"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problem%20in%20AFP%20/%20AutoCorres2_Main/near/546627355" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20in.20AFP.20.2F.20AutoCorres2_Main.html#546627355">(Oct 23 2025 at 09:08)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+isabelle: ee3a09458665 tip<br>
+afp: 3805fcdc2e54 tip</p>
+<p>$ isabelle build AutoCorres2_Main<br>
+Running AutoCorres2_Main ...<br>
+AutoCorres2_Main FAILED (see also "isabelle build_log -H Error <br>
+AutoCorres2_Main")<br>
+*** Failed to finish proof (line 1810 of <br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy"):<br>
+*** goal (1 subgoal):<br>
+***  1. length bs = size_td d ⟹<br>
+***     ¬ i &lt; size_td d ⟶<br>
+***     bs =<br>
+***     bs[i := b]<br>
+*** At command "by" (line 1810 of <br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy")<br>
+*** Failed to finish proof (line 1567 of <br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy"):<br>
+*** goal (1 subgoal):<br>
+***  1. length bs = size_td d ⟹<br>
+***     ¬ i &lt; size_td d ⟶<br>
+***     bs =<br>
+***     bs[i := b]<br>
+*** At command "by" (line 1567 of <br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy")<br>
+*** Failed to finish proof (line 951 of <br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy"):<br>
+*** goal (1 subgoal):<br>
+***  1. ⟦length bs = size_td s; n ≤ x; x &lt; n + size_td s;<br>
+***      size_td s + n ≤ size_of TYPE('a); length pfx = n;<br>
+***      length sfx = size_of TYPE('a) - (n + size_td s)⟧<br>
+***     ⟹ ¬ x - n &lt; size_td s ⟶<br>
+***        bs[0 := b] = bs ∧<br>
+***        sfx =<br>
+***        sfx[0 := b]<br>
+*** At command "by" (line 951 of <br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy")</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/80gHXXBk9Ft9KQJp8CdyHxEJ/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/hA0rr1WMX04WtI39y-U6N-bf/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="546631954"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problem%20in%20AFP%20/%20AutoCorres2_Main/near/546631954" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problem.20in.20AFP.20.2F.20AutoCorres2_Main.html#546631954">(Oct 23 2025 at 09:30)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Yes I’m fixing them</p>
+<p>Larry<br>
+On 23 Oct 2025 at 10:08 +0100, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;, wrote:<br>
+isabelle: ee3a09458665 tip<br>
+afp: 3805fcdc2e54 tip</p>
+<p>$ isabelle build AutoCorres2_Main<br>
+Running AutoCorres2_Main ...<br>
+AutoCorres2_Main FAILED (see also "isabelle build_log -H Error<br>
+AutoCorres2_Main")<br>
+*** Failed to finish proof (line 1810 of<br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy"):<br>
+*** goal (1 subgoal):<br>
+*** 1. length bs = size_td d ⟹<br>
+*** ¬ i &lt; size_td d ⟶<br>
+*** bs =<br>
+*** bs[i := b]<br>
+*** At command "by" (line 1810 of<br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy")<br>
+*** Failed to finish proof (line 1567 of<br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy"):<br>
+*** goal (1 subgoal):<br>
+*** 1. length bs = size_td d ⟹<br>
+*** ¬ i &lt; size_td d ⟶<br>
+*** bs =<br>
+*** bs[i := b]<br>
+*** At command "by" (line 1567 of<br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy")<br>
+*** Failed to finish proof (line 951 of<br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy"):<br>
+*** goal (1 subgoal):<br>
+*** 1. ⟦length bs = size_td s; n ≤ x; x &lt; n + size_td s;<br>
+*** size_td s + n ≤ size_of TYPE('a); length pfx = n;<br>
+*** length sfx = size_of TYPE('a) - (n + size_td s)⟧<br>
+*** ⟹ ¬ x - n &lt; size_td s ⟶<br>
+*** bs[0 := b] = bs ∧<br>
+*** sfx =<br>
+*** sfx[0 := b]<br>
+*** At command "by" (line 951 of<br>
+"$AFP/AutoCorres2/c-parser/umm_heap/Padding_Equivalence.thy")</p>
+<p>Florian</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

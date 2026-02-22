@@ -1,0 +1,49 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: support for screen reader technology in Isabelle/jEdit · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20support.20for.20screen.20reader.20technology.20in.20Isabelle.2FjEdit.html">NEWS: support for screen reader technology in Isabelle/jEdit</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="553479041"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20support%20for%20screen%20reader%20technology%20in%20Isabelle/jEdit/near/553479041" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20support.20for.20screen.20reader.20technology.20in.20Isabelle.2FjEdit.html#553479041">(Nov 03 2025 at 20:58)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* Isabelle/jEdit Prover IDE </strong>*</p>
+<ul>
+<li>
+<p>Support for screen reader technology via Java Accessibility API<br>
+(JAAPI), for blind or visually impaired users. Tested with:</p>
+<ul>
+<li>NVDA (Windows), see <a href="https://www.nvaccess.org">https://www.nvaccess.org</a></li>
+<li>JAWS (Windows), see <a href="https://support.freedomscientific.com/Downloads/JAWS">https://support.freedomscientific.com/Downloads/JAWS</a></li>
+<li>VoiceOver (macOS), builtin Command-F5</li>
+</ul>
+</li>
+</ul>
+<p>This refers to Isabelle/d83e23a67e9c. The most relevant source file is here <br>
+<a href="https://isabelle.sketis.net/repos/isabelle/file/d83e23a67e9c/src/Tools/jEdit/src/jedit_accessible.scala">https://isabelle.sketis.net/repos/isabelle/file/d83e23a67e9c/src/Tools/jEdit/src/jedit_accessible.scala</a> <br>
+--- plus a few patches on the jEdit code base.</p>
+<p>It is an initial result of an ongoing project (from Sep-2025 to Sep-2026) with <br>
+Johannes Kepler University Linz, which is about Isabelle/MAWEN, an accessible <br>
+learning environment for mathematics.</p>
+<p>A few years ago, we had initial attempts with Isabelle/VSCode: it was first <br>
+successful (by mere luck) and later stopped working due to arbitrary changes <br>
+to the very dynamic code base of VSCode. We did not want to make ourselves <br>
+depend on such a "super cool" project, so we revisited the ancient JAAPI for <br>
+Java/Swing instead. Hardly anybody knows about, but it turned out pretty clean <br>
+and straightforward to use. Each of the different screen readers requires some <br>
+minor tinkering to make it work smoothly.</p>
+<p>As usual for Java/Swing, the "proof of existence" is provided by IntelliJ <br>
+IDEA, which is both a major Java IDE and a major Swing application. IntelliJ <br>
+works quite well with screen readers, as if that could be to be expected by <br>
+default --- but it is actually quite unusual.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

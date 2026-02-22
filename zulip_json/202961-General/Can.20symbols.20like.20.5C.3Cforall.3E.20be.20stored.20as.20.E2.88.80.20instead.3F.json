@@ -1,0 +1,134 @@
+[
+    {
+        "content": "<p>Will Isabelle work if are stored as the character they are displayed as, instead of using the Isabelle-specific encoding? I know this is handled by the encoding which is UTF-8-Isabelle. I noticed the completion menu does not pop up when using encoding UTF-8.</p>",
+        "id": 567285118,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1768009501
+    },
+    {
+        "content": "<p>It will lead to strange behaviours, e.g. Isabelle/jEdit might not complain. but <code>isabelle build</code> will fail. <br>\nSee this thread <a class=\"stream-topic\" data-stream-id=\"238552\" href=\"/#narrow/channel/238552-Beginner-Questions/topic/Github/with/204994312\">#Beginner Questions &gt; Github</a></p>",
+        "id": 567310236,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1768041954
+    },
+    {
+        "content": "<p>My REPL supports the conversion between Isabelle's ASCII encoding and Unicode. It reads the system and the user symbol file to parse the ASCII symbols, so almost identical to how the system handles it.</p>",
+        "id": 567582794,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1768235149
+    },
+    {
+        "content": "<p>Note on this topic: While there are UTF-8 codepoints for many Isabelle symbols (not for all), converting to UTF-8 only makes sense in specific contexts. For instance, <code>\\&lt;^sup&gt;</code> has the unicode codepoint ⇧, but you really want to display the following symbol in superscript instead, unless you're e.g. directly editing the identifier that contains ⇧.</p>",
+        "id": 567772556,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768313131
+    },
+    {
+        "content": "<p>And UTF-8 characters don't generally exist for superscipted/subscripted characters.</p>",
+        "id": 567772828,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768313190
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/567772828\">ha dicho</a>:</p>\n<blockquote>\n<p>And UTF-8 characters don't generally exist for superscipted/subscripted characters.</p>\n</blockquote>\n<p>Of course, but UTF-8 has subcripts and superscripts for digits, which is the most common use of subscripts and superscripts.</p>",
+        "id": 567877984,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1768347493
+    },
+    {
+        "content": "<p>Certainly not in general math -- that should be obvious, but you can just look into the AFP: <a href=\"https://search.isabelle.in.tum.de/#search?q=%5C%3C%5Esup%3E\">list of ⇧ usage</a> (within the first three hits, you will find characters not representable by UTF-8, and you'll have to scroll far to find numbers).<br>\nThe whole reason why UTF-8 does not support arbitrary superscript/subscript is that it is <em>not</em> meant for rich text representation, in particular not for mathematical formulae (proposals to add more sub/superscript characters were dismissed by the consortium for this exact reason).</p>",
+        "id": 567928387,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768380280
+    },
+    {
+        "content": "<p>Another issue, when talking symbols more generally, is that having a symbol encoding is not good enough. There are plenty of superscript symbols that exist in UTF-8, but your font won't actually be able to render them. Let alone the font of some other user. And even if rendered at all, the symbol might be represented differently...</p>",
+        "id": 567928736,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768380399
+    },
+    {
+        "content": "<p>The idea (which I have heard from people using other ITPs) that monospaced UTF-8 would be good enough for math seems crazy to me.</p>",
+        "id": 567929022,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768380487
+    },
+    {
+        "content": "<p>I understand having a general notation that is not dependent on non-ASCII Unicode support. Nonetheless, Isabelle should use the existing Unicode characters for logical connectives like ∀, ∃, etc. All serious programming fonts include these characters.</p>",
+        "id": 568109207,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1768439597
+    },
+    {
+        "content": "<p>I don't really see how you can demand that it 'should' do that, when unicode is neither sufficient nor necessary here. In any case, monospaced programming fonts are not adequate at all for displaying logical connectives such as a long implication arrow -- you get a tiny =&gt; instead of the proper ==&gt; . Not to mention large operators such as a sum sign...</p>",
+        "id": 568147728,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768466022
+    },
+    {
+        "content": "<p>In Isabelle we favor great technology over popular solutions. Use a different ITP if you want the latter, e.g. Lean.</p>",
+        "id": 568147971,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768466107
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568147971\">ha dicho</a>:</p>\n<blockquote>\n<p>In Isabelle we favor great technology over popular solutions. Use a different ITP if you want the latter, e.g. Lean.</p>\n</blockquote>\n<p>I like that philosophy and I chose Isabelle over Lean for that reason among others. I mean using Unicode characters for symbols that already exist in Unicode, not to change Isabelle to only use such symbols. The reason is so that when one sees theory files using tools other than Isabelle/jEdit, such symbols will be displayed properly. It is better to see <code>¬ (∀x. P x)</code> instead of <code>\\&lt;not&gt; (\\&lt;forall&gt;x. P x)</code>. In the case of <code>==&gt;</code>, Unicode has ⟹ <code>U+27F9 LONG RIGHTWARDS DOUBLE ARROW</code>. Note it displays longer than <code>⇒</code> in Zulip.</p>",
+        "id": 568347046,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1768531224
+    },
+    {
+        "content": "<p>The Zulip font selection is reasonably solid, it will display most Isabelle symbols (although some are displayed as wrong symbols, e.g. the \\&lt;inverse&gt; becomes ¯ but should look something like ⁻¹). And of course the regular text font is not monospaced, only the programming font is: ⟹ becomes <code>⟹</code> and ⟶ becomes <code>⟶</code>.</p>\n<p>Using other tools to display Isabelle theories is of course a valid concern, e.g. for VCS diffs. But for that use-case it is much simpler, and technologically much more solid, to build a diff viewer that can display Isabelle symbols properly.<br>\nOr what is the application you have in mind?</p>",
+        "id": 568381937,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768552747
+    },
+    {
+        "content": "<p>Huh, that is funny: ⟹ does not actually become much smaller in Zulip code mode, since the monospaced font does not have the symbol, so this is rendered in a different font in code which is not actually monospaced. So apparently mixing fonts like zulip does has its own pitfalls...</p>",
+        "id": 568382809,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768553063
+    },
+    {
+        "content": "<p>Out of curiosity: Couldn't we have both of best worlds, if for example the encoding of ==&gt; in UTF8-Isabelle would be ⟹ instead of \\&lt;Longrightarrow&gt; (Whenever something like this is possible). Then we have our nice symbols in Jedit but can also nicely read mercurial/git diffs for example.</p>",
+        "id": 568462654,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1768577778
+    },
+    {
+        "content": "<p>Well, but then you couldn't write actual ==&gt; in a theory. This might not be a problem for this character, but I doubt people would want to trade 'more readable diffs with no/bad tooling' with 'Not being able to write equations like <code>(a+b)=c</code> because the system interprets <code>)=</code> as <code>⊇</code>... ;)</p>",
+        "id": 568799798,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1768828907
+    },
+    {
+        "content": "<p>regarding readable diffs specifically (at least in git; i am less familiar with hg, which I don't use outside of Isabelle itself): you can tell git to consider <code>.thy</code> files as being \"binary\", and then set a <code>textconv</code> program which git will apply before diffing to make them readable (of course, this means they are no longer usable as patches). Of course <code>.thy</code> files are not actually binary, but that way you can replace the escape sequences with unicode symbols (in the cases where such symbols easily exist, at least)</p>",
+        "id": 568825171,
+        "sender_full_name": "terru",
+        "timestamp": 1768835665
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568799798\">ha dicho</a>:</p>\n<blockquote>\n<p>Well, but then you couldn't write actual ==&gt; in a theory. This might not be a problem for this character, but I doubt people would want to trade 'more readable diffs with no/bad tooling' with 'Not being able to write equations like <code>(a+b)=c</code> because the system interprets <code>)=</code> as <code>⊇</code>... ;)</p>\n</blockquote>\n<p>That is rather an argument to use spaces as in <code>(a + b) = c</code> which is good practice anyway.</p>",
+        "id": 569395556,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1769048527
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568381937\">ha dicho</a>:</p>\n<blockquote>\n<p>Using other tools to display Isabelle theories is of course a valid concern, e.g. for VCS diffs. But for that use-case it is much simpler, and technologically much more solid, to build a diff viewer that can display Isabelle symbols properly.<br>\nOr what is the application you have in mind?</p>\n</blockquote>\n<p>Yes, it is for VCS diffs, specifically in Mercurial.</p>",
+        "id": 569395570,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1769048540
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"992716\">Mario Xerxes Castelán Castro</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/569395556\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568799798\">ha dicho</a>:</p>\n<blockquote>\n<p>Well, but then you couldn't write actual ==&gt; in a theory. This might not be a problem for this character, but I doubt people would want to trade 'more readable diffs with no/bad tooling' with 'Not being able to write equations like <code>(a+b)=c</code> because the system interprets <code>)=</code> as <code>⊇</code>... ;)</p>\n</blockquote>\n<p>That is rather an argument to use spaces as in <code>(a + b) = c</code> which is good practice anyway.</p>\n</blockquote>\n<p>Right. And it would be kinda cool if terms like <code>(=)</code> can be lexed in three different ways ;)</p>",
+        "id": 569446674,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769075372
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"992716\">Mario Xerxes Castelán Castro</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/569395570\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Can.20symbols.20like.20.5C.3Cforall.3E.20be.20stored.20as.20.E2.88.80.20instead.3F/near/568381937\">ha dicho</a>:</p>\n<blockquote>\n<p>Using other tools to display Isabelle theories is of course a valid concern, e.g. for VCS diffs. But for that use-case it is much simpler, and technologically much more solid, to build a diff viewer that can display Isabelle symbols properly.<br>\nOr what is the application you have in mind?</p>\n</blockquote>\n<p>Yes, it is for VCS diffs, specifically in Mercurial.</p>\n</blockquote>\n<p>I see. Yes, I do agree that we need better tooling for that.</p>",
+        "id": 569446852,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769075422
+    }
+]

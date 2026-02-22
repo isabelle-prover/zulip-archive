@@ -1,0 +1,116 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2025-1-RC2 bulky app, notably on macOS · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC2.20bulky.20app.2C.20notably.20on.20macOS.html">[isabelle] Isabelle2025-1-RC2 bulky app, notably on macOS</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="558309326"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1-RC2%20bulky%20app%2C%20notably%20on%20macOS/near/558309326" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC2.20bulky.20app.2C.20notably.20on.20macOS.html#558309326">(Nov 19 2025 at 21:47)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 19/11/2025 20:46, Makarius wrote:</p>
+<blockquote>
+<p>a consolidated release candidate of Isabelle2025-1 (December 2025) is <br>
+available from <a href="https://isabelle.in.tum.de/website-Isabelle2025-1-RC2">https://isabelle.in.tum.de/website-Isabelle2025-1-RC2</a><br>
+Testing that on macOS, I now see we have a new record in application bundle <br>
+size: 3.56 GiB. Thus we are slowly approaching the 6 GiB of MacTeX.</p>
+</blockquote>
+<p>This continued inflation has two reasons:</p>
+<p>(1) more ambitious bundling of add-on components, e.g. VSCodium with its <br>
+Electron and Node.js framework, or pre-built browser_info and Find_Facts data,</p>
+<p>(2) native ARM64 binaries for the majority of Isabelle tools and <br>
+frameworks, in addition to old Intel binaries.</p>
+<p>Presently we still demand Apple's Rosetta2 to run old x86_64-darwin <br>
+executables on the spot, like the initial app launcher <br>
+<a href="http://Isabelle2025-1-RC2.app/Isabelle2025-1-RC2">Isabelle2025-1-RC2.app/Isabelle2025-1-RC2</a> --- that startup-wrapper ensures <br>
+that Rosetta2 is already present when external ATPs and SMTs are run later on.</p>
+<p>Within the next 1-2 years, I would like to see native arm64-darwin executables <br>
+for all Isabelle add-on tools, and make x86_64-darwin optional. Then we will <br>
+no longer demand Rosetta2 --- it will be discontinued by Apple after macOS 26. <br>
+That might pose a challenge for some old tools: We will need to work on that.</p>
+<p>A bit later we could phase out x86_64-darwin altogether, and thus get back to <br>
+the subject of this mail: reduce the bulk of the app bundle again, having <br>
+just one copy of jdk, vscodium, cvc5, vampire etc.</p>
+<p>This also poses the question if Intel-Mac users still exist: We do have our <br>
+own test machines as existence proof for that platform, to build and test <br>
+executables, but is there anybody else still out there?</p>
+<p>Makarius</p>
+
+
+
+<a name="558313775"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1-RC2%20bulky%20app%2C%20notably%20on%20macOS/near/558313775" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC2.20bulky.20app.2C.20notably.20on.20macOS.html#558313775">(Nov 19 2025 at 22:13)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 19/11/2025 22:47, Makarius wrote:</p>
+<blockquote>
+<p>On 19/11/2025 20:46, Makarius wrote:</p>
+<blockquote>
+<p>a consolidated release candidate of Isabelle2025-1 (December 2025) is <br>
+available from <a href="https://isabelle.in.tum.de/website-Isabelle2025-1-RC2">https://isabelle.in.tum.de/website-Isabelle2025-1-RC2</a><br>
+Testing that on macOS, I now see we have a new record in application bundle <br>
+size: 3.56 GiB. Thus we are slowly approaching the 6 GiB of MacTeX.</p>
+</blockquote>
+</blockquote>
+<p>To be more precise, the situation is as follows:</p>
+<p>Isabelle2025-1-RC2_macos.tar.gz  1.7G<br>
+<a href="http://Isabelle2025-1-RC2.app/">Isabelle2025-1-RC2.app/</a>          3.6G</p>
+<p>MacTeX.pkg  5.9G<br>
+   MacTeX installed  9.7G</p>
+<p>So we have a little headroom left, before we need to call it "as bulky as MacTeX".</p>
+<p>Makarius</p>
+
+
+
+<a name="558317220"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1-RC2%20bulky%20app%2C%20notably%20on%20macOS/near/558317220" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC2.20bulky.20app.2C.20notably.20on.20macOS.html#558317220">(Nov 19 2025 at 22:36)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+The 2019 iMacs offered attractive performance and I imagine there could be many floating around, but they don’t support Tahoe.</p>
+<blockquote>
+<p>On 19 Nov 2025, at 21:47, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>This also poses the question if Intel-Mac users still exist: We do have our own test machines as existence proof for that platform, to build and test executables, but is there anybody else still out there?</p>
+</blockquote>
+
+
+
+<a name="558318218"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1-RC2%20bulky%20app%2C%20notably%20on%20macOS/near/558318218" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC2.20bulky.20app.2C.20notably.20on.20macOS.html#558318218">(Nov 19 2025 at 22:44)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 19/11/2025 23:36, Lawrence Paulson wrote:</p>
+<blockquote>
+<blockquote>
+<p>On 19 Nov 2025, at 21:47, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>This also poses the question if Intel-Mac users still exist: We do have our own test machines as existence proof for that platform, to build and test executables, but is there anybody else still out there?</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>The 2019 iMacs offered attractive performance and I imagine there could be <br>
+many floating around, but they don’t support Tahoe.</p>
+</blockquote>
+<p>Yes, Intel Macs will get stuck on macOS 26. It will continue to work for a few <br>
+years, and then be discontinued by Apple.</p>
+<p>Presently, I would like to get an idea about the timespan we should continue <br>
+to support Intel Macs --- meaning that we need keep some of the hardware <br>
+around in some basement (even buy new ones).</p>
+<p>Makarius</p>
+
+
+
+<a name="558407051"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2025-1-RC2%20bulky%20app%2C%20notably%20on%20macOS/near/558407051" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2025-1-RC2.20bulky.20app.2C.20notably.20on.20macOS.html#558407051">(Nov 20 2025 at 11:33)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Almost the entire Apple product line had moved to ARM chips by April 2021. The exception is the Mac Pro, and I imagine nobody has one of those.</p>
+<p>You could always announce "I propose to drop Mac Intel support starting with Isabelle2026", and count how many object. I'd like my Intel iMac but I have to admit, it is getting old.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 19 Nov 2025, at 22:43, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Presently, I would like to get an idea about the timespan we should continue to support Intel Macs --- meaning that we need keep some of the hardware around in some basement (even buy new ones).</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

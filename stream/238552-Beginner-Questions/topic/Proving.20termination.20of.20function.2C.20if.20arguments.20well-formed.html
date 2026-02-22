@@ -1,0 +1,69 @@
+<html>
+<head><meta charset="utf-8"><title>Proving termination of function, if arguments well-formed · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html">Proving termination of function, if arguments well-formed</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="521356926"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521356926" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521356926">(May 30 2025 at 19:13)</a>:</h4>
+<p>I have a function that only terminates if it's called with valid arguments, and that is always the case.<br>
+Can I prove this conditional termination to obtain executable code, or do I actually have to modify the function such that it also terminates with invalid arguments, then prove that?</p>
+
+
+
+<a name="521357766"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521357766" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521357766">(May 30 2025 at 19:19)</a>:</h4>
+<p>You can define the type of only valid arguments</p>
+
+
+
+<a name="521357922"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521357922" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521357922">(May 30 2025 at 19:20)</a>:</h4>
+<p>Ooooh, thanks, I'll play around with that.</p>
+
+
+
+<a name="521358105"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521358105" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521358105">(May 30 2025 at 19:21)</a>:</h4>
+<p>I did this once <a href="https://github.com/IsaFoL/IsaFoL/blob/master/Weidenbach_Book/CDCL/DPLL_W_Implementation.thy#L361">https://github.com/IsaFoL/IsaFoL/blob/master/Weidenbach_Book/CDCL/DPLL_W_Implementation.thy#L361</a>, but have forgotten all the details now. I just remember that this is described somewhere in the codegen tutorial</p>
+
+
+
+<a name="521425979"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521425979" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521425979">(May 31 2025 at 09:20)</a>:</h4>
+<p>What I did in a similar case is to modify the function definition like this: <code>f x = if valid x then &lt;recursion&gt; else undefined</code> and then derived a better simp rule afterwards that assumed <code>valid x</code> and did not have the undefined</p>
+
+
+
+<a name="521425990"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521425990" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521425990">(May 31 2025 at 09:21)</a>:</h4>
+<p>Dealing with subtypes can be annoying sometimes</p>
+
+
+
+<a name="521426240"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521426240" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521426240">(May 31 2025 at 09:24)</a>:</h4>
+<p>Oh yeah that's even better in my case, thank you!</p>
+
+
+
+<a name="521452131"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/521452131" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#521452131">(May 31 2025 at 15:31)</a>:</h4>
+<p>Yes if <code>valid x</code> is simple enough and that you do not care about performance…</p>
+
+
+
+<a name="522162210"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proving%20termination%20of%20function%2C%20if%20arguments%20well-formed/near/522162210" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proving.20termination.20of.20function.2C.20if.20arguments.20well-formed.html#522162210">(Jun 03 2025 at 15:56)</a>:</h4>
+<p>These two approaches are probably the best ones for most use cases: a simple validity check if performance and decidability of that check is not an issue, and a typedef otherwise.</p>
+<p>Another thing you can do is to use the <code>partial_function</code> command with the <code>(option)</code> flag, which makes it so that your function logically returns <code>None</code> in case of nontermination or <code>Some x</code> in case of termination with a result <code>x</code>. If your function definition is tail-recursive, you can use <code>partial_function</code> with the <code>(tailrec)</code> flag instead and do away with the option type; in that case, the result in nonterminating cases is simply unspecified.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

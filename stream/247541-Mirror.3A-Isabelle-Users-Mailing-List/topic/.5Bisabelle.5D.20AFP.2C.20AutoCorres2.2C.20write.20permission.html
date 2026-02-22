@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] AFP, AutoCorres2, write permission · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20AFP.2C.20AutoCorres2.2C.20write.20permission.html">[isabelle] AFP, AutoCorres2, write permission</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="530982830"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20AFP%2C%20AutoCorres2%2C%20write%20permission/near/530982830" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20AFP.2C.20AutoCorres2.2C.20write.20permission.html#530982830">(Jul 26 2025 at 18:14)</a>:</h4>
+<p>From: Alain Kägi &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Is it the expectation that each user install their own writable copy of the<br>
+Archive of Formal Proofs?</p>
+<p>I have installed AFP in a system-owned directory (<code>/opt</code>) retaining the<br>
+original file ownerships and permissions. Bottom line, I don't have write<br>
+permission to the AFP directory. Unfortunately, with this setup, building<br>
+AutoCorres2 fails with <code>permission denied</code> (command: <code>isabelle build -D
+&lt;path-to-AFP&gt;/AutoCorres2</code>). The <code>CTranslationSetup</code> theory wants to write<br>
+<code>$AFP/AutoCorres2/c-parser/StrictC.lex.sml</code> (command <code>mllex</code> on line 536)<br>
+and <code>$AFP/AutoCorres2/c-parser/StrictC.grm.sig</code> &amp;<br>
+<code>$AFP/AutoCorres2/c-parser/StrictC.grm.sml</code> (command <code>mlyacc</code> on line 537).</p>
+<p>I can grant write permissions to these files, but that does not seem an<br>
+ideal solution.</p>
+<p>I'm using Isabelle2025 and afp-2025-07-24.</p>
+<p>Thanks for your attention,<br>
+Alain</p>
+
+
+
+<a name="531227212"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20AFP%2C%20AutoCorres2%2C%20write%20permission/near/531227212" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20AFP.2C.20AutoCorres2.2C.20write.20permission.html#531227212">(Jul 27 2025 at 22:48)</a>:</h4>
+<p>From: Gerwin Klein &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hi Alain,</p>
+<p>you only need write permission in AutoCorres2 to build these the first time (it’s just lex/yacc). Once they exist, everything should be read only. So you could build once, adjust access rights, and then should be Ok for a site installation of this specific entry.</p>
+<p>Most entries will be read-only, but the AFP in general does not place any restrictions on what entries might generate or write, so other entries might similar things. I’d recommend a per-user installation if you want to make sure you’re not hitting any such cases.</p>
+<p>Cheers,<br>
+Gerwin</p>
+<p>On 27 Jul 2025, at 04:14, Alain Kägi (via cl-isabelle-users Mailing List) [cl-isabelle-users-bounces@lists.cam.ac.uk] &lt;<a href="mailto:forwarded_for@cse.unsw.edu.au">forwarded_for@cse.unsw.edu.au</a>&gt; wrote:</p>
+<p>Is it the expectation that each user install their own writable copy of the Archive of Formal Proofs?</p>
+<p>I have installed AFP in a system-owned directory (<code>/opt</code>) retaining the original file ownerships and permissions. Bottom line, I don't have write permission to the AFP directory. Unfortunately, with this setup, building AutoCorres2 fails with <code>permission denied</code> (command: <code>isabelle build -D &lt;path-to-AFP&gt;/AutoCorres2</code>). The <code>CTranslationSetup</code> theory wants to write <code>$AFP/AutoCorres2/c-parser/StrictC.lex.sml</code> (command <code>mllex</code> on line 536) and <code>$AFP/AutoCorres2/c-parser/StrictC.grm.sig</code> &amp; <code>$AFP/AutoCorres2/c-parser/StrictC.grm.sml</code> (command <code>mlyacc</code> on line 537).</p>
+<p>I can grant write permissions to these files, but that does not seem an ideal solution.</p>
+<p>I'm using Isabelle2025 and afp-2025-07-24.</p>
+<p>Thanks for your attention,<br>
+Alain</p>
+<p>Confidential communication - This email and any files transmitted with it are confidential and are intended solely for the addressee. If you are not the intended recipient, please be advised that you have received this email in error and that any use, dissemination, forwarding, printing, or copying of this email and any file attachments is strictly prohibited. If you have received this email in error, please notify me immediately by return email and destroy this email.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

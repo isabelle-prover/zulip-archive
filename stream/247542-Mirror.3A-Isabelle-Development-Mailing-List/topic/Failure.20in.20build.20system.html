@@ -1,0 +1,100 @@
+<html>
+<head><meta charset="utf-8"><title>Failure in build system · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Failure.20in.20build.20system.html">Failure in build system</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525776556"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Failure%20in%20build%20system/near/525776556" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Failure.20in.20build.20system.html#525776556">(Jun 25 2025 at 19:33)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<blockquote>
+<p>*** Unable to convert bytea parameter at position 7 to literal<br>
+Job ended at Wed Jun 25 21:29:15 GMT+2 2025, with status failed</p>
+</blockquote>
+<p><a href="https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958">https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958</a></p>
+<p><a href="/user_uploads/14278/6kZkwzbd1654EbseaW-AgHxD/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/l4XhSwVN21PL2aHHTnUNZjZB/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="525848460"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Failure%20in%20build%20system/near/525848460" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Failure.20in.20build.20system.html#525848460">(Jun 26 2025 at 08:16)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+Those are due to repeated crashes because of memory problems since <br>
+yesterday afternoon:</p>
+<p><strong>* </strong>* java.lang.OutOfMemoryError: Java heap space</p>
+<p>*** Ran out of memory retrieving query results.</p>
+<p>I am not yet sure what causes the increased memory consumption.</p>
+<p>Fabian</p>
+<p>On 6/25/25 21:32, Florian Haftmann wrote:</p>
+<blockquote>
+<blockquote>
+<p>*** Unable to convert bytea parameter at position 7 to literal<br>
+Job ended at Wed Jun 25 21:29:15 GMT+2 2025, with status failed</p>
+</blockquote>
+<p><a href="https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958">https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958</a> </p>
+</blockquote>
+
+
+
+<a name="525855544"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Failure%20in%20build%20system/near/525855544" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Failure.20in.20build.20system.html#525855544">(Jun 26 2025 at 08:55)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+I think the problem comes from Isabelle/0e36478a1b6a. Initializing the <br>
+PIDE Session inside Session_Job creates a null store:</p>
+<p>override val store:Store =store</p>
+<p>so each call of Session.cache creates a new cache, allocating additional <br>
+memory. It looks like the intention of the above assignment is to assign <br>
+the store from the build context?</p>
+<p>Fabian</p>
+<p>On 6/26/25 10:15, Fabian Huch wrote:</p>
+<blockquote>
+<p>Those are due to repeated crashes because of memory problems since <br>
+yesterday afternoon:</p>
+<p><strong>* </strong>* java.lang.OutOfMemoryError: Java heap space<br>
+*** Ran out of memory retrieving query results.</p>
+<p>I am not yet sure what causes the increased memory consumption.</p>
+<p>Fabian</p>
+<p>On 6/25/25 21:32, Florian Haftmann wrote:</p>
+<blockquote>
+<blockquote>
+<p>*** Unable to convert bytea parameter at position 7 to literal<br>
+Job ended at Wed Jun 25 21:29:15 GMT+2 2025, with status failed</p>
+</blockquote>
+<p><a href="https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958">https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958</a> </p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="525929631"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Failure%20in%20build%20system/near/525929631" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Failure.20in.20build.20system.html#525929631">(Jun 26 2025 at 15:20)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 26/06/2025 10:55, Fabian Huch wrote:</p>
+<blockquote>
+<p>I think the problem comes from Isabelle/0e36478a1b6a. Initializing the PIDE <br>
+Session inside Session_Job creates a null store:</p>
+<p>override val store:Store =store</p>
+<p>so each call of Session.cache creates a new cache, allocating additional <br>
+memory. It looks like the intention of the above assignment is to assign the <br>
+store from the build context?</p>
+</blockquote>
+<p>There is indeed something wrong. See now:</p>
+<p>changeset:   82769:7cb5ef6da1f0<br>
+user:        wenzelm<br>
+date:        Thu Jun 26 17:14:01 2025 +0200<br>
+files:       src/Pure/Build/build_job.scala src/Pure/PIDE/session.scala<br>
+description:<br>
+proper <a href="http://build_context.store">build_context.store</a>, instead of circular null value (amending <br>
+0e36478a1b6a and e891ff63e6db);</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

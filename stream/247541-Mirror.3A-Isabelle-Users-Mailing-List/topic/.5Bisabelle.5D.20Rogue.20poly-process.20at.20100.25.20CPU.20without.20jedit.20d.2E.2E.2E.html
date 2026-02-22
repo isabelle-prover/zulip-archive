@@ -1,0 +1,116 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Rogue poly-process at 100% CPU without jedit d... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rogue.20poly-process.20at.20100.25.20CPU.20without.20jedit.20d.2E.2E.2E.html">[isabelle] Rogue poly-process at 100% CPU without jedit d...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="568075410"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rogue%20poly-process%20at%20100%25%20CPU%20without%20jedit%20d.../near/568075410" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rogue.20poly-process.20at.20100.25.20CPU.20without.20jedit.20d.2E.2E.2E.html#568075410">(Jan 14 2026 at 20:35)</a>:</h4>
+<p><strong>From:</strong> Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;</p>
+<p>Dear List,</p>
+<p>I recently encountered my fan not stopping to spin. I wanted to delete <br>
+the veriT threads, but found out that there was a poly thread sitting at <br>
+100% CPU, and not stopping. According to the theory panel, all theories <br>
+where completely processed, and according to the status bar, no GCs <br>
+where in progress.</p>
+<p>I'd expect no 100% CPU thread in this situation ... restarting Isabelle <br>
+solved the problem.</p>
+<p>What information can/shall I collect the next time that happens, in <br>
+order to identify the reason?</p>
+<p>--</p>
+<p>Peter</p>
+<p>OS: Ubuntu on x86_64</p>
+
+
+
+<a name="568167374"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rogue%20poly-process%20at%20100%25%20CPU%20without%20jedit%20d.../near/568167374" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rogue.20poly-process.20at.20100.25.20CPU.20without.20jedit.20d.2E.2E.2E.html#568167374">(Jan 15 2026 at 10:04)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 14/01/2026 21:34, Peter Lammich wrote:</p>
+<blockquote>
+<p>What information can/shall I collect the next time that happens, in order to <br>
+identify the reason?</p>
+</blockquote>
+<p>Maybe some information from "top" about memory: VIRT, RES.</p>
+<p>Also a confirmation that the "poly" process is really the prover backend, not <br>
+the ML runtime monitor process.</p>
+<p>You can see the difference via "ps aux | grep poly". The monitor has a <br>
+command-line like this:</p>
+<p>poly -q --use src/Pure/ML/ml_statistics.ML --eval ML_Statistics.monitor <br>
+5617 0.5</p>
+<p>Makarius</p>
+
+
+
+<a name="568658531"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rogue%20poly-process%20at%20100%25%20CPU%20without%20jedit%20d.../near/568658531" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rogue.20poly-process.20at.20100.25.20CPU.20without.20jedit.20d.2E.2E.2E.html#568658531">(Jan 18 2026 at 11:53)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 18/01/2026 07:35, Vincent Jackson wrote:</p>
+<blockquote>
+<p>Here is my current Isabelle version:</p>
+<p>isabelle version -it<br>
+4b875a4c83b0<br>
+Isabelle2025</p>
+</blockquote>
+<p>That is already outdated. We are talking about Isabelle2025-1 here.</p>
+<blockquote>
+<blockquote>
+<p>Maybe some information from "top" about memory: VIRT, RES.</p>
+<p>Also a confirmation that the "poly" process is really the prover backend, <br>
+not the ML runtime monitor process.<br>
+Here is the requested information:</p>
+</blockquote>
+<p>admin     145198  261 22.9 7786296 3698832 ?     Sl   16:04  21:19 poly -q --minheap 1000 --gcthreads 4 --exportstats --eval (PolyML.SaveState.loadHierarchy ["&lt;...&gt;/Isabelle2025/heaps/polyml-for-isabelle-2025_x86_64-linux/Pure", "&lt;...&gt;/Isabelle2025/heaps/polyml-for-isabelle-2025_x86_64-linux/HOL"]; PolyML.print_depth 0) --eval Options.load_default () --eval Resources.init_session_env () --eval Isabelle_Process.init ()<br>
+admin     145229  0.0  0.1 2586568 25312 ?       Sl   16:05   0:00 poly -q --use src/Pure/ML/ml_statistics.ML --eval ML_Statistics.monitor 145198 0.5</p>
+</blockquote>
+<p>For claritiy, here are is the ps header line (on Linux):</p>
+<p>USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</p>
+<p>It means that the poly process above is running at 261% --- which is a notable <br>
+difference from the initial observation on this thread. 100% often means that <br>
+a there is a single thread that "hangs".</p>
+<p>The scale for the process size is unclear to me. Maybe we see approx. 3.6 GiB <br>
+above, which is not so much. (Assuming this is decent hardware with 16..32 GiB <br>
+total.)</p>
+<blockquote>
+<p>I have also noticed that whenever this does happen, the ML status indicator in <br>
+jEdit reads "ML cleanup", but I have no idea if that's diagnostically relevant.</p>
+</blockquote>
+<p>That means poly is running garbage collection. It can take quite long, but <br>
+should finish eventually. If it doesn't, it needs further investigation --- <br>
+using a current version of Isabelle --- with an authentic Poly/ML component <br>
+that has been provided by the Isabelle distribution.</p>
+<p>Makarius</p>
+
+
+
+<a name="568906094"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rogue%20poly-process%20at%20100%25%20CPU%20without%20jedit%20d.../near/568906094" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rogue.20poly-process.20at.20100.25.20CPU.20without.20jedit.20d.2E.2E.2E.html#568906094">(Jan 19 2026 at 22:09)</a>:</h4>
+<p><strong>From:</strong> Vincent Jackson &lt;<a href="mailto:vjjac@student.unimelb.edu.au">vjjac@student.unimelb.edu.au</a>&gt;</p>
+<p>Hello, I am also experiencing this issue.</p>
+<p>Here is my current Isabelle version:</p>
+<p>isabelle version -it<br>
+4b875a4c83b0<br>
+Isabelle2025</p>
+<blockquote>
+<p>Maybe some information from "top" about memory: VIRT, RES.</p>
+<p>Also a confirmation that the "poly" process is really the prover <br>
+backend, not the ML runtime monitor process.<br>
+Here is the requested information:</p>
+</blockquote>
+<p>admin     145198  261 22.9 7786296 3698832 ?     Sl   16:04  21:19 poly -q --minheap 1000 --gcthreads 4 --exportstats --eval (PolyML.SaveState.loadHierarchy ["&lt;...&gt;/Isabelle2025/heaps/polyml-for-isabelle-2025_x86_64-linux/Pure", "&lt;...&gt;/Isabelle2025/heaps/polyml-for-isabelle-2025_x86_64-linux/HOL"]; PolyML.print_depth 0) --eval Options.load_default () --eval Resources.init_session_env () --eval Isabelle_Process.init ()<br>
+admin     145229  0.0  0.1 2586568 25312 ?       Sl   16:05   0:00 poly -q --use src/Pure/ML/ml_statistics.ML --eval ML_Statistics.monitor 145198 0.5</p>
+<p>(N.b. I have trimmed some excessively long paths generated by nixos.)</p>
+<p>I have also noticed that whenever this does happen, the ML status <br>
+indicator in jEdit reads "ML cleanup", but I have no idea if that's <br>
+diagnostically relevant.</p>
+<p>Vincent</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,44 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Type inference in &quot;cases&quot; and &quot;induction&quot; method · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Type.20inference.20in.20.22cases.22.20and.20.22induction.22.20method.html">[isabelle] Type inference in &quot;cases&quot; and &quot;induction&quot; method</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513939230"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Type%20inference%20in%20%22cases%22%20and%20%22induction%22%20method/near/513939230" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Type.20inference.20in.20.22cases.22.20and.20.22induction.22.20method.html#513939230">(Apr 23 2025 at 18:28)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Hello,</p>
+<p>here's an issue that has been bugging me for years: in methods like <br>
+"cases", "induct", and "induction" that take a rule and instantiations <br>
+for that rule, it seems that type inference is first run for the <br>
+instantiations separately and the results are then plugged into the rule.</p>
+<p>This can lead to problems, e.g. the following does not work:</p>
+<p>lemma<br>
+     fixes P :: "int ⇒ bool"<br>
+     shows "P a"<br>
+   proof (cases a 0 rule: linorder_cases)</p>
+<p>exception THM 0 raised (line 756 of "drule.ML"):<br>
+     infer_instantiate_types: type int of variable ?y<br>
+     cannot be unified with type 'a of term 0<br>
+     (?x &lt; ?y ⟹ ?P) ⟹<br>
+     (?x = ?y ⟹ ?P) ⟹ (?y &lt; ?x ⟹ ?P) ⟹ ?P</p>
+<p>There is an easy workaround, of course:</p>
+<p>proof (cases a "0::int" rule: linorder_cases)</p>
+<p>However, I remember that I was quite puzzled when I first encountered <br>
+this. Perhaps it would be worth investigating whether this can be made <br>
+more robust. I can e.g. write</p>
+<p>thm linorder_cases[of a 0]</p>
+<p>just fine, so it must be possible to plug in the instantiations first an <br>
+then do the type inference. I tried to do it myself but didn't get very far.</p>
+<p>Cheers,</p>
+<p>Manuel</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

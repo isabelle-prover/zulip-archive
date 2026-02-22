@@ -1,0 +1,127 @@
+<html>
+<head><meta charset="utf-8"><title>Rewrites for object-level equality · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html">Rewrites for object-level equality</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="532780524"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532780524" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532780524">(Aug 04 2025 at 18:54)</a>:</h4>
+<p>I'm writing a logic atop Pure with its own object-level equality. I have lots of theorems of the form "complicated lhs = simple rhs" which I'd like to use as simplifying rules. It seems this is not possible, as the simplifier works with meta-level equality only, right? Does every object logic need to implement its own simplifier/rewrite engine? Or can you 'hook into' the simplifier? I did already write a simplifier which takes a theorem, extracts its lhs and rhs, recursively finds a match for the lhs in a term and then applies the axioms for equality substitution and discharges the resulting subgoal with the theorem used for rewriting. Is this anywhere close to an idiomatic approach? I could still profit from existing infrastructure to be sublinear in the number of rewrite theorems. I'm really sorry if this is all the wrong place for a question like this.</p>
+
+
+
+<a name="532780823"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532780823" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532780823">(Aug 04 2025 at 18:56)</a>:</h4>
+<p>I am confused by your question. There is a <em>pure</em> simplifier (<code>Pure.simp</code>) which should work also in your case</p>
+
+
+
+<a name="532781031"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781031" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781031">(Aug 04 2025 at 18:58)</a>:</h4>
+<p>It seems it only accepts rewrite rules using meta-level equality, which none of my rewrite rules use. They all use object-level equality. How can I circumvent that.</p>
+
+
+
+<a name="532781117"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781117" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781117">(Aug 04 2025 at 18:58)</a>:</h4>
+<p>Ah, you mean that you have an equality that cannot be converted to <code>==</code>?</p>
+
+
+
+<a name="532781135"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781135" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781135">(Aug 04 2025 at 18:58)</a>:</h4>
+<p>Yes.</p>
+
+
+
+<a name="532781279"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781279" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781279">(Aug 04 2025 at 18:59)</a>:</h4>
+<p>But maybe it is idiomatic to not do what I do (is object-level equality usually convertible to meta-level equality == ?) and I would be glad about a pointer like that as well</p>
+
+
+
+<a name="532781348"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781348" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781348">(Aug 04 2025 at 19:00)</a>:</h4>
+<p>As far as I know, the simplifier only works for meta-equality (it is a limitation of Isabelle's simplifier)</p>
+
+
+
+<a name="532781455"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781455" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781455">(Aug 04 2025 at 19:01)</a>:</h4>
+<p>Do HOL and other object logics all have their own simplifier then?</p>
+
+
+
+<a name="532781781"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781781" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781781">(Aug 04 2025 at 19:03)</a>:</h4>
+<p>No, in HOL <code>=</code>  can be converted to <code>==</code></p>
+
+
+
+<a name="532781802"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781802" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781802">(Aug 04 2025 at 19:03)</a>:</h4>
+<p>same in ZF</p>
+
+
+
+<a name="532781877"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532781877" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532781877">(Aug 04 2025 at 19:04)</a>:</h4>
+<p>And if you look at <code>~~//Tools/eqsubst.ML</code>, the first thing that happen is:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="c">(* changes object "=" to meta "==" which prepares a given rewrite rule *)</span>
+<span class="k">fun</span><span class="w"> </span><span class="n">prep_meta_eq</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">Simplifier.mksimps</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">#&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="n">Drule.zero_var_indexes;</span>
+</code></pre></div>
+
+
+
+<a name="532782006"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/532782006" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#532782006">(Aug 04 2025 at 19:05)</a>:</h4>
+<p>Thanks! Seems I should seek compatibility with meta equality then.</p>
+
+
+
+<a name="539102485"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/539102485" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#539102485">(Sep 12 2025 at 15:48)</a>:</h4>
+<p>There's supposedly a draft version of a tool to do rewriting modulo arbitrary congruences by <span class="user-mention" data-user-id="302181">@Simon Roßkopf</span>, but it's been a draft version for a long time at this point. <span aria-label="smile" class="emoji emoji-1f604" role="img" title="smile">:smile:</span></p>
+
+
+
+<a name="539102602"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/539102602" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#539102602">(Sep 12 2025 at 15:48)</a>:</h4>
+<p>Not sure if it's specific to HOL though. Although I see no reason why it should be.</p>
+
+
+
+<a name="539115411"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/539115411" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#539115411">(Sep 12 2025 at 16:24)</a>:</h4>
+<p>Has there been a measure of slow down? Transitive is a kernel primitive in most HOL family theorem provers. Even HOL-light which was aiming for minimal inference rules has it.</p>
+
+
+
+<a name="539120194"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/539120194" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#539120194">(Sep 12 2025 at 16:37)</a>:</h4>
+<p>Also HOL4's simplifier supports rewriting with arbitrary preorders. see<br>
+8.5.6.6 of the description manual for a user guide <a href="https://github.com/HOL-Theorem-Prover/HOL/releases/download/trindemossen-2/trindemossen-2-description.pdf">https://github.com/HOL-Theorem-Prover/HOL/releases/download/trindemossen-2/trindemossen-2-description.pdf</a><br>
+ you might want to look at the code here <a href="https://github.com/HOL-Theorem-Prover/HOL/tree/develop/src/simp/src">https://github.com/HOL-Theorem-Prover/HOL/tree/develop/src/simp/src</a></p>
+
+
+
+<a name="539123296"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/539123296" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#539123296">(Sep 12 2025 at 16:47)</a>:</h4>
+<p>The idea behind it isn't too hard you just need to provide a equivalent of Thm.reflexive and Conv.then_conv. Thm.reflexive is needed to discharge assumptions of congruence rules where no progress has been made.</p>
+
+
+
+<a name="539809366"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Rewrites%20for%20object-level%20equality/near/539809366" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sascha Kehrli <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Rewrites.20for.20object-level.20equality.html#539809366">(Sep 16 2025 at 16:09)</a>:</h4>
+<p>I ended up just adding an axiom that converts object equality = to meta equality == just like HOL does.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,210 @@
+<html>
+<head><meta charset="utf-8"><title>Orphaned Code_* theory imports · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Orphaned.20Code_.2A.20theory.20imports.html">Orphaned Code_* theory imports</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513669951"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Orphaned%20Code_%2A%20theory%20imports/near/513669951" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Orphaned.20Code_.2A.20theory.20imports.html#513669951">(Apr 22 2025 at 17:49)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+In AFP entries Separation_Logic_Imperative_HOL, CAVA_Automata, <br>
+Collections and Ordinary_Differential_Equations, there were some <br>
+(indirect) imports of Code_* theories from HOL-Library where actually no <br>
+code generation was involved.</p>
+<p>I have removed these in <br>
+<a href="https://foss.heptapod.net/isa-afp/afp-devel/-/commit/ccc0b81823579c3d522a916b165bcc0bdf0d1ffb">https://foss.heptapod.net/isa-afp/afp-devel/-/commit/ccc0b81823579c3d522a916b165bcc0bdf0d1ffb</a> <br>
+with no directly observable effect, but since these imports have been in <br>
+place for quite a long time there might be applications where it is <br>
+appropriate to explicitly import HOL-Library.Code_Target_Numeral and <br>
+similar.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/zIaQ_q1KM3elK_LVOSw8MCMd/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/G2dL3NKuE7djbLjQ0ee3DXEC/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="513683216"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Orphaned%20Code_%2A%20theory%20imports/near/513683216" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Orphaned.20Code_.2A.20theory.20imports.html#513683216">(Apr 22 2025 at 18:58)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Hi Florian</p>
+<p>This sounds like a very fragile (and dangerous) change. It will affect <br>
+all code-exports in theories that depend on the changed theories.</p>
+<p>The observable effects may only be in the performance (and bindings to <br>
+external code), which you won't see in the standard AFP tests.</p>
+<p>I do not understand why you got rid of the Code_Target_ICF theory (and <br>
+you could, along the same lines, get rid of CAVA_Code_Target). These <br>
+theories where meant to provide a default sensible setup for the code <br>
+generator, by combining several Code_Target theories. You have now <br>
+removed that abstraction, and inlined it where it was used</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 22/04/2025 19:40, Florian Haftmann wrote:</p>
+<blockquote>
+<p>In AFP entries Separation_Logic_Imperative_HOL, CAVA_Automata, <br>
+Collections and Ordinary_Differential_Equations, there were some <br>
+(indirect) imports of Code_* theories from HOL-Library where actually <br>
+no code generation was involved.</p>
+<p>I have removed these in <br>
+<a href="https://foss.heptapod.net/isa-afp/afp-devel/-/commit/ccc0b81823579c3d522a916b165bcc0bdf0d1ffb">https://foss.heptapod.net/isa-afp/afp-devel/-/commit/ccc0b81823579c3d522a916b165bcc0bdf0d1ffb</a> <br>
+with no directly observable effect, but since these imports have been <br>
+in place for quite a long time there might be applications where it is <br>
+appropriate to explicitly import HOL-Library.Code_Target_Numeral and <br>
+similar.</p>
+<p>Florian</p>
+</blockquote>
+
+
+
+<a name="513926043"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Orphaned%20Code_%2A%20theory%20imports/near/513926043" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Orphaned.20Code_.2A.20theory.20imports.html#513926043">(Apr 23 2025 at 17:19)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi Peter,</p>
+<blockquote>
+<p>These<br>
+theories where meant to provide a default sensible setup for the code<br>
+generator, by combining several Code_Target theories. You have now<br>
+removed that abstraction, and inlined it where it was used.</p>
+</blockquote>
+<p>The combination of several theories over time has boiled down to <br>
+HOL-Library.Code_Target_Numeral as the only one. This is an official <br>
+hook which users can import if they want that particular setup. This is <br>
+a deliberate decision not supposed to be obscured by transitive imports.</p>
+<p>Why? Changing the code setup if non-monotonous. Technically, you get a <br>
+default setup if you do nothing special, and you may change that default <br>
+setup by importing particular theories. But then there is no supported <br>
+way back again.</p>
+<p>Admittedly I have recently blurred that simple picture by introducing <br>
+HOL-Library.Code_Bit_Shifts_for_Arithmetic, but this is likely to be <br>
+transient situation: if this theory proves what it promises it could be <br>
+incorporated into HOL-Library.Code_Target_Numeral.</p>
+<blockquote>
+<p>I do not understand why you got rid of the Code_Target_ICF theory (and<br>
+you could, along the same lines, get rid of CAVA_Code_Target)</p>
+</blockquote>
+<p>CAVA_Code_Target is still there.</p>
+<blockquote>
+<p>This sounds like a very fragile (and dangerous) change. It will affect <br>
+all code-exports in theories that depend on the changed theories.</p>
+</blockquote>
+<p>Indeed. One of my aims is to get rid of transitive, unintentional <br>
+imports of HOL-Library.Code_Target_Numeral. I had a look at the <br>
+immediate neighborhood of the affected places and tried best to identify <br>
+spots where the import of HOL-Library.Code_Target_Numeral is intentional <br>
+/ appropriate, but the situation got very intricate over the years and <br>
+there might be subtle dependency paths.</p>
+<blockquote>
+<p>The observable effects may only be in the performance (and bindings to <br>
+external code), which you won't see in the standard AFP tests.</p>
+</blockquote>
+<p>There is an important observable effect of AFP test performance: the <br>
+duration of the long sessions as well as the ability to test the whole <br>
+AFP within reasonable time and resource limits.</p>
+<p>Of course there is a chance applications may degrade in performance <br>
+unnoticed, but for actively maintained applications there are still a <br>
+few months before the next release where things can be ironed out.</p>
+<p>There have been so many re-arrangements of that material in recent times <br>
+that the change in question only adds modestly to that general risk.</p>
+<p>Cheers,<br>
+    Florian</p>
+<blockquote>
+<p>On 22/04/2025 19:40, Florian Haftmann wrote:</p>
+<blockquote>
+<p>In AFP entries Separation_Logic_Imperative_HOL, CAVA_Automata, <br>
+Collections and Ordinary_Differential_Equations, there were some <br>
+(indirect) imports of Code_* theories from HOL-Library where actually <br>
+no code generation was involved.</p>
+<p>I have removed these in <a href="https://foss.heptapod.net/isa-afp/afp-devel/-/">https://foss.heptapod.net/isa-afp/afp-devel/-/</a> <br>
+commit/ccc0b81823579c3d522a916b165bcc0bdf0d1ffb with no directly <br>
+observable effect, but since these imports have been in place for <br>
+quite a long time there might be applications where it is appropriate <br>
+to explicitly import HOL-Library.Code_Target_Numeral and similar.</p>
+<p>Florian</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/EuF4zyLzJCKanyI9InnUIpOa/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/Z8avWjrcwgnKDx73SQK6p0BQ/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="513941357"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Orphaned%20Code_%2A%20theory%20imports/near/513941357" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Orphaned.20Code_.2A.20theory.20imports.html#513941357">(Apr 23 2025 at 18:40)</a>:</h4>
+<p>From: Peter Lammich &lt;<a href="mailto:lammich@in.tum.de">lammich@in.tum.de</a>&gt;<br>
+Ok, if the goal is to only have one efficient code target theory, then I can<br>
+see where these changes are going </p>
+<p>Peter </p>
+<p>On 23 Apr 2025 19:11, Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt; wrote:  </p>
+<blockquote>
+<p>Hi Peter,  </p>
+<blockquote>
+<p>These  <br>
+theories where meant to provide a default sensible setup for the code  <br>
+generator, by combining several Code_Target theories. You have now  <br>
+removed that abstraction, and inlined it where it was used.  </p>
+</blockquote>
+<p>The combination of several theories over time has boiled down to  <br>
+ HOL-Library.Code_Target_Numeral as the only one. This is an official  <br>
+ hook which users can import if they want that particular setup. This is  <br>
+ a deliberate decision not supposed to be obscured by transitive imports.  </p>
+<p>Why? Changing the code setup if non-monotonous. Technically, you get a  <br>
+ default setup if you do nothing special, and you may change that default  <br>
+ setup by importing particular theories. But then there is no supported  <br>
+ way back again.  </p>
+<p>Admittedly I have recently blurred that simple picture by introducing  <br>
+ HOL-Library.Code_Bit_Shifts_for_Arithmetic, but this is likely to be  <br>
+ transient situation: if this theory proves what it promises it could be  <br>
+ incorporated into HOL-Library.Code_Target_Numeral.  </p>
+<blockquote>
+<p>I do not understand why you got rid of the Code_Target_ICF theory (and  <br>
+you could, along the same lines, get rid of CAVA_Code_Target)  </p>
+</blockquote>
+<p>CAVA_Code_Target is still there.  </p>
+<blockquote>
+<p>This sounds like a very fragile (and dangerous) change. It will affect  <br>
+all code-exports in theories that depend on the changed theories.  </p>
+</blockquote>
+<p>Indeed. One of my aims is to get rid of transitive, unintentional  <br>
+ imports of HOL-Library.Code_Target_Numeral. I had a look at the  <br>
+ immediate neighborhood of the affected places and tried best to identify  <br>
+ spots where the import of HOL-Library.Code_Target_Numeral is intentional  <br>
+ / appropriate, but the situation got very intricate over the years and  <br>
+ there might be subtle dependency paths.  </p>
+<blockquote>
+<p>The observable effects may only be in the performance (and bindings to  <br>
+external code), which you won't see in the standard AFP tests.  </p>
+</blockquote>
+<p>There is an important observable effect of AFP test performance: the  <br>
+ duration of the long sessions as well as the ability to test the whole  <br>
+ AFP within reasonable time and resource limits.  </p>
+<p>Of course there is a chance applications may degrade in performance  <br>
+ unnoticed, but for actively maintained applications there are still a  <br>
+ few months before the next release where things can be ironed out.  </p>
+<p>There have been so many re-arrangements of that material in recent times  <br>
+ that the change in question only adds modestly to that general risk.  </p>
+<p>Cheers,  <br>
+ Florian  </p>
+<blockquote>
+<p>On 22/04/2025 19:40, Florian Haftmann wrote:  </p>
+<blockquote>
+<p>In AFP entries Separation_Logic_Imperative_HOL, CAVA_Automata,  <br>
+Collections and Ordinary_Differential_Equations, there were some  <br>
+(indirect) imports of Code_* theories from HOL-Library where actually  <br>
+no code generation was involved.  </p>
+<p>I have removed these in <a href="https://foss.heptapod.net/isa-afp/afp-devel/-/">https://foss.heptapod.net/isa-afp/afp-devel/-/</a>  <br>
+commit/ccc0b81823579c3d522a916b165bcc0bdf0d1ffb with no directly  <br>
+observable effect, but since these imports have been in place for  <br>
+quite a long time there might be applications where it is appropriate  <br>
+to explicitly import HOL-Library.Code_Target_Numeral and similar.  </p>
+<p>Florian  </p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

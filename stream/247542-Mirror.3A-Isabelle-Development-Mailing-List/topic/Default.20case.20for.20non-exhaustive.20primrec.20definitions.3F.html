@@ -1,0 +1,88 @@
+<html>
+<head><meta charset="utf-8"><title>Default case for non-exhaustive primrec definitions? · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Default.20case.20for.20non-exhaustive.20primrec.20definitions.3F.html">Default case for non-exhaustive primrec definitions?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="529699789"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Default%20case%20for%20non-exhaustive%20primrec%20definitions%3F/near/529699789" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Default.20case.20for.20non-exhaustive.20primrec.20definitions.3F.html#529699789">(Jul 20 2025 at 16:45)</a>:</h4>
+<p>From: Elliot Bobrow &lt;<a href="mailto:ebobrow@g.hmc.edu">ebobrow@g.hmc.edu</a>&gt;<br>
+Hello Isabelle developers,</p>
+<p>I've noticed that Isabelle's logic for <code>case</code> statements and <code>fun</code><br>
+definitions automatically defaults to returning <code>undefined</code> for unspecified<br>
+inputs:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a option </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f x = (case x of Some _</span>
+<span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> 1)"</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"f None = undefined"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">f'</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a option </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f' (Some _) = 1"</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"f' None = undefined"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">meson</span><span class="w"> </span><span class="n">f'.elims</span><span class="w"> </span><span class="n">option.distinct</span><span class="o">(</span><span class="n">1</span><span class="o">))</span>
+</code></pre></div>
+<p>However, the same does not hold for <code>primrec</code> definitions:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">primrec</span><span class="w"> </span><span class="o">(</span><span class="n">nonexhaustive</span><span class="o">)</span><span class="w"> </span><span class="n">f''</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a option </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f''</span>
+<span class="s">(Some _) = 0"</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"f'' None = undefined"</span><span class="w"> </span><span class="gr">oops</span>
+</code></pre></div>
+<p>Is there a reason for this? It seems it would be good to be consistent<br>
+here, and the functions would still be primitive recursive. Having<br>
+<code>undefined</code> as a default case seems like a good idea for the sake of<br>
+clarity and explicitness.</p>
+<p>This has come up in a research project (collaborators CC'd) which involves<br>
+proving a number of functions primitive recursive according to a<br>
+user-defined predicate. We are doing this by constructing equivalent<br>
+functions out of known primitive recursive functions and proving them<br>
+equivalent on all inputs. However, it is impossible to do this for e.g.<br>
+<code>nth</code> because an equivalent function must always return <code>[] ! n</code> for<br>
+out-of-bounds inputs. This is a function of n and we do not know it to be<br>
+primitive recursive, so we're stuck. If instead we had that <code>[] ! n</code><br>
+evaluates to undefined, the problem becomes trivial by returning the<br>
+constant <code>undefined</code> on out-of-bounds inputs, which we know to be primitive<br>
+recursive because it is a constant. This might not be the only instance<br>
+where the current behavior makes it more difficult/impossible to reason<br>
+about equality.</p>
+<p>Elliot</p>
+
+
+
+<a name="533817198"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Default%20case%20for%20non-exhaustive%20primrec%20definitions%3F/near/533817198" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Default.20case.20for.20non-exhaustive.20primrec.20definitions.3F.html#533817198">(Aug 11 2025 at 15:23)</a>:</h4>
+<p>From: Dmitriy Traytel via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Hi Elliot,</p>
+<p>For your simplified example the property actually holds:</p>
+<p>primrec (nonexhaustive) f'' :: "'a option \&lt;Rightarrow&gt; nat" where "f'' (Some _) = 0"<br>
+lemma "f'' None = undefined"<br>
+  unfolding f''_def by simp</p>
+<p>This is not exported to the user on purpose, but still available.</p>
+<p>With nth it is more subtle because of the extra argument. Primrec choses to let the unspecified value depend on the additional parameter (therefore "[] ! 42 = [] ! 43” will not be provable as “[] ! 42 = undefined 42” and “[] ! 43 = undefined 43” unless the element type is a singleton).</p>
+<p>lemma "nth [] n = undefined n"<br>
+  unfolding nth_def by simp</p>
+<p>The “fun” command indeed makes a different choice (which would make "[] ! 42 = [] ! 43” and "[] ! 42 = undefined" true, if nth was defined using fun).</p>
+<p>I think it depends on the application which choice is good or bad (the latter gives you “accidental" equalities such as "[] ! 42 = [] ! 43” or “hd [] = [] ! 43” which may raise some questions about your model but might eliminate some side conditions from lemmas). If you don’t like a particular choice you can always wrap the function in question to correct it.</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<p>On 20 Jul 2025, at 18.45, Elliot Bobrow &lt;<a href="mailto:ebobrow@g.hmc.edu">ebobrow@g.hmc.edu</a>&gt; wrote:</p>
+<p>Hello Isabelle developers,</p>
+<p>I've noticed that Isabelle's logic for <code>case</code> statements and <code>fun</code> definitions automatically defaults to returning <code>undefined</code> for unspecified inputs:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a option </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f x = (case x of Some _ </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> 1)"</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"f None = undefined"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">f'</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a option </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f' (Some _) = 1"</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"f' None = undefined"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">meson</span><span class="w"> </span><span class="n">f'.elims</span><span class="w"> </span><span class="n">option.distinct</span><span class="o">(</span><span class="n">1</span><span class="o">))</span>
+</code></pre></div>
+<p>However, the same does not hold for <code>primrec</code> definitions:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">primrec</span><span class="w"> </span><span class="o">(</span><span class="n">nonexhaustive</span><span class="o">)</span><span class="w"> </span><span class="n">f''</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a option </span><span class="ss">\&lt;Rightarrow&gt;</span><span class="s"> nat"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"f'' (Some _) = 0"</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"f'' None = undefined"</span><span class="w"> </span><span class="gr">oops</span>
+</code></pre></div>
+<p>Is there a reason for this? It seems it would be good to be consistent here, and the functions would still be primitive recursive. Having <code>undefined</code> as a default case seems like a good idea for the sake of clarity and explicitness.</p>
+<p>This has come up in a research project (collaborators CC'd) which involves proving a number of functions primitive recursive according to a user-defined predicate. We are doing this by constructing equivalent functions out of known primitive recursive functions and proving them equivalent on all inputs. However, it is impossible to do this for e.g. <code>nth</code> because an equivalent function must always return <code>[] ! n</code> for out-of-bounds inputs. This is a function of n and we do not know it to be primitive recursive, so we're stuck. If instead we had that <code>[] ! n</code> evaluates to undefined, the problem becomes trivial by returning the constant <code>undefined</code> on out-of-bounds inputs, which we know to be primitive recursive because it is a constant. This might not be the only instance where the current behavior makes it more difficult/impossible to reason about equality.</p>
+<p>Elliot</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

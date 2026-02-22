@@ -1,0 +1,170 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Simp rules with reducible lhss in Transcendent... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html">[isabelle] Simp rules with reducible lhss in Transcendent...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="564202730"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simp%20rules%20with%20reducible%20lhss%20in%20Transcendent.../near/564202730" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html#564202730">(Dec 17 2025 at 09:14)</a>:</h4>
+<p><strong>From:</strong> 山田晃久 &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear list,</p>
+<p>this is just a question, not a request. In HOL/Transcendental.thy, there are two simp rules whose lhss are reducible by other simp rules:</p>
+<ul>
+<li>lemma sin_cos_npi [simp]: "sin (real (Suc (2 * n)) * pi/2) = (-1) ^ n"</li>
+<li>lemma cos_pi_eq_zero [simp]: "cos (pi * real (Suc (2 * m)) / 2) = 0"</li>
+</ul>
+<p>To make them applied, one must disable of_nat_Suc. Is this intended?</p>
+<p>Best,<br>
+Akihisa</p>
+
+
+
+<a name="564225170"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simp%20rules%20with%20reducible%20lhss%20in%20Transcendent.../near/564225170" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html#564225170">(Dec 17 2025 at 11:10)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>That doesn't look intentional, no. No idea where this comes from and why <br>
+it's written that way. My guess would be that somebody added it without <br>
+thinking too much about it.</p>
+<p>In my experience rules like that don't work super well to begin with <br>
+though. If your "n" is actually a "Suc n" or a numeral or a "m + n" the <br>
+rules aren't going to fire. So even if one were to replace the left-hand <br>
+side of this rule with its normal form, I don't think it would work <br>
+terribly well. I have been wondering whether one could build some sort <br>
+of simproc to deal with that sort of thing. But I never really got round <br>
+to doing that and it's not entirely clear what the scope would be.</p>
+<p>However, in Isabelle 2025-1 there will at least be some material that <br>
+might help with this sort of thing in HOL-Library.Real_Mod, e.g.:</p>
+<blockquote>
+<p>lemma sin_rcong: "[x = y] (rmod (2 * pi)) ⟹ sin x = sin y"</p>
+</blockquote>
+<p>Or more generally:</p>
+<blockquote>
+<p>lemma sin_eq_sin_conv_rmod_iff: "sin x = sin y ⟷ [x = y] (rmod 2 * <br>
+pi) ∨ [x = pi - y] (rmod 2 * pi)"<br>
+Combining this with the collection of intro rules rcong_intros allows <br>
+you to simplify expressions involving sin/cos/tan/cis/etc. a lot more <br>
+nicely.</p>
+</blockquote>
+<p>Cheers,</p>
+<p>Manuel</p>
+<p>On 17/12/2025 10:13, 山田晃久 (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear list,</p>
+<p>this is just a question, not a request. In HOL/Transcendental.thy, <br>
+there are two simp rules whose lhss are reducible by other simp rules:</p>
+<ul>
+<li>lemma sin_cos_npi [simp]: "sin (real (Suc (2 * n)) * pi/2) = (-1) ^ n"</li>
+<li>lemma cos_pi_eq_zero [simp]: "cos (pi * real (Suc (2 * m)) / 2) = 0"</li>
+</ul>
+<p>To make them applied, one must disable of_nat_Suc. Is this intended?</p>
+<p>Best,<br>
+Akihisa</p>
+</blockquote>
+
+
+
+<a name="564236394"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simp%20rules%20with%20reducible%20lhss%20in%20Transcendent.../near/564236394" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html#564236394">(Dec 17 2025 at 12:13)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 17/12/2025 12:10, Manuel Eberl wrote:</p>
+<blockquote>
+<p>That doesn't look intentional, no. No idea where this comes from and why it's <br>
+written that way. My guess would be that somebody added it without thinking <br>
+too much about it.</p>
+</blockquote>
+<p>It comes from this changeset:</p>
+<p>changeset:   12196:a3be6b3a9c0b<br>
+user:        paulson<br>
+date:        Thu Nov 15 16:12:49 2001 +0100<br>
+description:<br>
+new theories from Jacques Fleuriot</p>
+<p>Interesting to see how things were done &gt; 25 years ago.</p>
+<p>Makarius</p>
+
+
+
+<a name="564374855"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simp%20rules%20with%20reducible%20lhss%20in%20Transcendent.../near/564374855" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html#564374855">(Dec 18 2025 at 03:25)</a>:</h4>
+<p><strong>From:</strong> 山田晃久 &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Thank you for clarification! I guess that long ago "real" wasn't a synonym of of_nat and the situation was different.</p>
+<p>And yes, just simplifying the lhss won't make them very applicable anyway. Then I would propose to add:</p>
+<p>lemma sin_add_pi_half [simp]: "sin (x + pi/2) = cos x" by (simp add: sin_add)<br>
+lemma cos_add_pi_half [simp]: "cos (x + pi/2) = - sin x" by (simp add: cos_add)</p>
+<p>Then the original statements can be derived by adding distribution rules:</p>
+<p>lemma sin_cos_npi: "sin (real (Suc (2 * n)) * pi/2) = (-1) ^ n" by (simp add: algebra_simps add_divide_distrib)<br>
+lemma cos_pi_eq_zero: "cos (pi * real (Suc (2 * m)) / 2) = 0" by (simp add: algebra_simps add_divide_distrib)</p>
+<p>Best,<br>
+Akihisa</p>
+<hr>
+<p>差出人: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; が Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; の代理で送信<br>
+送信: 2025 年 12 月 17 日 (水曜日) 21:13<br>
+宛先: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;; <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+件名: Re: [isabelle] Simp rules with reducible lhss in Transcendental.thy</p>
+<p>On 17/12/2025 12:10, Manuel Eberl wrote:</p>
+<blockquote>
+<p>That doesn't look intentional, no. No idea where this comes from and why it's<br>
+written that way. My guess would be that somebody added it without thinking<br>
+too much about it.</p>
+</blockquote>
+<p>It comes from this changeset:</p>
+<p>changeset:   12196:a3be6b3a9c0b<br>
+user:        paulson<br>
+date:        Thu Nov 15 16:12:49 2001 +0100<br>
+description:<br>
+new theories from Jacques Fleuriot</p>
+<p>Interesting to see how things were done &gt; 25 years ago.</p>
+<p>Makarius</p>
+
+
+
+<a name="564446725"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simp%20rules%20with%20reducible%20lhss%20in%20Transcendent.../near/564446725" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html#564446725">(Dec 18 2025 at 12:26)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Many thanks for your suggestion. I'm surprised that those well-known facts are not available already in that exact form, although we have many related identities. As for your original question, I think that sometimes people apply the [simp] attribute without considering whether it makes sense, or else as you suggested, possibly it made sense back in 2001.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 18 Dec 2025, at 03:24, 山田晃久 &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Thank you for clarification! I guess that long ago "real" wasn't a synonym of of_nat and the situation was different.</p>
+<p>And yes, just simplifying the lhss won't make them very applicable anyway. Then I would propose to add:</p>
+<p>lemma sin_add_pi_half [simp]: "sin (x + pi/2) = cos x" by (simp add: sin_add)<br>
+lemma cos_add_pi_half [simp]: "cos (x + pi/2) = - sin x" by (simp add: cos_add)<br>
+</p>
+</blockquote>
+
+
+
+<a name="564711995"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Simp%20rules%20with%20reducible%20lhss%20in%20Transcendent.../near/564711995" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Simp.20rules.20with.20reducible.20lhss.20in.20Transcendent.2E.2E.2E.html#564711995">(Dec 19 2025 at 14:46)</a>:</h4>
+<p><strong>From:</strong> 山田晃久 &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Thank you! It was actually a question regarding how to improve HOL/MacLaurin.thy, which I now propose as in the attached patch.​​</p>
+<p>Initial motivation was just to make proof export succeed (for the project of Frédéric), but I think eventually this is good enough to replace the original.<br>
+I did not change the main statements, though I think "1/2 * ..." should better be simplified to "... / 2".</p>
+<p>Best,<br>
+Akihisa</p>
+<hr>
+<p>差出人: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+送信: 2025 年 12 月 18 日 (木曜日) 21:26<br>
+宛先: 山田晃久 &lt;<a href="mailto:akihisa.yamada@aist.go.jp">akihisa.yamada@aist.go.jp</a>&gt;<br>
+Cc: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;; Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;; <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+件名: Re: [isabelle] Simp rules with reducible lhss in Transcendental.thy</p>
+<p>Many thanks for your suggestion. I'm surprised that those well-known facts are not available already in that exact form, although we have many related identities. As for your original question, I think that sometimes people apply the [simp] attribute without considering whether it makes sense, or else as you suggested, possibly it made sense back in 2001.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 18 Dec 2025, at 03:24, 山田晃久 &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Thank you for clarification! I guess that long ago "real" wasn't a synonym of of_nat and the situation was different.</p>
+<p>And yes, just simplifying the lhss won't make them very applicable anyway. Then I would propose to add:</p>
+<p>lemma sin_add_pi_half [simp]: "sin (x + pi/2) = cos x" by (simp add: sin_add)<br>
+lemma cos_add_pi_half [simp]: "cos (x + pi/2) = - sin x" by (simp add: cos_add)<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/MNiI_L3WyRwI6asqQXODi011/MacLaurin.patch">MacLaurin.patch</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

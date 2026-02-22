@@ -1,0 +1,60 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Self-container simproc for word numeral normal... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Self-container.20simproc.20for.20word.20numeral.20normal.2E.2E.2E.html">[isabelle] Self-container simproc for word numeral normal...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513667820"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Self-container%20simproc%20for%20word%20numeral%20normal.../near/513667820" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Self-container.20simproc.20for.20word.20numeral.20normal.2E.2E.2E.html#513667820">(Apr 22 2025 at 17:36)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+See now <br>
+<a href="https://foss.heptapod.net/isa-afp/afp-devel/-/commit/fc1ef1c2cc6701b9e9d24304867366b4041f3f2d">https://foss.heptapod.net/isa-afp/afp-devel/-/commit/fc1ef1c2cc6701b9e9d24304867366b4041f3f2d</a> <br>
+for an attempt of a self-contained simproc.</p>
+<p>Florian</p>
+<p>Am 15.04.25 um 09:53 schrieb Florian Haftmann:</p>
+<blockquote>
+<p>Hi Ike,</p>
+<p>thanks for figuring that out.</p>
+<p>As far I can see, the best solution is to disregard <br>
+word_eq_numeral_iff_iszero [simp] and calculate equality on word values <br>
+in the same manner as &lt;= and &lt; is calculated by default in HOL- <br>
+Library.Word.</p>
+<p>@list Any objections?</p>
+<blockquote>
+<p>* Swap out <code> word_eq_numeral_iff_iszero</code> for <code>word_unat_eq_iff[where ?
+    v=‹numeral _› and ?w=‹numeral _›]</code>. This avoids the subtraction – it<br>
+    normalizes the words, then compares them as naturals.</p>
+</blockquote>
+<blockquote>
+<p>I have also tried to modify the simpset used by <code>unsigned_word</code> to a <br>
+completely determined one. This speeds up the normalization procedure <br>
+itself about 3x, but is still very slow in conjunction with <code> 
+word_eq_numeral_iff_iszero</code>. For reference, I ended up with something <br>
+like <code>val ss = simpset_of (put_simpset HOL_ss @{context} addsimps 
+@{thms bintrunc_numeral len_bit0 len_num1 One_nat_def mult_Suc_right 
+mult_0_right add.right_neutral mult_num_simps numeral_times_numeral 
+pred_numeral_simps bin_last_numeral_simps of_bool_eq Num.BitM.simps 
+numeral_div_numeral divmod_cancel divmod_trivial prod.case prod.sel 
+div_0 take_bit_0 times_int_code mult_1_right add.left_neutral 
+one_plus_numeral add_num_simps minus_numeral_div_numeral 
+minus_one_div_numeral Parity.adjust_div_eq odd_neg_numeral1 
+numeral_One one_neq_zero bintrunc_Suc_numeral of_int_numeral})</code>.</p>
+</blockquote>
+<p>By »completely determined« you mean static, with no effect of later simp <br>
+declarations? This would indeed by interesting to be included by default.</p>
+<p>@list Opinions?</p>
+<p>Cheers,<br>
+     Florian</p>
+</blockquote>
+<p><a href="/user_uploads/14278/TM2uKxEkAfe0aQJ3GWOG4nug/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/As0TkFOI_Mp7bXZX0HyOIaFC/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

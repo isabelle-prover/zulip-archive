@@ -1,0 +1,38 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] e-graphs and equational theories · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20e-graphs.20and.20equational.20theories.html">[isabelle] e-graphs and equational theories</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="541087061"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20e-graphs%20and%20equational%20theories/near/541087061" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20e-graphs.20and.20equational.20theories.html#541087061">(Sep 23 2025 at 19:42)</a>:</h4>
+<p>From: Patrick Nicodemus &lt;<a href="mailto:gadget142@gmail.com">gadget142@gmail.com</a>&gt;<br>
+The Nelson-Oppen congruence closure paper gives a decision algorithm for<br>
+the theory of LISP lists. You can generalize this to other universal<br>
+algebra theories: to decide equality between two terms over an equational<br>
+theory, \forall x1...xn, t1 = t2. One starts by adding ground equations<br>
+whenever one side of an equation unifies with a subterm of the goal, adding<br>
+these as equivalence constraints, and taking the congruence closure. Then<br>
+one repeats the procedure, trying to unify one side of the universally<br>
+quantified theorems with a subterm of the new set of subterms (or sub-node<br>
+in the e-graph). If you are lucky then this process eventually hits a<br>
+fixpoint in the sense that every rewrite of an e-node in the graph yields<br>
+another e-node already in the graph, for such theories this gives a nice<br>
+decision procedure.</p>
+<p>I'm interested in some sufficient conditions on the theory such that for<br>
+every term t, the e-graph built by repeatedly rewriting subterms in t<br>
+according to axioms in t eventually stabilizes. For example the theory<br>
+\forall x. x = f(x), after the first time I apply this to a term t, I have<br>
+a new term f(t) in my graph, but t ~ f(t) so I don't get any new<br>
+equivalence classes in the term graph. What references should I look at for<br>
+conditions on the theory that guarantee this stabilizes?</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,65 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] beginners eisbach issues · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20beginners.20eisbach.20issues.html">[isabelle] beginners eisbach issues</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="527473587"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20beginners%20eisbach%20issues/near/527473587" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20beginners.20eisbach.20issues.html#527473587">(Jul 07 2025 at 12:54)</a>:</h4>
+<p>From: "\"Putti, Edoardo (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear list,</p>
+<p>I am writing a verification condition generation tactic and I have two questions.</p>
+<ol>
+<li>Using match focuses the goal and instantiate schematic variables. Is there a way to control this behavior?</li>
+<li>Is there a way to have match abstract over terms of different types?</li>
+</ol>
+<p>The problem with 1 is that irrespective of the matchin pattern (for fixes, schematics, _)  match<br>
+always instantiates the schematics by focusing on the subgoal. This happens even when the names introduced<br>
+are not used/bound in the match body.  A matching goal like "hoare ?P C ?Q" gets instantiated to "hoare P C Q"<br>
+and this cannot match any specification I have. Is there a way to control this focusing behavior, e.g. an option?</p>
+<p>The second issue becomes clearer with an example. The following is a pattern for guiding the tactic to use a specific lemma for verification condition generation. The precondition P is tagged with a marker, i.e. STATE P, the vcg_lemma can be used as<br>
+an elimination rule to remove it from the premises.</p>
+<p>definition STATE :: "('s ⇒ bool) ⇒ 's ⇒ bool"<br>
+― ‹tagging of state predicates for use in preconditions›<br>
+  where<br>
+"STATE P ≡ P"</p>
+<p>lemma STATE_vcg:<br>
+  assumes pre: "STATE P s" and spec: "hoare P' M Q'"<br>
+  and pre_framing: "⋀ s. P s ⟹  (P' ** F) s"<br>
+  and post_framing: "⋀ x s. STATE (Q' x ** F) s ⟹  Q x s"<br>
+shows "wp_cnres M Q s"</p>
+<p>If I want to extend this pattern with more markers, .e.g. LOCK lid, I add a LOCK_vcg lemma. I can make the<br>
+vcg tactic more generic by adding all my vcg lemmas into one fact abstraction but this is not enough.</p>
+<p>I don't have a way to abstract over the marker terms and I need to repeat the same pattern as long as I introduce more markers.<br>
+My tactic is not really extensible.</p>
+<p>(match premises in marker [thin]: "STATE P s" for P ⇒ ‹(rule vcg_lemmas[OF marker])›)<br>
+| (match premises in marker [thin]: "LOCK lid" for lid ⇒ ‹(rule vcg_lemmas[OF marker])›)</p>
+<p>Is there a simple solution that I am missing? I know I can abstract over terms but the type-checking does not allow me to mix<br>
+them as I would like.</p>
+<p>The obvious solution to me is to have an overloadable constant but using that as the marker in the tactic does not work as<br>
+I expected. The tactic never matches over the overloadable marker. Is there a way to obtain this behavior from Eisbach?</p>
+<p>Wishful thinking example below.</p>
+<p>consts marker :: "('s ⇒ bool) ⇒ ('s ⇒ bool)"<br>
+overloading<br>
+  marker_state ≡ marker<br>
+  marker_lock  ≡ marker<br>
+...</p>
+<p>lemma STATE_vcg [vcg_lemmas]:<br>
+  assumes pre: "marker_state P s" and spec: "hoare P' M Q'"<br>
+  ...</p>
+<p>lemma LOCK_vcg [vcg_lemmas]:<br>
+  assumes pre: "marker_lock lid" and spec: "hoare P' M Q'"<br>
+  ...</p>
+<p>method vcg = ... (match premises in marker [thin]: "marker P" for P ⇒ ‹(rule vcg_lemmas[OF marker])›)</p>
+<p>Thanks for the help</p>
+<p>Edoardo</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

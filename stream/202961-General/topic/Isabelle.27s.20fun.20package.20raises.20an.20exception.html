@@ -1,0 +1,163 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle&#x27;s fun package raises an exception · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html">Isabelle&#x27;s fun package raises an exception</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="570758054"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570758054" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570758054">(Jan 29 2026 at 10:33)</a>:</h4>
+<p>I've noticed that isabelle raises an exception given this function</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">function</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"test n = (if n = 0 then 0 else</span>
+<span class="s">          let x = (λn. test n) in</span>
+<span class="s">          test (x (n - 1)))"</span>
+</code></pre></div>
+<p>I'm not sure whether it's worth reporting since the condition generated is going to be impossible to prove anyway see this which succeeds but can't be proved.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">function</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"test n = (if n = 0 then 0 else</span>
+<span class="s">          let x = (λn. test n) in</span>
+<span class="s">          (x (n - 1)))"</span>
+</code></pre></div>
+
+
+
+<a name="570761751"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570761751" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570761751">(Jan 29 2026 at 10:50)</a>:</h4>
+<p>The package also raises exceptions when you give bad fundef_cong rules but that's also kinda to be expected</p>
+
+
+
+<a name="570771200"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570771200" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570771200">(Jan 29 2026 at 11:37)</a>:</h4>
+<p>This is surely worth reporting, especially because it can be broken to relatively simple functions, e.g.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"f 0 = 0"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"f _ = (let x = f in f 0)"</span>
+</code></pre></div>
+
+
+
+<a name="570771631"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570771631" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570771631">(Jan 29 2026 at 11:40)</a>:</h4>
+<p>Isn't f still unprovable due to how the let cong rule works</p>
+
+
+
+<a name="570772175"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570772175" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570772175">(Jan 29 2026 at 11:44)</a>:</h4>
+<p>Not sure what you mean by that</p>
+
+
+
+<a name="570772361"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570772361" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570772361">(Jan 29 2026 at 11:44)</a>:</h4>
+<p>Surely one can always remove the let e.g. via <code>Let_const</code> rule?</p>
+
+
+
+<a name="570772578"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570772578" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570772578">(Jan 29 2026 at 11:46)</a>:</h4>
+<p>In any case, throwing a raw exception is not good</p>
+
+
+
+<a name="570772663"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570772663" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570772663">(Jan 29 2026 at 11:46)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">function</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"test n = (if n = 0 then 0 else</span>
+<span class="s">          let x = test in</span>
+<span class="s">          (x (0)))"</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">pat_completeness</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="kn">termination</span><span class="w"> </span><span class="n">test</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">relation</span><span class="w"> </span><span class="s">"measure id "</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">auto</span><span class="w"> </span><span class="c">(*the goal here is unprovable *)</span>
+</code></pre></div>
+
+
+
+<a name="570773105"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570773105" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570773105">(Jan 29 2026 at 11:48)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">let_cong</span><span class="w"> </span><span class="o">[</span><span class="n">fundef_cong</span><span class="o">]:</span><span class="w"> </span><span class="s">"M = N ⟹ (⋀x. x = N ⟹ f x = g x) ⟹ Let M f = Let N g"</span>
+</code></pre></div>
+<p>The issue here is that <code>M = N</code> is not restricted</p>
+
+
+
+<a name="570773150"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570773150" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570773150">(Jan 29 2026 at 11:48)</a>:</h4>
+<p>And you can't restrict a cong rule this way</p>
+
+
+
+<a name="570773701"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570773701" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570773701">(Jan 29 2026 at 11:52)</a>:</h4>
+<p>Maybe <span class="user-mention" data-user-id="233977">@Alexander Krauss</span> knows how to make the fun package support this?</p>
+
+
+
+<a name="570774110"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570774110" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570774110">(Jan 29 2026 at 11:54)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Isabelle's.20fun.20package.20raises.20an.20exception/near/570772361">said</a>:</p>
+<blockquote>
+<p>Surely one can always remove the let e.g. via <code>Let_const</code> rule?</p>
+</blockquote>
+<p>If you inline by removing the let it's provable i think</p>
+
+
+
+<a name="570774263"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570774263" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570774263">(Jan 29 2026 at 11:55)</a>:</h4>
+<p>But you can't inline unconditionally without having to fix back the induction rule</p>
+
+
+
+<a name="570775669"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570775669" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570775669">(Jan 29 2026 at 12:01)</a>:</h4>
+<p>You can use an alternative congruence rule for let:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">let_cong_alt</span><span class="w"> </span><span class="o">[</span><span class="n">fundef_cong</span><span class="o">]:</span><span class="w"> </span><span class="s">"f x = g y ⟹ Let x f = Let y g"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="kn">function</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"test n = (if n = 0 then 0 else</span>
+<span class="s">          let x = test in x 0)"</span>
+<span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="kn">termination</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">relation</span><span class="w"> </span><span class="s">"measure id "</span><span class="o">)</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+
+
+
+<a name="570776211"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570776211" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570776211">(Jan 29 2026 at 12:03)</a>:</h4>
+<p>Do you know how to phrase the MAP cong rule for this?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">function</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"test n = (if n = 0 then 0 else</span>
+<span class="s">          hd (map (λf. f (n - 1)) [test]))"</span>
+</code></pre></div>
+
+
+
+<a name="570777726"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570777726" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570777726">(Jan 29 2026 at 12:11)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">map_cong_single</span><span class="w"> </span><span class="o">[</span><span class="n">fundef_cong</span><span class="o">]:</span><span class="w"> </span><span class="s">"f x = g y ⟹ map f [x] = map g [y]"</span>
+<span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+
+
+
+<a name="570810383"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%27s%20fun%20package%20raises%20an%20exception/near/570810383" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.27s.20fun.20package.20raises.20an.20exception.html#570810383">(Jan 29 2026 at 14:29)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="714722">irvin</span> <a href="#narrow/channel/202961-General/topic/Isabelle's.20fun.20package.20raises.20an.20exception/near/570773150">said</a>:</p>
+<blockquote>
+<p>And you can't restrict a cong rule this way</p>
+</blockquote>
+<p>You can just ignore the variable, e.g. with <code> "f = g ⟹ Let x (λ_. f) = Let y (λ_. g)"</code>. With that,  the function package works of course, but raising a <code>THM 0</code> instead of reporting that it could not find termination is not great IMO.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

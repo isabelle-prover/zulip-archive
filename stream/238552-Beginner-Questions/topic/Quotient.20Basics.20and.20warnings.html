@@ -1,0 +1,107 @@
+<html>
+<head><meta charset="utf-8"><title>Quotient Basics and warnings · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html">Quotient Basics and warnings</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="528546506"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528546506" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528546506">(Jul 13 2025 at 18:04)</a>:</h4>
+<p>With the goal of eventually defining PGL(3, R) (3x3 invertible matrices over the reals, where two matrices are 'the same' if one is a nonzero scalar multiple of the other), we ran into troubles almost immediately, and have distilled them down to this minimal example (replacing "3" with "2" for simplicity). The example was produced in analogy with the definition of rationals (i.e., I didn't completely understand what I was doing):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Quo</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span><span class="w"> </span><span class="s">"HOL-Analysis.Finite_Cartesian_Product"</span>
+<span class="k">begin</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"(real,2) vec"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">rel</span><span class="o">::</span><span class="s">"t ⇒ t ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"rel x y = (x$1 = y$1)"</span>
+
+<span class="kn">quotient_type</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"t"</span><span class="w"> </span><span class="n">/</span><span class="w"> </span><span class="s">"rel"</span>
+<span class="w">  </span><span class="kp">morphisms</span><span class="w"> </span><span class="n">Abs_rel</span><span class="w"> </span><span class="n">Rep_rel</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">equivpI</span><span class="w"> </span><span class="n">reflpI</span><span class="w"> </span><span class="n">rel_def</span><span class="w"> </span><span class="n">sympI</span><span class="w"> </span><span class="n">transpI</span><span class="o">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>which generates <code>No map function defined for Finite_Cartesian_Product.vec. This will cause problems later on.</code> and <code>Generation of a parametrized correspondence relation failed.
+Reason:  No relator for the type "Numeral_Type.bit0" found.</code> When I changed to <code>(real, 3) vec</code>, the second error turned into <code>.bit1</code>; when I changed to <code>(real, 4) vec</code> it changed <strong>back</strong> to <code>.bit0</code>, at which point I realized I was beyond my depth. </p>
+<p>The corresponding theory using ordered pairs (and a proof discovered by sledgehammer) actually works without errors/warnings:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Quo</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span><span class="w"> </span><span class="s">"HOL-Analysis.Finite_Cartesian_Product"</span>
+<span class="k">begin</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"real × real"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">rel</span><span class="o">::</span><span class="s">"t ⇒ t ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"rel ≡ %(a,b)  . %(x, y) .   (x=a)"</span>
+
+<span class="kn">quotient_type</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"t"</span><span class="w"> </span><span class="n">/</span><span class="w"> </span><span class="s">"rel"</span>
+<span class="w">  </span><span class="kp">morphisms</span><span class="w"> </span><span class="n">Abs_rel</span><span class="w"> </span><span class="n">Rep_rel</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">mono_tags</span><span class="o">,</span><span class="w"> </span><span class="n">lifting</span><span class="o">)</span><span class="w"> </span><span class="n">equivp_def</span><span class="w"> </span><span class="n">rel_def</span><span class="w"> </span><span class="n">split_beta</span><span class="o">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>but since I'll actually need the <code>vec</code> stuff for defining my matrices, and don't want to rederive all imaginable linear algebra stuff (determinants!), I'd really like to get the first version to work if that's possible. Googling for the error messages didn't yield a lot of insight, unfortunately: two were pointers to source code, and one (<a href="https://groups.google.com/g/fa.isabelle/c/IOc9mYXxxFo">https://groups.google.com/g/fa.isabelle/c/IOc9mYXxxFo</a>) includes a note from Ondřej Kunčar that suggests that the two errors can be ignored, an idea that always worries me.</p>
+<p>Is there a way to make the first version work?</p>
+
+
+
+<a name="528647227"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528647227" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528647227">(Jul 14 2025 at 12:10)</a>:</h4>
+<p>The issue is that vec is not registered as a BNF and thus your quotient type fails to register as a BNF.  I do not understand BNF's enough to know whether you can register vec as a BNF but I would agree that you can ignore those warning unless you fail to define a new datatype depending on q</p>
+
+
+
+<a name="528654704"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528654704" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528654704">(Jul 14 2025 at 12:50)</a>:</h4>
+<p>I think I must be misunderstanding. Are you saying that if I type</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">junk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Junk</span><span class="w"> </span><span class="s">"q"</span>
+</code></pre></div>
+<p>in the first example, and then never use the datatype <code>junk</code> again, I should be OK? </p>
+<p>Perhaps I'm mis-parsing the negatives in your last sentence. </p>
+<p>(BTW, I tried to read about BNFs a while back, and can confidently say that I also do not understand them well enough!)</p>
+
+
+
+<a name="528675073"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528675073" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528675073">(Jul 14 2025 at 14:27)</a>:</h4>
+<p>I'm saying that if you encounter failure when trying to define a new datatype that uses q, then I would bother figuring out whether I can fix this problem. Otherwise I would just ignore it.</p>
+
+
+
+<a name="528685257"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528685257" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528685257">(Jul 14 2025 at 15:17)</a>:</h4>
+<p>Of course!...that's a much more reasonable interpretation of the sentence you wrote! Thanks for the clarification.</p>
+
+
+
+<a name="528685628"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528685628" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528685628">(Jul 14 2025 at 15:19)</a>:</h4>
+<p>Wait I might be completely wrong. I just looked at the code behind quotient_type and it does not seem to be related to bnfs at all.</p>
+
+
+
+<a name="528710295"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528710295" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528710295">(Jul 14 2025 at 17:34)</a>:</h4>
+<p>Ok so the first error is due to vec not registered as a functor.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">map_vec</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"map_vec f g v = vec_lambda (map_fun g f (vec_nth v))"</span>
+<span class="k">functor</span><span class="w"> </span><span class="n">map_vec</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">map_vec_def</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">eq_id_iff</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+</code></pre></div>
+<p>This seems fix the first issue</p>
+
+
+
+<a name="528733443"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Quotient%20Basics%20and%20warnings/near/528733443" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Quotient.20Basics.20and.20warnings.html#528733443">(Jul 14 2025 at 20:19)</a>:</h4>
+<p>Wow...thanks. You're really going above and beyond!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

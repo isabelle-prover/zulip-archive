@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>Breakdown in build system · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Breakdown.20in.20build.20system.html">Breakdown in build system</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="519753842"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Breakdown%20in%20build%20system/near/519753842" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Breakdown.20in.20build.20system.html#519753842">(May 22 2025 at 06:11)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+When issuing a new build task, the resulting URL (e.g. <br>
+<a href="https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720">https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720</a>) <br>
+just yields »Invalid request« and the task doesn’t show up in <br>
+<a href="https://build.proof.cit.tum.de/home">https://build.proof.cit.tum.de/home</a></p>
+<p>What is going wrong here?<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/CTh1jf0SrN93FF4izneWEYSA/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/Y2hMVJLv1XRJShX7QgkDfke2/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="519757978"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Breakdown%20in%20build%20system/near/519757978" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Breakdown.20in.20build.20system.html#519757978">(May 22 2025 at 06:47)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<blockquote>
+<p>When issuing a new build task, the resulting URL (e.g. <br>
+<a href="https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720">https://build.proof.cit.tum.de/build?id=ce0149bb-3b02-41f1-8a65-cf00e4bc0720</a>) <br>
+just yields »Invalid request« and the task doesn’t show up in <br>
+<a href="https://build.proof.cit.tum.de/home">https://build.proof.cit.tum.de/home</a></p>
+<p>What is going wrong here?</p>
+</blockquote>
+<p>The database connection had been closed:</p>
+<blockquote>
+<p>Exception in thread "Isabelle.thread-15" Exception in thread <br>
+"Isabelle.thread-18" org.postgresql.util.PSQLException: This <br>
+connection has been closed.</p>
+</blockquote>
+<p>But I don't see a reason for that: The database is still running.</p>
+<p>We do have problems with long-running SSH connections (the nightly <br>
+presentation job regularly fails because of SSH disconnects), but so far <br>
+the database connections have not created any problems. I have to <br>
+investigate this at some point: Perhaps we have to build a mechanism for <br>
+re-connects when the underlying connections are not perfectly reliable.</p>
+<p>Fabian</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

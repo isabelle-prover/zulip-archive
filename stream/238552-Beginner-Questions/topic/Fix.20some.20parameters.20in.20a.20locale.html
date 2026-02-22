@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Fix some parameters in a locale · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html">Fix some parameters in a locale</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="516271597"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Fix%20some%20parameters%20in%20a%20locale/near/516271597" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html#516271597">(May 05 2025 at 18:41)</a>:</h4>
+<p>If I have a locale with several fixes and assumes, but for many operations some of the fixes will always be the same, what is the best way of providing a partially instantiated locale?<br>
+Written differenctly: let's say the locale <code>L</code> has fixes <code>A</code>, <code>B</code> and <code>C</code> and assumes <code>P1</code>, <code>P2</code>, <code>P3</code>. <code>P3</code> only depends on <code>C</code>. What is the best way to provide the locale <code>L A B K</code> (where <code>C</code> is fixed to some constant <code>K</code>) that only assumes <code>P1</code> and <code>P2</code> (because I can prove <code>P3</code> for <code>K</code>)?</p>
+
+
+
+<a name="516272373"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Fix%20some%20parameters%20in%20a%20locale/near/516272373" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html#516272373">(May 05 2025 at 18:45)</a>:</h4>
+<p>Currently I can only think of a lemma <code>P1 ⟹ P2 ⟹ L A B K</code>, is there a better way that does not require restating <code>P1</code> and <code>P2</code>?</p>
+
+
+
+<a name="516280102"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Fix%20some%20parameters%20in%20a%20locale/near/516280102" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html#516280102">(May 05 2025 at 19:30)</a>:</h4>
+<p>Ok, that is very inconvenient for the user as they won't be able to use <code>interpretation</code> easily (at least as far as I can tell). So I think the solution is to define a new locale <code>L' A B</code> that assumes <code>P1</code> and <code>P2</code>, then interpret <code>L A B K</code> inside <code>L'</code> and provide an abbreviation for the derived constants that I care about and use <code>lemmas</code> statements as abbreviations for the derived theorems from the inner locale. Is there a better way?</p>
+
+
+
+<a name="517380931"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Fix%20some%20parameters%20in%20a%20locale/near/517380931" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Balazs Toth <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html#517380931">(May 11 2025 at 17:34)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="392255">Jan van Brügge</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale/near/516280102">said</a>:</p>
+<blockquote>
+<p>Ok, that is very inconvenient for the user as they won't be able to use <code>interpretation</code> easily (at least as far as I can tell). So I think the solution is to define a new locale <code>L' A B</code> that assumes <code>P1</code> and <code>P2</code>, then interpret <code>L A B K</code> inside <code>L'</code> and provide an abbreviation for the derived constants that I care about and use <code>lemmas</code> statements as abbreviations for the derived theorems from the inner locale. Is there a better way?</p>
+</blockquote>
+<p>I do pretty much the same what you describe, just that I use <code>sublocale</code> for the inner locale. Then you don't have to provide the abbreviations and the <code>lemmas</code> statement</p>
+
+
+
+<a name="517449635"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Fix%20some%20parameters%20in%20a%20locale/near/517449635" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html#517449635">(May 12 2025 at 07:20)</a>:</h4>
+<p>You could also rearrange the locales: have a locale <code>C c</code> assuming <code>P3</code> and have your <code>L = C c + fixes a b assumes P1 P2</code></p>
+
+
+
+<a name="517449813"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Fix%20some%20parameters%20in%20a%20locale/near/517449813" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Fix.20some.20parameters.20in.20a.20locale.html#517449813">(May 12 2025 at 07:21)</a>:</h4>
+<p>Then you can interpret your <code>C</code> with your constant, which should avoid you needing to reinterpret it when interpreting <code>L</code>.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

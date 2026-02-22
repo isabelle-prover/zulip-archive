@@ -1,0 +1,78 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle 2025-1, RC-1: Problems with Code-Equa... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025-1.2C.20RC-1.3A.20Problems.20with.20Code-Equa.2E.2E.2E.html">[isabelle] Isabelle 2025-1, RC-1: Problems with Code-Equa...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="556841024"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%202025-1%2C%20RC-1%3A%20Problems%20with%20Code-Equa.../near/556841024" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025-1.2C.20RC-1.3A.20Problems.20with.20Code-Equa.2E.2E.2E.html#556841024">(Nov 17 2025 at 14:16)</a>:</h4>
+<p>From: "Thiemann, René" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear all,</p>
+<p>the upcoming theory works perfectly fine in Isabelle 2025.</p>
+<p>theory Test<br>
+  imports <br>
+  Main<br>
+  "HOL-Analysis.Euclidean_Space"<br>
+begin</p>
+<p>export_code card  (* based on card (set ?xs) = length (remdups ?xs) *)<br>
+end</p>
+<p>In Isabelle 2025-1, RC-1, there is a problem now:</p>
+<p>"Euclidean_Space.euclidean_space_class.Basis" is not a constructor, on left hand side of equation, in theorem:<br>
+DIM(?'a) ≡ DIM(?’a)</p>
+<p>The problem appeared, when trying to adapt the latest AFP entry Neural Networks from 2025 to 2025-1,<br>
+in theory Compass_Digraph where “card” needs to be executable.</p>
+<p>Any suggestions?</p>
+<p>Best,<br>
+René</p>
+
+
+
+<a name="558132781"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%202025-1%2C%20RC-1%3A%20Problems%20with%20Code-Equa.../near/558132781" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.202025-1.2C.20RC-1.3A.20Problems.20with.20Code-Equa.2E.2E.2E.html#558132781">(Nov 19 2025 at 07:43)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+Hi René,</p>
+<p>thanks for reporting this.</p>
+<p>This is now restored in <br>
+<a href="https://isabelle.in.tum.de/repos/isabelle/rev/13e1addb123f">https://isabelle.in.tum.de/repos/isabelle/rev/13e1addb123f</a></p>
+<p>Background: the massive reworking of the code equation bookkeeping <br>
+exhibited some dark corners where priorities of equations are not so <br>
+clear in the first instance; you hit one of the rare cases where this <br>
+actually practically matters (interesting, though, that none of our <br>
+existing abundant examples in the AFP already exhibited that).</p>
+<p>I plan to iron out those subtle cases, but this is a task after an release.</p>
+<p>Cheers,<br>
+    Florian</p>
+<p>Am 17.11.25 um 15:15 schrieb Thiemann, René (via cl-isabelle-users <br>
+Mailing List):</p>
+<blockquote>
+<p>Dear all,</p>
+<p>the upcoming theory works perfectly fine in Isabelle 2025.</p>
+<p>theory Test<br>
+   imports<br>
+   Main<br>
+   "HOL-Analysis.Euclidean_Space"<br>
+begin</p>
+<p>export_code card  (* based on card (set ?xs) = length (remdups ?xs) *)<br>
+end</p>
+<p>In Isabelle 2025-1, RC-1, there is a problem now:</p>
+<p>"Euclidean_Space.euclidean_space_class.Basis" is not a constructor, on left hand side of equation, in theorem:<br>
+DIM(?'a) ≡ DIM(?’a)</p>
+<p>The problem appeared, when trying to adapt the latest AFP entry Neural Networks from 2025 to 2025-1,<br>
+in theory Compass_Digraph where “card” needs to be executable.</p>
+<p>Any suggestions?</p>
+<p>Best,<br>
+René<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/5Kwc8sgUzXvBf5aN18F4TJj5/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/QRpVdBVEApogm77C1mVUtaxh/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,468 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [Isabelle2025-1-RC1] About try0 · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html">[isabelle] [Isabelle2025-1-RC1] About try0</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="555311339"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/555311339" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#555311339">(Nov 13 2025 at 09:57)</a>:</h4>
+<p>From: "\"Kohlen, Bram (UT-EEMCS)\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Dear all,</p>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of days now. I see that try0 has gotten a bit of an overhaul where certain provers are tried before others. First it tries satx and metis, then order, presburger, linarith, algebra and argo and finally simp, auto, blast, fast, fastforce, force and meson.</p>
+<p>I have been running into some issues where for example satx and metis block (sometimes almost trivial) proofs that can easily be solved by auto.<br>
+For example:</p>
+<p>lemma "(λ (n,M). M n) (n,M) ⟹ M n"<br>
+    try0</p>
+<p>First, metis or satx will block try0 for about 5 seconds while searching for a proof. After 5 seconds, presumably because of a timeout, try0 moves on to the second batch of provers (order, presburger, linarith, algebra and argo), which fail immediately and only then moves on to the third batch where it provides proofs using simp, auto, blast, fast, fastforce and force.</p>
+<p>This bothers me, because I feel like I should not have to wait five seconds for this very simple proof. Especially because, in Isabelle2025, these proofs show up immediately with try0.</p>
+<p>My first question is: Can I somehow change or disable this ordering? Or can this be added? I looked around for about 15 minutes but could not find any new settings. I do want to play around a bit to see if I can find an ordering works for me, but the current one makes try0 feel a bit sluggish in my opinion.</p>
+<p>My second question is: Could these changes be added to the news? Currently it states nothing about changes to try0 while this one is quite large in my opinion.</p>
+<p>Kind regards,<br>
+Bram</p>
+
+
+
+<a name="555313038"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/555313038" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#555313038">(Nov 13 2025 at 10:04)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I would just like to add that a student of mine has the same issue.</p>
+<p>Tobias</p>
+<p>On 13/11/2025 10:56, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of days now. I <br>
+see that try0 has gotten a bit of an overhaul where certain provers are tried <br>
+before others. First it tries satx and metis, then order, presburger, linarith, <br>
+algebra and argo and finally simp, auto, blast, fast, fastforce, force and meson.</p>
+<p>I have been running into some issues where for example satx and metis block <br>
+(sometimes almost trivial) proofs that can easily be solved by auto.<br>
+For example:</p>
+<p>lemma "(λ (n,M). M n) (n,M) ⟹ M n"<br>
+    try0</p>
+<p>First, metis or satx will block try0 for about 5 seconds while searching for a <br>
+proof. After 5 seconds, presumably because of a timeout, try0 moves on to the <br>
+second batch of provers (order, presburger, linarith, algebra and argo), which <br>
+fail immediately and only then moves on to the third batch where it provides <br>
+proofs using simp, auto, blast, fast, fastforce and force.</p>
+<p>This bothers me, because I feel like I should not have to wait five seconds for <br>
+this very simple proof. Especially because, in Isabelle2025, these proofs show <br>
+up immediately with try0.</p>
+<p>My first question is: Can I somehow change or disable this ordering? Or can this <br>
+be added? I looked around for about 15 minutes but could not find any new <br>
+settings. I do want to play around a bit to see if I can find an ordering works <br>
+for me, but the current one makes try0 feel a bit sluggish in my opinion.</p>
+<p>My second question is: Could these changes be added to the news? Currently it <br>
+states nothing about changes to try0 while this one is quite large in my opinion.</p>
+<p>Kind regards,<br>
+Bram</p>
+</blockquote>
+<p><a href="/user_uploads/14278/KEy3xHnCnmLwHqgtYx31M8f_/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="555315119"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/555315119" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#555315119">(Nov 13 2025 at 10:13)</a>:</h4>
+<p>From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+In my experience, Isabelle2025 already had the issue where "try" would sometimes completely<br>
+fail when in fact it turns out "auto" would succeed very quickly.  This meant that you would<br>
+lose the time of waiting through an entire cycle of "try" and only then (because it looks<br>
+like the goal ought to be fairly simple to solve) you find that "auto" worked in the first place.</p>
+<p>So far, it looks like Isabelle2025-1-RC1 also has this behavior.  It is of course very difficult<br>
+to extract reasonable examples for bug reporting purposes.</p>
+<p>- Gene Stark</p>
+<p>On 11/13/25 04:56, "Kohlen, Bram (UT-EEMCS)" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of days now. I see that try0 has gotten a bit of an<br>
+overhaul where certain provers are tried before others. First it tries satx and metis, then order, presburger, linarith,<br>
+algebra and argo and finally simp, auto, blast, fast, fastforce, force and meson.</p>
+<p>I have been running into some issues where for example satx and metis block (sometimes almost trivial) proofs that can<br>
+easily be solved by auto.<br>
+For example: </p>
+<p>lemma "(λ (n,M). M n) (n,M) ⟹ M n"<br>
+    try0</p>
+<p>First, metis or satx will block try0 for about 5 seconds while searching for a proof. After 5 seconds, presumably<br>
+because of a timeout, try0 moves on to the second batch of provers (order, presburger, linarith, algebra and argo),<br>
+which fail immediately and only then moves on to the third batch where it provides proofs using simp, auto, blast, fast,<br>
+fastforce and force.</p>
+<p>This bothers me, because I feel like I should not have to wait five seconds for this very simple proof. Especially<br>
+because, in Isabelle2025, these proofs show up immediately with try0.</p>
+<p>My first question is: Can I somehow change or disable this ordering? Or can this be added? I looked around for about 15<br>
+minutes but could not find any new settings. I do want to play around a bit to see if I can find an ordering works for<br>
+me, but the current one makes try0 feel a bit sluggish in my opinion.</p>
+<p>My second question is: Could these changes be added to the news? Currently it states nothing about changes to try0 while<br>
+this one is quite large in my opinion.</p>
+<p>Kind regards,<br>
+Bram</p>
+</blockquote>
+
+
+
+<a name="558155016"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/558155016" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#558155016">(Nov 19 2025 at 09:44)</a>:</h4>
+<p>From: <a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a><br>
+Hi Bram,</p>
+<p>reposting as my original email did not reach the mailing list.</p>
+<blockquote>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of<br>
+days now. I see that try0 has gotten a bit of an overhaul where<br>
+certain provers are tried before others...</p>
+<p>This bothers me, because I feel like I should not have to wait five<br>
+seconds for this very simple proof. Especially because, in<br>
+Isabelle2025, these proofs show up immediately with try0.</p>
+</blockquote>
+<p>Thank you for testing Isabelle2025-1-RC1 and pointing out your issue <br>
+caused by this undocumented change.</p>
+<blockquote>
+<p>My first question is: Can I somehow change or disable this ordering?<br>
+Or can this be added? I looked around for about 15 minutes but could<br>
+not find any new settings. I do want to play around a bit to see if I<br>
+can find an ordering works for me, but the current one makes try0 feel<br>
+a bit sluggish in my opinion.</p>
+</blockquote>
+<p>Yes, you can configure the default timeout with the option <br>
+<code>try0_default_timeout</code> and the schedule with the option <code>try0_schedule</code>. <br>
+The default schedule is the following:</p>
+<p>declare [[try0_schedule = "<br>
+   satx metis |<br>
+   order presburger linarith algebra argo |<br>
+   simp auto blast fast fastforce force meson<br>
+"]]</p>
+<p>See the new documentation further down. In a nutshell, you can change <br>
+the ordering by moving the names around or use full parallel execution <br>
+by removing the vertical bars.</p>
+<p>I changed the default timeout from 5 to 2 seconds; it can still be <br>
+increased or decreased on a case-by-case basis with <code>using 
+[[try0_default_timeout = &lt;integer&gt;]]</code>.</p>
+<blockquote>
+<p>My second question is: Could these changes be added to the news?<br>
+Currently it states nothing about changes to try0 while this one is<br>
+quite large in my opinion.</p>
+</blockquote>
+<p>Yes, I added the following documentation entry to NEW:</p>
+<ul>
+<li>
+<p>try0:</p>
+<ul>
+<li>
+<p>Proof methods can now be dynamically added with the function<br>
+   Try0.register_proof_method and retrieved (e.g., to call them from<br>
+   Isabelle/ML) with the function Try0.get_proof_method.</p>
+</li>
+<li>
+<p>Added the option "try0_schedule" to control which proof methods get<br>
+   tried in which order. It accepts a list of proof method names<br>
+   separated by either a space, meaning parallel evaluation, or<br>
+   vertical lines, meaning sequential evaluation. The schedule is<br>
+   interpreted as list of groups executed in sequence; in each group,<br>
+   the proof methods are executed in parallel. INCOMPATIBILITY.</p>
+</li>
+<li>
+<p>Added the option "try0_default_timeout" to control the default<br>
+   timeout (in seconds).</p>
+</li>
+<li>
+<p>Changed the default timeout from 5 to 2 seconds.<br>
+   Minor INCOMPATIBILITY.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Regards,<br>
+Martin</p>
+
+
+
+<a name="558175491"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/558175491" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#558175491">(Nov 19 2025 at 11:19)</a>:</h4>
+<p>From: Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+That sounds like a nice change (provided the default makes sense and is <br>
+usable).</p>
+<p>However, it is not modular: A theory cannot simply add another method to <br>
+try0 without reverting all existing settings. So in the current form, it <br>
+looks like this makes sense mostly in every private user's settings, <br>
+which is great!</p>
+<p>But forcing a new, incompatible, and less performing default setting is <br>
+critical: this will only limit the use and usefulness of try0. Moreover, <br>
+we'll probably see a lot of theories starting with some declare <br>
+[[try0_schedule = "..."]] magic, exporting it to all dependent theories.</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 19/11/2025 10:44, <a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a> wrote:</p>
+<blockquote>
+<p>Hi Bram,</p>
+<p>reposting as my original email did not reach the mailing list.</p>
+<blockquote>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of<br>
+days now. I see that try0 has gotten a bit of an overhaul where<br>
+certain provers are tried before others...</p>
+<p>This bothers me, because I feel like I should not have to wait five<br>
+seconds for this very simple proof. Especially because, in<br>
+Isabelle2025, these proofs show up immediately with try0.</p>
+</blockquote>
+<p>Thank you for testing Isabelle2025-1-RC1 and pointing out your issue <br>
+caused by this undocumented change.</p>
+<blockquote>
+<p>My first question is: Can I somehow change or disable this ordering?<br>
+Or can this be added? I looked around for about 15 minutes but could<br>
+not find any new settings. I do want to play around a bit to see if I<br>
+can find an ordering works for me, but the current one makes try0 feel<br>
+a bit sluggish in my opinion.</p>
+</blockquote>
+<p>Yes, you can configure the default timeout with the option <br>
+<code>try0_default_timeout</code> and the schedule with the option <br>
+<code>try0_schedule</code>. The default schedule is the following:</p>
+<p>declare [[try0_schedule = "<br>
+  satx metis |<br>
+  order presburger linarith algebra argo |<br>
+  simp auto blast fast fastforce force meson<br>
+"]]</p>
+<p>See the new documentation further down. In a nutshell, you can change <br>
+the ordering by moving the names around or use full parallel execution <br>
+by removing the vertical bars.</p>
+<p>I changed the default timeout from 5 to 2 seconds; it can still be <br>
+increased or decreased on a case-by-case basis with <code>using 
+[[try0_default_timeout = &lt;integer&gt;]]</code>.</p>
+<blockquote>
+<p>My second question is: Could these changes be added to the news?<br>
+Currently it states nothing about changes to try0 while this one is<br>
+quite large in my opinion.</p>
+</blockquote>
+<p>Yes, I added the following documentation entry to NEW:</p>
+<ul>
+<li>try0:<br>
+  - Proof methods can now be dynamically added with the function<br>
+    Try0.register_proof_method and retrieved (e.g., to call them from<br>
+    Isabelle/ML) with the function Try0.get_proof_method.<br>
+  - Added the option "try0_schedule" to control which proof methods get<br>
+    tried in which order. It accepts a list of proof method names<br>
+    separated by either a space, meaning parallel evaluation, or<br>
+    vertical lines, meaning sequential evaluation. The schedule is<br>
+    interpreted as list of groups executed in sequence; in each group,<br>
+    the proof methods are executed in parallel. INCOMPATIBILITY.<br>
+  - Added the option "try0_default_timeout" to control the default<br>
+    timeout (in seconds).<br>
+  - Changed the default timeout from 5 to 2 seconds.<br>
+    Minor INCOMPATIBILITY.</li>
+</ul>
+<p>Regards,<br>
+Martin</p>
+</blockquote>
+
+
+
+<a name="558196949"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/558196949" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#558196949">(Nov 19 2025 at 13:04)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Perhaps, the new default, whatever reason there is for it, could be try1 ...</p>
+<p>Stepan</p>
+<p>On 11/19/2025 12:19 PM, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>That sounds like a nice change (provided the default makes sense and <br>
+is usable).</p>
+<p>However, it is not modular: A theory cannot simply add another method <br>
+to try0 without reverting all existing settings. So in the current <br>
+form, it looks like this makes sense mostly in every private user's <br>
+settings, which is great!</p>
+<p>But forcing a new, incompatible, and less performing default setting <br>
+is critical: this will only limit the use and usefulness of try0. <br>
+Moreover, we'll probably see a lot of theories starting with <br>
+some declare [[try0_schedule = "..."]] magic, exporting it to all <br>
+dependent theories.</p>
+<p>-- </p>
+<p>Peter</p>
+<p>On 19/11/2025 10:44, <a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a> wrote:</p>
+<blockquote>
+<p>Hi Bram,</p>
+<p>reposting as my original email did not reach the mailing list.</p>
+<blockquote>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of<br>
+days now. I see that try0 has gotten a bit of an overhaul where<br>
+certain provers are tried before others...</p>
+<p>This bothers me, because I feel like I should not have to wait five<br>
+seconds for this very simple proof. Especially because, in<br>
+Isabelle2025, these proofs show up immediately with try0.</p>
+</blockquote>
+<p>Thank you for testing Isabelle2025-1-RC1 and pointing out your issue <br>
+caused by this undocumented change.</p>
+<blockquote>
+<p>My first question is: Can I somehow change or disable this ordering?<br>
+Or can this be added? I looked around for about 15 minutes but could<br>
+not find any new settings. I do want to play around a bit to see if I<br>
+can find an ordering works for me, but the current one makes try0 feel<br>
+a bit sluggish in my opinion.</p>
+</blockquote>
+<p>Yes, you can configure the default timeout with the option <br>
+<code>try0_default_timeout</code> and the schedule with the option <br>
+<code>try0_schedule</code>. The default schedule is the following:</p>
+<p>declare [[try0_schedule = "<br>
+  satx metis |<br>
+  order presburger linarith algebra argo |<br>
+  simp auto blast fast fastforce force meson<br>
+"]]</p>
+<p>See the new documentation further down. In a nutshell, you can change <br>
+the ordering by moving the names around or use full parallel <br>
+execution by removing the vertical bars.</p>
+<p>I changed the default timeout from 5 to 2 seconds; it can still be <br>
+increased or decreased on a case-by-case basis with <code>using 
+[[try0_default_timeout = &lt;integer&gt;]]</code>.</p>
+<blockquote>
+<p>My second question is: Could these changes be added to the news?<br>
+Currently it states nothing about changes to try0 while this one is<br>
+quite large in my opinion.</p>
+</blockquote>
+<p>Yes, I added the following documentation entry to NEW:</p>
+<ul>
+<li>try0:<br>
+  - Proof methods can now be dynamically added with the function<br>
+    Try0.register_proof_method and retrieved (e.g., to call them from<br>
+    Isabelle/ML) with the function Try0.get_proof_method.<br>
+  - Added the option "try0_schedule" to control which proof methods get<br>
+    tried in which order. It accepts a list of proof method names<br>
+    separated by either a space, meaning parallel evaluation, or<br>
+    vertical lines, meaning sequential evaluation. The schedule is<br>
+    interpreted as list of groups executed in sequence; in each group,<br>
+    the proof methods are executed in parallel. INCOMPATIBILITY.<br>
+  - Added the option "try0_default_timeout" to control the default<br>
+    timeout (in seconds).<br>
+  - Changed the default timeout from 5 to 2 seconds.<br>
+    Minor INCOMPATIBILITY.</li>
+</ul>
+<p>Regards,<br>
+Martin</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="558199421"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/558199421" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#558199421">(Nov 19 2025 at 13:15)</a>:</h4>
+<p>From: Martin Desharnais-Schäfer &lt;<a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a>&gt;<br>
+Hi Bram,</p>
+<blockquote>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of <br>
+days now. I see that try0 has gotten a bit of an overhaul where certain <br>
+provers are tried before others...</p>
+<p>This bothers me, because I feel like I should not have to wait five <br>
+seconds for this very simple proof. Especially because, in Isabelle2025, <br>
+these proofs show up immediately with try0.</p>
+</blockquote>
+<p>thank you for testing Isabelle2025-1-RC1 and pointing out your issue <br>
+caused by this undocumented change.</p>
+<blockquote>
+<p>My first question is: Can I somehow change or disable this ordering? Or <br>
+can this be added? I looked around for about 15 minutes but could not <br>
+find any new settings. I do want to play around a bit to see if I can <br>
+find an ordering works for me, but the current one makes try0 feel a bit <br>
+sluggish in my opinion.</p>
+</blockquote>
+<p>Yes, you can configure the default timeout with the option <br>
+<code>try0_default_timeout</code> and the schedule with the option <code>try0_schedule</code>. <br>
+The default schedule is the following:</p>
+<p>declare [[try0_schedule = "<br>
+   satx metis |<br>
+   order presburger linarith algebra argo |<br>
+   simp auto blast fast fastforce force meson<br>
+"]]</p>
+<p>See the new documentation further down. In a nutshell, you can change <br>
+the ordering by moving the names around or use full parallel execution <br>
+by removing the vertical bars.</p>
+<p>I changed the default timeout from 5 to 2 seconds; it can still be <br>
+increased or decreased on a case-by-case basis with <code>using 
+[[try0_default_timeout = &lt;integer&gt;]]</code>.</p>
+<blockquote>
+<p>My second question is: Could these changes be added to the news? <br>
+Currently it states nothing about changes to try0 while this one is <br>
+quite large in my opinion.</p>
+</blockquote>
+<p>I added the following documentation entry to NEW:</p>
+<ul>
+<li>
+<p>try0:</p>
+<ul>
+<li>
+<p>Proof methods can now be dynamically added with the function<br>
+   Try0.register_proof_method and retrieved (e.g., to call them from<br>
+   Isabelle/ML) with the function Try0.get_proof_method.</p>
+</li>
+<li>
+<p>Added the option <code>try0_schedule</code> to control which proof methods get<br>
+   tried in which order. It accepts a list of proof method names<br>
+   separated by either a space, meaning parallel evaluation, or<br>
+   vertical lines, meaning sequential evaluation; parallel execution<br>
+   binds stronger than sequential execution. INCOMPATIBILITY.</p>
+</li>
+<li>
+<p>Added the option <code>try0_default_timeout</code> to control the default<br>
+   timeout (in seconds).</p>
+</li>
+<li>
+<p>Changed the default timeout from 5 to 2 seconds.<br>
+   Minor INCOMPATIBILITY.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Regards,<br>
+Martin</p>
+
+
+
+<a name="561227394"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/561227394" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#561227394">(Dec 01 2025 at 17:22)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 19/11/2025 12:19, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>That sounds like a nice change (provided the default makes sense and is usable).</p>
+<p>However, it is not modular: A theory cannot simply add another method to try0 <br>
+without reverting all existing settings. So in the current form, it looks like <br>
+this makes sense mostly in every private user's settings, which is great!</p>
+<p>But forcing a new, incompatible, and less performing default setting is <br>
+critical: this will only limit the use and usefulness of try0. Moreover, we'll <br>
+probably see a lot of theories starting with some declare [[try0_schedule = <br>
+"..."]] magic, exporting it to all dependent theories.</p>
+</blockquote>
+<p>Is that question settled in RC3? I've lost track of the many small changes in <br>
+that area.</p>
+<p>Makarius</p>
+
+
+
+<a name="561229516"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC1%5D%20About%20try0/near/561229516" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC1.5D.20About.20try0.html#561229516">(Dec 01 2025 at 17:29)</a>:</h4>
+<p><strong>From:</strong> Martin Desharnais-Schäfer &lt;<a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a>&gt;</p>
+<p>Hi Makarius,</p>
+<p>Le 2025-12-01 à 18 h 22, Makarius a écrit :</p>
+<blockquote>
+<p>On 19/11/2025 12:19, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>That sounds like a nice change (provided the default makes sense and <br>
+is usable).</p>
+<p>However, it is not modular: A theory cannot simply add another method <br>
+to try0 without reverting all existing settings. So in the current <br>
+form, it looks like this makes sense mostly in every private user's <br>
+settings, which is great!</p>
+<p>But forcing a new, incompatible, and less performing default setting <br>
+is critical: this will only limit the use and usefulness of try0. <br>
+Moreover, we'll probably see a lot of theories starting with <br>
+some declare [[try0_schedule = "..."]] magic, exporting it to all <br>
+dependent theories.</p>
+</blockquote>
+<p>Is that question settled in RC3? I've lost track of the many small <br>
+changes in that area.</p>
+</blockquote>
+<p>I changed the default schedule to run all proof methods in parallel, <br>
+which should, hopefully, settled the raised criticisms.</p>
+<p>Regards,<br>
+Martin</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

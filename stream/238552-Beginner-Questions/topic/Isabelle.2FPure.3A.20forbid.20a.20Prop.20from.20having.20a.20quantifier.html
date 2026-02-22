@@ -1,0 +1,45 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle/Pure: forbid a Prop from having a quantifier · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.2FPure.3A.20forbid.20a.20Prop.20from.20having.20a.20quantifier.html">Isabelle/Pure: forbid a Prop from having a quantifier</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="516166951"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle/Pure%3A%20forbid%20a%20Prop%20from%20having%20a%20quantifier/near/516166951" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Paweł Balawender <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.2FPure.3A.20forbid.20a.20Prop.20from.20having.20a.20quantifier.html#516166951">(May 05 2025 at 11:14)</a>:</h4>
+<p>Hey, can we somehow limit the logical formulas (like in Isabelle/Pure) from having a quantifier in them? I want to use Isabelle's unification to reason about variable names in formulas etc., but I see that even in Isabelle/Pure, universal and existential quantification is 'on' by default. I want to reason about weaker formulas! I.e. only allow the user to add quantifiers in a particular way and not however they want to. Do you think we can do that in Isabelle? Perhaps I shouldn't even import Pure? :) Thanks!</p>
+
+
+
+<a name="516168298"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle/Pure%3A%20forbid%20a%20Prop%20from%20having%20a%20quantifier/near/516168298" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.2FPure.3A.20forbid.20a.20Prop.20from.20having.20a.20quantifier.html#516168298">(May 05 2025 at 11:21)</a>:</h4>
+<p>Pure doesn't have an existential quantifier, but in any case, what do you even want to achieve? You could check whether  <code>Pure.all</code>, <code>HOL.All</code>, and <code>HOL.Ex</code> appear in your term, but that doesn't stop anyone from defining another constant that is a quantifier</p>
+
+
+
+<a name="516169731"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle/Pure%3A%20forbid%20a%20Prop%20from%20having%20a%20quantifier/near/516169731" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.2FPure.3A.20forbid.20a.20Prop.20from.20having.20a.20quantifier.html#516169731">(May 05 2025 at 11:30)</a>:</h4>
+<p>Depending on what you are trying to achieve, embedding your terms into HOL might be easier, like in <a href="https://www.isa-afp.org/sessions/implicational_logic/#Implicational_Logic">https://www.isa-afp.org/sessions/implicational_logic/#Implicational_Logic</a></p>
+
+
+
+<a name="516169856"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle/Pure%3A%20forbid%20a%20Prop%20from%20having%20a%20quantifier/near/516169856" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.2FPure.3A.20forbid.20a.20Prop.20from.20having.20a.20quantifier.html#516169856">(May 05 2025 at 11:30)</a>:</h4>
+<p>Especially if you want to prove meta-theorems about your formulas</p>
+
+
+
+<a name="516179587"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle/Pure%3A%20forbid%20a%20Prop%20from%20having%20a%20quantifier/near/516179587" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Paweł Balawender <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.2FPure.3A.20forbid.20a.20Prop.20from.20having.20a.20quantifier.html#516179587">(May 05 2025 at 12:13)</a>:</h4>
+<p>Hey thank you for the pointers! Embedding into HOL is something I haven't considered, but sounds useful indeed. <span class="user-mention" data-user-id="348400">@Fabian Huch</span> I need to formalize proofs in the area of bounded arithmetics and, more generally, of reverse mathematics. What they do there is to limit the expressiveness of a proof system by restricting the Induction scheme (for <em>every</em> proposition P, if P(0) and P(x)-&gt;P(x+1), then forall x, P(x)) to only some smaller class of propositions. For example, you can consider a proof system consisting of classical natural deduction, some constants and axioms (constants 0, 1, +, *, axiom 0+x=x etc.) + an axiom scheme of induction limited to open formulas - that is, having no quantifiers at all, but possibly having free variables. I attach the relevant part of Wikipedia's article on Arithmetical hierarchy for the specific definition of how to they cluster the formulas. All this is very cool and I think formalizing some of these results would help us "convert" a lot of logicians onto our side :) But it seems that implementing these weak systems will require more work than I thought <br>
+<a href="/user_uploads/14278/db3zXA7TMpMrzkJxCj8tt8TP/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/db3zXA7TMpMrzkJxCj8tt8TP/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="1114x933" src="/user_uploads/thumbnail/14278/db3zXA7TMpMrzkJxCj8tt8TP/image.png/840x560.webp"></a></div>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

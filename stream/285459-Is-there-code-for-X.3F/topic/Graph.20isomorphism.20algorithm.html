@@ -1,0 +1,109 @@
+<html>
+<head><meta charset="utf-8"><title>Graph isomorphism algorithm · Is there code for X? · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/index.html">Is there code for X?</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html">Graph isomorphism algorithm</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="528490957"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528490957" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528490957">(Jul 12 2025 at 23:55)</a>:</h4>
+<p>Hi,</p>
+<p>I am wondering if there is a verified graph isomorphism algorithm on the AFP.</p>
+<p>I came across some papers that seem to involve algorithms for isomorphism checking (<a href="https://isabelle.in.tum.de/~nipkow/pubs/itp11.pdf">https://isabelle.in.tum.de/~nipkow/pubs/itp11.pdf</a>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7324030/">https://pmc.ncbi.nlm.nih.gov/articles/PMC7324030/</a>), but could not find these developments on the AFP.</p>
+<p>I am also aware of <a href="https://github.com/mabdula/Isabelle-Graph-Library">https://github.com/mabdula/Isabelle-Graph-Library</a>, but did not see an isomorphism algorithm there.</p>
+
+
+
+<a name="528542112"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528542112" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528542112">(Jul 13 2025 at 16:51)</a>:</h4>
+<p>I don't think so. The positive answer is of course very easy to certify, and that's usually the one people care about. So perhaps the incentive to formalise an algorithm for this has not been too big. I don't know how much work you have to do to get significantly better performance than brute-forcing, but competitive GI solvers are quite complex, I think.</p>
+<p><span class="user-mention" data-user-id="233212">@Mohammad Abdulaziz</span> ought to know much more about this.</p>
+
+
+
+<a name="528544593"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528544593" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528544593">(Jul 13 2025 at 17:30)</a>:</h4>
+<p>As far as I know <a href="https://github.com/ciaranm/glasgow-subgraph-solver">https://github.com/ciaranm/glasgow-subgraph-solver</a> is the most advanced certifying approach</p>
+
+
+
+<a name="528544638"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528544638" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528544638">(Jul 13 2025 at 17:31)</a>:</h4>
+<p>(but not verified… from Ciaran McCreesh's talks it is not easy )</p>
+
+
+
+<a name="528562549"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528562549" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mohammad Abdulaziz <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528562549">(Jul 13 2025 at 22:36)</a>:</h4>
+<p>I am certain there is a calculus for certifying graph isomorphism by Filip Maric. It is formalised and shown to indeed certify Naughty style isomorphism solvers in Isabelle, iirc. I wanted to integrate it with the graph library you pointed to above</p>
+
+
+
+<a name="528562560"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528562560" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mohammad Abdulaziz <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528562560">(Jul 13 2025 at 22:36)</a>:</h4>
+<p>Here is a link:</p>
+<p><a href="https://lmcs.episciences.org/10892">https://lmcs.episciences.org/10892</a></p>
+
+
+
+<a name="528562614"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528562614" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mohammad Abdulaziz <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528562614">(Jul 13 2025 at 22:38)</a>:</h4>
+<p>Let me know if that is a topic you want to further explore</p>
+
+
+
+<a name="528582263"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528582263" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528582263">(Jul 14 2025 at 04:24)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm/near/528544593">said</a>:</p>
+<blockquote>
+<p>As far as I know <a href="https://github.com/ciaranm/glasgow-subgraph-solver">https://github.com/ciaranm/glasgow-subgraph-solver</a> is the most advanced certifying approach</p>
+</blockquote>
+<p>I think that <span class="user-mention" data-user-id="234226">@Yong Kiam</span> has a verified checker for that in HOL4</p>
+
+
+
+<a name="528586965"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528586965" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528586965">(Jul 14 2025 at 05:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="714722">irvin</span> <a href="#narrow/channel/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm/near/528582263">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm/near/528544593">said</a>:</p>
+<blockquote>
+<p>As far as I know <a href="https://github.com/ciaranm/glasgow-subgraph-solver">https://github.com/ciaranm/glasgow-subgraph-solver</a> is the most advanced certifying approach</p>
+</blockquote>
+<p>I think that <span class="user-mention silent" data-user-id="234226">Yong Kiam</span> has a verified checker for that in HOL4</p>
+</blockquote>
+<p>we can certify both positive/negative answers generated by the Glasgow subgraph solver.</p>
+<p>besides verified algorithms vs certifying algorithms, I think there's also a substantial difference if this thread is meant to be asking about verifying a real GI solver or something more on the theoretical end.</p>
+
+
+
+<a name="528587157"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528587157" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528587157">(Jul 14 2025 at 05:31)</a>:</h4>
+<p>(if it is the former on verifying a real GI solver, I agree with <span class="user-mention" data-user-id="233198">@Mathias Fleury</span>'s assessment)</p>
+<p>edit: actually if it is the latter, I also guess it's not esay <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span></p>
+
+
+
+<a name="528724760"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/528724760" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#528724760">(Jul 14 2025 at 19:14)</a>:</h4>
+<p>Thank you for the responses!</p>
+<p>I was interested in this problem in the context of graph enumeration up to isomorphism. I've seen, for instance, tree enumeration on the AFP, but in that case I believe isomorphic copies were avoided by construction. A little while ago, I was experimenting with enumerating a particular type of graph up to isomorphism, up to around 20 vertices, so I wrote the enumeration algorithm, including an isomorphism checker, in Isabelle (and verified the isomorphism checker part). The isomorphism checker does some hashing to improve performance, but is by no means advanced (and does not check for subgraph isomorphism). As I did not finish verification of the enumeration, nothing is on the AFP yet, but I was considering submitting the verified isomorphism checker by itself. But, I know that GI is a deep problem so I was wondering what other work is out there.</p>
+<p>Based on this thread, my understanding is that the main interest is going to be in certifying GI outputs rather than verifying a GI algorithm directly, since the state-of-the-art GI algorithms are very complex.</p>
+<p>I wonder how this certificate-based approach would extend to verified graph enumeration, though. The only instance of verified graph enumeration I've seen is the Nipkow paper previously linked (well, there is also the tree enumeration on the AFP, but again I believe that avoids isomorphic copies by construction).</p>
+<p>Anyways, perhaps a basic verified isomorphism checker can be useful to other users for experiments in graph enumeration, so I will try and submit that soon.</p>
+<p><span class="user-mention" data-user-id="233212">@Mohammad Abdulaziz</span> Yes, I am certainly interested in exploring verified graph algorithms! (By the way, will you be at ITP this year? I was hoping to have a chance to connect with you then.)</p>
+
+
+
+<a name="529154345"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Graph%20isomorphism%20algorithm/near/529154345" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mohammad Abdulaziz <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Graph.20isomorphism.20algorithm.html#529154345">(Jul 16 2025 at 19:30)</a>:</h4>
+<p>Yes, I will be there. See you in September!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,108 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Monoid or word homomorphism? · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Monoid.20or.20word.20homomorphism.3F.html">[isabelle] Monoid or word homomorphism?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="521035662"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Monoid%20or%20word%20homomorphism%3F/near/521035662" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Monoid.20or.20word.20homomorphism.3F.html#521035662">(May 29 2025 at 07:23)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+This is what I defined locally:</p>
+<p>definition hom :: ‹('a list ⇒ 'b list) ⇒ bool› where<br>
+‹hom h = ((∀a b. h (a @ b) = (h a) @ h b) ∧ h [] = [])›</p>
+<p>Maybe it exists already? Maybe as part of the monoid class? I couldn't find <br>
+anything. Maybe it should be added to theory List (named hom_list)?</p>
+<p>Tobias</p>
+<p><a href="/user_uploads/14278/eT-gAtlE4pvT6riWfx9V0AcT/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="521085253"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Monoid%20or%20word%20homomorphism%3F/near/521085253" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Monoid.20or.20word.20homomorphism.3F.html#521085253">(May 29 2025 at 12:31)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+I have this:</p>
+<p><a href="https://www.isa-afp.org/sessions/combinatorics_words/#Morphisms">https://www.isa-afp.org/sessions/combinatorics_words/#Morphisms</a></p>
+<p>Note, for example, that the empty to empty is a consequence.</p>
+<p>Stepan</p>
+<p>On 5/29/2025 9:23 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>This is what I defined locally:</p>
+<p>definition hom :: ‹('a list ⇒ 'b list) ⇒ bool› where<br>
+‹hom h = ((∀a b. h (a @ b) = (h a) @ h b) ∧ h [] = [])›</p>
+<p>Maybe it exists already? Maybe as part of the monoid class? I couldn't <br>
+find anything. Maybe it should be added to theory List (named hom_list)?</p>
+<p>Tobias</p>
+</blockquote>
+
+
+
+<a name="521105428"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Monoid%20or%20word%20homomorphism%3F/near/521105428" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Monoid.20or.20word.20homomorphism.3F.html#521105428">(May 29 2025 at 14:25)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Thank you Stepan,</p>
+<p>The first place I looked was your AFP entry, but I made the mistake of grepping <br>
+for "hom", not "morphism" ;-)</p>
+<p>Tobias</p>
+<p>On 29/05/2025 14:31, Stepan Holub (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I have this:</p>
+<p><a href="https://www.isa-afp.org/sessions/combinatorics_words/#Morphisms">https://www.isa-afp.org/sessions/combinatorics_words/#Morphisms</a></p>
+<p>Note, for example, that the empty to empty is a consequence.</p>
+<p>Stepan</p>
+<p>On 5/29/2025 9:23 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>This is what I defined locally:</p>
+<p>definition hom :: ‹('a list ⇒ 'b list) ⇒ bool› where<br>
+‹hom h = ((∀a b. h (a @ b) = (h a) @ h b) ∧ h [] = [])›</p>
+<p>Maybe it exists already? Maybe as part of the monoid class? I couldn't find <br>
+anything. Maybe it should be added to theory List (named hom_list)?</p>
+<p>Tobias</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/RHqMuVNn_4fQYf0_Gay2AxLZ/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="521124445"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Monoid%20or%20word%20homomorphism%3F/near/521124445" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Monoid.20or.20word.20homomorphism.3F.html#521124445">(May 29 2025 at 16:03)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Not sure why, but the term "morphism" is canonical in combinatorics on <br>
+words, see<br>
+<a href="https://link.springer.com/chapter/10.1007/978-3-642-59136-5_7">https://link.springer.com/chapter/10.1007/978-3-642-59136-5_7</a><br>
+for example.</p>
+<p>Stepan</p>
+<p>On 29-May-25 4:25 PM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Thank you Stepan,</p>
+<p>The first place I looked was your AFP entry, but I made the mistake of <br>
+grepping for "hom", not "morphism" ;-)</p>
+<p>Tobias</p>
+<p>On 29/05/2025 14:31, Stepan Holub (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>I have this:</p>
+<p><a href="https://www.isa-afp.org/sessions/combinatorics_words/#Morphisms">https://www.isa-afp.org/sessions/combinatorics_words/#Morphisms</a></p>
+<p>Note, for example, that the empty to empty is a consequence.</p>
+<p>Stepan</p>
+<p>On 5/29/2025 9:23 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>This is what I defined locally:</p>
+<p>definition hom :: ‹('a list ⇒ 'b list) ⇒ bool› where<br>
+‹hom h = ((∀a b. h (a @ b) = (h a) @ h b) ∧ h [] = [])›</p>
+<p>Maybe it exists already? Maybe as part of the monoid class? I <br>
+couldn't find anything. Maybe it should be added to theory List <br>
+(named hom_list)?</p>
+<p>Tobias</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

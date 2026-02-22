@@ -1,0 +1,26 @@
+<html>
+<head><meta charset="utf-8"><title>Breaking up Division · Is there code for X? · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/index.html">Is there code for X?</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Breaking.20up.20Division.html">Breaking up Division</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="521760733"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Breaking%20up%20Division/near/521760733" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David E. Narváez <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Breaking.20up.20Division.html#521760733">(Jun 02 2025 at 14:24)</a>:</h4>
+<p>Related to my other question: is there code to break up divisions like <code>(k₁*a₁+...+kₙ*aₙ) div b</code> by grouping multiples of <code>b</code> then using something like <code>div_mult_self4</code> to simplify the term? It looks like <code>numeral_simprocs.ML</code> has a lot of the code needed (normalize terms, calculate gcd, etc) but the approach there seems to be "all or nothing".</p>
+
+
+
+<a name="521815615"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/285459-Is%20there%20code%20for%20X%3F/topic/Breaking%20up%20Division/near/521815615" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/285459-Is-there-code-for-X.3F/topic/Breaking.20up.20Division.html#521815615">(Jun 02 2025 at 18:26)</a>:</h4>
+<p>Pretty sure no. There's similar issues with periodic functions like <code>sin</code>, <code>cos</code>, <code>cis</code>, <code>exp</code> where one could possibly identify subterms of the argument to simplify or remove. But it's a bit hard to predict what level of generality is needed and how useful it would ultimately end up being. And, if it is to end up in the standard library, how much it would break. Of course one could just put it in a library somewhere and have people switch it on manually, but that will just lead to noone knowing about it and noone using it.</p>
+<p>It's the sort of experiment one could try if one had the spare time, or put a student on it.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,63 @@
+<html>
+<head><meta charset="utf-8"><title>Source for a term · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source.20for.20a.20term.html">Source for a term</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="509457131"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Source%20for%20a%20term/near/509457131" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source.20for.20a.20term.html#509457131">(Apr 01 2025 at 13:48)</a>:</h4>
+<p>In HOL-Algebra.Group, early on we have</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">record</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">monoid</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="s">"'a partial_object"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">mult</span><span class="w">    </span><span class="o">::</span><span class="w"> </span><span class="s">"['a, 'a] ⇒ 'a"</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">‹⊗ı›</span><span class="w"> </span><span class="n">70</span><span class="o">)</span>
+<span class="w">  </span><span class="n">one</span><span class="w">     </span><span class="o">::</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="o">(</span><span class="s">‹𝟭ı›</span><span class="o">)</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">m_inv</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a, 'b) monoid_scheme =&gt; 'a =&gt; 'a"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"m_inv G x = (THE y. y ∈ carrier G ∧ x ⊗⇘G⇙ y = 𝟭⇘G⇙ ∧ y ⊗⇘G⇙ x = 𝟭⇘G⇙)"</span>
+</code></pre></div>
+<p>Cmd-clicking on <code>monoid_scheme</code> jumps to the record definition a few lines above.  I figured it might be something automatically generated when the record was created, so I made a Scratch file containing this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span><span class="w"> </span><span class="s">"HOL-Algebra.Congruence"</span><span class="w"> </span><span class="s">"HOL-Library.FuncSet"</span>
+<span class="k">begin</span>
+<span class="k">record</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">zonoid</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="s">"'a partial_object"</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">mult</span><span class="w">    </span><span class="o">::</span><span class="w"> </span><span class="s">"['a, 'a] ⇒ 'a"</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">‹⊗ı›</span><span class="w"> </span><span class="n">70</span><span class="o">)</span>
+<span class="w">  </span><span class="n">one</span><span class="w">     </span><span class="o">::</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="o">(</span><span class="s">‹𝟭ı›</span><span class="o">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>A query with <code>name: zonoid</code> then yielded many many things, but not <code>zonoid_scheme</code>. I also grepped through the HOL sources for <code>monoid_scheme</code> and saw it used a lot, but nothing that looked like a definition. </p>
+<p>As I'm trying to define a notion of isomorphism for affine and projective planes (locales that I've definied), I was hoping to mimic the definition of <code>hom</code> from the Algebra theories, but go stuck here. Can someone tell me where <code>monoid_scheme</code> came from, and what it means?</p>
+
+
+
+<a name="509466617"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Source%20for%20a%20term/near/509466617" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source.20for.20a.20term.html#509466617">(Apr 01 2025 at 14:25)</a>:</h4>
+<p>monoid is a record and monoid_scheme is the definition generated by the record package</p>
+
+
+
+<a name="509483722"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Source%20for%20a%20term/near/509483722" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source.20for.20a.20term.html#509483722">(Apr 01 2025 at 15:28)</a>:</h4>
+<p>So why, in my scratch example, does "zonoid_scheme" not show up in the search?</p>
+
+
+
+<a name="509485956"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Source%20for%20a%20term/near/509485956" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source.20for.20a.20term.html#509485956">(Apr 01 2025 at 15:36)</a>:</h4>
+<p>It is a type, not a term</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">typ</span><span class="w"> </span><span class="s">‹('a, 'b) zonoid_scheme›</span>
+</code></pre></div>
+
+
+
+<a name="509486019"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Source%20for%20a%20term/near/509486019" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Source.20for.20a.20term.html#509486019">(Apr 01 2025 at 15:37)</a>:</h4>
+<p>You can search for <code>‹_ :: (_, _) zonoid_scheme›</code> however</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

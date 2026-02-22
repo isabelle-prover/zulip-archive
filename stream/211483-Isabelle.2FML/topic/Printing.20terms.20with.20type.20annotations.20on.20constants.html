@@ -1,0 +1,247 @@
+<html>
+<head><meta charset="utf-8"><title>Printing terms with type annotations on constants · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html">Printing terms with type annotations on constants</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="563662484"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563662484" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563662484">(Dec 14 2025 at 04:10)</a>:</h4>
+<p>Hello,</p>
+<p>I am trying to print terms with type annotations. I am aware of <code>declare[[show_types]]</code> which seems to add type annotations to variables, but not constants, when printing terms. For instance, suppose the following goal is yielded by running <code>apply (induct xs)</code> on a goal involving an <code>int list</code>.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">⋀x</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">z.</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="n">⊆</span><span class="w"> </span><span class="ow">{</span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="ow">}</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">sum_list</span><span class="w"> </span><span class="o">[]</span>
+</code></pre></div>
+<p>In the proof state after the apply, the empty list <code>[]</code> has type <code>int list</code>. However, if I print out this goal with <code>declare[[show_types]]</code> enabled, I get the following.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">⋀</span><span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">y</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="w"> </span><span class="n">z</span><span class="o">::</span><span class="n">nat.</span>
+<span class="w">                  </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">                  </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">set</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="n">⊆</span><span class="w"> </span><span class="ow">{</span><span class="n">int</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">y</span><span class="o">,</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="n">z</span><span class="ow">}</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">sum_list</span><span class="w"> </span><span class="o">[]</span>
+</code></pre></div>
+<p>The problem is that there are no type annotations on the conclusion <code>0 ≤ sum_list []</code>, so this cannot be proved (e.g. if I insert this string into a "have" statement verbatim).</p>
+<p>Is there any way to print type annotations on everything, including constants?</p>
+
+
+
+<a name="563682694"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563682694" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563682694">(Dec 14 2025 at 11:37)</a>:</h4>
+<p>You can get the type information for constants by control-hovering over the constant in question. (This might not work as expected when fancy syntax is used.)</p>
+<p>There is also <code>[[show_consts]]</code>. It is not ideal because it prints the type of constants below the goal, so if a constant occurs more than once you'll end up having to guess. But it does help spotting unexpected type variables.</p>
+
+
+
+<a name="563682745"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563682745" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563682745">(Dec 14 2025 at 11:37)</a>:</h4>
+<p>(Not sure why this is a question on the Isabelle/ML channel BTW.)</p>
+
+
+
+<a name="563707246"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563707246" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563707246">(Dec 14 2025 at 19:19)</a>:</h4>
+<p>Sorry, let me clarify a bit.</p>
+<p>I am trying to build a tool that takes a goal from an apply-style proof and prints it out in Isar. For instance, if <code>P</code> is a subgoal arising in an apply-style proof, it should become <code>have "P"</code> within some Isar that gets printed to the user. The problem is that without type annotations on constants, some goals become unprovable when printed in Isar (e.g., in my example above, in the term <code>0 ≤ sum_list []</code>, the type of <code>[]</code> does not match the type of <code>xs</code>).</p>
+<p>In ML, I'm using <code>Config.put (Printer.show_types) true</code> to enable the printing of types, and I'm using <code>(Syntax.pretty_term ctxt) |&gt; Pretty.string_of</code> to convert terms to strings. Per your suggestions, I tried using <code>Config.put (show_consts) true</code> as well, but that still does not seem to print types on constants.</p>
+
+
+
+<a name="563710367"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563710367" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563710367">(Dec 14 2025 at 20:28)</a>:</h4>
+<p>What you are describings sounds a lot like <a href="https://isabelle.in.tum.de/library/HOL/HOL-ex/Sketch_and_Explore.html">Sketch</a></p>
+
+
+
+<a name="563710437"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563710437" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563710437">(Dec 14 2025 at 20:30)</a>:</h4>
+<p>But <code>explore</code> has the same problem</p>
+
+
+
+<a name="563710469"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563710469" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563710469">(Dec 14 2025 at 20:30)</a>:</h4>
+<p>As a side-remark, I have my own version of explore and never had a problem with types, but that might be due to my goals.</p>
+
+
+
+<a name="563787916"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/563787916" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#563787916">(Dec 15 2025 at 10:43)</a>:</h4>
+<p><span class="user-mention" data-user-id="694924">@Sage Binder</span> we support several versions of what you want to do in our repository <a href="https://github.com/ChengsongTan/super_sketch_and_super_fix">super_sketch_and_super_fix</a> inspired on the Sketch tool Mathias linked above. You can see some examples in the <a href="https://github.com/ChengsongTan/super_sketch_and_super_fix/blob/main/Super_Sketch/Try_Sketch.thy">Try_Sketch.thy</a></p>
+
+
+
+<a name="564109261"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/564109261" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#564109261">(Dec 16 2025 at 18:35)</a>:</h4>
+<p><span class="user-mention" data-user-id="441006">@Jonathan Julian Huerta y Munive</span> Thanks, this looks promising! I'll take a look. Also, the Super Sketch and Super Fix tools look cool <span aria-label="slight smile" class="emoji emoji-1f642" role="img" title="slight smile">:slight_smile:</span></p>
+
+
+
+<a name="570487884"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570487884" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570487884">(Jan 28 2026 at 07:49)</a>:</h4>
+<p><span class="user-mention" data-user-id="441006">@Jonathan Julian Huerta y Munive</span>  Thank you for helping me with this question last month! I have been using the following function to print types, which generally works well.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">print_term</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">singleton</span><span class="w"> </span><span class="o">(</span><span class="n">Syntax.uncheck_terms</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span>
+<span class="w">    </span><span class="n">#&gt;</span><span class="w"> </span><span class="n">Sledgehammer_Isar_Annotate.annotate_types_in_term</span><span class="w"> </span><span class="n">ctxt</span>
+<span class="w">    </span><span class="n">#&gt;</span><span class="w"> </span><span class="n">Print_Mode.setmp</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="o">(</span><span class="n">Syntax.unparse_term</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">#&gt;</span><span class="w"> </span><span class="n">Pretty.string_of</span><span class="o">)</span>
+<span class="w">    </span><span class="n">#&gt;</span><span class="w"> </span><span class="n">Sledgehammer_Util.simplify_spaces</span>
+</code></pre></div>
+<p>However, occasionally I encounter a goal where meta quantifiers get printed as <code>Pure.all</code> instead of the usual syntax. This seems sporadic and I really have no idea what causes it. For example, the goal</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">⋀x</span><span class="w"> </span><span class="n">y.</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">           </span><span class="n">j</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">           </span><span class="n">i</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">           </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">           </span><span class="n">y</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">⟹</span>
+<span class="w">           </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+</code></pre></div>
+<p>gets printed as</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Pure.all</span><span class="w"> </span><span class="o">((</span><span class="n">λx</span><span class="o">::</span><span class="n">nat.</span><span class="w"> </span><span class="o">(</span><span class="n">⋀y</span><span class="o">::</span><span class="n">nat.</span><span class="w"> </span><span class="n">⟦</span><span class="o">(</span><span class="n">i</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="o">(</span><span class="n">n</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="n">;</span><span class="w"> </span><span class="o">(</span><span class="n">j</span><span class="o">::</span><span class="n">nat</span><span class="o">)</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">j;</span><span class="w"> </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="n">n;</span><span class="w"> </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">i;</span><span class="w"> </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">j;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">i;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="n">≠</span><span class="w"> </span><span class="n">j⟧</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="n">transpos</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">))::</span><span class="n">nat</span><span class="w"> </span><span class="n">⇒</span><span class="w"> </span><span class="kt">prop</span><span class="o">)</span>
+</code></pre></div>
+<p>(This is a random goal from Algebra1.thy in the Group-Ring-Module AFP entry; I wish I could find a shorter example but like I said, the problem is seemingly random). Notably, this term with <code>Pure.all</code> does not type check, with the error: <code>Operator:  Trueprop :: bool ⇒ prop</code>. Manually changing the <code>Pure.all</code> to the usual <code>⋀</code> syntax fixes the type issue.</p>
+<p>I wonder if you have ever encountered this with Super Sketch, or if you have any idea how to solve this. Perhaps a custom version of the <code>Sledgehammer_Isar_Annotate.annotate_types_in_term</code> function is necessary?</p>
+
+
+
+<a name="570507523"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570507523" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570507523">(Jan 28 2026 at 09:29)</a>:</h4>
+<p>I think <code>annotate_types</code> introduced a <code>_type_constraint_</code> constant in your example. You can strip these constraints with <code>Type.strip_constraints</code>. Maybe the following modification to your code works for your applications? </p>
+<div class="codehilite" data-code-language="Standard ML"><pre><span></span><code><span class="kr">fun</span> <span class="nf">print_term</span> <span class="n">ctxt</span> <span class="p">=</span>
+  <span class="n">singleton</span> <span class="p">(</span><span class="nn">Syntax</span><span class="p">.</span><span class="n">uncheck_terms</span> <span class="n">ctxt</span><span class="p">)</span>
+  <span class="n">#&gt;</span> <span class="nn">Sledgehammer_Isar_Annotate</span><span class="p">.</span><span class="n">annotate_types_in_term</span> <span class="n">ctxt</span>
+  <span class="n">#&gt;</span> <span class="nn">Type</span><span class="p">.</span><span class="n">strip_constraints</span> <span class="cm">(*new line*)</span>
+  <span class="n">#&gt;</span> <span class="nn">Print_Mode</span><span class="p">.</span><span class="n">setmp</span> <span class="p">[]</span> <span class="p">(</span><span class="nn">Syntax</span><span class="p">.</span><span class="n">unparse_term</span> <span class="n">ctxt</span> <span class="n">#&gt;</span> <span class="nn">Pretty</span><span class="p">.</span><span class="n">string_of</span><span class="p">)</span>
+  <span class="n">#&gt;</span> <span class="nn">Sledgehammer_Util</span><span class="p">.</span><span class="n">simplify_spaces</span>
+</code></pre></div>
+
+
+
+<a name="570523072"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570523072" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570523072">(Jan 28 2026 at 10:44)</a>:</h4>
+<p><span class="user-mention" data-user-id="694924">@Sage Binder</span> I tried your goal with the <code>Sketcher</code> functions and everything worked as expected on our side. I also tried Kevin's suggestion and that seems to do the fix for your goal:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="w"> </span><span class="s">‹</span>
+<span class="s">fun print_term ctxt =</span>
+<span class="s">    singleton (Syntax.uncheck_terms ctxt)</span>
+<span class="s">    #&gt; Sledgehammer_Isar_Annotate.annotate_types_in_term ctxt</span>
+<span class="s">    #&gt; Print_Mode.setmp [] (Syntax.unparse_term ctxt #&gt; Pretty.string_of)</span>
+<span class="s">    #&gt; Sledgehammer_Util.simplify_spaces;</span>
+
+<span class="s">fun print_term' ctxt =</span>
+<span class="s">  singleton (Syntax.uncheck_terms ctxt)</span>
+<span class="s">  #&gt; Sledgehammer_Isar_Annotate.annotate_types_in_term ctxt</span>
+<span class="s">  #&gt; Type.strip_constraints (*new line*)</span>
+<span class="s">  #&gt; Print_Mode.setmp [] (Syntax.unparse_term ctxt #&gt; Pretty.string_of)</span>
+<span class="s">  #&gt; Sledgehammer_Util.simplify_spaces;</span>
+<span class="s">›</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"⋀x y. i ≤ n ⟹</span>
+<span class="s">           j ≤ n ⟹</span>
+<span class="s">           i ≠ j ⟹</span>
+<span class="s">           transpos i j y ≤ n ⟹</span>
+<span class="s">           y ≤ n ⟹</span>
+<span class="s">           transpos i j y ≠ i ⟹ transpos i j y ≠ j ⟹ y ≠ i ⟹ y ≠ j ⟹ transpos i j y = y"</span>
+<span class="w">  </span><span class="kt">ML_val</span><span class="w"> </span><span class="s">‹</span>
+<span class="s">val t1 = print_term </span><span class="ss">\&lt;^context&gt;</span><span class="s"> (Thm.prop_of (#goal (Proof.goal (Toplevel.proof_of @{Isar.state}))));</span>
+<span class="s">val t1 = print_term' </span><span class="ss">\&lt;^context&gt;</span><span class="s"> (Thm.prop_of (#goal (Proof.goal (Toplevel.proof_of @{Isar.state}))));</span>
+<span class="s">val _ =  Sketcher.sketch_goals_at Sketcher.FIX_SHOW 2 @{Isar.state}</span>
+<span class="s">  |&gt; Sketcher.make_skeleton 0 "-"</span>
+<span class="s">  |&gt; Output.information o Active.sendback_markup_command</span>
+<span class="s">›</span>
+</code></pre></div>
+
+
+
+<a name="570653719"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570653719" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570653719">(Jan 28 2026 at 20:27)</a>:</h4>
+<p>It appears that Kevin's solution does prevent the <code>Pure.all</code> issue, but it also removes type annotations on constants, which runs into the initial issue I described in this thread. It seems the <code>Sketcher.make_skeleton</code> actually has the same issue. Going back to the original example I presented:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"⋀x y z.</span>
+<span class="s">    0 &lt; int x</span>
+<span class="s">    ⟹ 0 &lt; int y</span>
+<span class="s">    ⟹ 0 &lt; int z</span>
+<span class="s">    ⟹ set [] ⊆ {int x, int y, int z}</span>
+<span class="s">    ⟹ (0::int) ≤ sum_list []"</span>
+<span class="w">  </span><span class="kt">ML_val</span><span class="w"> </span><span class="s">‹</span>
+<span class="s">val t1 = print_term </span><span class="ss">\&lt;^context&gt;</span><span class="s"> (Thm.prop_of (#goal (Proof.goal (Toplevel.proof_of @{Isar.state}))));</span>
+<span class="s">val t2 = print_term' </span><span class="ss">\&lt;^context&gt;</span><span class="s"> (Thm.prop_of (#goal (Proof.goal (Toplevel.proof_of @{Isar.state}))));</span>
+<span class="s">val _ =  Sketcher.sketch_goals_at Sketcher.FIX_SHOW 2 @{Isar.state}</span>
+<span class="s">  |&gt; Sketcher.make_skeleton 0 "-"</span>
+<span class="s">  |&gt; Output.information o Active.sendback_markup_command</span>
+<span class="s">›</span>
+<span class="k">proof</span><span class="o">-</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat"</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"0 &lt; int x"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="s">"0 &lt; int y"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="s">"0 &lt; int z"</span>
+<span class="w">    </span><span class="kp">and</span><span class="w"> </span><span class="s">"set [] ⊆ {int x, int y, int z}"</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="n">goal0</span><span class="o">:</span><span class="w"> </span><span class="s">"0 ≤ sum_list []"</span><span class="w"> </span><span class="c">(* 0 :: 'a, but should be int*)</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>The <code>goal0</code> will not be provable because <code>0</code> needs to be annotated to be an int.</p>
+<p>It seems that the type constraints which enable type annotations on constants (what I want) also causes the meta quantifier to (sometimes) be printed as <code>Pure.all</code> (what I don't want).</p>
+
+
+
+<a name="570654850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570654850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570654850">(Jan 28 2026 at 20:33)</a>:</h4>
+<p>I'm wondering if I can modify the <code>strip_constraints</code> function to only affect the particular constraint that is causing the <code>Pure.all</code> issue. I guess it is something involving <code>prop</code>?</p>
+
+
+
+<a name="570658080"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570658080" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570658080">(Jan 28 2026 at 20:54)</a>:</h4>
+<p>Ok, I've modified <code>strip_constraints</code> to only strip constraints that contain <code>"prop"</code>. I guess this is a bit hacky, but I think it will work for my purposes.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span>
+<span class="w">  </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="o">((</span><span class="n">c</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">Const</span><span class="w"> </span><span class="o">(</span><span class="s">"_type_constraint_"</span><span class="o">,</span><span class="w"> </span><span class="n">ty</span><span class="o">))</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="n">t</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="kp">if</span><span class="w"> </span><span class="n">String.isSubstring</span><span class="w"> </span><span class="s">"prop"</span><span class="w"> </span><span class="o">(</span><span class="n">Syntax.string_of_typ</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">ty</span><span class="o">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">t</span>
+<span class="w">    </span><span class="n">else</span>
+<span class="w">      </span><span class="n">c</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">t</span>
+<span class="o">|</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="o">(</span><span class="n">t</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="n">u</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">$</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">u</span>
+<span class="o">|</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="o">(</span><span class="n">Abs</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="w"> </span><span class="n">T</span><span class="o">,</span><span class="w"> </span><span class="n">t</span><span class="o">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Abs</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="w"> </span><span class="n">T</span><span class="o">,</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">t</span><span class="o">)</span>
+<span class="o">|</span><span class="w"> </span><span class="n">strip_prop_constraints</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a;</span>
+</code></pre></div>
+
+
+
+<a name="570662708"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570662708" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570662708">(Jan 28 2026 at 21:24)</a>:</h4>
+<p>I suspect that there will be similar issues (e.g. with other binders that don't live in <code>prop</code>) that you will miss (e.g. <code>HOL.All</code>).</p>
+<p>But pushing that aside, here's a more elegant way to check if a type contains <code>prop</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="s">‹</span>
+<span class="s">  val contains_prop = exists_subtype (can </span><span class="ss">\&lt;^Type_fn&gt;</span><span class="s">‹prop =&gt; ‹()››)</span>
+<span class="s">  val _ = @{print} (contains_prop @{typ "bool ⇒ (prop ⇒ bool)"})</span>
+<span class="s">  val _ = @{print} (contains_prop @{typ "bool ⇒ (bool ⇒ bool)"})</span>
+<span class="s">›</span>
+</code></pre></div>
+
+
+
+<a name="570702601"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/570702601" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#570702601">(Jan 29 2026 at 04:13)</a>:</h4>
+<p>After further testing, I did indeed encounter similar issues with <code>HOL.All</code> (though it seems much rarer, for some reason). Luckily, for my purposes this is fine, since <code>have "All (λx. [...])"</code> does not result in a type error like it does with <code>Pure.all</code>.</p>
+<p>Thank you all for the help!</p>
+
+
+
+<a name="571010924"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Printing%20terms%20with%20type%20annotations%20on%20constants/near/571010924" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Bartl <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Printing.20terms.20with.20type.20annotations.20on.20constants.html#571010924">(Jan 30 2026 at 12:09)</a>:</h4>
+<p>The issue with <code>Pure.all</code> seems to be a problem with <code>Sledgehammer_Isar_Annotate.annotate_types_in_term</code>. I will try to look into it, when I have time. It seems to happen if <code>x</code> (the first variable) is not used. Here is a minimal example (gets printed as <code>Pure.all ((λx. (⋀y. y = y))::'a ⇒ prop)</code>):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="s">‹@{term "⋀x y. y = y"}</span>
+<span class="s">  |&gt; singleton (Syntax.uncheck_terms @{context})</span>
+<span class="s">  |&gt; Sledgehammer_Isar_Annotate.annotate_types_in_term @{context}</span>
+<span class="s">  |&gt; Syntax.unparse_term (Config.put show_markup false (Config.put show_types false @{context}))›</span>
+</code></pre></div>
+<p>In your <code>print_term</code> function, <code>Print_Mode.setmp [] (Syntax.unparse_term ctxt #&gt; Pretty.string_of)</code> should nowadays be replaced by <code>Syntax.unparse_term ctxt #&gt; Pretty.pure_string_of</code> (as done in <a href="https://isabelle.in.tum.de/library/HOL/HOL-ex/Sketch_and_Explore.html">Sketch</a> and <a href="https://isabelle.in.tum.de/library/HOL/HOL/ISABELLE_HOME/src/HOL/Tools/Sledgehammer/sledgehammer_isar_proof.ML.html">Sledgehammer_Isar_Proof</a>).</p>
+<p>Concerning your original problem annotating constants with types: <code>Sledgehammer_Isar_Annotate</code> introduces type annotations where necessary, but you have to configure the printer accordingly, such that these are displayed: Sketch and Sledgehammer_Isar_Proof use <code>[[show_markup=false, show_types=false]]</code>, which works for variables, but does not display type annotations on constants. Here is a minimal example, which is displayed as <code>0</code> instead of <code>0::nat</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">ML</span><span class="s">‹@{term "0::nat"}</span>
+<span class="s">  |&gt; singleton (Syntax.uncheck_terms @{context})</span>
+<span class="s">  |&gt; Sledgehammer_Isar_Annotate.annotate_types_in_term @{context}</span>
+<span class="s">  |&gt; Syntax.unparse_term (Config.put show_markup false (Config.put show_types false @{context}))›</span>
+</code></pre></div>
+<p>If you replace <code>0</code> by <code>x</code>, it is displayed as <code>x::nat</code>. If you use <code>true</code> instead of <code>false</code> (i.e., using <code>[[show_types]]</code>), <code>0</code> is displayed as <code>0::nat</code>, but <code>x</code> is displayed as <code>(x::nat)::nat</code> which works but has an unnecessary second annotation.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

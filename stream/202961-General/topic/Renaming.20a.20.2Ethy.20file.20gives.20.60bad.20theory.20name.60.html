@@ -1,0 +1,191 @@
+<html>
+<head><meta charset="utf-8"><title>Renaming a .thy file gives `bad theory name` · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html">Renaming a .thy file gives `bad theory name`</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="508004207"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508004207" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508004207">(Mar 25 2025 at 12:07)</a>:</h4>
+<p>When renaming a file, or changing the capitalization (and then of course also adapting the theory name), Isabelle will complain <br>
+`bad theory name [new name] for file [old file name.thy].<br>
+For Isabelle/jEdit it was sufficient to delete the corresponding ~ file.<br>
+For Isabelle/Vscode i still get the error, even after a restart of Isabelle/Vscode.<br>
+What can i do?</p>
+
+
+
+<a name="508004529"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508004529" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508004529">(Mar 25 2025 at 12:08)</a>:</h4>
+<p>logging out didn't help either.</p>
+
+
+
+<a name="508005414"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508005414" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508005414">(Mar 25 2025 at 12:13)</a>:</h4>
+<p>I think your error is somewhere else, Isabelle/VSCode doesn't try to remember a file name.</p>
+
+
+
+<a name="508005476"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508005476" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508005476">(Mar 25 2025 at 12:13)</a>:</h4>
+<p>perhaps you are loading a session and the name is in the ROOT file?</p>
+
+
+
+<a name="508005493"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508005493" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508005493">(Mar 25 2025 at 12:13)</a>:</h4>
+<p>Deleting the file, closing Isabelle/VsCode, opening Isabelle/Vscode, then restoring the theory (in my case i did it via git) worked</p>
+
+
+
+<a name="508005897"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508005897" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508005897">(Mar 25 2025 at 12:15)</a>:</h4>
+<p>idk what a session is, but the header of my file looks like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Chomsky_Schuetzenberger</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="s">"../CFG"</span><span class="w"> </span><span class="s">"../CFL"</span><span class="w"> </span><span class="s">"../Parse_Tree"</span><span class="w"> </span><span class="s">"Finite_Automata_Not_HF"</span><span class="w"> </span><span class="s">"$AFP/Regular-Sets/Regexp_Constructions"</span>
+<span class="k">begin</span>
+</code></pre></div>
+
+
+
+<a name="508006033"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508006033" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508006033">(Mar 25 2025 at 12:16)</a>:</h4>
+<p>I also use Isabelle/vscodes <code>Open folder</code> instead of only this one file</p>
+
+
+
+<a name="508007914"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508007914" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508007914">(Mar 25 2025 at 12:24)</a>:</h4>
+<p>Maybe there is a problem in your file system with case sensitivity?</p>
+
+
+
+<a name="508008042"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508008042" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508008042">(Mar 25 2025 at 12:25)</a>:</h4>
+<p>E.g. on Macos file names are case insensitive so maybe your change didn't really work?</p>
+
+
+
+<a name="508008448"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508008448" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508008448">(Mar 25 2025 at 12:27)</a>:</h4>
+<p>I have confirmed, that this also happens, when one only opens one file via Vscode.<br>
+What works when not using the <code>open folder</code> feature, is to close all editors of the renamed file, and then restart vscode</p>
+
+
+
+<a name="508008556"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508008556" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508008556">(Mar 25 2025 at 12:27)</a>:</h4>
+<p>I am using macOS atm, but im pretty sure i also had such a problem on windows before.</p>
+
+
+
+<a name="508008681"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508008681" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508008681">(Mar 25 2025 at 12:28)</a>:</h4>
+<p>also i renamed the file using github, so idk what happens on macOS then</p>
+
+
+
+<a name="508008720"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508008720" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508008720">(Mar 25 2025 at 12:28)</a>:</h4>
+<p>Let me hop on windows real quick</p>
+
+
+
+<a name="508008809"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508008809" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508008809">(Mar 25 2025 at 12:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="768294">Moritz R</span> <a href="#narrow/channel/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60/near/508008681">said</a>:</p>
+<blockquote>
+<p>also i renamed the file using github, so idk what happens on macOS then</p>
+</blockquote>
+<p>This might be the problem -- no idea what git does in this situation</p>
+
+
+
+<a name="508009147"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508009147" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508009147">(Mar 25 2025 at 12:30)</a>:</h4>
+<p>Off-topic: Usually imports are session-qualified rather than using paths with environment variables</p>
+
+
+
+<a name="508009869"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508009869" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508009869">(Mar 25 2025 at 12:33)</a>:</h4>
+<blockquote>
+<p>Off-topic: Usually imports are session-qualified rather than using paths with environment variables</p>
+</blockquote>
+<p>i'm not sure what session-qualified means, but you mean i shouldn't use $AFP ? What is a better option?</p>
+
+
+
+<a name="508010722"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508010722" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508010722">(Mar 25 2025 at 12:37)</a>:</h4>
+<p>"&lt;sessionname&gt;.&lt;theoryname&gt;"</p>
+
+
+
+<a name="508011280"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508011280" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508011280">(Mar 25 2025 at 12:40)</a>:</h4>
+<p>I am actually surprised that the import with $AFP still work. Isabelle is now very strict on checking that you are using the session-qualified right if you have a ROOT file (and you should have one).</p>
+
+
+
+<a name="508012522"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508012522" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508012522">(Mar 25 2025 at 12:46)</a>:</h4>
+<p>Ok, so on windows and macOS, if you use finder/explorer to rename the file everything works as expected.</p>
+<p>On both systems, pulling a rename - e.g. someone else renamed it, pushed it into a github and you pulled it -<br>
+will get the mentioned error.</p>
+<hr>
+<p><strong>FIX:</strong><br>
+What seems to work reliably, is to use <br>
+<code>File -&gt; Close Folder</code>, <strong>then</strong> restart Isabelle/VSCode.<br>
+You might have to select the file again, as it will still have the old file in the editor panel (idk where it saves that).</p>
+<hr>
+
+
+
+<a name="508012788"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508012788" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508012788">(Mar 25 2025 at 12:47)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60/near/508011280">said</a>:</p>
+<blockquote>
+<p>I am actually surprised that the import with $AFP still work. Isabelle is now very strict on checking that you are using the session-qualified right if you have a ROOT file (and you should have one).</p>
+</blockquote>
+<p>Well i dont know what a root file is, so i guess thats why my imports work?</p>
+
+
+
+<a name="508013337"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508013337" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508013337">(Mar 25 2025 at 12:50)</a>:</h4>
+<p><a href="https://isabelle.in.tum.de/doc/system.pdf">https://isabelle.in.tum.de/doc/system.pdf</a>, chapter 2; although the two slides from <a href="http://cl-informatik.uibk.ac.at/teaching/ss24/itpIsa/slides/12x1.pdf">http://cl-informatik.uibk.ac.at/teaching/ss24/itpIsa/slides/12x1.pdf</a> are probably as useful as the description in the system manual</p>
+
+
+
+<a name="508016115"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508016115" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508016115">(Mar 25 2025 at 13:02)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="768294">Moritz R</span> <a href="#narrow/channel/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60/near/508012522">said</a>:</p>
+<blockquote>
+<p>Ok, so on windows and macOS, if you use finder/explorer to rename the file everything works as expected.</p>
+<p>On both systems, pulling a rename - e.g. someone else renamed it, pushed it into a github and you pulled it -<br>
+will get the mentioned error.</p>
+<hr>
+<p><strong>FIX:</strong><br>
+What seems to work reliably, is to use <br>
+<code>File -&gt; Close Folder</code>, <strong>then</strong> restart Isabelle/VSCode.<br>
+You might have to select the file again, as it will still have the old file in the editor panel (idk where it saves that).</p>
+<hr>
+</blockquote>
+<p>This looks like a VSCode problem then, where it keeps the file cached when in reality it was changed on disk but only if the inode didn't change. This wouldn't have anything to do with Isabelle except that wer're still using an older version -- maybe it's fixed on newer VSCode versions</p>
+
+
+
+<a name="508046632"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Renaming%20a%20.thy%20file%20gives%20%60bad%20theory%20name%60/near/508046632" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Moritz R <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60.html#508046632">(Mar 25 2025 at 14:54)</a>:</h4>
+<p>Yes, looks a lot like this issue, that isn't fixed in our version <a href="https://github.com/microsoft/vscode/issues/161743">https://github.com/microsoft/vscode/issues/161743</a></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

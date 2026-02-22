@@ -1,0 +1,57 @@
+<html>
+<head><meta charset="utf-8"><title>build_task not working · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/build_task.20not.20working.html">build_task not working</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="508535551"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/build_task%20not%20working/near/508535551" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/build_task.20not.20working.html#508535551">(Mar 27 2025 at 14:34)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Here’s the output.</p>
+<p>Host "of4-proof_classic": init ...<br>
+Host "of3-proof_classic": init ...<br>
+Host "of2-proof_classic": init ...<br>
+Host "of1-proof_classic": init ...<br>
+*** Batch entry 0 INSERT INTO "isabelle_build_sessions" VALUES (('HOL-Matrix_LP'), ('HOL'), ('Pure<br>
+*** HOL'), (''), ('3388d67c284096209f11b169986ae204ef7cf331 &lt;meta_info&gt;<br>
+*** e512a13d839ea34e1dc95b4853b580c309500b04 ~~/src/HOL/ATP.thy<br>
+*** fb5c04ec4758211546d540118f08450c5d57ab05 ~~/src/Tools/subtyping.ML<br>
+*** 97f6449e53d782a57a5af30e8df922ac66e4f9da ~~/src/Tools/try.ML<br>
+*** '), ('0'::int8), ('0'::int8), '\x'::bytea, ('af33ee54-8201-4e9e-bc5b-03a6b9474d55')) was aborted: ERROR: duplicate key value violates unique constraint "isabelle_build_sessions_pkey"<br>
+***   Detail: Key (name)=(HOL-Matrix_LP) already exists.  Call getNextException to see other errors in the batch.</p>
+
+
+
+<a name="508539283"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/build_task%20not%20working/near/508539283" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/build_task.20not.20working.html#508539283">(Mar 27 2025 at 14:48)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+That is due to a previous build leaving the build database in an <br>
+inconsistent state (it is resetted daily but I've now done it manually).</p>
+<p>Perhaps we could detect if there is a pending but inactive build in the <br>
+database (and remove the remnants), before attempting to start a new build?</p>
+<p>Fabian</p>
+<p>On 3/27/25 15:33, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>Here’s the output.</p>
+<p>Host "of4-proof_classic": init ...<br>
+Host "of3-proof_classic": init ...<br>
+Host "of2-proof_classic": init ...<br>
+Host "of1-proof_classic": init ...<br>
+*** Batch entry 0 INSERT INTO "isabelle_build_sessions" VALUES (('HOL-Matrix_LP'), ('HOL'), ('Pure<br>
+*** HOL'), (''), ('3388d67c284096209f11b169986ae204ef7cf331 &lt;meta_info&gt;<br>
+*** e512a13d839ea34e1dc95b4853b580c309500b04 ~~/src/HOL/ATP.thy<br>
+*** fb5c04ec4758211546d540118f08450c5d57ab05 ~~/src/Tools/subtyping.ML<br>
+*** 97f6449e53d782a57a5af30e8df922ac66e4f9da ~~/src/Tools/try.ML<br>
+*** '), ('0'::int8), ('0'::int8), '\x'::bytea, ('af33ee54-8201-4e9e-bc5b-03a6b9474d55')) was aborted: ERROR: duplicate key value violates unique constraint "isabelle_build_sessions_pkey"<br>
+***   Detail: Key (name)=(HOL-Matrix_LP) already exists.  Call getNextException to see other errors in the batch.</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

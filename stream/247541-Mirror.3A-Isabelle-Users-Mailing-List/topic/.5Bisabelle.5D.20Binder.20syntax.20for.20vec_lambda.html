@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Binder syntax for vec_lambda · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Binder.20syntax.20for.20vec_lambda.html">[isabelle] Binder syntax for vec_lambda</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="515673305"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Binder%20syntax%20for%20vec_lambda/near/515673305" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Binder.20syntax.20for.20vec_lambda.html#515673305">(May 02 2025 at 09:22)</a>:</h4>
+<p>From: Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+In</p>
+<p><a href="https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/Fixed_Length_Vector/Fixed_Length_Vector.thy?ref_type=heads#L272">https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/Fixed_Length_Vector/Fixed_Length_Vector.thy?ref_type=heads#L272</a></p>
+<p>there is</p>
+<blockquote>
+<p>lift_definition vec_lambda :: ‹('b :: index ⇒ 'a) ⇒ 'a ^ 'b› (binder ‹χ› 10)<br>
+  is ‹λf. map f indexes› by simp</p>
+</blockquote>
+<p>The term ‹vec_lambda (λv. f v i)› then prints as ‹χv. f v i›, which does <br>
+not parse again, but ‹χ v. f v i› does.</p>
+<p>The cause might be that χ and v share the same lexical category.</p>
+<p>What to do here?  My first idea would be to change the syntax to (binder <br>
+‹χ › 10) but there might be more behind it.</p>
+<p>Florian</p>
+<p><a href="/user_uploads/14278/7c8i7DEZ-WKcbs2TjR73kPXq/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/AF5VV4mZcxZCKVtjJ48GbS9-/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="519562416"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Binder%20syntax%20for%20vec_lambda/near/519562416" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Binder.20syntax.20for.20vec_lambda.html#519562416">(May 21 2025 at 09:15)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 02/05/2025 11:21, Florian Haftmann wrote:</p>
+<blockquote>
+<p>In</p>
+<p><a href="https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/">https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/</a> <br>
+Fixed_Length_Vector/Fixed_Length_Vector.thy?ref_type=heads#L272</p>
+<p>there is</p>
+<blockquote>
+<p>lift_definition vec_lambda :: ‹('b :: index ⇒ 'a) ⇒ 'a ^ 'b› (binder ‹χ› 10)<br>
+  is ‹λf. map f indexes› by simp</p>
+</blockquote>
+<p>The term ‹vec_lambda (λv. f v i)› then prints as ‹χv. f v i›, which does not <br>
+parse again, but ‹χ v. f v i› does.</p>
+<p>The cause might be that χ and v share the same lexical category.</p>
+</blockquote>
+<p>The problem is indeed that greek and latin letters may be freely mixed to form <br>
+an identifier. That issue was swept under the carpet many decades ago by <br>
+treating \&lt;lambda&gt; as a non-letter. So it happens to work there, but in <br>
+generality it doesn't.</p>
+<p>The usual workaround in library theories is to use an extra space like this:</p>
+<blockquote>
+<p>My first idea would be to change the syntax to (binder ‹χ › <br>
+10) but there might be more behind it.</p>
+</blockquote>
+<p>I have no better idea right now. It falls into the category "our bad habits <br>
+have become best practices".</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

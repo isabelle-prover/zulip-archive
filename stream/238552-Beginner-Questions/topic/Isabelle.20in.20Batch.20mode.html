@@ -1,0 +1,77 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle in Batch mode · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html">Isabelle in Batch mode</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="504144603"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504144603" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504144603">(Mar 07 2025 at 17:18)</a>:</h4>
+<p>I’m working on automating some reasoning tasks in Isabelle and looking to efficiently run and verify multiple theory files without relying on the interactive GUI (Batch mode?). My goal is to streamline proof execution and analyze results at scale.</p>
+<p>I’ve explored Isabelle’s batch mode using <code>isabelle build -D</code>  and tested some small theory files, but I’m looking for <strong>best practices</strong> on:</p>
+<ul>
+<li>Running <strong>automated proofs efficiently</strong> in batch mode.</li>
+<li>Generating <strong>logs or structured proof output</strong> for analysis.</li>
+<li>Handling <strong>proof method failures</strong> that occur in batch mode but not in interactive mode.</li>
+<li>Optimizing batch execution for larger sets of theory files.</li>
+</ul>
+<p>I’d love to hear from anyone who has experience using batch mode for automation. Are there any <strong>recommended workflows, debugging strategies, or useful resources</strong> for setting up batch execution effectively?</p>
+
+
+
+<a name="504160817"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504160817" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504160817">(Mar 07 2025 at 18:44)</a>:</h4>
+<blockquote>
+<p>Handling proof method failures that occur in batch mode but not in interactive mode.</p>
+</blockquote>
+<p>That should not happen</p>
+
+
+
+<a name="504161291"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504161291" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504161291">(Mar 07 2025 at 18:47)</a>:</h4>
+<blockquote>
+<p>Optimizing batch execution for larger sets of theory files.</p>
+</blockquote>
+<p>You are limited by two things: the number of sessions you run in parallel (usually, the limit is given by your CPU/RAM) and the number of proofs you can run in parallel within your theory and the slowest proof path (usually the limit is given by your theory, but improving this is really really hard)</p>
+
+
+
+<a name="504184086"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504184086" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504184086">(Mar 07 2025 at 21:04)</a>:</h4>
+<p>Thanks, that makes sense. Where can I learn more about this?</p>
+
+
+
+<a name="504265989"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504265989" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504265989">(Mar 08 2025 at 11:21)</a>:</h4>
+<p>I would like to mention isabelle also supports distributed builds. Generally any paper by Makarius <a href="https://files.sketis.net/wenzel_bib.html">https://files.sketis.net/wenzel_bib.html</a> about parallel/ asynchronous would probably be relevant.</p>
+
+
+
+<a name="504347873"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504347873" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sana I. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504347873">(Mar 09 2025 at 03:45)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="714722">irvin</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode/near/504265989">said</a>:</p>
+<blockquote>
+<p>I would like to mention isabelle also supports distributed builds. Generally any paper by Makarius <a href="https://files.sketis.net/wenzel_bib.html">https://files.sketis.net/wenzel_bib.html</a> about parallel/ asynchronous would probably be relevant.</p>
+</blockquote>
+<p>Thank you, this is helpful.</p>
+
+
+
+<a name="504359469"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Isabelle%20in%20Batch%20mode/near/504359469" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode.html#504359469">(Mar 09 2025 at 06:21)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="874965">Sana I.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Isabelle.20in.20Batch.20mode/near/504184086">said</a>:</p>
+<blockquote>
+<p>Thanks, that makes sense. Where can I learn more about this?</p>
+</blockquote>
+<p>mostly reading the documentation of <code>isabelle build</code> and trying stuff out</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

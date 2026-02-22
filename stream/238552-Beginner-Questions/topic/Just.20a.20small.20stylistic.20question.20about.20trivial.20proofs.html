@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>Just a small stylistic question about trivial proofs · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html">Just a small stylistic question about trivial proofs</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="523372857"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Just%20a%20small%20stylistic%20question%20about%20trivial%20proofs/near/523372857" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Sage Binder <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html#523372857">(Jun 10 2025 at 21:23)</a>:</h4>
+<p>When an existing theorem directly matches a goal, which of the following is preferred?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"..."</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">my_theorem</span><span class="w"> </span><span class="ow">.</span>
+</code></pre></div>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">"..."</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">my_theorem</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="523496484"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Just%20a%20small%20stylistic%20question%20about%20trivial%20proofs/near/523496484" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html#523496484">(Jun 11 2025 at 07:30)</a>:</h4>
+<p>I prefer the latter, but that's mostly personal preference.</p>
+
+
+
+<a name="523517606"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Just%20a%20small%20stylistic%20question%20about%20trivial%20proofs/near/523517606" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html#523517606">(Jun 11 2025 at 09:26)</a>:</h4>
+<p>I try to skip those steps...</p>
+
+
+
+<a name="523517761"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Just%20a%20small%20stylistic%20question%20about%20trivial%20proofs/near/523517761" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html#523517761">(Jun 11 2025 at 09:27)</a>:</h4>
+<p><code>note H = my_theorem[of ...]</code> would also work</p>
+
+
+
+<a name="523517908"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Just%20a%20small%20stylistic%20question%20about%20trivial%20proofs/near/523517908" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html#523517908">(Jun 11 2025 at 09:28)</a>:</h4>
+<p>The rule version has the advantage to have an implicit standard applied, which can be useful to discharge assumptions</p>
+
+
+
+<a name="539992623"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Just%20a%20small%20stylistic%20question%20about%20trivial%20proofs/near/539992623" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Just.20a.20small.20stylistic.20question.20about.20trivial.20proofs.html#539992623">(Sep 17 2025 at 11:44)</a>:</h4>
+<p>There's also the "fact" method for that sort of thing. Can take a theorem as a parameter, or can figure it out automatically if there's a suitable fact in the context</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

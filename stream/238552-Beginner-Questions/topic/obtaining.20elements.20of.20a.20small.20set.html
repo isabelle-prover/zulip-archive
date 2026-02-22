@@ -1,0 +1,176 @@
+<html>
+<head><meta charset="utf-8"><title>obtaining elements of a small set · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html">obtaining elements of a small set</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="525182810"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525182810" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525182810">(Jun 21 2025 at 23:14)</a>:</h4>
+<p>Sometimes I have a proof that looks (in text) like this: </p>
+<p>"... The sets H and K overlap, and the overlap contains at least three points. Let A, B, and C denote three points in that overlap, and consider the lines AB and BC..." </p>
+<p>I tried saying something like this in Isabelle and had troubles, and trimmed it down to this example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">xx</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">U</span><span class="o">::</span><span class="s">"nat set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"card U ≥ 3"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"True"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"A ∈ U ∧ B ∈ U  ∧ A ≠ B"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">...</span>
+</code></pre></div>
+<p>(The lemma was just a way to let me get into the middle of a proof; I didn't really need to prove <code>True</code>.) </p>
+<p>For this particular <code>obtain</code>, sledgehammer suggested</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">smt</span><span class="w"> </span><span class="o">(</span><span class="n">verit</span><span class="o">,</span><span class="w"> </span><span class="n">ccfv_SIG</span><span class="o">)</span><span class="w"> </span><span class="n">Suc_le_mono</span><span class="w"> </span><span class="n">antisym</span><span class="w"> </span><span class="n">ex_card</span><span class="w"> </span><span class="n">le_add2</span><span class="w"> </span><span class="n">nat.simps</span><span class="o">(</span><span class="n">3</span><span class="o">)</span><span class="w"> </span><span class="n">numeral_3_eq_3</span><span class="w"> </span><span class="n">plus_1_eq_Suc</span><span class="w"> </span><span class="n">subset_iff</span><span class="o">)</span>
+</code></pre></div>
+<p>with a timing of 211 ms. As an alternative, I tried </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"A ∈ U ∧ B ∈ U  ∧ distinct [A, B]"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+</code></pre></div>
+<p>and got these suggestions:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="c">(* vampire, &gt; 1.0 s *)</span>
+
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">Suc_le_mono</span><span class="w"> </span><span class="n">all_not_in_conv</span><span class="w"> </span><span class="n">antisym</span><span class="w"> </span><span class="n">bot_least</span><span class="w"> </span><span class="n">bot_nat_0.extremum</span><span class="w"> </span><span class="n">card.empty</span><span class="w"> </span><span class="n">card_Suc_eq</span><span class="w"> </span><span class="n">distinct_length_2_or_more</span><span class="w"> </span><span class="n">distinct_singleton</span><span class="w"> </span><span class="n">insertI1</span><span class="w"> </span><span class="n">insert_subset</span>
+<span class="w">      </span><span class="n">numeral_3_eq_3</span><span class="w"> </span><span class="n">subsetI</span><span class="w"> </span><span class="n">zero_neq_numeral</span><span class="o">)</span>
+
+
+<span class="c">(* Isar proof, 157 msec *)</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">a1</span><span class="o">:</span><span class="w"> </span><span class="s">"⋀A B. A ∈ U ∧ B ∈ U ∧ distinct [A, B] ⟹ thesis"</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">NN</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat set ⇒ nat ⇒ nat set"</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="n">NNa</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat set ⇒ nat ⇒ nat set"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">    </span><span class="n">f2</span><span class="o">:</span><span class="w"> </span><span class="s">"∀N n. NN N n ⊆ N ∧ card (NN N n) = n ∨ ¬ n ≤ card N"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">no_types</span><span class="o">)</span><span class="w"> </span><span class="n">ex_card</span><span class="o">)</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">nn</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat set ⇒ nat set ⇒ nat"</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="n">nna</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat set ⇒ nat set ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">    </span><span class="n">f3</span><span class="o">:</span><span class="w"> </span><span class="s">"∀N Na. ((∀n. n ∈ Na ∨ n ∉ N) ∨ ¬ N ⊆ Na) ∧ (N ⊆ Na ∨ nn N Na ∉ Na ∧ nn N Na ∈ N)"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">no_types</span><span class="o">)</span><span class="w"> </span><span class="n">subset_iff</span><span class="o">)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">f4</span><span class="o">:</span><span class="w"> </span><span class="s">"3 ≠ 0"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">f5</span><span class="o">:</span><span class="w"> </span><span class="s">"∀n. ¬ 3 ≤ Suc n ∨ Suc (Suc 0) ≤ n"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">presburger</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">f6</span><span class="o">:</span><span class="w"> </span><span class="s">"∀n. ¬ (n::nat) ≤ 0 ∨ 0 = n"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">f7</span><span class="o">:</span><span class="w"> </span><span class="s">"∀n. Suc n ≤ 3 ∨ ¬ n ≤ Suc (Suc 0)"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">numeral_3_eq_3</span><span class="o">)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"∀n. ¬ n ≤ 0 ∨ 3 = Suc (Suc (Suc n))"</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">force</span>
+<span class="w">  </span><span class="k">moreover</span>
+<span class="w">  </span><span class="ow">{</span><span class="w"> </span><span class="k">assume</span><span class="w"> </span><span class="s">"∃N Na. nn U Na ∈ N ∧ ¬ U ⊆ N ∧ ¬ U ⊆ Na"</span>
+<span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"∃n na. na ∈ U ∧ n ≠ na ∧ n ∈ U"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">f3</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">no_types</span><span class="o">))</span><span class="w"> </span><span class="ow">}</span>
+<span class="w">  </span><span class="k">moreover</span>
+<span class="w">  </span><span class="ow">{</span><span class="w"> </span><span class="k">assume</span><span class="w"> </span><span class="s">"∃N n Na. n ∉ Na ∧ ¬ Na ⊆ N ∧ ¬ Na ⊆ N ∧ Na ⊆ U ∧ n ∈ U"</span>
+<span class="w">    </span><span class="k">then</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"∃n na. na ∈ U ∧ n ≠ na ∧ n ∈ U"</span>
+<span class="w">      </span><span class="k">using</span><span class="w"> </span><span class="n">f3</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">full_types</span><span class="o">))</span><span class="w"> </span><span class="ow">}</span>
+<span class="w">  </span><span class="k">ultimately</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">f7</span><span class="w"> </span><span class="n">f6</span><span class="w"> </span><span class="n">f5</span><span class="w"> </span><span class="n">f4</span><span class="w"> </span><span class="n">f3</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="n">a1</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">smt</span><span class="w"> </span><span class="o">(</span><span class="n">z3</span><span class="o">)</span><span class="w"> </span><span class="n">Suc_le_mono</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="n">bot_nat_0.extremum</span><span class="w"> </span><span class="n">distinct_length_2_or_more</span><span class="w"> </span><span class="n">distinct_singleton</span><span class="w"> </span><span class="n">nat.simps</span><span class="o">(</span><span class="n">3</span><span class="o">)</span><span class="w"> </span><span class="n">order_antisym_conv</span><span class="o">)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Not surprisingly, given how long these took, trying to generalize to get <em>three</em> distinct items from <code>U</code> was hopeless -- sledgehammer gave up. </p>
+<p>Is there some more idiomatic way to do this kind of thing? I'll soon be doing something with 10 points (although I think I only need to extract 4 of them, and then can construct the others), and it's clear that what I've been doing won't suffice for that task.</p>
+
+
+
+<a name="525214109"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525214109" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525214109">(Jun 22 2025 at 13:45)</a>:</h4>
+<p>Something like that? It is not exactly pretty… (the lemma <code>helper</code> can for sure be proven better, but I did not care about that lemma)</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">helper</span><span class="o">:</span>
+<span class="w">  </span><span class="s">‹card U &gt; numeral n ⟹ numeral n ≥ (0::nat) ⟹ ∃x U'. U = insert x U' ∧ x ∉ U' ∧ card U' &gt; pred_numeral n›</span>
+<span class="w">  </span><span class="s">‹card U &gt; Suc 0 ⟹ ∃x U'. U = insert x U' ∧ x ∉ U' ∧ card U' &gt; 0›</span>
+<span class="w">  </span><span class="s">‹card U &gt; 0 ⟹ ∃x U'. U = insert x U' ∧ x ∉ U'›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">finite.cases</span><span class="o">)</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">card_ge_0_finite</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">U</span><span class="o">]</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">dest</span><span class="o">!:</span><span class="w"> </span><span class="o">)[]</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">dest</span><span class="o">:</span><span class="w"> </span><span class="n">card_ge_0_finite</span><span class="o">)[]</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">dest</span><span class="o">:</span><span class="w"> </span><span class="n">card_ge_0_finite</span><span class="o">)</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">Set.set_insert</span><span class="w"> </span><span class="n">card_insert_if</span><span class="w"> </span><span class="n">finite_insert</span><span class="w"> </span><span class="n">insertCI</span><span class="w"> </span><span class="n">less_numeral_Suc</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">Suc_less_eq2</span><span class="w"> </span><span class="n">card_eq_SucD</span><span class="o">)</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">meson</span><span class="w"> </span><span class="n">card_le_Suc_iff</span><span class="w"> </span><span class="n">less_eq_Suc_le</span><span class="o">)</span>
+
+
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">xx</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">U</span><span class="o">::</span><span class="s">"nat set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"card U &gt; 5"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"True"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"A ∈ U ∧ B ∈ U  ∧C ∈ U ∧ D ∈ U  ∧ E ∈ U ∧</span>
+<span class="s">         distinct [A, B, C, D, E]"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">a</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">card_ge_0_finite</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">U</span><span class="o">]</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">dest</span><span class="o">!:</span><span class="w"> </span><span class="n">helper</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="o">)</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+</code></pre></div>
+
+
+
+<a name="525217041"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525217041" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525217041">(Jun 22 2025 at 14:49)</a>:</h4>
+<p>Thanks!</p>
+<p>Gosh. It took me a while to even parse the theorem statement, as I thought that <code>‹card U &gt;</code> contained an open-close cartouche pair!</p>
+<p>I've been trying to do everything in Isar, and maybe this is one of those places where you really need to move to "assembly language" and write apply scripts, but I'd hate to think so. </p>
+<p>I'm shocked that something like this is so messy.</p>
+
+
+
+<a name="525217203"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525217203" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525217203">(Jun 22 2025 at 14:52)</a>:</h4>
+<p>There is no reason that this is not in Isar except my lazyness…</p>
+
+
+
+<a name="525217351"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525217351" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525217351">(Jun 22 2025 at 14:55)</a>:</h4>
+<p>Hmmm.  I wish that I knew of a resource on how to translate apply-scripts to become Isar. I guess I'll spend some time trying to do it myself, but I'm not optimistic :( .</p>
+
+
+
+<a name="525217698"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525217698" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525217698">(Jun 22 2025 at 15:02)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">helper</span><span class="o">:</span>
+<span class="w">  </span><span class="s">‹card U &gt; numeral n ⟹ numeral n ≥ (0::nat) ⟹ ∃x U'. U = insert x U' ∧ x ∉ U' ∧ card U' &gt; pred_numeral n›</span>
+<span class="w">  </span><span class="s">‹card U &gt; Suc 0 ⟹ ∃x U'. U = insert x U' ∧ x ∉ U' ∧ card U' &gt; 0›</span>
+<span class="w">  </span><span class="s">‹card U &gt; 0 ⟹ ∃x U'. U = insert x U' ∧ x ∉ U'›</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="n">p1</span><span class="o">:</span><span class="w"> </span><span class="s">‹∃x U'. U = insert x U' ∧ x ∉ U' ∧ card U' &gt; pred_numeral n›</span>
+<span class="w">    </span><span class="kp">if</span><span class="w"> </span><span class="n">H</span><span class="o">:</span><span class="w"> </span><span class="s">‹card U &gt; numeral n›</span><span class="w"> </span><span class="s">‹numeral n ≥ (0::nat)›</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">card_le_Suc_iff</span><span class="w"> </span><span class="n">less_eq_Suc_le</span><span class="w"> </span><span class="n">numeral_eq_Suc</span><span class="w"> </span><span class="n">that</span><span class="o">(</span><span class="n">1</span><span class="o">))</span>
+<span class="w">  </span><span class="k">show</span>
+<span class="w">    </span><span class="s">‹card U &gt; Suc 0 ⟹ ∃x U'. U = insert x U' ∧ x ∉ U' ∧ card U' &gt; 0›</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">meson</span><span class="w"> </span><span class="n">card_le_Suc_iff</span><span class="w"> </span><span class="n">less_eq_Suc_le</span><span class="o">)</span>
+<span class="w">  </span><span class="k">show</span>
+<span class="w">    </span><span class="s">‹card U &gt; 0 ⟹ ∃x U'. U = insert x U' ∧ x ∉ U'›</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">card_gt_0_iff</span><span class="w"> </span><span class="n">ex_in_conv</span><span class="w"> </span><span class="n">mk_disjoint_insert</span><span class="o">)</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="525220236"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525220236" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525220236">(Jun 22 2025 at 15:55)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<a name="525521463"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/obtaining%20elements%20of%20a%20small%20set/near/525521463" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/obtaining.20elements.20of.20a.20small.20set.html#525521463">(Jun 24 2025 at 13:39)</a>:</h4>
+<p>One trick I often do is to go through lists. There is a lemma that tells you that if you have a set <code>A</code> with cardinality <code>n</code> then there exists a list <code>xs</code> of length <code>n</code> with no repeated elements such that <code>set xs ⊆ A</code>.</p>
+<p>Concrete application could look something like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">card_A</span><span class="o">:</span><span class="w"> </span><span class="s">"finite A"</span><span class="w"> </span><span class="s">"card A ≥ 3"</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">xs</span><span class="o">:</span><span class="w"> </span><span class="s">"length xs = 3"</span><span class="w"> </span><span class="s">"distinct xs"</span><span class="w"> </span><span class="s">"set xs ⊆ A"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">card_A</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">distinct_card</span><span class="w"> </span><span class="n">finite_distinct_list</span><span class="w"> </span><span class="n">obtain_subset_with_card_n</span><span class="o">)</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">xs_eq</span><span class="o">:</span><span class="w"> </span><span class="s">"xs = [a, b, c]"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="n">length_Suc_conv</span><span class="w"> </span><span class="n">eval_nat_numeral</span><span class="o">)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">abc</span><span class="o">:</span><span class="w"> </span><span class="s">"a ≠ b"</span><span class="w"> </span><span class="s">"a ≠ c"</span><span class="w"> </span><span class="s">"b ≠ c"</span><span class="w"> </span><span class="s">"a ∈ A"</span><span class="w"> </span><span class="s">"b ∈ A"</span><span class="w"> </span><span class="s">"c ∈ A"</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">xs_eq</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>One could potentially write some automation for this sort of thing. But I'm not sure if it's worth it.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

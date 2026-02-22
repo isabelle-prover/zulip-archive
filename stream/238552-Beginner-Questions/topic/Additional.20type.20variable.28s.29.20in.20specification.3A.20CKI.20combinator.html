@@ -1,0 +1,98 @@
+<html>
+<head><meta charset="utf-8"><title>Additional type variable(s) in specification: CKI combinator · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html">Additional type variable(s) in specification: CKI combinator</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="507860415"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507860415" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Paweł Balawender <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507860415">(Mar 24 2025 at 19:31)</a>:</h4>
+<p>Hey, I'm trying to define I combinator (I = CKK) in BCK combinatory calculus, but it seems like Isabelle is unable to see a proper unification of the remaining types from C and K combinators. I tried a solution from another thread using TYPE('b) =&gt; ...,, but to no effect. What is the reason of this? </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">example</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a =&gt; 'b =&gt; 'c) =&gt; 'b =&gt; 'a =&gt; 'c"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"C f g x = f x g"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a =&gt; 'b =&gt; 'a"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"K x y = x"</span>
+
+<span class="c">(* cannot get it to work *)</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a =&gt; 'a"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"I = C K K"</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="507861159"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507861159" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507861159">(Mar 24 2025 at 19:35)</a>:</h4>
+<p>I only get a warning:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Additional</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">variable</span><span class="o">(</span><span class="n">s</span><span class="o">)</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="kn">specification</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"I"</span><span class="o">:</span><span class="w"> </span><span class="n n-Type">'b</span><span class="o">,</span><span class="w"> </span><span class="n n-Type">'c</span>
+</code></pre></div>
+
+
+
+<a name="507861733"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507861733" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507861733">(Mar 24 2025 at 19:38)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a =&gt; 'a"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"I = (C:: _ ⇒ ('a ⇒ 'a ⇒ 'a) ⇒ ('a ⇒ 'a)) K K"</span>
+</code></pre></div>
+
+
+
+<a name="507861763"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507861763" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507861763">(Mar 24 2025 at 19:38)</a>:</h4>
+<p>if you want to fix them</p>
+
+
+
+<a name="507861802"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507861802" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Paweł Balawender <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507861802">(Mar 24 2025 at 19:38)</a>:</h4>
+<p>Oh.. i thought it was an error xD thank you then! Btw, what I'm actually trying to do is to use Isabelle's unification to obtain any specific type inferred for CKK (so, in the above definition, what does 'b evaluate to etc.). Do you have any pointers how to access this from the level of a tactic?</p>
+
+
+
+<a name="507862123"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507862123" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Paweł Balawender <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507862123">(Mar 24 2025 at 19:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator/near/507861733">said</a>:</p>
+<blockquote>
+<p><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a =&gt; 'a"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"I = (C:: _ ⇒ ('a ⇒ 'a ⇒ 'a) ⇒ ('a ⇒ 'a)) K K"</span>
+</code></pre></div><br>
+</p>
+</blockquote>
+<p>Oh, that's neat, thanks! Actually, this specific instantiation of C is exactly what I'd like to obtain  programatically. So to not have to come up with specific type of C on my own, but to use type system to get this thing</p>
+
+
+
+<a name="507862587"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507862587" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507862587">(Mar 24 2025 at 19:43)</a>:</h4>
+<p>On the ML level it is easy:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="w"> </span><span class="s">‹</span>
+<span class="s">case @{term ‹C K›} of</span>
+<span class="s">  Const(_, _) $ s =&gt; s›</span>
+</code></pre></div>
+
+
+
+<a name="507862752"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507862752" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507862752">(Mar 24 2025 at 19:44)</a>:</h4>
+<p>that is pretty much how I came up with the type (using <code>term "C K"</code> actually)</p>
+
+
+
+<a name="507863190"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Additional%20type%20variable%28s%29%20in%20specification%3A%20CKI%20combinator/near/507863190" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Paweł Balawender <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Additional.20type.20variable.28s.29.20in.20specification.3A.20CKI.20combinator.html#507863190">(Mar 24 2025 at 19:46)</a>:</h4>
+<p>That's neat! Thank you a lot :)</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

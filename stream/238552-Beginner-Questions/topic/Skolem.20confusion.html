@@ -1,0 +1,114 @@
+<html>
+<head><meta charset="utf-8"><title>Skolem confusion · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html">Skolem confusion</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="502872022"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502872022" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502872022">(Mar 02 2025 at 15:40)</a>:</h4>
+<p>In a larger document, I ran into something that surprised me, and I've reduced it to a minimal example. </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">SkolemMWE</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Complex_Main</span>
+<span class="k">begin</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">x</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"h ∈ {A} ∧ k ∈ {B} ⟹  h ≠ k"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"True"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"h ∈ {A} ∧ k ∈ {B} ⟹  h ≠ k"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">1</span><span class="o">:</span><span class="s">"h1 ∈ {A}"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">k1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">2</span><span class="o">:</span><span class="s">"k1 ∈ {B}"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">3</span><span class="o">:</span><span class="w"> </span><span class="s">"h1 ≠ k1"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now obviously it's easy to show the conclusion, but the point I wanted to make is in <code>have 3:</code> in my (failed) proof. <br>
+I <em>thought</em> that fact 0 said "if you have an item <code>h</code> that's in this set, and an item <code>k</code> that in <em>that</em> set, then they are not equal", and that this was implicitly a "forall possible h and k and A and B". (It's also clearly false, as quickcheck notes: if A and B are equal, then the result isn't true.)</p>
+<p>Regardless, facts 1 and 2 say that we've met the preconditions for fact 0, but Isabelle can't derive the conclusion of fact 0 from them. </p>
+<p>I'm sorry this is such a contrived example -- but it does capture the main question which is "why doesn't fact 0 seem to match up with facts 1 and 2 to imply that <code>h1</code> and <code>k1</code> are distinct?"</p>
+
+
+
+<a name="502872918"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502872918" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502872918">(Mar 02 2025 at 15:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="699541">John  Hughes</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Skolem.20confusion/near/502872022">said</a>:</p>
+<blockquote>
+<p>I'm sorry this is such a contrived example -- but it does capture the main question which is "why doesn't fact 0 seem to match up with facts 1 and 2 to imply that <code>h1</code> and <code>k1</code> are distinct?"</p>
+</blockquote>
+<p>because fact 0 talks about the variable <code>h</code> and <code>k</code> (the ones you have fixed in the lemma), and you cannot decide that <code>h=h1</code> and <code>k=k1</code>, you have prove it.</p>
+
+
+
+<a name="502879188"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502879188" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502879188">(Mar 02 2025 at 17:00)</a>:</h4>
+<p>I didn't think that I was "fixing" <code>h</code> and <code>k</code>, butI guess I was wrong. Perhaps I can ask the question differently: </p>
+<p>Here's a silly theorem, stated in English: Suppose you have two sets, U and V, that they have the property that if h is in U and k is in V, then h and k are unequal. Then if you have h1 and h2 in U and k in V, we have that h1 != k <em>and</em> h2 != k.</p>
+<p>Can you write this theorem in fix-assume-show form and use a proof that's at least somewhat similar to what I wrote, but avoids the "you said it was true for these fixed things, not for arbitrary things" problem? I'd really like to know how to express this sort of thing, and my attempt to do so clearly didn't meet my goal.  (I understand that there's a trivial proof that does <em>not</em> follow my pattern, but that trivial proof won't work in the larger context in which I'm trying to use these ideas.)</p>
+
+
+
+<a name="502884916"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502884916" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502884916">(Mar 02 2025 at 18:04)</a>:</h4>
+<p>you have to explicitly mark that your assumption should hold for <em>any</em> h and k (e.g. using ∀ or the meta-logic forall ⋀):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">x</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"⋀h k. h ∈ {A} ∧ k ∈ {B} ⟹  h ≠ k"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"True"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">0</span><span class="o">:</span><span class="w"> </span><span class="s">"⋀h k. h ∈ {A} ∧ k ∈ {B} ⟹  h ≠ k"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">1</span><span class="o">:</span><span class="s">"h1 ∈ {A}"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">k1</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">2</span><span class="o">:</span><span class="s">"k1 ∈ {B}"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">3</span><span class="o">:</span><span class="w"> </span><span class="s">"h1 ≠ k1"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">0</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+</code></pre></div>
+
+
+
+<a name="502887251"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502887251" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502887251">(Mar 02 2025 at 18:32)</a>:</h4>
+<p>Thanks, <span class="user-mention" data-user-id="485021">@terru</span>  . From reading "Programming and Proving" I'd inferred that the "forall" was implicit in theorem statements. Here's a brief quotation from page 6, for example:</p>
+<p>...</p>
+<blockquote>
+<p>datatype nat = 0 | Suc nat</p>
+<p>All values of type nat are generated by the constructors 0 and Suc. Thus the values of type nat are 0, Suc 0, Suc (Suc 0), etc. There are many predefined functions: +, ∗, 6, etc. Here is how you could define your own addition:</p>
+<p>fun add :: "nat ⇒ nat ⇒ nat" where "add 0 n = n" |<br>
+"add (Suc m) n = Suc(add m n)"</p>
+<p>And here is a proof of the fact that add m 0 = m:</p>
+<p>lemma add_02: "add m 0 = m" apply(induction m)<br>
+apply(auto)<br>
+done<br>
+...<br>
+As a result of that final done, Isabelle associates the lemma just proved with its name. You can now inspect the lemma with the command</p>
+<p>thm add_02 which displays add ?m 0 = ?m</p>
+<p>The free variable m has been replaced by the unknown ?m. There is no logical difference between the two but there is an operational one: unknowns can be instantiated, which is what you want after some lemma has been proved.</p>
+</blockquote>
+<p>So at least in <em>this</em> form of theorem-statement, there's an implicit "forall" generated. </p>
+<p>And even in a theorem like this one</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">z</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"x ≤ x + (y::nat)"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"x &lt; x + (1::nat)"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+</code></pre></div>
+<p>the result ends up being </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">theorem</span><span class="w"> </span><span class="n">z</span><span class="o">:</span>
+<span class="w"> </span><span class="o">?</span><span class="n">x</span><span class="w"> </span><span class="n">≤</span><span class="w"> </span><span class="o">?</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">?</span><span class="n">y</span><span class="w"> </span><span class="n">⟹</span><span class="w"> </span><span class="o">?</span><span class="n">x</span><span class="w"> </span><span class="n">&lt;</span><span class="w"> </span><span class="o">?</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span>
+</code></pre></div>
+<p>which seems to indicate a generalization over all x and y, not just something about a particular x and y. So I guess I don't understand why the forall is needed in your version (although it clearly works, and I appreciate the insight on how to get past this particular bump in the road!).</p>
+
+
+
+<a name="502887860"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502887860" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502887860">(Mar 02 2025 at 18:39)</a>:</h4>
+<p>you are correct! but the argument of the forall is important. Perhaps that's clearer when not using the assumes-syntax — then your original statement becomes <code>⋀h k. (h ∈ {?A} ∧ k ∈ {?B} ⟹ h ≠ k) ⟹ True</code>, whereas in the version i gave it's <code>(⋀h k. h ∈ {?A} ∧ k ∈ {?B} ⟹ h ≠ k) ⟹ True</code> (notice that the ⋀ now "ends" earlier, which allows you to instantiate the names bound by it inside the proof; otherwise they're free variables, which I have attempted to show with the ⋀ extending all the way — although iirc this is not technically correct with how they're actually handled inside isabelle, but "true enough" to show the difference here)</p>
+
+
+
+<a name="502890178"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Skolem%20confusion/near/502890178" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Skolem.20confusion.html#502890178">(Mar 02 2025 at 19:05)</a>:</h4>
+<p>I'm not sure I completely understand, but I'm pretty sure that this is the thing I needed. (I'm particularly not sure why "in the version I gave you ...." ends with that "==&gt; True"!)  I have to go do other things right now, but I'm going to digest this later and see whether it all makes sense after that. Thanks!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

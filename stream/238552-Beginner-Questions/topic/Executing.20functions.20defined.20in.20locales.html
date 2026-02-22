@@ -1,0 +1,93 @@
+<html>
+<head><meta charset="utf-8"><title>Executing functions defined in locales · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html">Executing functions defined in locales</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="503073602"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Executing%20functions%20defined%20in%20locales/near/503073602" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html#503073602">(Mar 03 2025 at 16:39)</a>:</h4>
+<p>I'm having trouble executing functions and definitions that are defined inside a locale. Do I have to first generate the code via something like code_pred?</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Broken_Locales</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">my_locale</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="k">begin</span>
+<span class="k">abbreviation</span><span class="w"> </span><span class="s">"suc ≡ x + 1"</span>
+<span class="k">definition</span><span class="w"> </span><span class="s">"sucsuc ≡ x + 2"</span>
+<span class="k">end</span>
+
+<span class="kt">value</span><span class="w"> </span><span class="s">"my_locale.suc 4"</span><span class="w"> </span><span class="c">(* works *)</span>
+<span class="kt">value</span><span class="w"> </span><span class="s">"my_locale.sucsuc 4"</span><span class="w"> </span><span class="c">(* No code equations for my_locale.sucsuc *)</span>
+
+<span class="kn">interpretation</span><span class="w"> </span><span class="n">my_x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">my_locale</span><span class="w"> </span><span class="n">4</span><span class="w"> </span><span class="ow">.</span>
+<span class="kt">value</span><span class="w"> </span><span class="s">"my_x.suc"</span><span class="w"> </span><span class="c">(* works *)</span>
+<span class="kt">value</span><span class="w"> </span><span class="s">"my_x.sucsuc"</span><span class="w"> </span><span class="c">(* "Num.nat_of_num" is not a constructor ... *)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>The project I'm working in has an absolute ton of functions defined inside locales so I'm hoping for a solution where I won't have to re-define every single one.</p>
+
+
+
+<a name="503109660"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Executing%20functions%20defined%20in%20locales/near/503109660" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html#503109660">(Mar 03 2025 at 19:43)</a>:</h4>
+<p>There's a section on that in the codegen manual, let me know if you have problems getting it to work in your scenario.</p>
+
+
+
+<a name="503221072"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Executing%20functions%20defined%20in%20locales/near/503221072" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html#503221072">(Mar 04 2025 at 09:41)</a>:</h4>
+<p>Thank you! I got it.</p>
+
+
+
+<a name="503229715"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Executing%20functions%20defined%20in%20locales/near/503229715" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Vollath <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html#503229715">(Mar 04 2025 at 10:23)</a>:</h4>
+<p>Nevermind, I have a new issue with this: duplicate fact declaration.<br>
+To be concrete, I am working with <a href="https://www.isa-afp.org/entries/AI_Planning_Languages_Semantics.html">AI_Planning_Languages_Semantics</a> in the AFP.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Running_Example_wip</span>
+<span class="w">  </span><span class="kp">imports</span>
+<span class="w">    </span><span class="s">"AI_Planning_Languages_Semantics.PDDL_STRIPS_Checker"</span>
+<span class="k">begin</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="s">"my_problem ≡ Problem (Domain [] [] [] []) [] [] ⊥"</span>
+
+<span class="n">global_interpretation</span><span class="w"> </span><span class="n">inst0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ast_problem</span><span class="w"> </span><span class="n">my_problem</span>
+<span class="w">  </span><span class="kp">defines</span><span class="w"> </span><span class="n">def1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inst0.of_type1</span>
+<span class="w">  </span><span class="c">(* TODO: add the other functions. *)</span>
+<span class="w">  </span><span class="ow">.</span>
+
+<span class="c">(* Duplicate fact declaration "Running_Example_wip.inst0.mp_objT_correct" vs. "Running_Example_wip.inst0.mp_objT_correct"⌂</span>
+<span class="c">The above error(s) occurred while activating facts of locale instance</span>
+<span class="c">inst0 : ast_problem "my_problem" *)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>The problem is that there are both <code>ast_domain.mp_objT_correct</code> and <code>ast_problem.mp_objT_correct</code>. Instantiating an ast_problem also instantiates a corresponding ast_domain. It goes away if I just locally change one of their names, but that's not sustainable. hide_fact also doesn't seem to solve it.</p>
+
+
+
+<a name="503232932"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Executing%20functions%20defined%20in%20locales/near/503232932" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html#503232932">(Mar 04 2025 at 10:39)</a>:</h4>
+<p>don't know if there is a trick, but this is a design problem of the locale hierarchy (can't be instantiated in a global context).</p>
+
+
+
+<a name="503498136"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Executing%20functions%20defined%20in%20locales/near/503498136" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Executing.20functions.20defined.20in.20locales.html#503498136">(Mar 05 2025 at 12:23)</a>:</h4>
+<p>You could try to give the instantiation of the<br>
+corresponding domain an optional qualifier: <code>sublocale dom?: ast_domain …</code>.<br>
+I don’t know whether this helps with your specific hierarchy.<br>
+The feature is explained towards the end of section 5.4 of the locale manual.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

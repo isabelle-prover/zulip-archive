@@ -1,0 +1,131 @@
+<html>
+<head><meta charset="utf-8"><title>nothing known about theory · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html">nothing known about theory</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="506654008"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/nothing%20known%20about%20theory/near/506654008" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html#506654008">(Mar 19 2025 at 07:38)</a>:</h4>
+<p><strong>Sorry for this disturbance. This post was a moment of foolishness on my part, please close/dismiss this thread.</strong></p>
+<p><strong>This post is about some dirty hacks that users shouldn't take. Please close and ignore this post.</strong></p>
+<hr>
+<p>Hi, until today, I believe I can be called an Isabelle hacker, but I find today I cannot troubleshoot even a simple problem.</p>
+<p>I have following package hierarchy:</p>
+<p>auto_sledgehammer/ROOT</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">Auto_Sledgehammer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">theories</span><span class="w"> </span><span class="n">Auto_Sledgehammer</span>
+<span class="w">  </span><span class="n">document_files</span>
+<span class="w">    </span><span class="s">"root.tex"</span>
+</code></pre></div>
+<p>Isa_REPL/ROOT</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">Isa_REPL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Auto_Sledgehammer</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">theories</span><span class="w"> </span><span class="n">Isa_REPL</span>
+</code></pre></div>
+<p>REPL224139/ROOT</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">REPL224139</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span>
+<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sessions</span><span class="w"> </span><span class="n">Auto_Sledgehammer</span><span class="w"> </span><span class="n">Isa_REPL</span>
+<span class="w">   </span><span class="n">theories</span><span class="w"> </span><span class="n">REPL224139</span>
+</code></pre></div>
+<p>Isa_REPL/Isa_REPL.thy</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Isa_REPL</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Auto_Sledgehammer.Auto_Sledgehammer</span>
+<span class="k">begin</span>
+
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">contrib/mlmsgpack/mlmsgpack-aux.sml</span><span class="ss">\&lt;close&gt;</span>
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">contrib/mlmsgpack/realprinter-packreal.sml</span><span class="ss">\&lt;close&gt;</span>
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">contrib/mlmsgpack/mlmsgpack.sml</span><span class="ss">\&lt;close&gt;</span>
+
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">library/REPL.ML</span><span class="ss">\&lt;close&gt;</span>
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">library/REPL_serializer.ML</span><span class="ss">\&lt;close&gt;</span>
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">library/REPL_aux.ML</span><span class="ss">\&lt;close&gt;</span>
+<span class="k">ML_file</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span><span class="s">library/Server.ML</span><span class="ss">\&lt;close&gt;</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>REPL224139/REPL224139.thy</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">REPL224139</span>
+<span class="kp">imports</span><span class="w"> </span><span class="s">"Isa_REPL.Isa_REPL"</span>
+<span class="k">begin</span>
+<span class="k">ML</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span>
+<span class="s">REPL.disable_output () ;</span>
+<span class="s">Thy_Info.register_thy @{theory Isa_REPL} ;</span>
+<span class="s">Isabelle_Thread.join (REPL_Server.startup (Path.explode "/tmp/repl_outputs") NONE "127.0.0.1:6666")</span>
+<span class="ss">\&lt;close&gt;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The problem is I try to build the packages above.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">isabelle</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">Auto_Sledgehammer</span><span class="w"> </span><span class="n">#</span><span class="w"> </span><span class="n">OK</span><span class="o">!</span>
+<span class="n">isabelle</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">Isa_REPL</span><span class="w"> </span><span class="n">#</span><span class="w"> </span><span class="n">OK</span><span class="o">!</span>
+<span class="n">isabelle</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">REPL224139</span><span class="w"> </span><span class="n">#</span><span class="w"> </span><span class="n">error</span><span class="o">!</span>
+<span class="n">#</span><span class="w"> </span><span class="n">***</span><span class="w"> </span><span class="n">Theory</span><span class="w"> </span><span class="n">loader</span><span class="o">:</span><span class="w"> </span><span class="n">nothing</span><span class="w"> </span><span class="n">known</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="k">theory</span><span class="w"> </span><span class="s">"Auto_Sledgehammer.Auto_Sledgehammer"</span>
+<span class="n">#</span><span class="w"> </span><span class="n">***</span>
+<span class="n">#</span><span class="w"> </span><span class="n">***</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="s">"ML"</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">4</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"/tmp/tmp.S6GNgYxXUy/REPL224139.thy"</span><span class="o">)</span>
+</code></pre></div>
+<p>The theory loader cannot find Auto_Sledgehammer.Auto_Sledgehammer but I have specify it in both REPL224139/ROOT and Isa_REPL/ROOT.</p>
+
+
+
+<a name="506654465"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/nothing%20known%20about%20theory/near/506654465" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html#506654465">(Mar 19 2025 at 07:41)</a>:</h4>
+<p>Alternatively, everything works if I change <code>REPL224139/ROOT</code> into</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">REPL224139</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Auto_Sledgehammer</span>
+<span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sessions</span><span class="w"> </span><span class="n">Isa_REPL</span>
+<span class="w">   </span><span class="n">theories</span><span class="w"> </span><span class="n">REPL224139</span>
+</code></pre></div>
+<p>However, this change is not acceptable in my REPL system. Could some one tell me what is the exact difference between a parent session and the session indicated in the <code>sessions</code> clause? This subtle behavior is really confusing</p>
+
+
+
+<a name="506655171"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/nothing%20known%20about%20theory/near/506655171" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html#506655171">(Mar 19 2025 at 07:46)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">auto_sledgehammer/ROOT</span>
+</code></pre></div>
+<p>is a typo for Auto_Sledgehammer right? or are you relying on the underlying file system to be case insensitive? (yes macos users, you are the only ones that can do that)</p>
+
+
+
+<a name="506655247"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/nothing%20known%20about%20theory/near/506655247" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html#506655247">(Mar 19 2025 at 07:46)</a>:</h4>
+<p>(because this is exactly the kind of weird bugs I would expect to happen if you the get the case wrong)</p>
+
+
+
+<a name="506655468"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/nothing%20known%20about%20theory/near/506655468" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html#506655468">(Mar 19 2025 at 07:48)</a>:</h4>
+<p>I am a fool!<br>
+I find I should just register the Auto_Sledgehammer theory to the system.</p>
+<p>REPL224139/REPL224139.thy</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">REPL224139</span>
+<span class="kp">imports</span><span class="w"> </span><span class="s">"Isa_REPL.Isa_REPL"</span>
+<span class="k">begin</span>
+<span class="k">ML</span><span class="w"> </span><span class="ss">\&lt;open&gt;</span>
+<span class="s">REPL.disable_output () ;</span>
+<span class="s">(*Add the following line solves the issue!*)</span>
+<span class="s">Thy_Info.register_thy @{theory Auto_Sledgehammer} ;</span>
+<span class="s">Thy_Info.register_thy @{theory Isa_REPL} ;</span>
+<span class="s">Isabelle_Thread.join (REPL_Server.startup (Path.explode "/tmp/repl_outputs") NONE "127.0.0.1:6666");</span>
+<span class="s">error "IGNORE THIS ERROR"</span>
+<span class="ss">\&lt;close&gt;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Cry, this must be the payback for all the dirty hacks I've taken. Sorry for the disturbance, let's drop this topic/thread.</p>
+
+
+
+<a name="506656700"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/nothing%20known%20about%20theory/near/506656700" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/nothing.20known.20about.20theory.html#506656700">(Mar 19 2025 at 07:56)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/nothing.20known.20about.20theory/near/506655247">said</a>:</p>
+<blockquote>
+<p>(because this is exactly the kind of weird bugs I would expect to happen if you the get the case wrong)</p>
+</blockquote>
+<p>Hi, Mathias, thank your response. The error in this post was caused by some dirty hacks taken by me (and my sudden foolishness). Please just ignore this post, and my bad.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

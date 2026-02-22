@@ -1,0 +1,268 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Unexpected printing of nested PROP functions · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html">[isabelle] Unexpected printing of nested PROP functions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="534196550"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534196550" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534196550">(Aug 13 2025 at 09:58)</a>:</h4>
+<p>From: Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt;<br>
+Dear list,</p>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of <br>
+the printing of terms containing nested prop functions (form <br>
+Isabelle/Pure).</p>
+<p>A minimal example is "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) <br>
+PROP x)", which is printed as "PROP f PROP g PROP x", which can be <br>
+misinterpreted as "f g x".</p>
+<p>Some possible outputs that are less prone to misinterpretation:</p>
+<ol>
+<li>"PROP f PROP (g PROP x)"</li>
+<li>"PROP f (g x)"</li>
+<li>"PROP f PROP (g x)"<br>
+Note that all these cases can already correctly be used as input.</li>
+</ol>
+<p>Below, you can find a corresponding theory file.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">   </span><span class="kp">imports</span><span class="w"> </span><span class="n">Pure</span>
+<span class="k">begin</span>
+
+<span class="kt">term</span><span class="w"> </span><span class="s">"PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)"</span>
+<span class="c">(*</span>
+<span class="c">This prints "PROP f PROP g PROP x", which can be misinterpreted as "f g x".</span>
+<span class="c">*)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="534452274"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534452274" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534452274">(Aug 14 2025 at 10:38)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+Kevin,</p>
+<p>I think I am to blame for PROP and the grammar may indeed be suboptimal. I'll <br>
+take a look soon.</p>
+<p>Tobias</p>
+<p>On 13/08/2025 11:50, Kevin Kappelmann wrote:</p>
+<blockquote>
+<p>Dear list,</p>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of the <br>
+printing of terms containing nested prop functions (form Isabelle/Pure).</p>
+<p>A minimal example is "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)", <br>
+which is printed as "PROP f PROP g PROP x", which can be misinterpreted as "f g x".</p>
+<p>Some possible outputs that are less prone to misinterpretation:<br>
+1. "PROP f PROP (g PROP x)"<br>
+2. "PROP f (g x)"<br>
+3. "PROP f PROP (g x)"<br>
+Note that all these cases can already correctly be used as input.</p>
+<p>Below, you can find a corresponding theory file.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>```isabelle<br>
+theory Scratch<br>
+   imports Pure<br>
+begin</p>
+<p>term "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)"<br>
+(*<br>
+This prints "PROP f PROP g PROP x", which can be misinterpreted as "f g x".<br>
+*)</p>
+<p>end<br>
+```</p>
+</blockquote>
+<p><a href="/user_uploads/14278/YP23Ii6hey3CjA7C79GcbCJ-/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="534452597"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534452597" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534452597">(Aug 14 2025 at 10:40)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Dear Kevin, as I guess you know, Isabelle maintains a separation between the object-logic and the meta-logic by relying on an embedding from the former to the latter, which is hidden from users for the sake of readability. The drawback is that a rule such as P ==&gt; P becomes ambiguous as to whether P has (assuming Isabelle/HOL) type bool or type prop. Therefore, the notation “PROP term" is provided to suppress the default embedding and ensure that in “PROP P" the variable has type prop. So I'm not even sure why you need three PROPs in f(g x); I would expect “PROP f (g x)".</p>
+<p>Things have changed massively in the past 30 years or so, and I see that the syntax is now defined as follows:</p>
+<p>("_aprop",      typ "aprop ⇒ prop",<br>
+      Mixfix.mixfix "(‹open_block notation=‹prefix PROP››PROP _)"),</p>
+<p>Maybe something can be tweaked in Pure/pure_thy.ML.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 13 Aug 2025, at 10:50, Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt; wrote:</p>
+<p>Dear list,</p>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of the printing of terms containing nested prop functions (form Isabelle/Pure).</p>
+<p>A minimal example is "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)", which is printed as "PROP f PROP g PROP x", which can be misinterpreted as "f g x".</p>
+<p>Some possible outputs that are less prone to misinterpretation:<br>
+1. "PROP f PROP (g PROP x)"<br>
+2. "PROP f (g x)"<br>
+3. "PROP f PROP (g x)"<br>
+Note that all these cases can already correctly be used as input.</p>
+<p>Below, you can find a corresponding theory file.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>```isabelle<br>
+theory Scratch<br>
+ imports Pure<br>
+begin</p>
+<p>term "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)"<br>
+(*<br>
+This prints "PROP f PROP g PROP x", which can be misinterpreted as "f g x".<br>
+*)</p>
+<p>end<br>
+```</p>
+</blockquote>
+
+
+
+<a name="534638506"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534638506" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534638506">(Aug 15 2025 at 11:35)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 14/08/2025 12:40, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Things have changed massively in the past 30 years or so, and I see that the syntax is now defined as follows:</p>
+<p>("_aprop",      typ "aprop ⇒ prop",<br>
+       Mixfix.mixfix "(‹open_block notation=‹prefix PROP››PROP _)"),</p>
+<p>Maybe something can be tweaked in Pure/pure_thy.ML.</p>
+</blockquote>
+<p>Indeed, things have changed a lot in the past decades. I am responsible for <br>
+almost everything there, and I won't accept arbitrary patches.</p>
+<p>I am presently busy elsewhere to look myself. The motivation of the example is <br>
+rather weak.</p>
+<p>Makarius</p>
+
+
+
+<a name="534639823"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534639823" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534639823">(Aug 15 2025 at 11:48)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 13/08/2025 11:50, Kevin Kappelmann wrote:</p>
+<blockquote>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of the <br>
+printing of terms containing nested prop functions (form Isabelle/Pure).</p>
+<p>```isabelle<br>
+theory Scratch<br>
+   imports Pure<br>
+begin</p>
+<p>term "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)"<br>
+(*<br>
+This prints "PROP f PROP g PROP x", which can be misinterpreted as "f g x".<br>
+*)</p>
+<p>end<br>
+```</p>
+</blockquote>
+<p>Side remark: PIDE markup in Isabelle2025 effectively highlights subexpressions <br>
+of inner syntax in input and output (although it is technically about mixfix <br>
+syntax blocks instead of actual lambda-term expressions).</p>
+<p>So using the normal C-mouse hovering in Isabelle/jEdit (not Isabelle/VSCode), <br>
+you will see the structure of the term.</p>
+<p>Moreover, output does not require the C modifier for mouse hovering, so casual <br>
+users will quickly see, what they did not explicitly ask for.</p>
+<p>Here is my version of the example:</p>
+<p>theory Scratch<br>
+   imports Pure<br>
+begin</p>
+<p>notepad<br>
+begin<br>
+   fix f :: "prop ⇒ prop"<br>
+   and g :: "prop ⇒ prop"<br>
+   and x :: "prop"<br>
+   term "PROP f PROP g PROP x"<br>
+end</p>
+<p>end</p>
+<p>Despite the ambiguity of the syntax, the Prover IDE makes clear what the <br>
+structure of the underlying term application really is.</p>
+<p>(The deeper reason why PROP syntax for the special "aprop" category has many <br>
+odd side-conditions is that this hardly ever occurs in regular applications. <br>
+An when it does occur, there are more oddities to be expected from the logical <br>
+side.)</p>
+<p>Makarius</p>
+
+
+
+<a name="534650410"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534650410" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534650410">(Aug 15 2025 at 13:12)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Side note: there is some other syntax that is also a bit odd. For <br>
+example, if you have a function applied to "CARD('a)", that gets <br>
+rendered as "f CARD('a)". So the CARD basically looks like a function, <br>
+but it isn't. And it binds more strongly than a function application, in <br>
+some sense.</p>
+<p>Not a huge issue or anything, but definitely confusing. But at least <br>
+nowadays, the CARD syntax is ctrl+clickable, so someone who is not <br>
+familiar with it can quickly find out what it means.</p>
+<p>Manuel</p>
+<p>On 15/08/2025 13:48, Makarius wrote:</p>
+<blockquote>
+<p>On 13/08/2025 11:50, Kevin Kappelmann wrote:</p>
+<blockquote>
+<p>I am using Isabelle2025 and want to report an unexpected behaviour of <br>
+the printing of terms containing nested prop functions (form <br>
+Isabelle/Pure).</p>
+<p>```isabelle<br>
+theory Scratch<br>
+   imports Pure<br>
+begin</p>
+<p>term "PROP (f :: prop ⇒ prop) PROP ((g :: prop ⇒ prop) PROP x)"<br>
+(*<br>
+This prints "PROP f PROP g PROP x", which can be misinterpreted as "f <br>
+g x".<br>
+*)</p>
+<p>end<br>
+```</p>
+</blockquote>
+<p>Side remark: PIDE markup in Isabelle2025 effectively highlights <br>
+subexpressions of inner syntax in input and output (although it is <br>
+technically about mixfix syntax blocks instead of actual lambda-term <br>
+expressions).</p>
+<p>So using the normal C-mouse hovering in Isabelle/jEdit (not <br>
+Isabelle/VSCode), you will see the structure of the term.</p>
+<p>Moreover, output does not require the C modifier for mouse hovering, <br>
+so casual users will quickly see, what they did not explicitly ask for.</p>
+<p>Here is my version of the example:</p>
+<p>theory Scratch<br>
+  imports Pure<br>
+begin</p>
+<p>notepad<br>
+begin<br>
+  fix f :: "prop ⇒ prop"<br>
+  and g :: "prop ⇒ prop"<br>
+  and x :: "prop"<br>
+  term "PROP f PROP g PROP x"<br>
+end</p>
+<p>end</p>
+<p>Despite the ambiguity of the syntax, the Prover IDE makes clear what <br>
+the structure of the underlying term application really is.</p>
+<p>(The deeper reason why PROP syntax for the special "aprop" category <br>
+has many odd side-conditions is that this hardly ever occurs in <br>
+regular applications. An when it does occur, there are more oddities <br>
+to be expected from the logical side.)</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="534716001"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Unexpected%20printing%20of%20nested%20PROP%20functions/near/534716001" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Unexpected.20printing.20of.20nested.20PROP.20functions.html#534716001">(Aug 15 2025 at 21:36)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 15/08/2025 15:09, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Side note: there is some other syntax that is also a bit odd. For example, if <br>
+you have a function applied to "CARD('a)", that gets rendered as "f CARD('a)". <br>
+So the CARD basically looks like a function, but it isn't. And it binds more <br>
+strongly than a function application, in some sense.</p>
+</blockquote>
+<p>This kind of "quasi-first-order application" stems from a time before <br>
+Isabelle/HOL, as we know it today. See all other object-logics to get a sense <br>
+of the original Isabelle framework.</p>
+<p>I have my own list of things that could be improved at some indefinite point <br>
+in the future.</p>
+<p>Now that we have so much markup, we could eventually come up with <br>
+Isabelle/Scala tools to do inner-syntax updates systematically --- no crappy "AI".</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

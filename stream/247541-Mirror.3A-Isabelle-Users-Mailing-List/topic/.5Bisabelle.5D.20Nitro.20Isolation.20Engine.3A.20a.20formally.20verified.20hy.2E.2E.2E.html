@@ -1,0 +1,176 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Nitro Isolation Engine: a formally verified hy... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Nitro.20Isolation.20Engine.3A.20a.20formally.20verified.20hy.2E.2E.2E.html">[isabelle] Nitro Isolation Engine: a formally verified hy...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="562730958"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Nitro%20Isolation%20Engine%3A%20a%20formally%20verified%20hy.../near/562730958" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Nitro.20Isolation.20Engine.3A.20a.20formally.20verified.20hy.2E.2E.2E.html#562730958">(Dec 09 2025 at 16:17)</a>:</h4>
+<p><strong>From:</strong> Dominic Mulligan &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear fellow Isabelle users,</p>
+<p>(Larry has already kindly pointed to some posts/videos related to this<br>
+project a few days ago.  This posting provides a bit more information.)</p>
+<p>At AWS re:Invent 2025 in Las Vegas, we announced the AWS Nitro Isolation<br>
+Engine [1, 2, 3], a formally verified enhancement to the AWS Nitro System<br>
+that enforces isolation between virtual machines hosted on AWS's new<br>
+Graviton5-based EC2 instances.</p>
+<p>Nitro Isolation Engine represents a significant deployment of mechanized<br>
+proof in production infrastructure, and we therefore wanted to bring this<br>
+to the attention of the formal methods and programming languages<br>
+communities. This work builds directly on decades of advances in<br>
+interactive theorem proving, program verification, and programming<br>
+languages theory, alongside landmark projects—such as, seL4 [4], CertiKOS<br>
+[5], SeKVM [6], and many others—that were inspirations for this work.<br>
+What is Nitro Isolation Engine?</p>
+<p>Nitro Isolation Engine is a small, trusted computing base written in Rust<br>
+that sits beneath the AWS Nitro Hypervisor, providing a security isolation<br>
+boundary between the hypervisor and guest virtual machines, and between<br>
+co-tenanted guest virtual machines. The Nitro Isolation Engine controls the<br>
+critical hardware features required for isolating customer workloads,<br>
+primarily control of Stage Two translation tables.<br>
+The verification effort</p>
+<p>Nitro Isolation Engine was designed with verification in mind from the<br>
+first line of code. Nitro Isolation Engine is subject to AWS’s existing<br>
+rigorous engineering practices, including the deployment of<br>
+property-based-testing and lightweight formal methods, for example the Kani<br>
+bounded model checker for Rust [7].</p>
+<p>Building atop this foundation, we have specified and verified the<br>
+correctness of Nitro Isolation Engine in Isabelle/HOL [8]. Our model and<br>
+proofs consist of around 260,000 lines of machine-checked models and<br>
+proofs. Specifically, we have proved:</p>
+<p>- *Functional correctness: *Nitro Isolation Engine behaves as specified<br>
+   for all operations: virtual machine creation, memory mapping, instruction<br>
+   and data abort handling, and so on. As corollaries of our total<br>
+   verification style, we have also proven memory-safety, termination, and<br>
+   absence of runtime errors, providing our modelling assumptions are accurate.</p>
+<p>- <em>Confidentiality</em>: We prove a noninterference-style property<br>
+   demonstrating the confidentiality of guest virtual machine states,<br>
+   formalized as indistinguishability preservation up-to permitted flows of<br>
+   declassified information out of a guest.</p>
+<p>- <em>Integrity</em>: The integrity of guest virtual machine state is<br>
+   formalized as a safety property, showing that the private state of one<br>
+   virtual machine is unaffected by operations modifying another distinct<br>
+   virtual machine.</p>
+<p>In addition, we have applied Iris [9] and Verus [10] to prove the<br>
+correctness of the Nitro Isolation Engine’s concurrency primitives,<br>
+including ticket locks, mutexes, and rendezvous barriers.</p>
+<p>For functional verification, we defined μRust, a restricted subset of Rust<br>
+expressive enough to write Nitro Isolation Engine but amenable to formal<br>
+reasoning and embedded its semantics into Isabelle/HOL. Specifications are<br>
+written in separation logic, and proofs proceed via weakest precondition<br>
+calculus with custom automation. We have made our verification<br>
+infrastructure open source as the AutoCorrode library [11] for<br>
+Isabelle/HOL, which may be of independent interest.</p>
+<p>Regards,<br>
+Automated Reasoning Group, AWS</p>
+<p>[1]: <a href="https://www.aboutamazon.com/news/aws/aws-graviton-5-cpu-amazon-ec2">https://www.aboutamazon.com/news/aws/aws-graviton-5-cpu-amazon-ec2</a><br>
+[2] : <a href="https://www.youtube.com/watch?v=3Gt-30Fm38U">https://www.youtube.com/watch?v=3Gt-30Fm38U</a><br>
+<a href="https://www.youtube.com/watch?v=3Gt-30Fm38U">https://www.youtube.com/watch?v=3Gt-30Fm38U</a><br>
+&lt;<a href="https://www.youtube.com/watch?v=3Gt-30Fm38U">https://www.youtube.com/watch?v=3Gt-30Fm38U</a>&gt;<br>
+[3]: <a href="https://www.youtube.com/watch?v=b0P55gHhG4g">https://www.youtube.com/watch?v=b0P55gHhG4g</a><br>
+[4]: <a href="https://sel4.systems/">https://sel4.systems/</a><br>
+[5]: <a href="https://flint.cs.yale.edu/certikos/">https://flint.cs.yale.edu/certikos/</a><br>
+[6]:<br>
+<a href="https://www.usenix.org/conference/usenixsecurity21/presentation/li-shih-wei">https://www.usenix.org/conference/usenixsecurity21/presentation/li-shih-wei</a><br>
+[7]: <a href="https://github.com/model-checking/kani">https://github.com/model-checking/kani</a><br>
+[8]: <a href="https://isabelle.in.tum.de/">https://isabelle.in.tum.de/</a><br>
+[9]: <a href="https://iris-project.org/">https://iris-project.org/</a><br>
+[10]: <a href="https://github.com/verus-lang/verus">https://github.com/verus-lang/verus</a><br>
+[11]: <a href="https://github.com/awslabs/AutoCorrode">https://github.com/awslabs/AutoCorrode</a></p>
+<div class="youtube-video message_inline_image"><a data-id="3Gt-30Fm38U" href="https://www.youtube.com/watch?v=3Gt-30Fm38U"><img src="https://uploads.zulipusercontent.net/c2a673a4ef421b446045799706a479eee3883345/68747470733a2f2f692e7974696d672e636f6d2f76692f3347742d3330466d3338552f6d7164656661756c742e6a7067"></a></div><div class="youtube-video message_inline_image"><a data-id="b0P55gHhG4g" href="https://www.youtube.com/watch?v=b0P55gHhG4g"><img src="https://uploads.zulipusercontent.net/349ce8413fbbc521008106a118bd7fd73ec38614/68747470733a2f2f692e7974696d672e636f6d2f76692f62305035356748684734672f6d7164656661756c742e6a7067"></a></div>
+
+
+
+<a name="562732968"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Nitro%20Isolation%20Engine%3A%20a%20formally%20verified%20hy.../near/562732968" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Nitro.20Isolation.20Engine.3A.20a.20formally.20verified.20hy.2E.2E.2E.html#562732968">(Dec 09 2025 at 16:23)</a>:</h4>
+<p><strong>From:</strong> David Cock &lt;<a href="mailto:david.cock@inf.ethz.ch">david.cock@inf.ethz.ch</a>&gt;</p>
+<p>Hey, just wanted to extend a really big congratulation to you all. <br>
+Knowing from personal experience what it takes to pull something like <br>
+this off, this is a really impressive effort. Well done guys!</p>
+<p>David</p>
+<p>On 12/9/25 17:16, Dominic Mulligan (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Dear fellow Isabelle users,</p>
+<p>(Larry has already kindly pointed to some posts/videos related to this <br>
+project a few days ago.  This posting provides a bit more information.)</p>
+<p>At AWS re:Invent 2025 in Las Vegas, we announced the AWS Nitro <br>
+Isolation Engine [1, 2, 3], a formally verified enhancement to the AWS <br>
+Nitro System that enforces isolation between virtual machines hosted <br>
+on AWS's new Graviton5-based EC2 instances.</p>
+<p>Nitro Isolation Engine represents a significant deployment of <br>
+mechanized proof in production infrastructure, and we therefore wanted <br>
+to bring this to the attention of the formal methods and programming <br>
+languages communities. This work builds directly on decades of <br>
+advances in interactive theorem proving, program verification, and <br>
+programming languages theory, alongside landmark projects—such as, <br>
+seL4 [4], CertiKOS [5], SeKVM [6], and many others—that were <br>
+inspirations for this work.</p>
+<p>What is Nitro Isolation Engine?</p>
+<p>Nitro Isolation Engine is a small, trusted computing base written in <br>
+Rust that sits beneath the AWS Nitro Hypervisor, providing a security <br>
+isolation boundary between the hypervisor and guest virtual machines, <br>
+and between co-tenanted guest virtual machines. The Nitro Isolation <br>
+Engine controls the critical hardware features required for isolating <br>
+customer workloads, primarily control of Stage Two translation tables.</p>
+<p>The verification effort</p>
+<p>Nitro Isolation Engine was designed with verification in mind from the <br>
+first line of code. Nitro Isolation Engine is subject to AWS’s <br>
+existing rigorous engineering practices, including the deployment of <br>
+property-based-testing and lightweight formal methods, for example the <br>
+Kani bounded model checker for Rust [7].</p>
+<p>Building atop this foundation, we have specified and verified the <br>
+correctness of Nitro Isolation Engine in Isabelle/HOL [8]. Our model <br>
+and proofs consist of around 260,000 lines of machine-checked models <br>
+and proofs. Specifically, we have proved:</p>
+<p>* *Functional correctness: *Nitro Isolation Engine behaves as<br>
+    specified for all operations: virtual machine creation, memory<br>
+    mapping, instruction and data abort handling, and so on. As<br>
+    corollaries of our total verification style, we have also proven<br>
+    memory-safety, termination, and absence of runtime errors,<br>
+    providing our modelling assumptions are accurate.<br>
+  * <em>Confidentiality</em>: We prove a noninterference-style property<br>
+    demonstrating the confidentiality of guest virtual machine states,<br>
+    formalized as indistinguishability preservation up-to permitted<br>
+    flows of declassified information out of a guest.<br>
+  * <em>Integrity</em>: The integrity of guest virtual machine state is<br>
+    formalized as a safety property, showing that the private state of<br>
+    one virtual machine is unaffected by operations modifying another<br>
+    distinct virtual machine.</p>
+<p>In addition, we have applied Iris [9] and Verus [10] to prove the <br>
+correctness of the Nitro Isolation Engine’s concurrency primitives, <br>
+including ticket locks, mutexes, and rendezvous barriers.</p>
+<p>For functional verification, we defined μRust, a restricted subset of <br>
+Rust expressive enough to write Nitro Isolation Engine but amenable to <br>
+formal reasoning and embedded its semantics into Isabelle/HOL. <br>
+Specifications are written in separation logic, and proofs proceed via <br>
+weakest precondition calculus with custom automation. We have made our <br>
+verification infrastructure open source as the AutoCorrode library <br>
+[11] for Isabelle/HOL, which may be of independent interest.</p>
+<p>Regards,<br>
+Automated Reasoning Group, AWS</p>
+<p>[1]: <a href="https://www.aboutamazon.com/news/aws/aws-graviton-5-cpu-amazon-ec2">https://www.aboutamazon.com/news/aws/aws-graviton-5-cpu-amazon-ec2</a><br>
+[2] : <a href="https://www.youtube.com/watch?v=3Gt-30Fm38U">https://www.youtube.com/watch?v=3Gt-30Fm38U</a> <br>
+<a href="https://www.youtube.com/watch?v=3Gt-30Fm38U">https://www.youtube.com/watch?v=3Gt-30Fm38U</a> <br>
+&lt;<a href="https://www.youtube.com/watch?v=3Gt-30Fm38U">https://www.youtube.com/watch?v=3Gt-30Fm38U</a>&gt;<br>
+[3]: <a href="https://www.youtube.com/watch?v=b0P55gHhG4g">https://www.youtube.com/watch?v=b0P55gHhG4g</a><br>
+[4]: <a href="https://sel4.systems/">https://sel4.systems/</a><br>
+[5]: <a href="https://flint.cs.yale.edu/certikos/">https://flint.cs.yale.edu/certikos/</a><br>
+[6]: <br>
+<a href="https://www.usenix.org/conference/usenixsecurity21/presentation/li-shih-wei">https://www.usenix.org/conference/usenixsecurity21/presentation/li-shih-wei</a><br>
+[7]: <a href="https://github.com/model-checking/kani">https://github.com/model-checking/kani</a><br>
+[8]: <a href="https://isabelle.in.tum.de/">https://isabelle.in.tum.de/</a><br>
+[9]: <a href="https://iris-project.org/">https://iris-project.org/</a><br>
+[10]: <a href="https://github.com/verus-lang/verus">https://github.com/verus-lang/verus</a><br>
+[11]: <a href="https://github.com/awslabs/AutoCorrode">https://github.com/awslabs/AutoCorrode</a></p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,369 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] very slow metis proofs: is that an issue? · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html">[isabelle] very slow metis proofs: is that an issue?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="534043903"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534043903" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534043903">(Aug 12 2025 at 19:36)</a>:</h4>
+<p>From: Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Hello,</p>
+<p>today I happened to compile "HOL-Analysis.Abstract_Topological_Spaces" <br>
+which takes about 5 minutes on my notebook.<br>
+Out of curiosity, I looked at the longest "by metis" which takes about<br>
+20 s. It is</p>
+<blockquote>
+<p>by (metis (no_types) assms closed_real_atLeastAtMost closed_closedin<br>
+continuous_map_closedin)</p>
+</blockquote>
+<p>on line 3310.</p>
+<p>A trivial transformation (guessed easily without understanding what is <br>
+going on in the proof) to</p>
+<blockquote>
+<p>using closed_real_atLeastAtMost[unfolded closed_closedin]<br>
+assms[unfolded continuous_map_closedin]  by blast</p>
+</blockquote>
+<p>brings it down to practically zero.</p>
+<p>This is not very interesting in itself but it raises for me following <br>
+questions:</p>
+<ul>
+<li>
+<p>I suspect that (at least) HOL-Analysis could be drastically sped up by <br>
+similar interventions. Is that a reasonable assumption?</p>
+</li>
+<li>
+<p>If so, is it something the community cares about?</p>
+</li>
+<li>If so, could the optimization be somehow automated? Since my <br>
+improvement, as I said, was immediate, AI should be able to do the same <br>
+in similar cases.</li>
+</ul>
+<p>Stepan</p>
+
+
+
+<a name="534172281"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534172281" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534172281">(Aug 13 2025 at 07:25)</a>:</h4>
+<p>From: Martin Desharnais &lt;<a href="mailto:martin.desharnais@posteo.de">martin.desharnais@posteo.de</a>&gt;<br>
+Hi Stepan,</p>
+<p>On 12.08.25 21:28, Stepan Holub (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Out of curiosity, I looked at the longest "by metis" which takes about<br>
+20 s. It is</p>
+<blockquote>
+<p>by (metis (no_types) assms closed_real_atLeastAtMost closed_closedin<br>
+continuous_map_closedin)</p>
+</blockquote>
+<p>on line 3310.</p>
+<p>A trivial transformation (guessed easily without understanding what is <br>
+going on in the proof) to</p>
+<blockquote>
+<p>using closed_real_atLeastAtMost[unfolded closed_closedin]<br>
+assms[unfolded continuous_map_closedin]  by blast</p>
+</blockquote>
+<p>brings it down to practically zero.</p>
+</blockquote>
+<p>I checked the mentioned theory and found two duplicates of the proof you <br>
+presented, each of which taking approximately 7.5 seconds on my laptop. <br>
+I (very slightly) generalized the proof step, proved it with your <br>
+suggested proof, and reused the generalized proof step in both places <br>
+(See Isabelle/7ac70210d12c).</p>
+<blockquote>
+<p>This is not very interesting in itself but it raises for me following <br>
+questions:</p>
+<ul>
+<li>I suspect that (at least) HOL-Analysis could be drastically sped up by <br>
+similar interventions. Is that a reasonable assumption?</li>
+<li>If so, is it something the community cares about?</li>
+</ul>
+</blockquote>
+<p>I suspect that many the verification of many formalizations could be <br>
+sped up by tuning some of the proofs.</p>
+<p>As for caring about it, opinions may vary. I believe that one should <br>
+strive for a balance between readability, maintainability, and <br>
+verification performance; verification performance not only reduce the <br>
+running time, but also the energy consumption.</p>
+<p>I believe the change you proposed was a good one, because it improved <br>
+both readability and performance.</p>
+<blockquote>
+<ul>
+<li>If so, could the optimization be somehow automated? Since my <br>
+improvement, as I said, was immediate, AI should be able to do the same <br>
+in similar cases.</li>
+</ul>
+</blockquote>
+<p>Yes, some proof refactoring could be automated if one was to invest the <br>
+time into writing a tool. Many heuristics could be used including AI, <br>
+Sledgehammer, try0, and metis_instantiate. I personally like to use <br>
+metis_instantiate and select some simple fact instantiation that <br>
+simplify the proof search.</p>
+<p>Regards,<br>
+Martin</p>
+
+
+
+<a name="534172847"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534172847" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534172847">(Aug 13 2025 at 07:29)</a>:</h4>
+<p>From: Gergely Buday &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Stepan Holub wrote:</p>
+<blockquote>
+<p>today I happened to compile "HOL-Analysis.Abstract_Topological_Spaces"<br>
+which takes about 5 minutes on my notebook.<br>
+Out of curiosity, I looked at the longest "by metis" which takes about<br>
+20 s. It is</p>
+<blockquote>
+<p>by (metis (no_types) assms closed_real_atLeastAtMost closed_closedin<br>
+continuous_map_closedin)</p>
+</blockquote>
+<p>on line 3310.</p>
+<p>A trivial transformation (guessed easily without understanding what is<br>
+going on in the proof) to</p>
+<blockquote>
+<p>using closed_real_atLeastAtMost[unfolded closed_closedin]<br>
+assms[unfolded continuous_map_closedin]  by blast</p>
+</blockquote>
+<p>brings it down to practically zero.</p>
+<p>This is not very interesting in itself but it raises for me following<br>
+questions:</p>
+</blockquote>
+<p>I think this is indeed interesting, and shows that while low level<br>
+massaging is frowned upon but it is actually useful, it reduces the<br>
+search space much. I would love to see a write up on this. Is there<br>
+one?</p>
+<ul>
+<li>Gergely</li>
+</ul>
+
+
+
+<a name="534173677"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534173677" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534173677">(Aug 13 2025 at 07:35)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I tuned another slow proof in HOL-Analysis.<br>
+Using the timimg panel, I was surprised that this showed up:</p>
+<ul>
+<li>HOL-Analysis.Infinite_Sum<ul>
+<li>91.8 command "text"</li>
+</ul>
+</li>
+</ul>
+<p>Does that have anything to do with the cite command in that text block?</p>
+<p>Tobias</p>
+<p>On 12/08/2025 21:28, Stepan Holub (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hello,</p>
+<p>today I happened to compile "HOL-Analysis.Abstract_Topological_Spaces" which <br>
+takes about 5 minutes on my notebook.<br>
+Out of curiosity, I looked at the longest "by metis" which takes about<br>
+20 s. It is</p>
+<blockquote>
+<p>by (metis (no_types) assms closed_real_atLeastAtMost closed_closedin<br>
+continuous_map_closedin)</p>
+</blockquote>
+<p>on line 3310.</p>
+<p>A trivial transformation (guessed easily without understanding what is going <br>
+on in the proof) to</p>
+<blockquote>
+<p>using closed_real_atLeastAtMost[unfolded closed_closedin]<br>
+assms[unfolded continuous_map_closedin]  by blast</p>
+</blockquote>
+<p>brings it down to practically zero.</p>
+<p>This is not very interesting in itself but it raises for me following questions:</p>
+<ul>
+<li>I suspect that (at least) HOL-Analysis could be drastically sped up by similar <br>
+interventions. Is that a reasonable assumption?</li>
+<li>If so, is it something the community cares about?</li>
+<li>If so, could the optimization be somehow automated? Since my improvement, as I <br>
+said, was immediate, AI should be able to do the same in similar cases.</li>
+</ul>
+<p>Stepan</p>
+</blockquote>
+<p><a href="/user_uploads/14278/hSHHQMk2J7e0dqri8DiOs7Fa/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="534182781"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534182781" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534182781">(Aug 13 2025 at 08:34)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Hello,</p>
+<p>as a big user of HOL-Analysis: yes, getting rid of a metis call that <br>
+runs for this long is definitely a valuable improvement. This timing <br>
+information has to be taken with a grain of salt, but 20s seems <br>
+excessive even for an outlier.</p>
+<p>As Martin pointed out, performance is not the only concern, but as far <br>
+as readability and maintainability are concerned, metis calls are <br>
+already pretty bad in my opinion, so anything you replace them with is <br>
+unlikely to be worse in those regards.</p>
+<p>@Martin: You mention "metis_instantiate". What is that? I couldn't find <br>
+anything about it.</p>
+<p>Manuel</p>
+
+
+
+<a name="534184787"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534184787" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534184787">(Aug 13 2025 at 08:46)</a>:</h4>
+<p>From: Martin Desharnais &lt;<a href="mailto:martin.desharnais@posteo.de">martin.desharnais@posteo.de</a>&gt;<br>
+Hi Manuel,</p>
+<p>On 13.08.25 10:32, Manuel Eberl wrote:</p>
+<blockquote>
+<p>@Martin: You mention "metis_instantiate". What is that? I couldn't find <br>
+anything about it.</p>
+</blockquote>
+<p>Fact instantiation is a new feature in Isabelle2025 implemented by Lukas <br>
+Bartl both in Metis and Sledgehammer. It is described in the <br>
+Sledgehammer documentation.</p>
+<p>The metis option is documented in § 6.2:</p>
+<blockquote>
+<p>The metis method also supports the Isabelle option<br>
+[[metis_instantiate]], which tells metis to infer and suggest<br>
+instantiations of facts using of from a successful proof.</p>
+</blockquote>
+<p>The Sledgehammer option is documented in § 7.4:</p>
+<blockquote>
+<p>instantiate [= smart_bool]<br>
+Specifies whether Metis should try to infer variable instantiations<br>
+be fore proof reconstruction, which results in instantiations of facts<br>
+using of (e.g. map_prod_surj_on[of f A "f <code>A" g B "g </code>B"]). This can<br>
+make the proof methods faster and more intelligible. If the option is<br>
+set to smart (the default), variable instantiations are inferred only<br>
+if proof reconstruction failed or timed out. (</p>
+</blockquote>
+<p>See the following CADE-30 paper for details:</p>
+<p>Lukas Bartl, Jasmin Blanchette and Tobias Nipkow. Exploiting <br>
+Instantiations from Paramodulation Proofs in Isabelle/HOL.</p>
+<p>Regards,<br>
+Martin</p>
+
+
+
+<a name="534184994"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534184994" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534184994">(Aug 13 2025 at 08:47)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+metis_instantiate:<br>
+<a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette/inst.pdf">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette/inst.pdf</a></p>
+<p>It is the new secret weapon to simplify metis proofs. Once you have a metis <br>
+proof, you precede it with "using [[metis_instantiate]]" and it spits out a <br>
+metis proof where the facts are instantiated (with "of") as much as possible. <br>
+That proof tends to run more quickly, but you can also try to turn it into a <br>
+simp/auto/etc proof by trying something like</p>
+<p>using &lt;key instantiated facts&gt; by simp/auto/etc</p>
+<p>and leaving out all the trivial lemmas that cluter up the metis proof.</p>
+<p>Sometimes it helps...</p>
+<p>Tobias</p>
+<p>On 13/08/2025 10:32, Manuel Eberl wrote:</p>
+<blockquote>
+<p>@Martin: You mention "metis_instantiate". What is that? I couldn't find anything <br>
+about it.</p>
+</blockquote>
+<p><a href="/user_uploads/14278/y0yfzCgZeV8EXnyFJrFNwBel/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="534192208"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534192208" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534192208">(Aug 13 2025 at 09:32)</a>:</h4>
+<p>From: Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;<br>
+Okay, that's exactly what I thought it would be and it's amazing. Well, <br>
+I assume it is, I haven't tried it yet. But I've been wanting something <br>
+like this for a long time.</p>
+<p>Thanks to you all!</p>
+<p>Manuel</p>
+<p>On 13/08/2025 10:47, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>metis_instantiate:<br>
+<a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette/inst.pdf">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette/inst.pdf</a></p>
+<p>It is the new secret weapon to simplify metis proofs. Once you have a <br>
+metis proof, you precede it with "using [[metis_instantiate]]" and it <br>
+spits out a metis proof where the facts are instantiated (with "of") <br>
+as much as possible. That proof tends to run more quickly, but you can <br>
+also try to turn it into a simp/auto/etc proof by trying something like</p>
+<p>using &lt;key instantiated facts&gt; by simp/auto/etc</p>
+<p>and leaving out all the trivial lemmas that cluter up the metis proof.</p>
+<p>Sometimes it helps...</p>
+<p>Tobias</p>
+<p>On 13/08/2025 10:32, Manuel Eberl wrote:</p>
+<blockquote>
+<p>@Martin: You mention "metis_instantiate". What is that? I couldn't <br>
+find anything about it.<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="534193974"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20very%20slow%20metis%20proofs%3A%20is%20that%20an%20issue%3F/near/534193974" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20very.20slow.20metis.20proofs.3A.20is.20that.20an.20issue.3F.html#534193974">(Aug 13 2025 at 09:43)</a>:</h4>
+<p>From: Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>On 8/13/25 09:19, Martin Desharnais wrote:</p>
+<blockquote>
+<p>Hi Stepan,</p>
+<p>On 12.08.25 21:28, Stepan Holub (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Out of curiosity, I looked at the longest "by metis" which takes about<br>
+20 s. It is</p>
+<blockquote>
+<p>by (metis (no_types) assms closed_real_atLeastAtMost closed_closedin<br>
+continuous_map_closedin)</p>
+</blockquote>
+<p>on line 3310.</p>
+<p>A trivial transformation (guessed easily without understanding what <br>
+is going on in the proof) to</p>
+<blockquote>
+<p>using closed_real_atLeastAtMost[unfolded closed_closedin]<br>
+assms[unfolded continuous_map_closedin]  by blast</p>
+</blockquote>
+<p>brings it down to practically zero.</p>
+</blockquote>
+<p>I checked the mentioned theory and found two duplicates of the proof <br>
+you presented, each of which taking approximately 7.5 seconds on my <br>
+laptop. I (very slightly) generalized the proof step, proved it with <br>
+your suggested proof, and reused the generalized proof step in both <br>
+places (See Isabelle/7ac70210d12c).</p>
+<blockquote>
+<p>This is not very interesting in itself but it raises for me following <br>
+questions:</p>
+<ul>
+<li>I suspect that (at least) HOL-Analysis could be drastically sped up <br>
+by similar interventions. Is that a reasonable assumption?</li>
+<li>If so, is it something the community cares about?</li>
+</ul>
+</blockquote>
+<p>I suspect that many the verification of many formalizations could be <br>
+sped up by tuning some of the proofs.</p>
+<p>As for caring about it, opinions may vary. I believe that one should <br>
+strive for a balance between readability, maintainability, and <br>
+verification performance; verification performance not only reduce the <br>
+running time, but also the energy consumption.</p>
+<p>I believe the change you proposed was a good one, because it improved <br>
+both readability and performance.</p>
+<blockquote>
+<ul>
+<li>If so, could the optimization be somehow automated? Since my <br>
+improvement, as I said, was immediate, AI should be able to do the <br>
+same in similar cases.</li>
+</ul>
+</blockquote>
+<p>Yes, some proof refactoring could be automated if one was to invest <br>
+the time into writing a tool.</p>
+</blockquote>
+<p>I wrote a tool for this once, but wasn't fully satisfied by the <br>
+approach: It uses a build hook, which makes it very difficult to obtain <br>
+local facts used in a proof. A better (but even less scalable) approach <br>
+would be to use an interactive session for this. The second problem was <br>
+an issue with threading, where after starting a large number of threads <br>
+(to process many goals) the system became unresponsive.</p>
+<p>To obtain a good ranking for proofs, one also needs to obtain data on <br>
+which proofs are preferred. I attempted to get responses for this once <br>
+(from the AFP editors) but didn't receive too many.</p>
+<p>If someone wants to pick this up, I am happy to share the prototype.</p>
+<p>Fabian</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

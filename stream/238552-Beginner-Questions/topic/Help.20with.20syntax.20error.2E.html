@@ -1,0 +1,49 @@
+<html>
+<head><meta charset="utf-8"><title>Help with syntax error. · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Help.20with.20syntax.20error.2E.html">Help with syntax error.</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="531912063"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Help%20with%20syntax%20error./near/531912063" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Thomas Gebert <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Help.20with.20syntax.20error.2E.html#531912063">(Jul 30 2025 at 19:14)</a>:</h4>
+<p>Hi, I am re-learning how to use Isabelle again to play with the LTL stuff.  </p>
+<p>I'm afraid that I'm very out of practice with the syntax for Isabelle, so I'm getting errors that I'm not 100% sure how to fix. </p>
+<p>I am trying to write this: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">SanityCheck</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="s">"LTL.LTL"</span>
+<span class="k">begin</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"p _ = True"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">excluded_middle</span><span class="o">:</span><span class="w"> </span><span class="s">"Or_ltlc (LTL.Prop_ltlc p) (LTL.Not_ltlc (LTL.Prop_ltlc p)) ≡ LTL.True_ltlc"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="gr">sorry</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>and I am getting this error: </p>
+<p>Outer syntax error⌂: keyword "(" expected,<br>
+but end-of-input⌂ was found</p>
+<p>Can someone tell me the correct syntax?</p>
+
+
+
+<a name="531922421"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Help%20with%20syntax%20error./near/531922421" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> terru <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Help.20with.20syntax.20error.2E.html#531922421">(Jul 30 2025 at 20:16)</a>:</h4>
+<p>just leave out the <code>by</code> (<code>sorry</code> closes the goal on its own, it's not a proof method that could be applied to <code>by</code> or <code>apply</code> the way <code>simp</code>/<code>auto</code>/etc. are)</p>
+
+
+
+<a name="531924412"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Help%20with%20syntax%20error./near/531924412" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Thomas Gebert <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Help.20with.20syntax.20error.2E.html#531924412">(Jul 30 2025 at 20:28)</a>:</h4>
+<p>Ah, ok, that fixed it.  I really need to reread the concrete semantics book.  Thanks!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

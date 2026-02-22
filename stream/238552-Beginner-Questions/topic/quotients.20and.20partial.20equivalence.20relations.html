@@ -1,0 +1,87 @@
+<html>
+<head><meta charset="utf-8"><title>quotients and partial equivalence relations · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotients.20and.20partial.20equivalence.20relations.html">quotients and partial equivalence relations</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="529940268"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotients%20and%20partial%20equivalence%20relations/near/529940268" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotients.20and.20partial.20equivalence.20relations.html#529940268">(Jul 21 2025 at 17:56)</a>:</h4>
+<p>Having tried to define the projective plane as the quotient of $R^3 - {(0,0,0)}$ by the relation that $(x, y, z)$ is the same as $(cx, cy, cz)$ for any nonzero real number $c$, I realized that I wasn't sure whether <code>Abs (0,0,0)</code> was in fact an element of the resulting quotient type. To try to resolve that question, I built a much simpler and smaller case, one where I think the quotient type should have exactly one element. In this example, the element <code>E</code> of the original type serves the role of $(0,0,0)$ in the RP2 example, namely, it's something I don't want to consider in the quotient. And making elements <code>A</code> and <code>B</code> equivalent is a proxy for the "scalar multiple" relation. As you might guess from the names, the original type definition had constructors <code>A,B,C,D,E</code>, but I eventually simplified down to this (which was copy-pasted and then adjusted from the definition of <code>rat</code> in Isabelle):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch5</span>
+<span class="w"> </span><span class="kp">imports</span><span class="w"> </span><span class="n">Complex_Main</span>
+<span class="k">begin</span>
+
+<span class="k">datatype</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">B</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">E</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">prel</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"b ⇒ b ⇒ bool"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"prel = (λx y. (x ≠ E ∧ y ≠ E)∧ ((x = y) ∨</span>
+<span class="s"> ((x = A) ∧ (y = B)) ∨</span>
+<span class="s"> ((x = B) ∧ (y = A))</span>
+<span class="s">))"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">arel</span><span class="o">:</span><span class="w"> </span><span class="kp">shows</span><span class="w"> </span><span class="s">"prel A A"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">prel_def</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">b.distinct</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">presburger</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">exists_prel_refl</span><span class="o">:</span><span class="w"> </span><span class="s">"∃x. prel x x"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">arel</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">symp_prel</span><span class="o">:</span><span class="w"> </span><span class="s">"symp prel"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">prel_def</span><span class="w"> </span><span class="n">sympI</span><span class="o">)</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">transp_prel</span><span class="o">:</span><span class="w"> </span><span class="s">"transp prel"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">prel_def</span><span class="w"> </span><span class="n">transpI</span><span class="o">)</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">part_equivp_prel</span><span class="o">:</span><span class="w"> </span><span class="s">"part_equivp prel"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">exists_prel_refl</span><span class="w"> </span><span class="n">part_equivpI</span><span class="w"> </span><span class="n">symp_prel</span><span class="w"> </span><span class="n">transp_prel</span><span class="o">)</span>
+
+<span class="kn">quotient_type</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"b"</span><span class="w"> </span><span class="n">/</span><span class="w"> </span><span class="n">partial</span><span class="o">:</span><span class="w"> </span><span class="s">"prel"</span>
+<span class="w">  </span><span class="kp">morphisms</span><span class="w"> </span><span class="n">Rep_p</span><span class="w"> </span><span class="n">Abs_p</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">part_equivp_prel</span><span class="w"> </span><span class="ow">.</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">Domainp_cr_proj</span><span class="w"> </span><span class="o">[</span><span class="n">transfer_domain_rule</span><span class="o">]:</span><span class="w"> </span><span class="s">"Domainp pcr_q = (λx .( (x ≠ E)) ∧ prel x x)"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">prel_def</span><span class="w"> </span><span class="n">q.domain_eq</span><span class="o">)</span>
+
+<span class="kt">thm</span><span class="w"> </span><span class="n">q.domain_eq</span>
+<span class="kt">thm</span><span class="w"> </span><span class="n">Abs_p_def</span>
+
+<span class="kn">theorem</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"card (UNIV::q set) = 1"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="kt">sledgehammer</span>
+</code></pre></div>
+<p>Sledgehammer can't prove that theorem. It also cannot prove that the cardinality is 2 or 3. This leaves me ignorant of what the whole <code>quotient_type</code> thing is doing. </p>
+<p>Concrete questions: </p>
+<ul>
+<li>Can someone tell me what the cardinality actually <strong>is</strong>?</li>
+<li>Can someone prove that? </li>
+<li>I'd really like to do a proof where I say (in the analogous setup for RP2) " I know that <code>p = q</code> in RP2; that means that <code>prel (Rep_p p) (Rep_p q)</code> is true, and then I'd like to go on and say that if <code>Rep_p p = (x, y, z)</code> and <code>Rep_p q = (a, b, c)</code>, then  <code>(x, y, z)</code> must be a nonzero scalar multiple of <code>(a, b, c)</code>, and that neither of them is <code>(0,0,0)</code>. I <em>thought</em> that was the kind of thing I'd get by using a partial equivalence relation, but maybe I was mistaken. Can anyone enlighten me?</li>
+</ul>
+
+
+
+<a name="529944371"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotients%20and%20partial%20equivalence%20relations/near/529944371" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotients.20and.20partial.20equivalence.20relations.html#529944371">(Jul 21 2025 at 18:21)</a>:</h4>
+<p>It is a bit too much for sledgehammer in one step:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">theorem</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"card (UNIV::q set) = 1"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹Abs_p A ∈ (UNIV::q set)›</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">moreover</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹x ∈ (UNIV::q set) ⟹ prel (Rep_p x) A›</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">x</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">cases</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">simp</span><span class="o">:</span><span class="w"> </span><span class="n">prel_def</span><span class="o">)</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="o">(</span><span class="n">lifting</span><span class="o">)</span><span class="w"> </span><span class="n">Quotient3_q</span><span class="w"> </span><span class="n">Quotient3_rep_reflp</span><span class="w"> </span><span class="n">prel_def</span><span class="o">)</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">Quotient3_q</span><span class="w"> </span><span class="n">Quotient3_rep_reflp</span><span class="w"> </span><span class="n">b.exhaust</span><span class="w"> </span><span class="n">prel_def</span><span class="o">)</span>
+<span class="w">  </span><span class="k">ultimately</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹(UNIV::q set) = {Abs_p A}›</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">Quotient_rel_abs2</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">Quotient_q</span><span class="o">]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">fastforce</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="n">thesis</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">card_1_singleton_iff</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="529955342"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotients%20and%20partial%20equivalence%20relations/near/529955342" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotients.20and.20partial.20equivalence.20relations.html#529955342">(Jul 21 2025 at 19:42)</a>:</h4>
+<p>Thank you. With luck, I can imitate this in my larger example. I'm very relieved to find that the cardinality is, indeed, 1. :)</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

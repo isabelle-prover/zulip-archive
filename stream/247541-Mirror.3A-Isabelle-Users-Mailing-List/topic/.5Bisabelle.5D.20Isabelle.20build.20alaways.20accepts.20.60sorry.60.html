@@ -1,0 +1,110 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle build alaways accepts `sorry` · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.20build.20alaways.20accepts.20.60sorry.60.html">[isabelle] Isabelle build alaways accepts `sorry`</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="568470852"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20build%20alaways%20accepts%20%60sorry%60/near/568470852" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.20build.20alaways.20accepts.20.60sorry.60.html#568470852">(Jan 16 2026 at 16:11)</a>:</h4>
+<p><strong>From:</strong> Simon Wimmer &lt;<a href="mailto:wimmersimon@gmail.com">wimmersimon@gmail.com</a>&gt;</p>
+<p>Dear list,</p>
+<p>It seems that Isabelle-2025-1 always accepts <code>sorry</code> during <code>isabelle
+build</code>,<br>
+regardless of whether <code>quick_and_dirty</code> is set. I attach a minimal example<br>
+at the end.</p>
+<p>This behavior appears on Apple Silicon and Linux (Intel).<br>
+It was already present in RC1.</p>
+<p>Simon</p>
+<p>Example:</p>
+<p>ROOT:</p>
+<p>session Test = Main +<br>
+  theories<br>
+    Test</p>
+<p>Test.thy:</p>
+<p>theory Test<br>
+  imports Main<br>
+begin</p>
+<p>lemma False<br>
+  sorry</p>
+<p>end</p>
+<p>Command:</p>
+<p>isabelle build -d . -c -o quick_and_dirty=false Test</p>
+
+
+
+<a name="568476542"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20build%20alaways%20accepts%20%60sorry%60/near/568476542" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.20build.20alaways.20accepts.20.60sorry.60.html#568476542">(Jan 16 2026 at 16:38)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 16/01/2026 17:11, Simon Wimmer wrote:</p>
+<blockquote>
+<p>It seems that Isabelle-2025-1 always accepts <code>sorry</code> during <code>isabelle build</code>,<br>
+regardless of whether <code>quick_and_dirty</code> is set. I attach a minimal example at <br>
+the end.</p>
+</blockquote>
+<blockquote>
+<p>Command:</p>
+<p>isabelle build -d . -c -o quick_and_dirty=false Test</p>
+</blockquote>
+<p>This is bad.</p>
+<p>Note that it works properly as follows:</p>
+<p>isabelle build -d . -c -o quick_and_dirty=false -o show_results=false Test</p>
+<p>We have accumulated a bit too many options, variants, modes. I need to <br>
+investigate this further, to understand its intended meaning and purpose.</p>
+<p>Makarius</p>
+
+
+
+<a name="568525605"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20build%20alaways%20accepts%20%60sorry%60/near/568525605" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.20build.20alaways.20accepts.20.60sorry.60.html#568525605">(Jan 16 2026 at 21:19)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 16/01/2026 17:38, Makarius wrote:</p>
+<blockquote>
+<p>This is bad.</p>
+</blockquote>
+<p>For the historical record, here is the relevant changeset from 28-Aug-2025:</p>
+<p>changeset:   83065:0a1a054d9b23<br>
+user:        wenzelm<br>
+date:        Thu Aug 28 15:55:07 2025 +0200<br>
+summary:     clarified show_results to serve as guard for interactive mode -- <br>
+avoid printing internal consts, e.g. in 'record' or 'datatype', where <br>
+Specification.definition is used as convenience for class instantiation (see <br>
+also 889d5cdc034b, 951abf9db857, ecf80e37ed1a);</p>
+<p>This treats all Isar commands in "isabelle build" as interactive and thus <br>
+always allows 'sorry'.</p>
+<p>I need to think about Isabelle2025-2 (January 2026) where this is partially <br>
+reverted.</p>
+<p>Makarius</p>
+
+
+
+<a name="568612267"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle%20build%20alaways%20accepts%20%60sorry%60/near/568612267" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.20build.20alaways.20accepts.20.60sorry.60.html#568612267">(Jan 17 2026 at 19:59)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 16/01/2026 22:19, Makarius wrote:</p>
+<blockquote>
+<p>On 16/01/2026 17:38, Makarius wrote:</p>
+<blockquote>
+<p>This is bad.</p>
+</blockquote>
+<p>I need to think about Isabelle2025-2 (January 2026) where this is partially <br>
+reverted.</p>
+</blockquote>
+<p>My current plan is to apply carefully chosen changes on top of Isabelle2025-1, <br>
+and publish that as Isabelle2025-2 at the start of next week. There won't be <br>
+any incompatibilities. AFP may remain at afp-2025-1 and does not need to be <br>
+relaunched.</p>
+<p>We've had such a slightly awkward situation before, with Isabelle2023-1 <br>
+(November 2013) vs. Isabelle2023-1 (December 2013). See also <br>
+<a href="https://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle2013-2/NEWS">https://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle2013-2/NEWS</a> --- <br>
+but with fewer changes this time.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

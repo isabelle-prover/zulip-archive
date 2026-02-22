@@ -1,0 +1,161 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [Isabelle2025-1-RC2] About try0 · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC2.5D.20About.20try0.html">[isabelle] [Isabelle2025-1-RC2] About try0</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="558309821"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC2%5D%20About%20try0/near/558309821" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC2.5D.20About.20try0.html#558309821">(Nov 19 2025 at 21:50)</a>:</h4>
+<p>From: Jørgen Villadsen &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+I completely agree, please call it try1 and keep the old try0. The new try0 is useless for me and my students.</p>
+<p>Regards, Jørgen</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 19 November 2025 14:03<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a><br>
+Subject: Re: [isabelle] [Isabelle2025-1-RC1] About try0</p>
+<p>Perhaps, the new default, whatever reason there is for it, could be try1 ...</p>
+<p>Stepan</p>
+<p>On 11/19/2025 12:19 PM, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>That sounds like a nice change (provided the default makes sense and<br>
+is usable).</p>
+<p>However, it is not modular: A theory cannot simply add another method<br>
+to try0 without reverting all existing settings. So in the current<br>
+form, it looks like this makes sense mostly in every private user's<br>
+settings, which is great!</p>
+<p>But forcing a new, incompatible, and less performing default setting<br>
+is critical: this will only limit the use and usefulness of try0.<br>
+Moreover, we'll probably see a lot of theories starting with<br>
+some declare [[try0_schedule = "..."]] magic, exporting it to all<br>
+dependent theories.</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 19/11/2025 10:44, <a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a> wrote:</p>
+<blockquote>
+<p>Hi Bram,</p>
+<p>reposting as my original email did not reach the mailing list.</p>
+<blockquote>
+<p>I have been using the new Isabelle2025-1-RC1 version for a couple of<br>
+days now. I see that try0 has gotten a bit of an overhaul where<br>
+certain provers are tried before others...</p>
+<p>This bothers me, because I feel like I should not have to wait five<br>
+seconds for this very simple proof. Especially because, in<br>
+Isabelle2025, these proofs show up immediately with try0.</p>
+</blockquote>
+<p>Thank you for testing Isabelle2025-1-RC1 and pointing out your issue<br>
+caused by this undocumented change.</p>
+<blockquote>
+<p>My first question is: Can I somehow change or disable this ordering?<br>
+Or can this be added? I looked around for about 15 minutes but could<br>
+not find any new settings. I do want to play around a bit to see if I<br>
+can find an ordering works for me, but the current one makes try0 feel<br>
+a bit sluggish in my opinion.</p>
+</blockquote>
+<p>Yes, you can configure the default timeout with the option<br>
+<code>try0_default_timeout</code> and the schedule with the option<br>
+<code>try0_schedule</code>. The default schedule is the following:</p>
+<p>declare [[try0_schedule = "<br>
+  satx metis |<br>
+  order presburger linarith algebra argo |<br>
+  simp auto blast fast fastforce force meson<br>
+"]]</p>
+<p>See the new documentation further down. In a nutshell, you can change<br>
+the ordering by moving the names around or use full parallel<br>
+execution by removing the vertical bars.</p>
+<p>I changed the default timeout from 5 to 2 seconds; it can still be<br>
+increased or decreased on a case-by-case basis with <code>using
+[[try0_default_timeout = &lt;integer&gt;]]</code>.</p>
+<blockquote>
+<p>My second question is: Could these changes be added to the news?<br>
+Currently it states nothing about changes to try0 while this one is<br>
+quite large in my opinion.</p>
+</blockquote>
+<p>Yes, I added the following documentation entry to NEW:</p>
+<ul>
+<li>try0:<ul>
+<li>Proof methods can now be dynamically added with the function<br>
+  Try0.register_proof_method and retrieved (e.g., to call them from<br>
+  Isabelle/ML) with the function Try0.get_proof_method.</li>
+<li>Added the option "try0_schedule" to control which proof methods get<br>
+  tried in which order. It accepts a list of proof method names<br>
+  separated by either a space, meaning parallel evaluation, or<br>
+  vertical lines, meaning sequential evaluation. The schedule is<br>
+  interpreted as list of groups executed in sequence; in each group,<br>
+  the proof methods are executed in parallel. INCOMPATIBILITY.</li>
+<li>Added the option "try0_default_timeout" to control the default<br>
+  timeout (in seconds).</li>
+<li>Changed the default timeout from 5 to 2 seconds.<br>
+  Minor INCOMPATIBILITY.</li>
+</ul>
+</li>
+</ul>
+<p>Regards,<br>
+Martin</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="558310588"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC2%5D%20About%20try0/near/558310588" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC2.5D.20About.20try0.html#558310588">(Nov 19 2025 at 21:55)</a>:</h4>
+<p>From: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+It’s impossible not to be reminded of the Theranos slogan, from Yoda in Star Wars: “Do or do not. There is no try.” </p>
+<p>Larry</p>
+<blockquote>
+<p>On 19 Nov 2025, at 21:50, Jørgen Villadsen &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>I completely agree, please call it try1 and keep the old try0. The new try0 is useless for me and my students.</p>
+</blockquote>
+
+
+
+<a name="558311596"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC2%5D%20About%20try0/near/558311596" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC2.5D.20About.20try0.html#558311596">(Nov 19 2025 at 22:00)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 19/11/2025 22:54, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>It’s impossible not to be reminded of the Theranos slogan, from Yoda in Star Wars: “Do or do not. There is no try.”</p>
+</blockquote>
+<p>Not Yoda am I, but the Isabelle release manager.</p>
+<p>It is up to Martin to figure out the truth from various reports on RC1/RC2, <br>
+and come up with suitable changes in the next 1-2 weeks. It is mainly about <br>
+converging to something that works most of the time, without going back and <br>
+forth several times.</p>
+<p>Makarius</p>
+
+
+
+<a name="558358887"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BIsabelle2025-1-RC2%5D%20About%20try0/near/558358887" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BIsabelle2025-1-RC2.5D.20About.20try0.html#558358887">(Nov 20 2025 at 06:50)</a>:</h4>
+<p>From: Martin Desharnais-Schäfer &lt;<a href="mailto:martin.desharnais-schaefer@posteo.de">martin.desharnais-schaefer@posteo.de</a>&gt;</p>
+<p>Hi all,</p>
+<p>Le 2025-11-19 à 23 h 00, Makarius a écrit :</p>
+<blockquote>
+<p>It is up to Martin to figure out the truth from various reports on <br>
+RC1/ RC2, and come up with suitable changes in the next 1-2 weeks. <br>
+It is mainly about converging to something that works most of the <br>
+time, without going back and forth several times.</p>
+</blockquote>
+<p>Yesterday, I changed the default schedule to run everything in parallel<br>
+but, sadly, this commit did not make it into RC2: It will be in RC3.</p>
+<p>A schedule can still be defined manually with the "try0_schedule"<br>
+option. However, note that I also changed the character used in the<br>
+schedule to mark sequencing from a vertical bar to a semicolon; some<br>
+anonymous person pointed out that a vertical bar could suggest<br>
+parallelism and suggested the semicolon as an alternative already use in<br>
+many programming languages to mark sequencing.</p>
+<p>The documentation in NEWS and the reduced timeout did make it into RC2,<br>
+so all proof methods get be executed in about six seconds, slightly more<br>
+than five.</p>
+<p>Regards,</p>
+<p>Martin</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

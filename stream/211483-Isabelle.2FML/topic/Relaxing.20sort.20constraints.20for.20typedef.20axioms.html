@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>Relaxing sort constraints for typedef axioms · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Relaxing.20sort.20constraints.20for.20typedef.20axioms.html">Relaxing sort constraints for typedef axioms</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="544427109"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Relaxing%20sort%20constraints%20for%20typedef%20axioms/near/544427109" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Daniel Matichuk <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Relaxing.20sort.20constraints.20for.20typedef.20axioms.html#544427109">(Oct 12 2025 at 20:30)</a>:</h4>
+<p>The axiom introduced by the typedef package includes any sort constraints that are present in the provided specification (as OFCLASS premises).  Since the axiom itself is conditional on the representation set being nonempty, I would argue that the sort constraints are not actually necessary.</p>
+<p>I propose that the sort constraints for the spec should be stripped before generating the typedef axiom, then re-introduced in the resulting theorem/inhabited proof obligation.</p>
+<p>Currently the underlying axioms for definitions are stripped of any sort constraints (although the exposed theorems have them re-introduced). This allows for some limited reasoning about types introduced with typedef that have weaker sort constraints than the original typedef specification. </p>
+<p>For example, given the following specification:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">typedef</span><span class="w"> </span><span class="o">(</span><span class="kp">overloaded</span><span class="o">)</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">not_zero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"{x :: ('a:: semiring_1). x ≠ 0 }"</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">exI</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">1</span><span class="o">])</span><span class="w"> </span><span class="n">simp</span>
+<span class="ow">...</span>
+<span class="k">instantiation</span><span class="w"> </span><span class="n">not_zero</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="o">(</span><span class="n">semiring_1</span><span class="o">)</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="k">begin</span>
+<span class="kn">lift_definition</span><span class="w"> </span><span class="n">one_not_zero</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a::semiring_1 not_zero"</span><span class="w"> </span><span class="kp">is</span><span class="w"> </span><span class="s">"1::'a"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="ow">...</span>
+</code></pre></div>
+<p>If we later relax the arity of the "one" class instance and constraint on "Abs_not_zero":</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">instance</span><span class="w"> </span><span class="n">not_zero</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="o">(</span><span class="n">zero_neq_one</span><span class="o">)</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">standard</span>
+<span class="k">setup</span><span class="w"> </span><span class="s">‹</span>
+<span class="s">Sign.add_const_constraint (@{const_name Abs_not_zero},SOME @{typ "'a::zero_neq_one ⇒ 'a not_zero"})</span>
+<span class="s">›</span>
+</code></pre></div>
+<p>We can prove the following:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"Abs_not_zero 1 = (1 :: 'a :: zero_neq_one not_zero)"</span>
+<span class="w">  </span><span class="k">unfolding</span>
+<span class="w">    </span><span class="o">[[</span><span class="n">axiom</span><span class="w"> </span><span class="s">"Scratch.one_not_zero_inst.one_not_zero_def"</span><span class="o">]]</span>
+<span class="w">    </span><span class="o">[[</span><span class="n">axiom</span><span class="w"> </span><span class="s">"Scratch.one_not_zero_def"</span><span class="o">]]</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">refl</span><span class="o">)</span>
+</code></pre></div>
+<p>However the following is not provable:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"Rep_not_zero (1 :: 'a :: zero_neq_one not_zero) = 1"</span>
+</code></pre></div>
+<p>This requires the property <code>y ∈ {x. x ≠ 0}  ⟹ Rep_not_zero (Abs_not_zero y) =  y</code>, which comes from the <code>type_definition</code><br>
+axiom from <code>typedef</code>. Unlike the <code>one_not_zero</code> definition, the <code>type_definition</code> axiom is conditional on the sort constraint originally provided to typedef:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kt">term</span><span class="w"> </span><span class="s">‹OFCLASS('a, semiring_1_class) ⟹ ∃x. x ∈ {x. ¬ x = 0} ⟹</span>
+<span class="s">type_definition Rep_not_zero Abs_not_zero {x. ¬ x = 0}›</span>
+</code></pre></div>
+<p>Although the <code>zero_neq_one</code> class would be sufficient to prove the type is inhabited, the <code>OFCLASS('a, semiring_1_class) </code> constraint on the axiom means we cannot properly interpret <code>Rep_not_zero</code> and <code>Abs_not_zero</code> without the <code>semiring_1</code> constraint.</p>
+<p>I propose that the sort constraints for the spec should be stripped (down to just <code>type</code>) before generating the typedef axiom, then re-introduced in the resulting theorem/inhabited proof obligation.</p>
+<p>This change would make it possible to effectively relax the sort constraints on an existing typedef (without needing additional axioms), provided that the representation set can still be shown to be nonempty under the weaker constraint.</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

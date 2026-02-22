@@ -1,0 +1,103 @@
+<html>
+<head><meta charset="utf-8"><title>Automation breaks when swapping arguments · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html">Automation breaks when swapping arguments</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="558351330"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558351330" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558351330">(Nov 20 2025 at 05:21)</a>:</h4>
+<p>While working through "Concrete Semantics", I discovered a very confusing scenario where automation works well or breaks completely depending on how you arrange the arguments. To demonstrate, given these definitions:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">b</span>
+
+<span class="k">inductive</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"alpha list ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"T []"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ a # w⇩2 @ [b])"</span>
+</code></pre></div>
+<p>The following lemma cannot be proven automatically:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ w⇩2)"</span>
+<span class="w">  </span><span class="kt">try</span><span class="w"> </span><span class="c">(* "No proof found, Tried in vain" *)</span>
+</code></pre></div>
+<p>Whereas if you swap the order of arguments in the conclusion, sledgehammer finds the solution instantly, and the previous lemma can now be trivially proved as well:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">T_append</span><span class="o">:</span><span class="w"> </span><span class="s">"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩2 @ w⇩1)"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">T.induct</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">metis</span><span class="w"> </span><span class="n">T.intros</span><span class="o">(</span><span class="n">2</span><span class="o">)</span><span class="w"> </span><span class="n">append_assoc</span><span class="o">)</span>
+<span class="w">  </span><span class="k">done</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ w⇩2)"</span>
+<span class="w">  </span><span class="k">by</span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">T_append</span><span class="o">)</span>
+</code></pre></div>
+<p>Why does this happen? Is there some sort of a rule I should follow to avoid this in the future?</p>
+
+
+
+<a name="558352632"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558352632" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558352632">(Nov 20 2025 at 05:40)</a>:</h4>
+<p>Neither version can be proven without <code>T_append</code></p>
+
+
+
+<a name="558352665"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558352665" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558352665">(Nov 20 2025 at 05:40)</a>:</h4>
+<p>And proving <code>T_append</code> is very hard, because the solvers do not do induction</p>
+
+
+
+<a name="558354053"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558354053" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558354053">(Nov 20 2025 at 05:59)</a>:</h4>
+<blockquote>
+<p>Neither version can be proven without <code>T_append</code></p>
+</blockquote>
+<p>I'm not sure I understand. This is <code>T_append</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">T_append</span><span class="o">:</span><span class="w"> </span><span class="s">"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩2 @ w⇩1)"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">T.induct</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">try</span>
+</code></pre></div>
+<p>The <code>try</code> statement immediately finds several proofs. But then if you state this lemma slightly differently:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">T_append</span><span class="o">:</span><span class="w"> </span><span class="s">"T w⇩1 ⟹ T w⇩2 ⟹ T (w⇩1 @ w⇩2)"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">T.induct</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">try</span>
+</code></pre></div>
+<p>The automation breaks completely. The order of the arguments shouldn't matter, but for some reason it does, and I don't understand why.</p>
+
+
+
+<a name="558355121"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558355121" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558355121">(Nov 20 2025 at 06:11)</a>:</h4>
+<p>The order matters</p>
+
+
+
+<a name="558355131"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558355131" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558355131">(Nov 20 2025 at 06:11)</a>:</h4>
+<p>you are not doing induction on the same variable</p>
+
+
+
+<a name="558355287"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558355287" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558355287">(Nov 20 2025 at 06:13)</a>:</h4>
+<p>Ah, thank you - it's clear to me now.</p>
+
+
+
+<a name="558355463"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558355463" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558355463">(Nov 20 2025 at 06:15)</a>:</h4>
+<p>BTW: I briefly tried to do a proof by hand, but I failed because the induction principle does not apply</p>
+
+
+
+<a name="558355508"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Automation%20breaks%20when%20swapping%20arguments/near/558355508" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Automation.20breaks.20when.20swapping.20arguments.html#558355508">(Nov 20 2025 at 06:15)</a>:</h4>
+<p>It might be possible but I don't see it</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head><meta charset="utf-8"><title>Mixfix notation · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Mixfix.20notation.html">Mixfix notation</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="547384991"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Mixfix%20notation/near/547384991" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Mixfix.20notation.html#547384991">(Oct 27 2025 at 22:59)</a>:</h4>
+<p>I've got a function "perspectivity" that takes 3 arguments -- a point and two lines. I've made a fake version here that takes 3 ints so that I don't have to include other definitions. </p>
+<p>Perspectivity is denoted like this <br>
+<a href="/user_uploads/14278/cq6UzKuYFBhPSICcN_WvHGqs/image.png">image.png</a> in the book we're working from, and in an attempt to capture something that that notation, I developed the notation below. Yes, in my case the point sits <em>below</em>  instead of above the dash, and there no little wedge, but it's close enough:</p>
+<div class="message_inline_image"><a href="/user_uploads/14278/cq6UzKuYFBhPSICcN_WvHGqs/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="59x38" src="/user_uploads/thumbnail/14278/cq6UzKuYFBhPSICcN_WvHGqs/image.png/840x560.webp"></a></div><div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">perspectivity</span><span class="o">::</span><span class="s">"int ⇒ int ⇒ int ⇒ int"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"perspectivity l1 P l2 = 0"</span>
+<span class="k">notation</span><span class="w"> </span><span class="n">perspectivity</span><span class="w"> </span><span class="o">(</span><span class="s">‹( _/ -⇩_-/ _)›</span><span class="w"> </span><span class="n">10</span><span class="o">)</span>
+
+<span class="kt">term</span><span class="w"> </span><span class="s">"perspectivity  l1 P l2"</span>
+</code></pre></div>
+<p>The result looks like this:<br>
+<a href="/user_uploads/14278/G_H6XdXr1hvfCP7Gb3xK9n6d/image.png">image.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/G_H6XdXr1hvfCP7Gb3xK9n6d/image.png" title="image.png"><img data-original-content-type="image/png" data-original-dimensions="187x68" src="/user_uploads/thumbnail/14278/G_H6XdXr1hvfCP7Gb3xK9n6d/image.png/840x560.webp"></a></div><p>Unfortunately, we'd really like to have this be the notation for "perspectivity P l1 l2", because in the actual definition, the point comes first (and this is 'natural' for various other parts of the development). Is there any way to refer to the arguments when writing mixfix so that the second arg can come first in the notation, etc? </p>
+<p>I assume not, or my search through various theory files in the sources might have revealed it, but if someone can confirm that it's hopeless, or tell me how to do it if it's possible, that'd be great.</p>
+
+
+
+<a name="547421157"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Mixfix%20notation/near/547421157" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Mixfix.20notation.html#547421157">(Oct 28 2025 at 06:57)</a>:</h4>
+<p>You can add an abbreviation for the infix notation:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">abbreviation</span><span class="w"> </span><span class="s">"perspectivity_infix P l1 ≡ perspectivity l1 P"</span>
+<span class="k">notation</span><span class="w"> </span><span class="n">perspectivity_infix</span><span class="w"> </span><span class="o">(</span><span class="ow">...</span><span class="o">)</span>
+</code></pre></div>
+<p>I also do that in the AFP, e.g. <a href="https://www.isa-afp.org/sessions/transport/#Transport_Functions_Base.html#offset_2624..2642">here</a></p>
+
+
+
+<a name="547613098"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Mixfix%20notation/near/547613098" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Mixfix.20notation.html#547613098">(Oct 29 2025 at 01:21)</a>:</h4>
+<p>Excellent solution -- thanks very much!</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

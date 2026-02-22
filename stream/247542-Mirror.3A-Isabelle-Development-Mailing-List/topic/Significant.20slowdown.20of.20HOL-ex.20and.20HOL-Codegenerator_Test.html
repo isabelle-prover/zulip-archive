@@ -1,0 +1,82 @@
+<html>
+<head><meta charset="utf-8"><title>Significant slowdown of HOL-ex and HOL-Codegenerator_Test · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Significant.20slowdown.20of.20HOL-ex.20and.20HOL-Codegenerator_Test.html">Significant slowdown of HOL-ex and HOL-Codegenerator_Test</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="539358706"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Significant%20slowdown%20of%20HOL-ex%20and%20HOL-Codegenerator_Test/near/539358706" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Significant.20slowdown.20of.20HOL-ex.20and.20HOL-Codegenerator_Test.html#539358706">(Sep 13 2025 at 20:12)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+There has been a significant slowdown of HOL-ex and HOL-Codegenerator_Test due <br>
+to the following changeset:</p>
+<p>changeset:   83131:7d6e6531de61<br>
+user:        paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+date:        Sun Sep 07 22:37:57 2025 +0100<br>
+files:       src/HOL/ROOT<br>
+description:<br>
+Removing "HOL-Library" as ancestor theory</p>
+<p>The log message keeps the motivation (or justification) secret, but I can <br>
+imagine certain situations where <em>removing</em> of intermediate session images <br>
+generally improves the build process. In AFP. my standard log message is <br>
+"build faster without intermediate session image", often with concrete <br>
+indication about actually saved time.</p>
+<p>Above this did not quite work, notably for HOL-ex and HOL-Codegenerator_Test, <br>
+where a lot of material from the parent session is actually used. Here are <br>
+some timings on my AMD Ryzen 9 7950X 16-Core Processor (with threads=8).</p>
+<p>87c96d455992, which includes 7d6e6531de61:<br>
+Finished HOL (0:01:52 elapsed time, 0:06:04 cpu time, factor 3.23)<br>
+Finished HOL-Computational_Algebra (0:00:41 elapsed time, 0:02:20 cpu time, <br>
+factor 3.38)<br>
+Finished HOL-Number_Theory (0:00:31 elapsed time, 0:02:13 cpu time, factor 4.22)<br>
+Finished HOL-ex (0:02:08 elapsed time, 0:11:03 cpu time, factor 5.15)<br>
+Finished HOL-Codegenerator_Test (0:04:22 elapsed time, 0:13:12 cpu time, <br>
+factor 3.02)</p>
+<p>87c96d455992, after "hg backout 7d6e6531de61":<br>
+Finished HOL (0:01:51 elapsed time, 0:05:57 cpu time, factor 3.20)<br>
+Finished HOL-Library (0:01:20 elapsed time, 0:05:43 cpu time, factor 4.28)<br>
+Finished HOL-Computational_Algebra (0:00:37 elapsed time, 0:01:58 cpu time, <br>
+factor 3.19)<br>
+Finished HOL-Number_Theory (0:00:31 elapsed time, 0:02:05 cpu time, factor 3.97)<br>
+Finished HOL-ex (0:01:45 elapsed time, 0:07:39 cpu time, factor 4.34)<br>
+Finished HOL-Codegenerator_Test (0:03:20 elapsed time, 0:06:49 cpu time, <br>
+factor 2.04)</p>
+<p>After my new change 746983070fca the situation is mostly back to normal:</p>
+<p>Finished HOL (0:01:54 elapsed time, 0:06:06 cpu time, factor 3.19)<br>
+Finished HOL-Library (0:01:20 elapsed time, 0:05:42 cpu time, factor 4.28)<br>
+Finished HOL-ex (0:01:50 elapsed time, 0:08:17 cpu time, factor 4.50)<br>
+Finished HOL-Codegenerator_Test (0:03:08 elapsed time, 0:07:11 cpu time, <br>
+factor 2.28)</p>
+<p>Thus the cluster build also becomes faster again, but it might be hard to <br>
+measure exactly due to its persistent history of build times used for <br>
+scheduling. On my local machine, a regular "isabelle build -j2 -a" is <br>
+something like 26min vs. 25min.</p>
+<p>Side-remark: for interactive development in Isabelle/jEdit, the session build <br>
+hierarchy can be trimmed-down on the spot. For example:</p>
+<p>isabelle jedit -A HOL -R HOL-ex</p>
+<p>or even:</p>
+<p>isabelle jedit -A Pure -R HOL-ex</p>
+<p>Thus only one image is built in parallel with 8 threads:</p>
+<p>Finished HOL-ex_requirements(Pure) (0:02:56 elapsed time, 0:13:07 cpu time, <br>
+factor 4.45). That is 20s shorter than sequential HOL + HOL-Library.</p>
+<p>Makarius</p>
+
+
+
+<a name="539419524"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Significant%20slowdown%20of%20HOL-ex%20and%20HOL-Codegenerator_Test/near/539419524" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Significant.20slowdown.20of.20HOL-ex.20and.20HOL-Codegenerator_Test.html#539419524">(Sep 14 2025 at 16:23)</a>:</h4>
+<p>From: Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>
+Feel free to revert, at least for those two. The original impetus was HOL-Computational_Algebra, which was taking forever to build when importing the whole of HOL-Library.</p>
+<blockquote>
+<p>On 13 Sep 2025, at 21:11, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Above this did not quite work, notably for HOL-ex and HOL-Codegenerator_Test, where a lot of material from the parent session is actually used. Here are some timings on my AMD Ryzen 9 7950X 16-Core Processor (with threads=8).</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

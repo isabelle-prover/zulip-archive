@@ -1,0 +1,48 @@
+<html>
+<head><meta charset="utf-8"><title>Why does &quot;TERM _&quot; appear. · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20does.20.22TERM.20_.22.20appear.2E.html">Why does &quot;TERM _&quot; appear.</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="523096107"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20does%20%22TERM%20_%22%20appear./near/523096107" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20does.20.22TERM.20_.22.20appear.2E.html#523096107">(Jun 09 2025 at 13:41)</a>:</h4>
+<p>I was playing around with PRIMITIVE and I've noticed that if I do</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="s">‹</span>
+<span class="s">val print_internal_goal = PRIMITIVE (fn x =&gt; (@{print} x ; x))</span>
+<span class="s">›</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"a ⟹ (b ⟹ a)"</span><span class="w"> </span><span class="s">"b"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">tactic</span><span class="w"> </span><span class="n">print_internal_goal</span><span class="o">)</span>
+</code></pre></div>
+<p>I get the following printed</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="s">"TERM _"</span><span class="n">⌂</span>
+<span class="s">"(a ⟹ b ⟹ a) ⟹ b ⟹ ((a ⟹ b ⟹ a) &amp;&amp;&amp; b)"</span><span class="n">⌂</span>
+</code></pre></div>
+<p>What is the origin of the <code>"TERM _"</code></p>
+
+
+
+<a name="523491801"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20does%20%22TERM%20_%22%20appear./near/523491801" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20does.20.22TERM.20_.22.20appear.2E.html#523491801">(Jun 11 2025 at 06:57)</a>:</h4>
+<p>as far as i know, it is used to check whether your tactic fails gracefully (i.e. return an empty sequence) in case it is applied to a state that it cannot act on. See <a href="#narrow/channel/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20emergence.20of.20.22TERM.20_.22.20.28using.20quickcheck.20and.20ni.2E.2E.2E/near/294320409">#Archive Mirror: Isabelle Users Mailing List &gt; &#91;isabelle&#93; emergence of "TERM _" (using quickcheck and ni... @ 💬</a></p>
+
+
+
+<a name="523662949"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20does%20%22TERM%20_%22%20appear./near/523662949" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> irvin <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20does.20.22TERM.20_.22.20appear.2E.html#523662949">(Jun 12 2025 at 01:11)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<a name="523987501"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20does%20%22TERM%20_%22%20appear./near/523987501" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20does.20.22TERM.20_.22.20appear.2E.html#523987501">(Jun 13 2025 at 17:32)</a>:</h4>
+<p>Note that you probably should not use <code>PRIMITIVE</code> etc directly. Whatever you want to do can probably also be done with high level combinators like <code>Subgoal.FOCUS</code></p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

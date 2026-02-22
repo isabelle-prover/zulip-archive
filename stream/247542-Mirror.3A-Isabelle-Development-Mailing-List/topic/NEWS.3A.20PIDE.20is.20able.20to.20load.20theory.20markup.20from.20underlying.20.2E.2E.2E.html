@@ -1,0 +1,168 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: PIDE is able to load theory markup from underlying ... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html">NEWS: PIDE is able to load theory markup from underlying ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="526466890"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20PIDE%20is%20able%20to%20load%20theory%20markup%20from%20underlying%20.../near/526466890" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html#526466890">(Jun 30 2025 at 18:55)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>* General </strong>*</p>
+<ul>
+<li>A Prover IDE session, e.g. in Isabelle/jEdit or Isabelle/VSCode, is<br>
+now able to load markup and messages from the underlying session<br>
+database. Example: "isabelle jedit -l HOL src/HOL/Nat.thy" for theory<br>
+"HOL.Nat" in session "HOL". This information is read-only: editing<br>
+theory sources in the editor will invalidate formal markup, and replace<br>
+it by an error message.</li>
+</ul>
+<p>This refers to Isabelle/476627cac12e.</p>
+<p>It addresses an old omission from our great Prover IDE. It now behaves like <br>
+IntellJ IDEA when jumping into "jar" files of the background library.</p>
+<p>Makarius</p>
+
+
+
+<a name="527057352"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20PIDE%20is%20able%20to%20load%20theory%20markup%20from%20underlying%20.../near/527057352" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html#527057352">(Jul 03 2025 at 18:53)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 03/07/2025 16:34, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>This is cool and totally great. I hope we don't pay a price in memory usage?</p>
+</blockquote>
+<p>There is no change on the Isabelle/ML side.</p>
+<p>On the Isabelle/Scala side, the memory usage should be the same as if the <br>
+theory had been loaded interactively into the Prover IDE.</p>
+<p>Nonetheless, we need to watch out for irregularities, after many years without <br>
+that functionality.</p>
+<p>Makarius</p>
+
+
+
+<a name="527114309"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20PIDE%20is%20able%20to%20load%20theory%20markup%20from%20underlying%20.../near/527114309" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html#527114309">(Jul 04 2025 at 06:21)</a>:</h4>
+<p>From: Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;<br>
+I almost missed this improvement, which is indeed totally great!</p>
+<p>Tobias</p>
+<p>On 03/07/2025 20:52, Makarius wrote:</p>
+<blockquote>
+<p>On 03/07/2025 16:34, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>This is cool and totally great. I hope we don't pay a price in memory usage?</p>
+</blockquote>
+<p>There is no change on the Isabelle/ML side.</p>
+<p>On the Isabelle/Scala side, the memory usage should be the same as if the theory <br>
+had been loaded interactively into the Prover IDE.</p>
+<p>Nonetheless, we need to watch out for irregularities, after many years without <br>
+that functionality.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/8MKBQXH8KMIMw4UCzYAvJ26l/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="532025616"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20PIDE%20is%20able%20to%20load%20theory%20markup%20from%20underlying%20.../near/532025616" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html#532025616">(Jul 31 2025 at 09:34)</a>:</h4>
+<p>From: Kevin Kappelmann &lt;<a href="mailto:kevin.kappelmann@tum.de">kevin.kappelmann@tum.de</a>&gt;<br>
+Hi all,</p>
+<p>I experience a regression in Isabelle/VSCode: when opening large <br>
+pre-built theories (particularly, HOL.List and HOL.Transcendental) <br>
+Isabelle/VSCode prints the messages of the respective theory but then <br>
+stops responding.</p>
+<p>Steps to re-reproduce: (1) build HOL (2) start Isabelle/VSCode (3) visit <br>
+HOL.List or HOL.Transcendental (4) process stops responding.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Test</span>
+<span class="w">   </span><span class="kp">imports</span>
+<span class="w">     </span><span class="n">HOL.Nat</span><span class="w"> </span><span class="c">(*go to Nat.thy and back -- no problems*)</span>
+<span class="w">     </span><span class="n">HOL.List</span><span class="w"> </span><span class="c">(*go to List.thy and back -- no more responses*)</span>
+<span class="w">     </span><span class="n">HOL.Transcendental</span><span class="w"> </span><span class="c">(*same as for List.thy*)</span>
+<span class="k">begin</span>
+
+<span class="c">(*just some text to check whether the process is still responding*)</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"True"</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="n">contradiction</span>
+<span class="w">   </span><span class="gr">sorry</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>On 03.07.25 20:52, Makarius wrote:</p>
+<blockquote>
+<p>On 03/07/2025 16:34, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>This is cool and totally great. I hope we don't pay a price in memory <br>
+usage?</p>
+</blockquote>
+<p>There is no change on the Isabelle/ML side.</p>
+<p>On the Isabelle/Scala side, the memory usage should be the same as if <br>
+the theory had been loaded interactively into the Prover IDE.</p>
+<p>Nonetheless, we need to watch out for irregularities, after many years <br>
+without that functionality.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+
+
+
+<a name="533159478"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20PIDE%20is%20able%20to%20load%20theory%20markup%20from%20underlying%20.../near/533159478" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html#533159478">(Aug 06 2025 at 18:32)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 30/06/2025 20:54, Makarius wrote:</p>
+<blockquote>
+<p><strong>* General </strong>*</p>
+<ul>
+<li>A Prover IDE session, e.g. in Isabelle/jEdit or Isabelle/VSCode, is<br>
+now able to load markup and messages from the underlying session<br>
+database. Example: "isabelle jedit -l HOL src/HOL/Nat.thy" for theory<br>
+"HOL.Nat" in session "HOL". This information is read-only: editing<br>
+theory sources in the editor will invalidate formal markup, and replace<br>
+it by an error message.</li>
+</ul>
+</blockquote>
+<p>I have reworked this significantly in Isabelle/b66202c4e6d9, which also <br>
+contains the slightly updated NEWS entry.</p>
+<p>Most notably, there is now proper support for output messages, even within <br>
+auxiliary files (e.g. 'ML_file'). This turned out surprisingly difficult, <br>
+because the concept of "results" of a command are half-way between the <br>
+obsolete REPL world and the PIDE document model. I made a lot of efforts to <br>
+re-implement the interactive status-quo in the batch-build model of reloaded <br>
+theories.</p>
+<p>Makarius</p>
+
+
+
+<a name="533160954"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20PIDE%20is%20able%20to%20load%20theory%20markup%20from%20underlying%20.../near/533160954" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20PIDE.20is.20able.20to.20load.20theory.20markup.20from.20underlying.20.2E.2E.2E.html#533160954">(Aug 06 2025 at 18:44)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 31/07/2025 11:34, Kevin Kappelmann wrote:</p>
+<blockquote>
+<p>I experience a regression in Isabelle/VSCode: when opening large pre-built <br>
+theories (particularly, HOL.List and HOL.Transcendental) Isabelle/VSCode <br>
+prints the messages of the respective theory but then stops responding.</p>
+</blockquote>
+<p>There is definitely something wrong here, even in current <br>
+Isabelle/adaea1a92086 with its significant refinements of "reload_theory" <br>
+concept of PIDE. I did manage to see output messages in theory HOL.List a few <br>
+times before it disintegrates.</p>
+<p>I've spent only 30min to look around in the Isabelle/VSCode sources, and did <br>
+not find anything specific on the spot. I did see many fine points that need <br>
+to be brushed up --- results from the last two Bachelor projects on <br>
+Isabelle/VSCode that are not yet fully integrated.</p>
+<p>This will happen soon, and be finished before the coming release at the end of <br>
+this year, because someone else has provided a small budget for precisely such <br>
+"brush up and proper integration" work in Isabelle/VSCode. (A much bigger <br>
+budget will be required to turn the still <em>experimental</em> Isabelle/VSCode into <br>
+proper production quality, at the level of Isabelle/jEdit.)</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

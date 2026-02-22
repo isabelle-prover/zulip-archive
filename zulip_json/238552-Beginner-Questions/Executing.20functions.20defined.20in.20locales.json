@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I'm having trouble executing functions and definitions that are defined inside a locale. Do I have to first generate the code via something like code_pred?</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Broken_Locales</span>\n<span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">Main</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">my_locale</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">nat</span>\n<span class=\"k\">begin</span>\n<span class=\"k\">abbreviation</span><span class=\"w\"> </span><span class=\"s\">\"suc ≡ x + 1\"</span>\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"s\">\"sucsuc ≡ x + 2\"</span>\n<span class=\"k\">end</span>\n\n<span class=\"kt\">value</span><span class=\"w\"> </span><span class=\"s\">\"my_locale.suc 4\"</span><span class=\"w\"> </span><span class=\"c\">(* works *)</span>\n<span class=\"kt\">value</span><span class=\"w\"> </span><span class=\"s\">\"my_locale.sucsuc 4\"</span><span class=\"w\"> </span><span class=\"c\">(* No code equations for my_locale.sucsuc *)</span>\n\n<span class=\"kn\">interpretation</span><span class=\"w\"> </span><span class=\"n\">my_x</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">my_locale</span><span class=\"w\"> </span><span class=\"n\">4</span><span class=\"w\"> </span><span class=\"ow\">.</span>\n<span class=\"kt\">value</span><span class=\"w\"> </span><span class=\"s\">\"my_x.suc\"</span><span class=\"w\"> </span><span class=\"c\">(* works *)</span>\n<span class=\"kt\">value</span><span class=\"w\"> </span><span class=\"s\">\"my_x.sucsuc\"</span><span class=\"w\"> </span><span class=\"c\">(* \"Num.nat_of_num\" is not a constructor ... *)</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>The project I'm working in has an absolute ton of functions defined inside locales so I'm hoping for a solution where I won't have to re-define every single one.</p>",
+        "id": 503073602,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1741019964
+    },
+    {
+        "content": "<p>There's a section on that in the codegen manual, let me know if you have problems getting it to work in your scenario.</p>",
+        "id": 503109660,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1741031024
+    },
+    {
+        "content": "<p>Thank you! I got it.</p>",
+        "id": 503221072,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1741081303
+    },
+    {
+        "content": "<p>Nevermind, I have a new issue with this: duplicate fact declaration.<br>\nTo be concrete, I am working with <a href=\"https://www.isa-afp.org/entries/AI_Planning_Languages_Semantics.html\">AI_Planning_Languages_Semantics</a> in the AFP.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Running_Example_wip</span>\n<span class=\"w\">  </span><span class=\"kp\">imports</span>\n<span class=\"w\">    </span><span class=\"s\">\"AI_Planning_Languages_Semantics.PDDL_STRIPS_Checker\"</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"s\">\"my_problem ≡ Problem (Domain [] [] [] []) [] [] ⊥\"</span>\n\n<span class=\"n\">global_interpretation</span><span class=\"w\"> </span><span class=\"n\">inst0</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">ast_problem</span><span class=\"w\"> </span><span class=\"n\">my_problem</span>\n<span class=\"w\">  </span><span class=\"kp\">defines</span><span class=\"w\"> </span><span class=\"n\">def1</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">inst0.of_type1</span>\n<span class=\"w\">  </span><span class=\"c\">(* TODO: add the other functions. *)</span>\n<span class=\"w\">  </span><span class=\"ow\">.</span>\n\n<span class=\"c\">(* Duplicate fact declaration \"Running_Example_wip.inst0.mp_objT_correct\" vs. \"Running_Example_wip.inst0.mp_objT_correct\"⌂</span>\n<span class=\"c\">The above error(s) occurred while activating facts of locale instance</span>\n<span class=\"c\">inst0 : ast_problem \"my_problem\" *)</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>The problem is that there are both <code>ast_domain.mp_objT_correct</code> and <code>ast_problem.mp_objT_correct</code>. Instantiating an ast_problem also instantiates a corresponding ast_domain. It goes away if I just locally change one of their names, but that's not sustainable. hide_fact also doesn't seem to solve it.</p>",
+        "id": 503229715,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1741083801
+    },
+    {
+        "content": "<p>don't know if there is a trick, but this is a design problem of the locale hierarchy (can't be instantiated in a global context).</p>",
+        "id": 503232932,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1741084777
+    },
+    {
+        "content": "<p>You could try to give the instantiation of the<br>\ncorresponding domain an optional qualifier: <code>sublocale dom?: ast_domain …</code>.<br>\nI don’t know whether this helps with your specific hierarchy.<br>\nThe feature is explained towards the end of section 5.4 of the locale manual.</p>",
+        "id": 503498136,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1741177391
+    }
+]

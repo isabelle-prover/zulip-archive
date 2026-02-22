@@ -1,0 +1,125 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Increase maximum heap size · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Increase.20maximum.20heap.20size.html">[isabelle] Increase maximum heap size</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="513634688"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Increase%20maximum%20heap%20size/near/513634688" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Increase.20maximum.20heap.20size.html#513634688">(Apr 22 2025 at 15:04)</a>:</h4>
+<p>From: Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;<br>
+Hello list</p>
+<p>How can I increase the maximum heap size of the java heap memory? I think<br>
+the default max is 4096MiB.</p>
+<p>I am sure there is an Isabelle command line to increase this.</p>
+<p>Best wishes,</p>
+<p>Yakoub.</p>
+
+
+
+<a name="513810282"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Increase%20maximum%20heap%20size/near/513810282" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Increase.20maximum.20heap.20size.html#513810282">(Apr 23 2025 at 08:40)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 22/04/2025 17:03, Yakoub Nemouchi wrote:</p>
+<blockquote>
+<p>How can I increase the maximum heap size of the java heap memory? I think the <br>
+default max is 4096MiB.</p>
+</blockquote>
+<p>You need to tinker manually with Java options. The details depend on context <br>
+(OS platform, application).</p>
+<p>For Isabelle/jEdit run via "isabelle jedit" you can set <br>
+JEDIT_JAVA_OPTIONS="-Xms512m -Xmx4g -Xss16m" in $ISABELLE_HOME_USER/etc/settings</p>
+<p>The Isabelle/jEdit desktop application has its Java options in a <br>
+platform-specific file next to it.</p>
+<p>For most other Isabelle/Scala command-line tools it works via <br>
+ISABELLE_TOOL_JAVA_OPTIONS in $ISABELLE_HOME_USER/etc/settings</p>
+<p>Makarius</p>
+
+
+
+<a name="514144156"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Increase%20maximum%20heap%20size/near/514144156" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Increase.20maximum.20heap.20size.html#514144156">(Apr 24 2025 at 14:34)</a>:</h4>
+<p>From: Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;<br>
+On Wed, Apr 23, 2025 at 2:40 AM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>On 22/04/2025 17:03, Yakoub Nemouchi wrote:</p>
+<blockquote>
+<p>How can I increase the maximum heap size of the java heap memory? I<br>
+think the<br>
+default max is 4096MiB.</p>
+</blockquote>
+<p>You need to tinker manually with Java options. The details depend on<br>
+context<br>
+(OS platform, application).</p>
+<p>I am using macOS Ventura 13.7.5<br>
+app: Isabelle2024</p>
+</blockquote>
+<p>Yakoub.</p>
+
+
+
+<a name="514155100"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Increase%20maximum%20heap%20size/near/514155100" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Increase.20maximum.20heap.20size.html#514155100">(Apr 24 2025 at 15:15)</a>:</h4>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+On 24/04/2025 16:34, Yakoub Nemouchi wrote:</p>
+<blockquote>
+<p>On Wed, Apr 23, 2025 at 2:40 AM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a> <br>
+&lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>On 22/04/2025 17:03, Yakoub Nemouchi wrote:<br>
+     &gt;<br>
+     &gt; How can I increase the maximum heap size of the java heap memory? I<br>
+    think the<br>
+     &gt; default max is 4096MiB.</p>
+<p>You need to tinker manually with Java options. The details depend on context<br>
+    (OS platform, application).</p>
+<p>I am using macOS Ventura 13.7.5<br>
+app: Isabelle2024</p>
+</blockquote>
+<p>The relevant file is <a href="http://Isabelle2024.app/Isabelle.options">Isabelle2024.app/Isabelle.options</a> --- each line has a <br>
+single Java option. The given defaults are:</p>
+<p>-Xms512m<br>
+-Xmx4g<br>
+-Xss16m</p>
+<p>Makarius</p>
+
+
+
+<a name="514167538"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Increase%20maximum%20heap%20size/near/514167538" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Increase.20maximum.20heap.20size.html#514167538">(Apr 24 2025 at 16:13)</a>:</h4>
+<p>From: Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;<br>
+Perfect! Worked very well. After I made my tweaks, I had to restart<br>
+Isabelleapp to observe the  changes.</p>
+<p>On Thu, Apr 24, 2025 at 9:14 AM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>On 24/04/2025 16:34, Yakoub Nemouchi wrote:</p>
+<blockquote>
+<p>On Wed, Apr 23, 2025 at 2:40 AM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a><br>
+&lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>On 22/04/2025 17:03, Yakoub Nemouchi wrote:<br>
+     &gt;<br>
+     &gt; How can I increase the maximum heap size of the java heap memory?<br>
+I<br>
+    think the<br>
+     &gt; default max is 4096MiB.</p>
+<p>You need to tinker manually with Java options. The details depend on<br>
+context<br>
+    (OS platform, application).</p>
+<p>I am using macOS Ventura 13.7.5<br>
+app: Isabelle2024</p>
+</blockquote>
+<p>The relevant file is <a href="http://Isabelle2024.app/Isabelle.options">Isabelle2024.app/Isabelle.options</a> --- each line has a<br>
+single Java option. The given defaults are:</p>
+<p>-Xms512m<br>
+-Xmx4g<br>
+-Xss16m</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Feb 22 2026 at 20:30 UTC</p>
+</html>

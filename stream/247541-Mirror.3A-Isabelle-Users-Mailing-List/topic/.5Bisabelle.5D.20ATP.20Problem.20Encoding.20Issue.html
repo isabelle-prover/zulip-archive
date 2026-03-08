@@ -1,0 +1,296 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] ATP Problem Encoding Issue · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ATP.20Problem.20Encoding.20Issue.html">[isabelle] ATP Problem Encoding Issue</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="575270816"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ATP%20Problem%20Encoding%20Issue/near/575270816" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ATP.20Problem.20Encoding.20Issue.html#575270816">(Feb 23 2026 at 10:45)</a>:</h4>
+<p><strong>From:</strong> Cezary Kaliszyk &lt;<a href="mailto:cezarykaliszyk@gmail.com">cezarykaliszyk@gmail.com</a>&gt;</p>
+<p>Dear all,</p>
+<p>For several problems in our development, we get a type error when we<br>
+try to call sledgehammer.</p>
+<p>Minimal example of the type error with just standard Isabelle 2025-2<br>
+distribution:</p>
+<p>&lt;&lt;<br>
+theory Scratch imports "HOL-Analysis.Analysis" begin<br>
+lemma bla: "retraction_map X Y f"<br>
+  sledgehammer[prover=zipperposition,slices=1,max_facts=1]</p>
+<blockquote>
+<p>&gt;</p>
+</blockquote>
+<p>The issue boils down to different Isabelle variables being encoded as<br>
+a single variable (name capture), the isabelle fact<br>
+retraction_map_def:</p>
+<p>∃g. retraction_maps ?X ?Y ?f g</p>
+<p>becomes:</p>
+<p>∃X. retraction_maps X Y f X</p>
+<p>Which does not typecheck as the second X having a different type than<br>
+the first one. This happens for several other problems and encodings,<br>
+affecting some slices for Vampire and others.</p>
+<p>Cheers,<br>
+Cezary</p>
+
+
+
+<a name="575280987"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ATP%20Problem%20Encoding%20Issue/near/575280987" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ATP.20Problem.20Encoding.20Issue.html#575280987">(Feb 23 2026 at 11:50)</a>:</h4>
+<p><strong>From:</strong> Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;</p>
+<p>Dear Cezary,</p>
+<p>This is a very serious issue. Thank you for the report. We will investigate and come back to you.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 23. Feb 2026, at 11:45, Cezary Kaliszyk &lt;<a href="mailto:cezarykaliszyk@gmail.com">cezarykaliszyk@gmail.com</a>&gt; wrote:</p>
+<p>Dear all,</p>
+<p>For several problems in our development, we get a type error when we<br>
+try to call sledgehammer.</p>
+<p>Minimal example of the type error with just standard Isabelle 2025-2<br>
+distribution:</p>
+<p>&lt;&lt;<br>
+theory Scratch imports "HOL-Analysis.Analysis" begin<br>
+lemma bla: "retraction_map X Y f"<br>
+ sledgehammer[prover=zipperposition,slices=1,max_facts=1]</p>
+<blockquote>
+<p>&gt; </p>
+</blockquote>
+<p>The issue boils down to different Isabelle variables being encoded as<br>
+a single variable (name capture), the isabelle fact<br>
+retraction_map_def:</p>
+<p>∃g. retraction_maps ?X ?Y ?f g</p>
+<p>becomes:</p>
+<p>∃X. retraction_maps X Y f X</p>
+<p>Which does not typecheck as the second X having a different type than<br>
+the first one. This happens for several other problems and encodings,<br>
+affecting some slices for Vampire and others.</p>
+<p>Cheers,<br>
+Cezary<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/fBQLi92iaZTxrfo9I6MGnfHa/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="575511886"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ATP%20Problem%20Encoding%20Issue/near/575511886" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ATP.20Problem.20Encoding.20Issue.html#575511886">(Feb 24 2026 at 10:58)</a>:</h4>
+<p><strong>From:</strong> Benjamin Puyobro &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear all,</p>
+<p>I don't know if my issue is related or not to the previously mentionned <br>
+issue by Cezary:</p>
+<p>I've also noticed a weird behavior from sledgehammer, proof that were <br>
+rather easily found by sledgehammer (especially smt ones) are not found <br>
+anymore by sledgehammer in Isabelle2025-2. Here is a minimal example to <br>
+reproduce the issue:</p>
+<p>theory Scratch<br>
+imports Main HOL.Real<br>
+begin</p>
+<p>locale test =<br>
+   fixes N ::nat<br>
+   assumes ‹N &gt; 0›<br>
+   fixes f::"nat ⇒ real"<br>
+   assumes a0: ‹∀i∈{0..N}. f i  &gt; 0›<br>
+begin<br>
+lemma travelled_less_than:<br>
+   assumes<br>
+     h:‹i∈{0..N}›<br>
+     "0 &lt; (t::real)"<br>
+     "0 ≤ s"<br>
+     "t &lt; T"<br>
+     "a ≤ f i"<br>
+   shows<br>
+     "a * (t * (t * 2)) + t * (s * 4)<br>
+      &lt; f i * (T * (T * 2)) + T * (s * 4)"<br>
+proof -<br>
+   have ‹a * t ≤ f i *t›<br>
+     using h by(auto simp:field_simps)<br>
+   moreover have ‹a * t ≤ f i *T›<br>
+   proof -<br>
+     have ‹f i *T ≥ f i * t›<br>
+       using h a0 by(auto simp:algebra_simps)<br>
+     thus ?thesis using calculation by auto<br>
+   qed<br>
+   moreover have ‹2* s + a * t &lt; 2* s + f i *T›<br>
+     using calculation a0<br>
+     using  h mult_less_cancel_left_pos<br>
+     by (metis add_less_cancel_left order_less_le order_less_trans)<br>
+   moreover have ‹t<em>2</em> s + t*a * t &lt; T<em>2</em> s + f i *T * T›<br>
+     using calculation h  sledgehammer (* In isabelle 2025 sledgehammer <br>
+would find the following smt instantaneously, it is not found here. *)<br>
+     by (smt (verit, ccfv_SIG) a0 mult.commute mult_le_cancel_right <br>
+mult_pos_pos mult_strict_mono)<br>
+   ultimately show ?thesis by(auto simp:field_simps)<br>
+qed<br>
+end</p>
+<p>In this example, if you provide a0 in the context: "using ... a0 <br>
+sledgehammer" then it will find the proof, but then if you change the <br>
+import HOL.Real by HOL-Analysis.Finite_Cartesian_Product it won't find <br>
+the proof anymore.</p>
+<p>I also have more complex examples (not involving facts declared in a <br>
+locale) that can't be reduced to a minimal example in which even with <br>
+the context provided sledgehammer won't find anything.</p>
+<p>Best,<br>
+Benjamin</p>
+<p>Le 2026-02-23 12:50, Jasmin Blanchette a écrit :</p>
+<blockquote>
+<p>Dear Cezary,</p>
+<p>This is a very serious issue. Thank you for the report. We will<br>
+investigate and come back to you.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 23. Feb 2026, at 11:45, Cezary Kaliszyk<br>
+&lt;<a href="mailto:cezarykaliszyk@gmail.com">cezarykaliszyk@gmail.com</a>&gt; wrote:</p>
+<p>Dear all,</p>
+<p>For several problems in our development, we get a type error when we<br>
+try to call sledgehammer.</p>
+<p>Minimal example of the type error with just standard Isabelle 2025-2<br>
+distribution:</p>
+<p>&lt;&lt;<br>
+theory Scratch imports "HOL-Analysis.Analysis" begin<br>
+lemma bla: "retraction_map X Y f"<br>
+sledgehammer[prover=zipperposition,slices=1,max_facts=1]</p>
+</blockquote>
+<p>The issue boils down to different Isabelle variables being encoded as<br>
+a single variable (name capture), the isabelle fact<br>
+retraction_map_def:</p>
+<p>∃g. retraction_maps ?X ?Y ?f g</p>
+<p>becomes:</p>
+<p>∃X. retraction_maps X Y f X</p>
+<p>Which does not typecheck as the second X having a different type than<br>
+the first one. This happens for several other problems and encodings,<br>
+affecting some slices for Vampire and others.</p>
+<p>Cheers,<br>
+Cezary</p>
+</blockquote>
+
+
+
+<a name="575597485"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20ATP%20Problem%20Encoding%20Issue/near/575597485" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20ATP.20Problem.20Encoding.20Issue.html#575597485">(Feb 24 2026 at 17:02)</a>:</h4>
+<p><strong>From:</strong> Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;</p>
+<p>Dear Benjamin,</p>
+<blockquote>
+<p>In this example, if you provide a0 in the context: "using ... a0 sledgehammer" then it will find the proof, but then if you change the import HOL.Real by HOL-Analysis.Finite_Cartesian_Product it won't find the proof anymore.</p>
+</blockquote>
+<p>These behaviors arise because the imports influence which lemmas get selected, and that influences proof search in various ways. So a priori, nothing of what you report is abnormal.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 24. Feb 2026, at 11:57, Benjamin Puyobro (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Dear all,</p>
+<p>I don't know if my issue is related or not to the previously mentionned issue by Cezary:</p>
+<p>I've also noticed a weird behavior from sledgehammer, proof that were rather easily found by sledgehammer (especially smt ones) are not found anymore by sledgehammer in Isabelle2025-2. Here is a minimal example to reproduce the issue:</p>
+<p>theory Scratch<br>
+imports Main HOL.Real<br>
+begin</p>
+<p>locale test =<br>
+ fixes N ::nat<br>
+ assumes ‹N &gt; 0›<br>
+ fixes f::"nat ⇒ real"<br>
+ assumes a0: ‹∀i∈{0..N}. f i  &gt; 0›<br>
+begin<br>
+lemma travelled_less_than:<br>
+ assumes<br>
+   h:‹i∈{0..N}›<br>
+   "0 &lt; (t::real)"<br>
+   "0 ≤ s"<br>
+   "t &lt; T"<br>
+   "a ≤ f i"<br>
+ shows<br>
+   "a * (t * (t * 2)) + t * (s * 4)<br>
+    &lt; f i * (T * (T * 2)) + T * (s * 4)"<br>
+proof -<br>
+ have ‹a * t ≤ f i *t›<br>
+   using h by(auto simp:field_simps)<br>
+ moreover have ‹a * t ≤ f i *T›<br>
+ proof -<br>
+   have ‹f i *T ≥ f i * t›<br>
+     using h a0 by(auto simp:algebra_simps)<br>
+   thus ?thesis using calculation by auto<br>
+ qed<br>
+ moreover have ‹2* s + a * t &lt; 2* s + f i *T›<br>
+   using calculation a0<br>
+   using  h mult_less_cancel_left_pos<br>
+   by (metis add_less_cancel_left order_less_le order_less_trans)<br>
+ moreover have ‹t<em>2</em> s + t*a * t &lt; T<em>2</em> s + f i *T * T›<br>
+   using calculation h  sledgehammer (* In isabelle 2025 sledgehammer would find the following smt instantaneously, it is not found here. *)<br>
+   by (smt (verit, ccfv_SIG) a0 mult.commute mult_le_cancel_right mult_pos_pos mult_strict_mono)<br>
+ ultimately show ?thesis by(auto simp:field_simps)<br>
+qed<br>
+end</p>
+<p>In this example, if you provide a0 in the context: "using ... a0 sledgehammer" then it will find the proof, but then if you change the import HOL.Real by HOL-Analysis.Finite_Cartesian_Product it won't find the proof anymore.</p>
+<p>I also have more complex examples (not involving facts declared in a locale) that can't be reduced to a minimal example in which even with the context provided sledgehammer won't find anything.</p>
+<p>Best,<br>
+Benjamin</p>
+<p>Le 2026-02-23 12:50, Jasmin Blanchette a écrit :</p>
+<blockquote>
+<p>Dear Cezary,<br>
+This is a very serious issue. Thank you for the report. We will<br>
+investigate and come back to you.<br>
+Best,<br>
+Jasmin<br>
+--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html">https://www.tcs.ifi.lmu.de/mitarbeiter/jasmin-blanchette_de.html</a></p>
+<blockquote>
+<p>On 23. Feb 2026, at 11:45, Cezary Kaliszyk<br>
+&lt;<a href="mailto:cezarykaliszyk@gmail.com">cezarykaliszyk@gmail.com</a>&gt; wrote:<br>
+Dear all,<br>
+For several problems in our development, we get a type error when we<br>
+try to call sledgehammer.<br>
+Minimal example of the type error with just standard Isabelle 2025-2<br>
+distribution:<br>
+&lt;&lt;<br>
+theory Scratch imports "HOL-Analysis.Analysis" begin<br>
+lemma bla: "retraction_map X Y f"<br>
+sledgehammer[prover=zipperposition,slices=1,max_facts=1]<br>
+The issue boils down to different Isabelle variables being encoded as<br>
+a single variable (name capture), the isabelle fact<br>
+retraction_map_def:<br>
+∃g. retraction_maps ?X ?Y ?f g<br>
+becomes:<br>
+∃X. retraction_maps X Y f X<br>
+Which does not typecheck as the second X having a different type than<br>
+the first one. This happens for several other problems and encodings,<br>
+affecting some slices for Vampire and others.<br>
+Cheers,<br>
+Cezary</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/-e8Lj2d3-CrMO8PEF7GN0Ypj/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Mar 08 2026 at 12:54 UTC</p>
+</html>

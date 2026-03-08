@@ -1,0 +1,145 @@
+<html>
+<head><meta charset="utf-8"><title>[PATCH] VSCode fix: Dynamic_Ouput JSON serialization erro... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BPATCH.5D.20VSCode.20fix.3A.20Dynamic_Ouput.20JSON.20serialization.20erro.2E.2E.2E.html">[PATCH] VSCode fix: Dynamic_Ouput JSON serialization erro...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="577863026"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BPATCH%5D%20VSCode%20fix%3A%20Dynamic_Ouput%20JSON%20serialization%20erro.../near/577863026" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BPATCH.5D.20VSCode.20fix.3A.20Dynamic_Ouput.20JSON.20serialization.20erro.2E.2E.2E.html#577863026">(Mar 07 2026 at 01:01)</a>:</h4>
+<p><strong>From:</strong> Andreas Kurz via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>Hello,</p>
+<p>While testing the Isabelle2025-2 with the VSCode Language Server, I <br>
+encountered a crash in the Dynamic_Output session consumer. The error <br>
+reported in the LSP logs is:</p>
+<p>[ERROR] "rpc" "isabelle" "stderr" '*** Session consumer failure: <br>
+"isabelle.vscode.Dynamic_Output"\n*** Bad JSON value: <br>
+isabelle.vscode.LSP$$$Lambda/...\n'</p>
+<p>Problem:<br>
+In isabelle.vscode.LSP.Dynamic_Output, the decorations field is <br>
+constructed using decorations.map(_.json). In the current Scala <br>
+environment, this appears to trigger an unintended eta-expansion, <br>
+because of the definition of Decoration.json(file: JFile). Passing a <br>
+lambda function to the JSON serializer rather than evaluating the <br>
+underlying data. This results in an error where the Output window would <br>
+never be filled.</p>
+<p>Fix:<br>
+Make the file input in the Decoration Optional and pass a None in case <br>
+of the Dynamic_Ouput which will then evaluate to a json null inside of <br>
+Decoration.json.<br>
+The other use locations of Decoration.json got changed to pass <br>
+Some(file).</p>
+<p>I have attached the patch to fix this issue to this email.</p>
+<p>Kind regards,<br>
+Andreas Kurz</p>
+<p><a href="/user_uploads/14278/kVerEVIpWz4JwOZWPA2INGC4/isabelle_lsp_json_fix.patch">isabelle_lsp_json_fix.patch</a></p>
+
+
+
+<a name="577914507"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BPATCH%5D%20VSCode%20fix%3A%20Dynamic_Ouput%20JSON%20serialization%20erro.../near/577914507" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BPATCH.5D.20VSCode.20fix.3A.20Dynamic_Ouput.20JSON.20serialization.20erro.2E.2E.2E.html#577914507">(Mar 07 2026 at 13:06)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 07/03/2026 01:51, Andreas Kurz via isabelle-dev wrote:</p>
+<blockquote>
+<p>While testing the Isabelle2025-2 with the VSCode Language Server, I <br>
+encountered a crash in the Dynamic_Output session consumer. The error reported <br>
+in the LSP logs is:</p>
+<p>[ERROR] "rpc" "isabelle" "stderr" '*** Session consumer failure: <br>
+"isabelle.vscode.Dynamic_Output"\n*** Bad JSON value: isabelle.vscode.LSP$$ <br>
+$Lambda/...\n'</p>
+</blockquote>
+<p>Thanks for the hint. How did you get this problem? I could not guess on the <br>
+spot how to trigger it.</p>
+<p>It is mandatory to have a reproducible error situation, before applying any <br>
+"fixes" blindy.</p>
+<blockquote>
+<p>I have attached the patch to fix this issue to this email.</p>
+</blockquote>
+<p>Again the ugly word "to fix". I've inspected your change wrt. the history, and <br>
+found this spot where I introduced the potential problem:</p>
+<p>changeset:   83555:b2857541a531<br>
+user:        wenzelm<br>
+date:        Fri Nov 14 22:18:37 2025 +0100<br>
+files:       src/Tools/VSCode/src/lsp.scala <br>
+src/Tools/VSCode/src/pretty_text_panel.scala <br>
+src/Tools/VSCode/src/vscode_rendering.scala<br>
+description:<br>
+clarified signature: more explicit types;<br>
+minor performance tuning: postpone ("text_" + colot.toString) after filtering <br>
+and grouping;<br>
+misc tuning;</p>
+<p>So to <em>amend</em> that properly, I need a reproducible error situation, and then <br>
+do a change that relates to b2857541a531.</p>
+<p>Makarius</p>
+
+
+
+<a name="577949193"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%5BPATCH%5D%20VSCode%20fix%3A%20Dynamic_Ouput%20JSON%20serialization%20erro.../near/577949193" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.5BPATCH.5D.20VSCode.20fix.3A.20Dynamic_Ouput.20JSON.20serialization.20erro.2E.2E.2E.html#577949193">(Mar 07 2026 at 23:08)</a>:</h4>
+<p><strong>From:</strong> Andreas Kurz via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<blockquote>
+<blockquote>
+<p>While testing the Isabelle2025-2 with the VSCode Language Server, I <br>
+encountered a crash in the Dynamic_Output session consumer. The error <br>
+reported in the LSP logs is:</p>
+<p>[ERROR] "rpc" "isabelle" "stderr" '*** Session consumer failure: <br>
+"isabelle.vscode.Dynamic_Output"\n*** Bad JSON value: <br>
+isabelle.vscode.LSP$$ $Lambda/...\n'</p>
+</blockquote>
+<p>Thanks for the hint. How did you get this problem? I could not guess on <br>
+the spot how to trigger it.</p>
+<p>It is mandatory to have a reproducible error situation, before applying <br>
+any "fixes" blindy.</p>
+</blockquote>
+<p>I worded this actually very badly. I tested it in Neovim with a plugin <br>
+and recieved this above error. I later tried running VSCode to check if <br>
+the LSP is still working there.<br>
+I ran the VSCode Extension now and there everything seemed to work with <br>
+no issues even with this serialization bug. But why?</p>
+<p>Server start command for VSCode: <code>isabelle vscode_server -l HOL -o 
+show_results=false</code><br>
+Server start command for Neovim: <code>isabelle vscode_server -o 
+vscode_pide_extensions -o vscode_html_output=false -o 
+editor_output_state</code></p>
+<blockquote>
+<p>So to <em>amend</em> that properly, I need a reproducible error situation, and <br>
+then do a change that relates to b2857541a531.</p>
+</blockquote>
+<p>To reproduce this issue in VSCode you have to set <br>
+<code>vscode_html_output=false</code> in settings.<br>
+[Info  - 11:54:53 PM] Welcome to Isabelle/HOL (Isabelle2025-2)<br>
+*** Session consumer failure: "isabelle.vscode.Dynamic_Output"<br>
+*** Bad JSON value: <br>
+isabelle.vscode.LSP$$$Lambda/0x00007ff0244844c0@38e3ab38</p>
+<p>Then I get the same error as I do in Neovim.</p>
+<p>I also have a good guess why it does fail with html_output=false, but <br>
+not with html_output=true.<br>
+In file <code>src/Tools/VSCode/src/pretty_text_panel.scala</code></p>
+<ul>
+<li>
+<p>if html_output is true it calls <br>
+<code>json_output(HTML.source(html).toString, None)</code> (line 60), the <br>
+decorations parameter is None it will not include the "decorations" key <br>
+in json.</p>
+</li>
+<li>
+<p>if html_output is false it calls <code>json_output(converted_text, 
+Some(LSP.Decoration(entries)))</code> (line 81), the decorations are not None <br>
+and therefore they are serialized to a eta expansion.<br>
+where json_output is set to <code>LSP.Dynamic_Output.apply</code> in <br>
+<code>src/Tools/VSCode/src/dynamic_output.scala:49</code></p>
+</li>
+</ul>
+<p>While I know Neovim falls outside the officially supported environments, <br>
+this bug affects the LSP servers JSON serialization under certain <br>
+configurations, so it would be great if this could be addressed.</p>
+<p>Andreas</p>
+
+
+
+<hr><p>Last updated: Mar 08 2026 at 12:54 UTC</p>
+</html>

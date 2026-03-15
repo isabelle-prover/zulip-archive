@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Isabelle/jEdit F1 versus S+F1 · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.20F1.20versus.20S.2BF1.html">NEWS: Isabelle/jEdit F1 versus S+F1</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="576455513"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Isabelle/jEdit%20F1%20versus%20S%2BF1/near/576455513" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Isabelle.2FjEdit.20F1.20versus.20S.2BF1.html#576455513">(Feb 28 2026 at 21:40)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* Isabelle/jEdit Prover IDE </strong>*</p>
+<ul>
+<li>
+<p>The keyboard shortcut "F1" now refers to jEdit action<br>
+"isabelle-documentation" to activate the Documentation panel of<br>
+Isabelle/jEdit. That is more useful than the original jEdit help, which<br>
+is also available as PDF from the Documentation panel.</p>
+</li>
+<li>
+<p>The jEdit action "focus-textarea" is now mapped to the keyboard<br>
+shortcut "S+F1", for improved accessibility. Together with "F1" for<br>
+"isabelle-documentation", this allows to explore Isabelle examples<br>
+quickly via keyboard only.</p>
+</li>
+</ul>
+<p>This refers to Isabelle/78618a883b2e.</p>
+<p>The action "focus-textarea" might look trivial to mouse-users, but with the <br>
+keyboard alone it is hard to achieve. This turned out critical to get started <br>
+quickly with keyboard + braille display, using F1 versus S+F1.</p>
+<p>I actually had F2 first, but it turned out to be in conflict with other defaults:</p>
+<p>changeset:   84132:817be267b8a6<br>
+user:        wenzelm<br>
+date:        Sat Feb 28 20:20:22 2026 +0100<br>
+files:       Admin/components/components.sha1 Admin/components/main NEWS <br>
+src/Pure/GUI<br>
+/tree_view.scala src/Tools/jEdit/patches/keymaps<br>
+description:<br>
+prefer focus-textarea.shortcut=S+F1 to avoid conflict with <br>
+vfs.browser.rename.shortcut, which is also hardwired in jEdit <br>
+VFSDirectoryEntryTable.processKeyEvent and Swing Table.ancestorInputMap;<br>
+proper find-prev.shortcut (not find-previous.shortcut) and additional <br>
+find-prev.shortcut2=S+F3;</p>
+<p>Thus we also got the pair F3 and S+F3 to imitate some notorious MS applications.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Mar 15 2026 at 20:33 UTC</p>
+</html>

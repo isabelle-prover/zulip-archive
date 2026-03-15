@@ -1,0 +1,79 @@
+<html>
+<head><meta charset="utf-8"><title>Looking for proofs of false, Isabelle edition · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html">Looking for proofs of false, Isabelle edition</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="578688217"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/578688217" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tristan Stérin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#578688217">(Mar 11 2026 at 16:28)</a>:</h4>
+<p>Hello,</p>
+<p>Last week my Opus 4.6 setup found proofs of false in Rocq and Lean (see <a href="https://tristan.st/blog/in_search_of_falsehood">blog post</a>).</p>
+<p><span class="user-mention" data-user-id="233155">@Lukas Stevens</span> sent me <a href="/user_uploads/14278/5Xo7QeDWRBW-boCzzIqyc8oO/overview.md">overview.md</a> describing areas of suspected vulnerabilities in Isabelle, and I've asked Opus to find bugs and potentially exploit them into proofs of false in the Isabelle codebase.</p>
+<p>Here is what it found so far:  <a href="/user_uploads/14278/rh5Vsv3QK6cCTAvaL15j5JYu/REPORT.md">REPORT.md</a> (Using Isabelle2025-2)</p>
+<p>Section 1 can be ignored as this was already known (<a href="/user_uploads/14278/lwPE72tWesEu5COKVQyTEkNf/KuncarPopescu_Exploit.thy">KuncarPopescu_Exploit.thy</a>) but there may be interesting bugs in Sections 3 and 2.</p>
+<p>I still have access to the agent, let me know if it should be steered in one direction or another :)</p>
+
+
+
+<a name="578692839"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/578692839" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#578692839">(Mar 11 2026 at 16:47)</a>:</h4>
+<p>Thanks for looking into this. 3.3 could be a one place where it might be worth to try harder. If dependencies really can be lost, then potentially the KuncarPopescu example can be resurrected. If theory merges are to blame, than any counterexample would need to consist of multiple theories (probably with a diamond-shaped import structure).</p>
+
+
+
+<a name="578695638"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/578695638" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tristan Stérin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#578695638">(Mar 11 2026 at 16:59)</a>:</h4>
+<p>With pleasure! OK I will steer it in that direction (currently stucked on an anthropic login bug)</p>
+
+
+
+<a name="578729010"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/578729010" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tristan Stérin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#578729010">(Mar 11 2026 at 19:55)</a>:</h4>
+<p><a href="/user_uploads/14278/b2hUMJd0yMKiWxMBon6y0A9T/Capture-decran-2026-03-11-a-20.54.15.png">Capture d’écran 2026-03-11 à 20.54.15.png</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/b2hUMJd0yMKiWxMBon6y0A9T/Capture-decran-2026-03-11-a-20.54.15.png" title="Capture d’écran 2026-03-11 à 20.54.15.png"><img data-original-content-type="image/png" data-original-dimensions="2172x568" src="/user_uploads/thumbnail/14278/b2hUMJd0yMKiWxMBon6y0A9T/Capture-decran-2026-03-11-a-20.54.15.png/840x560.webp"></a></div><p>Here is its updated report: <a href="/user_uploads/14278/pihJUXp1lO9LGTbB_A0jsurC/REPORT_UPDATED.md">REPORT_UPDATED.md</a> it may contain new leads</p>
+
+
+
+<a name="578851707"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/578851707" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#578851707">(Mar 12 2026 at 07:45)</a>:</h4>
+<p>Good for the merges! The only place I am aware of where unchecked definitions are explicitly used is Nominal1 (src/HOL/Nominal/Nominal.thy). (In contrast Nominal2 in the AFP is fully foundational.) It might makes sense to try to make sense of these particular unchecked definitions (and the checked ones building on top) and see if they can give rise to any problems.</p>
+
+
+
+<a name="578884714"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/578884714" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tristan Stérin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#578884714">(Mar 12 2026 at 10:34)</a>:</h4>
+<p>I forwarded your message and it updated its report but does not seem to have found anything new:<br>
+<a href="/user_uploads/14278/djkPwFZfYGJr1QRFR6vgm_Yp/Capture-decran-2026-03-12-a-11.32.44.png">Capture d’écran 2026-03-12 à 11.32.44.png</a><br>
+<a href="/user_uploads/14278/6TvkRvsQXMAo_D9-7nNBPSES/REPORT.md">REPORT.md</a></p>
+<div class="message_inline_image"><a href="/user_uploads/14278/djkPwFZfYGJr1QRFR6vgm_Yp/Capture-decran-2026-03-12-a-11.32.44.png" title="Capture d’écran 2026-03-12 à 11.32.44.png"><img data-original-content-type="image/png" data-original-dimensions="2024x640" src="/user_uploads/thumbnail/14278/djkPwFZfYGJr1QRFR6vgm_Yp/Capture-decran-2026-03-12-a-11.32.44.png/840x560.webp"></a></div>
+
+
+
+<a name="579314520"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/579314520" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#579314520">(Mar 13 2026 at 16:44)</a>:</h4>
+<p>Hi Tristan,<br>
+thanks for all your efforts! We from the Copilots for Isabelle project are currently out of ideas on what other details to look out for. If time and tokens permit, you could try to have a go with less specific input to avoid "overfitting", so you might just point it to the primitives in <code>thm.ML</code>, <code>overloading</code> and <code>typedef</code>.</p>
+
+
+
+<a name="579315982"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/579315982" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tristan Stérin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#579315982">(Mar 13 2026 at 16:52)</a>:</h4>
+<p>Yes of course! Launching now</p>
+
+
+
+<a name="579320585"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Looking%20for%20proofs%20of%20false%2C%20Isabelle%20edition/near/579320585" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Tristan Stérin <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Looking.20for.20proofs.20of.20false.2C.20Isabelle.20edition.html#579320585">(Mar 13 2026 at 17:13)</a>:</h4>
+<p><img alt="Capture d’écran 2026-03-13 à 18.12.43.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="2478x1414" data-original-src="/user_uploads/14278/xY71BrZQhPf8HSv9_dhY2WFx/Capture-decran-2026-03-13-a-18.12.43.png" src="/user_uploads/thumbnail/14278/xY71BrZQhPf8HSv9_dhY2WFx/Capture-decran-2026-03-13-a-18.12.43.png/840x560.webp"><br>
+<img alt="Capture d’écran 2026-03-13 à 18.13.00.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="2320x420" data-original-src="/user_uploads/14278/kiD68ls3E36yAG6uryxpM97j/Capture-decran-2026-03-13-a-18.13.00.png" src="/user_uploads/thumbnail/14278/kiD68ls3E36yAG6uryxpM97j/Capture-decran-2026-03-13-a-18.13.00.png/840x560.webp"></p>
+<p>It did not try very hard but maybe enough that there is clear direction to nudge it into?</p>
+
+
+
+<hr><p>Last updated: Mar 15 2026 at 20:33 UTC</p>
+</html>

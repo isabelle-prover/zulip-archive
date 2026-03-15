@@ -1,0 +1,61 @@
+<html>
+<head><meta charset="utf-8"><title>meaning of [type, type] in Pure metalogic? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html">meaning of [type, type] in Pure metalogic?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="579535903"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579535903" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579535903">(Mar 15 2026 at 10:23)</a>:</h4>
+<p>Pure/Examples/Higher_Order_Logic.thy defines implication like this:</p>
+<p><code>axiomatization imp :: "o ⇒ o ⇒ o"  (infixr ‹⟶› 25)</code></p>
+<p>But in HOL/HOL.thy it looks a bit different:</p>
+<p><code>
+axiomatization implies :: "[bool, bool] ⇒ bool"  (infixr ‹⟶› 25)
+</code></p>
+<p>I don't understand the meaning of <code>[bool, bool]</code> here.  The grammar in section 8.4.3 "The Pure grammar" of the Isabelle reference indicates that a type may have the form [type, ..., type], but doesn't explain it at all.  Any pointers?</p>
+
+
+
+<a name="579546688"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579546688" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579546688">(Mar 15 2026 at 13:01)</a>:</h4>
+<p>the bracket notation is the same as an arrow</p>
+
+
+
+<a name="579546707"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579546707" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579546707">(Mar 15 2026 at 13:01)</a>:</h4>
+<p>it exists both for types and terms</p>
+
+
+
+<a name="579546870"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579546870" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579546870">(Mar 15 2026 at 13:04)</a>:</h4>
+<p>(Terms use <code> [[ ... ]] </code>)</p>
+
+
+
+<a name="579551089"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579551089" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579551089">(Mar 15 2026 at 14:07)</a>:</h4>
+<p>Aha, thanks.  If this notation has the same meaning, why does it exist?  Because someone thinks it looks nicer?  Also, is this documented somewhere?</p>
+
+
+
+<a name="579552312"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579552312" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579552312">(Mar 15 2026 at 14:25)</a>:</h4>
+<p>You can here <a href="https://stackoverflow.com/questions/15939265/how-do-i-display-brackets-around-assumptions-in-isabelle-jedit">https://stackoverflow.com/questions/15939265/how-do-i-display-brackets-around-assumptions-in-isabelle-jedit</a> how to activate it.</p>
+
+
+
+<a name="579552356"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/meaning%20of%20%5Btype%2C%20type%5D%20in%20Pure%20metalogic%3F/near/579552356" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/meaning.20of.20.5Btype.2C.20type.5D.20in.20Pure.20metalogic.3F.html#579552356">(Mar 15 2026 at 14:25)</a>:</h4>
+<p>Some people like it more</p>
+
+
+
+<hr><p>Last updated: Mar 15 2026 at 20:33 UTC</p>
+</html>

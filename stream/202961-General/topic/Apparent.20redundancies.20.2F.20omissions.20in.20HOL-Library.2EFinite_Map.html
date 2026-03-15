@@ -1,0 +1,46 @@
+<html>
+<head><meta charset="utf-8"><title>Apparent redundancies / omissions in HOL-Library.Finite_Map · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map.html">Apparent redundancies / omissions in HOL-Library.Finite_Map</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="575600159"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Apparent%20redundancies%20/%20omissions%20in%20HOL-Library.Finite_Map/near/575600159" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map.html#575600159">(Feb 24 2026 at 17:13)</a>:</h4>
+<p>I've been using HOL-Library.Finite_Map in my theories and have noticed a couple of warts:</p>
+<ul>
+<li>Some definitions seem redundant, perhaps added before their counterparts in Map were added - <code>map_restrict_set</code> is <code>Map.restrict_map</code> with arguments swapped, <code>set_of_map</code> is <code>Map.graph</code>. The corresponding <code>fmap_restrict</code> also doesn't have any syntax to it. The common definitions have more lemmas that could be transferred, but I don't know how much value there is in making the aliases explicit.</li>
+<li><code>fmap_subseteq</code> is missing partial order lemmas (unsure if <code>order</code> instantiation is warranted here - it exists for unbounded maps). These partial lemmas are trivial to prove <code>by transfer'</code>, but surprisingly tricky using just the provided lemmas (even reflexivity is non-trivial!) - they should IMO definitely be included.<br>
+I'm happy to contribute on these counts, but don't really know what the model for that is - I hope I don't need a scholarship at TUM :).</li>
+</ul>
+
+
+
+<a name="575601287"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Apparent%20redundancies%20/%20omissions%20in%20HOL-Library.Finite_Map/near/575601287" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map.html#575601287">(Feb 24 2026 at 17:19)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1033557">Alex Mobius</span> <a href="#narrow/channel/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map/near/575600159">said</a>:</p>
+<blockquote>
+<p>I'm happy to contribute on these counts, but don't really know what the model for that is - I hope I don't need a scholarship at TUM :).</p>
+</blockquote>
+<p>The model is to propose the changes in question on the users mailing list.</p>
+
+
+
+<a name="575627608"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Apparent%20redundancies%20/%20omissions%20in%20HOL-Library.Finite_Map/near/575627608" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map.html#575627608">(Feb 24 2026 at 19:43)</a>:</h4>
+<p><span class="user-mention" data-user-id="348400">@Fabian Huch</span> thank you. How do I format them, as hg patches or is it better to start with a textual proposition?</p>
+
+
+
+<a name="575639663"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Apparent%20redundancies%20/%20omissions%20in%20HOL-Library.Finite_Map/near/575639663" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map.html#575639663">(Feb 24 2026 at 20:56)</a>:</h4>
+<p>I brief summary and a patch file should be fine.</p>
+
+
+
+<hr><p>Last updated: Mar 15 2026 at 20:33 UTC</p>
+</html>

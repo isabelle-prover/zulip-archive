@@ -1,0 +1,72 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Introducing AutoReal: A Cost-Efficient Local L... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Introducing.20AutoReal.3A.20A.20Cost-Efficient.20Local.20L.2E.2E.2E.html">[isabelle] Introducing AutoReal: A Cost-Efficient Local L...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="579545331"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Introducing%20AutoReal%3A%20A%20Cost-Efficient%20Local%20L.../near/579545331" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Introducing.20AutoReal.3A.20A.20Cost-Efficient.20Local.20L.2E.2E.2E.html#579545331">(Mar 15 2026 at 12:42)</a>:</h4>
+<p><strong>From:</strong> Jianyu Zhang &lt;<a href="mailto:jianyu_zhang@zju.edu.cn">jianyu_zhang@zju.edu.cn</a>&gt;</p>
+<p>Dear Isabelle users,</p>
+<p>We have been following the recent discussion on LLM-supported proof generation<br>
+in Isabelle, especially the questions around practical usefulness,<br>
+computational cost, and how such systems should relate to established tools<br>
+such as Sledgehammer and other automation methods. In that context, we thought<br>
+it might be useful to briefly introduce our recent work, AutoReal, from the<br>
+research group of Prof. Yongwang Zhao at the College of Computer Science and<br>
+Technology, Zhejiang University, China, and we would be very grateful for any<br>
+feedback from the community.</p>
+<p>AutoReal is an LLM-driven prover built around a locally deployable 7B model<br>
+(based on Qwen2.5-Coder). One motivation behind our work is exactly the<br>
+concern raised in the earlier discussion: frontier proprietary models such as<br>
+GPT-5 and Claude can be very powerful, but they are also expensive, opaque,<br>
+and difficult to reproduce in everyday theorem-proving workflows. By contrast,<br>
+AutoReal is designed to run locally with a much lower deployment barrier and<br>
+operating cost. In our experiments, AutoReal can be run locally and<br>
+efficiently on a laptop GPU with 24 GB of VRAM for standard inference.</p>
+<p>A second point is scope. Our target is not primarily olympiad-style<br>
+mathematics or small synthetic benchmarks, but proof obligations arising in<br>
+real verification projects. In particular, we focus on industrial-scale<br>
+verification settings such as seL4. Given the lemma statement and proof<br>
+context (including the relevant lemmas and definitions needed for the proof),<br>
+AutoReal achieves a proof success rate of 51.67% (341/660) on 660 theorems<br>
+drawn from the important theories of seL4 and covering all major proof<br>
+categories. We also evaluated AutoReal under the same setting on three<br>
+security-related AFP developments — CRYSTALS-Kyber_Security, RSAPSS, and<br>
+Elliptic_Curves_Group_Law — where it achieves an overall proof success rate of<br>
+53.88%.</p>
+<p>Another aspect we have found useful in practice is that AutoReal outputs not<br>
+only candidate proof steps, but also a natural-language explanation for each<br>
+step, describing what the step does and how it affects the proof state. Our<br>
+hope is that this makes LLM-generated proofs easier for human verifiers to<br>
+inspect, understand, and repair.</p>
+<p>We are also working on integrating AutoReal into Isabelle, with the hope that<br>
+it can eventually work in a way similar to Sledgehammer. This integration is<br>
+still incomplete, and one of the main current challenges is how to extract<br>
+proof context automatically.</p>
+<p>If this sounds interesting, we would be very happy if members of the community<br>
+would like to take a look at the paper:</p>
+<p>Paper:<br>
+<a href="https://doi.org/10.48550/arXiv.2602.08384">https://doi.org/10.48550/arXiv.2602.08384</a></p>
+<p>We have also open-sourced the weights of our fine-tuned model here:<br>
+<a href="https://doi.org/10.5281/zenodo.18412012">https://doi.org/10.5281/zenodo.18412012</a></p>
+<p>We see AutoReal as complementary to existing tools rather than a replacement<br>
+for them, and we would sincerely welcome comments, criticism, suggestions, or<br>
+possible collaboration. In particular, we would be very interested in feedback<br>
+on Isabelle-side integration, context extraction, evaluation settings, and use<br>
+cases that matter to practitioners.</p>
+<p>Best regards,</p>
+<p>Jianyu Zhang<br>
+Research group of Prof. Yongwang Zhao<br>
+College of Computer Science and Technology, Zhejiang University, China<br>
+2026-3-15</p>
+
+
+
+<hr><p>Last updated: Mar 15 2026 at 20:33 UTC</p>
+</html>

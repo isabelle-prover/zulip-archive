@@ -1,0 +1,147 @@
+<html>
+<head><meta charset="utf-8"><title>Problems with unsupported Isabelle/PIDE editors · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problems.20with.20unsupported.20Isabelle.2FPIDE.20editors.html">Problems with unsupported Isabelle/PIDE editors</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="578148898"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problems%20with%20unsupported%20Isabelle/PIDE%20editors/near/578148898" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problems.20with.20unsupported.20Isabelle.2FPIDE.20editors.html#578148898">(Mar 09 2026 at 12:55)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>[This thread has a new subject to capture the true situation better.]</p>
+<p>On 08/03/2026 00:07, Andreas Kurz wrote:</p>
+<blockquote>
+<p>To reproduce this issue in VSCode you have to set <code>vscode_html_output=false</code> <br>
+in settings.<br>
+[Info  - 11:54:53 PM] Welcome to Isabelle/HOL (Isabelle2025-2)<br>
+*** Session consumer failure: "isabelle.vscode.Dynamic_Output"<br>
+*** Bad JSON value: isabelle.vscode.LSP$$$Lambda/0x00007ff0244844c0@38e3ab38</p>
+<p>Then I get the same error as I do in Neovim.</p>
+<p>I also have a good guess why it does fail with html_output=false, but not with <br>
+html_output=true.<br>
+In file <code>src/Tools/VSCode/src/pretty_text_panel.scala</code><br>
+- if html_output is true it calls <code>json_output(HTML.source(html).toString, 
+None)</code> (line 60), the decorations parameter is None it will not include the <br>
+"decorations" key in json.<br>
+- if html_output is false it calls <code>json_output(converted_text, 
+Some(LSP.Decoration(entries)))</code> (line 81), the decorations are not None and <br>
+therefore they are serialized to a eta expansion.<br>
+where json_output is set to <code>LSP.Dynamic_Output.apply</code> in <code>src/Tools/VSCode/ 
+src/dynamic_output.scala:49</code></p>
+</blockquote>
+<p>That is really bad. The deeper problem is that the author, Thomas Lindae, has <br>
+made variants of the Isabelle/LSP implementation, specifically for his private <br>
+Neovim experiments. The details, and expectations of the other side, are left <br>
+implicit, though.</p>
+<p>So we have an unmaintainable situations, or "bogs" instead of "bugs".</p>
+<blockquote>
+<p>While I know Neovim falls outside the officially supported environments, this <br>
+bug affects the LSP servers JSON serialization under certain configurations, <br>
+so it would be great if this could be addressed.</p>
+</blockquote>
+<p>Can you point to the relevant Neovim sources, presumably also by Thomas Lindae?</p>
+<p>We need explicit proof that it is worth keeping it for now, and not remove the <br>
+bad code paths in Isabelle/LSP, to avoid such problems.</p>
+<p>Note that Isabelle has this principle of "garbage collection on sources" for <br>
+unused/unmaintained material.</p>
+<p>Makarius</p>
+
+
+
+<a name="578184646"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problems%20with%20unsupported%20Isabelle/PIDE%20editors/near/578184646" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problems.20with.20unsupported.20Isabelle.2FPIDE.20editors.html#578184646">(Mar 09 2026 at 15:18)</a>:</h4>
+<p><strong>From:</strong> Andreas Kurz via isabelle-dev &lt;<a href="mailto:isabelle-dev@mailman.proof.cit.tum.de">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>
+<p>On 2026-03-09 13:46, Makarius wrote:</p>
+<blockquote>
+<blockquote>
+<p>While I know Neovim falls outside the officially supported <br>
+environments, this bug affects the LSP servers JSON serialization <br>
+under certain configurations, so it would be great if this could be <br>
+addressed.</p>
+</blockquote>
+<p>Can you point to the relevant Neovim sources, presumably also by Thomas <br>
+Lindae?</p>
+</blockquote>
+<p>So the Neovim plugin that I use is this one: <br>
+<a href="https://github.com/Treeniks/isabelle-lsp.nvim">https://github.com/Treeniks/isabelle-lsp.nvim</a><br>
+The initialization of the server or rather the definition of the command <br>
+is done here: <br>
+<a href="https://github.com/Treeniks/isabelle-lsp.nvim/blob/master/lua/utils.lua#L9">https://github.com/Treeniks/isabelle-lsp.nvim/blob/master/lua/utils.lua#L9</a><br>
+ofcourse with the option <code>vscode_html_output=false</code> set to false, then <br>
+rendering the content directly with the decorations in the terminal.</p>
+<blockquote>
+<p>We need explicit proof that it is worth keeping it for now, and not <br>
+remove the bad code paths in Isabelle/LSP, to avoid such problems.</p>
+<p>Note that Isabelle has this principle of "garbage collection on <br>
+sources" for unused/unmaintained material.</p>
+</blockquote>
+<p>This makes total sense, reduce the complexity and simplify to the actual <br>
+needed things.<br>
+If you plan to create a general LSP that works for editors outside of <br>
+VSCode then a JSON protocol would be prefered. (I see that this is a big <br>
+undertaking for a (currently) small reward.)</p>
+
+
+
+<a name="578193127"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Problems%20with%20unsupported%20Isabelle/PIDE%20editors/near/578193127" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Problems.20with.20unsupported.20Isabelle.2FPIDE.20editors.html#578193127">(Mar 09 2026 at 15:53)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 09/03/2026 16:17, Andreas Kurz wrote:</p>
+<blockquote>
+<p>On 2026-03-09 13:46, Makarius wrote:</p>
+<blockquote>
+<blockquote>
+<p>While I know Neovim falls outside the officially supported environments, <br>
+this bug affects the LSP servers JSON serialization under certain <br>
+configurations, so it would be great if this could be addressed.</p>
+</blockquote>
+<p>Can you point to the relevant Neovim sources, presumably also by Thomas Lindae?</p>
+</blockquote>
+<p>So the Neovim plugin that I use is this one: <a href="https://github.com/Treeniks/">https://github.com/Treeniks/</a> <br>
+isabelle-lsp.nvim<br>
+The initialization of the server or rather the definition of the command is <br>
+done here: <a href="https://github.com/Treeniks/isabelle-lsp.nvim/blob/master/lua/">https://github.com/Treeniks/isabelle-lsp.nvim/blob/master/lua/</a> <br>
+utils.lua#L9<br>
+ofcourse with the option <code>vscode_html_output=false</code> set to false, then <br>
+rendering the content directly with the decorations in the terminal.</p>
+</blockquote>
+<p>I've looked through this briefly. Thomas Lindae boldly claims "This plugin <br>
+requires changeset aa77be3e8329 or later of Isabelle to work." as if there <br>
+would be a global principle of monotonicity on the changeset history, without <br>
+any precautions to actually get there.</p>
+<p>I will not give a lecture on proper software design and maintenance. Instead, <br>
+I have now produced this change:</p>
+<p>changeset:   84196:f9bed2fc64c8<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Mon Mar 09 16:40:21 2026 +0100<br>
+files:       src/Tools/VSCode/src/lsp.scala <br>
+src/Tools/VSCode/src/vscode_resources.scala<br>
+description:<br>
+recover json_entries from b2857541a531: required for unproven Neovim <br>
+experiments, see also isabelle.vscode.Pretty_Text_Panel with <br>
+vscode_html_output=false;<br>
+renamed "json" to "notification", to emphasize its semantics;</p>
+<p>That does not mean that the Neovim experiment will still work for the next <br>
+Isabelle release, it can easily break again the way it has been done. Someone <br>
+who cares about it needs to actively support its case within the specified <br>
+time window: <a href="https://sketis.net/2025/plan-for-isabelle2026-october-2026">https://sketis.net/2025/plan-for-isabelle2026-october-2026</a></p>
+<blockquote>
+<p>If you plan to create a general LSP that works for editors outside of VSCode<br>
+then a JSON protocol would be prefered.</p>
+</blockquote>
+<p>We don't plan that, because LSP, despite its popularity, needs to be counted <br>
+as a failure. It covers too few aspects of what is really required. And the <br>
+JSON wrapping for the protocol messages is a performance bottle-neck.</p>
+<p>Whenever we redo Isabelle/VSCode seriously, there will be a more direct, <br>
+non-JSON protocol.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Mar 15 2026 at 20:33 UTC</p>
+</html>

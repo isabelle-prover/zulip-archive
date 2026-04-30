@@ -1,0 +1,565 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle/REPL · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html">[isabelle] Isabelle/REPL</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="575355932"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575355932" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575355932">(Feb 23 2026 at 17:33)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi,</p>
+<p>We added to AutoCorrode (<a href="https://github.com/awslabs/autocorrode">https://github.com/awslabs/autocorrode</a>) yet another tool, Isabelle/REPL (I/R). It provides a REPL as an interactive and programmatic interface to Isabelle/ML.</p>
+<p>I/R is rather simple. It manages a set of REPLs, each basically a list of Isar texts; you push/pop Isar to/from a REPL to explore proofs. REPLs can be rooted in theories, locations within theories (assuming a suitably augmented heap build), or at points within other REPLs (for sub-proof exploration).</p>
+<p>An MCP wrapper is provided exposing I/R to agents like Kiro CLI or Claude Code. For a quick experiment, use the Docker container in <a href="https://github.com/awslabs/AutoCorrode/tree/main/ir">https://github.com/awslabs/AutoCorrode/tree/main/ir</a> which runs I/R and exposes an MCP server which your agent can connect to once the following is added to your agent config:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="s">"mcpServers"</span><span class="o">:</span><span class="w"> </span><span class="ow">{</span>
+<span class="w">    </span><span class="s">"i/r"</span><span class="o">:</span><span class="w"> </span><span class="ow">{</span>
+<span class="w">      </span><span class="s">"type"</span><span class="o">:</span><span class="w"> </span><span class="s">"http"</span><span class="o">,</span>
+<span class="w">      </span><span class="s">"url"</span><span class="o">:</span><span class="w"> </span><span class="n">http</span><span class="o">:</span><span class="n">//localhost</span><span class="o">:</span><span class="n">9148/mcp</span><span class="o">,</span>
+<span class="w">      </span><span class="s">"description"</span><span class="o">:</span><span class="w"> </span><span class="s">"Isabelle Isar REPL"</span>
+<span class="w">    </span><span class="ow">}</span>
+<span class="w">  </span><span class="ow">}</span>
+</code></pre></div>
+<p>I ran some initial experiments seeing Opus 4.6 quickly develop and prove bubble sort and heap sort atop I/R, which is promising. However, more experimentation is needed to tune the I/R interface.</p>
+<p>Taking a step back, we announced multiple tools over the past weeks and months. Here is how we see things come together, in a nutshell:<br>
+I/Q: Mechanism for Agent &lt;-&gt; Isabelle/Scala interaction<br>
+I/R: Mechanism for Agent &lt;-&gt; Isabelle/ML interaction<br>
+I/P: Proxy for offloading (agentic) proof development to remotes.<br>
+Isabelle Assistant: Orchestration, prompts, GUI</p>
+<p>More work is needed to refine these tools and bring them together effectively. For example, I/R will be integrated into I/Q + Isabelle Assistant to allow the assistant to develop proofs in the background, based off arbitrary states in the interactive session, without interfering with the user.</p>
+<p>Kind regards,<br>
+Hanno</p>
+
+
+
+<a name="575361069"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575361069" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575361069">(Feb 23 2026 at 17:58)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 23/02/2026 18:32, "Becker, Hanno" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>We added to AutoCorrode (<a href="https://github.com/awslabs/autocorrode">https://github.com/awslabs/autocorrode</a> &lt;https:// <br>
+<a href="http://github.com/awslabs/autocorrode">github.com/awslabs/autocorrode</a>&gt;) yet another tool, Isabelle/REPL (I/R). It <br>
+provides a REPL as an interactive and programmatic interface to Isabelle/ML.</p>
+</blockquote>
+<p>Can you explain the purpose of it --- after so many decades of a proper <br>
+interactive document model of Isabelle/PIDE?</p>
+<p>I've worked myself with REPL interaction since Isabelle Proof General 2.0 <br>
+1998, and it always caused problems that can be avoided by removing the thing.</p>
+<p>"One happy day in the past", we actually made it. Contemporary Isabelle is <br>
+free from old-fashioned REPL interaction. The paper to upgrade your mindset to <br>
+the document model of Isabelle is here:</p>
+<p><a href="https://arxiv.org/abs/1307.1944v1">https://arxiv.org/abs/1307.1944v1</a><br>
+   READ-EVAL-PRINT in Parallel and Asynchronous Proof-checking<br>
+   Makarius Wenzel, 2013</p>
+<p>That was 2013, and so many years later, the implementation mostly conforms to <br>
+the concepts that were introduced back then.</p>
+<p>The Isabelle2025-2 release has a few more things, specifically requested from <br>
+some guys doing data mining and machine learning with Isabelle. See the NEWS <br>
+on "isabelle process_theories" and Thy_Info.get_theory_elements</p>
+<blockquote>
+<p>I/R is rather simple. It manages a set of REPLs, each basically a list of Isar <br>
+texts; you push/pop Isar to/from a REPL to explore proofs. REPLs can be rooted <br>
+in theories, locations within theories (assuming a suitably augmented heap <br>
+build), or at points within other REPLs (for sub-proof exploration).</p>
+</blockquote>
+<p>This reminds me of Isabelle until approx. 1998, with the stacked toplevel by <br>
+Paulson, from ancient LCF. Larry can explain the history better.</p>
+<p>Of course, anybody is free to do with Isabelle anything, even emulating <br>
+retro-provers. I won't spend time with that, though, like reviewing sources or <br>
+answering questions how to retrofit it into current Isabelle.</p>
+<p>The REPL era is long over, and it won't come back.</p>
+<p>Makarius</p>
+
+
+
+<a name="575409602"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575409602" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575409602">(Feb 23 2026 at 22:29)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Makarius,</p>
+<blockquote>
+<p>Can you explain the purpose of it --- after so many decades of a proper interactive document model of Isabelle/PIDE?</p>
+</blockquote>
+<p>Sure. Let me explain the problem we're trying to solve. Please chime in if you see better approaches - Isabelle is a complex system and I don't claim to oversee it as well as you do.</p>
+<p>To be clear upfront: I/R is not meant as a tool for human proof development. I agree that REPL interaction is inferior to the document model for that purpose. The target user of I/R is an AI agent. There are two use cases:</p>
+<p>The first is AI-assisted interactive development. Consider an AI assistant integrated into Isabelle/jEdit or VSCode. The user is working on a theory, leaves a sorry, and asks the agent to fill it in. The agent needs to explore a proof -- potentially trying multiple approaches, backtracking, running sledgehammer -- all without disturbing the user's experience. The user should keep editing freely while the agent works in the background, and only see a suggestion once the agent has found and validated a proof. This requires the agent to do multi-step proof exploration at a fixed theory state, decoupled from the live document. I/R provides this: given a Toplevel.state (e.g. extracted from the document at the sorry's location), the agent can iteratively develop and validate Isar text without touching the document (accepting that the result may become irrelevant if the user makes conflicting edits). With I/Q (our Isabelle/Scala integration), we already use PIDE overlays for one-shot proof checking at a given location, but this doesn't extend to multi-step exploration where each step depends on the result of the previous one.</p>
+<p>The second is offline improvement: agents working on a code base to e.g. rewrite apply-style proofs to Isar, or fill in sorrys. I've looked at process_theories and record_theories + Thy_Info.get_theory_elements in 2025-2. Thank you for the pointer - get_theory_elements is very close to something we implemented independently (storing intermediate Toplevel.states during heap builds via a custom session option); I expect we will be able to switch to record_theories for this, which is a welcome replacement for our custom approach. What remains is the feedback loop: an agent developing a proof will take multiple steps, backtrack, and try different strategies -- rebuilding a full theory file at each iteration would be too slow for our use case. I/R lets the agent work at sub-theory granularity -- from individual commands to sequences of definitions and lemmas -- without rebuilding the surrounding theory. I see it as a natural continuation of the path you took with process_theories: from session-level to theory-level to sub-theory-level exploration. And once a proof is found, validation goes the other way: the agent checks at command level via I/R, validates the resulting theory file via process_theories, and ultimately rebuilds the full session via isabelle build.</p>
+<p>I'd welcome your thoughts and suggestions on any of the above.</p>
+<p>Best,<br>
+Hanno</p>
+<p>﻿On 23/02/2026, 17:58, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Makarius" &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of <a href="mailto:makarius@sketis.net">makarius@sketis.net</a> &lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>On 23/02/2026 18:32, "Becker, Hanno" (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>We added to AutoCorrode (<a href="https://github.com/awslabs/autocorrode">https://github.com/awslabs/autocorrode</a> &lt;<a href="https://github.com/awslabs/autocorrode">https://github.com/awslabs/autocorrode</a>&gt; &lt;https://<br>
+<a href="http://github.com/awslabs/autocorrode">github.com/awslabs/autocorrode</a>&gt;) yet another tool, Isabelle/REPL (I/R). It<br>
+provides a REPL as an interactive and programmatic interface to Isabelle/ML.</p>
+</blockquote>
+<p>Can you explain the purpose of it --- after so many decades of a proper<br>
+interactive document model of Isabelle/PIDE?</p>
+<p>I've worked myself with REPL interaction since Isabelle Proof General 2.0<br>
+1998, and it always caused problems that can be avoided by removing the thing.</p>
+<p>"One happy day in the past", we actually made it. Contemporary Isabelle is<br>
+free from old-fashioned REPL interaction. The paper to upgrade your mindset to<br>
+the document model of Isabelle is here:</p>
+<p><a href="https://arxiv.org/abs/1307.1944v1">https://arxiv.org/abs/1307.1944v1</a> &lt;<a href="https://arxiv.org/abs/1307.1944v1">https://arxiv.org/abs/1307.1944v1</a>&gt;<br>
+READ-EVAL-PRINT in Parallel and Asynchronous Proof-checking<br>
+Makarius Wenzel, 2013</p>
+<p>That was 2013, and so many years later, the implementation mostly conforms to<br>
+the concepts that were introduced back then.</p>
+<p>The Isabelle2025-2 release has a few more things, specifically requested from<br>
+some guys doing data mining and machine learning with Isabelle. See the NEWS<br>
+on "isabelle process_theories" and Thy_Info.get_theory_elements</p>
+<blockquote>
+<p>I/R is rather simple. It manages a set of REPLs, each basically a list of Isar<br>
+texts; you push/pop Isar to/from a REPL to explore proofs. REPLs can be rooted<br>
+in theories, locations within theories (assuming a suitably augmented heap<br>
+build), or at points within other REPLs (for sub-proof exploration).</p>
+</blockquote>
+<p>This reminds me of Isabelle until approx. 1998, with the stacked toplevel by<br>
+Paulson, from ancient LCF. Larry can explain the history better.</p>
+<p>Of course, anybody is free to do with Isabelle anything, even emulating<br>
+retro-provers. I won't spend time with that, though, like reviewing sources or<br>
+answering questions how to retrofit it into current Isabelle.</p>
+<p>The REPL era is long over, and it won't come back.</p>
+<p>Makarius</p>
+
+
+
+<a name="575415988"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575415988" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575415988">(Feb 23 2026 at 23:19)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 23/02/2026 23:29, Becker, Hanno wrote:</p>
+<blockquote>
+<p>To be clear upfront: I/R is not meant as a tool for human proof development. I agree that REPL interaction is inferior to the document model for that purpose. The target user of I/R is an AI agent. </p>
+</blockquote>
+<p>There are two use cases:</p>
+<blockquote>
+<p>The first is AI-assisted interactive development.</p>
+</blockquote>
+<blockquote>
+<p>The second is offline improvement:</p>
+</blockquote>
+<blockquote>
+<p>I'd welcome your thoughts and suggestions on any of the above.</p>
+</blockquote>
+<p>Reading through your text twice, I get the impression that nothing really <br>
+depends on the old REPL approach. Rather it is an attempt to get something <br>
+working quickly, without mastering the subtle details of PIDE interaction. <br>
+(Which might also require some refinements of PIDE on my side, not your side.)</p>
+<p>From the past posts, I did already harvest a few hints of how the PIDE model <br>
+could improve eventually --- also from conversations with other people that <br>
+have with similar applications. This will take its time on my side, and might <br>
+break your approaches so far --- which are mostly outside normal Isabelle user <br>
+space anyway, so there are no guarantees being violated.</p>
+<p>A few general remarks how Isabelle developments works (at least in the past <br>
+2-3 decades):</p>
+<p>- There are no "pull requests" for Isabelle, or semantic equivalents of it. <br>
+It means that people cannot "force features onto the system" by starting their <br>
+own experiments and hoping them to be adopted. Instead, everything needs to be <br>
+grown steadily from the bottom up, with 1-3 guys who really understand how <br>
+things work.</p>
+<p>- Significant changes or add-ons to Isabelle subsystems need to be <br>
+developed together with the person who is mainly responsible for it in the <br>
+long term (rarely are there 2 or even more persons --- this does not work <br>
+well). The names can be quickly found out by inspecting the changes in the <br>
+repository history. For Isabelle/PIDE, I am responsible in all respects, and I <br>
+will not delegate anything --- that is too risky. I used to be responsible for <br>
+the old REPL, too. We even had (very bad) times with REPL + PIDE side-by-side.</p>
+<p>- When people show me small changes for the parts where I am responsible, I <br>
+usually put them on a stack and study them eventually. Once I've understood <br>
+the 2-3 key ideas, I sit down to rewrite them in "canonical form". Thus I <br>
+often discover a few mistakes in the approach, and I won't copy them. It can <br>
+also happen that I introduce new mistakes myself: the system has become very <br>
+complex indeed, and has left the state of "research experiment" long ago. <br>
+Rather, it has become a fine art to grow it further, without breaking it.</p>
+<p>So far, I don't see how this fits to your project at its scale. There is a <br>
+type error here.</p>
+<p>Concerning REPLs in particular: I've already spent several days in 2024/2025 <br>
+with someone from a notable AI group, and he could not explain the purpose of <br>
+it --- that REPL was even a clone of my ancient implementation that was <br>
+already gone. This explains my current attitude of not to wasting any more <br>
+time with that footnote of ITP history.</p>
+<p>Makarius</p>
+
+
+
+<a name="575450862"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575450862" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575450862">(Feb 24 2026 at 04:51)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Makarius,</p>
+<p>Thank you for your reply. </p>
+<p>The REPL approach is meant as a pragmatic solution given the current architecture, not a necessity in itself, I agree. Native PIDE support for passive multi-step proof exploration is likely preferable -- I'd be curious to hear how you envision that, whether with current PIDE or future changes. We'll adopt record_theories in the meantime; thanks again for the pointers!</p>
+<p>Best regards,<br>
+Hanno</p>
+<p>﻿On 23/02/2026, 23:19, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Makarius" &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of <a href="mailto:makarius@sketis.net">makarius@sketis.net</a> &lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>On 23/02/2026 23:29, Becker, Hanno wrote:</p>
+<blockquote>
+<p>To be clear upfront: I/R is not meant as a tool for human proof development. I agree that REPL interaction is inferior to the document model for that purpose. The target user of I/R is an AI agent.</p>
+</blockquote>
+<p>There are two use cases:</p>
+<blockquote>
+<p>The first is AI-assisted interactive development.</p>
+</blockquote>
+<blockquote>
+<p>The second is offline improvement:</p>
+</blockquote>
+<blockquote>
+<p>I'd welcome your thoughts and suggestions on any of the above.</p>
+</blockquote>
+<p>Reading through your text twice, I get the impression that nothing really<br>
+depends on the old REPL approach. Rather it is an attempt to get something<br>
+working quickly, without mastering the subtle details of PIDE interaction.<br>
+(Which might also require some refinements of PIDE on my side, not your side.)</p>
+<p>From the past posts, I did already harvest a few hints of how the PIDE model<br>
+could improve eventually --- also from conversations with other people that<br>
+have with similar applications. This will take its time on my side, and might<br>
+break your approaches so far --- which are mostly outside normal Isabelle user<br>
+space anyway, so there are no guarantees being violated.</p>
+<p>A few general remarks how Isabelle developments works (at least in the past<br>
+2-3 decades):</p>
+<ul>
+<li>
+<p>There are no "pull requests" for Isabelle, or semantic equivalents of it.<br>
+It means that people cannot "force features onto the system" by starting their<br>
+own experiments and hoping them to be adopted. Instead, everything needs to be<br>
+grown steadily from the bottom up, with 1-3 guys who really understand how<br>
+things work.</p>
+</li>
+<li>
+<p>Significant changes or add-ons to Isabelle subsystems need to be<br>
+developed together with the person who is mainly responsible for it in the<br>
+long term (rarely are there 2 or even more persons --- this does not work<br>
+well). The names can be quickly found out by inspecting the changes in the<br>
+repository history. For Isabelle/PIDE, I am responsible in all respects, and I<br>
+will not delegate anything --- that is too risky. I used to be responsible for<br>
+the old REPL, too. We even had (very bad) times with REPL + PIDE side-by-side.</p>
+</li>
+<li>
+<p>When people show me small changes for the parts where I am responsible, I<br>
+usually put them on a stack and study them eventually. Once I've understood<br>
+the 2-3 key ideas, I sit down to rewrite them in "canonical form". Thus I<br>
+often discover a few mistakes in the approach, and I won't copy them. It can<br>
+also happen that I introduce new mistakes myself: the system has become very<br>
+complex indeed, and has left the state of "research experiment" long ago.<br>
+Rather, it has become a fine art to grow it further, without breaking it.</p>
+</li>
+</ul>
+<p>So far, I don't see how this fits to your project at its scale. There is a<br>
+type error here.</p>
+<p>Concerning REPLs in particular: I've already spent several days in 2024/2025<br>
+with someone from a notable AI group, and he could not explain the purpose of<br>
+it --- that REPL was even a clone of my ancient implementation that was<br>
+already gone. This explains my current attitude of not to wasting any more<br>
+time with that footnote of ITP history.</p>
+<p>Makarius</p>
+
+
+
+<a name="575680658"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575680658" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575680658">(Feb 25 2026 at 02:35)</a>:</h4>
+<p><strong>From:</strong> Yakoub Nemouchi &lt;<a href="mailto:y.nemouchi@gmail.com">y.nemouchi@gmail.com</a>&gt;</p>
+<p>Hi Makarius,</p>
+<p>Is it a nice excuse to move to VSCode as main frontend? If the modern tech<br>
+is there why not?<br>
+I know it is a hard choice given the flexibility provided by jEdit for java<br>
+devs!</p>
+<p>Yakoub.</p>
+<p>On Mon, Feb 23, 2026 at 9:51 PM Becker, Hanno &lt;<br>
+<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<p>Thank you for your reply.</p>
+<p>The REPL approach is meant as a pragmatic solution given the current<br>
+architecture, not a necessity in itself, I agree. Native PIDE support for<br>
+passive multi-step proof exploration is likely preferable -- I'd be curious<br>
+to hear how you envision that, whether with current PIDE or future changes.<br>
+We'll adopt record_theories in the meantime; thanks again for the pointers!</p>
+<p>Best regards,<br>
+Hanno</p>
+<p>﻿On 23/02/2026, 23:19, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<br>
+<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Makarius" &lt;<br>
+<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<br>
+<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of<br>
+<a href="mailto:makarius@sketis.net">makarius@sketis.net</a> &lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>CAUTION: This email originated from outside of the organization. Do not<br>
+click links or open attachments unless you can confirm the sender and know<br>
+the content is safe.</p>
+<p>On 23/02/2026 23:29, Becker, Hanno wrote:</p>
+<blockquote>
+<p>To be clear upfront: I/R is not meant as a tool for human proof<br>
+development. I agree that REPL interaction is inferior to the document<br>
+model for that purpose. The target user of I/R is an AI agent.</p>
+</blockquote>
+<p>There are two use cases:</p>
+<blockquote>
+<p>The first is AI-assisted interactive development.</p>
+</blockquote>
+<blockquote>
+<p>The second is offline improvement:</p>
+</blockquote>
+<blockquote>
+<p>I'd welcome your thoughts and suggestions on any of the above.</p>
+</blockquote>
+<p>Reading through your text twice, I get the impression that nothing really<br>
+depends on the old REPL approach. Rather it is an attempt to get something<br>
+working quickly, without mastering the subtle details of PIDE interaction.<br>
+(Which might also require some refinements of PIDE on my side, not your<br>
+side.)</p>
+<p>From the past posts, I did already harvest a few hints of how the PIDE<br>
+model<br>
+could improve eventually --- also from conversations with other people that<br>
+have with similar applications. This will take its time on my side, and<br>
+might<br>
+break your approaches so far --- which are mostly outside normal Isabelle<br>
+user<br>
+space anyway, so there are no guarantees being violated.</p>
+<p>A few general remarks how Isabelle developments works (at least in the past<br>
+2-3 decades):</p>
+<ul>
+<li>
+<p>There are no "pull requests" for Isabelle, or semantic equivalents of it.<br>
+It means that people cannot "force features onto the system" by starting<br>
+their<br>
+own experiments and hoping them to be adopted. Instead, everything needs<br>
+to be<br>
+grown steadily from the bottom up, with 1-3 guys who really understand how<br>
+things work.</p>
+</li>
+<li>
+<p>Significant changes or add-ons to Isabelle subsystems need to be<br>
+developed together with the person who is mainly responsible for it in the<br>
+long term (rarely are there 2 or even more persons --- this does not work<br>
+well). The names can be quickly found out by inspecting the changes in the<br>
+repository history. For Isabelle/PIDE, I am responsible in all respects,<br>
+and I<br>
+will not delegate anything --- that is too risky. I used to be responsible<br>
+for<br>
+the old REPL, too. We even had (very bad) times with REPL + PIDE<br>
+side-by-side.</p>
+</li>
+<li>
+<p>When people show me small changes for the parts where I am responsible, I<br>
+usually put them on a stack and study them eventually. Once I've understood<br>
+the 2-3 key ideas, I sit down to rewrite them in "canonical form". Thus I<br>
+often discover a few mistakes in the approach, and I won't copy them. It<br>
+can<br>
+also happen that I introduce new mistakes myself: the system has become<br>
+very<br>
+complex indeed, and has left the state of "research experiment" long ago.<br>
+Rather, it has become a fine art to grow it further, without breaking it.</p>
+</li>
+</ul>
+<p>So far, I don't see how this fits to your project at its scale. There is a<br>
+type error here.</p>
+<p>Concerning REPLs in particular: I've already spent several days in<br>
+2024/2025<br>
+with someone from a notable AI group, and he could not explain the purpose<br>
+of<br>
+it --- that REPL was even a clone of my ancient implementation that was<br>
+already gone. This explains my current attitude of not to wasting any more<br>
+time with that footnote of ITP history.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="575781886"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/575781886" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#575781886">(Feb 25 2026 at 14:04)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 25/02/2026 03:35, Yakoub Nemouchi wrote:</p>
+<blockquote>
+<p>Is it a nice excuse to move to VSCode as main frontend? If the modern tech is <br>
+there why not?<br>
+I know it is a hard choice given the flexibility provided by jEdit for java devs!</p>
+</blockquote>
+<p>Isabelle/VSCode is certainly something to be reconsidered seriously again at <br>
+some point, but it has been a continuously "emerging" as new Isabelle <br>
+technology for almost 1 decade already.</p>
+<p>I was initially much more enthusiastic about the VSCode platform than now, <br>
+after spending so much time on it in 2025.</p>
+<p>This paper from the Isabelle Workshop 2022 <br>
+<a href="https://files.sketis.net/Isabelle_Workshop_2022/Isabelle_2022_paper_7.pdf">https://files.sketis.net/Isabelle_Workshop_2022/Isabelle_2022_paper_7.pdf</a> <br>
+marks the peak of my enthusiasm, afterwards it only went downhill.</p>
+<p>The Future work section from that paper says:</p>
+<p>"""<br>
+   Isabelle/VSCode with Electron, Chromium, Node.js opens a whole new world to<br>
+   Isabelle applications. Only the future will show what comes from it, but a<br>
+   few immediate project can already be anticipated now:</p>
+<p>▪ Isabelle/VSCode as a basis for ‹accessible formal mathematics›, as<br>
+   sketched in the paper by Neuper/Stöger/Wenzel in the same Isabelle workshop<br>
+   2022.</p>
+<p>▪ PDF.js with Isabelle-specific URLs (within the PDF) that are dynamically<br>
+   routed to commands of the running Prover IDE. Thus browsing and editing of<br>
+   form proof documents could be connected, e.g. in an interactive tutorial on<br>
+   formalized mathematics.</p>
+<p>▪ PDF.js with some GUI elements (via HTML/CSS/JS) to view Isabelle PDF<br>
+   documents that are dynamically generated from the running PIDE session. This<br>
+   will be the basis for a proper document-oriented Prover IDE, without<br>
+   requiring ▩‹isabelle build› or ▩‹isabelle document› from the command-line.</p>
+<p>Both Isabelle/VSCode and Isabelle/jEdit can benefit from that. Within<br>
+   Isabelle/VSCode, HTML browser views are directly available as side-windows.<br>
+   Within Isabelle/jEdit, we can open the browser as separate Electron window.<br>
+   An alternative is the standard browser of the OS platform, but that opens<br>
+   the gates to ``browser hell'' and should not be done for sophisticated<br>
+   applications.</p>
+<p>┉ Another open question: JavaScript and/or TypeScript eventually be elevated<br>
+   to ``official'' Isabelle programming languages, just like ML and Scala? Or<br>
+   will Scala.js⁋‹https://www.scala-js.org› do a sufficiently good job, to<br>
+   allow staying with Scala most of the time? That needs to be tried out soon,<br>
+   especially in the context of the new Scala3 eco-system (a new compiler and a<br>
+   new language).⁋‹https://dotty.epfl.ch›<br>
+"""</p>
+<p>Most of the open problems and questions are still open until today, e.g. the <br>
+suitability of Scala.js (Fabian Huch made some experiments in Dec-2025 that I <br>
+still need to study).</p>
+<p>The project of "accessible formal mathematics" mentioned above now has some <br>
+funding and some tangible results, but without VSCode! It turned out a bad <br>
+idea to rely on MicroSoft and Google to do their homework on accessibility: it <br>
+often does not work at all, sometimes hardly at all, sometimes reasonably well <br>
+--- depending on the weather conditions of the underlying VSCode release that <br>
+happens so frequently.</p>
+<p>Thus we resolved to do the homework on accessibility ourselves in <br>
+Isabelle/jEdit. As a consequence, its ancient Java/Swing GUI has already been <br>
+brushed up for the Isabelle2025-1 release, and more will be coming for the <br>
+Isabelle2026 release (see its time table <br>
+<a href="https://sketis.net/2025/plan-for-isabelle2026-october-2026">https://sketis.net/2025/plan-for-isabelle2026-october-2026</a>). This will help <br>
+everybody, not just blind and visually impaired people.</p>
+<p>The PDF.js idea above can be tried again using JCEF (Java Chromium Embedded <br>
+Framework) in Isabelle/jEdit.</p>
+<p>Conclusion: Isabelle/jEdit is "not quite dead yet", and actually prospering. <br>
+So Isabelle/VSCode will have more and more to catch up --- on inferior <br>
+technological basis: Node.js/Electron and the rather closed VSCode codebase <br>
+that is very difficult to adapt to the needs (and ambitions) of Isabelle.</p>
+<p>Makarius</p>
+
+
+
+<a name="581059372"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/581059372" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#581059372">(Mar 23 2026 at 09:38)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Makarius, all,</p>
+<p>Picking this up again. I've been thinking about what PIDE-native support for collaborative AI+Human proof development could look like, and want to share an idea for your and the community’s  consideration.</p>
+<p>To recap the goal: an AI agent explores theory developments (e.g. filling in a sorry, refactoring proofs) in parallel to the human, without disturbing the human's editing experience. The agent must be able to engage with the prover in the background, producing only validated suggestions.</p>
+<p>As mentioned, our I/R tool addresses this pragmatically via a Toplevel.state-level REPL outside the document model. It works, but it works against the PIDE-focused design, and is unlikely to be a long-term solution, as Makarius rightly points out.</p>
+<p>Looking towards future Isabelle releases, I wonder if the following would be a more natural approach:</p>
+<p>A new document node type: a "fork node". A fork node is a document node whose initial state comes from a specific command in another node, rather than from imported theories' final results. In Isar syntax, something like:</p>
+<p>theory_fork Explore<br>
+  imports "Base_Theory” 42857 (* command ID *)<br>
+begin<br>
+  (* say cmd 42857 is a lemma, then we’re at the beginning of its proof here *)<br>
+  apply (induct x)<br>
+  apply auto<br>
+  done<br>
+end</p>
+<p>where 42857 identifies the command in Base_Theory from which to fork. How the fork point is specified would be TBD — command IDs are one option (inconvenient for the human, but probably fine to work with for the AI), but perhaps another identifier is more suitable.</p>
+<p>Explorations in a fork node would not disturb the user because no ordinary theory would depend on it. Whether edits to the parent theory ahead of the fork point should immediately invalidate the fork needs more thought — the infrastructure would support it naturally, but it may or may not be desirable.</p>
+<p>Note that this keeps the linear command sequence per node intact. One could alternatively implement forks as tree-like structures within a node's command chain, but that seems more intrusive than reusing the existing node dependency graph.</p>
+<p>I sketched out the changes to check feasibility (~200 lines) and didn't find immediate obstacles. The core document model would stay unchanged.</p>
+<p>I'd be curious to hear whether this direction aligns with your thinking, Makarius, or whether there are aspects I'm not seeing.</p>
+<p>Best regards,<br>
+Hanno</p>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Becker, Hanno" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Date: Tuesday, 24 February 2026 at 04:51<br>
+To: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;, <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: RE: [EXTERNAL] [isabelle] Isabelle/REPL</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>Hi Makarius,</p>
+<p>Thank you for your reply.</p>
+<p>The REPL approach is meant as a pragmatic solution given the current architecture, not a necessity in itself, I agree. Native PIDE support for passive multi-step proof exploration is likely preferable -- I'd be curious to hear how you envision that, whether with current PIDE or future changes. We'll adopt record_theories in the meantime; thanks again for the pointers!</p>
+<p>Best regards,<br>
+Hanno</p>
+<p>﻿On 23/02/2026, 23:19, "<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Makarius" &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;mailto:<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of <a href="mailto:makarius@sketis.net">makarius@sketis.net</a> &lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>On 23/02/2026 23:29, Becker, Hanno wrote:</p>
+<blockquote>
+<p>To be clear upfront: I/R is not meant as a tool for human proof development. I agree that REPL interaction is inferior to the document model for that purpose. The target user of I/R is an AI agent.</p>
+</blockquote>
+<p>There are two use cases:</p>
+<blockquote>
+<p>The first is AI-assisted interactive development.</p>
+</blockquote>
+<blockquote>
+<p>The second is offline improvement:</p>
+</blockquote>
+<blockquote>
+<p>I'd welcome your thoughts and suggestions on any of the above.</p>
+</blockquote>
+<p>Reading through your text twice, I get the impression that nothing really<br>
+depends on the old REPL approach. Rather it is an attempt to get something<br>
+working quickly, without mastering the subtle details of PIDE interaction.<br>
+(Which might also require some refinements of PIDE on my side, not your side.)</p>
+<p>From the past posts, I did already harvest a few hints of how the PIDE model<br>
+could improve eventually --- also from conversations with other people that<br>
+have with similar applications. This will take its time on my side, and might<br>
+break your approaches so far --- which are mostly outside normal Isabelle user<br>
+space anyway, so there are no guarantees being violated.</p>
+<p>A few general remarks how Isabelle developments works (at least in the past<br>
+2-3 decades):</p>
+<ul>
+<li>
+<p>There are no "pull requests" for Isabelle, or semantic equivalents of it.<br>
+It means that people cannot "force features onto the system" by starting their<br>
+own experiments and hoping them to be adopted. Instead, everything needs to be<br>
+grown steadily from the bottom up, with 1-3 guys who really understand how<br>
+things work.</p>
+</li>
+<li>
+<p>Significant changes or add-ons to Isabelle subsystems need to be<br>
+developed together with the person who is mainly responsible for it in the<br>
+long term (rarely are there 2 or even more persons --- this does not work<br>
+well). The names can be quickly found out by inspecting the changes in the<br>
+repository history. For Isabelle/PIDE, I am responsible in all respects, and I<br>
+will not delegate anything --- that is too risky. I used to be responsible for<br>
+the old REPL, too. We even had (very bad) times with REPL + PIDE side-by-side.</p>
+</li>
+<li>
+<p>When people show me small changes for the parts where I am responsible, I<br>
+usually put them on a stack and study them eventually. Once I've understood<br>
+the 2-3 key ideas, I sit down to rewrite them in "canonical form". Thus I<br>
+often discover a few mistakes in the approach, and I won't copy them. It can<br>
+also happen that I introduce new mistakes myself: the system has become very<br>
+complex indeed, and has left the state of "research experiment" long ago.<br>
+Rather, it has become a fine art to grow it further, without breaking it.</p>
+</li>
+</ul>
+<p>So far, I don't see how this fits to your project at its scale. There is a<br>
+type error here.</p>
+<p>Concerning REPLs in particular: I've already spent several days in 2024/2025<br>
+with someone from a notable AI group, and he could not explain the purpose of<br>
+it --- that REPL was even a clone of my ancient implementation that was<br>
+already gone. This explains my current attitude of not to wasting any more<br>
+time with that footnote of ITP history.</p>
+<p>Makarius</p>
+
+
+
+<a name="581314110"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle/REPL/near/581314110" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle.2FREPL.html#581314110">(Mar 24 2026 at 09:26)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 23/03/2026 10:37, Becker, Hanno wrote:</p>
+<blockquote>
+<p>I sketched out the changes to check feasibility (~200 lines) and didn't find <br>
+immediate obstacles. The core document model would stay unchanged.</p>
+</blockquote>
+<p>Did you intend to include the patch? While this is going to be informative, <br>
+submitting patches usually slows down further Isabelle development: I need to <br>
+study the approach and then "eliminate the change", i.e. understand its true <br>
+motivation and side-conditions and then rewrite it from scratch.</p>
+<p>"I didn't find immediate obstacles" is phrased in Isabelle canon as "We don't <br>
+forsee any difficulties" (a citation from a paper many decades ago). But <br>
+difficulties are to be expected, when changing/extending the status-quo of the <br>
+system significantly.</p>
+<p>Moreover, starting changes in one corner will inevitably cause more changes in <br>
+other corners.</p>
+<p>Such a project requires its time and a proper budget.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

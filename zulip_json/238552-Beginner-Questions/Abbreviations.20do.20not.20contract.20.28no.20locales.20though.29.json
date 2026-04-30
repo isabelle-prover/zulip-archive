@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"713474\">Jibiana Jakpor</span> has marked this topic as unresolved.</p>",
+        "id": 584743244,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1775848650
+    },
+    {
+        "content": "<p>I am also having trouble with this abbreviation</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">abbreviation</span><span class=\"w\"> </span><span class=\"n\">str_indexof</span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"uc_word ⇒ uc_word ⇒ int ⇒ int\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"str_indexof w v i ≡ (if 0 ≤ i ∧  (str_contains (str_substr w i ¦w¦) v) ∧ i≤¦w¦ then Int.int (indexof_nat w v (Int.nat i)) else -1)\"</span>\n</code></pre></div>\n<p>Here is it how it appears in the proof state:<br>\n<img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"2088x818\" data-original-src=\"/user_uploads/14278/QFibEl9cYZqWHuUOySH_x7Zh/image.png\" src=\"/user_uploads/thumbnail/14278/QFibEl9cYZqWHuUOySH_x7Zh/image.png/840x560.webp\"></p>",
+        "id": 584770658,
+        "sender_full_name": "Jibiana Jakpor",
+        "timestamp": 1775862938
+    },
+    {
+        "content": "<p>This might not be the answer you want, but: This shouldn't be an abbreviation anyway but a definition. Then you prove the characteristic theorems you need about the definition and never unfold it again.</p>",
+        "id": 584958950,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1775919631
+    },
+    {
+        "content": "<p>That is a good point. In this case, I'm not the author of this formalization, and I think that abbreviations might have been important for the original use case the authors had in mind. I don't want to break backwards compatibility, so I'm hesitant to replace the abbreviations with definitions.</p>",
+        "id": 585068491,
+        "sender_full_name": "Jibiana Jakpor",
+        "timestamp": 1776031055
+    },
+    {
+        "content": "<p>When you cannot change the definition, the only way is to compare the terms exactly to see what the difference really is. Here it looks like <code>¦w¦</code> is different from <code>int (length w)</code></p>",
+        "id": 585101697,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1776056512
+    },
+    {
+        "content": "<p>In some cases like this in the past, I have introduced a <code>str_indexof'</code> version that was what could be applied</p>",
+        "id": 585101740,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1776056557
+    }
+]

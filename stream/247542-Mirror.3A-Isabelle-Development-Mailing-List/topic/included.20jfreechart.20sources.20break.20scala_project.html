@@ -1,0 +1,89 @@
+<html>
+<head><meta charset="utf-8"><title>included jfreechart sources break scala_project · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/included.20jfreechart.20sources.20break.20scala_project.html">included jfreechart sources break scala_project</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="585345960"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/included%20jfreechart%20sources%20break%20scala_project/near/585345960" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/included.20jfreechart.20sources.20break.20scala_project.html#585345960">(Apr 14 2026 at 07:11)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>The recently updated jfreechart component (added in cc6e160130ab) breaks <br>
+scala_project: Including the java sources via build.props is bad, since <br>
+transitive dependencies (javax.servlet:servlet-api) are missing. This <br>
+makes the generated scala_project no longer build properly (and thus <br>
+IntelliJ IDEA cannot understand our Isabelle/Scala sources).</p>
+<p>Fabian</p>
+
+
+
+<a name="588719166"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/included%20jfreechart%20sources%20break%20scala_project/near/588719166" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/included.20jfreechart.20sources.20break.20scala_project.html#588719166">(Apr 21 2026 at 20:43)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 14/04/2026 09:11, Fabian Huch wrote:</p>
+<blockquote>
+<p>The recently updated jfreechart component (added in cc6e160130ab) breaks <br>
+scala_project: Including the java sources via build.props is bad, since <br>
+transitive dependencies (javax.servlet:servlet-api) are missing. This makes <br>
+the generated scala_project no longer build properly (and thus IntelliJ IDEA <br>
+cannot understand our Isabelle/Scala sources).</p>
+</blockquote>
+<p>I have reverted that here:</p>
+<p>changeset:   84426:26f651ac1f28<br>
+user:        wenzelm<br>
+date:        Sat Apr 18 12:06:27 2026 +0200<br>
+files:       src/Pure/Admin/component_jfreechart.scala<br>
+description:<br>
+backed out changeset c5c135ff3726: resulting scala_project lacks build <br>
+dependencies and thus may cause problems in IntelliJ IDEA;</p>
+<p>The purpose was actually to get formal sources in IntelliJ IDEA: this worked <br>
+to the usual extent, without building the project in the IDE. (The latter <br>
+sometimes works and sometimes doesn't, depending on the weather conditions of <br>
+the latest IntelliJ release. Or maybe I don't understand it sufficiently well.)</p>
+<p>Makarius</p>
+
+
+
+<a name="590123567"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/included%20jfreechart%20sources%20break%20scala_project/near/590123567" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/included.20jfreechart.20sources.20break.20scala_project.html#590123567">(Apr 22 2026 at 07:14)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>On 4/21/26 22:42, Makarius wrote:</p>
+<blockquote>
+<p>On 14/04/2026 09:11, Fabian Huch wrote:</p>
+<blockquote>
+<p>The recently updated jfreechart component (added in cc6e160130ab) <br>
+breaks scala_project: Including the java sources via build.props is <br>
+bad, since transitive dependencies (javax.servlet:servlet-api) are <br>
+missing. This makes the generated scala_project no longer build <br>
+properly (and thus IntelliJ IDEA cannot understand our Isabelle/Scala <br>
+sources).</p>
+</blockquote>
+<p>I have reverted that here:</p>
+<p>changeset:   84426:26f651ac1f28<br>
+user:        wenzelm<br>
+date:        Sat Apr 18 12:06:27 2026 +0200<br>
+files:       src/Pure/Admin/component_jfreechart.scala<br>
+description:<br>
+backed out changeset c5c135ff3726: resulting scala_project lacks build <br>
+dependencies and thus may cause problems in IntelliJ IDEA; <br>
+Thanks.</p>
+<p>The purpose was actually to get formal sources in IntelliJ IDEA: this <br>
+worked to the usual extent, without building the project in the IDE. <br>
+(The latter sometimes works and sometimes doesn't, depending on the <br>
+weather conditions of the latest IntelliJ release. Or maybe I don't <br>
+understand it sufficiently well.)</p>
+</blockquote>
+<p>In my experience, the important part is that the build via selected <br>
+build tool works (e.g., 'mvn install'), not the IntelliJ 'build' action. <br>
+I find maven to be very reliable for that (once the appropriate java <br>
+version configured).</p>
+<p>Fabian</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

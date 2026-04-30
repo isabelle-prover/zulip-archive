@@ -1,0 +1,59 @@
+<html>
+<head><meta charset="utf-8"><title>✔ How can I invoke Sledgehammer to finish an induction pr... · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20pr.2E.2E.2E.html">✔ How can I invoke Sledgehammer to finish an induction pr...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="580816384"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20invoke%20Sledgehammer%20to%20finish%20an%20induction%20pr.../near/580816384" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20pr.2E.2E.2E.html#580816384">(Mar 21 2026 at 12:55)</a>:</h4>
+<p><code>by</code> is closing goals. Sledgehammer works on open goals</p>
+
+
+
+<a name="580816403"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20invoke%20Sledgehammer%20to%20finish%20an%20induction%20pr.../near/580816403" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20pr.2E.2E.2E.html#580816403">(Mar 21 2026 at 12:55)</a>:</h4>
+<p>So either:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+<span class="w">   </span><span class="kt">sledgehammer</span>
+</code></pre></div>
+
+
+
+<a name="580816473"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20invoke%20Sledgehammer%20to%20finish%20an%20induction%20pr.../near/580816473" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20pr.2E.2E.2E.html#580816473">(Mar 21 2026 at 12:56)</a>:</h4>
+<p>or:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+<span class="w">  </span><span class="c">(*click on the skeleton produced by Isabelle/jEdit*)</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="n">0</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">    </span><span class="kt">sledgehammer</span>
+<span class="w">   </span><span class="gr">sorry</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">Suc</span><span class="w"> </span><span class="n">n</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">    </span><span class="kt">sledgehammer</span>
+<span class="w">   </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="580816520"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20invoke%20Sledgehammer%20to%20finish%20an%20induction%20pr.../near/580816520" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20pr.2E.2E.2E.html#580816520">(Mar 21 2026 at 12:57)</a>:</h4>
+<p>Great, thanks!</p>
+
+
+
+<a name="580816522"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20invoke%20Sledgehammer%20to%20finish%20an%20induction%20pr.../near/580816522" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20pr.2E.2E.2E.html#580816522">(Mar 21 2026 at 12:57)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1054129">Adam Dingle</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

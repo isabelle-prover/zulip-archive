@@ -1,0 +1,55 @@
+<html>
+<head><meta charset="utf-8"><title>Abbreviation within an Isar proof · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html">Abbreviation within an Isar proof</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="586141572"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586141572" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586141572">(Apr 17 2026 at 14:03)</a>:</h4>
+<p>I know I can do something on the lines of <code>define A where adef[simp]: "A ≡..."</code> but what if I want to always rewrite A to to its right hand side, or use it in blast? (since it seems blast doesn't use this simp rule). I guess therte are two problems here: If I don't use <code>auto</code>/<code>simp</code>, how do I make the current proof context automatically rewrite the definition of <code>A</code> to its right-hand side? My current solution is to add <code>using adef</code> in any proof steps that use it, but that seems unnecessary. Is this where <code>translation</code> would be useful?</p>
+
+
+
+<a name="586146695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586146695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586146695">(Apr 17 2026 at 14:26)</a>:</h4>
+<p>You can use abbreviation instead of definition</p>
+
+
+
+<a name="586146859"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586146859" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586146859">(Apr 17 2026 at 14:27)</a>:</h4>
+<p>within a proof context?</p>
+
+
+
+<a name="586146941"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586146941" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586146941">(Apr 17 2026 at 14:27)</a>:</h4>
+<p>Bad context for command "abbreviation"⌂ -- using reset state</p>
+
+
+
+<a name="586146962"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586146962" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586146962">(Apr 17 2026 at 14:27)</a>:</h4>
+<p>I get this</p>
+
+
+
+<a name="586149728"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586149728" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586149728">(Apr 17 2026 at 14:40)</a>:</h4>
+<p>You can use <code>let ?x = "…"</code></p>
+
+
+
+<a name="586151503"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Abbreviation%20within%20an%20Isar%20proof/near/586151503" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Abbreviation.20within.20an.20Isar.20proof.html#586151503">(Apr 17 2026 at 14:49)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

@@ -1,0 +1,85 @@
+<html>
+<head><meta charset="utf-8"><title>*** Failed to relativize href location · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20Failed.20to.20relativize.20href.20location.html">*** Failed to relativize href location</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="590156291"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%2A%2A%2A%20Failed%20to%20relativize%20href%20location/near/590156291" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20Failed.20to.20relativize.20href.20location.html#590156291">(Apr 22 2026 at 09:38)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>...<br>
+Presenting theory "Dyck_Language.Dyck_Language"<br>
+Presenting theory "Pure"<br>
+*** Failed to relativize href location <br>
+"/Users/nipkow/.isabelle/browser_info/HOL/HOL/ISABELLE_HOME/src/Provers/classical.ML.html" <br>
+with wrt. base "/Users/nipkow/.isabelle/browser_info/AFP/Context_Free_Grammar"</p>
+<p>AFP: parent: 16494:e2ca723aa27e tip<br>
+Isabelle: parent: 84518:f09a1737d3c0 tip</p>
+<p>What am I doing wrong :)</p>
+<p>Tobias</p>
+<p><a href="/user_uploads/14278/ZIJ32xbtna7Ps9PcvybkjppH/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="590161275"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%2A%2A%2A%20Failed%20to%20relativize%20href%20location/near/590161275" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20Failed.20to.20relativize.20href.20location.html#590161275">(Apr 22 2026 at 09:57)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 22/04/2026 11:37, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>...<br>
+Presenting theory "Dyck_Language.Dyck_Language"<br>
+Presenting theory "Pure"<br>
+*** Failed to relativize href location "/Users/nipkow/.isabelle/browser_info/ <br>
+HOL/HOL/ISABELLE_HOME/src/Provers/classical.ML.html" with wrt. base "/Users/ <br>
+nipkow/.isabelle/browser_info/AFP/Context_Free_Grammar"</p>
+<p>AFP: parent: 16494:e2ca723aa27e tip<br>
+Isabelle: parent: 84518:f09a1737d3c0 tip</p>
+<p>What am I doing wrong :)</p>
+</blockquote>
+<p>I've got something wrong in b8b99a2c5991 with the semantics of <br>
+File.relative_path vs. _.relativize(_) --- and need to investigate this further.</p>
+<p>Makarius</p>
+
+
+
+<a name="590174772"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/%2A%2A%2A%20Failed%20to%20relativize%20href%20location/near/590174772" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/.2A.2A.2A.20Failed.20to.20relativize.20href.20location.html#590174772">(Apr 22 2026 at 11:03)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 22/04/2026 11:57, Makarius wrote:</p>
+<blockquote>
+<p>On 22/04/2026 11:37, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>...<br>
+Presenting theory "Dyck_Language.Dyck_Language"<br>
+Presenting theory "Pure"<br>
+*** Failed to relativize href location "/Users/nipkow/.isabelle/ <br>
+browser_info/ HOL/HOL/ISABELLE_HOME/src/Provers/classical.ML.html" with wrt. <br>
+base "/Users/ nipkow/.isabelle/browser_info/AFP/Context_Free_Grammar"</p>
+<p>AFP: parent: 16494:e2ca723aa27e tip<br>
+Isabelle: parent: 84518:f09a1737d3c0 tip</p>
+<p>What am I doing wrong :)</p>
+</blockquote>
+<p>I've got something wrong in b8b99a2c5991 with the semantics of <br>
+File.relative_path vs. _.relativize(_) --- and need to investigate this further.</p>
+</blockquote>
+<p>I would say it should work again with the subsequent change, but your "..." <br>
+above don't say in which situation the problem actually occurred, so I could <br>
+not reproduce it.</p>
+<p>changeset:   84520:c50c2ebb9f7c<br>
+user:        wenzelm<br>
+date:        Wed Apr 22 12:45:30 2026 +0200<br>
+files:       src/Pure/General/file.scala src/Pure/General/html.scala<br>
+description:<br>
+more permissive operation, for relative locations outside the base (amending <br>
+b8b99a2c5991, see also 02588021b581);</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

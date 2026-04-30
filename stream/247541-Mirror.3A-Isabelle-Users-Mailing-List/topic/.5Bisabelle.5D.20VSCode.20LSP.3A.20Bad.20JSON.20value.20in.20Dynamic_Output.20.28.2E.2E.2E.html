@@ -1,0 +1,60 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] VSCode LSP: Bad JSON value in Dynamic_Output (... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20VSCode.20LSP.3A.20Bad.20JSON.20value.20in.20Dynamic_Output.20.28.2E.2E.2E.html">[isabelle] VSCode LSP: Bad JSON value in Dynamic_Output (...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="583574666"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20VSCode%20LSP%3A%20Bad%20JSON%20value%20in%20Dynamic_Output%20%28.../near/583574666" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20VSCode.20LSP.3A.20Bad.20JSON.20value.20in.20Dynamic_Output.20.28.2E.2E.2E.html#583574666">(Apr 04 2026 at 10:40)</a>:</h4>
+<p><strong>From:</strong> Petteri Raita &lt;<a href="mailto:petteri.r.raita@gmail.com">petteri.r.raita@gmail.com</a>&gt;</p>
+<p>Hey Team,</p>
+<p>I encountered an issue with Isabelle's VSCode LSP output where decorations<br>
+fail to render and produce runtime errors.<br>
+Environment:</p>
+<ul>
+<li>Isabelle: &lt;your version&gt;</li>
+<li>OS: &lt;your system&gt;</li>
+<li>Editor: Neovim (using LSP client, not VSCode)</li>
+<li>LSP bridge: Treeniks LSP client</li>
+</ul>
+<p>Observed error:<br>
+*** Session consumer failure: "isabelle.vscode.Dynamic_Output"<br>
+*** Bad JSON value: isabelle.vscode.LSP$$$Lambda/...<br>
+This suggests that a function (lambda) is being passed into the JSON layer<br>
+instead of a concrete JSON value.</p>
+<p>The issue appears to originate from:<br>
+  Tools/VSCode/src/lsp.scala<br>
+Specifically:<br>
+Before:<br>
+  "entries" -&gt; entries.map(_.json)<br>
+After:<br>
+  "entries" -&gt; json<br>
+with:<br>
+  def json: JSON.T = entries.map(_.json)<br>
+The modified version resolves the issue locally and produces valid JSON,<br>
+while the original version leads to the "Bad JSON value" error above.<br>
+My interpretation is that in some contexts the original expression results<br>
+in a value that is not properly normalized into JSON.T, whereas the named<br>
+method avoids this (possibly related to eta-expansion or evaluation<br>
+context).</p>
+<p>I am not certain if this is the correct fix or if it exposes a deeper issue<br>
+in JSON encoding or LSP interaction.<br>
+A patch (generated via git format-patch) is attached for reference.<br>
+Any feedback would be appreciated.</p>
+<p>-- <br>
+Best Regards,<br>
+Petteri Raita<br>
++358 442592704<br>
+DTU student number 253163<br>
+<a href="mailto:s253163@student.dtu.dk">s253163@student.dtu.dk</a></p>
+<p><a href="/user_uploads/14278/mpMphC9_8XDRghNIVUCWCpZK/0001-Fix-decoration-JSON-encoding-for-VSCode-server-outpu.patch">0001-Fix-decoration-JSON-encoding-for-VSCode-server-outpu.patch</a></p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

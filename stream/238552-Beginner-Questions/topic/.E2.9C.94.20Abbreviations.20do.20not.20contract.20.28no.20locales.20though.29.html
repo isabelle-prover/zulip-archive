@@ -1,0 +1,69 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Abbreviations do not contract (no locales though) · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html">✔ Abbreviations do not contract (no locales though)</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="584591645"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584591645" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jibiana Jakpor <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584591645">(Apr 10 2026 at 05:08)</a>:</h4>
+<p>Hello, I am having an issue with an abbreviation not being contracted in the output window. <code>str_substr</code> always remains expanded as in the following example:<br>
+<img alt="image.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="2088x352" data-original-src="/user_uploads/14278/_5iqs42EBCFkF2myQO4XGHX7/image.png" src="/user_uploads/thumbnail/14278/_5iqs42EBCFkF2myQO4XGHX7/image.png/840x560.webp"></p>
+<p>Even stranger, other abbreviations from the same theory do get contracted. I saw a warning in the thread <a class="stream-topic" data-stream-id="238552" href="/#narrow/channel/238552-Beginner-Questions/topic/Not.20to.20expand.20abbreviation.20in.20proof.20state/with/498392229">#Beginner Questions &gt; Not to expand abbreviation in proof state</a> that locales can keep abbreviations from being folded in, but the abbreviation was not declared in a locale. What do you think could be the problem?</p>
+
+
+
+<a name="584592889"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584592889" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584592889">(Apr 10 2026 at 05:27)</a>:</h4>
+<p><code>n &gt;= 0</code> vs <code>0 &lt;=n</code></p>
+
+
+
+<a name="584592919"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584592919" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584592919">(Apr 10 2026 at 05:27)</a>:</h4>
+<p>the former is expanded to the latter during parsing</p>
+
+
+
+<a name="584592940"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584592940" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584592940">(Apr 10 2026 at 05:27)</a>:</h4>
+<p>so your abbreviation needs to be written with <code>0 &lt;= n</code></p>
+
+
+
+<a name="584593021"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584593021" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584593021">(Apr 10 2026 at 05:28)</a>:</h4>
+<p>(this is an educated guess, because you did not show the abbreviation...)</p>
+
+
+
+<a name="584593566"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584593566" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jibiana Jakpor <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584593566">(Apr 10 2026 at 05:35)</a>:</h4>
+<p>That was exactly the issue. This helps me a lot. Thank you so much!</p>
+
+
+
+<a name="584593633"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/584593633" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#584593633">(Apr 10 2026 at 05:36)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="713474">Jibiana Jakpor</span> has marked this topic as resolved.</p>
+
+
+
+<a name="586036531"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/586036531" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jibiana Jakpor <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#586036531">(Apr 17 2026 at 03:37)</a>:</h4>
+<p>Thanks!</p>
+
+
+
+<a name="586036533"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Abbreviations%20do%20not%20contract%20%28no%20locales%20though%29/near/586036533" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Abbreviations.20do.20not.20contract.20.28no.20locales.20though.29.html#586036533">(Apr 17 2026 at 03:37)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="713474">Jibiana Jakpor</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

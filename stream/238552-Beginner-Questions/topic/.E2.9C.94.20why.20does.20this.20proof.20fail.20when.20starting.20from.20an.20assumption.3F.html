@@ -1,0 +1,95 @@
+<html>
+<head><meta charset="utf-8"><title>✔ why does this proof fail when starting from an assumption? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20does.20this.20proof.20fail.20when.20starting.20from.20an.20assumption.3F.html">✔ why does this proof fail when starting from an assumption?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="584230800"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20does%20this%20proof%20fail%20when%20starting%20from%20an%20assumption%3F/near/584230800" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20does.20this.20proof.20fail.20when.20starting.20from.20an.20assumption.3F.html#584230800">(Apr 08 2026 at 13:48)</a>:</h4>
+<p>This proof succeeds:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">foo</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+
+<span class="k">begin</span>
+
+<span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">p</span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"p = True"</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"⋀f. f p = f True"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">iprover</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"(λf. f p) = (λf. f True)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">iprover</span>
+<span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>In the last step, iprover is applying HOL's extensionality axiom, which is automatically available as an introduction rule due to this line in HOL.thy:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="o">[</span><span class="n">intro</span><span class="o">]</span>
+</code></pre></div>
+<p>So far, so good.  Now let's modify the proof slightly:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">p</span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"⋀f. f p = f True"</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"(λf. f p) = (λf. f True)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">iprover</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now the last step fails with this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="kp">apply</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="k">proof</span><span class="w"> </span><span class="n">method⌂</span><span class="o">:</span>
+<span class="k">using</span><span class="w"> </span><span class="n">this</span><span class="o">:</span>
+<span class="w">  </span><span class="o">?</span><span class="n">f1</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="n">f1</span><span class="w"> </span><span class="n">True</span>
+<span class="n">goal</span><span class="w"> </span><span class="o">(</span><span class="n">1</span><span class="w"> </span><span class="n">subgoal</span><span class="o">):</span>
+<span class="w"> </span><span class="n">1.</span><span class="w"> </span><span class="o">(</span><span class="n">λf.</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">p</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">λf.</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">True</span><span class="o">)</span>
+</code></pre></div>
+<p>That seems strange, since it is proceeding from the exact same fact "⋀f. f p = f True".  In my first proof above, I proved that fact with "hence".  In the second proof, I assumed it.  Why is that any different?</p>
+<p>(By the way, changing the proof method from "iprover" to "auto" produces the same behavior.)</p>
+
+
+
+<a name="584233424"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20does%20this%20proof%20fail%20when%20starting%20from%20an%20assumption%3F/near/584233424" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20does.20this.20proof.20fail.20when.20starting.20from.20an.20assumption.3F.html#584233424">(Apr 08 2026 at 13:59)</a>:</h4>
+<p>The types are subtly different:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">note</span><span class="w"> </span><span class="o">[[</span><span class="n">show_sorts</span><span class="o">]]</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">p</span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"⋀f. f p = f True"</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="c">(*have: ?f p = ?f True</span>
+<span class="c">have   (?f::bool ⇒ ?'a1::type) (p::bool) = ?f True</span>
+<span class="c">assume: (?f1::bool ⇒ 'a::type) (p::bool) = ?f1 True*)</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"(λf. f p) = (λf. f True)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">iprover</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="584233528"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20does%20this%20proof%20fail%20when%20starting%20from%20an%20assumption%3F/near/584233528" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20does.20this.20proof.20fail.20when.20starting.20from.20an.20assumption.3F.html#584233528">(Apr 08 2026 at 13:59)</a>:</h4>
+<p><del>I don't have an explanation why though</del> actually it makes sense with the way the logic work. You could not have a generalizable type in an assume.</p>
+
+
+
+<a name="584252243"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20does%20this%20proof%20fail%20when%20starting%20from%20an%20assumption%3F/near/584252243" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20does.20this.20proof.20fail.20when.20starting.20from.20an.20assumption.3F.html#584252243">(Apr 08 2026 at 15:18)</a>:</h4>
+<p>Thanks for the reply.  I didn't know that I could enable [[show_sorts]] to see more information about types - that's very useful.  (Actually [[show_types]] is enough to see what's going on here.)</p>
+<p>It's still a little surprising to me that I can't have a generalizable type in an assume.  However, I just glanced at section 3.4.3 "Type inference and polymorphism" of Wenzel's 2002 PhD thesis about Izar.  He writes</p>
+<blockquote>
+<p>Note that polymorphic treatment of proper abstraction elements like fix and assume (§3.3.1), would demand actual “polymorphic λ-calculus”, such as λ2 or beyond (e.g. see [Barendregt, 1992]), which would quickly lead into a substantially more complex situation (with undecidable problems).</p>
+</blockquote>
+<p>So presumably that's the explanation.</p>
+
+
+
+<a name="584267457"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20does%20this%20proof%20fail%20when%20starting%20from%20an%20assumption%3F/near/584267457" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20does.20this.20proof.20fail.20when.20starting.20from.20an.20assumption.3F.html#584267457">(Apr 08 2026 at 16:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1054129">Adam Dingle</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

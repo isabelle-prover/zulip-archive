@@ -1,0 +1,46 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: more static type-checking in Isabelle/Scala · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20more.20static.20type-checking.20in.20Isabelle.2FScala.html">NEWS: more static type-checking in Isabelle/Scala</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="588719710"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20more%20static%20type-checking%20in%20Isabelle/Scala/near/588719710" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20more.20static.20type-checking.20in.20Isabelle.2FScala.html#588719710">(Apr 21 2026 at 20:46)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>
+<p>Isabelle/Scala now uses more static type-checking by default, notably<br>
+Explicit Nulls (as explained in<br>
+<a href="https://docs.scala-lang.org/scala3/reference/experimental/explicit-nulls.html">https://docs.scala-lang.org/scala3/reference/experimental/explicit-nulls.html</a>).<br>
+Notable INCOMPATIBILITY: need to be careful about type T vs. T | Null.<br>
+The following operations may help to get rid of the Null part:</p>
+<p>proper_value: A | Null =&gt; Option[A]<br>
+ _.nn: A | Null =&gt; A</p>
+</li>
+</ul>
+<p>The "nn" (non-null) operation is written postfix, like regular method<br>
+application. This partial operation will throw NullPointerException on<br>
+null. Excessive use of "nn" may indicate a Java-centric programming<br>
+style: it is better to use null-free operations from the libraries of<br>
+Scala and Isabelle/Scala. As last resort, it also possible to opt-out<br>
+from Explicit Nulls for Scala modules as follows:</p>
+<p>import scala.language.unsafeNulls</p>
+<p>Note: This extension of Scala3 is not yet a "safe" type-system. Even<br>
+with type-checking of Explicit Nulls enabled, the Java/VM can produce<br>
+null values by other means, e.g. during object initialization.</p>
+<p>This refers to Isabelle/c11edc105209 where "scalac -Yexplicit-nulls" is <br>
+enabled by default, except for HOL codgen output.</p>
+<p>I have struggled with our Scala sources for several days, but today everything <br>
+worked on the spot: Isabelle + AFP. (Maybe I have overlooked something.)</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

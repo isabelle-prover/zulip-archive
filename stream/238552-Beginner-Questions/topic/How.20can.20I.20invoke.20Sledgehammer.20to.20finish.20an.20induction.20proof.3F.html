@@ -1,0 +1,40 @@
+<html>
+<head><meta charset="utf-8"><title>How can I invoke Sledgehammer to finish an induction proof? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20proof.3F.html">How can I invoke Sledgehammer to finish an induction proof?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="580812304"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20can%20I%20invoke%20Sledgehammer%20to%20finish%20an%20induction%20proof%3F/near/580812304" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20can.20I.20invoke.20Sledgehammer.20to.20finish.20an.20induction.20proof.3F.html#580812304">(Mar 21 2026 at 11:59)</a>:</h4>
+<p>As an exercise, I defined my own version of the natural numbers, along with a recursive addition function:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">One</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="n">nat</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒ nat ⇒ nat"</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">‹'_+›</span><span class="w"> </span><span class="n">65</span><span class="o">)</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"add x One = S x"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"add x (S y) = S (x _+ y)"</span>
+</code></pre></div>
+<p>Now I want to prove that x + 1 = 1 + x for all x.  This should not be difficult to show by induction on x, so I'd like to specify that induction, then let Sledgehammer finish the details.  I tried typing</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"x _+ One = One _+ x"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+</code></pre></div>
+<p>But if I put my cursor after that point and press Sledgehammer's Apply button, I see</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Illegal</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="k">proof</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="s">"state"</span><span class="w"> </span><span class="n">mode</span>
+</code></pre></div>
+<p>As another attempt, I typed</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"x _+ One = One _+ x"</span>
+<span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+</code></pre></div>
+<p>If I put my cursor after that and try to apply Sledgehammer, I see</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Unknown</span><span class="w"> </span><span class="k">proof</span><span class="w"> </span><span class="k">context</span>
+</code></pre></div>
+<p>What am I doing wrong?</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

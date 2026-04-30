@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nI experienced a failure of code generation using this pre-release, and have been able to isolate it to the following example:</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>export_code test</p>\n<p>The error message is</p>\n<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>\n*** No type arity word ::<br>\n*** discrete_linordered_semidom_with_range</p>\n<p>This example works in Isabelle2025. Thoughts?</p>\n<p>Larry</p>",
+        "id": 544586698,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1760371838
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 13/10/2025 18:10, Lawrence Paulson wrote:</p>\n<blockquote>\n<p>I experienced a failure of code generation using this pre-release, and have <br>\nbeen able to isolate it to the following example:</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>export_code test</p>\n<p>The error message is</p>\n<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>\n*** No type arity word ::<br>\n*** discrete_linordered_semidom_with_range</p>\n<p>This example works in Isabelle2025. Thoughts?</p>\n</blockquote>\n<p>Florian Haftmann has made many changes in the codegen setup recently.</p>\n<p>You might help him by making induction over the history, using \"hg bisect\".</p>\n<p>Makarius</p>",
+        "id": 544595402,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1760375367
+    },
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nThe error goes away if I invoke</p>\n<p>declare discrete_linordered_semidom_with_range_class.atLeastAtMost_eq_range [code del]</p>\n<p>The code it generates for Standard ML takes up 22K. For Isabelle 2025, the same example generates 25K of code. There is very little overlap between the two. I did not try running them.</p>\n<hr>\n<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nSent: 13 October 2025 17:10<br>\nTo: cl-isabelle-users &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\nSubject: Isabelle2025-1_RC0 code generation regression</p>\n<p>I experienced a failure of code generation using this pre-release, and have been able to isolate it to the following example:</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>export_code test</p>\n<p>The error message is</p>\n<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>\n*** No type arity word ::<br>\n*** discrete_linordered_semidom_with_range</p>\n<p>This example works in Isabelle2025. Thoughts?</p>\n<p>Larry</p>",
+        "id": 544742939,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1760446974
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nThings like</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>work in Isabelle2025 but the code is very inefficient.</p>\n<p>I am currently testing a practically functioning code setup for ranges <br>\non words as candidate for Isabelle2025-1.</p>\n<p>Doing that range stuff properly will require one further iteration.</p>\n<p>Florian</p>\n<p>Am 14.10.25 um 15:02 schrieb Lawrence Paulson:</p>\n<blockquote>\n<p>The error goes away if I invoke</p>\n<p>declare discrete_linordered_semidom_with_range_class.atLeastAtMost_eq_range [code del]</p>\n<p>The code it generates for Standard ML takes up 22K. For Isabelle 2025, the same example generates 25K of code. There is very little overlap between the two. I did not try running them.</p>\n<hr>\n<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nSent: 13 October 2025 17:10<br>\nTo: cl-isabelle-users &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\nSubject: Isabelle2025-1_RC0 code generation regression</p>\n<p>I experienced a failure of code generation using this pre-release, and have been able to isolate it to the following example:</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>export_code test</p>\n<p>The error message is</p>\n<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>\n*** No type arity word ::<br>\n*** discrete_linordered_semidom_with_range</p>\n<p>This example works in Isabelle2025. Thoughts?</p>\n<p>Larry<br>\n</p>\n</blockquote>\n<p><a href=\"/user_uploads/14278/TQCNVgpvbpR8n4e_-ElWXczg/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/WDRoDYS_c2q3HulpwmoB4WJk/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 545233083,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1760606201
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nSee now <a href=\"https://isabelle.in.tum.de/repos/isabelle/rev/0bd014c32479\">https://isabelle.in.tum.de/repos/isabelle/rev/0bd014c32479</a></p>\n<p>(The additional material should be easily usable stand-alone on top of RC0)</p>\n<p>Florian</p>\n<p>Am 16.10.25 um 11:10 schrieb Florian Haftmann:</p>\n<blockquote>\n<p>Things like</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>work in Isabelle2025 but the code is very inefficient.</p>\n<p>I am currently testing a practically functioning code setup for ranges <br>\non words as candidate for Isabelle2025-1.</p>\n<p>Doing that range stuff properly will require one further iteration.</p>\n<p>Florian</p>\n<p>Am 14.10.25 um 15:02 schrieb Lawrence Paulson:</p>\n<blockquote>\n<p>The error goes away if I invoke</p>\n<p>declare <br>\ndiscrete_linordered_semidom_with_range_class.atLeastAtMost_eq_range <br>\n[code del]</p>\n<p>The code it generates for Standard ML takes up 22K. For Isabelle 2025, <br>\nthe same example generates 25K of code. There is very little overlap <br>\nbetween the two. I did not try running them.</p>\n<hr>\n<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nSent: 13 October 2025 17:10<br>\nTo: cl-isabelle-users &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\nSubject: Isabelle2025-1_RC0 code generation regression</p>\n<p>I experienced a failure of code generation using this pre-release, and <br>\nhave been able to isolate it to the following example:</p>\n<p>definition \"test ≡ ∀w::16 word ∈ {0..31}. (w AND 63) = (w AND 31)\"</p>\n<p>export_code test</p>\n<p>The error message is</p>\n<p>*** Type 16 word not of sort discrete_linordered_semidom_with_range<br>\n*** No type arity word ::<br>\n*** discrete_linordered_semidom_with_range</p>\n<p>This example works in Isabelle2025. Thoughts?</p>\n<p>Larry</p>\n</blockquote>\n</blockquote>\n<p><a href=\"/user_uploads/14278/K3SVeLrB2GHkCqe-g19zNOHO/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/pgU0Sq46KoGeWgU3av8sBwfg/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 545277643,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1760613812
+    },
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nThis looks great. In the examples, I changed the upper bound for the quantifiers from 31 to 32767 and the two tests still ran in well under a second.</p>\n<p>Larry<br>\nOn 16 Oct 2025 at 12:14 +0100, Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;, wrote:</p>\n<p>(The additional material should be easily usable stand-alone on top of RC0)</p>",
+        "id": 545538084,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1760697993
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nIn bcc1001cbfbd, I concluded a series of adaptions which generalized <br>\nexecutability of (finite) set intervals further (cf. NEWS)</p>\n<p>You might want to check this with the upcoming RC1.</p>\n<p>Florian</p>\n<p><a href=\"/user_uploads/14278/WVhhMLSiEi03uqv5DgaP1Czb/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/rGPfep87bemAPWJRgTrxfhHd/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 553445902,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1762192884
+    }
+]

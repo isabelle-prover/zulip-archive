@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Strange definition for `Fun.f_the_inv_into_f_bij_betw` · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html">Strange definition for `Fun.f_the_inv_into_f_bij_betw`</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="588485838"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Strange%20definition%20for%20%60Fun.f_the_inv_into_f_bij_betw%60/near/588485838" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html#588485838">(Apr 20 2026 at 21:46)</a>:</h4>
+<p>Found this while doing some exercises:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">f_the_inv_into_f_bij_betw</span><span class="o">:</span>
+<span class="w">  </span><span class="s">"bij_betw f A B ⟹ (bij_betw f A B ⟹ x ∈ B) ⟹ f (the_inv_into A f x) = x"</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">bij_betw_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">blast</span><span class="w"> </span><span class="n">intro</span><span class="o">:</span><span class="w"> </span><span class="n">f_the_inv_into_f</span><span class="o">)</span>
+</code></pre></div>
+<p>Why the extra implication in the second premise? The inj_on version doesn't have anything of the sort.</p>
+
+
+
+<a name="588703371"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Strange%20definition%20for%20%60Fun.f_the_inv_into_f_bij_betw%60/near/588703371" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html#588703371">(Apr 21 2026 at 19:20)</a>:</h4>
+<p>Good question. This looks pretty odd.</p>
+
+
+
+<a name="590201869"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Strange%20definition%20for%20%60Fun.f_the_inv_into_f_bij_betw%60/near/590201869" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html#590201869">(Apr 22 2026 at 13:00)</a>:</h4>
+<p>I used theorems in that style when I had to use them with <code>erule</code> (so it chooses the right assumption and correctly deals with higher order unification), but still needed the assumption for later in the proof. Maybe this was a similar case? I'd love to have a version of erule/eresolve_tac that keeps the assumption and only uses it for unification</p>
+
+
+
+<a name="590229716"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Strange%20definition%20for%20%60Fun.f_the_inv_into_f_bij_betw%60/near/590229716" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html#590229716">(Apr 22 2026 at 14:41)</a>:</h4>
+<p><span class="user-mention" data-user-id="392255">@Jan van Brügge</span> so you're saying that this is essentially for <code>erule</code> to leave the <code>bij_betw</code> in?</p>
+
+
+
+<a name="590229940"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Strange%20definition%20for%20%60Fun.f_the_inv_into_f_bij_betw%60/near/590229940" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html#590229940">(Apr 22 2026 at 14:41)</a>:</h4>
+<p>it is  just a guess ¯\_(ツ)_/¯</p>
+
+
+
+<a name="590234191"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Strange%20definition%20for%20%60Fun.f_the_inv_into_f_bij_betw%60/near/590234191" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Strange.20definition.20for.20.60Fun.2Ef_the_inv_into_f_bij_betw.60.html#590234191">(Apr 22 2026 at 14:58)</a>:</h4>
+<p>Looking at the mercurial history, this is a lemma that used to live in src/HOL/BNF_Least_Fixpoint.thy. At that time, its only usage was in tactics used by the datatype command (src/HOL/Tools/BNF/bnf_lfp_tactics.ML). I do not recall the precise usage, but what Jan writes makes sense to me as a plausible explanation. In 2020, the lemma was moved to Fun.thy (rather than e.g., creating an alternative lemma that has a more canonical shape).</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

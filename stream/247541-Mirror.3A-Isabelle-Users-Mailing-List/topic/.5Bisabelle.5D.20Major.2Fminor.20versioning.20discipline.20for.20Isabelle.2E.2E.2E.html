@@ -1,0 +1,297 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Major/minor versioning discipline for Isabelle... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html">[isabelle] Major/minor versioning discipline for Isabelle...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="575677050"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575677050" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575677050">(Feb 25 2026 at 01:49)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>I’m sorry if a form of this question has been discussed multiple times during Isabelle’s past decades of evolution, but nevertheless: wouldn’t it be nice if Isabelle releases followed a best-practice major/minor versioning discipline, so that we could normally rely on minor-version releases to make only backwards-compatible changes?</p>
+<p>To be clear, I’m not proposing to change Isabelle’s whole version numbering system, in particular the tradition of using a year as more-or-less a “major” version number and suffixes like “-1” for incremental updates within a year.  I see nothing wrong with that tradition.  Rather, I’m just suggesting that it would be nice if we could rely on incompatible changes mostly being reserved for “major” year-number releases like Isabelle2026, and for “minor” releases like “Isabelle2025-1” to avoid such compatibility-breaking changes.</p>
+<p>I’ll briefly relate an incident in which the Isabelle2025-1 release in particular “bit” me and a group of undergraduate students in the past couple months.  In late December I was evaluating applications for undergraduate summer internships in my lab at EPFL, including quite a few candidates to work with Isabelle/HOL on our Grounded Arithmetic or GA project (<a href="https://bford.info/pub/lang/ga/">https://bford.info/pub/lang/ga/</a>).  As part of the evaluation process I gave these candidates a “challenge problem” involving actually using Isabelle2025 for some nontrivial theorem-proving in a subset of the GA code base.  But soon a few of these candidates started noticing strange behavior: proving stuff was “too easy” and the proofs that sledgehammer found always referred to a particular locale assumption.  A couple candidates noticed that there was an outright inconsistency: Isabelle was allowing proofs of anything within the relevant locale.  But I knew that the locale’s assumptions were consistent, as the code base also successfully instantiated that locale.</p>
+<p>Upon debugging this behavior and suspecting Isabelle version issues, I finally saw that Isabelle2025-1 had been released only days before I assigned this challenge problem.  Indeed, a look through the Isabelle2025-1 change log quickly revealed the problem (to me, not to the candidates, most of whom were completely new to Isabelle and mostly new to proof assistants in general):</p>
+<p>"  - Removed predicate single_valuedp. Use predicate right_unique instead. INCOMPATIBILITY.”</p>
+<p>The locale assumption I mentioned above was of the form “single_valuedp R” for a concrete single-valued predicate-relation R, but to the candidates who had accidentally downloaded and used Isabelle2025-1 instead of Isabelle2025, the ‘single_valuedp’ was being interpreted as a function <em>variable</em> rather than a constant, and implicitly universally quantified, so the locale assumption was in effect that <em>all</em> predicates were true of R.  Oops.</p>
+<p>I’ll be the first to admit that this incident was partly my fault, for not watching the Isabelle mailing list closely at that time and noticing that an Isabelle2025-1 had just been released, and in turn failing to warn the challenge problem candidates <em>not</em> to use that brand-new version.  But especially given that “Isabelle2025” had been stable and unchanged through almost all of the year 2025, I was not anticipating a new variant also called more-or-less “Isabelle2025" being released only in the last few weeks of 2025, let alone that release including major compatibility-breaking changes like the complete removal of long-stable standard constants from Main.</p>
+<p>I also have no argument against this particular change; “right_unique” is a perfectly fine name too.  But I’m just suggesting that it would be nice if compatibility-breaking changes like this could be scheduled for the next “major” Isabelle release that increases the year number, i.e., Isabelle2026.  (I had carefully instructed the candidates to download and use “Isabelle2025” and no other version; I only didn’t know at the time that an “Isabelle2025-1” had just gone up.).</p>
+<p>As a result of this breaking change slipped into Isabelle2025-1, quite a few sharp and eager potential new Isabelle users were not only extremely confused but lost in some cases days of effort to this versioning issue until I had the time to debug the problem for them.</p>
+<p>As a related issue with the Isabelle home page, it is fairly non-obvious exactly how to find and download prior Isabelle releases — even recently-prior releases like Isabelle2025.  It would be nice if pointers to the websites of at least a few prior versions (especially including the original “base version” for a given year) were readily accessible from the home page for those looking for exactly a particular version.  Upon debugging the above issue, I had to resort to manual URL-editing to find and point the candidates to the “old” Isabelle2025 website so they could download the correct version.</p>
+<p>Just a few versioning thoughts, FWIW.</p>
+<p>Thanks<br>
+Bryan</p>
+
+
+
+<a name="575729284"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575729284" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575729284">(Feb 25 2026 at 09:40)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>I think you are misunderstanding the versioning scheme -- Isabelle2025-1 <br>
+is not a 'minor' release, it is simply the second release in the year <br>
+2025 (this happens regularly since the release cycle is a bit shorter <br>
+than one year). Releases are always immutable and will not be changed.</p>
+<p>For the naming of the second release in one year, there hasn't been a <br>
+better proposal than adding a number postfix.</p>
+<p>We did have a second special Isabelle2025-2 release over Isabelle2025-1, <br>
+where an important problem was solved. An argument can be made that such <br>
+special releases could be named differently.</p>
+<p>Fabian</p>
+<p>On 2/25/26 02:48, Bryan Alexander Ford (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>I’m sorry if a form of this question has been discussed multiple times <br>
+during Isabelle’s past decades of evolution, but nevertheless: <br>
+wouldn’t it be nice if Isabelle releases followed a best-practice <br>
+major/minor versioning discipline, so that we could normally rely on <br>
+minor-version releases to make only backwards-compatible changes?</p>
+<p>To be clear, I’m not proposing to change Isabelle’s whole version <br>
+numbering system, in particular the tradition of using a year as <br>
+more-or-less a “major” version number and suffixes like “-1” for <br>
+incremental updates within a year.  I see nothing wrong with that <br>
+tradition.  Rather, I’m just suggesting that it would be nice if we <br>
+could rely on incompatible changes mostly being reserved for “major” <br>
+year-number releases like Isabelle2026, and for “minor” releases like <br>
+“Isabelle2025-1” to avoid such compatibility-breaking changes.</p>
+<p>I’ll briefly relate an incident in which the Isabelle2025-1 release in <br>
+particular “bit” me and a group of undergraduate students in the past <br>
+couple months.  In late December I was evaluating applications for <br>
+undergraduate summer internships in my lab at EPFL, including quite a <br>
+few candidates to work with Isabelle/HOL on our Grounded Arithmetic or <br>
+GA project (<a href="https://bford.info/pub/lang/ga/">https://bford.info/pub/lang/ga/</a>).  As part of the <br>
+evaluation process I gave these candidates a “challenge problem” <br>
+involving actually using Isabelle2025 for some nontrivial <br>
+theorem-proving in a subset of the GA code base.  But soon a few of <br>
+these candidates started noticing strange behavior: proving stuff was <br>
+“too easy” and the proofs that sledgehammer found always referred to a <br>
+particular locale assumption.  A couple candidates noticed that there <br>
+was an outright inconsistency: Isabelle was allowing proofs of <br>
+anything within the relevant locale.  But I knew that the locale’s <br>
+assumptions were consistent, as the code base also successfully <br>
+instantiated that locale.</p>
+<p>Upon debugging this behavior and suspecting Isabelle version issues, I <br>
+finally saw that Isabelle2025-1 had been released only days before I <br>
+assigned this challenge problem.  Indeed, a look through the <br>
+Isabelle2025-1 change log quickly revealed the problem (to me, not to <br>
+the candidates, most of whom were completely new to Isabelle and <br>
+mostly new to proof assistants in general):</p>
+<p>"  - Removed predicate single_valuedp. Use predicate right_unique <br>
+instead. INCOMPATIBILITY.”</p>
+<p>The locale assumption I mentioned above was of the form <br>
+“single_valuedp R” for a concrete single-valued predicate-relation R, <br>
+but to the candidates who had accidentally downloaded and used <br>
+Isabelle2025-1 instead of Isabelle2025, the ‘single_valuedp’ was being <br>
+interpreted as a function <em>variable</em> rather than a constant, and <br>
+implicitly universally quantified, so the locale assumption was in <br>
+effect that <em>all</em> predicates were true of R.  Oops.</p>
+<p>I’ll be the first to admit that this incident was partly my fault, for <br>
+not watching the Isabelle mailing list closely at that time and <br>
+noticing that an Isabelle2025-1 had just been released, and in turn <br>
+failing to warn the challenge problem candidates <em>not</em> to use that <br>
+brand-new version.  But especially given that “Isabelle2025” had been <br>
+stable and unchanged through almost all of the year 2025, I was not <br>
+anticipating a new variant also called more-or-less “Isabelle2025" <br>
+being released only in the last few weeks of 2025, let alone that <br>
+release including major compatibility-breaking changes like the <br>
+complete removal of long-stable standard constants from Main.</p>
+<p>I also have no argument against this particular change; “right_unique” <br>
+is a perfectly fine name too.  But I’m just suggesting that it would <br>
+be nice if compatibility-breaking changes like this could be scheduled <br>
+for the next “major” Isabelle release that increases the year number, <br>
+i.e., Isabelle2026.  (I had carefully instructed the candidates to <br>
+download and use “Isabelle2025” and no other version; I only didn’t <br>
+know at the time that an “Isabelle2025-1” had just gone up.).</p>
+<p>As a result of this breaking change slipped into Isabelle2025-1, quite <br>
+a few sharp and eager potential new Isabelle users were not only <br>
+extremely confused but lost in some cases days of effort to this <br>
+versioning issue until I had the time to debug the problem for them.</p>
+<p>As a related issue with the Isabelle home page, it is fairly <br>
+non-obvious exactly how to find and download prior Isabelle releases — <br>
+even recently-prior releases like Isabelle2025.  It would be nice if <br>
+pointers to the websites of at least a few prior versions (especially <br>
+including the original “base version” for a given year) were readily <br>
+accessible from the home page for those looking for exactly a <br>
+particular version.  Upon debugging the above issue, I had to resort <br>
+to manual URL-editing to find and point the candidates to the “old” <br>
+Isabelle2025 website so they could download the correct version.</p>
+<p>Just a few versioning thoughts, FWIW.</p>
+<p>Thanks<br>
+Bryan</p>
+</blockquote>
+
+
+
+<a name="575744032"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575744032" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575744032">(Feb 25 2026 at 10:50)</a>:</h4>
+<p><strong>From:</strong> Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Ok, but my point remains that “Isabelle2025-1” <em>sounds</em> like it should be a minor release, probably to anyone not already entrenched in the Isabelle community (certainly to me, and I have actually used Isabelle on and off intermittently since around 2001).</p>
+<p>And your answer also does not address my main suggestion that regardless of tradition, maybe it would be a “good thing” if Isabelle did have some sort of major/minor versioning distinction, however the naming works.  If only for the simple reason that that’s a standard best practice for software engineering and maintenance practically everywhere now, for good reasons. (see my experience above for just one of innumerable types of undesirable situations that having major/minor versioning practice is good at preventing.)</p>
+<p>Bryan</p>
+<blockquote>
+<p>On Feb 25, 2026, at 10:40, Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt; wrote:</p>
+<p>﻿I think you are misunderstanding the versioning scheme -- Isabelle2025-1 is not a 'minor' release, it is simply the second release in the year 2025 (this happens regularly since the release cycle is a bit shorter than one year). Releases are always immutable and will not be changed.</p>
+<p>For the naming of the second release in one year, there hasn't been a better proposal than adding a number postfix.</p>
+<p>We did have a second special Isabelle2025-2 release over Isabelle2025-1, where an important problem was solved. An argument can be made that such special releases could be named differently.</p>
+<p>Fabian</p>
+<blockquote>
+<p>On 2/25/26 02:48, Bryan Alexander Ford (via cl-isabelle-users Mailing List) wrote:<br>
+I’m sorry if a form of this question has been discussed multiple times during Isabelle’s past decades of evolution, but nevertheless: wouldn’t it be nice if Isabelle releases followed a best-practice major/minor versioning discipline, so that we could normally rely on minor-version releases to make only backwards-compatible changes?</p>
+<p>To be clear, I’m not proposing to change Isabelle’s whole version numbering system, in particular the tradition of using a year as more-or-less a “major” version number and suffixes like “-1” for incremental updates within a year.  I see nothing wrong with that tradition.  Rather, I’m just suggesting that it would be nice if we could rely on incompatible changes mostly being reserved for “major” year-number releases like Isabelle2026, and for “minor” releases like “Isabelle2025-1” to avoid such compatibility-breaking changes.</p>
+<p>I’ll briefly relate an incident in which the Isabelle2025-1 release in particular “bit” me and a group of undergraduate students in the past couple months.  In late December I was evaluating applications for undergraduate summer internships in my lab at EPFL, including quite a few candidates to work with Isabelle/HOL on our Grounded Arithmetic or GA project (<a href="https://bford.info/pub/lang/ga/">https://bford.info/pub/lang/ga/</a>).  As part of the evaluation process I gave these candidates a “challenge problem” involving actually using Isabelle2025 for some nontrivial theorem-proving in a subset of the GA code base.  But soon a few of these candidates started noticing strange behavior: proving stuff was “too easy” and the proofs that sledgehammer found always referred to a particular locale assumption.  A couple candidates noticed that there was an outright inconsistency: Isabelle was allowing proofs of anything within the relevant locale.  But I knew that the locale’s assumptions were consistent, as the code base also successfully instantiated that locale.</p>
+<p>Upon debugging this behavior and suspecting Isabelle version issues, I finally saw that Isabelle2025-1 had been released only days before I assigned this challenge problem.  Indeed, a look through the Isabelle2025-1 change log quickly revealed the problem (to me, not to the candidates, most of whom were completely new to Isabelle and mostly new to proof assistants in general):</p>
+<p>"  - Removed predicate single_valuedp. Use predicate right_unique instead. INCOMPATIBILITY.”</p>
+<p>The locale assumption I mentioned above was of the form “single_valuedp R” for a concrete single-valued predicate-relation R, but to the candidates who had accidentally downloaded and used Isabelle2025-1 instead of Isabelle2025, the ‘single_valuedp’ was being interpreted as a function <em>variable</em> rather than a constant, and implicitly universally quantified, so the locale assumption was in effect that <em>all</em> predicates were true of R.  Oops.</p>
+<p>I’ll be the first to admit that this incident was partly my fault, for not watching the Isabelle mailing list closely at that time and noticing that an Isabelle2025-1 had just been released, and in turn failing to warn the challenge problem candidates <em>not</em> to use that brand-new version.  But especially given that “Isabelle2025” had been stable and unchanged through almost all of the year 2025, I was not anticipating a new variant also called more-or-less “Isabelle2025" being released only in the last few weeks of 2025, let alone that release including major compatibility-breaking changes like the complete removal of long-stable standard constants from Main.</p>
+<p>I also have no argument against this particular change; “right_unique” is a perfectly fine name too.  But I’m just suggesting that it would be nice if compatibility-breaking changes like this could be scheduled for the next “major” Isabelle release that increases the year number, i.e., Isabelle2026.  (I had carefully instructed the candidates to download and use “Isabelle2025” and no other version; I only didn’t know at the time that an “Isabelle2025-1” had just gone up.).</p>
+<p>As a result of this breaking change slipped into Isabelle2025-1, quite a few sharp and eager potential new Isabelle users were not only extremely confused but lost in some cases days of effort to this versioning issue until I had the time to debug the problem for them.</p>
+<p>As a related issue with the Isabelle home page, it is fairly non-obvious exactly how to find and download prior Isabelle releases — even recently-prior releases like Isabelle2025.  It would be nice if pointers to the websites of at least a few prior versions (especially including the original “base version” for a given year) were readily accessible from the home page for those looking for exactly a particular version.  Upon debugging the above issue, I had to resort to manual URL-editing to find and point the candidates to the “old” Isabelle2025 website so they could download the correct version.</p>
+<p>Just a few versioning thoughts, FWIW.</p>
+<p>Thanks<br>
+Bryan</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="575744112"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575744112" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575744112">(Feb 25 2026 at 10:51)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>On 25 Feb 2026, at 01:48, Bryan Alexander Ford &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>I’m sorry if a form of this question has been discussed multiple times during Isabelle’s past decades of evolution, but nevertheless: wouldn’t it be nice if Isabelle releases followed a best-practice major/minor versioning discipline, so that we could normally rely on minor-version releases to make only backwards-compatible changes?</p>
+</blockquote>
+<p>During the 1990s, we did make a distinction between major and minor releases. But for most software, minor releases are bug fixes, and we don't get that many bugs to fix. These days, all of our releases should be considered as major. </p>
+<p>Unfortunately, I in particular have been careless about upwards compatibility, due to the gradual growth of Isabelle's user base from a handful of researchers to what it is today. At least the person who had made that change had bothered to document it, which is more than I remember to do. But we do have quite an elaborate release process with multiple release candidates, and that is the right time to look out for and report incompatibilities.</p>
+<p>Almost all prior releases can be found here: <a href="https://www.cl.cam.ac.uk/~lp15/archive/">https://www.cl.cam.ac.uk/~lp15/archive/</a></p>
+<p>Larry</p>
+
+
+
+<a name="575765574"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575765574" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575765574">(Feb 25 2026 at 12:52)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>On 2/25/26 11:50, Bryan Alexander Ford wrote:</p>
+<blockquote>
+<p>Ok, but my point remains that “Isabelle2025-1” <em>sounds</em> like it should be a minor release, probably to anyone not already entrenched in the Isabelle community (certainly to me, and I have actually used Isabelle on and off intermittently since around 2001).</p>
+<p>And your answer also does not address my main suggestion that regardless of tradition, maybe it would be a “good thing” if Isabelle did have some sort of major/minor versioning distinction, however the naming works.</p>
+</blockquote>
+<p>So what scheme are you proposing? Year-number "major" releases doesn't <br>
+work as I explained.</p>
+<p>Fabian</p>
+
+
+
+<a name="575787386"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575787386" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575787386">(Feb 25 2026 at 14:27)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 25/02/2026 02:48, Bryan Alexander Ford (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>I’m sorry if a form of this question has been discussed multiple times during <br>
+Isabelle’s past decades of evolution, but nevertheless: wouldn’t it be nice if <br>
+Isabelle releases followed a best-practice major/minor versioning discipline, <br>
+so that we could normally rely on minor-version releases to make only <br>
+backwards-compatible changes?</p>
+</blockquote>
+<p>I do agree that Isabelle release names are confusing, but I still have no <br>
+better idea than continuing the tradition started by Larry Paulson.</p>
+<p>Even worse, I now tend to read "best practice" as "bad habits", because it <br>
+does not quite work out in reality. Looking through the list of contributing <br>
+components of Isabelle (see Admin/components/main in the repository), there is <br>
+a zoo of funny version schemes, and none of them can be relied upon. Every <br>
+version needs to be treated as a fresh and unique thing, without upgrade or <br>
+downgrade order.</p>
+<p>For example, the Scala project with X.Y.Z versioning scheme superficially <br>
+looks accurate, with major.minor.patch releases, but it isn't. The Scala guys <br>
+do de-facto major releases on an increment of the last digit!</p>
+<p>The best I've seen so far are Java releases: they rarely case a problem, but <br>
+the release and version scheme is very complicated. Luckily, it can be ignored.</p>
+<blockquote>
+<p>As a related issue with the Isabelle home page, it is fairly non-obvious <br>
+exactly how to find and download prior Isabelle releases — even recently-prior <br>
+releases like Isabelle2025.  It would be nice if pointers to the websites of <br>
+at least a few prior versions (especially including the original “base <br>
+version” for a given year) were readily accessible from the home page for <br>
+those looking for exactly a particular version.</p>
+</blockquote>
+<p>There is <a href="https://isabelle.in.tum.de/download_past.html">https://isabelle.in.tum.de/download_past.html</a> with a link to it on <br>
+the "Installation" part of the website. Not really obvious, but it has been <br>
+there for almost 2 decades, so "old habits" will work here.</p>
+<p>Makarius</p>
+
+
+
+<a name="575788542"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/575788542" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#575788542">(Feb 25 2026 at 14:32)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 25/02/2026 11:51, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>These days, all of our releases should be considered as major.</p>
+</blockquote>
+<p>Yes, indeed.</p>
+<p>The only exception are the "emergency releases" Isabelle2013-2 (December 2013) <br>
+and Isabelle2025-2 (January 2026). They don't have a specific naming scheme, <br>
+because emergencies are so exceptional.</p>
+<blockquote>
+<p>But we do have quite an elaborate release process with multiple release candidates, and that is the right time to look out for and report incompatibilities.</p>
+</blockquote>
+<p>Definitely.</p>
+<p>The timetable for Isabelle2026 (October 2026) is already available: <br>
+<a href="https://sketis.net/2025/plan-for-isabelle2026-october-2026">https://sketis.net/2025/plan-for-isabelle2026-october-2026</a></p>
+<p>Makarius</p>
+
+
+
+<a name="576130041"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/576130041" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#576130041">(Feb 26 2026 at 21:54)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 25/02/2026 15:27, Makarius wrote:</p>
+<blockquote>
+<p>Even worse, I now tend to read "best practice" as "bad habits", because it <br>
+does not quite work out in reality.</p>
+</blockquote>
+<p>This guy makes a long and entertaining story out of it: <br>
+<a href="https://hynek.me/articles/semver-will-not-save-you">https://hynek.me/articles/semver-will-not-save-you</a></p>
+<p>I would say the answer to all uncertainty about versions is to be explicit, <br>
+and refer to <a href="https://isabelle.in.tum.de/website-Isabelle2025-2">https://isabelle.in.tum.de/website-Isabelle2025-2</a> as a constant, <br>
+and not to <a href="https://isabelle.in.tum.de">https://isabelle.in.tum.de</a> as a variable ("the latest release"), or <br>
+even worse "the latest repository version that only I know, but won't tell".</p>
+<p>Makarius</p>
+
+
+
+<a name="576190655"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Major/minor%20versioning%20discipline%20for%20Isabelle.../near/576190655" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Major.2Fminor.20versioning.20discipline.20for.20Isabelle.2E.2E.2E.html#576190655">(Feb 27 2026 at 06:55)</a>:</h4>
+<p><strong>From:</strong> "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;</p>
+<blockquote>
+<p>I would say the answer to all uncertainty about versions is to be <br>
+explicit, and refer to <br>
+<a href="https://isabelle.in.tum.de/website-Isabelle2025-2">https://isabelle.in.tum.de/website-Isabelle2025-2</a> as a constant, and <br>
+not to <a href="https://isabelle.in.tum.de">https://isabelle.in.tum.de</a> as a variable ("the latest <br>
+release"), or even worse "the latest repository version that only I <br>
+know, but won't tell".</p>
+<p>This is what I do in the documentation in my projects and, e.g., also <br>
+when submitting artefacts for evaluations (in particular when a new <br>
+Isabelle release is happening during the review period). Overall, this <br>
+really works well!</p>
+</blockquote>
+<p>The only minor suggestion/request I have is that we have a similar <br>
+stable link for the AFP. Either on the AFP website itself (the last AFP <br>
+release that works with a specific Isabelle version) or that the <br>
+(archived) Isabelle website for old releases contains a link to the <br>
+latest AFP archive that works with this specific Isabelle release. This <br>
+would really be useful for ensuring re-usability of artefacts.</p>
+<p>Best,</p>
+<p>Achim</p>
+<p>PS: Yes, I do store my local archives and provide them usually to <br>
+reviewers as well. Still, having a public archive for older releases <br>
+would be helpful, also when trying to "revive" works of colleagues.</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

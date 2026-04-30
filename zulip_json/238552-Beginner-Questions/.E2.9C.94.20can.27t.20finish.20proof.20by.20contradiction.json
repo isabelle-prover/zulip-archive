@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>As I mentioned earlier, as an exercise I've made my own definition of the natural numbers and am attempting to prove some theorems about them.</p>\n<p>I'm trying to prove by contradiction that ¬(x &lt; x) for all x : ℕ.  I've gotten this far:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">less</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"natt ⇒ natt ⇒ bool\"</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"kp\">infix</span><span class=\"w\"> </span><span class=\"s\">\"&lt;\"</span><span class=\"w\"> </span><span class=\"n\">50</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"x &lt; y = (∃z. x + z = y)\"</span>\n\n<span class=\"kn\">theorem</span><span class=\"w\"> </span><span class=\"n\">thm_4_1_a</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"¬(x &lt; x)\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"s\">\"x &lt; x\"</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">z</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">eq</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"x + z = x\"</span><span class=\"w\"> </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">less_def</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"x ≠ x + z\"</span><span class=\"w\"> </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">thm_3_6</span><span class=\"w\"> </span><span class=\"n\">add_sym</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">hence</span><span class=\"w\"> </span><span class=\"n\">False</span><span class=\"w\"> </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">eq</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n</code></pre></div>\n<p>I've proven False, so the proof should be done.  However, if I change \"hence\" to \"thus\" (= \"then show\"), Isabelle reports</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Local</span><span class=\"w\"> </span><span class=\"n\">statement</span><span class=\"w\"> </span><span class=\"n\">fails</span><span class=\"w\"> </span><span class=\"n\">to</span><span class=\"w\"> </span><span class=\"n\">refine</span><span class=\"w\"> </span><span class=\"n\">any</span><span class=\"w\"> </span><span class=\"n\">pending</span><span class=\"w\"> </span><span class=\"n\">goal</span>\n</code></pre></div>\n<p>So I seem to be stuck.  What am I doing wrong?</p>\n<p>I'll attach my entire source file in case that is helpful:<br>\n<a href=\"/user_uploads/14278/uOFrX0i_lVIuMNSHE70ky8YP/arith.thy\">arith.thy</a></p>",
+        "id": 582397839,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1774779244
+    },
+    {
+        "content": "<p>By trial and error I figured out the solution: I needed just \"proof\" instead of \"proof -\".</p>\n<p>However, I don't completely understand this - I thought those had the same meaning.</p>",
+        "id": 582398194,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1774779617
+    },
+    {
+        "content": "<p>OK, I did some more reading in the reference manual and realized that \"proof\" and \"proof -\" are not the same.  Apparently \"proof -\" does no refinement at all.  \"proof\" is equivalent to \"proof standard\".  According to the manual:</p>\n<blockquote>\n<p><strong>standard</strong> refers to the default refinement step of some Isar language elements (notably proof and “..”). It is dynamically scoped, so the behaviour depends on the application environment.<br>\nIn Isabelle/Pure, standard performs elementary introduction / elimination steps (rule), introduction of type classes (intro_classes) and locales (intro_locales).<br>\nIn Isabelle/HOL, standard also takes classical rules into account.</p>\n</blockquote>",
+        "id": 582398468,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1774779891
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1054129\">Adam Dingle</span> has marked this topic as resolved.</p>",
+        "id": 582398472,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1774779895
+    }
+]

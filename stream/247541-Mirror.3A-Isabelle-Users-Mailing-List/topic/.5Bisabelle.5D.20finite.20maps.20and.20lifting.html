@@ -1,0 +1,895 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] finite maps and lifting · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html">[isabelle] finite maps and lifting</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="581227653"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581227653" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581227653">(Mar 23 2026 at 22:06)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle Mailing List,</p>
+<p>I have a question about using the lifting package together with finite maps (HOL-Library.Finite_Map). I am trying to define a copy of a simple fmap type as follows:</p>
+<p>typedef myfmap =<br>
+  "UNIV::((nat, nat) fmap) set"<br>
+  ..</p>
+<p>However, when I attempt to set up the lifting package with</p>
+<p>setup_lifting type_definition_myfmap</p>
+<p>I encounter the following error:</p>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+  dest_state<br>
+  Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+<p>If anyone has any insight into what I may be doing wrong, I would greatly appreciate your help.</p>
+<p>Thanks and all the best,</p>
+<p>Diego</p>
+
+
+
+<a name="581416821"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581416821" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581416821">(Mar 24 2026 at 16:18)</a>:</h4>
+<p><strong>From:</strong> Alex Shkotin &lt;<a href="mailto:alex.shkotin@gmail.com">alex.shkotin@gmail.com</a>&gt;</p>
+<p>Hi Diego,</p>
+<p>Meanwhile, have a look<br>
+<a href="https://chat.qwen.ai/s/t_056fc366-7d43-4103-9c8a-0436d8c1f96b?fev=0.2.16">https://chat.qwen.ai/s/t_056fc366-7d43-4103-9c8a-0436d8c1f96b?fev=0.2.16</a></p>
+<p>Alex</p>
+<p>вт, 24 мар. 2026 г. в 01:03, "Marmsoler, Diego" &lt;<br>
+<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;:</p>
+<blockquote>
+<p>Dear Isabelle Mailing List,</p>
+<p>I have a question about using the lifting package together with finite<br>
+maps (HOL-Library.Finite_Map). I am trying to define a copy of a simple<br>
+fmap type as follows:</p>
+<p>typedef myfmap =<br>
+  "UNIV::((nat, nat) fmap) set"<br>
+  ..</p>
+<p>However, when I attempt to set up the lifting package with</p>
+<p>setup_lifting type_definition_myfmap</p>
+<p>I encounter the following error:</p>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+  dest_state<br>
+  Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+<p>If anyone has any insight into what I may be doing wrong, I would greatly<br>
+appreciate your help.</p>
+<p>Thanks and all the best,</p>
+<p>Diego<br>
+</p>
+</blockquote>
+
+
+
+<a name="581426757"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581426757" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581426757">(Mar 24 2026 at 16:58)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/03/2026 17:18, Alex Shkotin wrote:</p>
+<blockquote>
+<p>Meanwhile, have a look <a href="https://chat.qwen.ai/s/">https://chat.qwen.ai/s/</a> <br>
+t_056fc366-7d43-4103-9c8a-0436d8c1f96b?fev=0.2.16</p>
+</blockquote>
+<p>Can someone who understands the issue please comment on the quality of the <br>
+machine-generated result?</p>
+<p>Looking myself superficially, I am worried about two marginal details:</p>
+<p>- "Updating to the latest Isabelle release." We did agree on this mailing <br>
+list recently that "latest" is very inaccurate and often misleading. Why is <br>
+there this interjection anyway?</p>
+<p>- Double quotes everywhere to mark inner syntax. It is the traditional way <br>
+and still the majority style, but one happy day it will be discontinued to <br>
+have proper cartouches everywhere. Then double-quotes will also be free for <br>
+use inside HOL for string literals. Will that happy day be a sad day for tons <br>
+of machine-digested text?</p>
+<p>Makarius</p>
+
+
+
+<a name="581447165"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581447165" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581447165">(Mar 24 2026 at 18:33)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/03/2026 19:17, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Most people are still using double quotes, but fortunately a simple regular expression substitution takes care of them.</p>
+<p>I wasn't aware that they were deprecated. If it really is our intention then it needs to be made public.</p>
+<blockquote>
+<p>On 24 Mar 2026, at 16:55, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Will that happy day be a sad day for tons of machine-digested text?</p>
+</blockquote>
+</blockquote>
+<p>Replacing the double-quotes properly is not so easy. For formally checked-text <br>
+it can be done reliably, based on authentic PIDE markup produced by <br>
+Isabelle/ML at the point where inner syntax is recognized. That will also work <br>
+for arbitrary nesting of embedded formal languages, e.g. in antiquotations. <br>
+That won't work for informal use of the same, because the markup is missing.</p>
+<p>The traditional double-quoting of inner-syntax is not deprecated yet, just a <br>
+bit old-fashioned: I use it myself routinely, but not universally.</p>
+<p>A few very elite users have switched their formal live to Isabelle cartouches <br>
+already some years ago. It looks better and is more robust. Disadvantage: It <br>
+is not immediately clear how to input it, despite the Isabelle/jEdit <br>
+completion on the " character. The German and French keyboards should also <br>
+have a standard mapping for it that I never know.</p>
+<p>Makarius</p>
+
+
+
+<a name="581463333"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581463333" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581463333">(Mar 24 2026 at 20:06)</a>:</h4>
+<p><strong>From:</strong> Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Makarius and Diego,</p>
+<p>On 24 Mar 2026, at 17.55, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Can someone who understands the issue please comment on the quality of the machine-generated result?</p>
+<p>I took this as a challenge. The answer by QWEN was mostly nonsense — of course setup_lifting should work with type copies via type definition. Mainly any chatbot used on the internet lacks access to the Isabelle sources and the ability to search them and try things out. Below is the transcript with better local setup using OpenCode+GPT 5.4 via Github Copilot and AWS’s Isabelle/Q (MCP interface)—thanks @Kevin Kappelmann for recommending this setup.</p>
+<p>After some back and forth and some nudges into the right direction, the model found a working workaround for the issue. At the end the LLM also suggested writing a reply to the mailing list, which I replicate below. I think this reply might be the weakest point in the overall conversation (next to the moment when the model tried reading my emails on this topic, which is actually a smart thing to do), although I do like the fact that it signed with Diego. Otherwise, I am astonished by the models' ability to orient itself in Isabelle/ML and understand things based on the “induction on the sources” it is performing. (I haven’t seen it looking up Mercurial history yet, but this could be a future instruction.)</p>
+<p>As for the workaround itself: I don’t have a good intuition why Quotient_fmap_bnf_2prem has the right shape for this to work. But also I am also not very familiar with setup_lifting internals. The various other declarations make sense (the uniqueness/totality lemmas could be more general, i.e., not involving the equality constants). In many cases, a lifting plugin derives those automatically for BNFs, but I believe the scope of the plugin is restricted to BNFs without dead variables (whereas in finite maps the domain is dead).</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<p><a href="https://opncd.ai/share/FzaMm9I7">https://opncd.ai/share/FzaMm9I7</a></p>
+<p>Dear Diego,<br>
+I was able to reproduce the problem in a small theory, and it looks like a bug or at least a missing registration in the interaction between setup_lifting and Finite_Map.<br>
+What happens is that setup_lifting turns your typedef into an internal Quotient theorem and then tries to generate a parametrized correspondence relation for the raw type fmap. For that, it consults the registered quot_map theorem for fmap. The existing one from Finite_Map is not in the shape that this part of Lifting expects for a type copy of fmap, which causes the low-level dest_state exception.<br>
+A working workaround is to locally override the quot_map theorem for fmap with a two-premise version, and additionally register the relator facts that setup_lifting needs:<br>
+theory Scratch<br>
+  imports "HOL-Library.Finite_Map"<br>
+begin<br>
+typedef myfmap =<br>
+  "UNIV :: ((nat, nat) fmap) set"<br>
+  ..<br>
+lemma Quotient_fmap_bnf_2prem[quot_map]:<br>
+  assumes "Quotient (=) (id :: 'a =&gt; 'a) id (=)"<br>
+  assumes "Quotient R Abs Rep T"<br>
+  shows "Quotient (fmrel R)<br>
+    (fmmap Abs :: ('a, 'b) fmap =&gt; ('a, 'c) fmap)<br>
+    (fmmap Rep :: ('a, 'c) fmap =&gt; ('a, 'b) fmap)<br>
+    (fmrel T)"<br>
+  using assms Quotient_fmap_bnf<br>
+  by (simp add: Quotient_alt_def)<br>
+declare fmap.rel_eq[relator_eq]<br>
+declare fmap.rel_mono[relator_mono]<br>
+declare fmap.rel_compp[symmetric, relator_distr]<br>
+lemma left_total_fmrel_eq[transfer_rule]: "left_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq left_total_eq)<br>
+lemma bi_total_fmrel_eq[transfer_rule]: "bi_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq bi_total_eq)<br>
+lemma left_unique_fmrel_eq[transfer_rule]: "left_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq left_unique_eq)<br>
+lemma right_unique_fmrel_eq[transfer_rule]: "right_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq right_unique_eq)<br>
+lemma bi_unique_fmrel_eq[transfer_rule]: "bi_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq bi_unique_eq)<br>
+lemma right_total_fmrel_eq[transfer_rule]: "right_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq right_total_eq)<br>
+setup_lifting type_definition_myfmap<br>
+end<br>
+With these declarations in place, setup_lifting type_definition_myfmap succeeds cleanly.<br>
+So in short:</p>
+<ul>
+<li>your original typedef is fine;</li>
+<li>the failure is caused by how Lifting reuses the registered fmap quotient-map information;</li>
+<li>the workaround above makes the registrations explicit enough for this case.<br>
+This seems worth reporting upstream, since Finite_Map already has the relevant BNF facts, but not in a form that setup_lifting can directly use here.<br>
+Best,<br>
+Diego</li>
+</ul>
+
+
+
+<a name="581464910"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581464910" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581464910">(Mar 24 2026 at 20:15)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Alex,</p>
+<p>thanks for the pointer but the proposed solutions do not seem to work.</p>
+<p>In particular,</p>
+<p>the first suggestion gives the same error message:</p>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+  dest_state<br>
+  Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+<p>for the second suggestion, lemma myfmap_quotient gives a typing error.</p>
+<p>Also the explanations do not seem very convincing.<br>
+For example "setup_lifting requires a quotient theorem, not just a typedef." is not true (at least not in the general case).</p>
+<p>Best,</p>
+<p>Diego</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Sent: 24 March 2026 16:55<br>
+To: Alex Shkotin &lt;<a href="mailto:alex.shkotin@gmail.com">alex.shkotin@gmail.com</a>&gt;; Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;; <a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a> &lt;<a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>On 24/03/2026 17:18, Alex Shkotin wrote:</p>
+<blockquote>
+<p>Meanwhile, have a look <a href="https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fchat.qwen.ai%2Fs%2F&amp;data=05%7C02%7Cd.marmsoler%40exeter.ac.uk%7C011f89e046664d72d79708de89c622d1%7C912a5d77fb984eeeaf321334d8f04a53%7C0%7C0%7C639099681255414191%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=S3CqVwmWSvPjFxyEbBnTFNH81UgK2X5akHvJmwR7YFI%3D&amp;reserved=0&lt;https://chat.qwen.ai/s/">https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fchat.qwen.ai%2Fs%2F&amp;data=05%7C02%7Cd.marmsoler%40exeter.ac.uk%7C011f89e046664d72d79708de89c622d1%7C912a5d77fb984eeeaf321334d8f04a53%7C0%7C0%7C639099681255414191%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=S3CqVwmWSvPjFxyEbBnTFNH81UgK2X5akHvJmwR7YFI%3D&amp;reserved=0&lt;https://chat.qwen.ai/s/</a>&gt;<br>
+t_056fc366-7d43-4103-9c8a-0436d8c1f96b?fev=0.2.16</p>
+</blockquote>
+<p>Can someone who understands the issue please comment on the quality of the<br>
+machine-generated result?</p>
+<p>Looking myself superficially, I am worried about two marginal details:</p>
+<p>- "Updating to the latest Isabelle release." We did agree on this mailing<br>
+list recently that "latest" is very inaccurate and often misleading. Why is<br>
+there this interjection anyway?</p>
+<p>- Double quotes everywhere to mark inner syntax. It is the traditional way<br>
+and still the majority style, but one happy day it will be discontinued to<br>
+have proper cartouches everywhere. Then double-quotes will also be free for<br>
+use inside HOL for string literals. Will that happy day be a sad day for tons<br>
+of machine-digested text?</p>
+<p>Makarius</p>
+
+
+
+<a name="581611363"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581611363" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581611363">(Mar 25 2026 at 13:06)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Dmitriy,</p>
+<p>Thanks for your help.</p>
+<p>I am not sure I completely understand why the Quotient_fmap_bnf_2prem is required but it seems to work.</p>
+<p>Thanks again,</p>
+<p>Diego</p>
+<hr>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Sent: 24 March 2026 20:05<br>
+To: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Cc: Alex Shkotin &lt;<a href="mailto:alex.shkotin@gmail.com">alex.shkotin@gmail.com</a>&gt;; Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;; <a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a> &lt;<a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Makarius and Diego,</p>
+<p>On 24 Mar 2026, at 17.55, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Can someone who understands the issue please comment on the quality of the machine-generated result?</p>
+<p>I took this as a challenge. The answer by QWEN was mostly nonsense — of course setup_lifting should work with type copies via type definition. Mainly any chatbot used on the internet lacks access to the Isabelle sources and the ability to search them and try things out. Below is the transcript with better local setup using OpenCode+GPT 5.4 via Github Copilot and AWS’s Isabelle/Q (MCP interface)—thanks @Kevin Kappelmann for recommending this setup.</p>
+<p>After some back and forth and some nudges into the right direction, the model found a working workaround for the issue. At the end the LLM also suggested writing a reply to the mailing list, which I replicate below. I think this reply might be the weakest point in the overall conversation (next to the moment when the model tried reading my emails on this topic, which is actually a smart thing to do), although I do like the fact that it signed with Diego. Otherwise, I am astonished by the models' ability to orient itself in Isabelle/ML and understand things based on the “induction on the sources” it is performing. (I haven’t seen it looking up Mercurial history yet, but this could be a future instruction.)</p>
+<p>As for the workaround itself: I don’t have a good intuition why Quotient_fmap_bnf_2prem has the right shape for this to work. But also I am also not very familiar with setup_lifting internals. The various other declarations make sense (the uniqueness/totality lemmas could be more general, i.e., not involving the equality constants). In many cases, a lifting plugin derives those automatically for BNFs, but I believe the scope of the plugin is restricted to BNFs without dead variables (whereas in finite maps the domain is dead).</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<p><a href="https://opncd.ai/share/FzaMm9I7">https://opncd.ai/share/FzaMm9I7</a></p>
+<p>Dear Diego,<br>
+I was able to reproduce the problem in a small theory, and it looks like a bug or at least a missing registration in the interaction between setup_lifting and Finite_Map.<br>
+What happens is that setup_lifting turns your typedef into an internal Quotient theorem and then tries to generate a parametrized correspondence relation for the raw type fmap. For that, it consults the registered quot_map theorem for fmap. The existing one from Finite_Map is not in the shape that this part of Lifting expects for a type copy of fmap, which causes the low-level dest_state exception.<br>
+A working workaround is to locally override the quot_map theorem for fmap with a two-premise version, and additionally register the relator facts that setup_lifting needs:<br>
+theory Scratch<br>
+  imports "HOL-Library.Finite_Map"<br>
+begin<br>
+typedef myfmap =<br>
+  "UNIV :: ((nat, nat) fmap) set"<br>
+  ..<br>
+lemma Quotient_fmap_bnf_2prem[quot_map]:<br>
+  assumes "Quotient (=) (id :: 'a =&gt; 'a) id (=)"<br>
+  assumes "Quotient R Abs Rep T"<br>
+  shows "Quotient (fmrel R)<br>
+    (fmmap Abs :: ('a, 'b) fmap =&gt; ('a, 'c) fmap)<br>
+    (fmmap Rep :: ('a, 'c) fmap =&gt; ('a, 'b) fmap)<br>
+    (fmrel T)"<br>
+  using assms Quotient_fmap_bnf<br>
+  by (simp add: Quotient_alt_def)<br>
+declare fmap.rel_eq[relator_eq]<br>
+declare fmap.rel_mono[relator_mono]<br>
+declare fmap.rel_compp[symmetric, relator_distr]<br>
+lemma left_total_fmrel_eq[transfer_rule]: "left_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq left_total_eq)<br>
+lemma bi_total_fmrel_eq[transfer_rule]: "bi_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq bi_total_eq)<br>
+lemma left_unique_fmrel_eq[transfer_rule]: "left_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq left_unique_eq)<br>
+lemma right_unique_fmrel_eq[transfer_rule]: "right_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq right_unique_eq)<br>
+lemma bi_unique_fmrel_eq[transfer_rule]: "bi_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq bi_unique_eq)<br>
+lemma right_total_fmrel_eq[transfer_rule]: "right_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq right_total_eq)<br>
+setup_lifting type_definition_myfmap<br>
+end<br>
+With these declarations in place, setup_lifting type_definition_myfmap succeeds cleanly.<br>
+So in short:</p>
+<ul>
+<li>your original typedef is fine;</li>
+<li>the failure is caused by how Lifting reuses the registered fmap quotient-map information;</li>
+<li>the workaround above makes the registrations explicit enough for this case.<br>
+This seems worth reporting upstream, since Finite_Map already has the relevant BNF facts, but not in a form that setup_lifting can directly use here.<br>
+Best,<br>
+Diego</li>
+</ul>
+
+
+
+<a name="581866292"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581866292" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581866292">(Mar 26 2026 at 10:57)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Dmitriy (all),</p>
+<p>thanks again for your help with my typedef question.<br>
+I now have a follow-up question. In particular I tried to add a type parameter to myfmap which then causes again problems with the setup-lifting command.</p>
+<p>My definition now looks like this:</p>
+<p>typedef 'a myfmap =<br>
+  "UNIV :: (('a, nat) fmap) set"<br>
+  ..</p>
+<p>The setup you (or your LLM) proposed now leads to the following error:</p>
+<p>exception THM 1 raised (line 2626 of "thm.ML"):<br>
+  RSN: no unifiers<br>
+  Quotient R Abs Rep T  [Quotient R Abs Rep T]<br>
+  Quotient (=) id id (=) ⟹ Quotient ?R ?Abs ?Rep ?T ⟹ Quotient (fmrel ?R) (fmmap ?Abs) (fmmap ?Rep) (fmrel ?T)</p>
+<p>Any ideas how to adapt the format of the lemma would be very much appreciated.</p>
+<p>Thanks and all the best,</p>
+<p>Diego</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Marmsoler, Diego" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 25 March 2026 13:06<br>
+To: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Cc: <a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a> &lt;<a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Dmitriy,</p>
+<p>Thanks for your help.</p>
+<p>I am not sure I completely understand why the Quotient_fmap_bnf_2prem is required but it seems to work.</p>
+<p>Thanks again,</p>
+<p>Diego</p>
+<hr>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Sent: 24 March 2026 20:05<br>
+To: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Cc: Alex Shkotin &lt;<a href="mailto:alex.shkotin@gmail.com">alex.shkotin@gmail.com</a>&gt;; Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;; <a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a> &lt;<a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Makarius and Diego,</p>
+<p>On 24 Mar 2026, at 17.55, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>Can someone who understands the issue please comment on the quality of the machine-generated result?</p>
+<p>I took this as a challenge. The answer by QWEN was mostly nonsense — of course setup_lifting should work with type copies via type definition. Mainly any chatbot used on the internet lacks access to the Isabelle sources and the ability to search them and try things out. Below is the transcript with better local setup using OpenCode+GPT 5.4 via Github Copilot and AWS’s Isabelle/Q (MCP interface)—thanks @Kevin Kappelmann for recommending this setup.</p>
+<p>After some back and forth and some nudges into the right direction, the model found a working workaround for the issue. At the end the LLM also suggested writing a reply to the mailing list, which I replicate below. I think this reply might be the weakest point in the overall conversation (next to the moment when the model tried reading my emails on this topic, which is actually a smart thing to do), although I do like the fact that it signed with Diego. Otherwise, I am astonished by the models' ability to orient itself in Isabelle/ML and understand things based on the “induction on the sources” it is performing. (I haven’t seen it looking up Mercurial history yet, but this could be a future instruction.)</p>
+<p>As for the workaround itself: I don’t have a good intuition why Quotient_fmap_bnf_2prem has the right shape for this to work. But also I am also not very familiar with setup_lifting internals. The various other declarations make sense (the uniqueness/totality lemmas could be more general, i.e., not involving the equality constants). In many cases, a lifting plugin derives those automatically for BNFs, but I believe the scope of the plugin is restricted to BNFs without dead variables (whereas in finite maps the domain is dead).</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<p><a href="https://opncd.ai/share/FzaMm9I7">https://opncd.ai/share/FzaMm9I7</a></p>
+<p>Dear Diego,<br>
+I was able to reproduce the problem in a small theory, and it looks like a bug or at least a missing registration in the interaction between setup_lifting and Finite_Map.<br>
+What happens is that setup_lifting turns your typedef into an internal Quotient theorem and then tries to generate a parametrized correspondence relation for the raw type fmap. For that, it consults the registered quot_map theorem for fmap. The existing one from Finite_Map is not in the shape that this part of Lifting expects for a type copy of fmap, which causes the low-level dest_state exception.<br>
+A working workaround is to locally override the quot_map theorem for fmap with a two-premise version, and additionally register the relator facts that setup_lifting needs:<br>
+theory Scratch<br>
+  imports "HOL-Library.Finite_Map"<br>
+begin<br>
+typedef myfmap =<br>
+  "UNIV :: ((nat, nat) fmap) set"<br>
+  ..<br>
+lemma Quotient_fmap_bnf_2prem[quot_map]:<br>
+  assumes "Quotient (=) (id :: 'a =&gt; 'a) id (=)"<br>
+  assumes "Quotient R Abs Rep T"<br>
+  shows "Quotient (fmrel R)<br>
+    (fmmap Abs :: ('a, 'b) fmap =&gt; ('a, 'c) fmap)<br>
+    (fmmap Rep :: ('a, 'c) fmap =&gt; ('a, 'b) fmap)<br>
+    (fmrel T)"<br>
+  using assms Quotient_fmap_bnf<br>
+  by (simp add: Quotient_alt_def)<br>
+declare fmap.rel_eq[relator_eq]<br>
+declare fmap.rel_mono[relator_mono]<br>
+declare fmap.rel_compp[symmetric, relator_distr]<br>
+lemma left_total_fmrel_eq[transfer_rule]: "left_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq left_total_eq)<br>
+lemma bi_total_fmrel_eq[transfer_rule]: "bi_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq bi_total_eq)<br>
+lemma left_unique_fmrel_eq[transfer_rule]: "left_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq left_unique_eq)<br>
+lemma right_unique_fmrel_eq[transfer_rule]: "right_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq right_unique_eq)<br>
+lemma bi_unique_fmrel_eq[transfer_rule]: "bi_unique (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq bi_unique_eq)<br>
+lemma right_total_fmrel_eq[transfer_rule]: "right_total (fmrel (=))"<br>
+  by (simp add: fmap.rel_eq right_total_eq)<br>
+setup_lifting type_definition_myfmap<br>
+end<br>
+With these declarations in place, setup_lifting type_definition_myfmap succeeds cleanly.<br>
+So in short:</p>
+<ul>
+<li>your original typedef is fine;</li>
+<li>the failure is caused by how Lifting reuses the registered fmap quotient-map information;</li>
+<li>the workaround above makes the registrations explicit enough for this case.<br>
+This seems worth reporting upstream, since Finite_Map already has the relevant BNF facts, but not in a form that setup_lifting can directly use here.<br>
+Best,<br>
+Diego</li>
+</ul>
+
+
+
+<a name="581909849"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581909849" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581909849">(Mar 26 2026 at 13:48)</a>:</h4>
+<p><strong>From:</strong> Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;</p>
+<p>Hi Diego,</p>
+<blockquote>
+<p>Quotient_fmap_bnf_2prem[quot_map]:<br>
+  assumes "Quotient (=) (id :: 'a =&gt; 'a) id (=)"</p>
+</blockquote>
+<p>this assumption looks fishy since it contains no variables.</p>
+<p>I suspect you could just delete it. Does that work?</p>
+<p>However, the subsequent declarations (left_total) may also have to be generalised. I’ll check later.</p>
+<p>Cheers<br>
+Lars</p>
+
+
+
+<a name="581955173"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/581955173" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#581955173">(Mar 26 2026 at 14:39)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Lars,</p>
+<p>thanks for the hint.</p>
+<p>Indeed the assumption is suspicious and the proof of lemma Quotient_fmap_bnf_2prem also works without this assumption.<br>
+However, without the assumption the setup_lifting command complaints (even for the version of myfmap without type parameters):</p>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+  dest_state<br>
+  Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+<p>It looks like the lifting package somehow expects two assumptions for the quot_map lemma (even for the case without type parameters).</p>
+<p>Diego</p>
+<hr>
+<p>From: Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;<br>
+Sent: 26 March 2026 13:48<br>
+To: Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;<br>
+Cc: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;; <a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a> &lt;<a href="mailto:isabelle-users@cl.cam.ac.uk">isabelle-users@cl.cam.ac.uk</a>&gt;; Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Diego,</p>
+<p>Quotient_fmap_bnf_2prem[quot_map]:<br>
+  assumes "Quotient (=) (id :: 'a =&gt; 'a) id (=)"</p>
+<p>this assumption looks fishy since it contains no variables.</p>
+<p>I suspect you could just delete it. Does that work?</p>
+<p>However, the subsequent declarations (left_total) may also have to be generalised. I’ll check later.</p>
+<p>Cheers<br>
+Lars</p>
+
+
+
+<a name="582623935"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/582623935" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#582623935">(Mar 30 2026 at 17:48)</a>:</h4>
+<p><strong>From:</strong> Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;</p>
+<p>Hi Diego,</p>
+<p>it's even weirder.</p>
+<blockquote>
+<p>Indeed the assumption is suspicious and the proof of lemma <br>
+Quotient_fmap_bnf_2prem also works without this assumption.</p>
+</blockquote>
+<p>This theorem is already in the Finite_Map theory as "Quotient_fmap_bnf"; <br>
+indeed with only one premise.</p>
+<p>I suspect that it was written by Ondrej himself, since he was still at <br>
+the chair when I committed the Finite_Map theory.</p>
+<p>Regarding the error:</p>
+<blockquote>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+   dest_state<br>
+   Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+</blockquote>
+<p>I could also reproduce it.</p>
+<p>While these declarations:</p>
+<blockquote>
+<p>declare fmap.rel_eq[relator_eq]<br>
+declare fmap.rel_mono[relator_mono]<br>
+declare fmap.rel_compp[symmetric, relator_distr]</p>
+</blockquote>
+<p>are indeed missing, they don't appear to change anything (same for the <br>
+left_total etc.) [1].</p>
+<p>Sadly, I couldn't find any examples in the AFP for how this could look <br>
+like in practice [2].</p>
+<p>tl;dr I have no idea how to fix your issue.</p>
+<p>Cheers<br>
+Lars</p>
+<p>[1] Interesting side note: for fset, those declarations are made by the <br>
+"bnf" command. However, fmap is declared as a BNF using "lift_bnf", <br>
+which does not make these declarations. I am unsure whether this is an <br>
+oversight; Jasmin et al. probably now.</p>
+<p>[2]  Perhaps as a consolation, <br>
+"Probabilistic_System_Zoo.Nonempty_Bounded_Set" contains a relevant <br>
+snippet, but it is commented out, just below the line (* FIXME for ONDRA <br>
+*) ;)</p>
+
+
+
+<a name="582637577"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/582637577" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#582637577">(Mar 30 2026 at 19:08)</a>:</h4>
+<p><strong>From:</strong> Dmitriy Traytel &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi both,</p>
+<p>Both bnf and lift_bnf run the same lifting plugin that should do the registration in principle. The plugin however is not handling types with dead variables (such as fmap or bounded sets from the AFP). This was a design decision by Ondrej; I don’t think that I recall the reasoning.</p>
+<p>I assume that the lifting infrastructure expects to see as many assumptions in the quotient theorem as there are type arguments in the type. Possibly also in the rel/map constants (which would explain the above—from BNFs you won’t get the contravariant map function for fmap or the binary relator—but one can define them manually of course). But I am unsure about the precise expected shape that the lifting infrastructure needs.</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<blockquote>
+<p>On 30 Mar 2026, at 19.48, Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt; wrote:</p>
+<p>[You don't often get email from <a href="mailto:lars@hupel.info">lars@hupel.info</a>. Learn why this is important at <a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a> ]</p>
+<p>Hi Diego,</p>
+<p>it's even weirder.</p>
+<blockquote>
+<p>Indeed the assumption is suspicious and the proof of lemma<br>
+Quotient_fmap_bnf_2prem also works without this assumption.</p>
+</blockquote>
+<p>This theorem is already in the Finite_Map theory as "Quotient_fmap_bnf";<br>
+indeed with only one premise.</p>
+<p>I suspect that it was written by Ondrej himself, since he was still at<br>
+the chair when I committed the Finite_Map theory.</p>
+<p>Regarding the error:</p>
+<blockquote>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+  dest_state<br>
+  Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+</blockquote>
+<p>I could also reproduce it.</p>
+<p>While these declarations:</p>
+<blockquote>
+<p>declare fmap.rel_eq[relator_eq]<br>
+declare fmap.rel_mono[relator_mono]<br>
+declare fmap.rel_compp[symmetric, relator_distr]</p>
+</blockquote>
+<p>are indeed missing, they don't appear to change anything (same for the<br>
+left_total etc.) [1].</p>
+<p>Sadly, I couldn't find any examples in the AFP for how this could look<br>
+like in practice [2].</p>
+<p>tl;dr I have no idea how to fix your issue.</p>
+<p>Cheers<br>
+Lars</p>
+<p>[1] Interesting side note: for fset, those declarations are made by the<br>
+"bnf" command. However, fmap is declared as a BNF using "lift_bnf",<br>
+which does not make these declarations. I am unsure whether this is an<br>
+oversight; Jasmin et al. probably now.</p>
+<p>[2]  Perhaps as a consolation,<br>
+"Probabilistic_System_Zoo.Nonempty_Bounded_Set" contains a relevant<br>
+snippet, but it is commented out, just below the line (* FIXME for ONDRA<br>
+*) ;)<br>
+</p>
+</blockquote>
+
+
+
+<a name="582663661"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/582663661" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#582663661">(Mar 30 2026 at 22:19)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Lars,<br>
+Hi Dmitriy,</p>
+<p>thanks a lot for your help!</p>
+<p>Indeed, it seems that the BNF command does not create contravariant versions of the relator and mapper functions which, however, seems to be required in this case.</p>
+<p>Thus, based on your suggestions I tried the following:</p>
+<p>*<br>
+I defined contravariant versions of relator and mapper functions for fmap.<br>
+  *<br>
+Using these I defined a new version of the quot_map theorem which is as follows:<br>
+assumes "Quotient R1 abs1 rep1 T1" and "Quotient R2 abs2 rep2 T2"<br>
+shows "Quotient (rel_fmap R1 R2) (map_fmap rep1 abs2) (map_fmap abs1 rep2) (rel_fmap T1 T2)"<br>
+  *<br>
+I updated the left_total ecc. lemmas accordingly.</p>
+<p>This seems to work now except that I get the following warning:</p>
+<blockquote>
+<p>Generation of a parametric transfer rule for the abs. or the rep. function failed.<br>
+A non-parametric version will be used.<br>
+Reason:<br>
+ Rewriting (merging) of this term has failed:<br>
+ rel_fmap T (=) OO rel_fmap (=) (=)</p>
+</blockquote>
+<p>I guess this results in weaker support for transfer.<br>
+Do you have any suggestions how to address this warning?</p>
+<p>Thanks and all the best,</p>
+<p>Diego</p>
+<hr>
+<p>From: Dmitriy Traytel &lt;<a href="mailto:traytel@di.ku.dk">traytel@di.ku.dk</a>&gt;<br>
+Sent: 30 March 2026 20:08<br>
+To: Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;; Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;<br>
+Cc: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi both,</p>
+<p>Both bnf and lift_bnf run the same lifting plugin that should do the registration in principle. The plugin however is not handling types with dead variables (such as fmap or bounded sets from the AFP). This was a design decision by Ondrej; I don’t think that I recall the reasoning.</p>
+<p>I assume that the lifting infrastructure expects to see as many assumptions in the quotient theorem as there are type arguments in the type. Possibly also in the rel/map constants (which would explain the above—from BNFs you won’t get the contravariant map function for fmap or the binary relator—but one can define them manually of course). But I am unsure about the precise expected shape that the lifting infrastructure needs.</p>
+<p>Best wishes,<br>
+Dmitriy</p>
+<blockquote>
+<p>On 30 Mar 2026, at 19.48, Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt; wrote:</p>
+<p>[You don't often get email from <a href="mailto:lars@hupel.info">lars@hupel.info</a>. Learn why this is important at <a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a> ]</p>
+<p>Hi Diego,</p>
+<p>it's even weirder.</p>
+<blockquote>
+<p>Indeed the assumption is suspicious and the proof of lemma<br>
+Quotient_fmap_bnf_2prem also works without this assumption.</p>
+</blockquote>
+<p>This theorem is already in the Finite_Map theory as "Quotient_fmap_bnf";<br>
+indeed with only one premise.</p>
+<p>I suspect that it was written by Ondrej himself, since he was still at<br>
+the chair when I committed the Finite_Map theory.</p>
+<p>Regarding the error:</p>
+<blockquote>
+<p>exception THM 1 raised (line 2157 of "thm.ML"):<br>
+  dest_state<br>
+  Quotient (fmrel (=)) (fmmap id) (fmmap id) (fmrel (=))</p>
+</blockquote>
+<p>I could also reproduce it.</p>
+<p>While these declarations:</p>
+<blockquote>
+<p>declare fmap.rel_eq[relator_eq]<br>
+declare fmap.rel_mono[relator_mono]<br>
+declare fmap.rel_compp[symmetric, relator_distr]</p>
+</blockquote>
+<p>are indeed missing, they don't appear to change anything (same for the<br>
+left_total etc.) [1].</p>
+<p>Sadly, I couldn't find any examples in the AFP for how this could look<br>
+like in practice [2].</p>
+<p>tl;dr I have no idea how to fix your issue.</p>
+<p>Cheers<br>
+Lars</p>
+<p>[1] Interesting side note: for fset, those declarations are made by the<br>
+"bnf" command. However, fmap is declared as a BNF using "lift_bnf",<br>
+which does not make these declarations. I am unsure whether this is an<br>
+oversight; Jasmin et al. probably now.</p>
+<p>[2]  Perhaps as a consolation,<br>
+"Probabilistic_System_Zoo.Nonempty_Bounded_Set" contains a relevant<br>
+snippet, but it is commented out, just below the line (* FIXME for ONDRA<br>
+*) ;)<br>
+</p>
+</blockquote>
+
+
+
+<a name="582827619"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/582827619" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#582827619">(Mar 31 2026 at 15:10)</a>:</h4>
+<p><strong>From:</strong> Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;</p>
+<p>Hi Diego,</p>
+<p>I admire your tenacity!</p>
+<blockquote>
+<p>Thus, based on your suggestions I tried the following:</p>
+<p>*<br>
+    I defined contravariant versions of relator and mapper functions for<br>
+    fmap.<br>
+  *<br>
+    Using these I defined a new version of the quot_map theorem which is<br>
+    as follows:<br>
+    assumes "Quotient R1 abs1 rep1 T1" and "Quotient R2 abs2 rep2 T2"<br>
+    shows "Quotient (rel_fmap R1 R2) (map_fmap rep1 abs2) (map_fmap abs1<br>
+    rep2) (rel_fmap T1 T2)"<br>
+  *<br>
+    I updated the left_total ecc. lemmas accordingly.</p>
+</blockquote>
+<p>Would you be willing to post a patch on the mailing list? I might <br>
+consider updating the material in HOL-Library. It seems to me that the <br>
+lifting setup we have today is simply wrong, and your approach is the <br>
+correct one (or at least more correct ...)</p>
+<blockquote>
+<blockquote>
+<p>Generation of a parametric transfer rule for the abs. or the rep. <br>
+function failed.<br>
+A non-parametric version will be used.<br>
+Reason:<br>
+  Rewriting (merging) of this term has failed:<br>
+  rel_fmap T (=) OO rel_fmap (=) (=)</p>
+</blockquote>
+</blockquote>
+<p>I remember liberally sprinkling invocations of "parametric_constant" all <br>
+over the theory, e.g.:</p>
+<blockquote>
+<p>parametric_constant map_add_transfer[transfer_rule]: map_add_def<br>
+parametric_constant map_of_transfer[transfer_rule]: map_of_def</p>
+</blockquote>
+<p>Perhaps it will help if you add those for "rel_fmap", "map_fmap" etc.?</p>
+<p>If you used "lift_definition" to define them, also refer to this example <br>
+from the library:</p>
+<blockquote>
+<p>lift_definition fmdom :: "('a, 'b) fmap ⇒ 'a fset"<br>
+  is dom<br>
+  parametric dom_transfer<br>
+.</p>
+</blockquote>
+<p>I hope that a combination of these will enable you to progress with your <br>
+definitions.</p>
+<p>Cheers<br>
+Lars</p>
+
+
+
+<a name="583053051"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/583053051" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#583053051">(Apr 01 2026 at 14:22)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Lars,</p>
+<blockquote>
+<p>I remember liberally sprinkling invocations of "parametric_constant" all<br>
+over the theory, e.g.:</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>parametric_constant map_add_transfer[transfer_rule]: map_add_def<br>
+parametric_constant map_of_transfer[transfer_rule]: map_of_def</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Perhaps it will help if you add those for "rel_fmap", "map_fmap" etc.?</p>
+</blockquote>
+<p>I like the "sprinkling over the theory" approach but unfortunately it did not solve the problem for me (;<br>
+What did help, however, is to add some missing lemmas as [relator_eq], [relator_mono], and [relator_distr], respectively.</p>
+<p>This resulted now in a setup_lifting without any warnings.<br>
+I also tested it by lifting some simple definitions and lemmas from finite_map and it seems to work.</p>
+<blockquote>
+<p>Would you be willing to post a patch on the mailing list? I might<br>
+consider updating the material in HOL-Library. It seems to me that the<br>
+lifting setup we have today is simply wrong, and your approach is the<br>
+correct one (or at least more correct ...)</p>
+</blockquote>
+<p>Sure, I still need to finish the proofs for some of the lemmas, then I can share a patch.<br>
+I would not go as far as calling my approach the correct one but at least it seems to work (;</p>
+<p>On a related matter, I was thinking if it would make sense to integrate some parts of Finite_Map_Extras into Finite_Maps.<br>
+Maybe there is a reason not to integrate them but I use the two almost always together.</p>
+<p>Thanks a lot for your help!</p>
+<p>All the best,</p>
+<p>Diego</p>
+<hr>
+<p>From: Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;<br>
+Sent: 31 March 2026 16:09<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Cc: Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Diego,</p>
+<p>I admire your tenacity!</p>
+<blockquote>
+<p>Thus, based on your suggestions I tried the following:</p>
+<p>*<br>
+    I defined contravariant versions of relator and mapper functions for<br>
+    fmap.<br>
+  *<br>
+    Using these I defined a new version of the quot_map theorem which is<br>
+    as follows:<br>
+    assumes "Quotient R1 abs1 rep1 T1" and "Quotient R2 abs2 rep2 T2"<br>
+    shows "Quotient (rel_fmap R1 R2) (map_fmap rep1 abs2) (map_fmap abs1<br>
+    rep2) (rel_fmap T1 T2)"<br>
+  *<br>
+    I updated the left_total ecc. lemmas accordingly.</p>
+</blockquote>
+<p>Would you be willing to post a patch on the mailing list? I might<br>
+consider updating the material in HOL-Library. It seems to me that the<br>
+lifting setup we have today is simply wrong, and your approach is the<br>
+correct one (or at least more correct ...)</p>
+<blockquote>
+<blockquote>
+<p>Generation of a parametric transfer rule for the abs. or the rep.<br>
+function failed.<br>
+A non-parametric version will be used.<br>
+Reason:<br>
+ Rewriting (merging) of this term has failed:<br>
+ rel_fmap T (=) OO rel_fmap (=) (=)</p>
+</blockquote>
+</blockquote>
+<p>I remember liberally sprinkling invocations of "parametric_constant" all<br>
+over the theory, e.g.:</p>
+<blockquote>
+<p>parametric_constant map_add_transfer[transfer_rule]: map_add_def<br>
+parametric_constant map_of_transfer[transfer_rule]: map_of_def</p>
+</blockquote>
+<p>Perhaps it will help if you add those for "rel_fmap", "map_fmap" etc.?</p>
+<p>If you used "lift_definition" to define them, also refer to this example<br>
+from the library:</p>
+<blockquote>
+<p>lift_definition fmdom :: "('a, 'b) fmap ⇒ 'a fset"<br>
+  is dom<br>
+  parametric dom_transfer<br>
+.</p>
+</blockquote>
+<p>I hope that a combination of these will enable you to progress with your<br>
+definitions.</p>
+<p>Cheers<br>
+Lars</p>
+
+
+
+<a name="584230028"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20finite%20maps%20and%20lifting/near/584230028" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20finite.20maps.20and.20lifting.html#584230028">(Apr 08 2026 at 13:45)</a>:</h4>
+<p><strong>From:</strong> "\"Marmsoler, Diego\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Lars (all),</p>
+<p>I did spend some more time on this but run into a problem for which I would need some input from a Transfer/Lifting expert.</p>
+<p>My original idea was to define contravariant versions of the relator and mapper by lifting corresponding definitions from maps:</p>
+<p>definition rel_map :: "('a ⇒ 'c ⇒ bool) ⇒ ('b ⇒ 'd ⇒ bool) ⇒ ('a  ⇀  'b) ⇒ ('c  ⇀ 'd) ⇒ bool" where<br>
+"rel_map R f ≡ (R ===&gt; rel_option f)"</p>
+<p>definition map_map :: "('c ⇒ 'a) ⇒ ('b ⇒ 'd) ⇒ ('a  ⇀ 'b) ⇒ ('c  ⇀ 'd)" where<br>
+"map_map f g ≡ f ---&gt; map_option g"</p>
+<p>lift_definition rel_fmap :: "('a ⇒ 'c ⇒ bool) ⇒ ('b ⇒ 'd ⇒ bool) ⇒ ('a, 'b) fmap ⇒ ('c, 'd) fmap ⇒ bool"<br>
+  is rel_map<br>
+  parametric rel_map_transfer<br>
+  done</p>
+<p>lift_definition map_fmap :: "('c ⇒ 'a) ⇒ ('b ⇒ 'd) ⇒ ('a, 'b) fmap ⇒ ('c, 'd) fmap"<br>
+  is map_map<br>
+  parametric map_map_transfer<br>
+  sorry</p>
+<p>and then to prove the following quot_map theorem:</p>
+<p>lemma fmap_quotient[quot_map]:<br>
+  assumes 1: "Quotient R1 abs1 rep1 T1"<br>
+  assumes 2: "Quotient R2 abs2 rep2 T2"<br>
+  shows "Quotient (rel_fmap R1 R2) (map_fmap rep1 abs2) (map_fmap abs1 rep2) (rel_fmap T1 T2)"</p>
+<p>This seems to fix the problem with setup_lifting but I do have two issues when trying to finish the proofs.</p>
+<p>The first issue is that the goal for lifting map_fmap seems to be not provable.<br>
+In particular it requires to prove that<br>
+"finite (dom fun3) ==&gt; finite (dom (map_map fun1 fun2 fun3))"<br>
+which does not seem to be provable in general.<br>
+This is an issue because the lifted definition is required to prove the quotient theorem.</p>
+<p>The second problem is that the rel_fmap definition is not left/right total, in general.<br>
+It can be shown that it is left/right_total w.r.t. equality but not for general left/righ_unique left/right_total relations.<br>
+This problem seems to be less critical since lifting still works on my examples but it leads to warnings in setup_lifting.</p>
+<p>Now I was wondering if the above approach seems like a reasonable approach and if so if someone has any ideas how to solve the above issues.</p>
+<p>Thanks and all the best,</p>
+<p>Diego</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of "Marmsoler, Diego" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: 01 April 2026 15:22<br>
+To: Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;; <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Lars,</p>
+<blockquote>
+<p>I remember liberally sprinkling invocations of "parametric_constant" all<br>
+over the theory, e.g.:</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>parametric_constant map_add_transfer[transfer_rule]: map_add_def<br>
+parametric_constant map_of_transfer[transfer_rule]: map_of_def</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Perhaps it will help if you add those for "rel_fmap", "map_fmap" etc.?</p>
+</blockquote>
+<p>I like the "sprinkling over the theory" approach but unfortunately it did not solve the problem for me (;<br>
+What did help, however, is to add some missing lemmas as [relator_eq], [relator_mono], and [relator_distr], respectively.</p>
+<p>This resulted now in a setup_lifting without any warnings.<br>
+I also tested it by lifting some simple definitions and lemmas from finite_map and it seems to work.</p>
+<blockquote>
+<p>Would you be willing to post a patch on the mailing list? I might<br>
+consider updating the material in HOL-Library. It seems to me that the<br>
+lifting setup we have today is simply wrong, and your approach is the<br>
+correct one (or at least more correct ...)</p>
+</blockquote>
+<p>Sure, I still need to finish the proofs for some of the lemmas, then I can share a patch.<br>
+I would not go as far as calling my approach the correct one but at least it seems to work (;</p>
+<p>On a related matter, I was thinking if it would make sense to integrate some parts of Finite_Map_Extras into Finite_Maps.<br>
+Maybe there is a reason not to integrate them but I use the two almost always together.</p>
+<p>Thanks a lot for your help!</p>
+<p>All the best,</p>
+<p>Diego</p>
+<hr>
+<p>From: Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;<br>
+Sent: 31 March 2026 16:09<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Cc: Marmsoler, Diego &lt;<a href="mailto:D.Marmsoler@exeter.ac.uk">D.Marmsoler@exeter.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] finite maps and lifting</p>
+<p>CAUTION: This email originated from outside of the organisation. Do not click links or open attachments unless you recognise the sender and know the content is safe.</p>
+<p>Hi Diego,</p>
+<p>I admire your tenacity!</p>
+<blockquote>
+<p>Thus, based on your suggestions I tried the following:</p>
+<p>*<br>
+    I defined contravariant versions of relator and mapper functions for<br>
+    fmap.<br>
+  *<br>
+    Using these I defined a new version of the quot_map theorem which is<br>
+    as follows:<br>
+    assumes "Quotient R1 abs1 rep1 T1" and "Quotient R2 abs2 rep2 T2"<br>
+    shows "Quotient (rel_fmap R1 R2) (map_fmap rep1 abs2) (map_fmap abs1<br>
+    rep2) (rel_fmap T1 T2)"<br>
+  *<br>
+    I updated the left_total ecc. lemmas accordingly.</p>
+</blockquote>
+<p>Would you be willing to post a patch on the mailing list? I might<br>
+consider updating the material in HOL-Library. It seems to me that the<br>
+lifting setup we have today is simply wrong, and your approach is the<br>
+correct one (or at least more correct ...)</p>
+<blockquote>
+<blockquote>
+<p>Generation of a parametric transfer rule for the abs. or the rep.<br>
+function failed.<br>
+A non-parametric version will be used.<br>
+Reason:<br>
+ Rewriting (merging) of this term has failed:<br>
+ rel_fmap T (=) OO rel_fmap (=) (=)</p>
+</blockquote>
+</blockquote>
+<p>I remember liberally sprinkling invocations of "parametric_constant" all<br>
+over the theory, e.g.:</p>
+<blockquote>
+<p>parametric_constant map_add_transfer[transfer_rule]: map_add_def<br>
+parametric_constant map_of_transfer[transfer_rule]: map_of_def</p>
+</blockquote>
+<p>Perhaps it will help if you add those for "rel_fmap", "map_fmap" etc.?</p>
+<p>If you used "lift_definition" to define them, also refer to this example<br>
+from the library:</p>
+<blockquote>
+<p>lift_definition fmdom :: "('a, 'b) fmap ⇒ 'a fset"<br>
+  is dom<br>
+  parametric dom_transfer<br>
+.</p>
+</blockquote>
+<p>I hope that a combination of these will enable you to progress with your<br>
+definitions.</p>
+<p>Cheers<br>
+Lars</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

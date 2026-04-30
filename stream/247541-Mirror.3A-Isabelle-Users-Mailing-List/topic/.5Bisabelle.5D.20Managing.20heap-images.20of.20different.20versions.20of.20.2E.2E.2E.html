@@ -1,0 +1,128 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Managing heap-images of different versions of ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Managing.20heap-images.20of.20different.20versions.20of.20.2E.2E.2E.html">[isabelle] Managing heap-images of different versions of ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="591344449"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Managing%20heap-images%20of%20different%20versions%20of%20.../near/591344449" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Managing.20heap-images.20of.20different.20versions.20of.20.2E.2E.2E.html#591344449">(Apr 28 2026 at 10:50)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi List,</p>
+<p>I've currently two versions of my Isabelle_LLVM theories. In the ROOT <br>
+file, they are declared as session with name Isabelle_LLVM.</p>
+<p>This leads to isabelle re-building the image each time I start it with a <br>
+different version from last time.</p>
+<p>This makes it very time-consuming to work with two different versions, <br>
+e.g., during updating dependent projects, and working with projects that <br>
+depend on different versions.</p>
+<p>Is there a way (apart from artificially renaming one of the sessions in <br>
+its ROOT file) to manage these separate versions of the same session?</p>
+<p>--</p>
+<p>Peter</p>
+<p>1)</p>
+<p>cd A</p>
+<p>cat ROOTS</p>
+<p>&lt;Refers to Version 1&gt;</p>
+<p>isabelle jedit -d . -l Isabelle_LLVM ...</p>
+<p>2)</p>
+<p>cd B</p>
+<p>cat ROOTS</p>
+<p>&lt;Refers to Version 2&gt;</p>
+<p>isabelle jedit -d . -l Isabelle_LLVM ...</p>
+<p>-- this will now always rebuild the image using Version2 files ... and <br>
+running 1) again will rebuild again, and so on.</p>
+
+
+
+<a name="591347109"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Managing%20heap-images%20of%20different%20versions%20of%20.../near/591347109" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Managing.20heap-images.20of.20different.20versions.20of.20.2E.2E.2E.html#591347109">(Apr 28 2026 at 11:02)</a>:</h4>
+<p><strong>From:</strong> "\"Becker, Hanno\"" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Peter,</p>
+<p>I have this in my etc/settings:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kp">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="s">"$ISABELLE_HEAP_SUFFIX"</span><span class="w"> </span><span class="o">]</span><span class="n">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="n">ISABELLE_HEAPS</span><span class="o">=</span><span class="s">"$ISABELLE_HEAPS-$ISABELLE_HEAP_SUFFIX"</span>
+<span class="n">fi</span>
+</code></pre></div>
+<p>Then you just set e.g. export ISABELLE_HEAP_SUFFIX=A​ in your shell, and all heaps go to .isabelle/Isabelle2025-2/heaps-A​ by default.</p>
+<p>Does that help?</p>
+<p>Kind regards,<br>
+Hanno</p>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Date: Tuesday, 28 April 2026 at 11:51<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [EXTERNAL] [isabelle] Managing heap-images of different versions of same development</p>
+<p>CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.</p>
+<p>Hi List,</p>
+<p>I've currently two versions of my Isabelle_LLVM theories. In the ROOT<br>
+file, they are declared as session with name Isabelle_LLVM.</p>
+<p>This leads to isabelle re-building the image each time I start it with a<br>
+different version from last time.</p>
+<p>This makes it very time-consuming to work with two different versions,<br>
+e.g., during updating dependent projects, and working with projects that<br>
+depend on different versions.</p>
+<p>Is there a way (apart from artificially renaming one of the sessions in<br>
+its ROOT file) to manage these separate versions of the same session?</p>
+<p>--</p>
+<p>Peter</p>
+<p>1)</p>
+<p>cd A</p>
+<p>cat ROOTS</p>
+<p>&lt;Refers to Version 1&gt;</p>
+<p>isabelle jedit -d . -l Isabelle_LLVM ...</p>
+<p>2)</p>
+<p>cd B</p>
+<p>cat ROOTS</p>
+<p>&lt;Refers to Version 2&gt;</p>
+<p>isabelle jedit -d . -l Isabelle_LLVM ...</p>
+<p>-- this will now always rebuild the image using Version2 files ... and<br>
+running 1) again will rebuild again, and so on.</p>
+
+
+
+<a name="591347804"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Managing%20heap-images%20of%20different%20versions%20of%20.../near/591347804" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Managing.20heap-images.20of.20different.20versions.20of.20.2E.2E.2E.html#591347804">(Apr 28 2026 at 11:05)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>Within one Isabelle environment, sessions are unique, so having two <br>
+different versions in there doesn't really make sense.</p>
+<p>But we do often have multiple Isabelle environments, e.g. devel vs. <br>
+releases. You can create distinct Isabelle environments from a <br>
+repository copy by setting the ISABELLE_IDENTIFIER, e.g. via the "-I" <br>
+option in Admin/init.</p>
+<p>Fabian</p>
+<p>On 4/28/26 12:50, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi List,</p>
+<p>I've currently two versions of my Isabelle_LLVM theories. In the ROOT <br>
+file, they are declared as session with name Isabelle_LLVM.</p>
+<p>This leads to isabelle re-building the image each time I start it with <br>
+a different version from last time.</p>
+<p>This makes it very time-consuming to work with two different versions, <br>
+e.g., during updating dependent projects, and working with projects <br>
+that depend on different versions.</p>
+<p>Is there a way (apart from artificially renaming one of the sessions <br>
+in its ROOT file) to manage these separate versions of the same session?</p>
+<p>-- </p>
+<p>Peter</p>
+<p>1)</p>
+<p>cd A</p>
+<p>cat ROOTS</p>
+<p>&lt;Refers to Version 1&gt;</p>
+<p>isabelle jedit -d . -l Isabelle_LLVM ...</p>
+<p>2)</p>
+<p>cd B</p>
+<p>cat ROOTS</p>
+<p>&lt;Refers to Version 2&gt;</p>
+<p>isabelle jedit -d . -l Isabelle_LLVM ...</p>
+<p>-- this will now always rebuild the image using Version2 files ... and <br>
+running 1) again will rebuild again, and so on.</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

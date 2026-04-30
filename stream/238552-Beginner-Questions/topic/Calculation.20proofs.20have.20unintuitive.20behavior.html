@@ -1,0 +1,195 @@
+<html>
+<head><meta charset="utf-8"><title>Calculation proofs have unintuitive behavior · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html">Calculation proofs have unintuitive behavior</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="575407952"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575407952" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575407952">(Feb 23 2026 at 22:17)</a>:</h4>
+<p>I've noticed that calculation proofs sometimes behave in weird ways, failing with cryptic errors (which btw aren't listed in the <a href="https://isabelle.in.tum.de/doc/isar-ref.pdf">reference manual</a>). Some examples:</p>
+<p>The lemma below fails with "Vacuous calculation result":</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Repro</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span><span class="w"> </span><span class="s">"HOL-Data_Structures.Sorting"</span>
+<span class="k">begin</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">partition3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a::linorder) ⇒ 'a list ⇒ 'a list × 'a list × 'a list"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"partition3 x xs = (</span>
+<span class="s">  filter (λy. y &lt; x ) xs,</span>
+<span class="s">  filter (λy. y = x ) xs,</span>
+<span class="s">  filter (λy. y &gt; x ) xs)"</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">quicksort3</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a::linorder) list ⇒ 'a list"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"quicksort3 [] = []"</span><span class="w"> </span><span class="o">|</span>
+<span class="s">"quicksort3 (x # xs) = (</span>
+<span class="s">  let (ls, es, gs) = partition3 x xs in</span>
+<span class="s">  quicksort3 ls @ x # es @ quicksort3 gs)"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"sorted (quicksort3 xs)"</span>
+<span class="k">proof</span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">rule</span><span class="o">:</span><span class="w"> </span><span class="n">quicksort3.induct</span><span class="o">,</span><span class="w"> </span><span class="n">simp</span><span class="o">)</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">2</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">xs</span><span class="o">)</span>
+<span class="w">  </span><span class="k">obtain</span><span class="w"> </span><span class="n">ls</span><span class="w"> </span><span class="n">es</span><span class="w"> </span><span class="n">gs</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">parts</span><span class="o">:</span><span class="w"> </span><span class="s">‹(ls, es, gs) = partition3 x xs›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="n">ls_smallest</span><span class="o">:</span><span class="w"> </span><span class="s">‹∀a ∈ set (quicksort3 ls). ∀b ∈ set (x # es @ quicksort3 gs). a ≤ b›</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹sorted (quicksort3 (x # xs)) = sorted (quicksort3 ls @ x # es @ quicksort3 gs)›</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="w">  </span><span class="c">(* Comment out this line, and the errors disappear: *)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = sorted ((quicksort3 ls) @ (x # es @ quicksort3 gs))›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="c">(* calculation: sorted (quicksort3 (x # xs)) = sorted (quicksort3 (x # xs)) *)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = (sorted (quicksort3 ls) ∧ sorted (x # es @ quicksort3 gs)</span>
+<span class="s">        ∧ (∀a ∈ set (quicksort3 ls). ∀b ∈ set (x # es @ quicksort3 gs). a ≤ b))›</span>
+<span class="w">    </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="n">sorted_append</span><span class="o">)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="c">(* Error: Vacuous calculation result: *)</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = (sorted (quicksort3 ls) ∧ sorted (x # es @ quicksort3 gs))›</span>
+<span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">ls_smallest</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">qed</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>It seems that the line <code>also have ‹… = sorted ((quicksort3 ls) @ (x # es @ quicksort3 gs))›</code> breaks the calculation proof. This step is redundant, but Isabelle seems to accept redundant steps in other situations:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">P1</span><span class="w"> </span><span class="n">P2</span><span class="w"> </span><span class="n">P3</span><span class="w"> </span><span class="n">P4</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">assms</span><span class="o">:</span><span class="w"> </span><span class="n">P1</span><span class="w"> </span><span class="s">‹P1 = P2›</span><span class="w"> </span><span class="s">‹P2 = P3›</span><span class="w"> </span><span class="s">‹P3 = P4›</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹P1 = P2›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P3›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P3›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(* Redudant step *)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P4›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>In the next example, Isabelle accepts one calculation step, but not another identical one:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">P1</span><span class="w"> </span><span class="n">P2</span><span class="w"> </span><span class="n">P3</span><span class="w"> </span><span class="n">P4</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">assms</span><span class="o">:</span><span class="w"> </span><span class="n">P1</span><span class="w"> </span><span class="s">‹P1 = P2›</span><span class="w"> </span><span class="s">‹P2 = P3›</span><span class="w"> </span><span class="s">‹P3 = P4›</span><span class="w"> </span><span class="n">Q</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹P1 ∧ Q = P2 ∧ Q›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P3 ∧ Q›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P4 ∧ Q›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(* No matching trans rules for calculation *)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Are these known bugs that will be fixed in a future release? Or, if this behavior is expected, is there some other way to write transitive chain calculations that don't have these weird quirks? Namely, if I can prove:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="n">1</span><span class="o">:</span><span class="w"> </span><span class="s">‹A = B›</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">have</span><span class="w"> </span><span class="n">2</span><span class="o">:</span><span class="w"> </span><span class="s">‹B = C›</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">have</span><span class="w"> </span><span class="s">‹A = C›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+<p>Then I should be also able to write it like this (regardless of what A, B and C look like, for any chain length):</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">have</span><span class="w"> </span><span class="s">‹A = B›</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = C›</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="k">finally</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹A = C›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+</code></pre></div>
+
+
+
+<a name="575411079"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575411079" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575411079">(Feb 23 2026 at 22:41)</a>:</h4>
+<p>In your first example, what essentially happens is Isabelle sees two statements of the form "A = B" and "B = B" and tries to apply a transitivity rule. There are two transitivity rules for equality, and you may either get "A = B" (so your step was redundant) or "A = A" (this is what happens in your first example; thus you get "(* calculation: sorted (quicksort3 (x # xs)) = sorted (quicksort3 (x # xs)) *)", a useless calculation rule that cannot be applied to the rest of the proof). So redundant steps may either work or break, because Isabelle tries to smartly select the correct transitivity rule and there's not enough information; however, it's fine to just delete them.</p>
+<p>Concerning your next example with "P1 /\ Q = P2 /\ Q", it does not say what you think it says, because = binds tighter than logical operators (you can use &lt;--&gt; as an equality that binds less tightly). So your first step is "P1 &amp; ((Q = P2) &amp; Q)" (which is true because all of these are True), your second step is RHS of the first step equal to P3, and Q; so, (((Q = P2) &amp; Q) = P3) &amp; Q". That is also of course true because all of the variables are True. Then on the next line the transitive step ("also") fails because the first line wasn't an equality, and the second line also isn't an equality. What's a little counterintuitive is that it doesn't have anything to do with what comes after "also", the "also" itself fails.</p>
+<p>Answering your final question, "simp" is not deterministic and has an upper bound on the complexity of combinations it tries, while a calculation chain can get in theory to any length without impacting the easibility of the proof. In your second snippet, btw, it is better to write <code>finally have ‹A = C› .</code> with a dot instead of <code>by simp</code>, because the result is just restating the calculation, there's no further simplification needed.</p>
+
+
+
+<a name="575411303"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575411303" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575411303">(Feb 23 2026 at 22:43)</a>:</h4>
+<p>I would suggest not despairing and sticking with calculation proofs; they do take a bit of getting used to, but this is often the nicest way to perform e.g. assumption or goal rewrites by equivalencies, not to mention the ordered statements.</p>
+
+
+
+<a name="575419415"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575419415" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575419415">(Feb 23 2026 at 23:45)</a>:</h4>
+<p>Thank you, this is very helpful! I still don't really get why the first example fails though. You say that there are two transitivity rules for equality, but  in the <code>print_trans_rules</code> output I only see one transitivity rule <code>⟦?r = ?s; ?s = ?t⟧ ⟹ ?r = ?t</code> and one symmetry rule <code>?s = ?t ⟹ ?t = ?s</code> that have an equality in both the premise and the conclusion. I don't see how you can derive <code>B = B</code> from the first rule though. And in any case this is very counter-intuitive IMO, as it breaks the expected chain of calculations from left to right.</p>
+
+
+
+<a name="575419847"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575419847" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575419847">(Feb 23 2026 at 23:49)</a>:</h4>
+<p>Oh, rather there are two possible orders of substitution. When using equality with calculation it performs a <em>substitution</em> in the other term, so rules are of the form <code>?s = ?t ==&gt; ?P ?t ==&gt; ?P ?s</code> and `?P ?s ==&gt; ?s = ?t ==&gt; ?P ?t". Which means you either substitute B -&gt; B in A = B, or substitute A &lt;- B in B = B. At least that is my understanding.</p>
+
+
+
+<a name="575427682"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575427682" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575427682">(Feb 24 2026 at 00:58)</a>:</h4>
+<p>This is starting to look like a bug. According to <a href="https://isabelle.in.tum.de/doc/isar-ref.pdf#section.6.3">the manual</a>, the second and further <code>also</code> should be equivalent to <code>note calculation = trans [OF calculation this]</code>. And this seems to work until you write down a redundant calculation step - then for some reason it breaks:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">‹P = Q›</span><span class="w"> </span><span class="s">‹Q = R›</span><span class="w"> </span><span class="s">‹R = S›</span><span class="w"> </span><span class="s">‹S = T›</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹P = Q›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="s">‹P = Q ›</span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">print_facts</span>
+
+<span class="w">  </span><span class="c">(* First `also`: calculation = this = (P = Q)*)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = R›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="s">‹Q = R›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">print_facts</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">trans</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">calculation</span><span class="w"> </span><span class="n">this</span><span class="o">]</span>
+
+<span class="w">  </span><span class="c">(* Next `also`: calculation = thm trans[OF calculation this] = (P = R)*)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = S›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="s">‹R = S›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">print_facts</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">trans</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">calculation</span><span class="w"> </span><span class="n">this</span><span class="o">]</span>
+
+<span class="w">  </span><span class="c">(* Next `also`: calculation = thm trans[OF calculation this] = (P = S)*)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = S›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="s">‹R = S›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">print_facts</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">trans</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">calculation</span><span class="w"> </span><span class="n">this</span><span class="o">]</span>
+
+<span class="w">  </span><span class="c">(* Next `also`: calculation should equal: thm trans[OF calculation this] = (P = S), but actually equals: P = P *)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = T›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="s">‹S = T›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="kt">print_facts</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">trans</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">calculation</span><span class="w"> </span><span class="n">this</span><span class="o">]</span>
+
+<span class="w">  </span><span class="k">finally</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹P = T›</span><span class="w"> </span><span class="ow">.</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="575433052"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575433052" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575433052">(Feb 24 2026 at 01:20)</a>:</h4>
+<p>If I apply the rule <code>trans</code> explicitly, I get a different error:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">also</span><span class="o">(</span><span class="n">trans</span><span class="o">)</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = T›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="s">‹S = T›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(* Vacuous calculation result: P = S *)</span>
+<span class="kt">print_facts</span>
+<span class="kt">thm</span><span class="w"> </span><span class="n">trans</span><span class="o">[</span><span class="n">OF</span><span class="w"> </span><span class="n">calculation</span><span class="w"> </span><span class="n">this</span><span class="o">]</span>
+</code></pre></div>
+<p>It seems you were right, and Isabelle picked a different trans rule that resulted in <code>calculation := P = P</code> (though I still have no idea how to debug this and find out which one exactly). Perhaps it initially tried to apply <code>trans</code>, saw it fail, and that's why it went with something else. But the "vacuous calculation" error still doesn't explain what's wrong.</p>
+
+
+
+<a name="575433905"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575433905" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575433905">(Feb 24 2026 at 01:27)</a>:</h4>
+<p>FWIW in here:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">P1</span><span class="w"> </span><span class="n">P2</span><span class="w"> </span><span class="n">P3</span><span class="w"> </span><span class="n">P4</span><span class="w"> </span><span class="n">Q</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">assms</span><span class="o">:</span><span class="w"> </span><span class="n">P1</span><span class="w"> </span><span class="s">‹P1 = P2›</span><span class="w"> </span><span class="s">‹P2 = P3›</span><span class="w"> </span><span class="s">‹P3 = P4›</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">‹P1 = P2›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P3›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P3›</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span><span class="w"> </span><span class="c">(* Redudant step *)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">‹… = P4›</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">assms</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>you have the same behaviour, you're just one line away from triggering the error :)</p>
+<p>looks like also has a wider set of rules than just trans, indeed - the manual does say the translation it provides are approximate. I however really don't get why it's important what behvaiour we get here... garbage in, garbage out, just don't write P=P in your proofs :)</p>
+
+
+
+<a name="575434004"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575434004" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575434004">(Feb 24 2026 at 01:28)</a>:</h4>
+<p>The vacuous calculation error just means that it reproduced a result that was already in <code>print_facts</code> somewhere. That's usually not what you want, so it's an error.</p>
+
+
+
+<a name="575434204"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575434204" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> isauser <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575434204">(Feb 24 2026 at 01:30)</a>:</h4>
+<p>It's not a critical issue - it just creates friction. Maybe I just want to parenthesize certain terms for clarity - it shouldn't break the program IMO.</p>
+
+
+
+<a name="575532483"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Calculation%20proofs%20have%20unintuitive%20behavior/near/575532483" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Calculation.20proofs.20have.20unintuitive.20behavior.html#575532483">(Feb 24 2026 at 12:48)</a>:</h4>
+<p>There are a number of issues with the calculation feature in Isar, in my opinion. It is a very versatile tool, but also quite brittle as a result of that. In any case, changing what it does at this point is basically impossible because it would break lots of existing proofs.</p>
+
+
+
+<hr><p>Last updated: Apr 30 2026 at 10:08 UTC</p>
+</html>

@@ -1,0 +1,251 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [BUG] Delay.run() rethrows exception, killing ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BBUG.5D.20Delay.2Erun.28.29.20rethrows.20exception.2C.20killing.20.2E.2E.2E.html">[isabelle] [BUG] Delay.run() rethrows exception, killing ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="583322218"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BBUG%5D%20Delay.run%28%29%20rethrows%20exception%2C%20killing%20.../near/583322218" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BBUG.5D.20Delay.2Erun.28.29.20rethrows.20exception.2C.20killing.20.2E.2E.2E.html#583322218">(Apr 02 2026 at 17:50)</a>:</h4>
+<p><strong>From:</strong> Bartosz Glowacki &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>I found a bug in Delay.run() (src/Pure/Concurrent/delay.scala, line 29) where a non-interrupt exception is logged but then rethrown. The rethrown exception propagates through TimerTask.run() into java.util.TimerThread.mainLoop(), which does not catch RuntimeException from tasks — the timer thread terminates and the global event_timer singleton dies permanently.</p>
+<p>After that, every Delay.invoke() call in the process either throws IllegalStateException ("Timer already cancelled") or silently fails. This breaks all debouncing and throttling in the editor.</p>
+<p>Call chain:<br>
+  Delay.invoke() → Event_Timer.request() → TimerTask fires → Delay.run()<br>
+  → catch block logs + rethrows → escapes TimerTask.run() → kills TimerThread</p>
+<p>Minimal fix — remove the rethrow in delay.scala line 29 (Isabelle2025/src/Pure/Concurrent/delay.scala:29):<br>
+Patch is attached to this email.</p>
+<p>The exception is still logged for visibility, but Delay.run() exits normally so TimerThread.mainLoop() continues its loop and the global timer stays alive.</p>
+<p>I have a standalone test (DelayBugTest) that reproduces this reliably:</p>
+<ol>
+<li>Create a Delay whose event throws RuntimeException</li>
+<li>Invoke it and wait for it to fire</li>
+<li>Create a second Delay and try to invoke it</li>
+<li>The second invoke throws IllegalStateException — the timer is dead</li>
+</ol>
+<p>The test passes after applying the fix above.<br>
+I am aware that there is a known bug that jEdit slows down after a long time. I am not sure, but I believe it might be somehow connected, that there is some runtime exception, which silently kills the timer and the perceived 'slowdown' is just the fact that some tasks that use timer are not executed, however, this requires further tests.</p>
+<p>I am happy to provide the full test code or any additional information. This was found as part of my dissertation work on frontend testing of the Isabelle platform.</p>
+<p>Best regards,<br>
+Bartosz Glowacki<br>
+King's College London</p>
+<p><a href="/user_uploads/14278/GLPegErprCARNueb7I0RAq0p/0001-Delay-bug-fix.patch">0001-Delay-bug-fix.patch</a></p>
+
+
+
+<a name="584059660"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BBUG%5D%20Delay.run%28%29%20rethrows%20exception%2C%20killing%20.../near/584059660" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BBUG.5D.20Delay.2Erun.28.29.20rethrows.20exception.2C.20killing.20.2E.2E.2E.html#584059660">(Apr 07 2026 at 18:25)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>While this does look suspicious, speaking of a 'bug' doesn't really make <br>
+sense here: If a task fails with an unrecoverable error on a background <br>
+thread, I would expect that the background thread is in a failure state <br>
+too. Looking only at your description, I would actually argue that the <br>
+system should instead fail immediately (loudly). But judging the <br>
+situation requires looking into the sources and history, to find out <br>
+what the intention was.</p>
+<p>In any case, this is still missing an actual problem -- does the <br>
+Exception actually occur, or does the behavior under the hypothesized <br>
+state actually coincide with a known issue? If yes, how to trigger the <br>
+problem? I have seen this state manifest a couple of times, but only <br>
+after a (very obvious) catastrophic failure somewhere else.</p>
+<p>Fabian</p>
+<p>On 4/2/26 19:24, Bartosz Glowacki (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Dear Isabelle developers,</p>
+<p>I found a bug in Delay.run() (src/Pure/Concurrent/delay.scala, line <br>
+29) where a non-interrupt exception is logged but then rethrown. The <br>
+rethrown exception propagates through TimerTask.run() into <br>
+java.util.TimerThread.mainLoop(), which does not catch <br>
+RuntimeException from tasks — the timer thread terminates and the <br>
+global event_timer singleton dies permanently.</p>
+<p>After that, every Delay.invoke() call in the process either throws <br>
+IllegalStateException ("Timer already cancelled") or silently fails. <br>
+This breaks all debouncing and throttling in the editor.</p>
+<p>Call chain:<br>
+  Delay.invoke() → Event_Timer.request() → TimerTask fires → Delay.run()<br>
+  → catch block logs + rethrows → escapes TimerTask.run() → kills <br>
+TimerThread</p>
+<p>Minimal fix — remove the rethrow in delay.scala line 29 <br>
+(Isabelle2025/src/Pure/Concurrent/delay.scala:29):<br>
+Patch is attached to this email.</p>
+<p>The exception is still logged for visibility, but Delay.run() exits <br>
+normally so TimerThread.mainLoop() continues its loop and the global <br>
+timer stays alive.</p>
+<p>I have a standalone test (DelayBugTest) that reproduces this reliably:<br>
+1. Create a Delay whose event throws RuntimeException<br>
+2. Invoke it and wait for it to fire<br>
+3. Create a second Delay and try to invoke it<br>
+4. The second invoke throws IllegalStateException — the timer is dead</p>
+<p>The test passes after applying the fix above.<br>
+I am aware that there is a known bug that jEdit slows down after a <br>
+long time. I am not sure, but I believe it might be somehow connected, <br>
+that there is some runtime exception, which silently kills the timer <br>
+and the perceived 'slowdown' is just the fact that some tasks that use <br>
+timer are not executed, however, this requires further tests.</p>
+<p>I am happy to provide the full test code or any additional <br>
+information. This was found as part of my dissertation work on <br>
+frontend testing of the Isabelle platform.</p>
+<p>Best regards,<br>
+Bartosz Glowacki<br>
+King's College London<br>
+</p>
+</blockquote>
+
+
+
+<a name="585058958"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BBUG%5D%20Delay.run%28%29%20rethrows%20exception%2C%20killing%20.../near/585058958" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BBUG.5D.20Delay.2Erun.28.29.20rethrows.20exception.2C.20killing.20.2E.2E.2E.html#585058958">(Apr 12 2026 at 19:18)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/04/2026 19:24, Bartosz Glowacki (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear Isabelle developers,</p>
+<p>I found a bug in Delay.run() (src/Pure/Concurrent/delay.scala, line 29) where <br>
+a non-interrupt exception is logged but then rethrown. The rethrown exception <br>
+propagates through TimerTask.run() into java.util.TimerThread.mainLoop(), <br>
+which does not catch RuntimeException from tasks — the timer thread terminates <br>
+and the global event_timer singleton dies permanently.</p>
+<p>After that, every Delay.invoke() call in the process either throws <br>
+IllegalStateException ("Timer already cancelled") or silently fails. This <br>
+breaks all debouncing and throttling in the editor.</p>
+<p>Call chain:<br>
+   Delay.invoke() → Event_Timer.request() → TimerTask fires → Delay.run()<br>
+   → catch block logs + rethrows → escapes TimerTask.run() → kills TimerThread</p>
+<p>Minimal fix — remove the rethrow in delay.scala line 29 (Isabelle2025/src/ <br>
+Pure/Concurrent/delay.scala:29):<br>
+Patch is attached to this email.</p>
+</blockquote>
+<p>Hi Bartosz,</p>
+<p>I've seen this mail some weeks ago and ignored it immediately, because of the <br>
+use of ill-defined words "bug" and "fix". My usual definitions first: "bug" <br>
+usually means "unexpected behaviour", and "fix" usually means "I did not <br>
+understand all details, but here is an adhoc patch that might improve the <br>
+situation, or not". (Note that your patch was actually lost.)</p>
+<p>My first impulse when something looks odd in the Isabelle sources is to browse <br>
+our glorious history, to see where the piece of source comes from. Here is an <br>
+approximative result from doing this for only 5min (it usually requires 20min <br>
+to 2h):</p>
+<p>changeset:   64810:05b29c8f0add<br>
+user:        wenzelm<br>
+date:        Thu Jan 05 22:57:59 2017 +0100<br>
+files:       src/Pure/Concurrent/standard_thread.scala <br>
+src/Tools/VSCode/src/channel.scala src/Tools/VSCode/src/server.scala<br>
+description:<br>
+more informative error for spurious crash;</p>
+<p>changeset:   56770:e160ae47db94<br>
+user:        wenzelm<br>
+date:        Mon Apr 28 14:41:49 2014 +0200<br>
+files:       src/Pure/Concurrent/simple_thread.scala <br>
+src/Pure/GUI/swing_thread.scala src/Tools/jEdit/src/document_view.scala <br>
+src/Tools/jEdit/src/jedit_editor.scala <br>
+src/Tools/jEdit/src/monitor_dockable.scala src/Tools/jEdit/src/plugin.scala <br>
+src/Tools/jEdit/src/simplifier_trace_dockable.scala <br>
+src/Tools/jEdit/src/simplifier_trace_window.scala<br>
+description:<br>
+mane delayed events outside of Swing thread -- triggers no longer require <br>
+Swing_Thread.later;</p>
+<p>I guess that the Swing Thread behaves more robustly in the face of exceptions <br>
+than java.util.Timer. At least I've never the Swing dispatcher disappear, like <br>
+the timer thread.</p>
+<p>That is certainly bad, and Java could be blamed for it, but they document this <br>
+fragile behavior (which I've overlooked so far). So it probably requires a <br>
+diligent change on our side to "make it more robust", meaning it works better <br>
+under more rough side-conditions.</p>
+<p>Anyway, apart from such theoretical failures, did you encounter an actual <br>
+problem in using Isabelle/jEdit practically?</p>
+<blockquote>
+<p>The exception is still logged for visibility, but Delay.run() exits normally <br>
+so TimerThread.mainLoop() continues its loop and the global timer stays alive.</p>
+<p>I have a standalone test (DelayBugTest) that reproduces this reliably:<br>
+1. Create a Delay whose event throws RuntimeException<br>
+2. Invoke it and wait for it to fire<br>
+3. Create a second Delay and try to invoke it<br>
+4. The second invoke throws IllegalStateException — the timer is dead</p>
+<p>The test passes after applying the fix above.</p>
+</blockquote>
+<p>I am interested in the materials from this experiment, but please note that <br>
+"bugs" vs. "fixes" are alien to the Isabelle development model.</p>
+<blockquote>
+<p>I am aware that there is a known bug that jEdit slows down after a long time. </p>
+</blockquote>
+<p>Do you mean jEdit or Isabelle/jEdit? (This makes a big difference.)</p>
+<blockquote>
+<p>I am happy to provide the full test code or any additional information. This <br>
+was found as part of my dissertation work on frontend testing of the Isabelle <br>
+platform.</p>
+</blockquote>
+<p>So what is your overall approach? I guess that the Java Swing GUI stuff is <br>
+pretty easy to get into bad situations, due to race conditions etc.</p>
+<p>Makarius</p>
+
+
+
+<a name="585059718"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BBUG%5D%20Delay.run%28%29%20rethrows%20exception%2C%20killing%20.../near/585059718" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BBUG.5D.20Delay.2Erun.28.29.20rethrows.20exception.2C.20killing.20.2E.2E.2E.html#585059718">(Apr 12 2026 at 19:31)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 12/04/2026 21:17, Makarius wrote:</p>
+<blockquote>
+<p>I guess that the Swing Thread behaves more robustly in the face of exceptions <br>
+than java.util.Timer. At least I've never the Swing dispatcher disappear, like <br>
+the timer thread.</p>
+<p>That is certainly bad, and Java could be blamed for it, but they document this <br>
+fragile behavior (which I've overlooked so far). So it probably requires a <br>
+diligent change on our side to "make it more robust", meaning it works better <br>
+under more rough side-conditions.</p>
+</blockquote>
+<p>Spending 5min longer on the Java documentation of java.util.Timer, I get the <br>
+impression that it is overall very weak. They also point to the later <br>
+ScheduledThreadPoolExecutor as an alternative.</p>
+<p>I will eventually study the sources of both, and then see what can be really <br>
+improved on our side (not "fixed", please).</p>
+<p>Makarius</p>
+
+
+
+<a name="585275406"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BBUG%5D%20Delay.run%28%29%20rethrows%20exception%2C%20killing%20.../near/585275406" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BBUG.5D.20Delay.2Erun.28.29.20rethrows.20exception.2C.20killing.20.2E.2E.2E.html#585275406">(Apr 13 2026 at 20:20)</a>:</h4>
+<p><strong>From:</strong> Bartosz Glowacki &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Makarius,</p>
+<p>Thank you for looking into this and for the historical context from the changesets.</p>
+<p>To your question about practical problems: The easiest way to observe the effect is to chmod 000 a HOL dependency (e.g. HOL/List.thy) before launching Isabelle/jEdit. The editor starts, but all theory text renders black with no semantic highlighting, and the state does not recover even after restoring the file. In fact, there is no retry for the timer, so later usage of the software is just pointless. This is admittedly an unusual situation, but files on network mounts or removable media could produce similar I/O exceptions transiently.</p>
+<p>Regarding jEdit vs Isabelle/jEdit slowdown: I meant Isabelle/jEdit specifically. I speculated that some instances of perceived slowdown (known issue in Isabelle, after longer usage time) might involve the timer thread dying after a transient exception, causing delay-scheduled UI updates to stop. This is just a hypothesis - I have not confirmed a connection.</p>
+<p>Apologies for the lost patch — I am re-attaching it to this email. I understand it may not be the right approach; however, I believe that rethrowing the exception can only kill the timer with no additional benefits. I look forward to seeing what you arrive at after studying the Timer and ScheduledThreadPoolExecutor sources, I believe that this change might be also required.</p>
+<p>My overall dissertation approach is systematic testing of the Isabelle/PIDE frontend infrastructure — the Scala layer between the prover and the GUI. For Whitebox testing, I use generative AI to initially scan the Isabelle/scala source code to look for vulnerabilities, then evaluate the results and write the tests case. I attach the test case, patch and markdown explaining the testing technique.</p>
+<p>Best regards,<br>
+Bartosz</p>
+<hr>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Sent: Sunday, April 12, 2026 9:28 PM<br>
+To: Bartosz Glowacki &lt;<a href="mailto:bartosz.gowacki@kcl.ac.uk">bartosz.gowacki@kcl.ac.uk</a>&gt;; <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Cc: Mohammad Ahmad Abdulaziz Ali Mansour &lt;<a href="mailto:mohammad.abdulaziz@kcl.ac.uk">mohammad.abdulaziz@kcl.ac.uk</a>&gt;; Karine Even-Mendoza &lt;<a href="mailto:karine.even_mendoza@kcl.ac.uk">karine.even_mendoza@kcl.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] [BUG] Delay.run() rethrows exception, killing global Event_Timer thread</p>
+<p>[Some people who received this message don't often get email from <a href="mailto:makarius@sketis.net">makarius@sketis.net</a>. Learn why this is important at <a href="https://aka.ms/LearnAboutSenderIdentification">https://aka.ms/LearnAboutSenderIdentification</a> ]</p>
+<p>On 12/04/2026 21:17, Makarius wrote:</p>
+<blockquote>
+<p>I guess that the Swing Thread behaves more robustly in the face of exceptions<br>
+than java.util.Timer. At least I've never the Swing dispatcher disappear, like<br>
+the timer thread.</p>
+<p>That is certainly bad, and Java could be blamed for it, but they document this<br>
+fragile behavior (which I've overlooked so far). So it probably requires a<br>
+diligent change on our side to "make it more robust", meaning it works better<br>
+under more rough side-conditions.</p>
+</blockquote>
+<p>Spending 5min longer on the Java documentation of java.util.Timer, I get the<br>
+impression that it is overall very weak. They also point to the later<br>
+ScheduledThreadPoolExecutor as an alternative.</p>
+<p>I will eventually study the sources of both, and then see what can be really<br>
+improved on our side (not "fixed", please).</p>
+<p>Makarius</p>
+<p><a href="/user_uploads/14278/_bH8Rqq3rK7mgrqwvZ6wjyeV/0001-Delay-bug-fix.patch">0001-Delay-bug-fix.patch</a><br>
+<a href="/user_uploads/14278/j-eIM2DKDO4djzaLXgMs16IW/DelayBugTest.md">DelayBugTest.md</a><br>
+<a href="/user_uploads/14278/lFmQd3nBW52UOVW2wGRY-GkZ/DelayBugTest.scala">DelayBugTest.scala</a></p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

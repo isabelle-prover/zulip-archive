@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p>Sorry, meant to make a new thread</p>",
+        "id": 593246459,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778071193
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/near/593246322\">said</a> in <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/with/593246322\">#Beginner Questions &gt; Getting value of a configuration parameter</a>:</p>\n<blockquote>\n<p>A follow-up from <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/with/591914457\">this thread</a>|</p>\n<p>I've had to recently downgrade my machine, and so one SMT query will complete nondeterministically -- sometimes it times out and sometimes it doesn't. This problem is a whole lot more persistent on my weaker machine. Setting <code>declare [[ smt_timeout = 0 ]]</code>does nothing, nor do big numbers like 10000 or -1. What do I do?</p>\n</blockquote>",
+        "id": 593246519,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778071211
+    },
+    {
+        "content": "<p>There is an <code>reconstruction_step_timeout</code> which might help</p>",
+        "id": 593326618,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778090926
+    },
+    {
+        "content": "<p>but you can also call sledgehammer again and try to find another faster proof</p>",
+        "id": 593326732,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778090955
+    },
+    {
+        "content": "<p>sledgehammer can't :( <br>\nBut I'll try reconstruction ty</p>",
+        "id": 593327028,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778091031
+    },
+    {
+        "content": "<p>try replacing the <code>by (smt ....)</code> by <code>sledgehammer(add: ....)</code> or even <code>sledgehammer (...)</code></p>",
+        "id": 593327385,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778091102
+    },
+    {
+        "content": "<p>what does that do</p>",
+        "id": 593327430,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778091115
+    },
+    {
+        "content": "<p>Is that not what putting facts in a using clause is for</p>",
+        "id": 593327484,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778091126
+    },
+    {
+        "content": "<p>that will force sledgehammer to use that facts (with <code>add:</code>) or only those facts</p>",
+        "id": 593327526,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778091139
+    },
+    {
+        "content": "<p>oh</p>",
+        "id": 593327556,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778091146
+    },
+    {
+        "content": "<p>whoa</p>",
+        "id": 593327563,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1778091149
+    },
+    {
+        "content": "<p>otherwise sledgehammer will use its own heuristics to select facts</p>",
+        "id": 593327619,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778091164
+    }
+]

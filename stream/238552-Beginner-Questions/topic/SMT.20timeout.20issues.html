@@ -1,0 +1,90 @@
+<html>
+<head><meta charset="utf-8"><title>SMT timeout issues · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html">SMT timeout issues</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="593246459"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593246459" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593246459">(May 06 2026 at 12:39)</a>:</h4>
+<p>Sorry, meant to make a new thread</p>
+
+
+
+<a name="593246519"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593246519" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593246519">(May 06 2026 at 12:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/near/593246322">said</a> in <a href="#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/with/593246322">#Beginner Questions &gt; Getting value of a configuration parameter</a>:</p>
+<blockquote>
+<p>A follow-up from <a href="#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/with/591914457">this thread</a>|</p>
+<p>I've had to recently downgrade my machine, and so one SMT query will complete nondeterministically -- sometimes it times out and sometimes it doesn't. This problem is a whole lot more persistent on my weaker machine. Setting <code>declare [[ smt_timeout = 0 ]]</code>does nothing, nor do big numbers like 10000 or -1. What do I do?</p>
+</blockquote>
+
+
+
+<a name="593326618"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593326618" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593326618">(May 06 2026 at 18:08)</a>:</h4>
+<p>There is an <code>reconstruction_step_timeout</code> which might help</p>
+
+
+
+<a name="593326732"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593326732" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593326732">(May 06 2026 at 18:09)</a>:</h4>
+<p>but you can also call sledgehammer again and try to find another faster proof</p>
+
+
+
+<a name="593327028"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327028" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327028">(May 06 2026 at 18:10)</a>:</h4>
+<p>sledgehammer can't :( <br>
+But I'll try reconstruction ty</p>
+
+
+
+<a name="593327385"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327385" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327385">(May 06 2026 at 18:11)</a>:</h4>
+<p>try replacing the <code>by (smt ....)</code> by <code>sledgehammer(add: ....)</code> or even <code>sledgehammer (...)</code></p>
+
+
+
+<a name="593327430"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327430" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327430">(May 06 2026 at 18:11)</a>:</h4>
+<p>what does that do</p>
+
+
+
+<a name="593327484"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327484" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327484">(May 06 2026 at 18:12)</a>:</h4>
+<p>Is that not what putting facts in a using clause is for</p>
+
+
+
+<a name="593327526"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327526" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327526">(May 06 2026 at 18:12)</a>:</h4>
+<p>that will force sledgehammer to use that facts (with <code>add:</code>) or only those facts</p>
+
+
+
+<a name="593327556"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327556" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327556">(May 06 2026 at 18:12)</a>:</h4>
+<p>oh</p>
+
+
+
+<a name="593327563"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327563" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327563">(May 06 2026 at 18:12)</a>:</h4>
+<p>whoa</p>
+
+
+
+<a name="593327619"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/SMT%20timeout%20issues/near/593327619" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/SMT.20timeout.20issues.html#593327619">(May 06 2026 at 18:12)</a>:</h4>
+<p>otherwise sledgehammer will use its own heuristics to select facts</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

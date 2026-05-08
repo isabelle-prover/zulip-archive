@@ -1,0 +1,52 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: uniform support for Message_Digest / SHA1 / SHA256 ... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20uniform.20support.20for.20Message_Digest.20.2F.20SHA1.20.2F.20SHA256.20.2E.2E.2E.html">NEWS: uniform support for Message_Digest / SHA1 / SHA256 ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="592827110"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20uniform%20support%20for%20Message_Digest%20/%20SHA1%20/%20SHA256%20.../near/592827110" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20uniform.20support.20for.20Message_Digest.20.2F.20SHA1.20.2F.20SHA256.20.2E.2E.2E.html#592827110">(May 04 2026 at 19:42)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* ML </strong>*</p>
+<ul>
+<li>Both SHA1 and SHA256 are supported via Isabelle/Scala, with minor<br>
+changes of the supported operations: Minor INCOMPATIBILITY. SHA1.fake<br>
+has been replaced by SHA1.parse (including proper checks). Structure<br>
+Message_Digest provides general operations. The native SHA1<br>
+implementation in ML has been discontinued, which may impact<br>
+performance.</li>
+</ul>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>Both SHA1 and SHA256 are supported in Isabelle/Scala. SHA1 is still<br>
+used routinely, but will be eventually phased out. Result is of type<br>
+Message_Digest.T, with slightly different toString method. Subtle<br>
+INCOMPATIBILITY: use "rep" instead (as in Isabelle/ML).</li>
+</ul>
+<p>This refers to Isabelle/50d7fead3758.</p>
+<p>After dismantling parts of the old "use_thy" loader state, the ML operation <br>
+SHA1.digest turned out to be unused (in Pure), so that was a good opportunity <br>
+to dismantle our native SHA1 C-module for Poly/ML, and thus simplify the poly <br>
+build process and make it more robust.</p>
+<p>SHA1 remains relevant to some other Isabelle/ML tools (e.g. Sledgehammer, <br>
+caches), but it now goes through the explicit ML-Scala-function protocol.</p>
+<p>Adding SHA256 was an easy exercise in re-use of high-quality cryptographic <br>
+algorithms on the JVM: We may use SHA256 routinely at a later stage, when SHA1 <br>
+has been generally discredited. There is no immediate need for action, though.</p>
+<p>My motivation to provide SHA256 right now was a talk at FOSDEM 2026 about the <br>
+next decade of git. The really interesting talks at that conference were <br>
+non-git / post-git ones, see also <a href="https://fosdem.org/2026/schedule/track/main">https://fosdem.org/2026/schedule/track/main</a> <br>
+--- I did not attend this event in person, but a small open source event in <br>
+Augsburg, where one post-git guy mentioned the very talk that I had watched <br>
+myself some weeks before.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

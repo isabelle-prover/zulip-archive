@@ -1,0 +1,112 @@
+<html>
+<head><meta charset="utf-8"><title>BNF for (&#x27;a =&gt; &#x27;b) =&gt; &#x27;c with live &#x27;a, &#x27;c - possible? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html">BNF for (&#x27;a =&gt; &#x27;b) =&gt; &#x27;c with live &#x27;a, &#x27;c - possible?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="575396827"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575396827" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575396827">(Feb 23 2026 at 21:02)</a>:</h4>
+<p>Hello,<br>
+long story short, I have a type that is a map from maps (representing vectors in some space) to values, plus two additional sets bounding the domain vectors' dimensionality, and some theorems. Thus it boils down to 'a set + 'a set + ('a =&gt; 'b) =&gt; 'c. I would like to define a recursive type based on it through the 'a position, so that dimension labels can also refer to these "partial scalar fields".</p>
+<p>The default BNF for ('a =&gt; 'b) =&gt; 'c marks 'a, 'b as dead and 'c as alive. I am wondering if there's a way to define 'a to be alive too. I'm not very good with category theory, so I defined the obvious map, but I am struggling with setfns/predicators/relators - what is a natural transformation for this functor in 'a place? By the equation it seems it should be something like "set of all the arguments that the outer function will pass to the inner function", but I'm not sure how to formalize this.</p>
+
+
+
+<a name="575415495"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575415495" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575415495">(Feb 23 2026 at 23:15)</a>:</h4>
+<p>Update: I am trying to move forward with just the <code>map</code> for right now, here's my repro:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">map_fn2</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"('a ⇒ 'd) ⇒ ('c ⇒ 'e) ⇒ (('a ⇒ 'b) ⇒ 'c) ⇒ (('d ⇒ 'b) ⇒ 'e)"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"map_fn2 map_arg map_val f0 farg = map_val (f0 (farg ∘ map_arg))"</span>
+
+<span class="kn">bnf</span><span class="w"> </span><span class="n">fn2</span><span class="o">:</span><span class="w"> </span><span class="s">"('a ⇒ 'b) ⇒ 'c"</span>
+<span class="w">  </span><span class="n">map</span><span class="o">:</span><span class="w"> </span><span class="n">map_fn2</span>
+<span class="w">  </span><span class="n">sets</span><span class="o">:</span><span class="w"> </span><span class="s">"λ_.{}"</span><span class="w"> </span><span class="n">range</span>
+<span class="w">  </span><span class="n">bd</span><span class="o">:</span><span class="w"> </span><span class="s">"card_suc ( card_of (UNIV::'a set) )"</span><span class="w"> </span><span class="c">(*placeholder*)</span>
+<span class="c">(* exception UnequalLengths raised (line 553 of "library.ML") *)</span>
+</code></pre></div>
+<p>Now the cardinal type is probably wrong, but something is going wronger... What does that exception mean? Do I need to communicate some additional things to the BNF procedure?</p>
+
+
+
+<a name="575462907"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575462907" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575462907">(Feb 24 2026 at 06:29)</a>:</h4>
+<p>The error message is unfortunately a low level crash, but the bound may not depend on live BNF parameters.</p>
+<p>Also if you pick set to be "%_. {}", you basically require the map function via the congruence property to ignore the corresponding position 'a.</p>
+<p>Generally, I doubt that this will work for the general <code>('a =&gt; 'b) =&gt; 'c</code>. There may be some restricted variant (e.g., such functions + an explicit finite/countable/'k-bounded domain for 'a). You have these additional sets. Are they bounded in some way?</p>
+
+
+
+<a name="575512979"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575512979" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575512979">(Feb 24 2026 at 11:03)</a>:</h4>
+<p>Yes, I've realized that there's no way to satisfy both congruence and natural transformation laws while providing the obvious mapping.<br>
+Thankfully the actual datatype I need is ('a, 'b) fmap .&gt; 'c * 'a fset, where the domains of domain are bounded by this additional set. (There's more stuff but not important). Looks like the first set is then just this additional set - it's obviously an upper bound on congruence, and obviously a natural transformation. I do need to fogure out how to express the cardinality bound though, looks to be something like "the set of (finite) subsets of 'b", is that what c_sup does?</p>
+
+
+
+<a name="575559591"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575559591" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575559591">(Feb 24 2026 at 14:40)</a>:</h4>
+<p>Nevermind, brushed up on my cardinal arithmetic, think I got this.</p>
+
+
+
+<a name="575709047"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575709047" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575709047">(Feb 25 2026 at 07:55)</a>:</h4>
+<p>Ah, it seems that I am not quite there - the dimension map does not commute with <code>range</code>... which is just as it is - for example, mapping two dimensions to the same value corresponds then to taking a diagonal, which loses values :( Everything else commutes just fine - the dimension map and the value map, the value map and the dimension set, composition and identity rules hold, obviously).</p>
+<p>I suppose my only option is to make two separate BNFs. Would I be able to choose which one to use in the type definitions downstream, in some way?</p>
+
+
+
+<a name="575731188"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575731188" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575731188">(Feb 25 2026 at 09:50)</a>:</h4>
+<p>Each type can be only associated with one BNF structure. But maybe I'm misunderstanding what you are trying to achieve. Can you post your datatype that you are trying to construct?</p>
+
+
+
+<a name="575801699"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575801699" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575801699">(Feb 25 2026 at 15:28)</a>:</h4>
+<p>The original file is long, contains additional restrictions and claims, so I've made an abridged version that omits the proofs of the true facts<br>
+<a href="/user_uploads/14278/hS2yHCEb8wmJbuGavAh4QZh0/ValsetAbridged.thy">ValsetAbridged.thy</a><br>
+the claim "vrange_idem" at the bottom is untrue, but it is the lemma we would need to be true if we were to prove that "bnf_map" is a natural transformation in its second argument. The rest of the laws are satisfied.</p>
+
+
+
+<a name="575801927"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575801927" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575801927">(Feb 25 2026 at 15:29)</a>:</h4>
+<p>I suppose I only really need to recurse in the first type argument, so I could just limit myself to that :) it is somewhat unsatisfying, but such is it.</p>
+
+
+
+<a name="575811765"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575811765" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Dmitriy Traytel <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575811765">(Feb 25 2026 at 16:08)</a>:</h4>
+<p>Limiting yourself to a BNF in 'a is plausible if that is what your application requires. I had a quick look at the theory and wondered if <code>vrange</code> is the right notion. I.e., should you restrict your attention to only these 'c elements that are in the range of some mapping M whose domain is contained in the explicit <code>max_dims</code> bound? (Not sure if this helps with the naturality in 'c though.)</p>
+
+
+
+<a name="575818069"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575818069" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575818069">(Feb 25 2026 at 16:32)</a>:</h4>
+<p>I'm pretty sure vrange is the only definition that satisfies congruence and naturality for <code>map_val</code>. Congruence says the set has to be at least as large as vrange, and naturality says it has to be at least as small. In a philosophical sense, those are indeed the values of 'c that the mapping contains!</p>
+
+
+
+<a name="575822994"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/575822994" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#575822994">(Feb 25 2026 at 16:53)</a>:</h4>
+<blockquote>
+<p>naturality says it has to be at least as small</p>
+</blockquote>
+<p>e.g. have <code>vrange vsU = UNIV</code>, then for any set2 for which <code>set2 (map_val f vsU) = f `` set2 vsU</code>, we have <code>set2 (map_val f vsU) = vrange (map_val f vsU)</code>, now observe that for any vs, <code>typedef t = {vrange vs}</code> implies <code>vs = map_val Rep_t (map_val Abs_t  vs)</code> and <code>vrange (map_val Abs_t vs) = UNIV</code>.</p>
+
+
+
+<a name="576839667"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/BNF%20for%20%28%27a%20%3D%3E%20%27b%29%20%3D%3E%20%27c%20with%20live%20%27a%2C%20%27c%20-%20possible%3F/near/576839667" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/BNF.20for.20.28.27a.20.3D.3E.20.27b.29.20.3D.3E.20.27c.20with.20live.20.27a.2C.20.27c.20-.20possible.3F.html#576839667">(Mar 02 2026 at 22:28)</a>:</h4>
+<p>Unfortunately, after a couple of days of struggling with relator and trying to define alternative notions of map (even dropping into <code>(('a, 'b) fmap \&lt;times&gt; 'c) set</code>, I'm starting to suspect it might not be possible. Would anyone have pointers as to how I ma convince myself of that? :) I'm unfortunately only passingly familiar with CT</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

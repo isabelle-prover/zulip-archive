@@ -1,0 +1,222 @@
+<html>
+<head><meta charset="utf-8"><title>Caching theorems · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html">Caching theorems</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="580719695"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580719695" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580719695">(Mar 20 2026 at 18:01)</a>:</h4>
+<p>Every time I want to update a comment, Isabelle/jEdit seems to check the whole proof script. Similarly, when I reopen a session, it checks every file, even though nothing has changed since a previous session. Is there a way to get isabelle to cache theorems in case (2), if not case (1)?</p>
+
+
+
+<a name="580727511"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580727511" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580727511">(Mar 20 2026 at 18:51)</a>:</h4>
+<p>The normal way is to have sessions for the parts you do not touch anymore (like HOL): the state is dumped and reloaded instead of rerunning everything. But when it is dumped, you cannot change the state anymore.</p>
+
+
+
+<a name="580727851"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580727851" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580727851">(Mar 20 2026 at 18:54)</a>:</h4>
+<p>Some hints:<br>
+Regarding 1), a partial solution on older hardware might be to disable continuous checking whilst editing documentation. I don't think you can do much better as it is difficult to decide whether your edits further up invalidate subsequent proofs. Splitting your development into smaller files might also help in certain situations.<br>
+Regarding 2), initiate an isabelle project using <code>mkroot</code>, specify the dependencies in the <code>ROOT</code> file, then build its dependencies only once, e.g. invoke <code>isabelle jedit -R &lt;your_session_name&gt;</code>. Check the Isabelle system manual or ROOT files in the AFP/Isabelle distribution for examples.</p>
+
+
+
+<a name="580728064"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580728064" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580728064">(Mar 20 2026 at 18:55)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Caching.20theorems/near/580727511">said</a>:</p>
+<blockquote>
+<p>have sessions</p>
+</blockquote>
+<p>could you elaborate on what it means to "have a session for the parts you don't touch?". If this is in the manual, where should I be looking?</p>
+
+
+
+<a name="580728458"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580728458" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580728458">(Mar 20 2026 at 18:58)</a>:</h4>
+<p><a href="https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/system.pdf">https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/system.pdf</a>, chapter 2</p>
+
+
+
+<a name="580728540"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580728540" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580728540">(Mar 20 2026 at 18:59)</a>:</h4>
+<p>thanks! I'll take a look. (I'll try to dig through the manual before asking a question like this, sorry about that)</p>
+
+
+
+<a name="580728630"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580728630" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580728630">(Mar 20 2026 at 19:00)</a>:</h4>
+<p>But the manual is not that useful for the big picture</p>
+
+
+
+<a name="580728687"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580728687" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580728687">(Mar 20 2026 at 19:00)</a>:</h4>
+<p>In any case, so I can be more precise when I ask something</p>
+
+
+
+<a name="580729095"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729095" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729095">(Mar 20 2026 at 19:03)</a>:</h4>
+<p>The idea is: </p>
+<p>1. split your theories in groups. Let's call them A, B, C (this can change) over time<br>
+  2. create your sessions (see the manual for the details), but you basically say for all your theories if they belong to A, B, or C<br>
+  3. Now (before you start Isabelle!), you decide on what you are going to work (usually the latest, C). So you start Isabelle with <code>-R C</code> as <span class="user-mention" data-user-id="433149">@Maximilian Schäffeler</span> suggested. You can also set the base session in some jEdit panel. But: you cannot touch A and B.<br>
+  4. Sometimes you will want to work on everything, then you to <code>-R A</code> and work on everything (useful for refactoring / moving theorems).</p>
+
+
+
+<a name="580729219"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729219" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729219">(Mar 20 2026 at 19:04)</a>:</h4>
+<p>are we assuming a dependency graph between A, B and C?</p>
+
+
+
+<a name="580729267"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729267" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729267">(Mar 20 2026 at 19:04)</a>:</h4>
+<p>HOL -&gt; A -&gt; B -&gt; C</p>
+
+
+
+<a name="580729319"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729319" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729319">(Mar 20 2026 at 19:05)</a>:</h4>
+<p>ah, ok, that clears it up</p>
+
+
+
+<a name="580729372"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729372" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729372">(Mar 20 2026 at 19:05)</a>:</h4>
+<p>can you not spawn 2 instances of <code>isabelle</code>? One with A and one with C?</p>
+
+
+
+<a name="580729418"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729418" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729418">(Mar 20 2026 at 19:05)</a>:</h4>
+<p>You can also do </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">A</span><span class="w"> </span><span class="o">-</span><span class="n">&gt;</span><span class="w"> </span><span class="n">B</span>
+<span class="n">A</span><span class="w"> </span><span class="o">-</span><span class="n">&gt;</span><span class="w"> </span><span class="n">C</span>
+</code></pre></div>
+
+
+
+<a name="580729514"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729514" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729514">(Mar 20 2026 at 19:06)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Caching.20theorems/near/580729372">said</a>:</p>
+<blockquote>
+<p>can you not spawn 2 instances of <code>isabelle</code>? One with A and one with C?</p>
+</blockquote>
+<p>you can do that, but the one with C will not be updated if you change A</p>
+
+
+
+<a name="580729563"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729563" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729563">(Mar 20 2026 at 19:06)</a>:</h4>
+<p>(it uses the dumped state, not the live state)</p>
+
+
+
+<a name="580729600"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729600" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729600">(Mar 20 2026 at 19:06)</a>:</h4>
+<p>when you say <code>A -&gt; B</code> or <code>A -&gt; C</code>, are you talking about in the command line flags?</p>
+
+
+
+<a name="580729681"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729681" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729681">(Mar 20 2026 at 19:07)</a>:</h4>
+<p>no, about the dependency</p>
+
+
+
+<a name="580729711"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729711" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729711">(Mar 20 2026 at 19:07)</a>:</h4>
+<p>oh, for the example</p>
+
+
+
+<a name="580729723"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729723" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729723">(Mar 20 2026 at 19:07)</a>:</h4>
+<p>got it <span aria-label="thumbs up" class="emoji emoji-1f44d" role="img" title="thumbs up">:thumbs_up:</span></p>
+
+
+
+<a name="580729900"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729900" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729900">(Mar 20 2026 at 19:08)</a>:</h4>
+<p><a href="https://www.isa-afp.org/browser_info/current/AFP/Show/session_graph.pdf">https://www.isa-afp.org/browser_info/current/AFP/Show/session_graph.pdf</a></p>
+
+
+
+<a name="580729922"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580729922" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580729922">(Mar 20 2026 at 19:08)</a>:</h4>
+<p>here you can see a real session graph</p>
+
+
+
+<a name="580730004"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730004" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730004">(Mar 20 2026 at 19:09)</a>:</h4>
+<p>the <code>[...]</code> are sessions</p>
+
+
+
+<a name="580730021"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730021" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730021">(Mar 20 2026 at 19:09)</a>:</h4>
+<p>the others are theories</p>
+
+
+
+<a name="580730171"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730171" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730171">(Mar 20 2026 at 19:10)</a>:</h4>
+<p>I see. I checked the isabelle system manual, and it doesn't seem to specify how this graph is made. Is it automatic?</p>
+
+
+
+<a name="580730254"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730254" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730254">(Mar 20 2026 at 19:11)</a>:</h4>
+<p>(i.e. how is this graph made)</p>
+
+
+
+<a name="580730255"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730255" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730255">(Mar 20 2026 at 19:11)</a>:</h4>
+<p>It is automatically generated when you produce the documentation</p>
+
+
+
+<a name="580730270"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730270" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730270">(Mar 20 2026 at 19:11)</a>:</h4>
+<p>oh</p>
+
+
+
+<a name="580730275"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730275" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730275">(Mar 20 2026 at 19:11)</a>:</h4>
+<p>neat</p>
+
+
+
+<a name="580730467"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730467" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730467">(Mar 20 2026 at 19:12)</a>:</h4>
+<p>Oh and one suggestion for the root files: copy-paste them from another ROOT file in the AFP</p>
+
+
+
+<a name="580730542"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730542" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730542">(Mar 20 2026 at 19:13)</a>:</h4>
+<p>starring this immediately tysm</p>
+
+
+
+<a name="580730561"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Caching%20theorems/near/580730561" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Caching.20theorems.html#580730561">(Mar 20 2026 at 19:13)</a>:</h4>
+<p>the syntax is not tricky but very hard to remember, because you never change a root file</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

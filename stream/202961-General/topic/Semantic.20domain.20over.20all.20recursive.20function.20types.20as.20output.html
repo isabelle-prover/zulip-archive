@@ -1,0 +1,29 @@
+<html>
+<head><meta charset="utf-8"><title>Semantic domain over all recursive function types as output · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Semantic.20domain.20over.20all.20recursive.20function.20types.20as.20output.html">Semantic domain over all recursive function types as output</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="590837869"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Semantic%20domain%20over%20all%20recursive%20function%20types%20as%20output/near/590837869" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jun Xu <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Semantic.20domain.20over.20all.20recursive.20function.20types.20as.20output.html#590837869">(Apr 25 2026 at 04:58)</a>:</h4>
+<p>Hi all,<br>
+I have a small programming language with a type system. The types are encoded as a datatype Typ := TNum | TBool | TFn Typ Typ. I wish to assign denotational semantic domains to each (recursive) type.<br>
+I have a data structure "'a lattice" where the underlying set has elements of type 'a. Hence, the assignment of semantic domains would be "nat lattice" for TNum, or "bool lattice" for TBool. Now a problem arises: I cannot define an Isabelle function "semantic_domain:: Typ -&gt; _" that does this, because "nat lattice" and "bool lattice" are different types and are rejected by Isabelle.<br>
+There is a workaround for this, which is creating a corresponding value datatype Val := VNum nat | VBool bool | VFn Val =&gt; Val, then make "semantic_domain:: Typ -&gt; Val lattice". Then I will have to distinguish different kinds of Val lattice.<br>
+My question is: is there an alternative way that does not involve creating a Val datatype?</p>
+
+
+
+<a name="590855449"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Semantic%20domain%20over%20all%20recursive%20function%20types%20as%20output/near/590855449" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Semantic.20domain.20over.20all.20recursive.20function.20types.20as.20output.html#590855449">(Apr 25 2026 at 09:34)</a>:</h4>
+<p>Ran into the same issue! No, Isabelle doesn't have that. You can either define an Any type like you said here, and/or have projection functions to different concrete types which are only going to be defined for specific Typ. (You could also have a polymorphic constant Typ =&gt; 'a lattice with each overload only defined for one Typ)</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

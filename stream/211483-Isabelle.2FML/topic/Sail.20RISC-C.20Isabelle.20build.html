@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Sail RISC-C Isabelle build · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sail.20RISC-C.20Isabelle.20build.html">Sail RISC-C Isabelle build</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="586057471"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Sail%20RISC-C%20Isabelle%20build/near/586057471" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Changyang Zeng <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sail.20RISC-C.20Isabelle.20build.html#586057471">(Apr 17 2026 at 07:02)</a>:</h4>
+<p>Hi users of Isabelle,</p>
+<p>I am building Isabelle theories from the Sail RISC-V  model here: <a href="https://github.com/riscv/sail-riscv">https://github.com/riscv/sail-riscv</a>.</p>
+<p>It seems to cause memory leak when building this file: Rc64d.thy, which has more than 158k lines of code,  3232 definitions. The build on this file has been running for almost two days on an  AMD EPYC 7542 32-Core Processor. <br>
+Current resource usage:</p>
+<ul>
+<li>CPU: 468% (~4.7 cores busy)</li>
+<li>Memory: 384,135,076 KB RSS (~366.3 GiB)</li>
+<li>Virtual memory: 404,424,516 KB VSZ (~385.7 GiB)</li>
+<li>Percent of RAM: 72.7%</li>
+<li>Elapsed time: 200,264s (~55.6 hours)</li>
+<li>Start time: Tue Apr 14 16:04:14 2026</li>
+</ul>
+<p>Machine-wide memory state at the same check:</p>
+<ul>
+<li>Total RAM: 503 GiB</li>
+<li>Used: 441 GiB</li>
+<li>Free: 1.6 GiB</li>
+<li>Available: 62 GiB</li>
+<li>Swap used: 257 GiB of 511 GiB</li>
+</ul>
+<p>A simple build on the first few definitions shows that loading this Rv64d_types.thy could take really long time that I can't predict.</p>
+<p>Does anyone have experiences on the Sail RISC-V  to Isabelle build? Or why Poly/ML is consuming so much memory? </p>
+<p>Thanks,<br>
+Changyang</p>
+
+
+
+<a name="586077626"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Sail%20RISC-C%20Isabelle%20build/near/586077626" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sail.20RISC-C.20Isabelle.20build.html#586077626">(Apr 17 2026 at 08:47)</a>:</h4>
+<p>I think the authors of the project will likely have experience building the project and be able to answer your question - did you contact them?</p>
+
+
+
+<a name="586203528"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Sail%20RISC-C%20Isabelle%20build/near/586203528" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Changyang Zeng <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sail.20RISC-C.20Isabelle.20build.html#586203528">(Apr 17 2026 at 19:42)</a>:</h4>
+<p>Not yet, I will reach out to them, thanks!</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

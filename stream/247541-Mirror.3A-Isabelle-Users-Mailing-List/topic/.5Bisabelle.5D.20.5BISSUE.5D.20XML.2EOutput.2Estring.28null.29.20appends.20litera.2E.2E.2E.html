@@ -1,0 +1,70 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [ISSUE] XML.Output.string(null) appends litera... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20XML.2EOutput.2Estring.28null.29.20appends.20litera.2E.2E.2E.html">[isabelle] [ISSUE] XML.Output.string(null) appends litera...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="585508495"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BISSUE%5D%20XML.Output.string%28null%29%20appends%20litera.../near/585508495" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20XML.2EOutput.2Estring.28null.29.20appends.20litera.2E.2E.2E.html#585508495">(Apr 14 2026 at 19:31)</a>:</h4>
+<p><strong>From:</strong> Bartosz Glowacki &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>I found an issue in XML.Output.string (src/Pure/PIDE/xml.scala, line ~195) where a null text value is appended literally as the four characters "null" instead of being safely ignored.</p>
+<p>The method contains a defensive null check, but the action taken is incorrect: builder ++= str with str == null calls Java's StringBuilder.append(null: String), which appends the ASCII characters n, u, l, l. The else branch that would normally HTML-escape the string is never reached.</p>
+<p>Call chain:<br>
+  XML.string_of_tree → XML.Output.text(s) → XML.Output.string(s)<br>
+  → str == null → builder ++= str → "null" appended to output</p>
+<p>This means any XML.Text node whose content is null (possible via Java interop or an ML prover malfunction) produces corrupt serialised output. This can corrupt protocol messages between the PIDE session manager and the ML prover or insert the literal word "null" into rendered proof output visible in editors (making developers wondering where did it come from with ctrl+f 'null' and no output).</p>
+<p>Minimal fix - in the null branch, do nothing instead of appending (xml.scala, line ~195):</p>
+<p>Patch is attached to this email.</p>
+<p>The else branch already produces correct output for non-null strings. For null, the correct output is nothing - an empty text node contributes zero characters. Skipping the append entirely restores that contract.</p>
+<p>I have a test function that confirms this issue:</p>
+<p>def test_xml_null_string_output(): Boolean = {<br>
+    val result = XML.string_of_tree(XML.Text(null))<br>
+    result == "null"<br>
+  }</p>
+<p>Logs from manual testing:</p>
+<p>// Unpatched behavior ("null" string appended):<br>
+bartek1301@BGlowacki:~$ isabelle scala -e 'println("OUTPUT: [" + isabelle.XML.string_of_tree(isabelle.XML.Text(null)) + "]")'<br>
+OUTPUT: [null]</p>
+<p>// Fixed behavior (Missing value safely ignored):<br>
+bartek1301@BGlowacki:~$ isabelle scala -e 'println("OUTPUT: [" + isabelle.XML.string_of_tree(isabelle.XML.Text(null)) + "]")'<br>
+OUTPUT: []</p>
+<p>I am happy to provide the full test code or any additional information. This was found as part of my dissertation work on frontend testing of the Isabelle platform.</p>
+<p>Kindest regards,<br>
+Bartosz Glowacki<br>
+King's College London</p>
+<p><a href="/user_uploads/14278/5wOEDKfhWoZWyxAiCLarlbfy/0001-Fix-xml-null-flaw.patch">0001-Fix-xml-null-flaw.patch</a></p>
+
+
+
+<a name="586087077"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BISSUE%5D%20XML.Output.string%28null%29%20appends%20litera.../near/586087077" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20XML.2EOutput.2Estring.28null.29.20appends.20litera.2E.2E.2E.html#586087077">(Apr 17 2026 at 09:31)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 14/04/2026 21:24, Bartosz Glowacki (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I found an issue in XML.Output.string (src/Pure/PIDE/xml.scala, line ~195) <br>
+where a null text value is appended literally as the four characters "null" <br>
+instead of being safely ignored.</p>
+</blockquote>
+<p>I am not sure what you mean by "safely ignored". That is a very bad approach <br>
+to work with nulls.</p>
+<p>As an exercise: look up the point in time where I introduced the != null <br>
+check, and try to understand what I was up to at that historical context. Then <br>
+we can continue the discussion.</p>
+<p>(Any change of the Isabelle sources need to be explained in terms of the <br>
+history that lead to the current status-quo).</p>
+<blockquote>
+<p>Minimal fix</p>
+</blockquote>
+<p>Again the dirty word ...</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

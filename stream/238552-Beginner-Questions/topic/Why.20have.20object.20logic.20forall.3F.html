@@ -1,0 +1,56 @@
+<html>
+<head><meta charset="utf-8"><title>Why have object logic forall? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F.html">Why have object logic forall?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="590329614"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20have%20object%20logic%20forall%3F/near/590329614" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F.html#590329614">(Apr 22 2026 at 23:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233154">Kevin Kappelmann</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/584961563">said</a>:</p>
+<blockquote>
+<p>Meta-level forall and implication are typically nicer to work with in Isar (Isabelle's structured proof language) and most proof methods. Rule of thumb: use them in theorem statements whenever you can.</p>
+</blockquote>
+<p>So meta forall is the way to go in theorem statements. </p>
+<p>Consider this contrived example (that I wish to prove using the well-ordering property)</p>
+<p><code>theorem induction: "⟦ P(0::nat); (∀ n :: nat. P(n) ⟶  P(n + 1)) ⟧ ⟹ (∀n. P(n))"</code></p>
+<p>why is it better to use metalogical forall than that of the object logic? in fact, why make the distinction? if the metalogic is HOL, is the object logic Pure?</p>
+
+
+
+<a name="590355494"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20have%20object%20logic%20forall%3F/near/590355494" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F.html#590355494">(Apr 23 2026 at 04:21)</a>:</h4>
+<p>Use the metalogical forall as much as possible</p>
+
+
+
+<a name="590355561"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20have%20object%20logic%20forall%3F/near/590355561" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F.html#590355561">(Apr 23 2026 at 04:22)</a>:</h4>
+<p>Basically, the only exception are definitions of invariants and properties, because using type bool makes those properties easier to compose</p>
+
+
+
+<a name="590411218"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20have%20object%20logic%20forall%3F/near/590411218" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F.html#590411218">(Apr 23 2026 at 09:50)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F/near/590329614">said</a>:</p>
+<blockquote>
+<p>why is it better to use metalogical forall than that of the object logic? in fact, why make the distinction? if the metalogic is HOL, is the object logic Pure?</p>
+</blockquote>
+<p>(1) Because many tools work with meta level quantifiers and implications and not HOL's object logic quantifiers and implications.<br>
+(2) Because there is a meta logic (Isabelle/Pure) which has quantifiers and implications and there are several object logics (Isabelle/HOL, Isabelle/FOL, etc.) with their own logical operators separate from the meta logic ones (e.g. the quantifiers in Isabelle/FOL only quantify first-order entities).<br>
+(3) Pure is the meta logic, HOL is one of the object logics.</p>
+
+
+
+<a name="590411714"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Why%20have%20object%20logic%20forall%3F/near/590411714" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Why.20have.20object.20logic.20forall.3F.html#590411714">(Apr 23 2026 at 09:52)</a>:</h4>
+<p>yeah I flipped (3) by mistake</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

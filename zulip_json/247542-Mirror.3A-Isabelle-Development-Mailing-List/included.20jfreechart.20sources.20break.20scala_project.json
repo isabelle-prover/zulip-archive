@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;</p>\n<p>The recently updated jfreechart component (added in cc6e160130ab) breaks <br>\nscala_project: Including the java sources via build.props is bad, since <br>\ntransitive dependencies (javax.servlet:servlet-api) are missing. This <br>\nmakes the generated scala_project no longer build properly (and thus <br>\nIntelliJ IDEA cannot understand our Isabelle/Scala sources).</p>\n<p>Fabian</p>",
+        "id": 585345960,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1776150679
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 14/04/2026 09:11, Fabian Huch wrote:</p>\n<blockquote>\n<p>The recently updated jfreechart component (added in cc6e160130ab) breaks <br>\nscala_project: Including the java sources via build.props is bad, since <br>\ntransitive dependencies (javax.servlet:servlet-api) are missing. This makes <br>\nthe generated scala_project no longer build properly (and thus IntelliJ IDEA <br>\ncannot understand our Isabelle/Scala sources).</p>\n</blockquote>\n<p>I have reverted that here:</p>\n<p>changeset:   84426:26f651ac1f28<br>\nuser:        wenzelm<br>\ndate:        Sat Apr 18 12:06:27 2026 +0200<br>\nfiles:       src/Pure/Admin/component_jfreechart.scala<br>\ndescription:<br>\nbacked out changeset c5c135ff3726: resulting scala_project lacks build <br>\ndependencies and thus may cause problems in IntelliJ IDEA;</p>\n<p>The purpose was actually to get formal sources in IntelliJ IDEA: this worked <br>\nto the usual extent, without building the project in the IDE. (The latter <br>\nsometimes works and sometimes doesn't, depending on the weather conditions of <br>\nthe latest IntelliJ release. Or maybe I don't understand it sufficiently well.)</p>\n<p>Makarius</p>",
+        "id": 588719166,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1776804231
+    },
+    {
+        "content": "<p><strong>From:</strong> Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;</p>\n<p>On 4/21/26 22:42, Makarius wrote:</p>\n<blockquote>\n<p>On 14/04/2026 09:11, Fabian Huch wrote:</p>\n<blockquote>\n<p>The recently updated jfreechart component (added in cc6e160130ab) <br>\nbreaks scala_project: Including the java sources via build.props is <br>\nbad, since transitive dependencies (javax.servlet:servlet-api) are <br>\nmissing. This makes the generated scala_project no longer build <br>\nproperly (and thus IntelliJ IDEA cannot understand our Isabelle/Scala <br>\nsources).</p>\n</blockquote>\n<p>I have reverted that here:</p>\n<p>changeset:   84426:26f651ac1f28<br>\nuser:        wenzelm<br>\ndate:        Sat Apr 18 12:06:27 2026 +0200<br>\nfiles:       src/Pure/Admin/component_jfreechart.scala<br>\ndescription:<br>\nbacked out changeset c5c135ff3726: resulting scala_project lacks build <br>\ndependencies and thus may cause problems in IntelliJ IDEA; <br>\nThanks.</p>\n<p>The purpose was actually to get formal sources in IntelliJ IDEA: this <br>\nworked to the usual extent, without building the project in the IDE. <br>\n(The latter sometimes works and sometimes doesn't, depending on the <br>\nweather conditions of the latest IntelliJ release. Or maybe I don't <br>\nunderstand it sufficiently well.)</p>\n</blockquote>\n<p>In my experience, the important part is that the build via selected <br>\nbuild tool works (e.g., 'mvn install'), not the IntelliJ 'build' action. <br>\nI find maven to be very reliable for that (once the appropriate java <br>\nversion configured).</p>\n<p>Fabian</p>",
+        "id": 590123567,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1776842091
+    }
+]

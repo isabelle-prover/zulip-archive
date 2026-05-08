@@ -1,0 +1,204 @@
+<html>
+<head><meta charset="utf-8"><title>✔ How can I shorten this simple Isar proof? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html">✔ How can I shorten this simple Isar proof?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="584957292"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584957292" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584957292">(Apr 11 2026 at 14:38)</a>:</h4>
+<p>Consider this proof:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"∀x :: nat. x &gt; 3 ⟶ x &gt; 2"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"x &gt; 3 ⟶ x &gt; 2"</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"x &gt; 3"</span>
+<span class="w">    </span><span class="k">have</span><span class="w"> </span><span class="s">"(3 :: nat) &gt; 2"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"x &gt; 2"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>And never mind that "auto" could prove the entire lemma, since really I'm asking about the block structure here.  The proof seems too verbose, since <code>fix x :: nat</code> and <code>show "x &gt; 3 ⟶ x &gt; 2"</code> and <code>assume a: "x &gt; 3"</code> all duplicate text that appear in the lemma statement.  Is there some way to tell Isabelle to apply these automatically?</p>
+<p>By the way, I know that if I omit ∀ in the lemma statement I can get this shorter proof:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"(x :: nat) &gt; 3 ⟶ x &gt; 2"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"x &gt; 3"</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"(3 :: nat) &gt; 2"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"x &gt; 2"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>However that still seems too verbose, since I must explicitly write "assume".  (And maybe I'd prefer to have ∀ in the lemma statement anyway.)</p>
+
+
+
+<a name="584957599"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584957599" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584957599">(Apr 11 2026 at 14:43)</a>:</h4>
+<p>Aha, two minutes after posting this I realized I can write this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"x &gt; 3"</span><span class="w"> </span><span class="kp">shows</span><span class="w"> </span><span class="s">"x &gt; 2"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"(3 :: nat) &gt; 2"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"x &gt; 2"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>Is that the best/only way to shorten the proof?</p>
+
+
+
+<a name="584958600"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584958600" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584958600">(Apr 11 2026 at 14:56)</a>:</h4>
+<p>Also, I noticed that if I write the last form above with "fixes" then I end up with a lemma with meta-level implication (<code>?x &gt; 3 ⟹ ?x &gt; 2</code>) rather than object-level implication (<code>?x &gt; 3 ⟶ ?x &gt; 2</code>).  Presumably this doesn't matter since they are logically equivalent, but I'm still curious whether there is a compact way to write the proof that will produce the object-level version.</p>
+
+
+
+<a name="584958616"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584958616" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584958616">(Apr 11 2026 at 14:56)</a>:</h4>
+<p><code>lemma "(x :: nat) &gt; 3 ⟹ x &gt; 2" by simp</code></p>
+
+
+
+<a name="584958667"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584958667" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584958667">(Apr 11 2026 at 14:56)</a>:</h4>
+<p>Kevin: as I wrote above "never mind that "auto" could prove the entire lemma, since really I'm asking about the block structure here".</p>
+
+
+
+<a name="584958817"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584958817" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584958817">(Apr 11 2026 at 14:58)</a>:</h4>
+<p>I don't understand how you further want to "shorten" the proof then.</p>
+
+
+
+<a name="584959276"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584959276" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584959276">(Apr 11 2026 at 15:05)</a>:</h4>
+<p>This is a contrived example - I'm actually working on a more complex proof that has a similar block structure, and which "auto" or "simp" cannot solve automatically.  It's not worth presenting the details of that proof here.</p>
+<p>I'll rephrase my question as follows.  Suppose that I have a proof of this form:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="s">"∀x :: nat. &lt;P&gt; ⟶ &lt;Q&gt;"</span>
+<span class="k">proof</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"&lt;P&gt; ⟶ &lt;Q&gt;"</span>
+<span class="w">  </span><span class="k">proof</span>
+<span class="w">    </span><span class="k">assume</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"&lt;P&gt;"</span>
+<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="ow">...</span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"&lt;Q&gt;"</span>
+<span class="w">  </span><span class="k">qed</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>How can I write the proof without repeating &lt;P&gt; and &lt;Q&gt; so many times?</p>
+<p>As I wrote above, I realized I can write</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">a</span><span class="o">:</span><span class="w"> </span><span class="s">"&lt;P&gt;"</span><span class="w"> </span><span class="kp">shows</span><span class="w"> </span><span class="s">"&lt;Q&gt;"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="ow">...</span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"&lt;Q&gt;"</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>That's shorter, which is nice.  Presumably this is the best way, then?</p>
+
+
+
+<a name="584959434"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584959434" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584959434">(Apr 11 2026 at 15:07)</a>:</h4>
+<p>Yes, use meta-level connectives for theorem statements.<br>
+And you can write <code>show ?thesis</code> instead of repeating your shows statement.<br>
+You can also use <code>(is "&lt;some patterns&gt;")</code> next to your assumptions and conclusion.</p>
+
+
+
+<a name="584959714"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584959714" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584959714">(Apr 11 2026 at 15:12)</a>:</h4>
+<p>Thanks for the suggestions.  Regarding meta-level connectives, I believe you are saying that theorem statements should generally use <code>⋀</code> and <code>⟹</code> rather than '∀' and '⟶'.  Can you elaborate on this a bit?  I'm not sure why/when I might prefer one form over the other.  Will built-in proof methods sometimes work better with the meta-level connectives?</p>
+
+
+
+<a name="584961563"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584961563" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584961563">(Apr 11 2026 at 15:40)</a>:</h4>
+<p>Meta-level forall and implication are typically nicer to work with in Isar (Isabelle's structured proof language) and most proof methods. Rule of thumb: use them in theorem statements whenever you can.</p>
+
+
+
+<a name="584963384"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584963384" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584963384">(Apr 11 2026 at 16:07)</a>:</h4>
+<p>OK, thanks for the advice.</p>
+
+
+
+<a name="584963391"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/584963391" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#584963391">(Apr 11 2026 at 16:07)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1054129">Adam Dingle</span> has marked this topic as resolved.</p>
+
+
+
+<a name="588682585"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/588682585" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#588682585">(Apr 21 2026 at 17:28)</a>:</h4>
+<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>
+
+
+
+<a name="590254545"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/590254545" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#590254545">(Apr 22 2026 at 16:14)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1033557">Alex Mobius</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/588682585">said</a>:</p>
+<blockquote>
+<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>
+</blockquote>
+<p>There is a nice rule combining these two as well: <code>(intro strip)</code>.</p>
+
+
+
+<a name="590305956"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/590305956" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#590305956">(Apr 22 2026 at 21:18)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="655321">David Wang</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590254545">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="1033557">Alex Mobius</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/588682585">said</a>:</p>
+<blockquote>
+<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>
+</blockquote>
+<p>There is a nice rule combining these two as well: <code>(intro strip)</code>.</p>
+</blockquote>
+<p>Is it specifically those two rules its introducing, or does it do more? How can I check? (Could also be useful for the meta tips threads I'm trying to prop up in <a href="#narrow/channel/202961-General/topic/.5Bmeta.5D.20an.20advice.20channel.20for.20tips.2Ftricks.20we.20may.20stumble.20upon/with/583517672">#**General**</a> )</p>
+
+
+
+<a name="590355573"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/590355573" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#590355573">(Apr 23 2026 at 04:22)</a>:</h4>
+<p><code>thm strip</code></p>
+
+
+
+<a name="590411405"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/590411405" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#590411405">(Apr 23 2026 at 09:51)</a>:</h4>
+<p>oh oops lol I shoulda checked that</p>
+
+
+
+<a name="590450605"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/590450605" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#590450605">(Apr 23 2026 at 12:10)</a>:</h4>
+<p><code>proof safe</code> is also a very common pattern.</p>
+
+
+
+<a name="590573647"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20How%20can%20I%20shorten%20this%20simple%20Isar%20proof%3F/near/590573647" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F.html#590573647">(Apr 23 2026 at 21:45)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590305956">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="655321">David Wang</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590254545">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="1033557">Alex Mobius</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/588682585">said</a>:</p>
+<blockquote>
+<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>
+</blockquote>
+<p>There is a nice rule combining these two as well: <code>(intro strip)</code>.</p>
+</blockquote>
+<p>Is it specifically those two rules its introducing, or does it do more? How can I check? (Could also be useful for the meta tips threads I'm trying to prop up in <a href="#narrow/channel/202961-General/topic/.5Bmeta.5D.20an.20advice.20channel.20for.20tips.2Ftricks.20we.20may.20stumble.20upon/with/583517672">#**General**</a> )</p>
+</blockquote>
+<p>Good idea.</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

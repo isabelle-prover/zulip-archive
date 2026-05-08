@@ -1,0 +1,56 @@
+<html>
+<head><meta charset="utf-8"><title>✔ when defining HOL, how can I cause λx.x to be a formula? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20when.20defining.20HOL.2C.20how.20can.20I.20cause.20.CE.BBx.2Ex.20to.20be.20a.20formula.3F.html">✔ when defining HOL, how can I cause λx.x to be a formula?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="579543574"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20when%20defining%20HOL%2C%20how%20can%20I%20cause%20%CE%BBx.x%20to%20be%20a%20formula%3F/near/579543574" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20when.20defining.20HOL.2C.20how.20can.20I.20cause.20.CE.BBx.2Ex.20to.20be.20a.20formula.3F.html#579543574">(Mar 15 2026 at 12:15)</a>:</h4>
+<p>Suppose that I want to define HOL as a theory in Pure.  I might begin by defining the object-level equality operator = with some associated axioms.  Then as a next step I could define True as (λx.x = λx.x).</p>
+<p>Here's my attempt to do that:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">hello</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Pure</span>
+
+<span class="k">begin</span>
+
+<span class="k">typedecl</span><span class="w"> </span><span class="n">formula</span>
+
+<span class="k">judgment</span><span class="w"> </span><span class="n">trueprop</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"formula ⇒ prop"</span><span class="w">  </span><span class="o">(</span><span class="s">‹_›</span><span class="w"> </span><span class="n">5</span><span class="o">)</span>
+
+<span class="k">axiomatization</span><span class="w"> </span><span class="n">eq</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"formula ⇒ formula ⇒ formula"</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">‹=›</span><span class="w"> </span><span class="n">50</span><span class="o">)</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="n">refl</span><span class="o">:</span><span class="w"> </span><span class="s">"t = t"</span><span class="w"> </span><span class="kp">and</span>
+<span class="w">  </span><span class="n">subst</span><span class="o">:</span><span class="w"> </span><span class="s">"s = t ⟹ P s = P t"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">true</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">formula</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"true ≡ ((λx. x) = (λx. x))"</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>However, the definition of true above fails to type check.  That's because = expects two formulas, yet (λx. x) isn't a formula - it's a pure term of type 'a -&gt; 'a.</p>
+<p>So somehow I need λx. x to have type formula, but I don't see how to achieve that.  HOL/HOL.thy has</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">True</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">bool</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"True ≡ ((λx::bool. x) = (λx. x))"</span>
+</code></pre></div>
+<p>so it works there, but doesn't in my minimal example.  What am I missing?</p>
+
+
+
+<a name="579544461"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20when%20defining%20HOL%2C%20how%20can%20I%20cause%20%CE%BBx.x%20to%20be%20a%20formula%3F/near/579544461" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20when.20defining.20HOL.2C.20how.20can.20I.20cause.20.CE.BBx.2Ex.20to.20be.20a.20formula.3F.html#579544461">(Mar 15 2026 at 12:28)</a>:</h4>
+<p>I figured out my own mistake: eq should have type 'a =&gt; 'a =&gt; formula, not formula =&gt; formula =&gt; formula.</p>
+
+
+
+<a name="579544469"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20when%20defining%20HOL%2C%20how%20can%20I%20cause%20%CE%BBx.x%20to%20be%20a%20formula%3F/near/579544469" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20when.20defining.20HOL.2C.20how.20can.20I.20cause.20.CE.BBx.2Ex.20to.20be.20a.20formula.3F.html#579544469">(Mar 15 2026 at 12:28)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1054129">Adam Dingle</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

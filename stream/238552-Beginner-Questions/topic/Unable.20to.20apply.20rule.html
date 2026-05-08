@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>Unable to apply rule · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Unable.20to.20apply.20rule.html">Unable to apply rule</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="592655109"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Unable%20to%20apply%20rule/near/592655109" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> sadra <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Unable.20to.20apply.20rule.html#592655109">(May 04 2026 at 06:45)</a>:</h4>
+<p>Hi I was doing Exercise 12.8 from Concrete Semantics. And I get stuck because I think i should be able to apply a rule but isablle fails to apply proof method</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Ch12</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="s">"HOL-IMP.Hoare_Examples"</span>
+
+<span class="k">begin</span>
+
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">NoPost</span><span class="o">:</span><span class="w"> </span><span class="s">"⊢ {P} c {λs. True}"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">arbitrary</span><span class="o">:</span><span class="w"> </span><span class="n">P</span><span class="o">)</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">SKIP</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">   </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">strengthen_pre</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">P</span><span class="w">  </span><span class="s">"λs. True"</span><span class="o">])</span>
+<span class="w">       </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">Skip</span><span class="o">)</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">Assign</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="n">x2</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">     </span><span class="kp">apply</span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">Assign'</span><span class="o">)</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="n">simp</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">Seq</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">    </span><span class="kp">apply</span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">Hoare.Seq</span><span class="o">)</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">If</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">    </span><span class="kp">apply</span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">Hoare.If</span><span class="o">)</span>
+<span class="w">    </span><span class="k">done</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="o">(</span><span class="n">While</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">)</span>
+<span class="w">  </span><span class="kt">thm</span><span class="w">  </span><span class="n">strengthen_pre</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="s">"λs. True"</span><span class="w"> </span><span class="s">"(WHILE b DO c)"</span><span class="w"> </span><span class="s">"λs. True"</span><span class="o">]</span>
+<span class="w">  </span><span class="k">thus</span><span class="w"> </span><span class="o">?</span><span class="k">case</span>
+<span class="w">    </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">strengthen_pre</span><span class="o">[</span><span class="n">of</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="s">"λs. True"</span><span class="w"> </span><span class="s">"(WHILE b DO c)"</span><span class="w"> </span><span class="s">"λs. True"</span><span class="o">])</span>
+<span class="w">    </span><span class="c">(*using conseq by metis*)</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>it occurs in the while case. I successfully apply the same rule earlier in the Skip Case and when I use thm to view the rule with arguments I supply I get <br>
+∀s. P s ⟶ True ⟹ ⊢ {λs. True} WHILE b DO c {λs. True} ⟹ ⊢ {P} WHILE b DO c {λs. True}<br>
+To me this looks like I should be able to get two new subgoals which are the premises of the rule</p>
+
+
+
+<a name="592678402"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Unable%20to%20apply%20rule/near/592678402" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Unable.20to.20apply.20rule.html#592678402">(May 04 2026 at 08:38)</a>:</h4>
+<p>If you change <code>thus</code> to <code>show</code>, rule application works. The <code>rule</code> method expects chained facts to match the premises of the rule to be applied. This is also discussed here: <code>https://stackoverflow.com/questions/67704281/fragile-rule-application-in-isabelle</code>.</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

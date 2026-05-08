@@ -1,0 +1,120 @@
+<html>
+<head><meta charset="utf-8"><title>✔ why can&#x27;t auto prove this statement, though blast can? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html">✔ why can&#x27;t auto prove this statement, though blast can?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="582401680"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582401680" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582401680">(Mar 29 2026 at 11:19)</a>:</h4>
+<p>Continuing my saga of proving facts about the naturals, in the middle of a proof I have this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="ow">...</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"x + (u + v) = z"</span><span class="w"> </span><span class="k">using</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"∃a. x + a = z"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">blast</span>
+<span class="w">  </span><span class="ow">...</span>
+</code></pre></div>
+<p>It works, but if I change "by blast" to "by auto" it fails.  That surprised me, since I thought that "auto" calls "blast".  Specifically, the reference manual says</p>
+<blockquote>
+<p><strong>auto</strong> combines classical reasoning with simplification. It is intended for situations where there are a lot of mostly trivial subgoals; it proves all the easy ones, leaving the ones it cannot prove. Occasionally, attempting to prove the hard ones may take a long time. The optional depth arguments in (auto m n) refer to its builtin classical reasoning procedures: m (default 4) is for blast, <strong>which is tried first</strong>...</p>
+</blockquote>
+<p>I thought maybe "auto" was failing because it searches by default to depth 4, but "blast" searches by default to depth 20.  However if I change "by blast" to "by (blast 4)" it still works, so a search depth of 4 should be adequate.</p>
+<p>So what am I missing?  Does "auto" not actually try "blast" as the documentation seems to say?</p>
+
+
+
+<a name="582402275"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582402275" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582402275">(Mar 29 2026 at 11:31)</a>:</h4>
+<p>One can't tell because your message does not include sufficient context. In particular, this works in Isabelle 2025-2: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+<span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">nat</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"x + (u + v) = z"</span><span class="w"> </span><span class="gr">sorry</span>
+<span class="w">  </span><span class="k">hence</span><span class="w"> </span><span class="s">"∃a. x + a = z"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="582402374"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582402374" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582402374">(Mar 29 2026 at 11:33)</a>:</h4>
+<p>In general: auto does more than blast. In particular, it uses the simplifier. So maybe you have a bad setup for the simplifier in your background theory.</p>
+
+
+
+<a name="582402613"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582402613" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582402613">(Mar 29 2026 at 11:37)</a>:</h4>
+<p>OK - I've attached my theory file.  If I change "by blast" to "by auto" in the last proof, it fails.</p>
+<p><a href="/user_uploads/14278/BgUkG54TYsYgqpmxz9Cu06YG/arith.thy">arith.thy</a></p>
+
+
+
+<a name="582402746"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582402746" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582402746">(Mar 29 2026 at 11:40)</a>:</h4>
+<p>Try <code>(auto simp del: add_assoc)</code></p>
+
+
+
+<a name="582403073"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582403073" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582403073">(Mar 29 2026 at 11:46)</a>:</h4>
+<p>Aha, I see - my associative simplification rule was causing trouble:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">theorem</span><span class="w"> </span><span class="n">add_assoc</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">"x + (y + z) = (x + y) + z"</span>
+<span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">induct</span><span class="w"> </span><span class="n">z</span><span class="o">)</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+<p>When I wrote that theorem, I wasn't sure whether to add "[simp]" or not.  Now I realize maybe that wasn't a great idea, since there are situations where this rewrite can be harmful.</p>
+<p>However, I'm still a bit puzzled as to why "auto" fails with this rule in place, because the documentation says that "blast is tried first".  I thought that "auto" would invoke "blast" <strong>before</strong> applying any rewrite rules.  But maybe I was wrong about that.</p>
+
+
+
+<a name="582403404"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582403404" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582403404">(Mar 29 2026 at 11:51)</a>:</h4>
+<p>You are misreading that part of the manual (and quoting it without sufficient context). The full context is:</p>
+<blockquote>
+<p>The optional depth arguments in (auto m n) refer to its builtin classical<br>
+reasoning procedures: m (default 4) is for blast, which is tried first...</p>
+</blockquote>
+<p>So "first" here just refers to its classical reasoning component. And indeed, that is true if you check the implementation (<code>Provers/clasimp.ML</code>): </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">mk_auto_tac</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="k">let</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">main_tac</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="n">Blast.depth_tac</span><span class="w"> </span><span class="n">ctxt</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="c">(* fast but can't use wrappers *)</span>
+<span class="w">      </span><span class="n">ORELSE'</span>
+<span class="w">      </span><span class="o">(</span><span class="n">CHANGED</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">nodup_depth_tac</span><span class="w"> </span><span class="o">(</span><span class="n">addss</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="n">n</span><span class="o">)</span><span class="n">;</span><span class="w">  </span><span class="c">(* slower but more general *)</span>
+<span class="w">  </span><span class="kp">in</span>
+<span class="w">    </span><span class="n">PARALLEL_ALLGOALS</span><span class="w"> </span><span class="o">(</span><span class="n">Simplifier.asm_full_simp_tac</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="n">THEN</span>
+<span class="w">    </span><span class="n">TRY</span><span class="w"> </span><span class="o">(</span><span class="n">Classical.safe_tac</span><span class="w"> </span><span class="n">ctxt</span><span class="o">)</span><span class="w"> </span><span class="n">THEN</span>
+<span class="w">    </span><span class="n">REPEAT_DETERM</span><span class="w"> </span><span class="o">(</span><span class="n">FIRSTGOAL</span><span class="w"> </span><span class="n">main_tac</span><span class="o">)</span><span class="w"> </span><span class="n">THEN</span>
+<span class="w">    </span><span class="n">TRY</span><span class="w"> </span><span class="o">(</span><span class="n">Classical.safe_tac</span><span class="w"> </span><span class="o">(</span><span class="n">addSss</span><span class="w"> </span><span class="n">ctxt</span><span class="o">))</span><span class="w"> </span><span class="n">THEN</span>
+<span class="w">    </span><span class="n">Simplifier.prune_params_tac</span><span class="w"> </span><span class="n">ctxt</span>
+<span class="w">  </span><span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="582403563"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582403563" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582403563">(Mar 29 2026 at 11:54)</a>:</h4>
+<p>(you don't have to understand the code, I just put it here so you can see by syntactic pattern matching that the simplifier is applied before calling main_tac, which contains blast)</p>
+
+
+
+<a name="582403585"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582403585" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582403585">(Mar 29 2026 at 11:55)</a>:</h4>
+<p>The code is illuminating.  Thanks for the helpful reply!</p>
+
+
+
+<a name="582403595"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20why%20can%27t%20auto%20prove%20this%20statement%2C%20though%20blast%20can%3F/near/582403595" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20why.20can.27t.20auto.20prove.20this.20statement.2C.20though.20blast.20can.3F.html#582403595">(Mar 29 2026 at 11:55)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1054129">Adam Dingle</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

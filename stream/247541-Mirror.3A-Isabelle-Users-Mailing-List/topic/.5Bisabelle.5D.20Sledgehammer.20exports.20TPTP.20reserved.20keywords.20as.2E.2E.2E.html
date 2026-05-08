@@ -1,0 +1,169 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Sledgehammer exports TPTP reserved keywords as... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sledgehammer.20exports.20TPTP.20reserved.20keywords.20as.2E.2E.2E.html">[isabelle] Sledgehammer exports TPTP reserved keywords as...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="579923982"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sledgehammer%20exports%20TPTP%20reserved%20keywords%20as.../near/579923982" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sledgehammer.20exports.20TPTP.20reserved.20keywords.20as.2E.2E.2E.html#579923982">(Mar 17 2026 at 12:01)</a>:</h4>
+<p><strong>From:</strong> Jiangjing Xu &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>I would like to report what appears to be a bug in Sledgehammer's TPTP export. This may be related to the recently discussed Sledgehammer/ATP name-clash issues, but the failure mode here seems slightly different: the generated identifier appears to collide with TPTP surface syntax rather than merely with another generated name.</p>
+<p>If a free variable in an Isabelle goal has the same name as a TPTP statement-level keyword such as fof, tff, cnf, thf, tcf, or include, Sledgehammer appears to export it unchanged as a symbol name in the generated TPTP problem file. This appears to produce declarations that Zipperposition cannot parse.</p>
+<p>Minimal example:</p>
+<p>theory Test<br>
+  imports Main<br>
+begin</p>
+<p>lemma "fof = (fof :: nat)"<br>
+  sledgehammer [prover = zipperposition, slices = 1, timeout = 30, overlord]<br>
+  oops</p>
+<p>end</p>
+<p>The generated problem file (retained via overlord) contains:</p>
+<p>thf(sy_v_fof, type,<br>
+    fof : nat).</p>
+<p>Zipperposition reports:</p>
+<p>parse error: expected declaration<br>
+    at file '.../prob_zipperposition_1.p'</p>
+<p>I have observed the same pattern for other names such as tff, cnf, thf, tcf, and include, where the generated TPTP output contains bare statement-level keywords as symbol names. In my tests, these variants likewise lead to ATP-side parse failures.</p>
+<p>By contrast, identifiers such as type or axiom, which are TPTP role values rather than statement-level introducers, do not seem to trigger this problem, and Sledgehammer works as expected there.</p>
+<p>My understanding is that Sledgehammer's nice-name mapping should avoid producing bare TPTP statement-level keywords as exported symbol names.</p>
+<p>Environment:</p>
+<p>*   Isabelle 2025-2</p>
+<p>*   Zipperposition</p>
+<p>*   macOS (arm64)</p>
+<p>I can provide the full generated .p files and additional reproducing examples if useful.</p>
+<p>Best regards,<br>
+Jiangjing Xu</p>
+
+
+
+<a name="580277091"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sledgehammer%20exports%20TPTP%20reserved%20keywords%20as.../near/580277091" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sledgehammer.20exports.20TPTP.20reserved.20keywords.20as.2E.2E.2E.html#580277091">(Mar 18 2026 at 19:38)</a>:</h4>
+<p><strong>From:</strong> Alexander Steen &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,</p>
+<p>this looks like a Zipperposition parser bug, not a Sledgehammer bug. <br>
+TPTP does not prohibit the use of "fof" as symbol name, and other ATP <br>
+systems do not complain about it.</p>
+<p>Best, Alex</p>
+<p>On 3/17/26 12:59, Jiangjing Xu (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Dear Isabelle developers,</p>
+<p>I would like to report what appears to be a bug in Sledgehammer's TPTP <br>
+export. This may be related to the recently discussed Sledgehammer/ATP <br>
+name-clash issues, but the failure mode here seems slightly different: <br>
+the generated identifier appears to collide with TPTP surface syntax <br>
+rather than merely with another generated name.</p>
+<p>If a free variable in an Isabelle goal has the same name as a TPTP <br>
+statement-level keyword such as |fof|, |tff|, |cnf|, |thf|, |tcf|, or <br>
+|include|, Sledgehammer appears to export it unchanged as a symbol <br>
+name in the generated TPTP problem file. This appears to produce <br>
+declarations that Zipperposition cannot parse.</p>
+<p>Minimal example:</p>
+<p>|theory Test  imports Main begin lemma "fof = (fof :: nat)" <br>
+ sledgehammer [prover = zipperposition, slices = 1, timeout = 30, <br>
+overlord]  oops end |</p>
+<p>The generated problem file (retained via |overlord|) contains:</p>
+<p>|thf(sy_v_fof, type,    fof : nat). |</p>
+<p>Zipperposition reports:</p>
+<p>|parse error: expected declaration    at file <br>
+'.../prob_zipperposition_1.p' |</p>
+<p>I have observed the same pattern for other names such as |tff|, |cnf|, <br>
+|thf|, |tcf|, and |include|, where the generated TPTP output contains <br>
+bare statement-level keywords as symbol names. In my tests, these <br>
+variants likewise lead to ATP-side parse failures.</p>
+<p>By contrast, identifiers such as |type| or |axiom|, which are TPTP <br>
+role values rather than statement-level introducers, do not seem to <br>
+trigger this problem, and Sledgehammer works as expected there.</p>
+<p>My understanding is that Sledgehammer's nice-name mapping should avoid <br>
+producing bare TPTP statement-level keywords as exported symbol names.</p>
+<p>Environment:</p>
+<p>*</p>
+<p>Isabelle 2025-2</p>
+<p>*</p>
+<p>Zipperposition</p>
+<p>*</p>
+<p>macOS (arm64)</p>
+<p>I can provide the full generated |.p| files and additional reproducing <br>
+examples if useful.</p>
+<p>Best regards,<br>
+Jiangjing Xu</p>
+<p>-- <br>
+Prof. Dr. Alexander Steen<br>
+Universität Greifswald<br>
+Institut für Mathematik und Informatik<br>
+Walther-Rathenau-Straße 47<br>
+17489 Greifswald<br>
+Tel.: +49 3834 420 4634<br>
+Tel.: +49 3834 420 4614 (secretary)<br>
+E-Mail:<a href="mailto:alexander.steen@uni-greifswald.de">alexander.steen@uni-greifswald.de</a><br>
+Zoom:<a href="https://uni-greifswald-de.zoom.us/my/a.steen">https://uni-greifswald-de.zoom.us/my/a.steen</a></p>
+</blockquote>
+
+
+
+<a name="580286414"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sledgehammer%20exports%20TPTP%20reserved%20keywords%20as.../near/580286414" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sledgehammer.20exports.20TPTP.20reserved.20keywords.20as.2E.2E.2E.html#580286414">(Mar 18 2026 at 20:36)</a>:</h4>
+<p><strong>From:</strong> Jiangjing Xu &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Prof. Dr. Alexander Steen,</p>
+<p>Thank you for pointing this out. I have since tested the same format with<br>
+Vampire and Z3, and both accept it without error, which confirms your<br>
+assessment that the TPTP output is valid and the issue is on the<br>
+Zipperposition parser side.</p>
+<p>Thank you again for the clarification.</p>
+<p>Best regards,<br>
+Jiangjing Xu</p>
+
+
+
+<a name="584621491"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Sledgehammer%20exports%20TPTP%20reserved%20keywords%20as.../near/584621491" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Sledgehammer.20exports.20TPTP.20reserved.20keywords.20as.2E.2E.2E.html#584621491">(Apr 10 2026 at 08:41)</a>:</h4>
+<p><strong>From:</strong> Jiangjing Xu &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle Developers,</p>
+<p>I would like to follow up on the previously discussed TPTP keyword collision<br>
+issue in Sledgehammer.</p>
+<p>Update on Zipperposition:<br>
+The parser issue in Zipperposition that caused parse errors when user-defined<br>
+symbols coincided with TPTP statement-level keywords (fof, tff, cnf, thf,<br>
+include) has been fixed in Parse_tptp.mly. Minimal reproductions now parse<br>
+correctly, and standard TPTP declarations continue to work as expected. PR<br>
+#103 implements this fix.</p>
+<p>Defensive suggestion for Sledgehammer:<br>
+Although the Zipperposition parser fix resolves the immediate parse failures,<br>
+other ATP systems with strict parsers could theoretically be affected.<br>
+Currently, in src/HOL/Tools/ATP/atp_problem.ML, the avoid_clash function for<br>
+TPTP format is the identity function I.</p>
+<p>As a precautionary measure, one could introduce an<br>
+avoid_clash_with_tptp_keywords function, analogous to the DFG version<br>
+(avoid_clash_with_dfg_keywords), that renames symbols colliding with the five<br>
+TPTP keywords (fof, tff, cnf, thf, include) and wire it into the TPTP branch<br>
+of avoid_clash. This modification is safe for readability, since only these<br>
+five keywords are renamed.</p>
+<p>Illustrative modification:</p>
+<p>(* Add this function for TPTP keyword avoidance *)<br>
+fun avoid_clash_with_tptp_keywords s =<br>
+    if List.exists (fn kw =&gt; kw = s) ["fof", "tff", "cnf", "thf", "include"]<br>
+then<br>
+        s ^ "_"<br>
+    else<br>
+        s</p>
+<p>(* Apply to all non-DFG formats *)<br>
+val avoid_clash =<br>
+  (case format of<br>
+     DFG _ =&gt; avoid_clash_with_dfg_keywords<br>
+   | _ =&gt; avoid_clash_with_tptp_keywords)</p>
+<p>This ensures all formats that output TPTP syntax (FOF, TFF, THF, CNF, CNF_UEQ)<br>
+are protected, preventing parser-specific conflicts while leaving other<br>
+symbols unchanged.</p>
+<p>Thank you for considering this suggestion.</p>
+<p>Best regards,<br>
+Jiangjing Xu</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

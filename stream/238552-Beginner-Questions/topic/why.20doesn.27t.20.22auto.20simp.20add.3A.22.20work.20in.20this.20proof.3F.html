@@ -1,0 +1,75 @@
+<html>
+<head><meta charset="utf-8"><title>why doesn&#x27;t &quot;auto simp add:&quot; work in this proof? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html">why doesn&#x27;t &quot;auto simp add:&quot; work in this proof?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="582323412"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/why%20doesn%27t%20%22auto%20simp%20add%3A%22%20work%20in%20this%20proof%3F/near/582323412" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html#582323412">(Mar 28 2026 at 11:55)</a>:</h4>
+<p>As an exercise, I defined my own natural number type and addition function:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">no_notation</span><span class="w"> </span><span class="n">plus</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">"+"</span><span class="w"> </span><span class="n">65</span><span class="o">)</span>
+
+<span class="k">datatype</span><span class="w"> </span><span class="n">natt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">One</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="n">natt</span>
+
+<span class="k">fun</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"natt ⇒ natt ⇒ natt"</span><span class="w"> </span><span class="o">(</span><span class="kp">infixl</span><span class="w"> </span><span class="s">"+"</span><span class="w"> </span><span class="n">65</span><span class="o">)</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"add x One = S x"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"add x (S y) = S (x + y)"</span>
+</code></pre></div>
+<p>I proved inductively that x + One = One + x for all x:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">thm_3_3</span><span class="o">:</span><span class="w"> </span><span class="s">"x + One = One + x"</span><span class="w"> </span><span class="o">(</span><span class="kp">is</span><span class="w"> </span><span class="s">"?P x"</span><span class="o">)</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">induction</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
+<span class="w">  </span><span class="k">show</span><span class="w"> </span><span class="s">"?P One"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">next</span>
+<span class="w">  </span><span class="k">fix</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">assume</span><span class="w"> </span><span class="s">"?P x"</span>
+
+<span class="w">  </span><span class="k">have</span><span class="w">  </span><span class="s">"S x + One = (x + One) + One"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (One + x) + One"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">auto</span><span class="w"> </span><span class="n">cong</span><span class="w"> </span><span class="n">add</span><span class="o">:</span><span class="w"> </span><span class="s">‹?P x›</span><span class="o">)</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = One + (x + One)"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = One + S x"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="w">  </span><span class="k">finally</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"?P (S x)"</span><span class="w"> </span><span class="ow">.</span>
+<span class="k">qed</span>
+</code></pre></div>
+<p>In the first "also have" line above, I tried "auto simp add: ‹?P x›" but it failed.  I don't understand why.  I thought that would cause auto to use "x + One = One + x" as a simplification rule, i.e. replace "x + One" with "One + x" which would prove the step immediately.  Randomly I tried "auto cong add" instead and it worked, but I don't really understand why since my understanding is that "cong" is intended for more general congruence rules, as explained e.g. in section 9.1.1 "Advanced Features" of the "Isabelle-HOL: A Proof Assistant" book.</p>
+<p>Did I really need to use "auto cong add" here?  Is there some easier/nicer way to prove the step?</p>
+
+
+
+<a name="582326259"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/why%20doesn%27t%20%22auto%20simp%20add%3A%22%20work%20in%20this%20proof%3F/near/582326259" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html#582326259">(Mar 28 2026 at 12:39)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="k">also</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"... = (One + x) + One"</span>
+<span class="w">    </span><span class="n">supply</span><span class="w"> </span><span class="o">[[</span><span class="n">simp_trace_new</span><span class="o">]]</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">simp</span><span class="w"> </span><span class="n">flip</span><span class="o">:</span><span class="w"> </span><span class="s">‹?P x›</span><span class="o">)</span>
+</code></pre></div>
+
+
+
+<a name="582326306"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/why%20doesn%27t%20%22auto%20simp%20add%3A%22%20work%20in%20this%20proof%3F/near/582326306" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html#582326306">(Mar 28 2026 at 12:39)</a>:</h4>
+<p>But the answer is boring: look at the trace of the simplifier with <code>simp add</code> and <code>simp flip</code></p>
+
+
+
+<a name="582326495"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/why%20doesn%27t%20%22auto%20simp%20add%3A%22%20work%20in%20this%20proof%3F/near/582326495" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html#582326495">(Mar 28 2026 at 12:42)</a>:</h4>
+<p>but the real real answer to the question is not why it fails, but that you lemma is written the wrong way around</p>
+
+
+
+<a name="582326508"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/why%20doesn%27t%20%22auto%20simp%20add%3A%22%20work%20in%20this%20proof%3F/near/582326508" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html#582326508">(Mar 28 2026 at 12:42)</a>:</h4>
+<p>the left trivially simplifies to <code>S x</code></p>
+
+
+
+<a name="582326536"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/why%20doesn%27t%20%22auto%20simp%20add%3A%22%20work%20in%20this%20proof%3F/near/582326536" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/why.20doesn.27t.20.22auto.20simp.20add.3A.22.20work.20in.20this.20proof.3F.html#582326536">(Mar 28 2026 at 12:42)</a>:</h4>
+<p>and you absolutely should not rewrite anything away from that normalized form</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

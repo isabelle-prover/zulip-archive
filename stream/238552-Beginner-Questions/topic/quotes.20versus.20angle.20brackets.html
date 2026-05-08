@@ -1,0 +1,56 @@
+<html>
+<head><meta charset="utf-8"><title>quotes versus angle brackets · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotes.20versus.20angle.20brackets.html">quotes versus angle brackets</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="582308796"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotes%20versus%20angle%20brackets/near/582308796" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adam Dingle <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotes.20versus.20angle.20brackets.html#582308796">(Mar 28 2026 at 08:06)</a>:</h4>
+<p>In Isabelle it seems that "x + y" and ‹x + y› are synonymous.  For example, I can write</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">conj</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"bool ⇒ bool ⇒ bool"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"conj True True = True"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"conj _ _ = False"</span>
+</code></pre></div>
+<p>or</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">conj</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹bool ⇒ bool ⇒ bool›</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">‹conj True True = True›</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">‹conj _ _ = False›</span>
+</code></pre></div>
+<p>and Isabelle will happily accept either form.</p>
+<p>Why do both of these syntaxes exist?  Is one preferred over another in certain situations?</p>
+
+
+
+<a name="582309881"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotes%20versus%20angle%20brackets/near/582309881" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotes.20versus.20angle.20brackets.html#582309881">(Mar 28 2026 at 08:27)</a>:</h4>
+<p><code>"</code> is the "older" form</p>
+
+
+
+<a name="582309915"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotes%20versus%20angle%20brackets/near/582309915" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotes.20versus.20angle.20brackets.html#582309915">(Mar 28 2026 at 08:27)</a>:</h4>
+<p>It is easier to type, but it has a major drawback: you cannot put quotes within quotes</p>
+
+
+
+<a name="582309954"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotes%20versus%20angle%20brackets/near/582309954" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotes.20versus.20angle.20brackets.html#582309954">(Mar 28 2026 at 08:28)</a>:</h4>
+<p>There is no way to parse:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">ML</span><span class="w"> </span><span class="s">"@{term "</span><span class="n">x</span><span class="o">=</span><span class="n">y"</span><span class="ow">}</span><span class="s">"</span>
+</code></pre></div>
+
+
+
+<a name="582309991"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/quotes%20versus%20angle%20brackets/near/582309991" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/quotes.20versus.20angle.20brackets.html#582309991">(Mar 28 2026 at 08:28)</a>:</h4>
+<p>while <code>ML ‹@{term ‹x=y›}›</code> is clear</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

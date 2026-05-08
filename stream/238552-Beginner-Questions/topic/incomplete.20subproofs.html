@@ -1,0 +1,63 @@
+<html>
+<head><meta charset="utf-8"><title>incomplete subproofs · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html">incomplete subproofs</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="582041584"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/incomplete%20subproofs/near/582041584" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html#582041584">(Mar 26 2026 at 21:28)</a>:</h4>
+<p>I'm trying to write a scaffold for a contrapositive proof (also in the spirit of my tips list) that intentionally has a have clause that isn't meant to be proved. I can't use qed obviously, but oops ignores the entire proof. Similar to rocq's <code>admit</code> vs <code>Admitted</code>, what should I use when I want to tell the reader "don't bother about this part of the proof, just look at the structure" </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">foo</span><span class="o">:</span><span class="w"> </span><span class="s">"P ⟹ Q"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="s">"¬Q ⟹ ¬P"</span><span class="w"> </span><span class="k">proof</span>
+<span class="w">    </span><span class="gr">sorry</span>
+<span class="k">qed</span><span class="w"> </span><span class="c">(* this shouldn't be a qed, but oops removes the proof as a whole *)</span>
+<span class="w">   </span><span class="k">then</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="s">"P ⟹ Q"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">qed</span>
+</code></pre></div>
+
+
+
+<a name="582041630"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/incomplete%20subproofs/near/582041630" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html#582041630">(Mar 26 2026 at 21:28)</a>:</h4>
+<p>I don't know what the right term is, but I doubt it's "removes"</p>
+
+
+
+<a name="582042116"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/incomplete%20subproofs/near/582042116" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html#582042116">(Mar 26 2026 at 21:32)</a>:</h4>
+<p>Looking at section 6.1.3 of the Isar reference manual and it doesn't seem like there's a way out here...</p>
+
+
+
+<a name="582042227"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/incomplete%20subproofs/near/582042227" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html#582042227">(Mar 26 2026 at 21:33)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/incomplete.20subproofs/near/582041630">said</a>:</p>
+<blockquote>
+<p>I don't know what the right term is, but I doubt it's "removes"</p>
+</blockquote>
+<p>Furthermore, oops does not produce any result theorem — there is no intended<br>
+claim to be able to complete the proof in any way.</p>
+<p>this is what I meant to say</p>
+
+
+
+<a name="582087642"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/incomplete%20subproofs/near/582087642" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html#582087642">(Mar 27 2026 at 05:54)</a>:</h4>
+<p>Just use sorry instead of <code>proof qed</code></p>
+
+
+
+<a name="582087738"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/incomplete%20subproofs/near/582087738" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/incomplete.20subproofs.html#582087738">(Mar 27 2026 at 05:55)</a>:</h4>
+<p><code>proof qed</code> does not exist by itself. You <em>need</em> the <code>show</code> to make it a valid block</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

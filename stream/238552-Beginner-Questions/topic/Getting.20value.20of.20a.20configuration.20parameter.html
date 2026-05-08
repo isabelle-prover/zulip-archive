@@ -1,0 +1,132 @@
+<html>
+<head><meta charset="utf-8"><title>Getting value of a configuration parameter · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html">Getting value of a configuration parameter</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="591745161"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591745161" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591745161">(Apr 29 2026 at 10:05)</a>:</h4>
+<p>I have sifting through implementation.pdf, section 1.15 and isar-ref.pdf to figure out how to write out the value of a configuration parameter (e.g. <code>declare [[ smt_timeout = 0 ]]</code> ) how do I print the value of smt_timeout? <br>
+Would it be something on the lines of <code>ML &lt;Config.get context smt_timeout&gt;</code>? That doesn't seem to be syntactically correct</p>
+
+
+
+<a name="591746688"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591746688" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591746688">(Apr 29 2026 at 10:10)</a>:</h4>
+<p>Is the only way to do this <code>print_options</code>?</p>
+
+
+
+<a name="591778598"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591778598" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591778598">(Apr 29 2026 at 12:23)</a>:</h4>
+<p>This works <code>ML ‹Config.get @{context} SMT_Config.timeout›</code></p>
+
+
+
+<a name="591778687"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591778687" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591778687">(Apr 29 2026 at 12:23)</a>:</h4>
+<p>Thank you! How should I have figured it out?</p>
+
+
+
+<a name="591778703"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591778703" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591778703">(Apr 29 2026 at 12:23)</a>:</h4>
+<p>from the manual</p>
+
+
+
+<a name="591779012"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591779012" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591779012">(Apr 29 2026 at 12:24)</a>:</h4>
+<p>You can Ctrl-click on <code>smt_timeout</code> to find out the corresponding ML constant. <code>@{context}</code> is the usual way to get hold of the context at that position in ML.</p>
+
+
+
+<a name="591779133"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591779133" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591779133">(Apr 29 2026 at 12:25)</a>:</h4>
+<blockquote>
+<p>attribute "SMT.smt_timeout"</p>
+</blockquote>
+<p>It doesn't say <code>SMT_Config</code> though</p>
+
+
+
+<a name="591787910"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591787910" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591787910">(Apr 29 2026 at 12:57)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/near/591779133">said</a>:</p>
+<blockquote>
+<p>attribute "SMT.smt_timeout"</p>
+</blockquote>
+<p>to clarify this is what I get when CTRL-hovering/clicking</p>
+
+
+
+<a name="591788123"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591788123" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591788123">(Apr 29 2026 at 12:58)</a>:</h4>
+<p>is it based on the ML file name (<a href="http://SMT_Config.ml">SMT_Config.ml</a>)</p>
+
+
+
+<a name="591793369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591793369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591793369">(Apr 29 2026 at 13:18)</a>:</h4>
+<p>If you look at the file, you see that the result of the declaration of the config attribute is assigned to <code>timeout</code>. Since <code>timeout</code> is part of the module <code>SMT_Config</code>, you can refer to this config option as <code>SMT_Config.timeout</code>.</p>
+
+
+
+<a name="591795121"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591795121" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591795121">(Apr 29 2026 at 13:24)</a>:</h4>
+<blockquote>
+<p>structure SMT_Config: SMT_CONFIG</p>
+</blockquote>
+<p>ah, so this line. Is there some way to get a "bird's eye view" of the file/module structure in jEdit? Sort of like what Ctrl-hovering does in Isar or just hovering over a variable does in VSCode for most languages. Ctrl-click/hover doesn't seem to do much in ML</p>
+<p>Is there some jEdit plugin that does this? I found <a href="https://github.com/polyml/jedit-plugin">https://github.com/polyml/jedit-plugin</a> but it seems outdated...</p>
+
+
+
+<a name="591846815"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591846815" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591846815">(Apr 29 2026 at 16:41)</a>:</h4>
+<p>the sidekick works to get some idea of the structure</p>
+
+
+
+<a name="591846944"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591846944" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591846944">(Apr 29 2026 at 16:41)</a>:</h4>
+<p>but there is no way to show documentation of a variable</p>
+
+
+
+<a name="591846958"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591846958" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591846958">(Apr 29 2026 at 16:41)</a>:</h4>
+<p>because there is none</p>
+
+
+
+<a name="591847020"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591847020" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591847020">(Apr 29 2026 at 16:42)</a>:</h4>
+<p>Some people have the opinion that no documentation is better than a misleading one</p>
+
+
+
+<a name="591914457"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/591914457" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jonathan Julian Huerta y Munive <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#591914457">(Apr 29 2026 at 23:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/near/591795121">said</a>:</p>
+<blockquote>
+<p>Is there some way to get a "bird's eye view" of the file/module structure in jEdit? Sort of like what Ctrl-hovering does in Isar or just hovering over a variable does in VSCode for most languages.</p>
+</blockquote>
+<p>I am not sure I am understanding what you want, but, if you (1) open your <code>ISABELLE_HOME/src/HOL/SMT.thy</code> in jEdit, (2) load it to the end of the file, and then (3) open the <code>smt_config.ML</code> in jEdit, you will be able to ctrl-hover some things in that file and get, e.g. some typing information.</p>
+
+
+
+<a name="593246322"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Getting%20value%20of%20a%20configuration%20parameter/near/593246322" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter.html#593246322">(May 06 2026 at 12:39)</a>:</h4>
+<p>A follow-up from <a href="#narrow/channel/238552-Beginner-Questions/topic/Getting.20value.20of.20a.20configuration.20parameter/with/591914457">this thread</a>|</p>
+<p>I've had to recently downgrade my machine, and so one SMT query will complete nondeterministically -- sometimes it times out and sometimes it doesn't. This problem is a whole lot more persistent on my weaker machine. Setting <code>declare [[ smt_timeout = 0 ]]</code>does nothing, nor do big numbers like 10000 or -1. What do I do?</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

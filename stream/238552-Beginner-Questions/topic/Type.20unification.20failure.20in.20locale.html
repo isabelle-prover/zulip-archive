@@ -1,0 +1,200 @@
+<html>
+<head><meta charset="utf-8"><title>Type unification failure in locale · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html">Type unification failure in locale</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="584415000"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584415000" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584415000">(Apr 09 2026 at 10:26)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">test</span>
+<span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">test2</span>
+<span class="k">begin</span>
+<span class="k">datatype</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">foo1</span><span class="w"> </span><span class="s">"foo list"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">foo2</span><span class="w"> </span><span class="n">nat</span>
+
+<span class="kt">value</span><span class="w"> </span><span class="s">"foo1 ([(foo2 (2:: nat))] :: foo list)"</span>
+
+<span class="k">datatype</span><span class="w"> </span><span class="n">bar</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">bar1</span><span class="w"> </span><span class="s">"bar list"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">bar2</span><span class="w"> </span><span class="s">"bool"</span>
+<span class="kt">value</span><span class="w"> </span><span class="s">"bar1 [(bar2 (true))]"</span>
+<span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>I'm playing around with these types foo and bar (as a minimal reproducible example) and for some reason, when I try to run "value "foo1 ([(foo2 (2:: nat))] :: foo list)" in a locale, I get a type unification error: </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Type</span><span class="w"> </span><span class="n">unification</span><span class="w"> </span><span class="n">failed</span><span class="o">:</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">arity</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">::</span>
+<span class="w">                 </span><span class="n">term_of</span>
+
+<span class="n">Type</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="n">application</span><span class="o">:</span><span class="w"> </span><span class="n">incompatible</span><span class="w"> </span><span class="n">operand</span><span class="w"> </span><span class="n">type</span>
+</code></pre></div>
+<p>As you may notice, I tried to explicitly write out the type of each subterm, to no avail</p>
+<p>However, "value "bar1 [(bar2 (true))]" returns a value with no error in this locale. <br>
+Also more interesting: value "foo1 ([(foo2 (2:: nat))] :: foo list)" works just fine if <code>foo</code> and the value statement are <em>not</em> declared in a locale. I tried looking at StackOverflow pages and searched through threads here to little success. What exactly am I missing? Is this specifically a problem with nats and locales?</p>
+
+
+
+<a name="584416186"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416186" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416186">(Apr 09 2026 at 10:33)</a>:</h4>
+<p>don't put datatype declaration in locales</p>
+
+
+
+<a name="584416240"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416240" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416240">(Apr 09 2026 at 10:33)</a>:</h4>
+<p>is this a general rule-of-thumb?</p>
+
+
+
+<a name="584416244"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416244" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416244">(Apr 09 2026 at 10:33)</a>:</h4>
+<p>the datatype package is not really localized</p>
+
+
+
+<a name="584416400"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416400" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416400">(Apr 09 2026 at 10:34)</a>:</h4>
+<p>Sometimes you get errors, sometimes stuff stops working down the line like here</p>
+
+
+
+<a name="584416558"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416558" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416558">(Apr 09 2026 at 10:35)</a>:</h4>
+<p>I see<br>
+is this in the datatypes manual?</p>
+
+
+
+<a name="584416619"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416619" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416619">(Apr 09 2026 at 10:35)</a>:</h4>
+<p>also what do you mean when you say that a package "is not localized"?</p>
+
+
+
+<a name="584416651"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416651" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416651">(Apr 09 2026 at 10:36)</a>:</h4>
+<p>what exactly does it mean to localize a package in Isabelle/HOL?</p>
+
+
+
+<a name="584416665"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416665" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416665">(Apr 09 2026 at 10:36)</a>:</h4>
+<p>compatible with locales</p>
+
+
+
+<a name="584416692"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416692" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416692">(Apr 09 2026 at 10:36)</a>:</h4>
+<p>oh<br>
+why is that</p>
+
+
+
+<a name="584416983"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584416983" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584416983">(Apr 09 2026 at 10:37)</a>:</h4>
+<p>from my understanding, there are fundamental issues (see <a href="https://isabelle.systems/zulip-archive/stream/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20in.20locale.20context.html">https://isabelle.systems/zulip-archive/stream/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20in.20locale.20context.html</a>)</p>
+
+
+
+<a name="584417092"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417092" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417092">(Apr 09 2026 at 10:38)</a>:</h4>
+<p>so support is only going to be possible for a subset of locales</p>
+
+
+
+<a name="584417150"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417150" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417150">(Apr 09 2026 at 10:38)</a>:</h4>
+<p>does this also mean that I can't declare a function over a type in a locale?</p>
+
+
+
+<a name="584417181"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417181" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417181">(Apr 09 2026 at 10:38)</a>:</h4>
+<p>So it is not very motivating to fix all the tactics in the BNF package</p>
+
+
+
+<a name="584417187"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417187" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417187">(Apr 09 2026 at 10:38)</a>:</h4>
+<p>(or recursive functions in general)</p>
+
+
+
+<a name="584417355"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417355" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417355">(Apr 09 2026 at 10:39)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417150">said</a>:</p>
+<blockquote>
+<p>does this also mean that I can't declare a function over a type in a locale?</p>
+</blockquote>
+<p>This works as far as I know, but you are going into issues if you want to generate code / use value</p>
+
+
+
+<a name="584417382"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417382" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417382">(Apr 09 2026 at 10:39)</a>:</h4>
+<p>oh, I see</p>
+
+
+
+<a name="584417742"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417742" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417742">(Apr 09 2026 at 10:41)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417355">said</a>:</p>
+<blockquote>
+<p>if you want to generate code / use value</p>
+</blockquote>
+<p>if the function is in the locale?</p>
+
+
+
+<a name="584417793"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584417793" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584417793">(Apr 09 2026 at 10:41)</a>:</h4>
+<p>or if the datatype is  (still) in the locale</p>
+
+
+
+<a name="584418618"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584418618" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584418618">(Apr 09 2026 at 10:46)</a>:</h4>
+<p>Is that why you'd get something like "no code equations for fn, requested by dependencies"</p>
+
+
+
+<a name="584418641"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584418641" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584418641">(Apr 09 2026 at 10:46)</a>:</h4>
+<p>where fn is some function</p>
+
+
+
+<a name="584424587"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584424587" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584424587">(Apr 09 2026 at 11:18)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1028125">Ant S.</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417742">said</a>:</p>
+<blockquote>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417355">said</a>:</p>
+<blockquote>
+<p>if you want to generate code / use value</p>
+</blockquote>
+<p>if the function is in the locale?</p>
+</blockquote>
+<p>Yes. There are two issues: code equations depend on the parameters of the locale and second the function are actually abbreviations and the code generator cannot handle that</p>
+
+
+
+<a name="584424681"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584424681" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584424681">(Apr 09 2026 at 11:19)</a>:</h4>
+<p>In practice, this has never really been an issue for me</p>
+
+
+
+<a name="584424824"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Type%20unification%20failure%20in%20locale/near/584424824" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale.html#584424824">(Apr 09 2026 at 11:19)</a>:</h4>
+<p>I never had the case of the termination depending on the local parameters, so moving the function out of the locale was always possible</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

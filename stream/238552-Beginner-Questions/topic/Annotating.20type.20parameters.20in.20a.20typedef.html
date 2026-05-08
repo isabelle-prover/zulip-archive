@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>Annotating type parameters in a typedef · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Annotating.20type.20parameters.20in.20a.20typedef.html">Annotating type parameters in a typedef</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="592329751"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Annotating%20type%20parameters%20in%20a%20typedef/near/592329751" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Cassidy Eastwood <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Annotating.20type.20parameters.20in.20a.20typedef.html#592329751">(May 01 2026 at 17:45)</a>:</h4>
+<p>So, I was trying to use <code>typedef</code> to define a "type of ordered pairs of type <code>'a × 'a</code> whose first and second place differ (are unequal)". Of course, it's not guaranteed that type will be inhabited for an arbitrary <code>'a</code>, so I imposed a type restriction using a typeclass for types that have at least two terms. The <code>typedef</code> went through.</p>
+<p>However, now any time I use the resulting type, I have to use the type annotation on its type parameter, or I get a type unification error when trying to use any of the actual properties of my type.</p>
+<p>My goal in creating this type was to be able to refer to an arbitrary such ordered pair without having to explicitly impose the <code>fst a ≠ snd a</code> condition every time (I'm working on a theory file that frequently deals with such pairs, and types derived from them, and I wanted to clean things up a little). In the end, the need to use this annotation in all the lemmas and constructions for this type is very tolerable, but it strikes me as also a possible indication that I'm doing things in a clumsy way.</p>
+<p>My actual question is a bit vague: is this a sensible way of going about this? Is there a better/cleaner approach I should know about?</p>
+
+
+
+<a name="592343226"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Annotating%20type%20parameters%20in%20a%20typedef/near/592343226" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Annotating.20type.20parameters.20in.20a.20typedef.html#592343226">(May 01 2026 at 19:01)</a>:</h4>
+<p>You could add the constraint in a context:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span><span class="o">[[</span><span class="n">show_sorts</span><span class="o">]]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="n">non_singleton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">assumes</span><span class="w"> </span><span class="n">non_singleton</span><span class="o">:</span><span class="w"> </span><span class="s">"∃x y. x ≠ y"</span>
+
+<span class="kn">typedef</span><span class="w"> </span><span class="o">(</span><span class="n n-Type">'a</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">non_singleton</span><span class="o">)</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"{p :: 'a × 'a . ∃x y. p = (x, y) ∧ x ≠ y}"</span>
+<span class="w">  </span><span class="k">using</span><span class="w"> </span><span class="n">non_singleton</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="k">context</span><span class="w"> </span><span class="kp">fixes</span><span class="w"> </span><span class="n">dummy</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a :: non_singleton"</span>
+<span class="k">begin</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"P (x :: 'a foo)"</span><span class="w"> </span><span class="c">(*'a has the right constraint*)</span>
+<span class="w">  </span><span class="gr">oops</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>I think there's no way to add the sort constraint to the type defined by typedef by default (cf <a href="#narrow/channel/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20typedef.20with.20sorts">this thread</a> form the mailing list)</p>
+
+
+
+<a name="592349320"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Annotating%20type%20parameters%20in%20a%20typedef/near/592349320" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Cassidy Eastwood <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Annotating.20type.20parameters.20in.20a.20typedef.html#592349320">(May 01 2026 at 19:44)</a>:</h4>
+<p>I see, thank you!</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

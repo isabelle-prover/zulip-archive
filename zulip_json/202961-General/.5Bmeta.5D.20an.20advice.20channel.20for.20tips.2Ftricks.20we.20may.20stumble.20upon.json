@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>Is it possible to have a channel where users can share anything they stumble upon as a nice trick to work more efficiently with Isabelle. e.g. to prove that a locale is inconsistent, it seems like <code>lemma foo: False</code> and <code>sledgehammer</code> are a nice starting point</p>",
+        "id": 580733040,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774035098
+    },
+    {
+        "content": "<p>(oops, I meant to send this in general. If someone could move it, that'd be great)</p>",
+        "id": 580733128,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774035130
+    },
+    {
+        "content": "<p>This topic was moved here from <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.5Bmeta.5D.20an.20advice.20channel.20for.20tips.2Ftricks.20we.20may.20stumble.20upon\">#Beginner Questions &gt; &#91;meta&#93; an advice channel for tips/tricks we may stumble upon</a> by <span class=\"user-mention silent\" data-user-id=\"233154\">Kevin Kappelmann</span>.</p>",
+        "id": 580735621,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1774036257
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/202961-General/topic/.5Bmeta.5D.20an.20advice.20channel.20for.20tips.2Ftricks.20we.20may.20stumble.20upon/near/580733040\">said</a>:</p>\n<blockquote>\n<p>Is it possible to have a channel where users can share anything they stumble upon as a nice trick to work more efficiently with Isabelle. e.g. to prove that a locale is inconsistent, it seems like <code>lemma foo: False</code> and <code>sledgehammer</code> are a nice starting point</p>\n</blockquote>\n<p>I think you could add them here (in this topic) for a start and if demand proves to be high, we can think about creating a channel.</p>",
+        "id": 581303684,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1774341248
+    },
+    {
+        "content": "<p>A general strategy for proofs by contraposition: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"P ⟹ Q\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"¬Q ⟹ ¬P\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span><span class=\"w\"> </span><span class=\"c\">(* replace with your proof*)</span>\n<span class=\"w\">   </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"P ⟹ Q\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"k\">qed</span>\n</code></pre></div>",
+        "id": 583139324,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775079933
+    },
+    {
+        "content": "<p>And here's one cool way I found to do case analysis on a disjunction: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"C\"</span>\n<span class=\"k\">proof</span>\n<span class=\"c\">(* suppose you know `P \\/ Q ==&gt; C` *)</span>\n<span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"P \\/ Q\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"C\"</span><span class=\"w\"> </span><span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">cases</span><span class=\"w\"> </span><span class=\"s\">\"P \\/ Q\"</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">erule</span><span class=\"w\"> </span><span class=\"n\">disjE</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"k\">qed</span>\n</code></pre></div>",
+        "id": 583139532,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775080025
+    },
+    {
+        "content": "<p>This generalizes better:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"C\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"c\">(* suppose you know `P \\/ Q ==&gt; C` *)</span>\n<span class=\"w\">  </span><span class=\"n\">consider</span>\n<span class=\"w\">    </span><span class=\"o\">(</span><span class=\"n\">1</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"s\">\"P\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"w\">    </span><span class=\"o\">(</span><span class=\"n\">2</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"s\">\"Q\"</span>\n<span class=\"w\">    </span><span class=\"gr\">sorry</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"C\"</span>\n<span class=\"w\">  </span><span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">cases</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"c\">(*use the proof outline here*)</span>\n</code></pre></div>",
+        "id": 583517628,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775247722
+    },
+    {
+        "content": "<p>(you can have any number of cases and each case can contain several properties)</p>",
+        "id": 583517672,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775247750
+    },
+    {
+        "content": "<p><a class=\"message-link\" href=\"/#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590305956\">#Beginner Questions &gt; ✔ How can I shorten this simple Isar proof? @ 💬</a> <br>\nThis entire thread from this point on.</p>",
+        "id": 590550527,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1776972584
+    }
+]

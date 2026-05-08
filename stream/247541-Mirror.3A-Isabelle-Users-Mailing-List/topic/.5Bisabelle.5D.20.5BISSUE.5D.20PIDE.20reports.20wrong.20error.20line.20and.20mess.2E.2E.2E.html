@@ -1,0 +1,266 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] [ISSUE] PIDE reports wrong error line and mess... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20PIDE.20reports.20wrong.20error.20line.20and.20mess.2E.2E.2E.html">[isabelle] [ISSUE] PIDE reports wrong error line and mess...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="583322213"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BISSUE%5D%20PIDE%20reports%20wrong%20error%20line%20and%20mess.../near/583322213" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20PIDE.20reports.20wrong.20error.20line.20and.20mess.2E.2E.2E.html#583322213">(Apr 02 2026 at 17:50)</a>:</h4>
+<p><strong>From:</strong> Bartosz Glowacki &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>I found a difference between isabelle build and the PIDE server (use_theories) outputs when <code>by sorry</code> appears as the final tactic before <code>qed</code> in a calc-terminated proof block:</p>
+<ul>
+<li>isabelle build (correct): "Bad context for command 'qed'" at the qed line</li>
+<li>PIDE server: "Outer syntax error: keyword '(' expected, but end-of-input was found" one line earlier, at the <code>by sorry</code> line</li>
+</ul>
+<p>Minimal reproducer:</p>
+<p>theory BugDemo<br>
+  imports "HOL-Combinatorics.Multiset_Permutations"<br>
+begin</p>
+<p>text \\&lt;open&gt;<br>
+  map_index_self: mapping the index function over a distinct list gives [0..&lt;length xs].<br>
+\\&lt;close&gt;</p>
+<p>lemma map_index_self:<br>
+  assumes "distinct xs"<br>
+  shows   "map (index xs) xs = [0..&lt;length xs]"<br>
+proof -<br>
+  have "xs = map (\\&lt;lambda&gt;i. xs ! i) [0..&lt;length xs]"<br>
+    by (simp add: map_nth)<br>
+  also have "map (index xs) \\&lt;dots&gt; = map id [0..&lt;length xs]"<br>
+    by (intro map_cong) simp_all<br>
+  finally show ?thesis<br>
+    by sorry     (* PIDE reports error here - wrong *)<br>
+Qed         (* isabelle build reports error here - correct *)</p>
+<p>end</p>
+<p>The real error is semantic — qed finds no open goal context — and isabelle build diagnoses it correctly. PIDE reports a spurious syntax error at the wrong line instead. While this is not a serious bug, it may be misleading for the end-user to receive the syntax error instead of the real issue they should focus on.</p>
+<p>This was found using a differential fuzzing framework that compares error output between isabelle build and the PIDE server on mutated AFP theories. The mutation <code>by simp -&gt; by sorry</code> triggered this mismatch in 10/10 independent runs. I am happy to share the framework and logs.</p>
+<p>This was found as part of my dissertation work on differential testing of the Isabelle platform.</p>
+<p>Kindest regards,<br>
+Bartosz Glowacki<br>
+King's College London</p>
+
+
+
+<a name="583979514"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BISSUE%5D%20PIDE%20reports%20wrong%20error%20line%20and%20mess.../near/583979514" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20PIDE.20reports.20wrong.20error.20line.20and.20mess.2E.2E.2E.html#583979514">(Apr 07 2026 at 12:16)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;</p>
+<p>'by sorry' is syntactically ill-formed, and there is no surprise that an <br>
+interactive session reports errors differently from a non-interactive <br>
+build because</p>
+<p>a) a headless build does not need to keep track of as much markup <br>
+information and</p>
+<p>b) an interactive session tries to recover from problems (to some <br>
+degree), such that one can continue editing in the presence of errors.</p>
+<p>Fabian</p>
+<p>On 4/2/26 19:05, Bartosz Glowacki (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Dear Isabelle developers,</p>
+<p>I found a difference between isabelle build and the PIDE server <br>
+(use_theories) outputs when <code>by sorry</code> appears as the final tactic <br>
+before <code>qed</code> in a calc-terminated proof block:</p>
+<ul>
+<li>isabelle build (correct): "Bad context for command 'qed'" at the qed <br>
+line</li>
+<li>PIDE server: "Outer syntax error: keyword '(' expected, but <br>
+end-of-input was found" one line earlier, at the <code>by sorry</code> line</li>
+</ul>
+<p>Minimal reproducer:</p>
+<p>theory BugDemo<br>
+  imports "HOL-Combinatorics.Multiset_Permutations"<br>
+begin</p>
+<p>text \\&lt;open&gt;<br>
+  map_index_self: mapping the index function over a distinct list <br>
+gives [0..&lt;length xs].<br>
+\\&lt;close&gt;</p>
+<p>lemma map_index_self:<br>
+  assumes "distinct xs"<br>
+  shows   "map (index xs) xs = [0..&lt;length xs]"<br>
+proof -<br>
+  have "xs = map (\\&lt;lambda&gt;i. xs ! i) [0..&lt;length xs]"<br>
+    by (simp add: map_nth)<br>
+  also have "map (index xs) \\&lt;dots&gt; = map id [0..&lt;length xs]"<br>
+    by (intro map_cong) simp_all<br>
+  finally show ?thesis<br>
+    by sorry     (* PIDE reports error here - wrong *)<br>
+Qed         (* isabelle build reports error here - correct *)</p>
+<p>end</p>
+<p>The real error is semantic — qed finds no open goal context — and <br>
+isabelle build diagnoses it correctly. PIDE reports a spurious syntax <br>
+error at the wrong line instead. While this is not a serious bug, it <br>
+may be misleading for the end-user to receive the syntax error instead <br>
+of the real issue they should focus on.</p>
+<p>This was found using a differential fuzzing framework that compares <br>
+error output between isabelle build and the PIDE server on mutated AFP <br>
+theories. The mutation <code>by simp -&gt; by sorry</code> triggered this mismatch <br>
+in 10/10 independent runs. I am happy to share the framework and logs.</p>
+<p>This was found as part of my dissertation work on differential testing <br>
+of the Isabelle platform.</p>
+<p>Kindest regards,<br>
+Bartosz Glowacki<br>
+King's College London<br>
+</p>
+</blockquote>
+
+
+
+<a name="585058796"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BISSUE%5D%20PIDE%20reports%20wrong%20error%20line%20and%20mess.../near/585058796" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20PIDE.20reports.20wrong.20error.20line.20and.20mess.2E.2E.2E.html#585058796">(Apr 12 2026 at 19:15)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/04/2026 19:05, Bartosz Glowacki (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I found a difference between isabelle build and the PIDE server (use_theories) <br>
+outputs when <code>by sorry</code> appears as the final tactic before <code>qed</code> in a calc- <br>
+terminated proof block:</p>
+</blockquote>
+<p>First note that "tactic" is not a category of the Isar proof language. The <br>
+"by" element is called a "command", and its argument a "proof method", or just <br>
+"method". The "sorry" command cannot be given as argument to "by": it will not <br>
+work for structural reasons.</p>
+<p>Anyway, back to the main points: You have just discovered the tip of the <br>
+iceberg of plenty of fundamental differences how batch-build vs. PIDE editing <br>
+works. That can be explained from historical reasons over many decades, <br>
+because quite different side-conditions apply to these two main modes of <br>
+Isabelle (in the past there were &gt; 2 such modes).</p>
+<p>In general, batch-compilers vs. IDE environments routinely work quite <br>
+differently, so this is to be expected --- even if it is annoying. For <br>
+example, I find the Scala plugin of IntelliJ IDEA particularly weak in this <br>
+respect: the IDE feedback is only a crude approximation of the real compiler <br>
+and its errors.</p>
+<p>For Isabelle processing of theory and proof documents, we are better than <br>
+that, but there is plenty of room for further improvement.</p>
+<p>The situation is going to improve once again soon, because the last remains of <br>
+the old ML and Isar toplevel command loops disappear, and this gives more <br>
+freedom in the semantics of command application (e.g. partial failure, while <br>
+retaining structural integrity of the text).</p>
+<blockquote>
+<p>theory BugDemo<br>
+   imports "HOL-Combinatorics.Multiset_Permutations"<br>
+begin</p>
+</blockquote>
+<blockquote>
+<p>The real error is semantic — qed finds no open goal context — and isabelle<br>
+build diagnoses it correctly. PIDE reports a spurious syntax error at the<br>
+wrong line instead. While this is not a serious bug, it may be misleading for<br>
+the end-user to receive the syntax error instead of the real issue they should<br>
+focus on.</p>
+</blockquote>
+<p>Why not stop using this misleading "bug" word. Above you say yourself, that it <br>
+is not a serious bug.</p>
+<blockquote>
+<p>This was found using a differential fuzzing framework that compares error <br>
+output between isabelle build and the PIDE server on mutated AFP theories. The <br>
+mutation <code>by simp -&gt; by sorry</code> triggered this mismatch in 10/10 independent <br>
+runs. I am happy to share the framework and logs.</p>
+</blockquote>
+<p>I would say the only problem on our side is that the documentation is too <br>
+implicit about the many differences of "isabelle build" vs. the PIDE editor <br>
+session.</p>
+<p>On the other hand, everybody knows that after using Isabelle practically for a <br>
+brief time.</p>
+<p>Makarius</p>
+
+
+
+<a name="585285572"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%5BISSUE%5D%20PIDE%20reports%20wrong%20error%20line%20and%20mess.../near/585285572" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.5BISSUE.5D.20PIDE.20reports.20wrong.20error.20line.20and.20mess.2E.2E.2E.html#585285572">(Apr 13 2026 at 21:36)</a>:</h4>
+<p><strong>From:</strong> Bartosz Glowacki &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Makarius,</p>
+<p>Thank you for the context. I take your point that batch build and PIDE sessions work under fundamentally different side-conditions, and that differences in error reporting are expected to some degree. I will avoid calling these "bugs."</p>
+<p>However, the <code>by sorry</code> case was just the entry point. The differential framework has now run hundreds of iterations of mutated AFP theories through both isabelle build and the PIDE server (use_theories), and after filtering out false positives from my own framework, several patterns remain where the PIDE user is concretely disadvantaged compared to batch build. I wanted to flag these as observations rather than defect reports (and maybe area for improvements on the server side):</p>
+<ol>
+<li>
+<p>Server stops after first error, hides later independent failures.<br>
+When a theory has two independent broken proofs (e.g. lines 354 and 537), isabelle build reports both, but the server reports only the first and stops. A user fixes line 354, re-checks, and is then surprised by the second failure at line 537 that was there all along. (Observed in Randomised_Social_Choice/Rankings.)</p>
+</li>
+<li>
+<p>Server appears to carry stale state across use_theories calls.<br>
+Across six consecutive mutations of Risk_Free_Lending.thy, the server persistently reports line 118 regardless of where the actual error is (lines 42, 177, or 2265 in different mutations). isabelle build correctly reports the actual error location each time. This looks like the server caching a failure from an earlier invocation without fully invalidating the affected region.</p>
+</li>
+<li>
+<p>Server floods intermediate proof-step errors from a single root cause.<br>
+For Median_Of_Medians_Selection.thy, a single duplicated <code>by (auto ...)</code> line causes isabelle build to report 3 errors, while the server reports 7 - scattering error markers across proof steps at lines 426, 445, 454, 461 that are all consequences of the one mutation. The user in jEdit sees what looks like five separate problems, and is confused, where to actually apply the fix.</p>
+</li>
+<li>
+<p>Consistent off-by-one line numbers.<br>
+Across five iterations and two different theories (Roy_Floyd_Warshall.thy, another), the server reports a command error one line before where isabelle build reports it (e.g. server says line 78, build says line 79 for the same <code>obtain</code> command). This is reproducible and systematic — always off by exactly 1 in the same direction.</p>
+</li>
+<li>
+<p>Different error attribution depth in nested proofs.<br>
+For GenClock.thy, the server reports the innermost failing <code>qed</code> (line 431), while isabelle build reports the outermost <code>qed</code> (line 455). This is arguably a design choice rather than a problem - the server's pinpointing may actually be more useful.</p>
+</li>
+</ol>
+<p>I understand that some of these (especially 3 and 5) may be inherent to the parallel/incremental processing model and not worth changing. And case 2 may be an artifact of how my framework calls use_theories in sequence. But cases 1 and 4 seem like places where the interactive experience could be improved without fundamental architectural changes.</p>
+<p>I am happy to share the full framework, mutation logs, and theory files for any of these cases. I would really like to know what your opinion on this is.</p>
+<p>Regarding my overall approach: the framework performs differential testing by taking AFP theories, applying targeted mutations (substituting proof methods, duplicating commands, introducing sorry), running them through both isabelle build and the PIDE server, and comparing the error output systematically. The goal is to find places where the two modes diverge in ways that affect the user.</p>
+<p>Kindest regards,<br>
+Bartosz Glowacki<br>
+King's College London</p>
+<hr>
+<p>From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+Sent: Sunday, April 12, 2026 9:15 PM<br>
+To: Bartosz Glowacki &lt;<a href="mailto:bartosz.gowacki@kcl.ac.uk">bartosz.gowacki@kcl.ac.uk</a>&gt;; <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Cc: Mohammad Ahmad Abdulaziz Ali Mansour &lt;<a href="mailto:mohammad.abdulaziz@kcl.ac.uk">mohammad.abdulaziz@kcl.ac.uk</a>&gt;; Karine Even-Mendoza &lt;<a href="mailto:karine.even_mendoza@kcl.ac.uk">karine.even_mendoza@kcl.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] [ISSUE] PIDE reports wrong error line and message for <code>by sorry</code> before <code>qed</code> in calc proof</p>
+<p>On 02/04/2026 19:05, Bartosz Glowacki (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I found a difference between isabelle build and the PIDE server (use_theories)<br>
+outputs when <code>by sorry</code> appears as the final tactic before <code>qed</code> in a calc-<br>
+terminated proof block:</p>
+</blockquote>
+<p>First note that "tactic" is not a category of the Isar proof language. The<br>
+"by" element is called a "command", and its argument a "proof method", or just<br>
+"method". The "sorry" command cannot be given as argument to "by": it will not<br>
+work for structural reasons.</p>
+<p>Anyway, back to the main points: You have just discovered the tip of the<br>
+iceberg of plenty of fundamental differences how batch-build vs. PIDE editing<br>
+works. That can be explained from historical reasons over many decades,<br>
+because quite different side-conditions apply to these two main modes of<br>
+Isabelle (in the past there were &gt; 2 such modes).</p>
+<p>In general, batch-compilers vs. IDE environments routinely work quite<br>
+differently, so this is to be expected --- even if it is annoying. For<br>
+example, I find the Scala plugin of IntelliJ IDEA particularly weak in this<br>
+respect: the IDE feedback is only a crude approximation of the real compiler<br>
+and its errors.</p>
+<p>For Isabelle processing of theory and proof documents, we are better than<br>
+that, but there is plenty of room for further improvement.</p>
+<p>The situation is going to improve once again soon, because the last remains of<br>
+the old ML and Isar toplevel command loops disappear, and this gives more<br>
+freedom in the semantics of command application (e.g. partial failure, while<br>
+retaining structural integrity of the text).</p>
+<blockquote>
+<p>theory BugDemo<br>
+   imports "HOL-Combinatorics.Multiset_Permutations"<br>
+begin</p>
+</blockquote>
+<blockquote>
+<p>The real error is semantic — qed finds no open goal context — and isabelle<br>
+build diagnoses it correctly. PIDE reports a spurious syntax error at the<br>
+wrong line instead. While this is not a serious bug, it may be misleading for<br>
+the end-user to receive the syntax error instead of the real issue they should<br>
+focus on.</p>
+</blockquote>
+<p>Why not stop using this misleading "bug" word. Above you say yourself, that it<br>
+is not a serious bug.</p>
+<blockquote>
+<p>This was found using a differential fuzzing framework that compares error<br>
+output between isabelle build and the PIDE server on mutated AFP theories. The<br>
+mutation <code>by simp -&gt; by sorry</code> triggered this mismatch in 10/10 independent<br>
+runs. I am happy to share the framework and logs.</p>
+</blockquote>
+<p>I would say the only problem on our side is that the documentation is too<br>
+implicit about the many differences of "isabelle build" vs. the PIDE editor<br>
+session.</p>
+<p>On the other hand, everybody knows that after using Isabelle practically for a<br>
+brief time.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

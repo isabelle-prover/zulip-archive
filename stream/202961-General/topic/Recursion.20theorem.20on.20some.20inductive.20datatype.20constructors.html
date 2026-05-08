@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>Recursion theorem on some inductive datatype constructors · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors.html">Recursion theorem on some inductive datatype constructors</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="578391965"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Recursion%20theorem%20on%20some%20inductive%20datatype%20constructors/near/578391965" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors.html#578391965">(Mar 10 2026 at 13:17)</a>:</h4>
+<p>Suppose I have some inductive data type like a tree in a locale:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">Leaf</span><span class="w"> </span><span class="n">int</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="n">Branch</span><span class="w"> </span><span class="s">"tree"</span><span class="w"> </span><span class="s">"'tree"</span>
+
+<span class="k">locale</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span>
+<span class="kp">assumes</span><span class="w"> </span><span class="n">recFn</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">=</span><span class="n">&gt;</span><span class="w"> </span><span class="n">nat</span>
+<span class="kp">and</span><span class="w"> </span><span class="n">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"recFn Leaf x = 0"</span>
+</code></pre></div>
+<p>Is it possible to show that there exists some helper function f', whose type signature is tree =&gt; tree =&gt; int (or in general, for an inductive constructor <code>X a b c</code> that its signature is a =&gt; b =&gt; c =&gt; d, which I believe would need some sort of reflection on the types of the objects that an instance of X stores), that recursively calls <code>recFn</code> somewhere in its body? I believe this is how the Recursion Theorem works, although that is used in a set-theoretic context. Additionally, since I am "breaking apart" a type into its constituent components, would this notion be easier to represent using a <code>codatatype</code>. Can we construct <code>f'</code> in a way that its type can be inferred?</p>
+
+
+
+<a name="578407850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Recursion%20theorem%20on%20some%20inductive%20datatype%20constructors/near/578407850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors.html#578407850">(Mar 10 2026 at 14:14)</a>:</h4>
+<p>Your source code is ill-formed, but a statement that 'some function calls some other function' can't be expressed in HOL, unless you are talking about the semantics of some embedded language.</p>
+
+
+
+<a name="578408856"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Recursion%20theorem%20on%20some%20inductive%20datatype%20constructors/near/578408856" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors.html#578408856">(Mar 10 2026 at 14:18)</a>:</h4>
+<p>Sorry bout that, here's the example, with corrections:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">datatype</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">Leaf</span><span class="w"> </span><span class="n">int</span>
+<span class="w">     </span><span class="o">|</span><span class="w">  </span><span class="n">Branch</span><span class="w"> </span><span class="s">"tree"</span><span class="w"> </span><span class="s">"tree"</span>
+
+<span class="w">      </span><span class="k">locale</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="kp">fixes</span><span class="w"> </span><span class="n">recFn</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"tree ⇒ nat"</span>
+<span class="w">      </span><span class="kp">assumes</span><span class="w"> </span><span class="n">bar</span><span class="o">:</span><span class="w"> </span><span class="s">"recFn (Leaf x) = 0"</span>
+</code></pre></div>
+<p>(also, meta-question: why can't I edit prior messages?)<br>
+(well, I'm able to edit this message, but not the previous one)</p>
+
+
+
+<a name="578409698"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Recursion%20theorem%20on%20some%20inductive%20datatype%20constructors/near/578409698" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors.html#578409698">(Mar 10 2026 at 14:21)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="348400">Fabian Huch</span> <a href="#narrow/channel/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors/near/578407850">said</a>:</p>
+<blockquote>
+<p>some function calls some other function</p>
+</blockquote>
+<p>How about a refinement: For the <code>Branch</code> constructor: ∃ f s.t. <code>recFn (Branch x y) = f x y</code>, or some generalized form of this for every constructor that is not the "base" constructor</p>
+
+
+
+<a name="578412086"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Recursion%20theorem%20on%20some%20inductive%20datatype%20constructors/near/578412086" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors.html#578412086">(Mar 10 2026 at 14:30)</a>:</h4>
+<p>I doubt that this is what you want since <code>λ x y. recFn (Branch x y)</code> is a trivial witness.</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

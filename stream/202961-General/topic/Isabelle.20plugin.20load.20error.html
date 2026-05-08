@@ -1,0 +1,101 @@
+<html>
+<head><meta charset="utf-8"><title>Isabelle plugin load error · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.20plugin.20load.20error.html">Isabelle plugin load error</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="578079081"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%20plugin%20load%20error/near/578079081" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jun Xu <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.20plugin.20load.20error.html#578079081">(Mar 09 2026 at 06:21)</a>:</h4>
+<p>Hi all,<br>
+My Isabelle/JEdit suddently got a plugin load error. The message looks like:<br>
+...\jedit\jars\isabelle_jedit_main.jar:<br>
+Cannot start: <br>
+*** [line 1 of "preferences"] error: bad input</p>
+<hr>
+<hr>
+<p>*** ^<br>
+And when clicking the checkbox in plugin manager:<br>
+java.lang.NoClassDefFoundError: isabelle/jedit_main/Isabelle_Sidekick_Structure<br>
+    at java.base/java.lang.ClassLoader.defineClass1(Native Method)<br>
+    at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1027)<br>
+    at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:889)<br>
+    at org.gjt.sp.jedit.JARClassLoader._loadClass(JARClassLoader.java:435)<br>
+    at org.gjt.sp.jedit.JARClassLoader.loadClass(JARClassLoader.java:112)<br>
+    at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)<br>
+    at org.gjt.sp.jedit.bsh.classpath.ClassManagerImpl.classForName(ClassManagerImpl.java:204)<br>
+    at org.gjt.sp.jedit.bsh.NameSpace.classForName(NameSpace.java:1320)<br>
+    at org.gjt.sp.jedit.bsh.NameSpace.getClassImpl(NameSpace.java:1220)<br>
+    at org.gjt.sp.jedit.bsh.NameSpace.getClass(NameSpace.java:1161)<br>
+    at org.gjt.sp.jedit.bsh.Name.consumeNextObjectField(Name.java:298)<br>
+    at org.gjt.sp.jedit.bsh.Name.toObject(Name.java:199)<br>
+    at org.gjt.sp.jedit.bsh.BSHAmbiguousName.toObject(BSHAmbiguousName.java:60)<br>
+    at org.gjt.sp.jedit.bsh.BSHAllocationExpression.objectAllocation(BSHAllocationExpression.java:86)<br>
+    at org.gjt.sp.jedit.bsh.BSHAllocationExpression.eval(BSHAllocationExpression.java:62)<br>
+    at org.gjt.sp.jedit.bsh.BSHPrimaryExpression.eval(BSHPrimaryExpression.java:102)<br>
+    at org.gjt.sp.jedit.bsh.BSHPrimaryExpression.eval(BSHPrimaryExpression.java:47)<br>
+    at org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:644)<br>
+    at org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:738)<br>
+    at org.gjt.sp.jedit.bsh.Interpreter.eval(Interpreter.java:727)<br>
+    at org.gjt.sp.jedit.BeanShellFacade._eval(BeanShellFacade.java:153)<br>
+    at org.gjt.sp.jedit.BeanShellFacade.eval(BeanShellFacade.java:117)<br>
+    at org.gjt.sp.jedit.BeanShell.eval(BeanShell.java:382)<br>
+    at org.gjt.sp.jedit.ServiceManager$Descriptor.getInstance(ServiceManager.java:337)<br>
+    at org.gjt.sp.jedit.ServiceManager.getService(ServiceManager.java:262)<br>
+    at sidekick.SideKickPlugin.getParser(SideKickPlugin.java:237)<br>
+    at sidekick.SideKickPlugin.getParserForBuffer(SideKickPlugin.java:293)<br>
+    at sidekick.SideKick.setParser(SideKick.java:214)<br>
+    at sidekick.SideKick.handlePluginUpdate(SideKick.java:345)<br>
+    at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)<br>
+    at java.base/java.lang.reflect.Method.invoke(Method.java:580)<br>
+    at org.gjt.sp.jedit.EditBus.dispatch(EditBus.java:242)<br>
+    at org.gjt.sp.jedit.EditBus.sendImpl(EditBus.java:281)<br>
+    at org.gjt.sp.jedit.EditBus$SendMessage.run(EditBus.java:442)<br>
+    at org.gjt.sp.jedit.EditBus.send(EditBus.java:206)<br>
+    at org.gjt.sp.jedit.jEdit.addPluginJAR(jEdit.java:1251)<br>
+    at org.gjt.sp.jedit.PluginJAR.load(PluginJAR.java:207)<br>
+    at org.gjt.sp.jedit.pluginmgr.ManagePanel$PluginTableModel$1.run(ManagePanel.java:563)<br>
+    at java.desktop/java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:318)<br>
+    at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:773)<br>
+    at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)<br>
+    at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)<br>
+    at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)<br>
+    at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)<br>
+    at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:742)<br>
+    at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)<br>
+    at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)<br>
+    at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)<br>
+    at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)<br>
+    at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)<br>
+    at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)<br>
+Caused by: java.lang.ClassNotFoundException: isabelle.jedit_main.Isabelle_Sidekick_Structure<br>
+    at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)<br>
+    at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)<br>
+    at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)<br>
+    at org.gjt.sp.jedit.JARClassLoader.loadFromParent(JARClassLoader.java:518)<br>
+    at org.gjt.sp.jedit.JARClassLoader.loadClass(JARClassLoader.java:90)<br>
+    at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)<br>
+    ... 51 more<br>
+I am on Windows, and the error occurred today for no reason. Do you know what it is ?</p>
+
+
+
+<a name="578080291"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%20plugin%20load%20error/near/578080291" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jun Xu <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.20plugin.20load.20error.html#578080291">(Mar 09 2026 at 06:36)</a>:</h4>
+<p>Hi all,<br>
+So after downloading Isabelle 2025-02 things work again. It seems like the old version is phased out.</p>
+
+
+
+<a name="579899166"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Isabelle%20plugin%20load%20error/near/579899166" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Manuel Eberl <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Isabelle.20plugin.20load.20error.html#579899166">(Mar 17 2026 at 10:06)</a>:</h4>
+<p>I don't think the old version should be "phased out" in any sense. I have no idea what this could be, but I think I had a similar problem with <code>isabelle-dev</code> a week ago or so. I eventually solved it by just deleting the <code>.isabelle</code> folder and reinstalling it.</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

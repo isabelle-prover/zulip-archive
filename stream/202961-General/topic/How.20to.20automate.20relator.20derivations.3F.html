@@ -1,0 +1,25 @@
+<html>
+<head><meta charset="utf-8"><title>How to automate relator derivations? · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/How.20to.20automate.20relator.20derivations.3F.html">How to automate relator derivations?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="580728105"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/How%20to%20automate%20relator%20derivations%3F/near/580728105" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/How.20to.20automate.20relator.20derivations.3F.html#580728105">(Mar 20 2026 at 18:56)</a>:</h4>
+<p>I have a datatype that's "'a fset \&lt;times&gt; (('a \&lt;times&gt; 'b) fset \&lt;times&gt; 'c) set" plus a condition that the left fset binds the domains of domain of the right  set. This is a BNF in 'a, and I want to prove it. However, relators prove to be really annoying, auxiliary theorems for "rel_fset (rel_prod R (=))" alone already took me several pages, and normally BNF machinery can derive it all by itself. The rub here is that a set is not a BNF, but its relator obeys all the same rules, it is THE natural relator one could say :) so, is there a way to partially automate this derivation, in the fashion that BNF machinery does it, ideally without writing ML?</p>
+
+
+
+<a name="581132800"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/How%20to%20automate%20relator%20derivations%3F/near/581132800" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/How.20to.20automate.20relator.20derivations.3F.html#581132800">(Mar 23 2026 at 14:37)</a>:</h4>
+<p>this type is not a BNF in 'a because it appears under the <code>set</code> type constructor? BNFs have to be bounded which <code>set</code> is not</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

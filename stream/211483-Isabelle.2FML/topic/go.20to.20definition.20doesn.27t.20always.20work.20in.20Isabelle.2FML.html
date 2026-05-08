@@ -1,0 +1,75 @@
+<html>
+<head><meta charset="utf-8"><title>go to definition doesn&#x27;t always work in Isabelle/ML · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html">go to definition doesn&#x27;t always work in Isabelle/ML</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="592774839"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/592774839" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jason Hu <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#592774839">(May 04 2026 at 15:38)</a>:</h4>
+<p>Hi all,</p>
+<p>whenever I go to Isabelle level, it seems that go to definition clicks might just stop working in jedit. For example, if I click <code>datatype</code>, the chances are, go to definition has stopped working. How do I browse isabelle/ML code more smoothly? What is your trick?</p>
+
+
+
+<a name="592776664"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/592776664" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#592776664">(May 04 2026 at 15:46)</a>:</h4>
+<p>load <code>ROOT.ML</code> to create a session of Pure within Pure.</p>
+
+
+
+<a name="592808986"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/592808986" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jason Hu <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#592808986">(May 04 2026 at 18:13)</a>:</h4>
+<p>could you elaborate what exactly you would do?</p>
+
+
+
+<a name="592815832"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/592815832" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#592815832">(May 04 2026 at 18:46)</a>:</h4>
+<p>Hi Jason, I think Fabian wants you to open $ISABELLE_HOME/src/Pure/ROOT.ML in jedit. This enables "go to definition" in ML sources that are preloaded by Isabelle/Pure.<br>
+Is this what you are looking for?</p>
+
+
+
+<a name="592825253"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/592825253" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jason Hu <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#592825253">(May 04 2026 at 19:32)</a>:</h4>
+<p>thank you. it works to some degree but I am not able to jump to all definitions. for example, i am in the middle of doing some case analysis in isabelle and would like to understand how <code>Induct_Tacs.case_tac</code> works, at that point, I've lost the jump to deifnitions again. I opened its ROOT file but it still doesn't work. what's the next I should do?</p>
+
+
+
+<a name="592988530"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/592988530" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#592988530">(May 05 2026 at 12:19)</a>:</h4>
+<p>If <code>Pure/ROOT.ML</code> is opened and loaded and it does not work, I don't know.</p>
+
+
+
+<a name="593005230"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/593005230" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#593005230">(May 05 2026 at 13:25)</a>:</h4>
+<p><code>Induct_Tacs</code> is not in Pure</p>
+
+
+
+<a name="593005663"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/593005663" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#593005663">(May 05 2026 at 13:27)</a>:</h4>
+<p>You need to interactively load the session you are interested in</p>
+
+
+
+<a name="593006241"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/593006241" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#593006241">(May 05 2026 at 13:28)</a>:</h4>
+<p>Which is not possible for Pure, hence the Pure in Pure via ROOT.ML</p>
+
+
+
+<a name="593101472"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/go%20to%20definition%20doesn%27t%20always%20work%20in%20Isabelle/ML/near/593101472" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jason Hu <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/go.20to.20definition.20doesn.27t.20always.20work.20in.20Isabelle.2FML.html#593101472">(May 05 2026 at 20:42)</a>:</h4>
+<p>Pure/ROOT.ML does allow me to view the Pure folder. how do I load <code>Induct_Tacs</code>? my ML code has been using it. but it still doesn't browse it?</p>
+
+
+
+<hr><p>Last updated: May 08 2026 at 05:58 UTC</p>
+</html>

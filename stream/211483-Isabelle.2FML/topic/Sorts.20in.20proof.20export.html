@@ -1,0 +1,29 @@
+<html>
+<head><meta charset="utf-8"><title>Sorts in proof export · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sorts.20in.20proof.20export.html">Sorts in proof export</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="605931530"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Sorts%20in%20proof%20export/near/605931530" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Antoine Gontard <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sorts.20in.20proof.20export.html#605931530">(Jun 23 2026 at 07:47)</a>:</h4>
+<p>Hi everyone,<br>
+What is the expected behavior of sorts in proof export?<br>
+When looking at the exported version (in Isabelle/Scala) of some subpart of the HOL session, I noticed that sorts (in type variables, in propositions' type arguments) are always empty (at least in the few theories I looked) in places I would expect them not to be (definitions/propositions in a typeclass context).<br>
+However, in the type arguments of a theory's <code>Spec_Rule</code>s, they are present as I would expect them to be.<br>
+Is that normal?</p>
+
+
+
+<a name="606739975"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/Sorts%20in%20proof%20export/near/606739975" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Antoine Gontard <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/Sorts.20in.20proof.20export.html#606739975">(Jun 26 2026 at 14:35)</a>:</h4>
+<p>I've been staring at the code for a few days and could not find where that comes from. All I found is that, when I ran a test on a session with Pure + theory HOL.Groups,  in every call to <code>Export_theory.encode_thm</code>, the <code>typargs</code> in <code>standard_prop_of thm (Some proof0)</code> are always of empty sort. It looks like <code>Zterm.standard_vars</code> does not remove sorts, so from what I understand, a theories' <code>thms</code> are already void of sorts when the export happens. Is that normal ?</p>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

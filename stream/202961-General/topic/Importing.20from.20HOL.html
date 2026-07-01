@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>Importing from HOL · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html">Importing from HOL</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="603768521"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Importing%20from%20HOL/near/603768521" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html#603768521">(Jun 16 2026 at 14:42)</a>:</h4>
+<p>I am to tweak a file in the src/HOL directory. I copied it into my repository and gave an extended name, updated the theory name accordingly. Now the imports declaration does not work, the system looks for the files in the current directory, not in the HOL session. How can I make this work? My ROOT file is</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">session</span><span class="w"> </span><span class="n">My_Spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HOL</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="n">theories</span>
+<span class="w">      </span><span class="n">SpecTheory_MYVERSION</span>
+</code></pre></div>
+<p>Is it a problem that the imported files are not present in the HOL session's ROOT file?</p>
+
+
+
+<a name="603776879"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Importing%20from%20HOL/near/603776879" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html#603776879">(Jun 16 2026 at 15:03)</a>:</h4>
+<p>You have to add the session qualifier <code>HOL.</code> <br>
+E.g. <code>imports List</code> becomes <code>imports HOL.List</code></p>
+
+
+
+<a name="603788102"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Importing%20from%20HOL/near/603788102" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html#603788102">(Jun 16 2026 at 15:33)</a>:</h4>
+<p>Follow-up: this line is not parsed:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w"> </span><span class="s">"card_order r ⟹ ( |A1| +c cone) ^c r = |Func UNIV (Inl ` A1 ∪ {Inr ()})|"</span>
+</code></pre></div>
+<p>due to the vertical bar syntax for set cardinality. But I do import</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">HOL.BNF_Cardinal_Arithmetic</span>
+</code></pre></div>
+<p>What do I miss compared to the original file?</p>
+
+
+
+<a name="603792321"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Importing%20from%20HOL/near/603792321" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Gergely Buday <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html#603792321">(Jun 16 2026 at 15:45)</a>:</h4>
+<p>Somehow the cardinal arithmetic notation does not propagate to my file.</p>
+
+
+
+<a name="604052458"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Importing%20from%20HOL/near/604052458" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html#604052458">(Jun 17 2026 at 07:54)</a>:</h4>
+<p>If it works in the original file and you haven't changed anything besides adding <code>HOL.</code> to the imports, it should work.</p>
+
+
+
+<a name="604228985"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Importing%20from%20HOL/near/604228985" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Importing.20from.20HOL.html#604228985">(Jun 17 2026 at 17:20)</a>:</h4>
+<p><code>+c</code> is not exposed by default:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">unbundle</span><span class="w"> </span><span class="n">cardinal_syntax</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"card_order r ⟹ ( |A1| +c cone) ^c r = |Func UNIV (Inl ` A1 ∪ {Inr ()})|"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+<span class="n">unbundle</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">cardinal_syntax</span>
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>From this message I realize that there are two buffers in Isabelle: one to handle UTF8 symbols and the other to convert those symbols to ASCII. <a class=\"message-link\" href=\"/#narrow/channel/238552-Beginner-Questions/topic/Setting.20up.20Isabelle.2FVSCode/near/574097534\">#Beginner Questions &gt; Setting up Isabelle/VSCode @ 💬</a> </p>\n<p>Is it possible to add more UTF8 symbols? It seems like it is possible by modifying /etc/symbols. However, I wanted to know if user-defined symbols can be imported when opening an existing project. For example, when I pull a repo and open it in Isabelle/jEdit or Isabelle/VSCode, it auto-imports custom symbols.</p>",
+        "id": 574944320,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1771595319
+    },
+    {
+        "content": "<p>Don't let yourself be confused by that discussion about technical internals.</p>\n<p><em>Isabelle symbols</em> are independent on the concrete encoding. They can be defined in the user home (but not for a project IIRC) and arbitrarily extended. For rendering, those symbols may be assigned a unicode glyph in a certain encoding (e.g., UTF-8).</p>\n<p>However, you will find that a unicode glyph alone is not very helpful: You also need a font that can render it. For that, you need to add glyphs in the font base, build the fonts, and re-assemble Isabelle components.</p>",
+        "id": 574950497,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1771596965
+    },
+    {
+        "content": "<p>My default font renders the extensions I'd like to make just fine; the symbols in question are ⸢ these two ⸣</p>",
+        "id": 574950976,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1771597077
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Adding.20more.20symbols.20to.20Isabelle-UTF8/near/574950497\">said</a>:</p>\n<blockquote>\n<p>They can be defined in the user home</p>\n</blockquote>\n<p>the user home being the location where Isabelle is installed?</p>",
+        "id": 574952330,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1771597399
+    },
+    {
+        "content": "<p>the symbols file, to my understanding, is like a global environment variable. Can we make a local file that overrides this symbols file if need be? I guess this is slightly different from saying that it is defined for a given project, because that would imply having some sort of project file, and I'm not sure if that's the case in Isabelle</p>",
+        "id": 574952729,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1771597486
+    },
+    {
+        "content": "<p>In <code>ISABELLE_HOME_USER/etc/symbols</code> - I don't know what you mean with environment variable here. <br>\nSee the system manual for an overview about session / component specification, settings, etc. (though symbols are explained in the jedit doc).</p>",
+        "id": 574956753,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1771598508
+    },
+    {
+        "content": "<p>thanks!</p>",
+        "id": 574964713,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1771600398
+    }
+]

@@ -1,0 +1,66 @@
+<html>
+<head><meta charset="utf-8"><title>Reusing session heaps across CI cache restores · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Reusing.20session.20heaps.20across.20CI.20cache.20restores.html">Reusing session heaps across CI cache restores</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="601208049"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Reusing%20session%20heaps%20across%20CI%20cache%20restores/near/601208049" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Amar Akshat <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Reusing.20session.20heaps.20across.20CI.20cache.20restores.html#601208049">(Jun 08 2026 at 17:43)</a>:</h4>
+<p>Hi all, question about <code>isabelle build</code> and CI caching.</p>
+<p>I have a GitHub Actions job that builds a heavy session dependency cone:<br>
+AFP <code>Berlekamp_Zassenhaus</code> + <code>Word_Lib</code> + a small vendored session, around 50 min cold.</p>
+<p>To avoid rebuilding on every run, I set <code>ISABELLE_HOME_USER</code> inside the workspace and cache it across runs, including the AFP/component directories. On a later run the cache restores cleanly. Sources and absolute paths appear identical; only mtimes differ. But <code>isabelle build -bv &lt;Session&gt;</code> still rebuilds the whole dependency cone instead of reusing the restored heaps.</p>
+<p>What I’m trying to understand:</p>
+<ol>
+<li>
+<p>Is <code>isabelle build</code>’s up-to-date check expected to be content/path based, so restored heaps should be reused if sources and paths are identical?</p>
+</li>
+<li>
+<p>Or are mtimes, component registration state, build logs, session database identity, etc. part of the validity check in a way that can legitimately force a rebuild after a CI cache restore?</p>
+</li>
+<li>
+<p>Is there an idiomatic/supported way to make session images reusable across CI runs? For example, should I cache a particular <code>ISABELLE_HEAPS</code> layout, use a prebuilt component, avoid changing <code>ISABELLE_HOME_USER</code>, or something else?</p>
+</li>
+</ol>
+<p>One possible culprit: my setup re-runs</p>
+<div class="codehilite"><pre><span></span><code>isabelle components -u &lt;afp&gt;/thys
+isabelle components -u &lt;saw-lib&gt;
+</code></pre></div>
+
+<p>on every CI run before building. Could repeated component registration perturb the session graph or invalidate the restored build state?</p>
+<p>The concrete repo is here if useful:<br>
+<a href="https://github.com/amarshat/pqc-assay">https://github.com/amarshat/pqc-assay</a></p>
+<p>The relevant setup script is <code>scripts/setup_isabelle_cryptol.sh</code>, and the GitHub Actions <code>verify</code> job does the caching.</p>
+
+
+
+<a name="601819943"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Reusing%20session%20heaps%20across%20CI%20cache%20restores/near/601819943" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Reusing.20session.20heaps.20across.20CI.20cache.20restores.html#601819943">(Jun 10 2026 at 14:55)</a>:</h4>
+<p>Digests depend only on content and options. To make them resuable in a CI system I would pull them into a database and materialize them when needed, like how it is done for the distributed build already.</p>
+
+
+
+<a name="601950492"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Reusing%20session%20heaps%20across%20CI%20cache%20restores/near/601950492" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Amar Akshat <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Reusing.20session.20heaps.20across.20CI.20cache.20restores.html#601950492">(Jun 10 2026 at 23:08)</a>:</h4>
+<p>Thanks - this sent me to actually measure it. Locally, session-heap reuse is exactly content+options digest based: it survives a tar round-trip of the store, and even survives touching the AFP sources to newer than the heaps (no rebuild). So mtimes/paths aren't the issue.</p>
+<p>Turns out my CI just wasn't persisting the right thing - I was caching only the toolchain dir, not <code>~/.isabelle/.../heaps</code> (the heaps + per-session build database). <br>
+Once I cache that store, the warm path reuses the AFP/Cryptol cone instead of rebuilding. Confirming on the actual runner now.</p>
+<p>For a single runner that on-disk store seems sufficient; I can see why the build_process database is the right answer once you're distributing across machines. Thanks for the pointer.</p>
+
+
+
+<a name="602087552"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Reusing%20session%20heaps%20across%20CI%20cache%20restores/near/602087552" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Amar Akshat <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Reusing.20session.20heaps.20across.20CI.20cache.20restores.html#602087552">(Jun 11 2026 at 09:39)</a>:</h4>
+<p>Confirmed on the runner: persisting the heap store makes the warm build reuse the AFP/Cryptol cone - the "Build AFP + Cryptol" step dropped from ~60–90 min to 21 seconds, total verify run ~3 min. As you said, it's purely the content+options digest; my CI just wasn't persisting ~/.isabelle/.../heaps (I was caching only the toolchain dir).<br>
+ Config: <a href="https://github.com/amarshat/pqc-assay/blob/main/.github/workflows/verify.yml">https://github.com/amarshat/pqc-assay/blob/main/.github/workflows/verify.yml</a> - and the warm run showing the 21s step: <a href="https://github.com/amarshat/pqc-assay/actions/runs/27334580624">https://github.com/amarshat/pqc-assay/actions/runs/27334580624</a></p>
+<p>Thanks again - for a single runner the on-disk store is enough.</p>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

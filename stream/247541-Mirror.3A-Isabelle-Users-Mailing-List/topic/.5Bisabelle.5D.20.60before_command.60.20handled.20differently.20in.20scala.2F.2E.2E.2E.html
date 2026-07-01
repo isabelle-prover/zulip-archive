@@ -1,0 +1,64 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] `before_command` handled differently in scala/... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.60before_command.60.20handled.20differently.20in.20scala.2F.2E.2E.2E.html">[isabelle] `before_command` handled differently in scala/...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="602044408"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%60before_command%60%20handled%20differently%20in%20scala/.../near/602044408" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.60before_command.60.20handled.20differently.20in.20scala.2F.2E.2E.2E.html#602044408">(Jun 11 2026 at 07:10)</a>:</h4>
+<p><strong>From:</strong> "w.sun" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>When porting Isabelle's span tokenizer to a Python PIDE client, I found that</p>
+<p>the Scala and ML implementations decide "is this token a command modifier?"</p>
+<p>in two different ways. Scala consults the keyword table; ML hardcodes the</p>
+<p>literals <code>private</code>/<code>qualified</code>. The two agree today only because those are the</p>
+<p>only <code>before_command</code> keywords declared anywhere in the 2025 sources — but the</p>
+<p>ML side would silently ignore any <em>new</em> <code>before_command</code> keyword a theory</p>
+<p>declares, whereas the Scala side would honor it.</p>
+<h2>The two code paths</h2>
+<p><strong>Scala — table-driven</strong> (<code>src/Pure/Isar/keyword.scala:203</code>):</p>
+<div class="codehilite" data-code-language="Scala"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_before_command</span><span class="p">(</span><span class="n">token</span><span class="p">:</span><span class="w"> </span><span class="nc">Token</span><span class="p">):</span><span class="w"> </span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span>
+
+<span class="w">  </span><span class="n">token</span><span class="p">.</span><span class="n">is_keyword</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">kinds</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">.</span><span class="n">source</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nc">Some</span><span class="p">(</span><span class="nc">BEFORE_COMMAND</span><span class="p">)</span>
+</code></pre></div>
+<p><code>Outer_Syntax.parse_spans</code> uses this predicate to start a new span</p>
+<p>(<code>src/Pure/Isar/outer_syntax.scala:191</code>).</p>
+<p><strong>ML — hardcoded literals</strong> (<code>src/Pure/Isar/token.ML:254</code>):</p>
+<div class="codehilite" data-code-language="ml"><pre><span></span><code>val is_command_modifier =
+
+  keyword_with (fn x =&gt; x = "private" orelse x = "qualified");
+</code></pre></div>
+<p><code>Outer_Syntax.parse_spans</code> uses <em>this</em> to start a new span</p>
+<p>(<code>src/Pure/Isar/outer_syntax.ML:197</code>):</p>
+<div class="codehilite" data-code-language="ml"><pre><span></span><code>else if Token.is_command_modifier tok orelse
+
+  Token.is_command tok andalso
+
+    (not (exists Token.is_command_modifier content) orelse exists
+Token.is_command content)
+
+then (flush (result, content, ignored), [tok], [])
+</code></pre></div>
+<h2>Consequence</h2>
+<p>A theory header such as</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kp">keywords</span><span class="w"> </span><span class="s">"foo"</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">before_command</span>
+</code></pre></div>
+<p>would make <code>foo</code> a span-flushing modifier under the Scala tokenizer (jEdit,</p>
+<p>batch dependency analysis) but <em>not</em> under the ML prover's own</p>
+<p><code>Outer_Syntax.parse_spans</code>. The span boundaries the two produce would diverge</p>
+<p>for that theory.</p>
+<h2>Question</h2>
+<p>Is the hardcoding in <code>token.ML:254</code> intentional (e.g. <code>before_command</code> is</p>
+<p>considered a closed, Pure-only concept by design), or should the ML side carry</p>
+<p>the <code>before_command</code> marking through <code>Keyword.keywords</code> the way Scala's</p>
+<p><code>kinds</code> map does?</p>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

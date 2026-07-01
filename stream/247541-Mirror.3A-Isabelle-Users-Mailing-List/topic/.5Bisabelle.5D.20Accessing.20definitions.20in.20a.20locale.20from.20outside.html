@@ -1,0 +1,64 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Accessing definitions in a locale from outside · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Accessing.20definitions.20in.20a.20locale.20from.20outside.html">[isabelle] Accessing definitions in a locale from outside</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="595244203"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Accessing%20definitions%20in%20a%20locale%20from%20outside/near/595244203" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Accessing.20definitions.20in.20a.20locale.20from.20outside.html#595244203">(May 15 2026 at 07:56)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Hi,</p>
+<p>If I define some function in a locale, how do I access the defining equations <br>
+outside the local from ML? Top-level function definitions can be accessed via <br>
+Spec_Rules.retrieve, but for functions from a locale, it returns an empty list, <br>
+although the constant itself is known, meaning @{const L.f} works fine (with the <br>
+locale parameters as additional arguments).</p>
+<p>Thanks<br>
+Tobias</p>
+<p><a href="/user_uploads/14278/Fjd5k__Bm7k97om2s-HnVNOU/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="595733910"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Accessing%20definitions%20in%20a%20locale%20from%20outside/near/595733910" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Accessing.20definitions.20in.20a.20locale.20from.20outside.html#595733910">(May 18 2026 at 07:16)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<p>Hi Tobias,</p>
+<blockquote>
+<p>If I define some function in a locale, how do I access the defining <br>
+equations outside the local from ML? Top-level function definitions can <br>
+be accessed via Spec_Rules.retrieve, but for functions from a locale, it <br>
+returns an empty list, although the constant itself is known, meaning <br>
+@{const L.f} works fine (with the locale parameters as additional <br>
+arguments).</p>
+</blockquote>
+<p>not 100% sure what your actual application is, but the following schema <br>
+is a starting point:</p>
+<blockquote>
+<p>locale nat<br>
+begin</p>
+<p>datatype T = Zero | Succ T</p>
+<p>primrec sym_dec :: ‹T ⇒ T›<br>
+  where<br>
+    ‹sym_dec Zero = Succ Zero›<br>
+  | ‹sym_dec (Succ n) = n›</p>
+<p>ML_val ‹<br>
+  Spec_Rules.retrieve \&lt;^context&gt; \&lt;^term&gt;‹sym_dec›<br>
+›</p>
+<p>end</p>
+</blockquote>
+<p>It is important that you retrieve the spec rules relative to the locale <br>
+context (Locale.init).</p>
+<p>Hope this helps,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/8LcI_qvUl2wa8PwNzuT8bZWL/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/7YnjWce7Tcs2MwroZo6HJ37h/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

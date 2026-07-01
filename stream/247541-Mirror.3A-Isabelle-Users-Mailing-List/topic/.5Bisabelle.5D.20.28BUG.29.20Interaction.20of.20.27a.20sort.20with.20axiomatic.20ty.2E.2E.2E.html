@@ -1,0 +1,61 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] (BUG) Interaction of &#x27;a sort with axiomatic ty... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.28BUG.29.20Interaction.20of.20.27a.20sort.20with.20axiomatic.20ty.2E.2E.2E.html">[isabelle] (BUG) Interaction of &#x27;a sort with axiomatic ty...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="600062376"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%28BUG%29%20Interaction%20of%20%27a%20sort%20with%20axiomatic%20ty.../near/600062376" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.28BUG.29.20Interaction.20of.20.27a.20sort.20with.20axiomatic.20ty.2E.2E.2E.html#600062376">(Jun 04 2026 at 11:21)</a>:</h4>
+<p><strong>From:</strong> Alex Mobius &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>As I've previously written, assigning a sort to type variable 'a in locale axioms triggers surprising behaviour: it sometimes succeeds and sometimes fails, and the locale context ends up with a copy of theorems that refer to (normally inaccessible) locale fixes, instead of class polymorphic constants. I stumbled upon this in HOLCF, but this can crop up up any time you use a symbol in assumptions that fixes the sort of one of its typevars and wasn't defined in the class context.</p>
+<p>I managed to create a reproduction that does not use HOLCF, and demonstrates the quirks rather minimally. Text included and attached for convenience.</p>
+<p>theory Repro2 imports Main begin</p>
+<p>(* this sort assignment fails (ord incompatible with default sort type), I am not sure why *)<br>
+class order_chain = order +<br>
+  assumes "∃x::(nat⇒'a::ord). ∀i. x i ≤ x (Suc i)"</p>
+<p>(* However if we make local copies of type classes, the same thing succeeds *)<br>
+class ord2 =<br>
+  fixes less_eq2 :: "'a ⇒ 'a ⇒ bool"<br>
+    and less2 :: "'a ⇒ 'a ⇒ bool"<br>
+begin</p>
+<p>notation<br>
+  less_eq2  (‹'(≤2')›) and<br>
+  less_eq2  (‹(‹notation=‹infix ≤››_/ ≤2 _)›  [51, 51] 50) and<br>
+  less2  (‹'(&lt;2')›) and<br>
+  less2  (‹(‹notation=‹infix &lt;››_/ &lt;2 _)›  [51, 51] 50)<br>
+end</p>
+<p>class preorder2 = ord2 +<br>
+  assumes less_le2_not_le2: "x &lt;2 y ⟷ x ≤2 y ∧ ¬ (y ≤2 x)"<br>
+  and order2_refl [iff]: "x ≤2 x"<br>
+  and order2_trans: "x ≤2 y ⟹ y ≤2 z ⟹ x ≤2 z"<br>
+begin</p>
+<p>lemma order2_le_trans: "x &lt;2 y ⟹ y &lt;2 z ⟹ x &lt;2 z"<br>
+  unfolding less_le2_not_le2<br>
+  using order2_trans by blast<br>
+end</p>
+<p>class order2 = preorder2 +<br>
+  assumes order2_antisym: "x ≤2 y ⟹ y ≤2 x ⟹ x = y"</p>
+<p>class order2_chain = order2 +<br>
+  assumes "∃x::(nat⇒'a::preorder2). ∀i. x i ≤2 x (Suc i)"<br>
+begin<br>
+(* We have succeeded, but the local context is weird: local facts now refer to e.g.<br>
+locale fixed variable less_eq2, which is distinct from polymorphic constant less_eq2 *)<br>
+lemma "x ≤2 y ⟹ y ≤2 z ⟹ x ≤2 z" by (fact order2_trans) (* fails *)<br>
+lemma "x ≤2 y ⟹ y ≤2 z ⟹ x ≤2 z" by (fact preorder2_class.order2_trans) (<em>succeeds</em>)<br>
+end</p>
+<p>(* Weirdly this works with base classes but with superclass ord (because it has no axioms maybe?)<br>
+*)<br>
+class order_chain_higher_sort = ord +<br>
+  assumes "∃x::(nat⇒'a::order). ∀i. x i ≤ x (Suc i)"</p>
+<p>end</p>
+<p><a href="/user_uploads/14278/cQbbiRkPyJmB1fGFd4FFKpG2/Repro2.thy">Repro2.thy</a></p>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

@@ -1,0 +1,396 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] List update pattern xs[i := f(xs!i) · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html">[isabelle] List update pattern xs[i := f(xs!i)</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="595733904"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595733904" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595733904">(May 18 2026 at 07:16)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used with this <br>
+pattern: xs[i := f(xs!i)], which is awkward to read. I would like a shorthand <br>
+for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.</p>
+<p><a href="/user_uploads/14278/eeu9pdhmCIec1zw6ULLopC-5/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="595756590"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595756590" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595756590">(May 18 2026 at 08:59)</a>:</h4>
+<p><strong>From:</strong> Norbert Schirmer &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>I would even argue that this should not only be syntax but the actual definition of list update and function update, just like it is already the case for record field updates. These “map” like updates compose nicely to nested structures.</p>
+<p>Regards,<br>
+Norbert</p>
+<p>--</p>
+<p>Norbert Schirmer (<a href="mailto:nschirmer@apple.com">nschirmer@apple.com</a>)<br>
+ SEG Formal Verification</p>
+<blockquote>
+<p>On 17. May 2026, at 11:36, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used with this pattern: xs[i := f(xs!i)], which is awkward to read. I would like a shorthand for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.</p>
+</blockquote>
+
+
+
+<a name="595767915"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595767915" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595767915">(May 18 2026 at 09:44)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>Seems reasonable. A possible alternative: xs[i, x := 2 * x + 5]</p>
+<p>On 5/17/26 11:36, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used <br>
+with this pattern: xs[i := f(xs!i)], which is awkward to read. I would <br>
+like a shorthand for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.</p>
+</blockquote>
+
+
+
+<a name="595788226"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595788226" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595788226">(May 18 2026 at 11:10)</a>:</h4>
+<p><strong>From:</strong> Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt;</p>
+<p>On Sun, 2026-05-17 at 11:36 +0200, Tobias Nipkow wrote:<br>
+We have the list update notation xs[i := x]. It is frequently used with this<br>
+pattern: xs[i := f(xs!i)], which is awkward to read. I would like a shorthand<br>
+for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>This is a good idea, but the proposed syntax is suggestive of an update to a list of functions.</p>
+<p>Maybe "xs[i := f _]" or "xs[i |-&gt; f]"?</p>
+<p>Best,<br>
+Tjark</p>
+<p>När du har kontakt med oss på Uppsala universitet med e-post så innebär det att vi behandlar dina personuppgifter. För att läsa mer om hur vi gör det kan du läsa här: <a href="http://www.uu.se/om-uu/dataskydd-personuppgifter/">http://www.uu.se/om-uu/dataskydd-personuppgifter/</a></p>
+<p>E-mailing Uppsala University means that we will process your personal data. For more information on how this is performed, please read here: <a href="http://www.uu.se/en/about-uu/data-protection-policy">http://www.uu.se/en/about-uu/data-protection-policy</a></p>
+
+
+
+<a name="595791217"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595791217" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595791217">(May 18 2026 at 11:24)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Norbert,</p>
+<p>You are saying that the update I proposed should be primitive? That could be <br>
+done. If it is defined in terms of the current update, there is no problem (even <br>
+less so if it is an abbreviation). But deriving the current one from the new one <br>
+would entail a lot of proof maintenance, I suspect.</p>
+<p>Tobias</p>
+<p>On 18/05/2026 10:58, Norbert Schirmer (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I would even argue that this should not only be syntax but the actual definition <br>
+of list update and function update, just like it is already the case for record <br>
+field updates. These “map” like updates compose nicely to nested structures.</p>
+<p>Regards,<br>
+Norbert</p>
+<p>--</p>
+<p>Norbert Schirmer (<a href="mailto:nschirmer@apple.com">nschirmer@apple.com</a>)<br>
+ SEG Formal Verification</p>
+<blockquote>
+<p>On 17. May 2026, at 11:36, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used with this <br>
+pattern: xs[i := f(xs!i)], which is awkward to read. I would like a shorthand <br>
+for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.<br>
+</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/ODJgKmh8vFHEEinJI8UTn18G/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="595795830"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595795830" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595795830">(May 18 2026 at 11:45)</a>:</h4>
+<p><strong>From:</strong> Norbert Schirmer &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>When doing the theory from scratch I would really prefer the new one (map-like) to be the primitive notion and the current one to be a syntactic abbreviation (just as with records). <br>
+With the current ones as primitives it gets really messy when you do nested updates. In the first place you always have to deal with both “lookup”, e.g. nth and “update”, e.g. list_update, instead of just composing update functions. Nesting both such lookup and updates instead of just nesting map-like updates is not nice. I understand that it might be too much of an effort to change the definition -- it seams feasible for an AI to refactor the library and the AFP though. But I would rather prefer a new constant (with the obvious simp lemmas) for the map-like update instead of just syntax. </p>
+<p>Regards,<br>
+Norbert</p>
+<p>--</p>
+<p>Norbert Schirmer (<a href="mailto:nschirmer@apple.com">nschirmer@apple.com</a>)<br>
+ SEG Formal Verification</p>
+<blockquote>
+<p>On 18. May 2026, at 13:23, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Norbert,</p>
+<p>You are saying that the update I proposed should be primitive? That could be done. If it is defined in terms of the current update, there is no problem (even less so if it is an abbreviation). But deriving the current one from the new one would entail a lot of proof maintenance, I suspect.</p>
+<p>Tobias</p>
+<p>On 18/05/2026 10:58, Norbert Schirmer (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>I would even argue that this should not only be syntax but the actual definition of list update and function update, just like it is already the case for record field updates. These “map” like updates compose nicely to nested structures.<br>
+Regards,<br>
+Norbert<br>
+--<br>
+Norbert Schirmer (<a href="mailto:nschirmer@apple.com">nschirmer@apple.com</a>)<br>
+ SEG Formal Verification</p>
+<blockquote>
+<p>On 17. May 2026, at 11:36, Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt; wrote:</p>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used with this pattern: xs[i := f(xs!i)], which is awkward to read. I would like a shorthand for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.<br>
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="595801673"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/595801673" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#595801673">(May 18 2026 at 12:09)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>On 18/05/2026 11:43, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Seems reasonable. A possible alternative: xs[i, x := 2 * x + 5]</p>
+</blockquote>
+<p>I like that, in principle. Not sure about the exact syntax.</p>
+<ul>
+<li>
+<p>Maybe "=&gt;" instead of ":=" ?</p>
+</li>
+<li>
+<p>"," seems a bit arbitrary. Maybe ":"?<br>
+  I had hoped the whole device could be extended to multiple dimensions, eg<br>
+  xs[i,j: x =&gt; ...]<br>
+  But there may be some established convention in the "lenses" community that I <br>
+am unaware of.</p>
+</li>
+</ul>
+<p>Tobias</p>
+<blockquote>
+<p>On 5/17/26 11:36, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used with this <br>
+pattern: xs[i := f(xs!i)], which is awkward to read. I would like a shorthand <br>
+for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.<br>
+</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/mX5YTwi-iH2losPL1sHDj3Fk/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="598013062"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/598013062" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#598013062">(May 27 2026 at 07:13)</a>:</h4>
+<p><strong>From:</strong> Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>The notation like<br>
+xs[i: x =&gt; 2*x]<br>
+is essentially<br>
+xs[i: f]<br>
+where f is written in a "Lean-like lambda notation". Such an ad-hoc <br>
+deviation from the Isabelle lambda notation may be too casual. And it <br>
+will force the explicit formulation even for functions with names.<br>
+Which leads (back) to the idea:<br>
+xs[i =&gt; f]<br>
+where =&gt;<br>
+becomes exactly the abbreviation for the pattern<br>
+i := f(xs!i)<br>
+This happens to be the very first of Tobias' suggestions, just =&gt; <br>
+instead of ::=. I like it.</p>
+<p>Stepan</p>
+<p>On 18-May-26 2:09 PM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>On 18/05/2026 11:43, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Seems reasonable. A possible alternative: xs[i, x := 2 * x + 5]</p>
+</blockquote>
+<p>I like that, in principle. Not sure about the exact syntax.</p>
+<ul>
+<li>
+<p>Maybe "=&gt;" instead of ":=" ?</p>
+</li>
+<li>
+<p>"," seems a bit arbitrary. Maybe ":"?<br>
+ I had hoped the whole device could be extended to multiple <br>
+dimensions, eg<br>
+ xs[i,j: x =&gt; ...]<br>
+ But there may be some established convention in the "lenses" <br>
+community that I am unaware of.</p>
+</li>
+</ul>
+<p>Tobias</p>
+<blockquote>
+<p>On 5/17/26 11:36, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used <br>
+with this pattern: xs[i := f(xs!i)], which is awkward to read. I <br>
+would like a shorthand for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<a name="598021657"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/598021657" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#598021657">(May 27 2026 at 08:01)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Good point. I now think that something like xs[i ?? f] is the right notation but <br>
+would not use =&gt; for ?? because it does look like a function with argument i.</p>
+<p>Tobias</p>
+<p>On 27/05/2026 09:12, Stepan Holub (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>The notation like<br>
+xs[i: x =&gt; 2*x]<br>
+is essentially<br>
+xs[i: f]<br>
+where f is written in a "Lean-like lambda notation". Such an ad-hoc deviation <br>
+from the Isabelle lambda notation may be too casual. And it will force the <br>
+explicit formulation even for functions with names.<br>
+Which leads (back) to the idea:<br>
+xs[i =&gt; f]<br>
+where =&gt;<br>
+becomes exactly the abbreviation for the pattern<br>
+i := f(xs!i)<br>
+This happens to be the very first of Tobias' suggestions, just =&gt; instead <br>
+of ::=. I like it.</p>
+<p>Stepan</p>
+<p>On 18-May-26 2:09 PM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>On 18/05/2026 11:43, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Seems reasonable. A possible alternative: xs[i, x := 2 * x + 5]</p>
+</blockquote>
+<p>I like that, in principle. Not sure about the exact syntax.</p>
+<ul>
+<li>
+<p>Maybe "=&gt;" instead of ":=" ?</p>
+</li>
+<li>
+<p>"," seems a bit arbitrary. Maybe ":"?<br>
+ I had hoped the whole device could be extended to multiple dimensions, eg<br>
+ xs[i,j: x =&gt; ...]<br>
+ But there may be some established convention in the "lenses" community that I <br>
+am unaware of.</p>
+</li>
+</ul>
+<p>Tobias</p>
+<blockquote>
+<p>On 5/17/26 11:36, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used with this <br>
+pattern: xs[i := f(xs!i)], which is awkward to read. I would like a <br>
+shorthand for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/t8XsEaahH_cyNiROLCZAwNo2/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="598024316"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20List%20update%20pattern%20xs%5Bi%20%3A%3D%20f%28xs%21i%29/near/598024316" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20List.20update.20pattern.20xs.5Bi.20.3A.3D.20f.28xs.21i.29.html#598024316">(May 27 2026 at 08:14)</a>:</h4>
+<p><strong>From:</strong> Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>True. Perhaps  ?? could feature \circ, since f(xs!i) is essentially (f <br>
+\circ xs) i.</p>
+<p>Stepan</p>
+<p>On 27-May-26 10:01 AM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Good point. I now think that something like xs[i ?? f] is the right <br>
+notation but would not use =&gt; for ?? because it does look like a <br>
+function with argument i.</p>
+<p>Tobias</p>
+<p>On 27/05/2026 09:12, Stepan Holub (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>The notation like<br>
+xs[i: x =&gt; 2*x]<br>
+is essentially<br>
+xs[i: f]<br>
+where f is written in a "Lean-like lambda notation". Such an ad-hoc <br>
+deviation from the Isabelle lambda notation may be too casual. And it <br>
+will force the explicit formulation even for functions with names.<br>
+Which leads (back) to the idea:<br>
+xs[i =&gt; f]<br>
+where =&gt;<br>
+becomes exactly the abbreviation for the pattern<br>
+i := f(xs!i)<br>
+This happens to be the very first of Tobias' suggestions, just =&gt; <br>
+instead of ::=. I like it.</p>
+<p>Stepan</p>
+<p>On 18-May-26 2:09 PM, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>On 18/05/2026 11:43, Manuel Eberl wrote:</p>
+<blockquote>
+<p>Seems reasonable. A possible alternative: xs[i, x := 2 * x + 5]</p>
+</blockquote>
+<p>I like that, in principle. Not sure about the exact syntax.</p>
+<ul>
+<li>
+<p>Maybe "=&gt;" instead of ":=" ?</p>
+</li>
+<li>
+<p>"," seems a bit arbitrary. Maybe ":"?<br>
+ I had hoped the whole device could be extended to multiple <br>
+dimensions, eg<br>
+ xs[i,j: x =&gt; ...]<br>
+ But there may be some established convention in the "lenses" <br>
+community that I am unaware of.</p>
+</li>
+</ul>
+<p>Tobias</p>
+<blockquote>
+<p>On 5/17/26 11:36, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>We have the list update notation xs[i := x]. It is frequently used <br>
+with this pattern: xs[i := f(xs!i)], which is awkward to read. I <br>
+would like a shorthand for this pattern, eg xs[i ::= f]. Examples:</p>
+<p>xs[i ::= Suc]<br>
+xs[i ::= (%x. 2*x+5)]</p>
+<p>There may well be better alternatives! Comments?</p>
+<p>Tobias</p>
+<p>PS Function update notation should be generalized analogously.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

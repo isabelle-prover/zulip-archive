@@ -1,0 +1,84 @@
+<html>
+<head><meta charset="utf-8"><title>How to disable veriT · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html">How to disable veriT</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="594077203"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594077203" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yosuke Ito <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594077203">(May 10 2026 at 08:23)</a>:</h4>
+<p>I think the the zombie veriT process problem still remains in Isabelle2025-2. I changed the setting of <code>SLEDGEHAMMER_PROVERS</code> to exclude veriT. The command</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">isabelle</span><span class="w"> </span><span class="n">getenv</span><span class="w"> </span><span class="n">SLEDGEHAMMER_PROVERS</span>
+</code></pre></div>
+<p>produces</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">SLEDGEHAMMER_PROVERS</span><span class="o">=</span><span class="n">cvc5</span><span class="w"> </span><span class="n">z3</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">spass</span><span class="w"> </span><span class="n">vampire</span><span class="w"> </span><span class="n">zipperposition</span>
+</code></pre></div>
+<p>as desired. However, when I invoke sledgehammer, veriT pops up again, and goes into an infinite loop in the background. How can I disable veriT altogether?</p>
+
+
+
+<a name="594670406"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594670406" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594670406">(May 12 2026 at 20:13)</a>:</h4>
+<p><a href="https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/sledgehammer.pdf">https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/sledgehammer.pdf</a>,  so <code>sledgehammer_params[prover=...]</code></p>
+
+
+
+<a name="594670563"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594670563" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594670563">(May 12 2026 at 20:14)</a>:</h4>
+<p>that being said, sledgehammer will try to reconstruct goals with the smt tactic and that is not option controlled. You could use <code>no_smt_proofs</code>, but that also deactivates z3.</p>
+
+
+
+<a name="594670940"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594670940" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594670940">(May 12 2026 at 20:15)</a>:</h4>
+<p>Alternatively, you could add the option <code>--max-time=30</code> to veriT</p>
+
+
+
+<a name="594671048"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594671048" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594671048">(May 12 2026 at 20:16)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span><span class="w"> </span><span class="o">[[</span><span class="n">verit_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"--proof-with-sharing --max-time=30"</span><span class="o">]]</span>
+</code></pre></div>
+<p>That way, you keep everything working, but veriT should kill itself after 30s if isabelle killing fails</p>
+
+
+
+<a name="594671151"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594671151" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594671151">(May 12 2026 at 20:16)</a>:</h4>
+<p>I really would like to know why killing processes is not working</p>
+
+
+
+<a name="594675545"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594675545" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lukas Stevens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594675545">(May 12 2026 at 20:36)</a>:</h4>
+<p>This is probably because veriT lets subprocesses escape its PID group.</p>
+
+
+
+<a name="594739893"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594739893" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594739893">(May 13 2026 at 04:48)</a>:</h4>
+<p>veriT does not use subprocesses</p>
+
+
+
+<a name="594801216"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/594801216" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yosuke Ito <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#594801216">(May 13 2026 at 09:52)</a>:</h4>
+<p><span class="user-mention" data-user-id="233198">@Mathias Fleury</span> <br>
+Thank you very much for your help. I'll try this one.</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span><span class="w"> </span><span class="o">[[</span><span class="n">verit_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"--proof-with-sharing --max-time=30"</span><span class="o">]]</span>
+</code></pre></div>
+
+
+
+<a name="595185080"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20to%20disable%20veriT/near/595185080" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> ADVANCED TECHNOLOGIES AND RESEARCH <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20to.20disable.20veriT.html#595185080">(May 14 2026 at 23:11)</a>:</h4>
+<p>I was wondering if Isabelle hol has ever been utilized to verify and validated video game source code in C???  this might be a ridiculous question.</p>
+
+
+
+<hr><p>Last updated: Jul 01 2026 at 21:39 UTC</p>
+</html>

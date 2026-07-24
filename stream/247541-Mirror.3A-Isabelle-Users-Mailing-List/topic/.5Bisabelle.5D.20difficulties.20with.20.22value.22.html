@@ -1,0 +1,259 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] difficulties with &quot;value&quot; · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html">[isabelle] difficulties with &quot;value&quot;</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="594798883"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20difficulties%20with%20%22value%22/near/594798883" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html#594798883">(May 13 2026 at 09:41)</a>:</h4>
+<p><strong>From:</strong> Jonas Lochmannn &lt;<a href="mailto:jonas.lochmann@informatik.uni-halle.de">jonas.lochmann@informatik.uni-halle.de</a>&gt;</p>
+<p>Hello,</p>
+<p>I am a beginner with Isabelle. I want to work with a certain data<br>
+structure in Isabelle and there is an entry in the AFP for it.</p>
+<p>My very simple test theory is this one:</p>
+<p>theory Scratch<br>
+  imports ROBDD.BDD_Code<br>
+begin<br>
+  value "(1::int) + (2::int)"<br>
+  value emptyci<br>
+end</p>
+<p>Adding two numbers works. Printing an (internal) representation of the<br>
+data structure does not work:</p>
+<p>structure Uint32:<br>
+  sig<br>
+    val shiftl: Word32.word -&gt; int -&gt; Word32.word<br>
+    val shiftr: Word32.word -&gt; int -&gt; Word32.word<br>
+    val shiftr_signed: Word32.word -&gt; int -&gt; Word32.word<br>
+    val test_bit: Word32.word -&gt; int -&gt; bool<br>
+  end<br>
+structure Bit_Shifts:<br>
+  sig val drop: int -&gt; int -&gt; int eqtype int val push: int -&gt; int -&gt; int end<br>
+Error: Pattern expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: Pattern expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: ) expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: = expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: end expected but ) was found<br>
+At (line 217 of "generated code")<br>
+Error: ; expected but ) was found<br>
+At (line 217 of "generated code")<br>
+Exception- Fail "Static Errors" raised</p>
+<p>I have no clue what the messages want to tell me. Are limitations of the<br>
+"value" statement expected/normal? Any experiences regarding this and<br>
+where to start resolving it?</p>
+<p>Best regards</p>
+<p>Jonas</p>
+
+
+
+<a name="594813967"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20difficulties%20with%20%22value%22/near/594813967" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html#594813967">(May 13 2026 at 10:50)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>The value command is only meant to work for executable types and functions. <br>
+Whether emptyci is meant to be executable, the authors of the package can tell <br>
+you. Normally things should not go that drastically wrong.</p>
+<p>Tobias</p>
+<p>On 13/05/2026 11:10, Jonas Lochmannn wrote:</p>
+<blockquote>
+<p>Hello,</p>
+<p>I am a beginner with Isabelle. I want to work with a certain data<br>
+structure in Isabelle and there is an entry in the AFP for it.</p>
+<p>My very simple test theory is this one:</p>
+<p>theory Scratch<br>
+   imports ROBDD.BDD_Code<br>
+begin<br>
+   value "(1::int) + (2::int)"<br>
+   value emptyci<br>
+end</p>
+<p>Adding two numbers works. Printing an (internal) representation of the<br>
+data structure does not work:</p>
+<p>structure Uint32:<br>
+   sig<br>
+     val shiftl: Word32.word -&gt; int -&gt; Word32.word<br>
+     val shiftr: Word32.word -&gt; int -&gt; Word32.word<br>
+     val shiftr_signed: Word32.word -&gt; int -&gt; Word32.word<br>
+     val test_bit: Word32.word -&gt; int -&gt; bool<br>
+   end<br>
+structure Bit_Shifts:<br>
+   sig val drop: int -&gt; int -&gt; int eqtype int val push: int -&gt; int -&gt; int end<br>
+Error: Pattern expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: Pattern expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: ) expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: = expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: end expected but ) was found<br>
+At (line 217 of "generated code")<br>
+Error: ; expected but ) was found<br>
+At (line 217 of "generated code")<br>
+Exception- Fail "Static Errors" raised</p>
+<p>I have no clue what the messages want to tell me. Are limitations of the<br>
+"value" statement expected/normal? Any experiences regarding this and<br>
+where to start resolving it?</p>
+<p>Best regards</p>
+<p>Jonas<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/EGpTDb6Kfw6RrOwDZe0p881Z/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="594814510"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20difficulties%20with%20%22value%22/near/594814510" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html#594814510">(May 13 2026 at 10:53)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>My guess would be that this has something to do with the code printing <br>
+for the "word" type. I vaguely recall running into similar issues when I <br>
+did some experiments with the word type. When using "export_code" <br>
+everything works fine, but the "value" command does not like it.</p>
+<p>Someone who is familiar with the code generator would probably be the <br>
+right person to look into this.</p>
+<p>Manuel</p>
+<p>On 13/05/2026 12:50, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>The value command is only meant to work for executable types and <br>
+functions. Whether emptyci is meant to be executable, the authors of <br>
+the package can tell you. Normally things should not go that <br>
+drastically wrong.</p>
+<p>Tobias</p>
+<p>On 13/05/2026 11:10, Jonas Lochmannn wrote:</p>
+<blockquote>
+<p>Hello,</p>
+<p>I am a beginner with Isabelle. I want to work with a certain data<br>
+structure in Isabelle and there is an entry in the AFP for it.</p>
+<p>My very simple test theory is this one:</p>
+<p>theory Scratch<br>
+   imports ROBDD.BDD_Code<br>
+begin<br>
+   value "(1::int) + (2::int)"<br>
+   value emptyci<br>
+end</p>
+<p>Adding two numbers works. Printing an (internal) representation of the<br>
+data structure does not work:</p>
+<p>structure Uint32:<br>
+   sig<br>
+     val shiftl: Word32.word -&gt; int -&gt; Word32.word<br>
+     val shiftr: Word32.word -&gt; int -&gt; Word32.word<br>
+     val shiftr_signed: Word32.word -&gt; int -&gt; Word32.word<br>
+     val test_bit: Word32.word -&gt; int -&gt; bool<br>
+   end<br>
+structure Bit_Shifts:<br>
+   sig val drop: int -&gt; int -&gt; int eqtype int val push: int -&gt; int -&gt; <br>
+int end<br>
+Error: Pattern expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: Pattern expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: ) expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: = expected but raise was found<br>
+At (line 217 of "generated code")<br>
+Error: end expected but ) was found<br>
+At (line 217 of "generated code")<br>
+Error: ; expected but ) was found<br>
+At (line 217 of "generated code")<br>
+Exception- Fail "Static Errors" raised</p>
+<p>I have no clue what the messages want to tell me. Are limitations of the<br>
+"value" statement expected/normal? Any experiences regarding this and<br>
+where to start resolving it?</p>
+<p>Best regards</p>
+<p>Jonas</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="594816450"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20difficulties%20with%20%22value%22/near/594816450" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html#594816450">(May 13 2026 at 11:04)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>I second Manuel's suspicion. Note that the following correctly displays <br>
+the representation of the empty BDD:</p>
+<p>ML_val ‹<br>
+     @{code emptyci} ()</p>
+<p>›</p>
+<p>Also note that emptyci is imperative HOL code. No idea how value copes <br>
+with Imperative HOL.</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 13/05/2026 12:53, Manuel Eberl wrote:</p>
+<blockquote>
+<p>theory Scratch<br>
+   imports ROBDD.BDD_Code<br>
+begin<br>
+   value "(1::int) + (2::int)"<br>
+   value emptyci<br>
+end</p>
+</blockquote>
+
+
+
+<a name="595045722"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20difficulties%20with%20%22value%22/near/595045722" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html#595045722">(May 14 2026 at 09:37)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<p>Hi Jonas,</p>
+<blockquote>
+<p>I am a beginner with Isabelle. I want to work with a certain data<br>
+structure in Isabelle and there is an entry in the AFP for it.</p>
+</blockquote>
+<p>note that when reporting specific behavior it is important to mention <br>
+the Isabelle release you are using – presumably, Isabelle2025-2.</p>
+<p>(The issue I discovered during analysis seems to be long-standing, though).</p>
+<p>The problem is in session HOL.Imperative_HOL where a code setup is fragile.</p>
+<p>You can amend that in an ad-hoc manner using</p>
+<blockquote>
+<p>declare [[code drop: "Code_Evaluation.term_of :: 'a::typerep Heap ⇒ Code_Evaluation.term"]]</p>
+</blockquote>
+<p>Then you get a more proper error message.</p>
+<p>The underlying issue is that there is no straightforward way to <br>
+reconstruct a logical »Heap« value from an ML term.</p>
+<p>Hope this helps,<br>
+    Florian</p>
+<p><a href="/user_uploads/14278/5_ByV2gNqzHdBwlPWwL9ubFs/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/UuMWZRCtiCyMQnrjmGAC3dBS/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="598277676"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20difficulties%20with%20%22value%22/near/598277676" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20difficulties.20with.20.22value.22.html#598277676">(May 28 2026 at 09:04)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;</p>
+<p>For the record: this has been addressed in rev. 9e90c764f943</p>
+<p>Florian</p>
+<p>Am 14.05.26 um 11:36 schrieb Florian Haftmann:</p>
+<blockquote>
+<p>Hi Jonas,</p>
+<blockquote>
+<p>I am a beginner with Isabelle. I want to work with a certain data<br>
+structure in Isabelle and there is an entry in the AFP for it.</p>
+</blockquote>
+<p>note that when reporting specific behavior it is important to mention <br>
+the Isabelle release you are using – presumably, Isabelle2025-2.</p>
+<p>(The issue I discovered during analysis seems to be long-standing, though).</p>
+<p>The problem is in session HOL.Imperative_HOL where a code setup is fragile.</p>
+<p>You can amend that in an ad-hoc manner using</p>
+<blockquote>
+<p>declare [[code drop: "Code_Evaluation.term_of :: 'a::typerep Heap ⇒ <br>
+Code_Evaluation.term"]]</p>
+</blockquote>
+<p>Then you get a more proper error message.</p>
+<p>The underlying issue is that there is no straightforward way to <br>
+reconstruct a logical »Heap« value from an ML term.</p>
+<p>Hope this helps,<br>
+     Florian<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/AHZMVMd25WuWY-766eQJ_7w_/OpenPGP_0xA707172232CFA4E9.asc">OpenPGP_0xA707172232CFA4E9.asc</a><br>
+<a href="/user_uploads/14278/klTNXw4W4ALrMhAR2XPycUhB/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

@@ -1,0 +1,144 @@
+<html>
+<head><meta charset="utf-8"><title>Printing of dummy terms in syntax translations · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Printing.20of.20dummy.20terms.20in.20syntax.20translations.html">Printing of dummy terms in syntax translations</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="608685301"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Printing%20of%20dummy%20terms%20in%20syntax%20translations/near/608685301" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Printing.20of.20dummy.20terms.20in.20syntax.20translations.html#608685301">(Jul 07 2026 at 11:18)</a>:</h4>
+<p><strong>From:</strong> Lukas Stevens &lt;lukas.stevens+isabelle-users@in.tum.de&gt;</p>
+<p>Dear Isabelle developers,</p>
+<p>I am working on the type annotation algorithm in <br>
+~~/src/HOL/Tools/Sledgehammer/sledgehammer_isar_annotate.ML that is used <br>
+by some interactive tools, e.g., Sledgehammer and Sketch and Explore. <br>
+The algorithm places type annotations in terms such that printing and <br>
+then parsing them again yields a term with the same type as the original <br>
+term. This is crucial when trying to output well-formed Isar proofs.</p>
+<p>While testing the algorithm, I ran into some unfortunate behavior that <br>
+results from the interaction of Syntax_Trans.atomic_abs_tr' and the <br>
+syntax translation case_prod_tr'/case_prod_guess_names_tr' in <br>
+Product_Type.thy. You can observe this behavior in <br>
+Isabelle/333ffbe82f5f, where</p>
+<p>term "λ_. 1 :: nat"</p>
+<p>yields "λ_. 1" :: "'a ⇒ nat" while</p>
+<p>term "λ(x, _). 1 :: nat"</p>
+<p>gives "λ(x, uu_). 1" :: "'a × 'b ⇒ nat", which contains an internal <br>
+variable uu_. The latter term cannot be parsed after printing it due to <br>
+the internal variable. Note that the same behavior surfaces for other <br>
+users of Syntax_Trans.atomic_abs_tr' such as the translations for SOME <br>
+and set comprehensions.</p>
+<p>The reason for the first term being printed without internal variables <br>
+is the changeset Isabelle/41986849fee0 that adds support for the syntax <br>
+constant _idtdummy (printed as _) to Syntax_Trans.abs_tr'/mk_binder_tr'; <br>
+however, case_prod_tr'/case_prod_guess_names_tr' internally uses <br>
+Syntax_Trans.atomic_abs_tr', which has no support for _idtdummy. This <br>
+could be changed by a 4-line modification of Syntax_Trans.atomic_abs_tr' <br>
+(see attached diff), which produces the right result on the surface, <br>
+although I am not sure if there is any collateral.</p>
+<p>Anecdotally, I know that users of Sketch and Explore have stumbled over <br>
+this behavior.</p>
+<p>Cheers,</p>
+<p>Lukas</p>
+<p><a href="/user_uploads/14278/B-MbSf_eOMfrd5lbQioZwY1B/atomic_abs_tr.diff">atomic_abs_tr.diff</a></p>
+
+
+
+<a name="609482569"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Printing%20of%20dummy%20terms%20in%20syntax%20translations/near/609482569" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Printing.20of.20dummy.20terms.20in.20syntax.20translations.html#609482569">(Jul 10 2026 at 15:19)</a>:</h4>
+<p><strong>From:</strong> Lukas Stevens &lt;lukas.stevens+isabelle-users@in.tum.de&gt;</p>
+<p>After consulting with Tobias and Larry, I have now inspected all users <br>
+of Syntax_Trans.atomic_abs_tr' in the distribution and the AFP and <br>
+propose the attached changes. Except for a change in <br>
+HOL-Probability.Probability_Measure all changes are concerned with the <br>
+print_translation of Collect in HOL.Set and its clones. The change to <br>
+the print translation of Collect is necessary, since <br>
+Syntax_Trans.atomic_abs_tr' now might return _idtdummy instead of always <br>
+a variable. This changes the behavior of</p>
+<p>term "{_. True}"</p>
+<p>from outputting "{uu_. True}" to "{_. True}", which is arguably nicer. <br>
+The change to HOL-Probability.Probability_Measure is perhaps overly <br>
+defensive because the translation only works on bounded set <br>
+comprehensions: e.g., for a bounded set comprehension {x. x ∈ A ∧ True} <br>
+the bound variable x is always used, so it can never be replaced by a <br>
+dummy. Allowing dummies in bounded set comprehensions would therefore <br>
+require significant refinements. I have checked all other users of <br>
+Syntax_Trans.atomic_abs_tr' and convinced myself that no changes are <br>
+necessary. The AFP builds successfully with these changes: <br>
+<a href="https://build.proof.cit.tum.de/build?id=38dc54fc-0a32-4755-a0b3-496107c8d016">https://build.proof.cit.tum.de/build?id=38dc54fc-0a32-4755-a0b3-496107c8d016</a>.</p>
+<p>Tobias has pointed out that he is the original author of the file, but <br>
+judging from the more recent history Makarius is the current owner of <br>
+the file. Makarius, can you comment on how to proceed?</p>
+<p>Cheers,</p>
+<p>Lukas</p>
+<p>On 07.07.26 13:09, Lukas Stevens wrote:</p>
+<blockquote>
+<p>Dear Isabelle developers,</p>
+<p>I am working on the type annotation algorithm in <br>
+~~/src/HOL/Tools/Sledgehammer/sledgehammer_isar_annotate.ML that is <br>
+used by some interactive tools, e.g., Sledgehammer and Sketch and <br>
+Explore. The algorithm places type annotations in terms such that <br>
+printing and then parsing them again yields a term with the same type <br>
+as the original term. This is crucial when trying to output <br>
+well-formed Isar proofs.</p>
+<p>While testing the algorithm, I ran into some unfortunate behavior that <br>
+results from the interaction of Syntax_Trans.atomic_abs_tr' and the <br>
+syntax translation case_prod_tr'/case_prod_guess_names_tr' in <br>
+Product_Type.thy. You can observe this behavior in <br>
+Isabelle/333ffbe82f5f, where</p>
+<p>term "λ_. 1 :: nat"</p>
+<p>yields "λ_. 1" :: "'a ⇒ nat" while</p>
+<p>term "λ(x, _). 1 :: nat"</p>
+<p>gives "λ(x, uu_). 1" :: "'a × 'b ⇒ nat", which contains an internal <br>
+variable uu_. The latter term cannot be parsed after printing it due <br>
+to the internal variable. Note that the same behavior surfaces for <br>
+other users of Syntax_Trans.atomic_abs_tr' such as the translations <br>
+for SOME and set comprehensions.</p>
+<p>The reason for the first term being printed without internal variables <br>
+is the changeset Isabelle/41986849fee0 that adds support for the <br>
+syntax constant _idtdummy (printed as _) to <br>
+Syntax_Trans.abs_tr'/mk_binder_tr'; however, <br>
+case_prod_tr'/case_prod_guess_names_tr' internally uses <br>
+Syntax_Trans.atomic_abs_tr', which has no support for _idtdummy. This <br>
+could be changed by a 4-line modification of <br>
+Syntax_Trans.atomic_abs_tr' (see attached diff), which produces the <br>
+right result on the surface, although I am not sure if there is any <br>
+collateral.</p>
+<p>Anecdotally, I know that users of Sketch and Explore have stumbled <br>
+over this behavior.</p>
+<p>Cheers,</p>
+<p>Lukas</p>
+</blockquote>
+<p><a href="/user_uploads/14278/ILN9zvkZj_Td1fUlv3WpNDga/atomic_abs_tr.diff">atomic_abs_tr.diff</a><br>
+<a href="/user_uploads/14278/6PnVZHa6vtjb4f9fxUQdbayI/atomic_abs_tr_AFP.diff">atomic_abs_tr_AFP.diff</a></p>
+
+
+
+<a name="609518049"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Printing%20of%20dummy%20terms%20in%20syntax%20translations/near/609518049" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Printing.20of.20dummy.20terms.20in.20syntax.20translations.html#609518049">(Jul 10 2026 at 18:15)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 10/07/2026 17:11, Lukas Stevens wrote:</p>
+<blockquote>
+<p>Tobias has pointed out that he is the original author of the file, but judging <br>
+from the more recent history Makarius is the current owner of the file. <br>
+Makarius, can you comment on how to proceed?</p>
+</blockquote>
+<p>Tobias started the inner syntax engine &gt; 30 years ago. I have reworked it so <br>
+many times since then that I don't remember how often it has changed.</p>
+<p>In Isabelle development, we don't have "owners" of anything, but individuals <br>
+who are personally responsible for certain parts of the system.</p>
+<p>I am personally responsible for everything around inner syntax.</p>
+<p>I am presently busy elsewhere, and my mail folder is lagging behind several <br>
+months.</p>
+<p>Re-openening a thread just after a few days of inactivity is a waste of time <br>
+--- it slows down the development process for no particular reason.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

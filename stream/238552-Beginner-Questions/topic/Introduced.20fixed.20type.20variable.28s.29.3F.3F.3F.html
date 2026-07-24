@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Introduced fixed type variable(s)??? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html">Introduced fixed type variable(s)???</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="612102054"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Introduced%20fixed%20type%20variable%28s%29%3F%3F%3F/near/612102054" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html#612102054">(Jul 22 2026 at 10:38)</a>:</h4>
+<p><img alt="image.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="1003x634" data-original-src="/user_uploads/14278/AwEw4zKTnmnMjI8UVEzB0QHQ/image.png" src="/user_uploads/thumbnail/14278/AwEw4zKTnmnMjI8UVEzB0QHQ/image.png/840x560.webp"><br>
+<img alt="image.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="963x520" data-original-src="/user_uploads/14278/1Xj5moV1WEvObv0ElyCWAkXU/image.png" src="/user_uploads/thumbnail/14278/1Xj5moV1WEvObv0ElyCWAkXU/image.png/840x560.webp"></p>
+<p>What even is the difference between those instances such that I need to like </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fix</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n n-Type">'b</span>
+</code></pre></div>
+<p>in the second one or whatever.</p>
+
+
+
+<a name="612200863"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Introduced%20fixed%20type%20variable%28s%29%3F%3F%3F/near/612200863" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html#612200863">(Jul 22 2026 at 18:16)</a>:</h4>
+<p>the types to infer are "deferred" to the next line</p>
+
+
+
+<a name="612201037"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Introduced%20fixed%20type%20variable%28s%29%3F%3F%3F/near/612201037" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html#612201037">(Jul 22 2026 at 18:17)</a>:</h4>
+<p>in <code>a = a</code>, you have no restriction, so you end up with type <code>'b</code>, while in the first case <code>F a</code> restricts <code>a</code> to be exactly the right type</p>
+
+
+
+<a name="612204381"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Introduced%20fixed%20type%20variable%28s%29%3F%3F%3F/near/612204381" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html#612204381">(Jul 22 2026 at 18:33)</a>:</h4>
+<p>I don't understand. what kinda restriction does F a put on a's type?</p>
+
+
+
+<a name="612440324"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Introduced%20fixed%20type%20variable%28s%29%3F%3F%3F/near/612440324" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html#612440324">(Jul 23 2026 at 19:58)</a>:</h4>
+<p>F has a type due to the lemma</p>
+
+
+
+<a name="612440450"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Introduced%20fixed%20type%20variable%28s%29%3F%3F%3F/near/612440450" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F.html#612440450">(Jul 23 2026 at 19:59)</a>:</h4>
+<p>the type is inferred there</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

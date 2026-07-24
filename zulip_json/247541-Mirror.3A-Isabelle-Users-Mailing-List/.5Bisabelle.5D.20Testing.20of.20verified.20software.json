@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nHi Gerwin, I was wondering: to what extent do you use testing to validate seL4: at all? Performance?</p>\n<p>Larry</p>",
+        "id": 507547164,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1742721940
+    },
+    {
+        "content": "<p>From: Gerwin Klein &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\nHi Larry,</p>\n<p>Not sure if you meant to send this to the list, but happy to answer there in case people want to know.</p>\n<p>We do have two test suites for seL4, one for performance tests (<a href=\"https://github.com/seL4/sel4bench/\">https://github.com/seL4/sel4bench/</a>) and one for functional tests (<a href=\"https://github.com/seL4/sel4test\">https://github.com/seL4/sel4test</a>).</p>\n<p>There are separate classes of things to test:</p>\n<ul>\n<li>\n<p>Code in the verified kernel that is left as an assumption, e.g. machine interfaces such as caching. These can be tested — maybe not exhaustively, but better than not tested at all. This has a fairly high density of tests.</p>\n</li>\n<li>\n<p>Code in unverified configurations of the kernel — things that are either not yet verified or are only for debugging or are for platforms that are unverified.</p>\n</li>\n<li>\n<p>Tests for verified code to confirm expectations: this is less about coverage, more about usability and confirming that the API is what the developers were intending (as opposed to what the specification says or what is implemented). It is also helpful when such tests break when people make changes to the code before we attempt to verify such changes.</p>\n</li>\n<li>\n<p>Tests for verified code that targets non-timing/scheduling properties. These properties are not covered by the verification, and are not necessarily just for performance. Some of these could in theory be verified if we added a more interesting model of time.</p>\n</li>\n</ul>\n<p>In addition to the test suites, there are also integration tests with various user-level libraries and frameworks to make sure that they still work (or are updated appropriately) when we make a change to the kernel API.</p>\n<p>Cheers,<br>\nGerwin</p>\n<p>On 23 Mar 2025, at 20:25, Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt; wrote:</p>\n<p>Hi Gerwin, I was wondering: to what extent do you use testing to validate seL4: at all? Performance?</p>\n<p>Larry</p>",
+        "id": 507648356,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1742792156
+    }
+]

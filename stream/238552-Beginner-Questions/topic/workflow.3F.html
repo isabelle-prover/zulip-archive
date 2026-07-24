@@ -1,0 +1,72 @@
+<html>
+<head><meta charset="utf-8"><title>workflow? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html">workflow?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="596885589"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596885589" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> András Salamon <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596885589">(May 22 2026 at 01:24)</a>:</h4>
+<p>I've been working with Claude Code using <code>isabelle build</code> as the source of ground truth, editing theories on disk and avoiding the IDE. For my project this has worked well and I now have a proof of the first main result. This takes about 30s to build. However, the cache system doesn't behave like I expected (each theory is rebuilt within a session) and the only approach that I have found to work as the project grows is to split into multiple sessions.</p>
+<p>Is splitting into many sessions the right workflow, or is there a better approach that people tend to use?</p>
+<p>Most of the time is spent waiting for <code>isabelle build</code> to generate an error or to time out, and this time increases as the theories grow even if most of the theories in a session don't change. I would appreciate pointers to more efficient workflows or ways people think about structuring projects. AFP entries tend to be single sessions (only 19 right now have two or more, 2% of the entries), with ODE on 7 as an outlier. Maybe I am using incorrect session/theory granularity?</p>
+
+
+
+<a name="596906618"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596906618" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596906618">(May 22 2026 at 04:38)</a>:</h4>
+<p>Have you looked at the IDE integrations discussed on the mailing list?</p>
+
+
+
+<a name="596906780"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596906780" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596906780">(May 22 2026 at 04:40)</a>:</h4>
+<p>But, at that point, you should ask claude to write a wrapper around <code>isabelle server</code>.</p>
+
+
+
+<a name="596906867"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596906867" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596906867">(May 22 2026 at 04:40)</a>:</h4>
+<p>You are not using like anyone else is. So it is not surprising that the tooling is not great</p>
+
+
+
+<a name="596910377"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596910377" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596910377">(May 22 2026 at 05:08)</a>:</h4>
+<p>*using Isabelle like anyone else is</p>
+
+
+
+<a name="596951038"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596951038" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Maximilian Schäffeler <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596951038">(May 22 2026 at 09:06)</a>:</h4>
+<p>This paper describes an autoformalization workflow based on <code>isabelle build</code>: <a href="https://arxiv.org/pdf/2604.07455">https://arxiv.org/pdf/2604.07455</a>. In my experience, Claude is quite good at interacting with <a href="https://github.com/awslabs/AutoCorrode/tree/main/iq">Isabelle/Q</a>. This MCP-based approach also avoids <code>isabelle build</code>.</p>
+
+
+
+<a name="596974032"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596974032" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> András Salamon <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596974032">(May 22 2026 at 11:00)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="433149">Maximilian Schäffeler</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/workflow.3F/near/596951038">said</a>:</p>
+<blockquote>
+<p>This paper describes an autoformalization workflow based on <code>isabelle build</code>: <a href="https://arxiv.org/pdf/2604.07455">https://arxiv.org/pdf/2604.07455</a>. ... This MCP-based approach also avoids <code>isabelle build</code>.</p>
+</blockquote>
+<p>Thanks for the pointers! I'm using custom tooling extensively but haven't looked at wrapping it in MCP or using Isabelle/Q.</p>
+<p>The proofs are easy but bulky, with large objects being reasoned about for many steps. The challenge here seems to be balancing the writing out of proof steps in excruciating detail versus the effort put into finding a proof method that works quickly with the chosen abstractions. Carefully crafting Isar in an IDE seems appropriate for results that need more difficult reasoning but seems hard to justify here.</p>
+
+
+
+<a name="596974659"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/workflow%3F/near/596974659" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> András Salamon <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/workflow.3F.html#596974659">(May 22 2026 at 11:03)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="233198">Mathias Fleury</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/workflow.3F/near/596906780">said</a>:</p>
+<blockquote>
+<p>But, at that point, you should ask claude to write a wrapper around <code>isabelle server</code>.</p>
+</blockquote>
+<p>Sounds like an excellent idea, thanks!</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

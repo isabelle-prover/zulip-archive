@@ -1,0 +1,74 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Separate application bundles for &quot;macos&quot; (Intel) vs... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Separate.20application.20bundles.20for.20.22macos.22.20.28Intel.29.20vs.2E.2E.2E.html">NEWS: Separate application bundles for &quot;macos&quot; (Intel) vs...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="610677608"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Separate%20application%20bundles%20for%20%22macos%22%20%28Intel%29%20vs.../near/610677608" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Separate.20application.20bundles.20for.20.22macos.22.20.28Intel.29.20vs.2E.2E.2E.html#610677608">(Jul 14 2026 at 22:08)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>Subject:</strong> NEWS: Separate application bundles for "macos" (Intel) vs. "macos_arm" (Apple Silicon)</p>
+<p><strong>* General </strong>*</p>
+<ul>
+<li>The Isabelle application bundle has been split into "macos"<br>
+(x86_64-darwin, Intel) and "macos_arm (arm64-darwin, Apple Silicon). The<br>
+correct version needs to be used for the actual system platform:<br>
+emulated Java via Rosetta 2 is explicitly excluded. Isabelle add-on<br>
+tools usually work on arm64-darwin, with the notable exception of the z3<br>
+prover --- z3 uses x86_64-darwin and thus requires Rosetta 2, as long as<br>
+that is still provided by Apple.</li>
+</ul>
+<p>This refers to Isabelle/ca65aeef65f0.</p>
+<p>Here is the complete list of remaining x86_64 tools:</p>
+<p>- z3 (stuck with a very old side-branch of the sources)<br>
+   - nunchaku + smbc (considered "experimental", not used in applications)</p>
+<p>The list used to have further entries, but they are now native on arm64:</p>
+<p>- spass-3.8ds: after closer inspection, I managed to re-build it on all <br>
+current platforms (see also "isabelle component_spass" in <br>
+Isabelle/272abac962eb and preceeding changes).</p>
+<p>- vampire-4.8: that is a dead side-branch before current vampire-5, <br>
+specifically for Isabelle ("HO" + "sledgehammer"). I was rather lucky to <br>
+rebuild it for arm64-darwin on one of my old macOS installations: actually a <br>
+cross-compile from Intel, which explains minor misunderstandings in the <br>
+changelog of Isabelle/8eee497c7252).</p>
+<p>That's finally it for the coming Isabelle release. Note that next year's macOS <br>
+release will no longer support arm64 + x86_64 side-by-side. (The "27" release <br>
+of 2026 still does, despite the confusion of numbers.)</p>
+<p>Makarius</p>
+
+
+
+<a name="610680158"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Separate%20application%20bundles%20for%20%22macos%22%20%28Intel%29%20vs.../near/610680158" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Separate.20application.20bundles.20for.20.22macos.22.20.28Intel.29.20vs.2E.2E.2E.html#610680158">(Jul 14 2026 at 22:31)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>Subject:</strong> NEWS: Separate application bundles for "macos" (Intel) vs. "macos_arm" (Apple Silicon)</p>
+<p>On 15/07/2026 00:07, Makarius wrote:</p>
+<blockquote>
+<p>The list used to have further entries, but they are now native on arm64:</p>
+<p>- spass-3.8ds: after closer inspection, I managed to re-build it on all <br>
+current platforms (see also "isabelle component_spass" in <br>
+Isabelle/272abac962eb and preceeding changes).</p>
+<p>- vampire-4.8: that is a dead side-branch before current vampire-5, <br>
+specifically for Isabelle ("HO" + "sledgehammer"). I was rather lucky to <br>
+rebuild it for arm64-darwin on one of my old macOS installations: actually a <br>
+cross-compile from Intel, which explains minor misunderstandings in the <br>
+changelog of Isabelle/8eee497c7252).</p>
+</blockquote>
+<p>One more entry:</p>
+<p>- zipperposition-2.1: I managed to tinker with opam-2.2.1 instead of our <br>
+usual opam-2.0.7, see also Isabelle/85ee34305702.</p>
+<p>We are stuck with opam-2.0.7, the last version that was available for Cygwin. <br>
+Later opam-2.2.1 theoretically supports Windows better, via Msys2 instead of <br>
+Cygwin, but I did not quite manage to make it work for us. The OCaml ecosystem <br>
+is generally a bit fragile an not quite portable.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

@@ -1,0 +1,80 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Problem with mlton component · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Problem.20with.20mlton.20component.html">[isabelle] Problem with mlton component</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="604059455"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Problem%20with%20mlton%20component/near/604059455" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Problem.20with.20mlton.20component.html#604059455">(Jun 17 2026 at 08:17)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>I was trying to build (with Isabelle2025-2) a recent submission to the AFP that <br>
+(directly or indirectly) builds on AFP/Buchi_Complementation, but I ran into <br>
+this problem on my Mac:</p>
+<p>*** /Applications/Isabelle2025-2.app/contrib/mlton-20241230-1/arm64-darwin/lib/ <br>
+mlton/include/cenv.h:49:10: fatal error: 'gmp.h' file not found<br>
+*** #include &lt;gmp.h&gt;<br>
+***          ^~~~~~~</p>
+<p>The problem is the same in devel. It looks like the mlton component expects gmp <br>
+to be installed but on Macs that is (no longer?) guaranteed.<br>
+[Aside: "brew install gmp" ran into some permission problems ...]</p>
+<p>Tobias</p>
+<p><a href="/user_uploads/14278/LJ97BnIJUK60cgJYQuDFwmIy/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="607222747"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Problem%20with%20mlton%20component/near/607222747" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Problem.20with.20mlton.20component.html#607222747">(Jun 29 2026 at 19:19)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 17/06/2026 10:16, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>I was trying to build (with Isabelle2025-2) a recent submission to the AFP <br>
+that (directly or indirectly) builds on AFP/Buchi_Complementation, but I ran <br>
+into this problem on my Mac:</p>
+<p>*** /Applications/Isabelle2025-2.app/contrib/mlton-20241230-1/arm64-darwin/ <br>
+lib/ mlton/include/cenv.h:49:10: fatal error: 'gmp.h' file not found<br>
+*** #include &lt;gmp.h&gt;<br>
+***          ^~~~~~~</p>
+</blockquote>
+<p>This actually conforms to the specification in NEWS for Isabelle2025 (March 2025):</p>
+<ul>
+<li>Update of the MLton SML compiler to work better with current macOS<br>
+versions (including ARM): this requires a C compiler and libgmp. Windows<br>
+and Linux ARM remain unsupported, as before.</li>
+</ul>
+<p>The NEWS don't say how to provide libgmp, because there are too many <br>
+possibilities, and none is really canonical.</p>
+<p>I usually do a build from source <a href="https://gmplib.org">https://gmplib.org</a> --- essentially <br>
+"./configure &amp;&amp; make &amp;&amp; make install" with results /usr/local</p>
+<p>Alternatively, you can try "brew install mlton", and add a suitable <br>
+"ISABELLE_MLTON=..." to $ISABELLE_HOME_USER/etc/settings to bypass the <br>
+Isabelle component --- I used to do that long ago, but now try to avoid <br>
+spilling too much beer on my macOS systems.</p>
+<p>If you merely want to avoid a failure of "isabelle build", you can add "unset <br>
+ISABELLE_MLTON" to $ISABELLE_HOME_USER/etc/settings --- so theories with <br>
+[condition = ISABELLE_MLTON] will be skipped.</p>
+<blockquote>
+<p>It looks like the mlton component expects <br>
+gmp to be installed but on Macs that is (no longer?) guaranteed.</p>
+</blockquote>
+<p>As far as I remember, macOS has never provided libgmp, neither for run-time <br>
+nor for compile/link-time. That is a constant cause of problems.</p>
+<p>For finished executables (e.g. Poly/ML), we bundle <a href="http://libgmp.so">libgmp.so</a> with some <br>
+manipulation of executable files to refer to the correct library location.</p>
+<p>This does not quite work for MLton, because it needs libgmp at <br>
+compile/link-time of the target program --- the game is a bit different.</p>
+<p>I have now spent some time at <a href="https://github.com/MLton/mlton/releases">https://github.com/MLton/mlton/releases</a> which <br>
+now provides more downloads that before, notably for arm64. The latest version <br>
+is still MLton 20241230 what we provide already. The arm64 versions work only <br>
+half-way, notably without "-codegen native".</p>
+<p>So MLton looks like a half-finished / half-dead product after so many decades.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

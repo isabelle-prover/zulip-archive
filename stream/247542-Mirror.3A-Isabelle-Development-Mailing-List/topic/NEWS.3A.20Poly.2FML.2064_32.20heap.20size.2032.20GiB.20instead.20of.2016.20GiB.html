@@ -1,0 +1,79 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: Poly/ML 64_32 heap size 32 GiB instead of 16 GiB · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Poly.2FML.2064_32.20heap.20size.2032.20GiB.20instead.20of.2016.20GiB.html">NEWS: Poly/ML 64_32 heap size 32 GiB instead of 16 GiB</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="610673675"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Poly/ML%2064_32%20heap%20size%2032%20GiB%20instead%20of%2016%20GiB/near/610673675" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Poly.2FML.2064_32.20heap.20size.2032.20GiB.20instead.20of.2016.20GiB.html#610673675">(Jul 14 2026 at 21:35)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 14/07/2026 23:31, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Could this be used with Isabelle 2025-2?</p>
+</blockquote>
+<p>Maybe. We have not tried it.</p>
+<p>Isabelle development is linear, moving forward on a single branch, or rather <br>
+no branches at all.</p>
+<p>Makarius</p>
+
+
+
+<a name="610673925"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Poly/ML%2064_32%20heap%20size%2032%20GiB%20instead%20of%2016%20GiB/near/610673925" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Poly.2FML.2064_32.20heap.20size.2032.20GiB.20instead.20of.2016.20GiB.html#610673925">(Jul 14 2026 at 21:38)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>Poly/ML 5.9.2 has been patched to support larger heap size in the<br>
+special x86_64_32/arm64_32 mode with 32-bit values: the limit is now 32<br>
+GiB, instead of 16 GiB before. The cost is a factor of 1.2 .. 1.5 more<br>
+memory requirement (due to alignment of values), and a slowdown factor<br>
+0.9 .. 0.95 for average sessions. For very large sessions, the gain is a<br>
+speedup factor 1.9 .. 1.2, due to reduced GC time. It also avoids the<br>
+need for bulky x86_64/arm64 mode with 64-bit values and excessive GC<br>
+time.</li>
+</ul>
+<p>This refers to Isabelle/e3c3e01d3eb1.</p>
+<p>This is the result of significant work by David Matthews in collaboration with <br>
+Martin Desharnais-Schäfer.</p>
+<p>The plan is to use the enlarged 64_32 memory model as "one size fits for <br>
+almost all applications", and omit the old 64_32 mode with 16 GiB that is in <br>
+principle still supported by Poly/ML.</p>
+<p>The full 64-bit mode is available as before, but discouraged. Its known GC <br>
+performance problems will be addressed at a later stage. (Not now and not for <br>
+this release.)</p>
+<p>Makarius</p>
+
+
+
+<a name="610674739"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20Poly/ML%2064_32%20heap%20size%2032%20GiB%20instead%20of%2016%20GiB/near/610674739" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20Poly.2FML.2064_32.20heap.20size.2032.20GiB.20instead.20of.2016.20GiB.html#610674739">(Jul 14 2026 at 21:44)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Here are some measurements from a few days ago:<br>
+<a href="https://files.sketis.net/build_profiling_11-Jul-2026">https://files.sketis.net/build_profiling_11-Jul-2026</a></p>
+<p>This has been produced with a command-line like this:</p>
+<p>isabelle build_profiling -A: Automated_Stateful_Protocol_Verification <br>
+Bicategory CZH_Universal_Constructions Category3 Frequency_Moments <br>
+JinjaThreads MiniSail ResiduatedTransitionSystem2 Two_Hermitian_Results <br>
+HOL-Probability</p>
+<p>The "isabelle build_profiling" tool is for administrative purposes, which <br>
+explains its lack of documentation in the "system" manual. It is so useful, <br>
+that I might make it more official for the coming release, with proper <br>
+documentation.</p>
+<p>The above test sessions are mainly those that hit the former 16 GiB limit, <br>
+which explains why the speedup is quite good. Various other sessions, e.g. <br>
+requirements of the main tests, need much less ML heap: here we see a small <br>
+slowdown and increase of stored heap size.</p>
+<p>I do hope that slowdown and increased heap images are not significant in <br>
+practice, so that we can proceed with the plan to have just one main Poly/ML <br>
+configuration.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

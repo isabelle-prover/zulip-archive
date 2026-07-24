@@ -1,0 +1,62 @@
+[
+    {
+        "content": "<p>Hello,</p>\n<p>While running a large-scale evaluation using Isabelle2025-2 on Ubuntu 22.04, I observed a substantial accumulation of temporary files with names of the form</p>\n<p><code>/tmp/tmpXXXXXXXXXXXXXXXcnf</code></p>\n<p>during repeated automated proof attempts involving Sledgehammer.</p>\n<p>In one run, approximately 10,000 such files accumulated and occupied about 10 GB of disk space:</p>\n<p>I have not yet identified which component is responsible for creating these files, nor whether their persistence is intentional.</p>\n<p>Before investigating further, I would like to ask:</p>\n<ol>\n<li>Is the creation and retention of these <code>.cnf</code> files expected behaviour?</li>\n<li>Which Isabelle component (or external prover) is responsible for them?</li>\n<li>Is there a documented mechanism for cleaning them up automatically?</li>\n</ol>\n<p>If the current behaviour is intentional, it might nevertheless be helpful to document it, as heavy users may otherwise be surprised by the amount of disk space consumed over time.</p>\n<p>I would be happy to provide additional details or a reproducer if useful.</p>\n<p>Best regards,<br>\nYutaka</p>",
+        "id": 605961806,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1782209667
+    },
+    {
+        "content": "<p>Never seen any .cnf file when running sledgehammer</p>",
+        "id": 606073063,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1782239492
+    },
+    {
+        "content": "<p>The only culprint I could assume is that <code>sat</code> (<a href=\"https://isabelle.in.tum.de/library/HOL/HOL-Proofs/ISABELLE_HOME/src/HOL/Tools/sat_solver.ML.html\">https://isabelle.in.tum.de/library/HOL/HOL-Proofs/ISABELLE_HOME/src/HOL/Tools/sat_solver.ML.html</a>) is producing some files, but:</p>\n<p>- I am not aware that sledgehammer even runs sat<br>\n  - those file have a header on the first line</p>",
+        "id": 606073330,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1782239569
+    },
+    {
+        "content": "<p>Since these are not Isabelle temp files, this must be some external tool</p>",
+        "id": 606171281,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1782286133
+    },
+    {
+        "content": "<p>Some tools have options to write intermediate files</p>",
+        "id": 606197984,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1782294436
+    },
+    {
+        "content": "<p>(sledgehammer has for example, but you have to set the options)</p>",
+        "id": 606198020,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1782294447
+    },
+    {
+        "content": "<p>Looks like you have minisat_with_proofs as one of your solvers. I wasn't aware of its existence, but it writes those files. Did it prove anything?</p>",
+        "id": 607020535,
+        "sender_full_name": "Lawrence Paulson",
+        "timestamp": 1782682358
+    },
+    {
+        "content": "<p>Thanks. I wasn't aware that <code>minisat_with_proofs</code> writes those files.</p>\n<p>I don't explicitly invoke <code>minisat_with_proofs</code> myself. In AbductionProver/PSL, I invoke Sledgehammer via <code>Sledgehammer.run_sledgehammer</code> with the default parameters (apart from a couple of options such as <code>isar_proofs=false</code>), so if <code>minisat_with_proofs</code> is being used, it is through Sledgehammer's default behaviour.</p>\n<p>As for whether it actually proved anything, I'm honestly not sure. Since AbductionProver invokes Sledgehammer many times during a single proof search, it is difficult to tell which internal components contributed to a successful proof.</p>\n<p>For my own evaluation, I now delete these <code>*cnf</code> files after each run, so the immediate problem is under control. I reported this because I suspect it may also affect other users who invoke Sledgehammer repeatedly. </p>\n<p>With the recent trend of combining Sledgehammer with external AI components and agentic proof search, repeatedly calling Sledgehammer is becoming increasingly common, so others may eventually run into the same issue.</p>",
+        "id": 607377959,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1782826369
+    },
+    {
+        "content": "<blockquote>\n<p>Thanks. I wasn't aware that <code>minisat_with_proofs</code> writes those files.</p>\n</blockquote>\n<p>As Fabian said, the naming scheme just does not match those files:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">    </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"n\">inpath</span><span class=\"w\">     </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">File.tmp_path</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">Path.explode</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"s\">\"isabelle\"</span><span class=\"w\"> </span><span class=\"n\">^</span><span class=\"w\"> </span><span class=\"n\">serial_str</span><span class=\"w\"> </span><span class=\"n\">^</span><span class=\"w\"> </span><span class=\"s\">\".cnf\"</span><span class=\"o\">))</span>\n<span class=\"w\">    </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"n\">outpath</span><span class=\"w\">    </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">File.tmp_path</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">Path.explode</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"s\">\"result\"</span><span class=\"w\"> </span><span class=\"n\">^</span><span class=\"w\"> </span><span class=\"n\">serial_str</span><span class=\"o\">))</span>\n<span class=\"w\">    </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"n\">proofpath</span><span class=\"w\">  </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">File.tmp_path</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">Path.explode</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"s\">\"result\"</span><span class=\"w\"> </span><span class=\"n\">^</span><span class=\"w\"> </span><span class=\"n\">serial_str</span><span class=\"w\"> </span><span class=\"n\">^</span><span class=\"w\"> </span><span class=\"s\">\".prf\"</span><span class=\"o\">))</span>\n</code></pre></div>",
+        "id": 607692453,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1782935535
+    },
+    {
+        "content": "<p>None of those files starts with \"tmp\"</p>",
+        "id": 607692567,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1782935581
+    }
+]

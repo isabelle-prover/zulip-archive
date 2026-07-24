@@ -1,0 +1,81 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Strange effect when matching (intro) + lambda ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Strange.20effect.20when.20matching.20.28intro.29.20.2B.20lambda.20.2E.2E.2E.html">[isabelle] Strange effect when matching (intro) + lambda ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="609604120"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Strange%20effect%20when%20matching%20%28intro%29%20%2B%20lambda%20.../near/609604120" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Strange.20effect.20when.20matching.20.28intro.29.20.2B.20lambda.20.2E.2E.2E.html#609604120">(Jul 11 2026 at 12:00)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Strange effect when matching (intro) + lambda + binders + schematic variable</p>
+<p>Dear list,</p>
+<p>I recently discovered a quite unexpected effect when matching (using <br>
+intro, or the underlying match_tac):</p>
+<p>A rule of the form: "FOO (P x) ⟹ FOO (λs. ∃x. P x s)" does <em>not</em> match a <br>
+goal of the form "FOO (λs. ∃x. P ∧ ?F)" but it <em>does</em> match "FOO (λs. <br>
+∃x. P ∧ F)"</p>
+<p>Intuitively, schematicity of goal variables shouldn't influence <br>
+matching, isn't it?</p>
+<p>Find below a few examples where I explored this effect.</p>
+<p><em>Question:</em> Is this the expected behavior? If yes, why?</p>
+<p>I'm currently still exploring workarounds for my situation, but I can <br>
+imagine the following might work:</p>
+<p>* focus on the goal to fix schematic variable</p>
+<p>* more low-level: substitute all schematics by fresh frees, apply <br>
+rule, substitute back.</p>
+<p><em>Question:</em> Do the above sound reasonable, or can you think of other <br>
+workarounds.</p>
+<p>--</p>
+<p>Peter</p>
+<p>(* Some predicate P that implicitly depends on a state (such as <br>
+assertions in Hoare-triples) *)<br>
+   definition "FOO P ≡ ∀s. P s"</p>
+<p>(*<br>
+     Setup similar to AFP/Separation_Algebra,<br>
+     abbreviating EXS x. P ≡ λs. ∃x. P x s<br>
+   *)<br>
+   lemma FExI: "FOO (P x) ⟹ FOO (λs. ∃x. P x s)"<br>
+     unfolding FOO_def by blast</p>
+<p>schematic_goal "FOO (λs. ∃x. P ∧ ?F)"<br>
+     apply (intro FExI)<br>
+     apply (rule FExI) (* Works, but instantiates ?F ↝ ?F5 *)<br>
+     oops</p>
+<p>schematic_goal "FOO (λs. ∃x. P ∧ ?F x s)"<br>
+     apply (intro FExI)<br>
+     apply (rule FExI) (* Works, but instantiates ?F ↝ ?F5 *)<br>
+     oops</p>
+<p>(* Testing the prerequisites for the effect *)</p>
+<p>(* The schematic variable is required *)<br>
+   lemma "FOO (λs. ∃x. P ∧ F x)"<br>
+     apply (intro FExI) (* Works as Expected *)<br>
+     oops</p>
+<p>(* It must not be top-level below the binder *)<br>
+   schematic_goal<br>
+     "FOO (λs. ∃x. ?F x)"<br>
+     "FOO (λs. ∃x. ?G x s)"<br>
+     (* All work as expected *)<br>
+     apply (intro FExI) defer<br>
+     apply (intro FExI) defer<br>
+     oops</p>
+<p>(* There must be a binder *)<br>
+   lemma FConjI: "FOO P ⟹ FOO Q ⟹ FOO (λs. P s ∧ Q s)"<br>
+     unfolding FOO_def by blast<br>
+   schematic_goal "FOO (λs. P ∧ ?F s)"<br>
+     apply (intro FConjI) (* Works as expected *)<br>
+     oops</p>
+<p>(* There must be a λs. … *)<br>
+   definition "BAR P ≡ P"<br>
+   lemma BExI: "P x ⟹ BAR (∃x. P x)" unfolding BAR_def by auto<br>
+   schematic_goal "BAR (∃x. P ∧ ?F x s)"<br>
+     apply (intro BExI) (* Works as expected *)<br>
+     oops</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

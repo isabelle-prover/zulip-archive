@@ -1,0 +1,109 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] A blueprint for formal verification of Apple c... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20A.20blueprint.20for.20formal.20verification.20of.20Apple.20c.2E.2E.2E.html">[isabelle] A blueprint for formal verification of Apple c...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="597422830"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20A%20blueprint%20for%20formal%20verification%20of%20Apple%20c.../near/597422830" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20A.20blueprint.20for.20formal.20verification.20of.20Apple.20c.2E.2E.2E.html#597422830">(May 24 2026 at 19:07)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Isabelle is at the centre of Apple's verification chain for cryptography:</p>
+<p><a href="https://security.apple.com/blog/formal-verification-corecrypto/">https://security.apple.com/blog/formal-verification-corecrypto/</a></p>
+
+
+
+<a name="600101575"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20A%20blueprint%20for%20formal%20verification%20of%20Apple%20c.../near/600101575" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20A.20blueprint.20for.20formal.20verification.20of.20Apple.20c.2E.2E.2E.html#600101575">(Jun 04 2026 at 14:25)</a>:</h4>
+<p><strong>From:</strong> Tassilo Lemke &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,</p>
+<p>I was wondering if anybody knows if similar verifications have been done for protocol implementations, particularly linking them with the inductive security analysis model (see L. Paulsons works), or other information-flow models. While the verification here certainly looks interesting, it is (as far as I can tell) primarily focusing on using FIPS specifications (and their respective Isabelle models) to verify implementations of cryptographic algorithms, but protocols (like TLS) don't seem to be covered in this.</p>
+<p>Are there any verifications of concrete implementations of protocols that anybody knows of? Or at least some approaches towards that? Also, are there possibly other information-flow models which are used to bridge the model-vs-implementation gap? I assume modelling information (and its content and flow) on an implementation-level is a great challenge. I'm currently a bit lost and can't seem to find anything concrete on this, so any insights or further reading tips would be much appreciated (I'd like to stick to Isabelle, I'm aware of tools like Tamarin/ProVerif/etc.)!</p>
+<p>Best,<br>
+Tassilo Lemke</p>
+<hr>
+<p>Von: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; im Auftrag von Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+Gesendet: Sonntag, 24. Mai 2026 21:07:01<br>
+An: isabelle-users<br>
+Betreff: [isabelle] A blueprint for formal verification of Apple corecrypto</p>
+<p>Isabelle is at the centre of Apple's verification chain for cryptography:</p>
+<p><a href="https://security.apple.com/blog/formal-verification-corecrypto/">https://security.apple.com/blog/formal-verification-corecrypto/</a></p>
+
+
+
+<a name="600120468"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20A%20blueprint%20for%20formal%20verification%20of%20Apple%20c.../near/600120468" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20A.20blueprint.20for.20formal.20verification.20of.20Apple.20c.2E.2E.2E.html#600120468">(Jun 04 2026 at 15:45)</a>:</h4>
+<p><strong>From:</strong> "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;</p>
+<p>Hi,<br>
+in addition to Larry's excellent work (which you seem to know already),</p>
+<ul>
+<li>A formel model including typing and compositionality results in <br>
+Isabelle/HOL: Hess, A. V., MÖdersheim, S. A., &amp; Brucker, A. D. (2023). <br>
+Stateful Protocol Composition in Isabelle/HOL. ACM Transactions on <br>
+Privacy and Security, 26(3), 1–36. <a href="https://doi.org/10.1145/3577020">https://doi.org/10.1145/3577020</a> - the <br>
+Isabelle formalisation is in the AFP: <br>
+<a href="https://isa-afp.org/entries/Stateful_Protocol_Composition_and_Typing.html">https://isa-afp.org/entries/Stateful_Protocol_Composition_and_Typing.html</a></li>
+</ul>
+<p>* Hess, A. V., Mödersheim, S. A., Brucker, A. D., &amp; Schlichtkrull, A. <br>
+(2025). PSPSP: A tool for automated verification of stateful protocols <br>
+in Isabelle/HOL. Journal of Computer Security, 33(6), 425–469. <br>
+<a href="https://doi.org/10.1177/0926227x251358741">https://doi.org/10.1177/0926227x251358741</a> - the Isabelle formalisation <br>
+and implementation is also in the AFP: <br>
+<a href="https://isa-afp.org/entries/Automated_Stateful_Protocol_Verification.html">https://isa-afp.org/entries/Automated_Stateful_Protocol_Verification.html</a></p>
+<p>Best,<br>
+Achim</p>
+<p>On 04/06/2026 15:25, Tassilo Lemke (via cl-isabelle-users Mailing List) <br>
+wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>I was wondering if anybody knows if similar verifications have been <br>
+done for protocol implementations, particularly linking them with the <br>
+inductive security analysis model (see L. Paulsons works), or other <br>
+information-flow models. While the verification here certainly looks <br>
+interesting, it is (as far as I can tell) primarily focusing on using <br>
+FIPS specifications (and their respective Isabelle models) to verify <br>
+implementations of cryptographic algorithms, but protocols (like TLS) <br>
+don't seem to be covered in this.</p>
+<p>Are there any verifications ofconcrete implementations of protocols <br>
+that anybody knows of? Or at least some approaches towards that? Also, <br>
+are there possibly other information-flow models which are used to <br>
+bridge the model-vs-implementation gap? I assume modelling information <br>
+(and its content and flow) on an implementation-level is a great <br>
+challenge. I'm currently a bit lost and can't seem to find anything <br>
+concrete on this, so any insights or further reading tips would be <br>
+much appreciated (I'd like to stick to Isabelle, I'm aware of tools <br>
+like Tamarin/ProVerif/etc.)!</p>
+<p>Best,<br>
+Tassilo Lemke</p>
+<hr>
+<p><em>Von:</em> <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> <br>
+&lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; im Auftrag von Lawrence <br>
+Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;<br>
+<em>Gesendet:</em> Sonntag, 24. Mai 2026 21:07:01<br>
+<em>An:</em> isabelle-users<br>
+<em>Betreff:</em> [isabelle] A blueprint for formal verification of Apple <br>
+corecrypto<br>
+Isabelle is at the centre of Apple's verification chain for cryptography:</p>
+<p><a href="https://security.apple.com/blog/formal-verification-corecrypto/">https://security.apple.com/blog/formal-verification-corecrypto/</a></p>
+</blockquote>
+
+
+
+<a name="600644068"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20A%20blueprint%20for%20formal%20verification%20of%20Apple%20c.../near/600644068" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20A.20blueprint.20for.20formal.20verification.20of.20Apple.20c.2E.2E.2E.html#600644068">(Jun 05 2026 at 10:22)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>I'm afraid I haven't done any recent work on protocol verification. My inductive method is flexible but the proof obligations are tricky to prove. There has been a lot of progress since. Given the difficulty of such work, one would expect the verification of an implementation to involve refinement from an abstract protocol to executable code, but refinement (at least if done naïvely) does not preserve security properties: refinement steps that look correct can nevertheless introduced vulnerabilities.</p>
+<p>Larry</p>
+<blockquote>
+<p>On 4 Jun 2026, at 15:25, Tassilo Lemke &lt;<a href="mailto:tassilo.lemke@tum.de">tassilo.lemke@tum.de</a>&gt; wrote:</p>
+<p>I was wondering if anybody knows if similar verifications have been done for protocol implementations, particularly linking them with the inductive security analysis model (see L. Paulsons works), or other information-flow models. While the verification here certainly looks interesting, it is (as far as I can tell) primarily focusing on using FIPS specifications (and their respective Isabelle models) to verify implementations of cryptographic algorithms, but protocols (like TLS) don't seem to be covered in this.</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

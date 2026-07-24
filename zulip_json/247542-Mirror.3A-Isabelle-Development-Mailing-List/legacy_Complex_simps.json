@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>From: Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>\nCan anybody explain why all of the lemmas about the complex constructor “Complex\" have been shoved into this lemma list, legacy_Complex_simps? </p>\n<p>There is seemingly a view to push users into writing complex expressions in the form x + iy, which looks nice in a mathematics textbook but is certain to complicate reasoning where the real and imaginary parts are dealt with separately.</p>\n<p>Larry</p>",
+        "id": 510153726,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1743764816
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 04/04/2025 13:06, Lawrence Paulson via isabelle-dev wrote:</p>\n<blockquote>\n<p>Can anybody explain why all of the lemmas about the complex constructor “Complex\" have been shoved into this lemma list, legacy_Complex_simps?</p>\n<p>There is seemingly a view to push users into writing complex expressions in the form x + iy, which looks nice in a mathematics textbook but is certain to complicate reasoning where the real and imaginary parts are dealt with separately.</p>\n</blockquote>\n<p>The Isabelle sources follow the principle that \"the history is the proof for <br>\nthe state of the text\". Here is the relevant changeset from 07-May-2014 by <br>\nJohannes Hölzl: <a href=\"https://isabelle-dev.sketis.net/rISABELLE48a745e1bde7\">https://isabelle-dev.sketis.net/rISABELLE48a745e1bde7</a></p>\n<p>Maybe you can make sense from that.</p>\n<p>Makarius</p>",
+        "id": 513951636,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745437395
+    },
+    {
+        "content": "<p>From: Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>On 23 Apr 2025, at 20:42, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>On 04/04/2025 13:06, Lawrence Paulson via isabelle-dev wrote:</p>\n<blockquote>\n<p>Can anybody explain why all of the lemmas about the complex constructor “Complex\" have been shoved into this lemma list, legacy_Complex_simps?<br>\nThere is seemingly a view to push users into writing complex expressions in the form x + iy, which looks nice in a mathematics textbook but is certain to complicate reasoning where the real and imaginary parts are dealt with separately.</p>\n</blockquote>\n<p>The Isabelle sources follow the principle that \"the history is the proof for the state of the text\". Here is the relevant changeset from 07-May-2014 by Johannes Hölzl: <a href=\"https://isabelle-dev.sketis.net/rISABELLE48a745e1bde7\">https://isabelle-dev.sketis.net/rISABELLE48a745e1bde7</a></p>\n<p>Maybe you can make sense from that.</p>\n</blockquote>\n<p>This looks like a massive and mostly positive change, namely to express the complex numbers as a codatatype. It also quite sensibly removes the default simprule going from x + iy to Complex x y. Nevertheless, when doing algebraic calculations, the Complex x y form is the practical choice.</p>\n<p>The commit msg is \"avoid the Complex constructor, use the more natural Re/Im view; moved csqrt to Complex”. </p>\n<p>Larry</p>",
+        "id": 514356209,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745580376
+    }
+]

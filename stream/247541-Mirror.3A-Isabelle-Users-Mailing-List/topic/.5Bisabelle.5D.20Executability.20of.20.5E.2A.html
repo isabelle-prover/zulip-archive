@@ -1,0 +1,40 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Executability of ^* · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executability.20of.20.5E.2A.html">[isabelle] Executability of ^*</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="611933954"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Executability%20of%20%5E%2A/near/611933954" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Executability.20of.20.5E.2A.html#611933954">(Jul 21 2026 at 16:27)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>The transitive reflexive closure ^* on relations is not executable simply <br>
+because of reflexivity, which result is an infinite relation if the base type is <br>
+infinite. In contrast, the transitive closure ^+ is executable.</p>
+<p>Here is a proposal of how to make ^* executable in specific contexts. We start <br>
+with "R^* `` A":</p>
+<p>lemma rtrancl_Image_code[code_unfold]: "R^* <code> A = R^+ </code> A ∪ A"<br>
+by (metis Image_Id Un_Image reflcl_trancl)</p>
+<p>Now terms of the form "R^* `` A" are executable (if R and A are finite).</p>
+<p>This helps some, but related situations still pose a problem, eg "(R^*)^-1 `` A" <br>
+is not covered. Luckily, another lemma helps:</p>
+<p>lemma rtrancl_converse_code[code_unfold]: "(R^*)^-1 <code> A = (R^+)^-1 </code> A ∪ A"<br>
+by (metis rtrancl_Image_code rtrancl_converse trancl_converse)</p>
+<p>For my particular situation, this does the job. However, it looks like one may <br>
+end up with a lot of special case code_unfold lemmas.</p>
+<p>Alternatively, one could define a special case of R^* that is reflexive only on <br>
+the elements already present in R. Using that alternative may require more <br>
+manual adjustments. But since one needs to prove most code equations manually <br>
+anyway, maybe that's the way to go.</p>
+<p>Comments?</p>
+<p>Tobias</p>
+<p><a href="/user_uploads/14278/wfsngvyNHZQ5F0u6u6SITj0p/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

@@ -1,0 +1,243 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Arithmetic Simplifier Loop · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html">[isabelle] Arithmetic Simplifier Loop</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="607605271"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Arithmetic%20Simplifier%20Loop/near/607605271" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html#607605271">(Jul 01 2026 at 12:51)</a>:</h4>
+<p><strong>From:</strong> Simon Foster &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Isabelle Developers,</p>
+<p>I am getting an unexpected loop from the Isabelle simplifier. Consider the<br>
+following minimal theory:</p>
+<p>theory Simplifier_Loop<br>
+  imports Main<br>
+begin</p>
+<p>consts r :: "int ⇒ int"<br>
+consts i :: "int ⇒ int ⇒ int"</p>
+<p>lemma "- (2 * (i (r x)) y) ≤ (z * 2)"<br>
+  apply simp (* Loops and then throws an Interrupt_Breakdown error *)<br>
+  oops</p>
+<p>We have two uninterpreted constants, r and i, over the integers. The lemma<br>
+should simplify to "- i (r x) y ≤ z", but the simplifier loops and<br>
+eventually throws an error. If we change the goal to "- (2 * (i (r x)) y) ≤<br>
+(2 * z)", the behaviour is as expected. The behaviour recurs for any choice<br>
+of numeral &gt;1 instead of 2 (e.g. 3).</p>
+<p>Setting [[simp_trace]] provides no trace of invoked simplification laws. If<br>
+we use [[simp_debug]], we get a trace, and it appears the loop is called by<br>
+the combination of mult.commute, minus_mult_commute, and<br>
+numeral_times_minus_swap. However, deleting these from the simplified (simp<br>
+del:) has no effect, and they are still shown in the debug trace.</p>
+<p>This minimal example is not synthetic, but is an instance of a proof<br>
+obligation I produced during a verification (i is the inner product, and r<br>
+is a function for performing a 90 degree turn). It works regardless of the<br>
+numeric type that is chosen, and the choice of definitions for r and i. It<br>
+occurs in both Isabelle2025 and Isabelle2025-2.</p>
+<p>Can anyone help to shed light on this situation? How can I prevent the<br>
+simplifier from looping?</p>
+<p>Thank you for your work on Isabelle.</p>
+<p>Regards,</p>
+<p>Simon.</p>
+
+
+
+<a name="607654655"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Arithmetic%20Simplifier%20Loop/near/607654655" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html#607654655">(Jul 01 2026 at 16:17)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>The fact that the simp trace is empty indicates that this is probably a <br>
+simproc that doesn't terminate.</p>
+<p>I played around a little bit, disabling any simproc that might apply to <br>
+your problem, and the culprit seems to be <br>
+"ring_le_cancel_numeral_factor". If you do a "declare [[simproc del: <br>
+ring_le_cancel_numeral_factor ]]" then your example does not loop.</p>
+<p>The suspicion is confirmed by the fact that the following also loops:</p>
+<p>ML_val ‹<br>
+   Numeral_Simprocs.le_cancel_numeral_factor @{context} @{cterm "- (2 * <br>
+(s (r x)) y) ≤ (z * 2)"}<br>
+›</p>
+<p>I haven't investigated the code to figure out where exactly the problem <br>
+might lie. Hopefully somebody who knows that code base will take a look. <br>
+If not, maybe I will at some point.</p>
+<p>Manuel</p>
+<p>On 7/1/26 14:50, Simon Foster (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>theory Simplifier_Loop<br>
+  imports Main<br>
+begin</p>
+<p>consts r :: "int ⇒ int"<br>
+consts i :: "int ⇒ int ⇒ int"</p>
+<p>lemma "- (2 * (i (r x)) y) ≤ (z * 2)"<br>
+  apply simp (* Loops and then throws an Interrupt_Breakdown error *)<br>
+  oops</p>
+</blockquote>
+
+
+
+<a name="607661709"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Arithmetic%20Simplifier%20Loop/near/607661709" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html#607661709">(Jul 01 2026 at 16:56)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Thanks for looking into this. I suspect that Larry and maybe myself had a hand <br>
+in that simproc ...</p>
+<p>Tobias</p>
+<p>On 01/07/2026 18:16, Manuel Eberl wrote:</p>
+<blockquote>
+<p>The fact that the simp trace is empty indicates that this is probably a simproc <br>
+that doesn't terminate.</p>
+<p>I played around a little bit, disabling any simproc that might apply to your <br>
+problem, and the culprit seems to be "ring_le_cancel_numeral_factor". If you do <br>
+a "declare [[simproc del: ring_le_cancel_numeral_factor ]]" then your example <br>
+does not loop.</p>
+<p>The suspicion is confirmed by the fact that the following also loops:</p>
+<p>ML_val ‹<br>
+   Numeral_Simprocs.le_cancel_numeral_factor @{context} @{cterm "- (2 * (s (r <br>
+x)) y) ≤ (z * 2)"}<br>
+›</p>
+<p>I haven't investigated the code to figure out where exactly the problem might <br>
+lie. Hopefully somebody who knows that code base will take a look. If not, maybe <br>
+I will at some point.</p>
+<p>Manuel</p>
+<p>On 7/1/26 14:50, Simon Foster (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>theory Simplifier_Loop<br>
+  imports Main<br>
+begin</p>
+<p>consts r :: "int ⇒ int"<br>
+consts i :: "int ⇒ int ⇒ int"</p>
+<p>lemma "- (2 * (i (r x)) y) ≤ (z * 2)"<br>
+  apply simp (* Loops and then throws an Interrupt_Breakdown error *)<br>
+  oops<br>
+</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/JFZ3gT4TI3pKKVEWx2ZAhoJ8/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="608179405"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Arithmetic%20Simplifier%20Loop/near/608179405" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html#608179405">(Jul 04 2026 at 09:30)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Thanks for reporting this bug, which will be fixed in the next release. </p>
+<blockquote>
+<p>On 1 Jul 2026, at 13:50, Simon Foster &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Dear Isabelle Developers,</p>
+<p>I am getting an unexpected loop from the Isabelle simplifier. Consider the following minimal theory:</p>
+<p>theory Simplifier_Loop<br>
+  imports Main<br>
+begin</p>
+<p>consts r :: "int ⇒ int"<br>
+consts i :: "int ⇒ int ⇒ int"</p>
+<p>lemma "- (2 * (i (r x)) y) ≤ (z * 2)"<br>
+  apply simp (* Loops and then throws an Interrupt_Breakdown error *)<br>
+  oops</p>
+<p>We have two uninterpreted constants, r and i, over the integers. The lemma should simplify to "- i (r x) y ≤ z", but the simplifier loops and eventually throws an error. If we change the goal to "- (2 * (i (r x)) y) ≤ (2 * z)", the behaviour is as expected. The behaviour recurs for any choice of numeral &gt;1 instead of 2 (e.g. 3).</p>
+<p>Setting [[simp_trace]] provides no trace of invoked simplification laws. If we use [[simp_debug]], we get a trace, and it appears the loop is called by the combination of mult.commute, minus_mult_commute, and numeral_times_minus_swap. However, deleting these from the simplified (simp del:) has no effect, and they are still shown in the debug trace.</p>
+</blockquote>
+
+
+
+<a name="609473661"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Arithmetic%20Simplifier%20Loop/near/609473661" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html#609473661">(Jul 10 2026 at 14:41)</a>:</h4>
+<p><strong>From:</strong> Simon Foster &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Larry,</p>
+<p>Thank you very much, it is much appreciated. Disabling it does help, but<br>
+it's a very useful simproc for the kind of proofs we're doing.</p>
+<p>Regards,</p>
+<p>Simon.</p>
+<p>On Sat, 4 Jul 2026 at 10:30, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Thanks for reporting this bug, which will be fixed in the next release.</p>
+<blockquote>
+<p>On 1 Jul 2026, at 13:50, Simon Foster &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+wrote:</p>
+<p>Dear Isabelle Developers,</p>
+<p>I am getting an unexpected loop from the Isabelle simplifier. Consider<br>
+the following minimal theory:</p>
+<p>theory Simplifier_Loop<br>
+  imports Main<br>
+begin</p>
+<p>consts r :: "int ⇒ int"<br>
+consts i :: "int ⇒ int ⇒ int"</p>
+<p>lemma "- (2 * (i (r x)) y) ≤ (z * 2)"<br>
+  apply simp (* Loops and then throws an Interrupt_Breakdown error *)<br>
+  oops</p>
+<p>We have two uninterpreted constants, r and i, over the integers. The<br>
+lemma should simplify to "- i (r x) y ≤ z", but the simplifier loops and<br>
+eventually throws an error. If we change the goal to "- (2 * (i (r x)) y) ≤<br>
+(2 * z)", the behaviour is as expected. The behaviour recurs for any choice<br>
+of numeral &gt;1 instead of 2 (e.g. 3).</p>
+<p>Setting [[simp_trace]] provides no trace of invoked simplification laws.<br>
+If we use [[simp_debug]], we get a trace, and it appears the loop is called<br>
+by the combination of mult.commute, minus_mult_commute, and<br>
+numeral_times_minus_swap. However, deleting these from the simplified (simp<br>
+del:) has no effect, and they are still shown in the debug trace.<br>
+</p>
+</blockquote>
+</blockquote>
+<p>-- <br>
+Dr. Simon Foster - Senior Lecturer in Computer Science<br>
+RoboStar Centre &lt;<a href="https://robostar.cs.york.ac.uk/">https://robostar.cs.york.ac.uk/</a>&gt;, University of York<br>
+&lt;<a href="http://www.york.ac.uk">http://www.york.ac.uk</a>&gt;<br>
+<a href="http://www.cs.york.ac.uk/~simonf">http://www.cs.york.ac.uk/~simonf</a></p>
+<p><em>My normal working hours are 9am to 5pm Monday to Friday.</em></p>
+
+
+
+<a name="609523700"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Arithmetic%20Simplifier%20Loop/near/609523700" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Arithmetic.20Simplifier.20Loop.html#609523700">(Jul 10 2026 at 18:50)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>If it's important to you you can switch to the development version of Isabelle, or replace the broken simproc with the new version in your development. </p>
+<p>Manuel</p>
+<p>On 10 July 2026 16:40:00 CEST, Simon Foster &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Dear Larry,</p>
+<p>Thank you very much, it is much appreciated. Disabling it does help, but<br>
+it's a very useful simproc for the kind of proofs we're doing.</p>
+<p>Regards,</p>
+<p>Simon.</p>
+<p>On Sat, 4 Jul 2026 at 10:30, Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt; wrote:</p>
+<blockquote>
+<p>Thanks for reporting this bug, which will be fixed in the next release.</p>
+<blockquote>
+<p>On 1 Jul 2026, at 13:50, Simon Foster &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+wrote:</p>
+<p>Dear Isabelle Developers,</p>
+<p>I am getting an unexpected loop from the Isabelle simplifier. Consider<br>
+the following minimal theory:</p>
+<p>theory Simplifier_Loop<br>
+  imports Main<br>
+begin</p>
+<p>consts r :: "int ⇒ int"<br>
+consts i :: "int ⇒ int ⇒ int"</p>
+<p>lemma "- (2 * (i (r x)) y) ≤ (z * 2)"<br>
+  apply simp (* Loops and then throws an Interrupt_Breakdown error *)<br>
+  oops</p>
+<p>We have two uninterpreted constants, r and i, over the integers. The<br>
+lemma should simplify to "- i (r x) y ≤ z", but the simplifier loops and<br>
+eventually throws an error. If we change the goal to "- (2 * (i (r x)) y) ≤<br>
+(2 * z)", the behaviour is as expected. The behaviour recurs for any choice<br>
+of numeral &gt;1 instead of 2 (e.g. 3).</p>
+<p>Setting [[simp_trace]] provides no trace of invoked simplification laws.<br>
+If we use [[simp_debug]], we get a trace, and it appears the loop is called<br>
+by the combination of mult.commute, minus_mult_commute, and<br>
+numeral_times_minus_swap. However, deleting these from the simplified (simp<br>
+del:) has no effect, and they are still shown in the debug trace.<br>
+</p>
+</blockquote>
+</blockquote>
+<p>-- <br>
+Dr. Simon Foster - Senior Lecturer in Computer Science<br>
+RoboStar Centre &lt;<a href="https://robostar.cs.york.ac.uk/">https://robostar.cs.york.ac.uk/</a>&gt;, University of York<br>
+&lt;<a href="http://www.york.ac.uk">http://www.york.ac.uk</a>&gt;<br>
+<a href="http://www.cs.york.ac.uk/~simonf">http://www.cs.york.ac.uk/~simonf</a></p>
+<p><em>My normal working hours are 9am to 5pm Monday to Friday.</em></p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

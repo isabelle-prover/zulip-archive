@@ -1,0 +1,25 @@
+<html>
+<head><meta charset="utf-8"><title>simproc is not invoked in local theory during a proof in ML · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/simproc.20is.20not.20invoked.20in.20local.20theory.20during.20a.20proof.20in.20ML.html">simproc is not invoked in local theory during a proof in ML</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="593859485"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/simproc%20is%20not%20invoked%20in%20local%20theory%20during%20a%20proof%20in%20ML/near/593859485" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jason Hu <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/simproc.20is.20not.20invoked.20in.20local.20theory.20during.20a.20proof.20in.20ML.html#593859485">(May 08 2026 at 18:50)</a>:</h4>
+<p>in a ML structure, I register a simproc using <code>@{simproc_setup}</code> antiquotation and I tested it fine in a HOL session. However, when I enter a proof context in ML, the simproc is not invoked at all from the trace log. here is what I have</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="n">val</span><span class="w"> </span><span class="n">enum_eq_simproc</span><span class="o">:</span><span class="w"> </span><span class="n">simproc</span>
+</code></pre></div>
+<p>and in the proof</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">simp_tac</span><span class="w"> </span><span class="o">(</span><span class="k">context</span><span class="w"> </span><span class="o">|</span><span class="n">&gt;</span><span class="w"> </span><span class="n">Config.put</span><span class="w"> </span><span class="n">simp_trace</span><span class="w"> </span><span class="n">true</span><span class="w"> </span><span class="o">|</span><span class="n">&gt;</span><span class="w"> </span><span class="n">Config.put</span><span class="w"> </span><span class="n">simp_trace_depth_limit</span><span class="w"> </span><span class="n">4</span><span class="w"> </span><span class="o">|</span><span class="n">&gt;</span><span class="w"> </span><span class="n">Simplifier.add_proc</span><span class="w"> </span><span class="n">enum_eq_simproc</span><span class="o">)</span><span class="w"> </span><span class="n">1</span>
+</code></pre></div>
+<p>You can see that I turned on the tracing flags, and then manually add the simproc to the simpset again. Isabelle issued a duplicated warning but still the simproc does not run on a matching pattern. what exactly is going wrong here?</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

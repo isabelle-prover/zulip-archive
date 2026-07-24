@@ -1,0 +1,152 @@
+[
+    {
+        "content": "<p>I've been working on Isabelle since July 2024, trying to prove the Bruck Ryser Chowla theorem as a challenge and a learning exercise. I'm on the last lemma (or maybe second to last), which happens to be the most challenging. I'm wondering if anybody would be willing to take a look at it and give me some suggestions. Thank you in advance.</p>",
+        "id": 513759183,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1745374204
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"736162\">@Craig Alan Feinstein</span> <br>\nIf you haven’t heard from others, it might be a good idea to add a link to your repository so they can see if they’re able to help. <span aria-label=\"thinking\" class=\"emoji emoji-1f914\" role=\"img\" title=\"thinking\">:thinking:</span></p>",
+        "id": 516740607,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1746641932
+    },
+    {
+        "content": "<p>Where do people usually put their repositories? I don’t have my stuff online.</p>",
+        "id": 520898262,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1748440348
+    },
+    {
+        "content": "<p>I guess:</p>\n<ul>\n<li><a href=\"https://github.com\">https://github.com</a> or/and</li>\n<li><a href=\"https://gitee.com\">https://gitee.com</a> (especially for people in China)</li>\n</ul>",
+        "id": 521120973,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1748533461
+    },
+    {
+        "content": "<p><a href=\"https://foss.heptapod.net/public\">heptapod</a> where the AFP lives deserves to be mentioned too.</p>",
+        "id": 521124116,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748534520
+    },
+    {
+        "content": "<p>There are many others (bitbucket, gitlab, ...), but github (and partially gitlab because it can be hosted) are winning</p>",
+        "id": 521124261,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748534562
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"736162\">@Craig Alan Feinstein</span> <br>\nUnsolicited advice: you should think carefully about which license to use before open-sourcing. <span aria-label=\"thinking\" class=\"emoji emoji-1f914\" role=\"img\" title=\"thinking\">:thinking:</span></p>",
+        "id": 521557299,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1748786512
+    },
+    {
+        "content": "<p>I just created a Github account.</p>",
+        "id": 521591582,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1748805892
+    },
+    {
+        "content": "<p>Yutaka, finally I'm starting to build a repository in Github. What license would you recommend? I ultimately want to get my Bruck Ryser Chowla Theorem proof into the Archive of Formal Proofs. I really don't care if I get help and would be happy to include their names for credit if they want it.</p>",
+        "id": 523010179,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1749430487
+    },
+    {
+        "content": "<p>From the AFP: \"All entries in the Archive of Formal Proofs are licensed under a <a href=\"https://isa-afp.org/LICENSE\">BSD-style License</a> or the <a href=\"https://www.gnu.org/copyleft/lesser.html\">GNU LGPL</a>. This means they are free to download, free to use, free to change, and free to redistribute with minimal restrictions.\"</p>\n<p>They're quite similar, I'd say just go with BSD but you should read up a bit on the various software licenses if you're going to make open source contributions.</p>",
+        "id": 523253905,
+        "sender_full_name": "Christian Pardillo Laursen",
+        "timestamp": 1749550054
+    },
+    {
+        "content": "<p>Christian, unfortunately I did the MIT license before I read your comment. I can't seem to find a way to change it. In any case, for everyone out there, my name on GitHub is cafeinst and the entry is Bruck_Ryser_Chowla.</p>",
+        "id": 523385117,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1749597136
+    },
+    {
+        "content": "<p>The MIT license is very permissive so it should be fine, but if you do want to change it you can simply replace the contents of your LICENSE file with the text at this link <a href=\"https://www.isa-afp.org/LICENSE\">https://www.isa-afp.org/LICENSE</a></p>",
+        "id": 524729926,
+        "sender_full_name": "Christian Pardillo Laursen",
+        "timestamp": 1750259425
+    },
+    {
+        "content": "<p>Looking at your theory, I have the following pieces of advice to offer:</p>\n<ul>\n<li>Function \"rightside\" is simply snd, replacing it might give you some automation benefits.</li>\n<li>In lemmas combine_r_lambda_terms, brc_x_identity, brc_x_equation, you assume x ∈ rat mat, but since this needs to be a type assertion rather than an assumption these lemmas end up with an uninterpreted symbol \"rat\" which makes the lemmas useless. Replace the assumption with fixes x :: \"rat mat\"</li>\n<li>In Isar proofs, if you're proving things using \".\", often it's better to skip the proof step, since the lemma is readily available anyway.</li>\n<li>It's generally helpful to prove the most general theorem you can, both in terms of types and constants. For example, you prove lambda_all_ones only for your Lambda constant, but it's both simpler and usually better to prove a more general theorem, like:</li>\n</ul>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">lambda_all_ones</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">l</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'b :: {monoid_mult, zero}\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"h &lt; 𝗏\"</span><span class=\"w\"> </span><span class=\"s\">\"j &lt; 𝗏\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"(l ⋅⇩m (J⇩m 𝗏)) $$ (j, h) = l\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">assms</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n</code></pre></div>",
+        "id": 524757417,
+        "sender_full_name": "Christian Pardillo Laursen",
+        "timestamp": 1750269431
+    },
+    {
+        "content": "<p>Christian, I tried replacing rightside with snd and it worked fine. For the lemmas combine_r_lambda_terms... when I replaced the assumption with fixes x :: \"rat mat\",  I got problems in the proofs. The lambda_all_ones that you suggested worked. My lemma brc_v_1_mod_4 is the one that is giving me the real problems. It is supposed to use brc_x_equation but it has problems.</p>",
+        "id": 524969941,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1750387280
+    },
+    {
+        "content": "<p>It's understandable that the proofs might break when you fix x :: \"rat mat\", since it looks like previously the type inference was setting the type of x to \"int mat\" instead, and the proofs might not be compatible. If you ctrl-hover over the rat term in your brc_x_equation lemma, you'll see that the type inference gave it a very strange type - removing the assumption will improve your odds of making it applicable.</p>",
+        "id": 524998313,
+        "sender_full_name": "Christian Pardillo Laursen",
+        "timestamp": 1750408001
+    },
+    {
+        "content": "<p>Christian, I’ll try it. I have absolutely nothing to lose since making the brc_x_equation applicable seems to be the source of my problem.</p>",
+        "id": 525052507,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1750429519
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"c\">(* We can pick arbitrary h &lt; 𝗏 and j &lt; 𝗏 since they're not used in the conclusion *)</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">h</span><span class=\"w\"> </span><span class=\"n\">j</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">hj</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"h &lt; 𝗏\"</span><span class=\"w\"> </span><span class=\"s\">\"j &lt; 𝗏\"</span>\n<span class=\"w\">    </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">positive_v</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">metis</span><span class=\"w\"> </span><span class=\"n\">gr0I</span><span class=\"w\"> </span><span class=\"n\">not_less0</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>does not hold for <code>v = 0</code></p>",
+        "id": 525066359,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1750434633
+    },
+    {
+        "content": "<p>You have many issues with normalization/casting of expression</p>",
+        "id": 525066435,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1750434666
+    },
+    {
+        "content": "<p>variants of the already existing:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">complex_of_rat_sum</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">‹complex_of_rat (∑h ∈A. f h) = (∑h ∈A. complex_of_rat(f h))›</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">of_rat_hom.hom_sum</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">rat_of_int_mult</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">‹rat_of_int (x * y) = rat_of_int x * rat_of_int y›</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">rat_of_int_sum</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">‹rat_of_int (∑h ∈A. f h) = (∑h ∈A. rat_of_int (f h))›</span>\n<span class=\"w\"> </span><span class=\"s\">‹rat_of_int (∑h=a..b. f h) = (∑h=a..b. rat_of_int (f h))›</span>\n<span class=\"w\"> </span><span class=\"s\">‹rat_of_int (∑h=a..&lt;b. f h) = (∑h=a..&lt;b. rat_of_int (f h))›</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">of_int_sum</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span><span class=\"o\">+</span>\n</code></pre></div>",
+        "id": 525066541,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1750434701
+    },
+    {
+        "content": "<p><code>linear_comb_of_y_part_2_i3</code> contains a reference to <code>i</code> in the assumption that is not used in the rest of the statement</p>",
+        "id": 525088578,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1750445149
+    },
+    {
+        "content": "<p>in <code>brc_v_1_mod_4</code> the first steps can be used like this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">    </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"n\">x123</span><span class=\"o\">:</span><span class=\"s\">\"x0 = x $$ (m-4,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x1 = x $$ (m-3,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x2 = x $$ (m-2,0)\"</span><span class=\"w\"> </span><span class=\"s\">\"x3 = x $$ (m-1,0)\"</span>\n<span class=\"w\">      </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">ineq</span><span class=\"w\"> </span><span class=\"k\">unfolding</span><span class=\"w\"> </span><span class=\"n\">x_def</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">auto</span><span class=\"w\"> </span><span class=\"n\">simp</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">index_mat</span><span class=\"o\">)</span>\n<span class=\"w\">    </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"∃e00 e10 e20 e30 :: rat.(∑h ∈ {0..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0)) =</span>\n<span class=\"s\">          e00 * y0 + e10 * y1 + e20 * y2 + e30 * y3 +</span>\n<span class=\"s\">          (∑h ∈ {4..&lt;m}. of_int(N $$ (m-h-1,m-4)) * x $$ (m-h-1,0))\"</span>\n<span class=\"w\">      </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">linear_comb_of_y_part_2_i3</span><span class=\"o\">[</span><span class=\"n\">OF</span><span class=\"w\"> </span><span class=\"n\">lag_eq</span><span class=\"w\"> </span><span class=\"n\">ineq</span><span class=\"w\"> </span><span class=\"n\">x123</span><span class=\"w\"> </span><span class=\"n\">x0_def</span><span class=\"w\"> </span><span class=\"n\">x1_def</span><span class=\"w\"> </span><span class=\"n\">x2_def</span><span class=\"w\"> </span><span class=\"n\">x3_def</span><span class=\"o\">]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n</code></pre></div>",
+        "id": 525089321,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1750445475
+    },
+    {
+        "content": "<p>Mathias, it looks like you were looking at lemma brc_x_equation_new. I got rid of that, as that had lots of problems.</p>",
+        "id": 525223856,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1750612433
+    },
+    {
+        "content": "<p>The linear_comb_of_y_part_2_i3 was actually not what I had originally intended. I actually wanted to use linear_comb_of_y_part_2 where i can be set to 0, 1, 2, or 3 but I couldn't figure out how to do it. For instance, the line using linear_comb_of_y_part_2[where i=2] ineq lag_eq by auto doesn't work. That is one of many things I had problems with. I'll put my new version up there.</p>",
+        "id": 525226807,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1750616367
+    },
+    {
+        "content": "<p>I just put the new version up.</p>",
+        "id": 525227393,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1750617126
+    },
+    {
+        "content": "<p>I am having trouble instantiating lemma linear_comb_of_y_part_2 with variable i. Maybe I should do your suggestion before and do a fix i in the lemma statement?</p>",
+        "id": 525436422,
+        "sender_full_name": "Craig Alan Feinstein",
+        "timestamp": 1750736480
+    }
+]

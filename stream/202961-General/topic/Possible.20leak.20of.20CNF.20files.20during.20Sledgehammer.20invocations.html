@@ -1,0 +1,101 @@
+<html>
+<head><meta charset="utf-8"><title>Possible leak of CNF files during Sledgehammer invocations · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html">Possible leak of CNF files during Sledgehammer invocations</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="605961806"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/605961806" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yutaka Nagashima <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#605961806">(Jun 23 2026 at 10:14)</a>:</h4>
+<p>Hello,</p>
+<p>While running a large-scale evaluation using Isabelle2025-2 on Ubuntu 22.04, I observed a substantial accumulation of temporary files with names of the form</p>
+<p><code>/tmp/tmpXXXXXXXXXXXXXXXcnf</code></p>
+<p>during repeated automated proof attempts involving Sledgehammer.</p>
+<p>In one run, approximately 10,000 such files accumulated and occupied about 10 GB of disk space:</p>
+<p>I have not yet identified which component is responsible for creating these files, nor whether their persistence is intentional.</p>
+<p>Before investigating further, I would like to ask:</p>
+<ol>
+<li>Is the creation and retention of these <code>.cnf</code> files expected behaviour?</li>
+<li>Which Isabelle component (or external prover) is responsible for them?</li>
+<li>Is there a documented mechanism for cleaning them up automatically?</li>
+</ol>
+<p>If the current behaviour is intentional, it might nevertheless be helpful to document it, as heavy users may otherwise be surprised by the amount of disk space consumed over time.</p>
+<p>I would be happy to provide additional details or a reproducer if useful.</p>
+<p>Best regards,<br>
+Yutaka</p>
+
+
+
+<a name="606073063"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/606073063" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#606073063">(Jun 23 2026 at 18:31)</a>:</h4>
+<p>Never seen any .cnf file when running sledgehammer</p>
+
+
+
+<a name="606073330"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/606073330" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#606073330">(Jun 23 2026 at 18:32)</a>:</h4>
+<p>The only culprint I could assume is that <code>sat</code> (<a href="https://isabelle.in.tum.de/library/HOL/HOL-Proofs/ISABELLE_HOME/src/HOL/Tools/sat_solver.ML.html">https://isabelle.in.tum.de/library/HOL/HOL-Proofs/ISABELLE_HOME/src/HOL/Tools/sat_solver.ML.html</a>) is producing some files, but:</p>
+<p>- I am not aware that sledgehammer even runs sat<br>
+  - those file have a header on the first line</p>
+
+
+
+<a name="606171281"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/606171281" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#606171281">(Jun 24 2026 at 07:28)</a>:</h4>
+<p>Since these are not Isabelle temp files, this must be some external tool</p>
+
+
+
+<a name="606197984"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/606197984" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#606197984">(Jun 24 2026 at 09:47)</a>:</h4>
+<p>Some tools have options to write intermediate files</p>
+
+
+
+<a name="606198020"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/606198020" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#606198020">(Jun 24 2026 at 09:47)</a>:</h4>
+<p>(sledgehammer has for example, but you have to set the options)</p>
+
+
+
+<a name="607020535"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/607020535" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Lawrence Paulson <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#607020535">(Jun 28 2026 at 21:32)</a>:</h4>
+<p>Looks like you have minisat_with_proofs as one of your solvers. I wasn't aware of its existence, but it writes those files. Did it prove anything?</p>
+
+
+
+<a name="607377959"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/607377959" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yutaka Nagashima <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#607377959">(Jun 30 2026 at 13:32)</a>:</h4>
+<p>Thanks. I wasn't aware that <code>minisat_with_proofs</code> writes those files.</p>
+<p>I don't explicitly invoke <code>minisat_with_proofs</code> myself. In AbductionProver/PSL, I invoke Sledgehammer via <code>Sledgehammer.run_sledgehammer</code> with the default parameters (apart from a couple of options such as <code>isar_proofs=false</code>), so if <code>minisat_with_proofs</code> is being used, it is through Sledgehammer's default behaviour.</p>
+<p>As for whether it actually proved anything, I'm honestly not sure. Since AbductionProver invokes Sledgehammer many times during a single proof search, it is difficult to tell which internal components contributed to a successful proof.</p>
+<p>For my own evaluation, I now delete these <code>*cnf</code> files after each run, so the immediate problem is under control. I reported this because I suspect it may also affect other users who invoke Sledgehammer repeatedly. </p>
+<p>With the recent trend of combining Sledgehammer with external AI components and agentic proof search, repeatedly calling Sledgehammer is becoming increasingly common, so others may eventually run into the same issue.</p>
+
+
+
+<a name="607692453"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/607692453" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#607692453">(Jul 01 2026 at 19:52)</a>:</h4>
+<blockquote>
+<p>Thanks. I wasn't aware that <code>minisat_with_proofs</code> writes those files.</p>
+</blockquote>
+<p>As Fabian said, the naming scheme just does not match those files:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">inpath</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="n">File.tmp_path</span><span class="w"> </span><span class="o">(</span><span class="n">Path.explode</span><span class="w"> </span><span class="o">(</span><span class="s">"isabelle"</span><span class="w"> </span><span class="n">^</span><span class="w"> </span><span class="n">serial_str</span><span class="w"> </span><span class="n">^</span><span class="w"> </span><span class="s">".cnf"</span><span class="o">))</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">outpath</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">File.tmp_path</span><span class="w"> </span><span class="o">(</span><span class="n">Path.explode</span><span class="w"> </span><span class="o">(</span><span class="s">"result"</span><span class="w"> </span><span class="n">^</span><span class="w"> </span><span class="n">serial_str</span><span class="o">))</span>
+<span class="w">    </span><span class="n">val</span><span class="w"> </span><span class="n">proofpath</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">File.tmp_path</span><span class="w"> </span><span class="o">(</span><span class="n">Path.explode</span><span class="w"> </span><span class="o">(</span><span class="s">"result"</span><span class="w"> </span><span class="n">^</span><span class="w"> </span><span class="n">serial_str</span><span class="w"> </span><span class="n">^</span><span class="w"> </span><span class="s">".prf"</span><span class="o">))</span>
+</code></pre></div>
+
+
+
+<a name="607692567"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Possible%20leak%20of%20CNF%20files%20during%20Sledgehammer%20invocations/near/607692567" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Possible.20leak.20of.20CNF.20files.20during.20Sledgehammer.20invocations.html#607692567">(Jul 01 2026 at 19:53)</a>:</h4>
+<p>None of those files starts with "tmp"</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

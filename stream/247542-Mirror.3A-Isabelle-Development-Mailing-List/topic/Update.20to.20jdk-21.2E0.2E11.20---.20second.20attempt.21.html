@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>Update to jdk-21.0.11 --- second attempt! · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Update.20to.20jdk-21.2E0.2E11.20---.20second.20attempt.21.html">Update to jdk-21.0.11 --- second attempt!</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="599595450"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Update%20to%20jdk-21.0.11%20---%20second%20attempt%21/near/599595450" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Update.20to.20jdk-21.2E0.2E11.20---.20second.20attempt.21.html#599595450">(Jun 02 2026 at 19:11)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>With Isabelle/895b651beabb we are on jdk-21.0.11, which alone is not very <br>
+exciting: it is a routine update by Azul.</p>
+<p>Two details are notable, though:</p>
+<p>(1) The Windows version has been built from sources, after applying a small <br>
+patch (jdk-21.0.11/x86_64-windows.patch) to improve accessibility. This is the <br>
+first time we build JDK from scratch for Isabelle. It turned out actually <br>
+quite simple, much simpler than building VSCodium, for example. So this might <br>
+encourage more patches in the future, also for other platforms.</p>
+<p>(2) The macOS version was broken in the first attempt, and instead of <br>
+duplicating 1 GiB tar.gz / 1.7 GiB directory content, I have replaced the bad <br>
+version non-monotonically. This can lead to confusion, if someone happened to <br>
+run Admin/init or "isabelle components -a" within a time-window of approx. <br>
+2-3h before 21:00 Royal Bavarian Time. In that case, local <br>
+$HOME/.isabelle/contrib/jdk-21.0.11 and the corresponding .tar.gz need to be <br>
+deleted, and Admin/init run again.</p>
+<p>Makarius</p>
+
+
+
+<a name="599600371"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Update%20to%20jdk-21.0.11%20---%20second%20attempt%21/near/599600371" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Update.20to.20jdk-21.2E0.2E11.20---.20second.20attempt.21.html#599600371">(Jun 02 2026 at 19:32)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/06/2026 21:10, Makarius wrote:</p>
+<blockquote>
+<p>With Isabelle/895b651beabb we are on jdk-21.0.11, which alone is not very <br>
+exciting: it is a routine update by Azul.</p>
+</blockquote>
+<p>Another side-remark: We are still on the old JDK 21 LTS branch because we are <br>
+stuck with an old Scala LTS version scala-3.3.4 from Sep-2024 that has not <br>
+been adapted to newer JDK versions yet, like the current JDK 25 LTS.</p>
+<p>After scala-3.3.4 there is a problem with inner Java classes that are <br>
+extended/redefined in Scala. I have submitted a ticket in Nov-2025 <br>
+<a href="https://github.com/scala/scala3/issues/24507">https://github.com/scala/scala3/issues/24507</a> --- that is still awaiting to be <br>
+shipped in a proper LTS release. The last one is scala-3.3.7 from 13-Oct-2025.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

@@ -1,0 +1,88 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Rewriting with Quasi-AC operators? · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rewriting.20with.20Quasi-AC.20operators.3F.html">[isabelle] Rewriting with Quasi-AC operators?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="605918805"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rewriting%20with%20Quasi-AC%20operators%3F/near/605918805" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rewriting.20with.20Quasi-AC.20operators.3F.html#605918805">(Jun 23 2026 at 06:26)</a>:</h4>
+<p><strong>From:</strong> Gidon Ernst &lt;<a href="mailto:gidon.ernst@lmu.de">gidon.ernst@lmu.de</a>&gt;</p>
+<p>Dear all,</p>
+<p>Sec 9.3.3 of the Isabelle/Isar reference manual explains how rewriting <br>
+modulo permutative operators.</p>
+<p>I was wondering whether the following example can be made to work? The <br>
+actual use-case is somewhat more complex but this MWE demonstrates the <br>
+main requirement I have.</p>
+<p>It seems the simplifier does not recognize the combination of map and <br>
+zip as permutative and therefore loops.</p>
+<p>Best,<br>
+  Gidon</p>
+<p>fun comm  where "comm f (x,y) = f (y,x)"<br>
+fun assoc where "assoc f (x,y,z) = f ((x,y),z)"<br>
+fun lcomm where "lcomm f (x,y,z) = f ((y,x),z)"</p>
+<p>lemma map_comm:<br>
+   "map f (zip xs ys) = map (comm f) (zip ys xs)"<br>
+   sorry</p>
+<p>lemma map_assoc:<br>
+   "map f (zip (zip xs ys) zs) = map (assoc f) (zip xs (zip ys zs))"<br>
+   sorry</p>
+<p>lemma map_lcomm:<br>
+   "map f (zip (zip xs ys) zs) = map (lcomm f) (zip ys (zip xs zs))"<br>
+   sorry</p>
+<p>lemmas map_ac = map_comm map_assoc map_lcomm</p>
+<p>lemma test:<br>
+   "map f (zip xs ys) = foo"<br>
+   apply (simp add: map_ac) (* loops *)</p>
+
+
+
+<a name="606231360"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Rewriting%20with%20Quasi-AC%20operators%3F/near/606231360" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Rewriting.20with.20Quasi-AC.20operators.3F.html#606231360">(Jun 24 2026 at 12:43)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Dear Gideon,</p>
+<p>A rule is permutative if, roughly speaking, the left and the right hand side <br>
+have the same skeleton, ignoring variables. Commutativity and left commutativity <br>
+have that property, but none of your map_comm map_assoc map_lcomm do.</p>
+<p>Best<br>
+Tobias</p>
+<p>On 23/06/2026 08:26, Gidon Ernst wrote:</p>
+<blockquote>
+<p>Dear all,</p>
+<p>Sec 9.3.3 of the Isabelle/Isar reference manual explains how rewriting modulo <br>
+permutative operators.</p>
+<p>I was wondering whether the following example can be made to work? The actual <br>
+use-case is somewhat more complex but this MWE demonstrates the main requirement <br>
+I have.</p>
+<p>It seems the simplifier does not recognize the combination of map and zip as <br>
+permutative and therefore loops.</p>
+<p>Best,<br>
+  Gidon</p>
+<p>fun comm  where "comm f (x,y) = f (y,x)"<br>
+fun assoc where "assoc f (x,y,z) = f ((x,y),z)"<br>
+fun lcomm where "lcomm f (x,y,z) = f ((y,x),z)"</p>
+<p>lemma map_comm:<br>
+   "map f (zip xs ys) = map (comm f) (zip ys xs)"<br>
+   sorry</p>
+<p>lemma map_assoc:<br>
+   "map f (zip (zip xs ys) zs) = map (assoc f) (zip xs (zip ys zs))"<br>
+   sorry</p>
+<p>lemma map_lcomm:<br>
+   "map f (zip (zip xs ys) zs) = map (lcomm f) (zip ys (zip xs zs))"<br>
+   sorry</p>
+<p>lemmas map_ac = map_comm map_assoc map_lcomm</p>
+<p>lemma test:<br>
+   "map f (zip xs ys) = foo"<br>
+   apply (simp add: map_ac) (* loops *)<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/vQJqvAxEJKMeWD_aQlV-1qM-/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

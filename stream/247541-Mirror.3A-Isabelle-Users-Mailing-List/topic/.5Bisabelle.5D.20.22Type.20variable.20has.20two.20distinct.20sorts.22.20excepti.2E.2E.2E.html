@@ -1,0 +1,134 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] &quot;Type variable has two distinct sorts&quot; excepti... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Type.20variable.20has.20two.20distinct.20sorts.22.20excepti.2E.2E.2E.html">[isabelle] &quot;Type variable has two distinct sorts&quot; excepti...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="608999524"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%22Type%20variable%20has%20two%20distinct%20sorts%22%20excepti.../near/608999524" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.22Type.20variable.20has.20two.20distinct.20sorts.22.20excepti.2E.2E.2E.html#608999524">(Jul 08 2026 at 14:21)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] "Type variable has two distinct sorts" exception on locale interpretation</p>
+<p>Dear list,</p>
+<p>I have a strange exception when instantiating a locale, that seems to be <br>
+caused by accidentally overlapping type-variable names. The gist of it <br>
+is that interpretations with different type-name annotations cause <br>
+different (or no) exceptions.</p>
+<p>In the original theory, I have also encountered cases where the <br>
+instantiation does not raise an exception, but yields a too special <br>
+type, by unrelated type variables with the same sort constraints being <br>
+unified.</p>
+<p>A full example to reproduce the problem is below, here's the important <br>
+lines:</p>
+<p>(*  Interpretation seems to depend on type-variable names<br>
+*)<br>
+interpretation foo: on_from_basic_indexable<br>
+   "basic_assn"<br>
+   "basic_extr"<br>
+   . (* Type variable has two distinct sorts, ?'a llvm_rep vs marker *)<br>
+   oops</p>
+<p>interpretation foo: on_from_basic_indexable<br>
+   "basic_assn :: 'xxa::llvm_rep option list ⇒ 'xxa ptr ⇒ llvm_amemory ⇒ <br>
+bool"<br>
+   "basic_extr"<br>
+   . (* Type variable has two distinct sorts, ?'a len2 vs marker *)<br>
+   oops</p>
+<p>interpretation foo: on_from_basic_indexable<br>
+   "basic_assn :: 'xxa::llvm_rep option list ⇒ 'xxa ptr ⇒ llvm_amemory ⇒ <br>
+bool"<br>
+   "basic_extr :: 'xxa ptr ⇒ 'xa::len2 word ⇒ 'xxa ptr llM"<br>
+   . (* works *)</p>
+<p>In the example, I have used the marker type-class to pinpoint the <br>
+culprit inside the locale, that gets accidentally unified with some type <br>
+variables from the instantiation arguments (see below). It stems from a <br>
+definition statement inside the locale, that is subsequently used as <br>
+argument of a sublocale.</p>
+<p>Any ideas what happens here? I'm currently trying to invent random type <br>
+names to work around that problem in my actual (more complicated) setup.</p>
+<p>Best,</p>
+<p>Peter</p>
+<p>======================================================</p>
+<p>Full example:</p>
+<p>theory Scratch imports Main<br>
+begin</p>
+<p>(* Constants to strip down example *)</p>
+<p>class llvm_rep =<br>
+   fixes llrep :: "'a ⇒ nat"</p>
+<p>instance nat :: llvm_rep by standard</p>
+<p>class len2 =<br>
+   fixes len2 :: "'a ⇒ nat"</p>
+<p>instance nat :: len2 by standard</p>
+<p>class marker =<br>
+   fixes marker :: "'a ⇒ unit"</p>
+<p>instance nat :: marker by standard</p>
+<p>datatype 'a word = WORD nat</p>
+<p>datatype 'a llM = LLM 'a</p>
+<p>typedecl llvm_amemory<br>
+type_synonym ll_assn = "llvm_amemory ⇒ bool"</p>
+<p>datatype 'a ptr = PTR nat</p>
+<p>instance ptr :: (llvm_rep) llvm_rep by standard</p>
+<p>consts<br>
+   list_assn :: "('a ⇒ 'c ⇒ ll_assn) ⇒ 'a list ⇒ 'c list ⇒ ll_assn"<br>
+   option_assn :: "('a ⇒ 'c ⇒ ll_assn) ⇒ 'a option ⇒ 'c option ⇒ ll_assn"<br>
+   oelem_assn :: "('a ⇒ 'c ⇒ ll_assn) ⇒ 'a option ⇒ 'c ⇒ ll_assn"</p>
+<p>assn_comp :: "('a ⇒ 'b ⇒ ll_assn) ⇒ ('b ⇒ 'c ⇒ ll_assn) ⇒ ('a ⇒ 'c ⇒ <br>
+ll_assn)" (infixr ‹O⇩a› 75)</p>
+<p>(*<br>
+   Example: locale and sublocale with definitions<br>
+*)<br>
+locale gen_onindexed =<br>
+   fixes C :: "('xa ⇒ 'xc::llvm_rep ⇒ llvm_amemory ⇒ bool) ⇒ 'xa option <br>
+option list ⇒ 'xcc::llvm_rep ⇒ llvm_amemory ⇒ bool"<br>
+     and extr :: "'xcc ⇒ 'xsize::len2 word ⇒ 'xc ptr llM"</p>
+<p>locale obasic_indexable =<br>
+   fixes A :: "'xa::llvm_rep option list ⇒ 'xc::llvm_rep ⇒ ll_assn"<br>
+     and extr :: "'xc ⇒ 'xsize::len2 word ⇒ 'xa ptr llM"</p>
+<p>locale on_from_basic_indexable = basic: obasic_indexable basic_assn <br>
+basic_extr<br>
+   for basic_assn :: "'xc::llvm_rep option list ⇒ 'xcc::llvm_rep ⇒ ll_assn"<br>
+   and basic_extr :: "'xcc ⇒ 'xsize::len2 word ⇒ 'xc ptr llM"<br>
+begin</p>
+<p>(**** I've introduced the marker type-class to pinpoint the culprit <br>
+of the accidental name identification, and it seems to be this 'xa, that <br>
+doesn't appear in the locale parameters, that is accidentally unified <br>
+with types from the locale instantiation *)</p>
+<p>definition  assn :: "('xa::marker ⇒ 'xc ⇒ llvm_amemory ⇒ bool) ⇒ 'xa <br>
+option option list ⇒ 'xcc ⇒ llvm_amemory ⇒ bool"<br>
+     where "assn A ≡ list_assn (option_assn (oelem_assn A)) O⇩a basic_assn"</p>
+<p>definition "extr ≡ basic_extr"<br>
+   sublocale gen_onindexed assn extr .</p>
+<p>end</p>
+<p>(*<br>
+   Triggering the problem:<br>
+*)</p>
+<p>consts<br>
+   basic_assn :: "'a::llvm_rep option list ⇒ 'a ptr ⇒ ll_assn"<br>
+   basic_extr :: "'a::llvm_rep ptr ⇒ 'l::len2 word ⇒ 'a ptr llM"</p>
+<p>(*<br>
+   Interpretation seems to depend on type-variable names<br>
+*)<br>
+interpretation foo: on_from_basic_indexable<br>
+   "basic_assn"<br>
+   "basic_extr"<br>
+   . (* Type variable has two distinct sorts, ?'a llvm_rep vs marker *)<br>
+   oops</p>
+<p>interpretation foo: on_from_basic_indexable<br>
+   "basic_assn :: 'xxa::llvm_rep option list ⇒ 'xxa ptr ⇒ llvm_amemory ⇒ <br>
+bool"<br>
+   "basic_extr"<br>
+   . (* Type variable has two distinct sorts, ?'a len2 vs marker *)<br>
+   oops</p>
+<p>interpretation foo: on_from_basic_indexable<br>
+   "basic_assn :: 'xxa::llvm_rep option list ⇒ 'xxa ptr ⇒ llvm_amemory ⇒ <br>
+bool"<br>
+   "basic_extr :: 'xxa ptr ⇒ 'xa::len2 word ⇒ 'xxa ptr llM"<br>
+   . (* works *)</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

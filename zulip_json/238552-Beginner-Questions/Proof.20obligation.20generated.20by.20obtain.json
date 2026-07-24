@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>My proof starts with</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">example_obtain_elementary</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"∃x. P x ∧ Q x\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃x. Q x\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">obtain</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"P a ∧ Q a\"</span><span class=\"w\"> </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">assms</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">exE</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>here the obtain-where clause generates this proof obligation:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">prove</span><span class=\"o\">)</span>\n<span class=\"n\">goal</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">1</span><span class=\"w\"> </span><span class=\"n\">subgoal</span><span class=\"o\">):</span>\n<span class=\"w\"> </span><span class=\"n\">1.</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">⋀a.</span><span class=\"w\"> </span><span class=\"n\">P</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">∧</span><span class=\"w\"> </span><span class=\"n\">Q</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">⟹</span><span class=\"w\"> </span><span class=\"n\">thesis</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">⟹</span><span class=\"w\"> </span><span class=\"n\">thesis</span>\n</code></pre></div>\n<p>I do understand why <code>using assms by (rule exE)</code> proves this, but not why exactly this is the proof obligation. Shouldn't it be simply </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">∃x.</span><span class=\"w\"> </span><span class=\"n\">P</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"n\">∧</span><span class=\"w\"> </span><span class=\"n\">Q</span><span class=\"w\"> </span><span class=\"n\">x</span>\n</code></pre></div>\n<p>as this is required for such an <code>a</code> to exist.</p>",
+        "id": 514345972,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1745576873
+    },
+    {
+        "content": "<p>obtain is on pure level, so there is no ∃</p>",
+        "id": 514349146,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1745577950
+    },
+    {
+        "content": "<p>but it boils down to the same: you want to use <code>⋀a. P a ∧ Q a ⟹ thesis</code> to prove thesis</p>",
+        "id": 514349258,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1745577985
+    },
+    {
+        "content": "<p>and to prove that you need to show that such an <code>a</code> exists</p>",
+        "id": 514349300,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1745578001
+    }
+]

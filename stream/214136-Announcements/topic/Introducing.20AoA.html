@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>Introducing AoA · Announcements · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/214136-Announcements/index.html">Announcements</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/214136-Announcements/topic/Introducing.20AoA.html">Introducing AoA</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="612171900"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/214136-Announcements/topic/Introducing%20AoA/near/612171900" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/214136-Announcements/topic/Introducing.20AoA.html#612171900">(Jul 22 2026 at 16:02)</a>:</h4>
+<p>Introducing AoA (Agent over Abstract Syntax Trees), our proof agent built on Isabelle/HOL.</p>
+<p><span aria-label="sparkles" class="emoji emoji-2728" role="img" title="sparkles">:sparkles:</span> AoA abstracts away from the concrete syntax of proof languages, representing proofs as abstract syntax trees via JSON schema.</p>
+<p>This enables the first effective proof agent on a freshly redesigned language (Isabelle/Minilang) that commercial LLMs have had little exposure to, achieving 99.6% on miniF2F, 89.2% on NTP4VC-Pearl, and 97.7% on NTP4VC-realC. This success suggests that the LLM era, far from stifling new languages, can actually accelerate their development</p>
+<p><span aria-label="sparkles" class="emoji emoji-2728" role="img" title="sparkles">:sparkles:</span> AoA also abandons the traditional agent interaction paradigm of source-code editing with line-number indexing, adopting a novel tree-editing model that eliminates the line-number drift issues that conventional agents often struggle with.</p>
+<p><span aria-label="direct hit" class="emoji emoji-1f3af" role="img" title="direct hit">:direct_hit:</span> Combining Minilang with the tree-editing model, AoA achieves a 2.3–4.7x reduction in API cost, a 2.9–6.9x reduction in token consumption, and 1.4–2.0x faster in total execution time, compared to Amazon's Isabelle Agent — which is likewise built on Isabelle and equipped with Sledgehammer.</p>
+<p><span aria-label="document" class="emoji emoji-1f4c4" role="img" title="document">:document:</span> Paper: <a href="https://arxiv.org/abs/2607.16372">https://arxiv.org/abs/2607.16372</a></p>
+<p><span aria-label="mechanical arm" class="emoji emoji-1f9be" role="img" title="mechanical arm">:mechanical_arm:</span> Source code: <a href="https://github.com/xqyww123/Isa-Mini">https://github.com/xqyww123/Isa-Mini</a></p>
+<p>AoA is fully productized, supporting Windows, Linux, and macOS.</p>
+<p>One-line install:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>isabelle<span class="w"> </span>-c<span class="w"> </span>https://conda.qiyuan.me<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>isabelle-ai
+</code></pre></div>
+<p>One-line launch:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>isabelle
+isabelle<span class="w"> </span>jedit
+</code></pre></div>
+<p>One-line usage:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Minilang_AoA.Minilang_AoA</span><span class="w"> </span><span class="n">Complex_Main</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="kn">theorem</span><span class="w"> </span><span class="s">"sqrt 2 ∉ ℚ"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">aoa</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><span aria-label="mechanical arm" class="emoji emoji-1f9be" role="img" title="mechanical arm">:mechanical_arm:</span> AoA ships with proof caching: once a proposition is proved, it is never proved again unless the proof becomes invalid — zero redundant overhead.</p>
+<p>AoA <strong>respects</strong> your projects! It quietly completes your proofs, never disturbs your Isabelle text, and produces no side effects beyond the target proof.</p>
+
+
+
+<a name="612182656"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/214136-Announcements/topic/Introducing%20AoA/near/612182656" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/214136-Announcements/topic/Introducing.20AoA.html#612182656">(Jul 22 2026 at 16:57)</a>:</h4>
+<ul>
+<li>AoA is nothing more than an ordinary tactic — you can use it as a drop-in replacement anywhere you'd normally write <code>by auto</code> or a much longer <code>proof ... qed</code></li>
+</ul>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

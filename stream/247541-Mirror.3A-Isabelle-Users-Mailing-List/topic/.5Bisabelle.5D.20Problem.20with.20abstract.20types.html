@@ -1,0 +1,90 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Problem with abstract types · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Problem.20with.20abstract.20types.html">[isabelle] Problem with abstract types</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="608178781"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Problem%20with%20abstract%20types/near/608178781" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Problem.20with.20abstract.20types.html#608178781">(Jul 04 2026 at 09:19)</a>:</h4>
+<p><strong>From:</strong> Nicolas FRANCOIS &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi.</p>
+<p>I have a function which adds an Atom (a "sign" and a variable name) to a<br>
+Cube (a Cube being an Atom list). The function has to compare the<br>
+variables to see if it has to mix the Atoms or transfer them. Namely :</p>
+<p>fun AtomAndCube :: "('a Atom) =&gt; ('a Cube)" where<br>
+   "AtomAndCube (Atom a) (Cube []) = Cube [a]"<br>
+ | "AtomAndCube (Atom (sa,va)) (Cube ((sa',va') # c')) = <br>
+      (if va=va' then ... else ...)</p>
+<p>I hope you see the idea. My problem is, I can't test this function on<br>
+abstract data. For example,</p>
+<p>AtomAndCube (Atom (Plus,1::nat)) (Cube [(Minus,2),(Plus,1),(Plus,3)])</p>
+<p>works, but</p>
+<p>AtomAndCube (Atom (Plus,a)) (Cube [(Plus,b),(Minus,a),(Minus,c)])</p>
+<p>doesn't (the computation returns the question), and I think it is<br>
+because Isabelle has no way to know that a and b are different.</p>
+<p>Is there a way I can make this true for an example, or, even better,<br>
+for the entire theory ?</p>
+<p>I'm quite new to Isabelle, sorry if I'm not very clear...</p>
+<p>Thanks in advance.</p>
+<p>-- </p>
+<p>Nicolas FRANCOIS                      |  /\ <br>
+<a href="http://nicolas.francois.free.fr">http://nicolas.francois.free.fr</a>       | |__|<br>
+                      X--/\\<br>
+We are the Micro$oft.               _\_V<br>
+Resistance is futile.           <br>
+You will be assimilated.         darthvader penguin</p>
+
+
+
+<a name="608179693"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Problem%20with%20abstract%20types/near/608179693" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Problem.20with.20abstract.20types.html#608179693">(Jul 04 2026 at 09:36)</a>:</h4>
+<p><strong>From:</strong> Stepan Holub &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<blockquote>
+<p>I think it is because Isabelle has no way to know that a and b are different.</p>
+</blockquote>
+<p>How do /YOU /know they are different?</p>
+<p>More generally:<br>
+If you refer to the "value" command, it is crucial to realize that not <br>
+all expressions can be evaluated.<br>
+You need some kind of executable code to be available for the expression.<br>
+For example<br>
+while<br>
+value "(1::nat) + 1"<br>
+works<br>
+value "1+1"<br>
+does not.</p>
+<p>Stepan</p>
+<p>On 04-Jul-26 10:55 AM, Nicolas FRANCOIS (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>Hi.</p>
+<p>I have a function which adds an Atom (a "sign" and a variable name) to a<br>
+Cube (a Cube being an Atom list). The function has to compare the<br>
+variables to see if it has to mix the Atoms or transfer them. Namely :</p>
+<p>fun AtomAndCube :: "('a Atom) =&gt; ('a Cube)" where<br>
+    "AtomAndCube (Atom a) (Cube []) = Cube [a]"<br>
+  | "AtomAndCube (Atom (sa,va)) (Cube ((sa',va') # c')) =<br>
+       (if va=va' then ... else ...)</p>
+<p>I hope you see the idea. My problem is, I can't test this function on<br>
+abstract data. For example,</p>
+<p>AtomAndCube (Atom (Plus,1::nat)) (Cube [(Minus,2),(Plus,1),(Plus,3)])</p>
+<p>works, but</p>
+<p>AtomAndCube (Atom (Plus,a)) (Cube [(Plus,b),(Minus,a),(Minus,c)])</p>
+<p>doesn't (the computation returns the question), and I think it is<br>
+because Isabelle has no way to know that a and b are different.</p>
+<p>Is there a way I can make this true for an example, or, even better,<br>
+for the entire theory ?</p>
+<p>I'm quite new to Isabelle, sorry if I'm not very clear...</p>
+<p>Thanks in advance.<br>
+</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>Since macOS 26 is the last version that supports the old Intel platform via <br>\nemulation, we need to reconsider our traditional approach to the macOS <br>\nplatform, where the Isabelle distribution (and \".app\") was \"hybrid\" for Intel <br>\nand ARM. Thus the same download worked on both platforms, but on ARM it <br>\nrequired Rosetta 2, which is going to disappear after macOS 26.</p>\n<p>Concerning Intel, I have now invested 360 EUR into a refurbished Mac Mini 2018 <br>\n(i3 with 4 cores, 16 GB RAM, 1 TB SSD). The 2018 line is the last one using <br>\nIntel CPUs, it supports macOS 12, 13, 14, 15, but not macOS 26. See also <br>\n<a href=\"https://everymac.com/systems/apple/mac_mini/specs/mac-mini-core-i3-3.6-late-2018-specs.html\">https://everymac.com/systems/apple/mac_mini/specs/mac-mini-core-i3-3.6-late-2018-specs.html</a> <br>\nfor details.</p>\n<p>Thus we can easily continue x86_64-darwin for Isabelle contrib executables, as <br>\nlong as we have macOS 12..15 as our active baseline. There are many years <br>\nahead, until the upper end macOS 15 will have to be discontinued. Only <br>\nafterwards, our support for macOS will be for ARM exclusively. Note that I <br>\nwill soon discontinue macOS 12 and move to macOS 13, because it helps to <br>\nprovide uniform VSCodium and GHC/stack executables.</p>\n<p>Concerning pure arm64-darwin support, there is still a lot of homework to do <br>\nconcerning external provers and solvers. When that is done, we can split the <br>\nIsabelle application bundle into x86_64-darwin vs. arm64-darwin. That will <br>\nmark the beginning of the \"macos\" vs. \"macos_arm\" era, following the \"linux\" <br>\nvs. \"linux_arm\" from some years ago. (It will be many more years, until <br>\nwindows_arm might become relevant.)</p>\n<p>I would like to see macos_arm already for Isabelle2026 (October 2026), but it <br>\nis probably more realistic for a subsequent Isabelle release in 2027. Note <br>\nthat when macOS 27 hits the end-user market, people can no longer run Isabelle <br>\nwith all its add-on tools.</p>\n<p>Makarius</p>",
+        "id": 569807931,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769204943
+    },
+    {
+        "content": "<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>On 23 Jan 2026, at 21:48, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>Thus we can easily continue x86_64-darwin for Isabelle contrib executables,</p>\n</blockquote>\n<p>Might be worth asking how many people still need this.</p>\n<blockquote>\n<p>Note that when macOS 27 hits the end-user market, people can no longer run Isabelle with all its add-on tools.</p>\n</blockquote>\n<p>What’s this?</p>\n<p>Larry</p>",
+        "id": 569860987,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769256386
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 24/01/2026 13:06, Lawrence Paulson wrote:</p>\n<blockquote>\n<blockquote>\n<p>Note that when macOS 27 hits the end-user market, people can no longer run Isabelle with all its add-on tools.</p>\n</blockquote>\n<p>What’s this?</p>\n</blockquote>\n<p>It is the next macOS release after current macOS 26. I don't know anything <br>\nabout its planned timeline, though.</p>\n<p>Makarius</p>",
+        "id": 569861093,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769256469
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 24/01/2026 14:00, Lawrence Paulson wrote:</p>\n<blockquote>\n<p>I mean what’s this \"people can no longer run Isabelle with all its add-on tools”?</p>\n</blockquote>\n<p>So far, the <a href=\"http://Isabelle.app\">Isabelle.app</a> launcher insisted in Intel, to prompt for <br>\ninstallation of Rosetta 2. This will fail after macOS 26, and users need to <br>\nuse <a href=\"http://Isabelle.app/isabelle/bin/isabelle\">Isabelle.app/isabelle/bin/isabelle</a> jedit on the command-line.</p>\n<p>I can change that easily, and make the launcher hybrid on Intel or ARM. <br>\nAfterwards, there will be some add-on tools that still insist on Intel: we <br>\nneed to sort that out, maybe this year or next year.</p>\n<p>Makarius</p>",
+        "id": 569865930,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769260291
+    },
+    {
+        "content": "<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>\n<p>Oh that. I wonder if anybody uses the app? As it stands, it is very basic. It needs at least a drag and drop capability. It should not be difficult, but we need to find somebody who knows how to build these things.</p>\n<p>Larry</p>\n<blockquote>\n<p>On 24 Jan 2026, at 13:11, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>So far, the <a href=\"http://Isabelle.app\">Isabelle.app</a> launcher insisted in Intel, to prompt for installation of Rosetta 2. This will fail after macOS 26, and users need to use <a href=\"http://Isabelle.app/isabelle/bin/isabelle\">Isabelle.app/isabelle/bin/isabelle</a> jedit on the command-line.</p>\n<p>I can change that easily, and make the launcher hybrid on Intel or ARM. Afterwards, there will be some add-on tools that still insist on Intel: we need to sort that out, maybe this year or next year.<br>\n</p>\n</blockquote>",
+        "id": 569866268,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769260556
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 24/01/2026 14:15, Lawrence Paulson wrote:</p>\n<blockquote>\n<p>Oh that. I wonder if anybody uses the app? As it stands, it is very basic. It needs at least a drag and drop capability. It should not be difficult, but we need to find somebody who knows how to build these things.</p>\n</blockquote>\n<p>My guess is that most first-time Isabelle users on macOS use the desktop app, <br>\nbecause they don't know anything else.</p>\n<p>Concerning drag-and-drop, it should be possible to find open-source examples <br>\nout there and imitate them. I've always ignored drag-and-drop in particular, <br>\nbecause it reminds me on super-retro desktop interaction from the late 1980s <br>\nor early 1990s.</p>\n<p>Makarius</p>",
+        "id": 569874595,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769266967
+    },
+    {
+        "content": "<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>\n<p>I can't think of a better way to open a particular theory that may be sitting in a deeply nested directory.</p>\n<blockquote>\n<p>On 24 Jan 2026, at 15:02, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>Concerning drag-and-drop, it should be possible to find open-source examples out there and imitate them. I've always ignored drag-and-drop in particular, because it reminds me on super-retro desktop interaction from the late 1980s or early 1990s.</p>\n</blockquote>",
+        "id": 569878069,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1769269886
+    }
+]

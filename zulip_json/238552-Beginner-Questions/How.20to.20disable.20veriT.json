@@ -1,0 +1,62 @@
+[
+    {
+        "content": "<p>I think the the zombie veriT process problem still remains in Isabelle2025-2. I changed the setting of <code>SLEDGEHAMMER_PROVERS</code> to exclude veriT. The command</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">isabelle</span><span class=\"w\"> </span><span class=\"n\">getenv</span><span class=\"w\"> </span><span class=\"n\">SLEDGEHAMMER_PROVERS</span>\n</code></pre></div>\n<p>produces</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">SLEDGEHAMMER_PROVERS</span><span class=\"o\">=</span><span class=\"n\">cvc5</span><span class=\"w\"> </span><span class=\"n\">z3</span><span class=\"w\"> </span><span class=\"n\">e</span><span class=\"w\"> </span><span class=\"n\">spass</span><span class=\"w\"> </span><span class=\"n\">vampire</span><span class=\"w\"> </span><span class=\"n\">zipperposition</span>\n</code></pre></div>\n<p>as desired. However, when I invoke sledgehammer, veriT pops up again, and goes into an infinite loop in the background. How can I disable veriT altogether?</p>",
+        "id": 594077203,
+        "sender_full_name": "Yosuke Ito",
+        "timestamp": 1778401416
+    },
+    {
+        "content": "<p><a href=\"https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/sledgehammer.pdf\">https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/sledgehammer.pdf</a>,  so <code>sledgehammer_params[prover=...]</code></p>",
+        "id": 594670406,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778616786
+    },
+    {
+        "content": "<p>that being said, sledgehammer will try to reconstruct goals with the smt tactic and that is not option controlled. You could use <code>no_smt_proofs</code>, but that also deactivates z3.</p>",
+        "id": 594670563,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778616844
+    },
+    {
+        "content": "<p>Alternatively, you could add the option <code>--max-time=30</code> to veriT</p>",
+        "id": 594670940,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778616935
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">declare</span><span class=\"w\"> </span><span class=\"o\">[[</span><span class=\"n\">verit_options</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"--proof-with-sharing --max-time=30\"</span><span class=\"o\">]]</span>\n</code></pre></div>\n<p>That way, you keep everything working, but veriT should kill itself after 30s if isabelle killing fails</p>",
+        "id": 594671048,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778616971
+    },
+    {
+        "content": "<p>I really would like to know why killing processes is not working</p>",
+        "id": 594671151,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778617006
+    },
+    {
+        "content": "<p>This is probably because veriT lets subprocesses escape its PID group.</p>",
+        "id": 594675545,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1778618215
+    },
+    {
+        "content": "<p>veriT does not use subprocesses</p>",
+        "id": 594739893,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1778647711
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"233198\">@Mathias Fleury</span> <br>\nThank you very much for your help. I'll try this one.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">declare</span><span class=\"w\"> </span><span class=\"o\">[[</span><span class=\"n\">verit_options</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"--proof-with-sharing --max-time=30\"</span><span class=\"o\">]]</span>\n</code></pre></div>",
+        "id": 594801216,
+        "sender_full_name": "Yosuke Ito",
+        "timestamp": 1778665920
+    },
+    {
+        "content": "<p>I was wondering if Isabelle hol has ever been utilized to verify and validated video game source code in C???  this might be a ridiculous question.</p>",
+        "id": 595185080,
+        "sender_full_name": "ADVANCED TECHNOLOGIES AND RESEARCH",
+        "timestamp": 1778800262
+    }
+]

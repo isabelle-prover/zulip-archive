@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>Recently it has happened to me several times that the prover appears to \"hang\" in large projects, i.e. it initially gets stuck somewhere (perhaps in a long-running or non-terminating <code>auto</code>) and then doesn't seem to recover — even after removing the faulty invocation &amp; waiting for quite a while, jedit seems to no longer get \"updates\" on the document state from the prover, so while editing still works, new proofs won't be checked (nor terms type-checked, etc.).</p>\n<p>Is this a known problem, and is there a better way of dealing with this than restarting all of jedit (&amp; potentially having to re-check a large number of theories?). I've built heap images for parts of the project to at least reduce the cost of restarting, but that's only a stopgap solution ..</p>",
+        "id": 543475017,
+        "sender_full_name": "terru",
+        "timestamp": 1759826735
+    },
+    {
+        "content": "<p>This has been discussed before, see for example <a href=\"#narrow/channel/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Heavy.20memory.20use.20with.20sledgehammer\">#Mirror: Isabelle Users Mailing List &gt; &#91;isabelle&#93; Heavy memory use with sledgehammer</a>.</p>\n<p>Unfortunately, this is a known issue that is probably related to memory leakage. You can improve the situation somewhat using a fine-grained session structure, preferring Isar proofs over apply scripts, or, ultimately, buying more powerful hardware.</p>",
+        "id": 543528498,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1759842619
+    },
+    {
+        "content": "<p>Also see <a class=\"stream-topic\" data-stream-id=\"238552\" href=\"/#narrow/channel/238552-Beginner-Questions/topic/ML.20memory.20usage.20goes.20up/with/229089353\">#Beginner Questions &gt; ML memory usage goes up</a></p>",
+        "id": 543529021,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1759842752
+    },
+    {
+        "content": "<p>polyml's garbage collection is also prone to this</p>",
+        "id": 543557619,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1759849851
+    },
+    {
+        "content": "<p>or at least was</p>",
+        "id": 543557680,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1759849867
+    },
+    {
+        "content": "<p>(I rarely do whole-day Isabelle anymore)</p>",
+        "id": 543557738,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1759849883
+    },
+    {
+        "content": "<p>but look at the system panel in Isabelle/jEdit, how much heap is left</p>",
+        "id": 543557808,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1759849906
+    },
+    {
+        "content": "<p>But the solution is the same: restarting</p>",
+        "id": 543557929,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1759849941
+    },
+    {
+        "content": "<p>well that's annoying, then; dealing with this is currently slowing down my work quite a bit (but thanks for the information to both of you!)</p>",
+        "id": 543558339,
+        "sender_full_name": "terru",
+        "timestamp": 1759850046
+    }
+]

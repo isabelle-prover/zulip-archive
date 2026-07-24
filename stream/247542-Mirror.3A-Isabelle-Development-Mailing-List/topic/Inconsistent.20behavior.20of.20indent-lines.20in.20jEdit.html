@@ -1,0 +1,77 @@
+<html>
+<head><meta charset="utf-8"><title>Inconsistent behavior of indent-lines in jEdit · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Inconsistent.20behavior.20of.20indent-lines.20in.20jEdit.html">Inconsistent behavior of indent-lines in jEdit</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="598986055"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Inconsistent%20behavior%20of%20indent-lines%20in%20jEdit/near/598986055" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Inconsistent.20behavior.20of.20indent-lines.20in.20jEdit.html#598986055">(May 31 2026 at 14:34)</a>:</h4>
+<p><strong>From:</strong> Balazs Toth &lt;<a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a>&gt;</p>
+<p>If I enable the setting "Restore previously open files on startup" and <br>
+restart jEdit, then indenting lines (automatic on new line and via the <br>
+short-cut) puts everything to the start of the lines.</p>
+<p>I can consistently reproduce it on my MacBook.</p>
+<p>Balazs</p>
+
+
+
+<a name="606452995"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Inconsistent%20behavior%20of%20indent-lines%20in%20jEdit/near/606452995" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Inconsistent.20behavior.20of.20indent-lines.20in.20jEdit.html#606452995">(Jun 25 2026 at 10:31)</a>:</h4>
+<p><strong>From:</strong> Balazs Toth &lt;<a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a>&gt;</p>
+<p>On 31.05.26 16:34, Balazs Toth wrote:</p>
+<blockquote>
+<p>If I enable the setting "Restore previously open files on startup" and <br>
+restart jEdit, then indenting lines (automatic on new line and via the <br>
+short-cut) puts everything to the start of the lines.</p>
+<p>I can consistently reproduce it on my MacBook.</p>
+<p>Balazs</p>
+<p>Hi all,</p>
+</blockquote>
+<p>I investigated the issue and wrote a small patch.</p>
+<p>Reproduction:</p>
+<ol>
+<li>In jEdit, enable "Restore previously open files on startup".</li>
+<li>With a theory file open, restart jEdit so the .thy buffer is restored.</li>
+<li>In the restored buffer, auto-indent on a new line, or invoke the<br>
+    "indent-lines" action: both move everything to column 0.</li>
+</ol>
+<p>Syntax highlighting (and everything else) keeps working; only indentation<br>
+is affected. Opening a theory the normal way (after startup) is fine.</p>
+<p>Cause:</p>
+<p>Text_Structure.Indent_Rule is injected into jEdit's<br>
+shared Mode object by Token_Markup.Mode_Provider.loadMode. That provider is<br>
+installed in Main_Plugin.init_mode_provider(), but the main plugin is<br>
+"activate=defer", so the swap happens late.</p>
+<p>With restore on startup, jEdit reopens the .thy buffers during <br>
+finishStartup<br>
+and loads the isabelle mode before the main plugin is activated.<br>
+Mode loading is a one-shot (Mode.loadIfNecessary guards on marker == null),<br>
+so the mode is loaded by the original ModeProvider, without the indent <br>
+rule,<br>
+and is never reloaded once the provider is installed. indent-lines then <br>
+falls<br>
+back to the mode's default rules.</p>
+<p>Highlighting is unaffected because the token marker is set per buffer in<br>
+Buffer_Model.init_token_marker().</p>
+<p>Patch:</p>
+<p>After installing the PIDE Mode_Provider, re-apply the per-mode setup to <br>
+modes<br>
+that were already loaded before the swap. I factored out the setup out of<br>
+loadMode into Mode_Provider.init_mode, which I call in<br>
+init_mode_provider.</p>
+<p>The patch (attached) applies on top of 7b3c7c9d30ce. Built with<br>
+"isabelle jedit -b" and verified: with restore on startup<br>
+enabled, indentation in restored theories now behaves as usual.</p>
+<p>Balazs</p>
+<p><a href="/user_uploads/14278/AtE483Kztt9YAPIC6JQaNl6E/isabelle_jedit_indent_restore.patch">isabelle_jedit_indent_restore.patch</a><br>
+<a href="/user_uploads/14278/i_2ic4dIT-EdIahIC46BqYir/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

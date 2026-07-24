@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Is there any native support for using external packages within an Isabelle/Scala component (e.g. <code>py4j</code>). At present, I am using Gradle to download it and place it in a folder that I then add to my Isabelle classpath in the component settings.</p>\n<p>My understanding is that Gradle is used in Isabelle/Scala components just to import the project into common IDEs and get static analysis. Is there any way to specify external dependencies within the component settings itself? This way Gradle does not need to be used for setting up the component but rather only if someone wants to further develop the component.</p>",
+        "id": 516044974,
+        "sender_full_name": "Milan Tom",
+        "timestamp": 1746376456
+    },
+    {
+        "content": "<p>Yes, there is a standard mechanism for external components (not just jars), e.g. have a look at the <code>Component_XZ</code> module.</p>",
+        "id": 516130616,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1746431649
+    },
+    {
+        "content": "<p>Where is this <code>Component_XZ</code> module?</p>",
+        "id": 516133524,
+        "sender_full_name": "Milan Tom",
+        "timestamp": 1746432524
+    },
+    {
+        "content": "<p><code>~~/src/Pure/Admin</code> I believe</p>",
+        "id": 516134960,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1746433016
+    },
+    {
+        "content": "<p>Ah, I see that specific component is only in Isabelle2025. So, if I understand correctly, the standard mechanism is to create an Isabelle/Scala module to manage the download of the required package and then add that to the <code>sources</code> in the <code>build.props</code> for your component so it can be used by other parts of your component.</p>",
+        "id": 516139846,
+        "sender_full_name": "Milan Tom",
+        "timestamp": 1746434585
+    },
+    {
+        "content": "<p>Pretty much</p>",
+        "id": 516170039,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1746444700
+    }
+]

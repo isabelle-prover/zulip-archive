@@ -1,0 +1,182 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Why is this not working? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html">✔ Why is this not working?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="610823953"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610823953" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610823953">(Jul 15 2026 at 14:32)</a>:</h4>
+<p><img alt="image.png" class="inline-image" data-original-content-type="image/png" data-original-dimensions="1016x948" data-original-src="/user_uploads/14278/l5X8cvtP5OE_8OC1cBG_otrB/image.png" src="/user_uploads/thumbnail/14278/l5X8cvtP5OE_8OC1cBG_otrB/image.png/840x560.webp"></p>
+
+
+
+<a name="610826024"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610826024" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610826024">(Jul 15 2026 at 14:40)</a>:</h4>
+<p>curiously, it works if I use auto instead of .. (or more explicitly conjI) which is very weird</p>
+
+
+
+<a name="610826307"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610826307" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610826307">(Jul 15 2026 at 14:41)</a>:</h4>
+<p>B, C is not the same as B /\ C, and conjI is exactly the theorem allowing you to prove the latter from the former.</p>
+
+
+
+<a name="610826578"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610826578" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610826578">(Jul 15 2026 at 14:42)</a>:</h4>
+<p>I am trying to prove B /\ C from B, C using conjI and it is not working as you can see in the screenshot. Maybe this is a bug.</p>
+
+
+
+<a name="610827626"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610827626" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610827626">(Jul 15 2026 at 14:46)</a>:</h4>
+<p>You're passing C, B not B, C:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"A"</span><span class="w"> </span><span class="s">"B"</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="s">‹A›</span><span class="w"> </span><span class="s">‹B›</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="ow">..</span><span class="w"> </span><span class="c">(*OK*)</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="s">‹B›</span><span class="w"> </span><span class="s">‹A›</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="ow">..</span><span class="w"> </span><span class="c">(*not OK*)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="610828188"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610828188" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610828188">(Jul 15 2026 at 14:48)</a>:</h4>
+<p>I guess there is no rule overloading in isabelle, but is there really no conjI2 or something for these cases?</p>
+
+
+
+<a name="610828759"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610828759" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610828759">(Jul 15 2026 at 14:50)</a>:</h4>
+<p>You can prove that lemma if you like it.<br>
+In practice, people don't write such proofs because automation takes care of such irrelevances (so nobody misses the rule).<br>
+I don't know what you mean by rule overloading.</p>
+
+
+
+<a name="610829194"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610829194" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610829194">(Jul 15 2026 at 14:51)</a>:</h4>
+<p>rule overloading is where you cite the same rule and it functions as different rules depending on certain other factors. for example, one might cite iffD and it will choose iffD1 or iffD2 based on context (or something)</p>
+
+
+
+<a name="610829765"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610829765" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610829765">(Jul 15 2026 at 14:53)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1174342">Yoav Cohen</span> has marked this topic as resolved.</p>
+
+
+
+<a name="610829992"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610829992" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610829992">(Jul 15 2026 at 14:54)</a>:</h4>
+<p>You can make a theorem collection <code>iffD</code> which contains <code>iffD1</code> and <code>iffD2</code>: <code>lemmas iffD = iffD1 iffD2</code>.</p>
+
+
+
+<a name="610830105"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830105" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830105">(Jul 15 2026 at 14:54)</a>:</h4>
+<p>And then I can cite it as a rule?</p>
+
+
+
+<a name="610830202"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830202" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830202">(Jul 15 2026 at 14:55)</a>:</h4>
+<p>if by rule you mean an argument passed to the <code>rule</code> method, then yes.</p>
+
+
+
+<a name="610830311"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830311" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830311">(Jul 15 2026 at 14:55)</a>:</h4>
+<p>I am not sure what that means, I was just thinking like "by"</p>
+
+
+
+<a name="610830378"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830378" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830378">(Jul 15 2026 at 14:55)</a>:</h4>
+<p>oh you mean like (rule something)?</p>
+
+
+
+<a name="610830417"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830417" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830417">(Jul 15 2026 at 14:55)</a>:</h4>
+<p>like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">conj_swapI</span><span class="o">:</span><span class="w"> </span><span class="s">"A ⟹ B ⟹ B ∧ A"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+<span class="k">lemmas</span><span class="w"> </span><span class="n">conj_intros</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">conjI</span><span class="w"> </span><span class="n">conj_swapI</span>
+
+<span class="k">notepad</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">assume</span><span class="w"> </span><span class="s">"A"</span><span class="w"> </span><span class="s">"B"</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="s">‹A›</span><span class="w"> </span><span class="s">‹B›</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conj_intros</span><span class="o">)</span><span class="w"> </span><span class="c">(*OK*)</span>
+<span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="s">‹B›</span><span class="w"> </span><span class="s">‹A›</span><span class="w"> </span><span class="k">have</span><span class="w"> </span><span class="s">"A ∧ B"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conj_intros</span><span class="o">)</span><span class="w"> </span><span class="c">(*OK*)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="610830609"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830609" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830609">(Jul 15 2026 at 14:56)</a>:</h4>
+<p>omg that is so cool, double thanks</p>
+
+
+
+<a name="610830679"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830679" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830679">(Jul 15 2026 at 14:56)</a>:</h4>
+<p>also so for my thing I wanted conj_swapI?</p>
+
+
+
+<a name="610830744"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830744" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830744">(Jul 15 2026 at 14:57)</a>:</h4>
+<p>I suppose so.</p>
+
+
+
+<a name="610830781"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610830781" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610830781">(Jul 15 2026 at 14:57)</a>:</h4>
+<p>does this work with like modus ponens too?</p>
+
+
+
+<a name="610831254"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610831254" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610831254">(Jul 15 2026 at 14:59)</a>:</h4>
+<p>yes: <code>lemmas mps = mp rev_mp</code></p>
+
+
+
+<a name="610831393"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610831393" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610831393">(Jul 15 2026 at 14:59)</a>:</h4>
+<p>why is this one swap and this one rev??</p>
+
+
+
+<a name="610832087"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610832087" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610832087">(Jul 15 2026 at 15:01)</a>:</h4>
+<p>Because those are human made-up names. You can name them in any way you like.</p>
+
+
+
+<a name="610832167"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610832167" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610832167">(Jul 15 2026 at 15:02)</a>:</h4>
+<p>like why is it not consistent though?</p>
+
+
+
+<a name="610832516"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610832516" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610832516">(Jul 15 2026 at 15:03)</a>:</h4>
+<p>Because I just gave conj_swapI some name without having consistency of naming wrt rev_mp in mind. Don't overthink it.</p>
+
+
+
+<a name="610832709"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Why%20is%20this%20not%20working%3F/near/610832709" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yoav Cohen <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Why.20is.20this.20not.20working.3F.html#610832709">(Jul 15 2026 at 15:04)</a>:</h4>
+<p>oh wait I just realized my confusion. I am very sorry, I thought those were built-in because I missed the line in which you defined it.</p>
+
+
+
+<hr><p>Last updated: Jul 24 2026 at 06:27 UTC</p>
+</html>

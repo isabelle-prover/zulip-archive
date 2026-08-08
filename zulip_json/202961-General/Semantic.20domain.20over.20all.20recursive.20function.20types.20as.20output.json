@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Hi all,<br>\nI have a small programming language with a type system. The types are encoded as a datatype Typ := TNum | TBool | TFn Typ Typ. I wish to assign denotational semantic domains to each (recursive) type.<br>\nI have a data structure \"'a lattice\" where the underlying set has elements of type 'a. Hence, the assignment of semantic domains would be \"nat lattice\" for TNum, or \"bool lattice\" for TBool. Now a problem arises: I cannot define an Isabelle function \"semantic_domain:: Typ -&gt; _\" that does this, because \"nat lattice\" and \"bool lattice\" are different types and are rejected by Isabelle.<br>\nThere is a workaround for this, which is creating a corresponding value datatype Val := VNum nat | VBool bool | VFn Val =&gt; Val, then make \"semantic_domain:: Typ -&gt; Val lattice\". Then I will have to distinguish different kinds of Val lattice.<br>\nMy question is: is there an alternative way that does not involve creating a Val datatype?</p>",
+        "id": 590837869,
+        "sender_full_name": "Jun Xu",
+        "timestamp": 1777093129
+    },
+    {
+        "content": "<p>Ran into the same issue! No, Isabelle doesn't have that. You can either define an Any type like you said here, and/or have projection functions to different concrete types which are only going to be defined for specific Typ. (You could also have a polymorphic constant Typ =&gt; 'a lattice with each overload only defined for one Typ)</p>",
+        "id": 590855449,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1777109696
+    }
+]

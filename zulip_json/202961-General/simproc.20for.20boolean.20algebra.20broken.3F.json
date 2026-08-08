@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>I may be wrong but it appears that the simproc for boolean_algebra are broken.<br>\nSmall example</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(A ⊔ B) ⊔ A = A ⊔ (B :: 'a :: boolean_algebra)\"</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">simp</span><span class=\"w\"> </span><span class=\"c\">(*fails*)</span>\n<span class=\"gr\">oops</span>\n</code></pre></div>",
+        "id": 508995659,
+        "sender_full_name": "irvin",
+        "timestamp": 1743315671
+    },
+    {
+        "content": "<p>Nevermind it appears that the simpproc only deals with<br>\ncancelling out negations.<br>\nlemma \"(A ⊔ B) ⊔ - A = (B :: 'a :: boolean_algebra)\"<br>\nsupply [[simp_trace]]<br>\n  apply (simp ) (*simplifies to ⊤ = B *)</p>",
+        "id": 509019315,
+        "sender_full_name": "irvin",
+        "timestamp": 1743336087
+    }
+]

@@ -1,0 +1,152 @@
+[
+    {
+        "content": "<p>This is the discussion channel for <a href=\"#narrow/channel/214136-Announcements/topic/PIDE.20MCP.3A.20Connecting.20AI.20Agents.20to.20Isabelle/near/607301673\">PIDE MCP</a></p>",
+        "id": 607301760,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1782803258
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"233154\">@Kevin Kappelmann</span> </p>\n<blockquote>\n<p>Note that <a href=\"https://github.com/awslabs/AutoCorrode/tree/main/iq\">I/Q</a> is an alternative Isabelle MCP which provides an Isabelle/jEdit-centred workflow.<br>\nExperience reports using both systems are very welcome: we hope that the strengths of both MCPs can be combined in the future.</p>\n</blockquote>\n<p>I’d be interested in incorporating this into <a href=\"https://github.com/data61/PSL\">AbductionProver</a>.</p>\n<p>From your perspective, are there already any philosophical or design differences between your Isabelle MCP and I/Q?</p>\n<p>I'm curious whether the two systems have different long-term goals.</p>",
+        "id": 607383635,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1782827700
+    },
+    {
+        "content": "<p>One difference is that I/Q connects to jEdit whereas PIDE MCP works through a headless PIDE session.</p>\n<p>The set of tools offered by I/Q (listed <a href=\"https://github.com/awslabs/AutoCorrode/blob/main/iq/README.md\">here</a>) and PIDE MCP (listed <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/blob/main/src/pide_mcp_tool_schemas.scala#L41\">here</a>) are different. </p>\n<p>Both are fairly easy to set up, so you could simply experiment with both and see which one fits your framework better :)</p>",
+        "id": 607400090,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1782831323
+    },
+    {
+        "content": "<p>I see that this requires Isabelle version <code>c13a4bd3c018</code> i.e. 20 May 2026, so no support for 2025-2. What was the big change in Isabelle between these two changesets that requires the more recent one for the PIDE access?</p>",
+        "id": 607890048,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1783010212
+    },
+    {
+        "content": "<p>Just some changes in the Isabelle/Scala signatures. When you compile PIDE MCP with Isabelle2025-2, you can see the compile errors. An Isabelle2025-2 compatible branch would be very welcomed as a contribution if you want to give it a go.</p>",
+        "id": 607999760,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783062295
+    },
+    {
+        "content": "<p>Do you already have a preferred way for people to cite this project? <span aria-label=\"slight smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"slight smile\">:slight_smile:</span></p>",
+        "id": 608332416,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1783296217
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/608332416\">said</a>:</p>\n<blockquote>\n<p>Do you already have a preferred way for people to cite this project? <span aria-label=\"slight smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"slight smile\">:slight_smile:</span></p>\n</blockquote>\n<p>I now added citation information and a Zenodo release: <a href=\"https://github.com/kappelmann/isabelle-pide-mcp#citation\">https://github.com/kappelmann/isabelle-pide-mcp#citation</a></p>",
+        "id": 608417976,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783335515
+    },
+    {
+        "content": "<p>thanks for this work. I'm trying this out and it seems to work, but I've ran into an issue multiple times (which I can't diagnose) where the interface just seems to hang with no progress. The only way to recover is for me to manually restart the mcp (which works but certainly isn't ideal).</p>\n<p>FWIW, here's what Claude thinks:</p>\n<p><a href=\"/user_uploads/14278/Tgt-rMHSK9KV6lJMFyvCtHiR/PastedText.txt\">PastedText.txt</a></p>",
+        "id": 609493663,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783699980
+    },
+    {
+        "content": "<p>if there's a better report or information that you need, let me know and I can try to get that the next time I hit a freeze</p>",
+        "id": 609500474,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783702116
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"234226\">Yong Kiam</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/609493663\">said</a>:</p>\n<blockquote>\n<p>thanks for this work. I'm trying this out and it seems to work, but I've ran into an issue multiple times (which I can't diagnose) where the interface just seems to hang with no progress. The only way to recover is for me to manually restart the mcp (which works but certainly isn't ideal).</p>\n<p>FWIW, here's what Claude thinks:</p>\n<p><a href=\"/user_uploads/14278/Tgt-rMHSK9KV6lJMFyvCtHiR/PastedText.txt\">PastedText.txt</a></p>\n</blockquote>\n<p>Let me address the agent's comments one by one (at least the ones I understand):</p>\n<blockquote>\n<p>One earlier scratch was given a nonexistent import (<code>HOL-Library.Permutations</code>).<br>\n    After that, EVERY MCP operation on that scratch (<code>read</code>, corrective <code>edit</code>)<br>\n    failed with the import error, so it could not be repaired through the MCP</p>\n</blockquote>\n<p>This has been fixed in the meantime.</p>\n<blockquote>\n<p>Symptom 1: file-path node vs session-qualified node diverge</p>\n</blockquote>\n<p>The agent mixed two different ways to refer to a theory: absolute file paths vs. session-qualified. Your shared text indicates that it edited the theory of a base session using an absolute file path but then requested (and imported) that theory session-qualified. But session-qualified base session theories are read-only and changes will not propagate. To see the changes, it also needs to use an absolute import. To try this yourself, start Isabelle with base session HOL and then compare importing and editing \"~~/src/HOL/HOL\" vs \"HOL.HOL\". Only if you import using the former you will see any changes propagate. The import of the latter is instant, the former will process the dependencies.</p>\n<p>I don't know your intended application, but there is a good chance that you do not want the agent to use absolute file paths for base sessions because doing so will re-process the required theories (which is very slow). To this end, there is even a hint for the agent in the <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/blob/main/.opencode/skills/pide-mcp/SKILL.md?plain=1#L37\">PIDE MCP SKILL file</a>.</p>\n<p>Finally, this mismatch/mixed usage of absolute file paths and session-qualified references might also have caused what it calls \"Symptom 2\", essentially a situation where it believes (rightfully or not) to be stuck. Another possible cause is that there are non-terminating commands in some theory file that it did not consider which block the processing of the commands that it is waiting for. The model is then confused as to why the commands it is waiting for are never processed/updated. I have a suspicion that this occurred to me and my collaborators a number of times before. A possible remedy might be to write an MCP tool that provides the agent an overview of all loaded theories and their progress (akin to the progress bar in Isabelle/jEdit). This way, it could locate where Isabelle is stuck (or if the process really stopped responding). Maybe this is likely caus in your case too?</p>\n<p>You can enable writing a log file by passing the <code>-L &lt;file_name&gt;</code> option to PIDE MCP (see <code>isabelle pide_mcp -?</code> for all options). Note, however, that the log file logs all requests and responses, so don't share it blindly if you are doing \"secret\" work.</p>",
+        "id": 609788502,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783931737
+    },
+    {
+        "content": "<p>thanks! I'll check this out the next time I get around to it (which might be after FLOC)</p>",
+        "id": 609790225,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783932383
+    },
+    {
+        "content": "<p>I'm also at the Isabelle Workshop and ITP - hit me up if you wanna try out some things :)</p>",
+        "id": 609790801,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783932583
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233154\">Kevin Kappelmann</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/609790801\">said</a>:</p>\n<blockquote>\n<p>I'm also at the Isabelle Workshop and ITP - hit me up if you wanna try out some things :)</p>\n</blockquote>\n<p>sounds good, I'll look for you at the workshop.</p>",
+        "id": 609790894,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783932611
+    },
+    {
+        "content": "<p>I’ve been experimenting with coding-agent hooks for Isabelle proof discipline:</p>\n<p><a href=\"https://github.com/balazstothofficial/isabelle-agent-hooks\">https://github.com/balazstothofficial/isabelle-agent-hooks</a></p>\n<p>The hooks currently discourage <code>apply</code> scripts and require search-discoverable terminal proof methods to have recent <code>sledgehammer</code>/<code>try0</code> evidence. They inspect newly added theory text and support Claude Code, Codex, and OpenCode, including AutoCorrode I/Q and <code>isabelle-pide-mcp</code>.</p>\n<p>I’ve manually tested the setup with all three agents. It is deliberately best-effort and fail-open, since agent hook and transcript interfaces are still evolving. Feedback would be very welcome.</p>\n<p>Disclaimer: The code was mostly written by Claude.</p>",
+        "id": 609848383,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1783951728
+    },
+    {
+        "content": "<p>We have a short workshop to set up an AI with Isabelle at 13:15 in the Isabelle workshop room at FLoC if anybody wants to join.</p>",
+        "id": 612727528,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784977885
+    },
+    {
+        "content": "<p>New in PIDE MCP:</p>\n<ul>\n<li>Update to Isabelle/f672c186c3bb</li>\n<li>New tool unload: Remove (\"clean\") a theory and its dependents.</li>\n<li>New tool get_progress: show progress of theories and currently processed commands.</li>\n</ul>\n<p>The new tools are also available on the Isabelle2025-2 compatible branch <code>2025-2</code>. We hope the tools improve the efficiency of the MCP particularly in large session applications. Feedback is very welcomed.</p>",
+        "id": 612823677,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785075526
+    },
+    {
+        "content": "<p>To update the MCP server, do I sync the mcp repository and re-run the <code>isabelle/bin/isabelle components -u ..</code> installation line?</p>",
+        "id": 612944844,
+        "sender_full_name": "Junming Zhao",
+        "timestamp": 1785148897
+    },
+    {
+        "content": "<p>You just need to pull from the repository. Isabelle will detect that the component changed and rebuild it automatically</p>",
+        "id": 612958759,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785153945
+    },
+    {
+        "content": "<p>thanks!</p>",
+        "id": 612965627,
+        "sender_full_name": "Junming Zhao",
+        "timestamp": 1785156005
+    },
+    {
+        "content": "<p>One note: I unfortunately named the 2025-2 release tag the same as the 2025-2 branch. So make sure you are pulling the newest changes from the branch and you're not on the tag.</p>",
+        "id": 612988955,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785162157
+    },
+    {
+        "content": "<p>There's now an <code>Isabelle2025-2</code> branch to fix this issue.</p>",
+        "id": 613012376,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785167803
+    },
+    {
+        "content": "<p>I think somewhere in the README there could be an \"official\" recommendation for setting up<br>\n prebuilt heaps (and also what to do if the heap changes mid-project)</p>\n<p>it looks like the <code>-l HOL</code> gets baked into the MCP JSON at setup (at least with Claude Code)</p>",
+        "id": 613550399,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1785375946
+    },
+    {
+        "content": "<p>My experience is that claude/codex can parse the ROOT structure and pick up the right base session it needs, if sufficient instruction/prompt is provided</p>",
+        "id": 613552886,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1785378001
+    },
+    {
+        "content": "<p>I'll add a note to the README.<br>\nChanging the base session on the fly is currently not supported. To change the base session, one has to change the <code>-l</code> option (in the mcp json) and then restart the MCP. I think(?) most coding agents do not allow agents to restart MCPs on their own though.</p>",
+        "id": 613646877,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785418224
+    },
+    {
+        "content": "<p>Right, coding agents generally won't restart an MCP server on their own. What I do is decouple the Isabelle session/process from the MCP itself. Each time an agent (Claude/Codex) starts up, only a thin Python wrapper is launched automatically — the actual Isabelle process isn't spawned until Claude/Codex makes its first call to the MCP. This lazy initialization avoids launching a full Isabelle instance every time I start Claude/Codex, which matters when that session isn't going to touch Isabelle at all (especially since I usually have ~10 Claude instances running in parallel; otherwise I'd end up with 10 Isabelle instances on my laptop :-)</p>",
+        "id": 613668031,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1785423510
+    }
+]

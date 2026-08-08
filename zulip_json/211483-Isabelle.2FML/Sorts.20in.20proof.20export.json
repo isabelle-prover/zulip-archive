@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Hi everyone,<br>\nWhat is the expected behavior of sorts in proof export?<br>\nWhen looking at the exported version (in Isabelle/Scala) of some subpart of the HOL session, I noticed that sorts (in type variables, in propositions' type arguments) are always empty (at least in the few theories I looked) in places I would expect them not to be (definitions/propositions in a typeclass context).<br>\nHowever, in the type arguments of a theory's <code>Spec_Rule</code>s, they are present as I would expect them to be.<br>\nIs that normal?</p>",
+        "id": 605931530,
+        "sender_full_name": "Antoine Gontard",
+        "timestamp": 1782200822
+    },
+    {
+        "content": "<p>I've been staring at the code for a few days and could not find where that comes from. All I found is that, when I ran a test on a session with Pure + theory HOL.Groups,  in every call to <code>Export_theory.encode_thm</code>, the <code>typargs</code> in <code>standard_prop_of thm (Some proof0)</code> are always of empty sort. It looks like <code>Zterm.standard_vars</code> does not remove sorts, so from what I understand, a theories' <code>thms</code> are already void of sorts when the export happens. Is that normal ?</p>",
+        "id": 606739975,
+        "sender_full_name": "Antoine Gontard",
+        "timestamp": 1782484525
+    },
+    {
+        "content": "<p>What I found to get the sorts:</p>\n<ul>\n<li>In src/Pure/Build/export_theory.ML:<ul>\n<li>For const export: Use U instead of U0; add a list string in encode const for the sort and remove the #1 from the definition of args.</li>\n<li>In encode_thm: compute the typargs with raw_thm first (using ZTerm.standard_vars), and use these instead of the ones computed in standard_prop_of thm.</li>\n<li>I did not do it for axioms as I did not do it, but the same is doable.</li>\n</ul>\n</li>\n<li>in src/Pure/proofterm.ML<ul>\n<li>In prepare_thm_proof, same trick, compute typargs first then pass them to export_proof.</li>\n<li>In export_proof, glue together the newly computed typargs' names (which may have changed) with the precomputed typargs' sorts.</li>\n</ul>\n</li>\n</ul>\n<p>Doing this (and changing src/Pure/Build/export_theory.scala to read the sorts of consts) I indeed got sorts when I needed them most in consts, theorems, and intermediary proofs. Other important sorts can be found in the theories' arities (in particular instantiations' constants' internal names contain enough information to find the associated arity and extract its typargs)</p>",
+        "id": 608684491,
+        "sender_full_name": "Antoine Gontard",
+        "timestamp": 1783422837
+    }
+]

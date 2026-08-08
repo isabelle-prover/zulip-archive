@@ -1,0 +1,78 @@
+<html>
+<head><meta charset="utf-8"><title>✔ Intro rule seems to be ignored? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Intro.20rule.20seems.20to.20be.20ignored.3F.html">✔ Intro rule seems to be ignored?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="615171765"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Intro%20rule%20seems%20to%20be%20ignored%3F/near/615171765" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bob Rubbens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Intro.20rule.20seems.20to.20be.20ignored.3F.html#615171765">(Aug 07 2026 at 10:18)</a>:</h4>
+<p>Hi everyone,</p>
+<p>Why is my intro rule not used automatically here? Is there some technicality with subset_eq? Or am I expecting too much and is there some kind of blind spot in the intro rule automation? Here's a repro file:</p>
+<p>(The definitions in the original development are more involved, and the sorries are proved there, so I don't think it's because of a false assumption...)</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Test</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">type_synonym</span><span class="w"> </span><span class="n">pname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nat</span>
+<span class="k">type_synonym</span><span class="w"> </span><span class="n">simple_proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nat</span>
+<span class="k">type_synonym</span><span class="w"> </span><span class="n">simple_net</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"pname ⇒ simple_proc"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">atomic</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"pname ⇒ simple_proc ⇒ simple_net"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"atomic p P q = (if p = q then P else 0)"</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">par</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"simple_net ⇒ simple_net ⇒ simple_net"</span><span class="w"> </span><span class="kp">where</span>
+<span class="s">"par p q = p"</span><span class="w"> </span><span class="c">(* bogus definition *)</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">supp_par</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span>
+<span class="s">"supp (par N M) = supp N ∪ supp M"</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="c">(* This is the intro rule I'm interested in *)</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">supp_atomic_subsetI</span><span class="w"> </span><span class="o">[</span><span class="n">intro</span><span class="o">]:</span>
+<span class="s">‹p ∈ S ⟹ supp (atomic p P) ⊆ S›</span>
+<span class="w">  </span><span class="gr">sorry</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">ex1</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"supp (par (atomic p P) (atomic q Q)) ⊆ {p, q}"</span>
+<span class="c">(* can do it manually: *)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">simp</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">conjI</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="o">(</span><span class="n">intro</span><span class="w"> </span><span class="n">supp_atomic_subsetI</span><span class="o">)</span>
+<span class="w">   </span><span class="kp">apply</span><span class="o">(</span><span class="n">simp</span><span class="o">)</span>
+<span class="w">    </span><span class="c">(* But would expect something like auto to do it. *)</span>
+<span class="w">    </span><span class="c">(* Force including the lemma also works: *)</span>
+<span class="w">    </span><span class="c">(*  using supp_atomic_subsetI by blast *)</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="615175066"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Intro%20rule%20seems%20to%20be%20ignored%3F/near/615175066" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bob Rubbens <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Intro.20rule.20seems.20to.20be.20ignored.3F.html#615175066">(Aug 07 2026 at 10:40)</a>:</h4>
+<p>The problem seems to have been related to one of my simp rules. I replaced:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">supp_atomic_simps</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span>
+<span class="s">"is_term P ==&gt; supp (p⟨P⟩) = {}"</span>
+<span class="s">"~is_term P ==&gt; supp (p⟨P⟩) = {p}"</span>
+</code></pre></div>
+<p>With:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">supp_atomic_simps</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span>
+<span class="s">"supp (p⟨P⟩) = (if is_term P then {} else {p})"</span>
+</code></pre></div>
+<p>Apparently with the former formulation Isabelle doesn't case split on the assumption, whereas if <code>is_term P</code> occurs as part of an if the simplifier does case split. This extra knowledge allows the simplification to proceed.</p>
+
+
+
+<a name="615175081"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%E2%9C%94%20Intro%20rule%20seems%20to%20be%20ignored%3F/near/615175081" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Notification Bot <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.E2.9C.94.20Intro.20rule.20seems.20to.20be.20ignored.3F.html#615175081">(Aug 07 2026 at 10:40)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="613529">Bob Rubbens</span> has marked this topic as resolved.</p>
+
+
+
+<hr><p>Last updated: Aug 08 2026 at 16:35 UTC</p>
+</html>

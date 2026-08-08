@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>Is `binder_datatype` working in Isabelle2025-2? · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Is.20.60binder_datatype.60.20working.20in.20Isabelle2025-2.3F.html">Is `binder_datatype` working in Isabelle2025-2?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="613938604"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Is%20%60binder_datatype%60%20working%20in%20Isabelle2025-2%3F/near/613938604" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Is.20.60binder_datatype.60.20working.20in.20Isabelle2025-2.3F.html#613938604">(Jul 31 2026 at 20:48)</a>:</h4>
+<p>I am referring specifically to <a href="https://github.com/jvanbruegge/binder_datatypes/">this library</a></p>
+<p>I seem to end up with a compile-time error like this when using 2025-2 instead of 2025:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">Binders</span><span class="w"> </span><span class="n">FAILED</span><span class="w"> </span><span class="o">(</span><span class="n">see</span><span class="w"> </span><span class="k">also</span><span class="w"> </span><span class="s">"isabelle build_log -H Error Binders"</span><span class="o">)</span>
+<span class="ow">...</span>
+<span class="n">***</span><span class="w">         </span><span class="o">(</span><span class="kt">thm</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">-</span><span class="n">&gt;</span><span class="w"> </span><span class="n">local_theory</span><span class="w"> </span><span class="o">-</span><span class="n">&gt;</span><span class="w"> </span><span class="n">local_theory</span><span class="o">)</span><span class="w"> </span><span class="n">*</span><span class="w"> </span><span class="n">local_theory</span>
+<span class="n">***</span><span class="w">    </span><span class="n">Argument</span><span class="o">:</span><span class="w"> </span><span class="o">(</span><span class="n">replicate</span><span class="w"> </span><span class="o">(</span><span class="n">length</span><span class="w"> </span><span class="n">specs</span><span class="o">)</span><span class="w"> </span><span class="n">NONE</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">list</span>
+<span class="n">***</span><span class="w">    </span><span class="n">Reason</span><span class="o">:</span>
+<span class="n">***</span><span class="w">       </span><span class="n">Can't</span><span class="w"> </span><span class="n">unify</span><span class="w"> </span><span class="k">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Context.proof</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n n-Type">'a</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="c">(*In Basis*)</span>
+<span class="n">***</span><span class="w">          </span><span class="o">(</span><span class="n">Different</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="n">constructors</span><span class="o">)</span>
+<span class="n">***</span><span class="w"> </span><span class="k">ML</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">(</span><span class="n">line</span><span class="w"> </span><span class="n">61</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s">"~/isa_pkgs/binder_datatypes/Tools/mrbnf_fp.ML"</span><span class="o">):</span>
+<span class="n">***</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="kp">in</span><span class="w"> </span><span class="kn">function</span><span class="w"> </span><span class="n">application.</span>
+<span class="n">***</span><span class="w">    </span><span class="n">Function</span><span class="o">:</span><span class="w"> </span><span class="ow">...</span><span class="w"> </span><span class="ow">...</span><span class="w"> </span><span class="n">true</span><span class="w"> </span><span class="o">[]</span><span class="w"> </span><span class="kp">fixes</span><span class="w"> </span><span class="n">specs'</span><span class="w"> </span><span class="o">(</span><span class="n">replicate</span><span class="w"> </span><span class="o">(</span><span class="n">length</span><span class="w"> </span><span class="n">specs</span><span class="o">)</span><span class="w"> </span><span class="n">NONE</span><span class="o">)</span><span class="w"> </span><span class="o">:</span>
+</code></pre></div>
+
+
+
+<a name="613938728"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Is%20%60binder_datatype%60%20working%20in%20Isabelle2025-2%3F/near/613938728" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Is.20.60binder_datatype.60.20working.20in.20Isabelle2025-2.3F.html#613938728">(Jul 31 2026 at 20:49)</a>:</h4>
+<p>Didn't want to cry wolf and post an issue on github before there is one, really.</p>
+
+
+
+<a name="613944308"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Is%20%60binder_datatype%60%20working%20in%20Isabelle2025-2%3F/near/613944308" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Jan van Brügge <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Is.20.60binder_datatype.60.20working.20in.20Isabelle2025-2.3F.html#613944308">(Jul 31 2026 at 21:39)</a>:</h4>
+<p>this is weird, we test with 2025-2 in CI<br>
+Is this a recent clone?</p>
+
+
+
+<a name="613944396"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Is%20%60binder_datatype%60%20working%20in%20Isabelle2025-2%3F/near/613944396" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Is.20.60binder_datatype.60.20working.20in.20Isabelle2025-2.3F.html#613944396">(Jul 31 2026 at 21:40)</a>:</h4>
+<p>I just cloned this today</p>
+
+
+
+<hr><p>Last updated: Aug 08 2026 at 16:35 UTC</p>
+</html>

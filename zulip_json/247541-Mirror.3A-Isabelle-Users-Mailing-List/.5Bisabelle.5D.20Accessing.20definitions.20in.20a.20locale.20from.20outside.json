@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Tobias Nipkow &lt;<a href=\"mailto:nipkow@in.tum.de\">nipkow@in.tum.de</a>&gt;</p>\n<p>Hi,</p>\n<p>If I define some function in a locale, how do I access the defining equations <br>\noutside the local from ML? Top-level function definitions can be accessed via <br>\nSpec_Rules.retrieve, but for functions from a locale, it returns an empty list, <br>\nalthough the constant itself is known, meaning @{const L.f} works fine (with the <br>\nlocale parameters as additional arguments).</p>\n<p>Thanks<br>\nTobias</p>\n<p><a href=\"/user_uploads/14278/Fjd5k__Bm7k97om2s-HnVNOU/smime.p7s\">smime.p7s</a></p>",
+        "id": 595244203,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1778831760
+    },
+    {
+        "content": "<p><strong>From:</strong> Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;</p>\n<p>Hi Tobias,</p>\n<blockquote>\n<p>If I define some function in a locale, how do I access the defining <br>\nequations outside the local from ML? Top-level function definitions can <br>\nbe accessed via Spec_Rules.retrieve, but for functions from a locale, it <br>\nreturns an empty list, although the constant itself is known, meaning <br>\n@{const L.f} works fine (with the locale parameters as additional <br>\narguments).</p>\n</blockquote>\n<p>not 100% sure what your actual application is, but the following schema <br>\nis a starting point:</p>\n<blockquote>\n<p>locale nat<br>\nbegin</p>\n<p>datatype T = Zero | Succ T</p>\n<p>primrec sym_dec :: ‹T ⇒ T›<br>\n  where<br>\n    ‹sym_dec Zero = Succ Zero›<br>\n  | ‹sym_dec (Succ n) = n›</p>\n<p>ML_val ‹<br>\n  Spec_Rules.retrieve \\&lt;^context&gt; \\&lt;^term&gt;‹sym_dec›<br>\n›</p>\n<p>end</p>\n</blockquote>\n<p>It is important that you retrieve the spec rules relative to the locale <br>\ncontext (Locale.init).</p>\n<p>Hope this helps,<br>\n    Florian</p>\n<p><a href=\"/user_uploads/14278/8LcI_qvUl2wa8PwNzuT8bZWL/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/7YnjWce7Tcs2MwroZo6HJ37h/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 595733910,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1779088617
+    }
+]

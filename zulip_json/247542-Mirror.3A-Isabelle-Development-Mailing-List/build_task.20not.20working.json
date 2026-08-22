@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>\nHere’s the output.</p>\n<p>Host \"of4-proof_classic\": init ...<br>\nHost \"of3-proof_classic\": init ...<br>\nHost \"of2-proof_classic\": init ...<br>\nHost \"of1-proof_classic\": init ...<br>\n*** Batch entry 0 INSERT INTO \"isabelle_build_sessions\" VALUES (('HOL-Matrix_LP'), ('HOL'), ('Pure<br>\n*** HOL'), (''), ('3388d67c284096209f11b169986ae204ef7cf331 &lt;meta_info&gt;<br>\n*** e512a13d839ea34e1dc95b4853b580c309500b04 ~~/src/HOL/ATP.thy<br>\n*** fb5c04ec4758211546d540118f08450c5d57ab05 ~~/src/Tools/subtyping.ML<br>\n*** 97f6449e53d782a57a5af30e8df922ac66e4f9da ~~/src/Tools/try.ML<br>\n*** '), ('0'::int8), ('0'::int8), '\\x'::bytea, ('af33ee54-8201-4e9e-bc5b-03a6b9474d55')) was aborted: ERROR: duplicate key value violates unique constraint \"isabelle_build_sessions_pkey\"<br>\n***   Detail: Key (name)=(HOL-Matrix_LP) already exists.  Call getNextException to see other errors in the batch.</p>",
+        "id": 508535551,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1743086073
+    },
+    {
+        "content": "<p>From: Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;<br>\nThat is due to a previous build leaving the build database in an <br>\ninconsistent state (it is resetted daily but I've now done it manually).</p>\n<p>Perhaps we could detect if there is a pending but inactive build in the <br>\ndatabase (and remove the remnants), before attempting to start a new build?</p>\n<p>Fabian</p>\n<p>On 3/27/25 15:33, Lawrence Paulson via isabelle-dev wrote:</p>\n<blockquote>\n<p>Here’s the output.</p>\n<p>Host \"of4-proof_classic\": init ...<br>\nHost \"of3-proof_classic\": init ...<br>\nHost \"of2-proof_classic\": init ...<br>\nHost \"of1-proof_classic\": init ...<br>\n*** Batch entry 0 INSERT INTO \"isabelle_build_sessions\" VALUES (('HOL-Matrix_LP'), ('HOL'), ('Pure<br>\n*** HOL'), (''), ('3388d67c284096209f11b169986ae204ef7cf331 &lt;meta_info&gt;<br>\n*** e512a13d839ea34e1dc95b4853b580c309500b04 ~~/src/HOL/ATP.thy<br>\n*** fb5c04ec4758211546d540118f08450c5d57ab05 ~~/src/Tools/subtyping.ML<br>\n*** 97f6449e53d782a57a5af30e8df922ac66e4f9da ~~/src/Tools/try.ML<br>\n*** '), ('0'::int8), ('0'::int8), '\\x'::bytea, ('af33ee54-8201-4e9e-bc5b-03a6b9474d55')) was aborted: ERROR: duplicate key value violates unique constraint \"isabelle_build_sessions_pkey\"<br>\n***   Detail: Key (name)=(HOL-Matrix_LP) already exists.  Call getNextException to see other errors in the batch.</p>\n</blockquote>",
+        "id": 508539283,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1743086920
+    }
+]

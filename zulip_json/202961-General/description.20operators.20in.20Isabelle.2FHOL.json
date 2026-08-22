@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>I've recently looked into how HOL is built up, and seem to have hit a roadblock in my understanding: Isabelle/HOL provides two description operators (THE and SOME, for definite and indefinite description). I had always assumed SOME (i.e. choice) was the more fundamental of the two — e.g. Mike Gordon introduces it as one of the axioms, and uses it to define <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi mathvariant=\"normal\">∃</mi></mrow><annotation encoding=\"application/x-tex\">\\exists</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:0.6944em;\"></span><span class=\"mord\">∃</span></span></span></span>; the old <code>logics.pdf</code> that is (while deprecated) still part of the Isabelle distribution does the same.</p>\n<p>The NEWS file seems to imply this used (?) to also be the definition in Isabelle/HOL, but that it was changed with Isabelle 2002. Current <code>HOL.thy</code> instead defines <code>∃x. P x ≡ ∀Q. (∀x. P x ⟶ Q) ⟶ Q</code>, and uses (definite) description only to define if-then-else, and <code>SOME</code> is no longer in it at all (its axiomatisation still exists, but is only in the separate <code>Hilbert_Choice.thy</code>).</p>\n<p>So my question: why this change? The NEWS file unfortunately does not give a reason; perhaps there's literature elsewhere that I missed, or someone here knows?</p>",
+        "id": 541039031,
+        "sender_full_name": "terru",
+        "timestamp": 1758640004
+    },
+    {
+        "content": "<p>Using hg blame I found the commit:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">changeset</span><span class=\"o\">:</span><span class=\"w\">   </span><span class=\"n\">11451</span><span class=\"o\">:</span><span class=\"n\">8abfb4f7bd02</span>\n<span class=\"n\">user</span><span class=\"o\">:</span><span class=\"w\">        </span><span class=\"n\">paulson</span>\n<span class=\"n\">date</span><span class=\"o\">:</span><span class=\"w\">        </span><span class=\"n\">Wed</span><span class=\"w\"> </span><span class=\"n\">Jul</span><span class=\"w\"> </span><span class=\"n\">25</span><span class=\"w\"> </span><span class=\"n\">13</span><span class=\"o\">:</span><span class=\"n\">13</span><span class=\"o\">:</span><span class=\"n\">01</span><span class=\"w\"> </span><span class=\"n\">2001</span><span class=\"w\"> </span><span class=\"o\">+</span><span class=\"n\">0200</span>\n<span class=\"n\">summary</span><span class=\"o\">:</span><span class=\"w\">     </span><span class=\"n\">partial</span><span class=\"w\"> </span><span class=\"n\">restructuring</span><span class=\"w\"> </span><span class=\"n\">to</span><span class=\"w\"> </span><span class=\"n\">reduce</span><span class=\"w\"> </span><span class=\"n\">dependence</span><span class=\"w\"> </span><span class=\"n\">on</span><span class=\"w\"> </span><span class=\"n\">Axiom</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">Choice</span>\n</code></pre></div>",
+        "id": 541043403,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1758641121
+    },
+    {
+        "content": "<p>This gives at least a partial information on why</p>",
+        "id": 541043512,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1758641147
+    },
+    {
+        "content": "<p>fair, then my rough guess wasn't too far off.</p>\n<p>(I'd mentally discarded this as possible motivation since I felt that one could probably reconstruct indefinite choice using definite choice &amp; the axiom for undefined, which remains in HOL.thy. But turns out one can't; the closest is that, if one has a concrete <code>P</code> and needs <code>Eps P</code>, one can do <code>typedef P_helper :: {x. P x}</code> and then use <code>undefined :: P_helper</code> in place of <code>Eps P</code> — but while this construction can be done for any <code>P</code>, it can't be done for a general <code>?P</code>, and in either case <code>undefined</code> was only added with Isabelle 2007, so its presence has no bearing on any motivations of chances done in 2002)</p>",
+        "id": 541069948,
+        "sender_full_name": "terru",
+        "timestamp": 1758649731
+    }
+]

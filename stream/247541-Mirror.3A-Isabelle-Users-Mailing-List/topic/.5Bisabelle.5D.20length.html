@@ -1,0 +1,122 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] length · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20length.html">[isabelle] length</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="617223564"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20length/near/617223564" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20length.html#617223564">(Aug 18 2026 at 14:39)</a>:</h4>
+<p><strong>From:</strong> Tobias Nipkow &lt;<a href="mailto:nipkow@in.tum.de">nipkow@in.tum.de</a>&gt;</p>
+<p>Hi everybody,</p>
+<p>One of the most frequently used functions in HOL is "length". There are about <br>
+100,000 occurrences in the AFP. If you have ever used list extensively, you will <br>
+have wished that there was a shorthand. Here are two alternatives that come to mind:</p>
+<ol>
+<li>
+<p>"|xs|" is what mathematicians would write. However, it clashes with the ASCII <br>
+syntax for both records ("(|" and "|)") and iterated implications ("[|" and <br>
+|]"). The record syntax at least is in a bundle, but not the iterated <br>
+implication. Thus it requires additional spaces, eg "[ |xs| ]".</p>
+</li>
+<li>
+<p>"len xs" is the obvious alphabetical shorthand.</p>
+</li>
+</ol>
+<p>If they ASCII syntaxes for [| etc were gone, alternative 1 would be my choice.<br>
+But wait that long? Why not have "len" tomorrow?</p>
+<p>Thoughts?</p>
+<p>Tobias</p>
+<p><a href="/user_uploads/14278/80m7_SoORIQf37U8ZBuFnNUm/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="617226594"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20length/near/617226594" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20length.html#617226594">(Aug 18 2026 at 14:50)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 18/08/2026 16:38, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>One of the most frequently used functions in HOL is "length". There are about <br>
+100,000 occurrences in the AFP. If you have ever used list extensively, you <br>
+will have wished that there was a shorthand. Here are two alternatives that <br>
+come to mind:</p>
+<ol start="2">
+<li>"len xs" is the obvious alphabetical shorthand.</li>
+</ol>
+</blockquote>
+<p>I don't see why this should be a conclusive argument. The name "length" is <br>
+well-established, also in other languages of Isabelle (e.g. ML, Scala).</p>
+<blockquote>
+<p>If they ASCII syntaxes for [| etc were gone, alternative 1 would be my choice.<br>
+But wait that long? Why not have "len" tomorrow?<br>
+Because we are between RC0 and RC1 of the coming release. Now is the time to <br>
+finish unfinished things, and not start new things.</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<a name="617423429"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20length/near/617423429" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20length.html#617423429">(Aug 19 2026 at 11:32)</a>:</h4>
+<p><strong>From:</strong> Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt;</p>
+<p>On Tue, 2026-08-18 at 16:38 +0200, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>One of the most frequently used functions in HOL is "length". There<br>
+are about 100,000 occurrences in the AFP. If you have ever used list<br>
+extensively, you will have wished that there was a shorthand. [...]</p>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>"len xs" is the obvious alphabetical shorthand.</li>
+</ol>
+</blockquote>
+<p>It's just a name, of course. But length is descriptive and immediately<br>
+understandable, whereas len primarily optimizes for typing convenience.<br>
+Given that Isabelle/HOL has thousands of names, I'm not sure that<br>
+saving a few keystrokes is the consideration that should take priority.</p>
+<p>Best,<br>
+Tjark</p>
+<p>När du har kontakt med oss på Uppsala universitet med e-post så innebär det att vi behandlar dina personuppgifter. För att läsa mer om hur vi gör det kan du läsa här: <a href="http://www.uu.se/om-uu/dataskydd-personuppgifter/">http://www.uu.se/om-uu/dataskydd-personuppgifter/</a></p>
+<p>E-mailing Uppsala University means that we will process your personal data. For more information on how this is performed, please read here: <a href="http://www.uu.se/en/about-uu/data-protection-policy">http://www.uu.se/en/about-uu/data-protection-policy</a></p>
+
+
+
+<a name="617426661"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20length/near/617426661" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20length.html#617426661">(Aug 19 2026 at 11:51)</a>:</h4>
+<p><strong>From:</strong> Gergely Buday &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>On Wed, 19 Aug 2026 at 12:32, Tjark Weber &lt;<a href="mailto:tjark.weber@it.uu.se">tjark.weber@it.uu.se</a>&gt; wrote:</p>
+<blockquote>
+<p>On Tue, 2026-08-18 at 16:38 +0200, Tobias Nipkow wrote:</p>
+<blockquote>
+<p>One of the most frequently used functions in HOL is "length". There<br>
+are about 100,000 occurrences in the AFP. If you have ever used list<br>
+extensively, you will have wished that there was a shorthand. [...]</p>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>"len xs" is the obvious alphabetical shorthand.</li>
+</ol>
+</blockquote>
+<p>It's just a name, of course. But length is descriptive and immediately<br>
+understandable, whereas len primarily optimizes for typing convenience.<br>
+Given that Isabelle/HOL has thousands of names, I'm not sure that<br>
+saving a few keystrokes is the consideration that should take priority.</p>
+</blockquote>
+<p>Terseness is idolised in mathematical practice, even in some Isabelle<br>
+theory files, but many times it does not improve readability. As the<br>
+old software engineering dictum says, a notation should be easy to<br>
+read, not easy to write. Also, in the mathematical community plain<br>
+language is considered ambiguous, and to be avoided, but in this case<br>
+the name length conveys a straightforward meaning.</p>
+<ul>
+<li>Gergely</li>
+</ul>
+
+
+
+<hr><p>Last updated: Aug 22 2026 at 16:26 UTC</p>
+</html>

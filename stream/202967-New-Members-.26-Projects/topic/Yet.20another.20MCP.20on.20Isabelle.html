@@ -1,0 +1,51 @@
+<html>
+<head><meta charset="utf-8"><title>Yet another MCP on Isabelle · New Members &amp; Projects · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/index.html">New Members &amp; Projects</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/Yet.20another.20MCP.20on.20Isabelle.html">Yet another MCP on Isabelle</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="613005046"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/Yet%20another%20MCP%20on%20Isabelle/near/613005046" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/Yet.20another.20MCP.20on.20Isabelle.html#613005046">(Jul 27 2026 at 15:24)</a>:</h4>
+<p>Following the <a href="#narrow/channel/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel/near/612881053">AoA proof agent</a>, I'd also like to announce <code>Isabelle-MCP</code>, which I built a couple of months ago as a development tool for AoA (and which, as a result, has been more or less battle-tested for a while now). It was developed in parallel with Kevin's. (Apologies — I wasn't aware Kevin was working on his at the time; had I known, I probably wouldn't have duplicated the effort)</p>
+<p>Functionally, the two MCPs overlap to a large extent. The most significant difference, I think, is the editing model: PIDE MCP ships its own edit tools. Isabelle-MCP deliberately provides none — the agent edits files with whatever tools it already has, including plain bash commands like <code>sed</code>. A file-system watcher monitors the relevant files and automatically syncs any modification into Isabelle.</p>
+<p>(My picture of PIDE MCP comes from a fairly shallow investigation and may well contain errors — corrections welcome.)</p>
+<h4>How to install</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">conda</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="n">isabelle</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">https</span><span class="o">:</span><span class="n">//conda.qiyuan.me</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="w"> </span><span class="n">isabelle</span><span class="o">-</span><span class="n">ai</span><span class="w"> </span><span class="n">#</span><span class="w"> </span><span class="n">Same</span><span class="w"> </span><span class="n">installation</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">AoA</span><span class="w"> </span><span class="n">—</span><span class="w"> </span><span class="kp">if</span><span class="w"> </span><span class="n">you've</span><span class="w"> </span><span class="n">already</span><span class="w"> </span><span class="n">installed</span><span class="w"> </span><span class="n">AoA</span><span class="o">,</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">step.</span>
+<span class="n">conda</span><span class="w"> </span><span class="n">activate</span><span class="w"> </span><span class="n">isabelle</span>
+<span class="n">isabelle</span><span class="o">-</span><span class="n">mcp</span><span class="w"> </span><span class="n">install</span>
+</code></pre></div>
+<h4>How to use</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="n">conda</span><span class="w"> </span><span class="n">activate</span><span class="w"> </span><span class="n">isabelle</span>
+<span class="n">claude</span><span class="w"> </span><span class="n">#</span><span class="w"> </span><span class="n">OR</span><span class="w"> </span><span class="n">codex</span>
+</code></pre></div>
+<p>source code: <a href="https://github.com/xqyww123/Isabelle-MCP">https://github.com/xqyww123/Isabelle-MCP</a></p>
+
+
+
+<a name="613009103"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/Yet%20another%20MCP%20on%20Isabelle/near/613009103" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/Yet.20another.20MCP.20on.20Isabelle.html#613009103">(Jul 27 2026 at 15:41)</a>:</h4>
+<p>Hi Qiyuan, I would argue the most significant difference is architectural: your MCP uses LSP while PIDE MCP directly manages a PIDE session. I wrote a preprint including a paragraph that compares these approaches: <a href="https://zenodo.org/records/21519365">https://zenodo.org/records/21519365</a></p>
+
+
+
+<a name="613011369"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/Yet%20another%20MCP%20on%20Isabelle/near/613011369" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/Yet.20another.20MCP.20on.20Isabelle.html#613011369">(Jul 27 2026 at 15:51)</a>:</h4>
+<p>Thanks for the addition <span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span> <span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span> <span aria-label="+1" class="emoji emoji-1f44d" role="img" title="+1">:+1:</span></p>
+
+
+
+<a name="617619404"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/Yet%20another%20MCP%20on%20Isabelle/near/617619404" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/Yet.20another.20MCP.20on.20Isabelle.html#617619404">(Aug 20 2026 at 07:21)</a>:</h4>
+<p>Isabelle-mcp v0.4.0 is out. The headline feature is support for the Isabelle/ML debugger.</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>conda<span class="w"> </span>update<span class="w"> </span>-c<span class="w"> </span>https://conda.qiyuan.me<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>isabelle-mcp
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Aug 22 2026 at 16:26 UTC</p>
+</html>

@@ -1,0 +1,194 @@
+[
+    {
+        "content": "<p>Every time I want to update a comment, Isabelle/jEdit seems to check the whole proof script. Similarly, when I reopen a session, it checks every file, even though nothing has changed since a previous session. Is there a way to get isabelle to cache theorems in case (2), if not case (1)?</p>",
+        "id": 580719695,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774029670
+    },
+    {
+        "content": "<p>The normal way is to have sessions for the parts you do not touch anymore (like HOL): the state is dumped and reloaded instead of rerunning everything. But when it is dumped, you cannot change the state anymore.</p>",
+        "id": 580727511,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774032717
+    },
+    {
+        "content": "<p>Some hints:<br>\nRegarding 1), a partial solution on older hardware might be to disable continuous checking whilst editing documentation. I don't think you can do much better as it is difficult to decide whether your edits further up invalidate subsequent proofs. Splitting your development into smaller files might also help in certain situations.<br>\nRegarding 2), initiate an isabelle project using <code>mkroot</code>, specify the dependencies in the <code>ROOT</code> file, then build its dependencies only once, e.g. invoke <code>isabelle jedit -R &lt;your_session_name&gt;</code>. Check the Isabelle system manual or ROOT files in the AFP/Isabelle distribution for examples.</p>",
+        "id": 580727851,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1774032869
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Caching.20theorems/near/580727511\">said</a>:</p>\n<blockquote>\n<p>have sessions</p>\n</blockquote>\n<p>could you elaborate on what it means to \"have a session for the parts you don't touch?\". If this is in the manual, where should I be looking?</p>",
+        "id": 580728064,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774032955
+    },
+    {
+        "content": "<p><a href=\"https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/system.pdf\">https://isabelle.in.tum.de/dist/Isabelle2025-2/doc/system.pdf</a>, chapter 2</p>",
+        "id": 580728458,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033134
+    },
+    {
+        "content": "<p>thanks! I'll take a look. (I'll try to dig through the manual before asking a question like this, sorry about that)</p>",
+        "id": 580728540,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033170
+    },
+    {
+        "content": "<p>But the manual is not that useful for the big picture</p>",
+        "id": 580728630,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033212
+    },
+    {
+        "content": "<p>In any case, so I can be more precise when I ask something</p>",
+        "id": 580728687,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033234
+    },
+    {
+        "content": "<p>The idea is: </p>\n<p>1. split your theories in groups. Let's call them A, B, C (this can change) over time<br>\n  2. create your sessions (see the manual for the details), but you basically say for all your theories if they belong to A, B, or C<br>\n  3. Now (before you start Isabelle!), you decide on what you are going to work (usually the latest, C). So you start Isabelle with <code>-R C</code> as <span class=\"user-mention\" data-user-id=\"433149\">@Maximilian Schäffeler</span> suggested. You can also set the base session in some jEdit panel. But: you cannot touch A and B.<br>\n  4. Sometimes you will want to work on everything, then you to <code>-R A</code> and work on everything (useful for refactoring / moving theorems).</p>",
+        "id": 580729095,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033418
+    },
+    {
+        "content": "<p>are we assuming a dependency graph between A, B and C?</p>",
+        "id": 580729219,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033473
+    },
+    {
+        "content": "<p>HOL -&gt; A -&gt; B -&gt; C</p>",
+        "id": 580729267,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033486
+    },
+    {
+        "content": "<p>ah, ok, that clears it up</p>",
+        "id": 580729319,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033504
+    },
+    {
+        "content": "<p>can you not spawn 2 instances of <code>isabelle</code>? One with A and one with C?</p>",
+        "id": 580729372,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033525
+    },
+    {
+        "content": "<p>You can also do </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">A</span><span class=\"w\"> </span><span class=\"o\">-</span><span class=\"n\">&gt;</span><span class=\"w\"> </span><span class=\"n\">B</span>\n<span class=\"n\">A</span><span class=\"w\"> </span><span class=\"o\">-</span><span class=\"n\">&gt;</span><span class=\"w\"> </span><span class=\"n\">C</span>\n</code></pre></div>",
+        "id": 580729418,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033541
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Caching.20theorems/near/580729372\">said</a>:</p>\n<blockquote>\n<p>can you not spawn 2 instances of <code>isabelle</code>? One with A and one with C?</p>\n</blockquote>\n<p>you can do that, but the one with C will not be updated if you change A</p>",
+        "id": 580729514,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033570
+    },
+    {
+        "content": "<p>(it uses the dumped state, not the live state)</p>",
+        "id": 580729563,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033588
+    },
+    {
+        "content": "<p>when you say <code>A -&gt; B</code> or <code>A -&gt; C</code>, are you talking about in the command line flags?</p>",
+        "id": 580729600,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033604
+    },
+    {
+        "content": "<p>no, about the dependency</p>",
+        "id": 580729681,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033626
+    },
+    {
+        "content": "<p>oh, for the example</p>",
+        "id": 580729711,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033637
+    },
+    {
+        "content": "<p>got it <span aria-label=\"thumbs up\" class=\"emoji emoji-1f44d\" role=\"img\" title=\"thumbs up\">:thumbs_up:</span></p>",
+        "id": 580729723,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033642
+    },
+    {
+        "content": "<p><a href=\"https://www.isa-afp.org/browser_info/current/AFP/Show/session_graph.pdf\">https://www.isa-afp.org/browser_info/current/AFP/Show/session_graph.pdf</a></p>",
+        "id": 580729900,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033721
+    },
+    {
+        "content": "<p>here you can see a real session graph</p>",
+        "id": 580729922,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033730
+    },
+    {
+        "content": "<p>the <code>[...]</code> are sessions</p>",
+        "id": 580730004,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033760
+    },
+    {
+        "content": "<p>the others are theories</p>",
+        "id": 580730021,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033767
+    },
+    {
+        "content": "<p>I see. I checked the isabelle system manual, and it doesn't seem to specify how this graph is made. Is it automatic?</p>",
+        "id": 580730171,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033830
+    },
+    {
+        "content": "<p>(i.e. how is this graph made)</p>",
+        "id": 580730254,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033863
+    },
+    {
+        "content": "<p>It is automatically generated when you produce the documentation</p>",
+        "id": 580730255,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033863
+    },
+    {
+        "content": "<p>oh</p>",
+        "id": 580730270,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033867
+    },
+    {
+        "content": "<p>neat</p>",
+        "id": 580730275,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033868
+    },
+    {
+        "content": "<p>Oh and one suggestion for the root files: copy-paste them from another ROOT file in the AFP</p>",
+        "id": 580730467,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774033966
+    },
+    {
+        "content": "<p>starring this immediately tysm</p>",
+        "id": 580730542,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774033995
+    },
+    {
+        "content": "<p>the syntax is not tricky but very hard to remember, because you never change a root file</p>",
+        "id": 580730561,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774034003
+    }
+]

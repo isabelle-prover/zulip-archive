@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\n<strong>* System </strong>*</p>\n<ul>\n<li>The command-line tool \"isabelle process\" no longer supports option -T<br>\nto load individual theories via the \"use_thy\" function in Isabelle/ML.<br>\nThe latter is still available as \"Thy_Info.use_thy_legacy\", notably for<br>\n\"isabelle process -e ...\", but it will be removed eventually. The proper<br>\nway to process individual theories under program control is via<br>\n\"isabelle process_theories\". INCOMPATIBILITY.</li>\n</ul>\n<p>This refers to Isabelle/7505b5e592b1.</p>\n<p>It needs to be understood in the context of the new \"isabelle <br>\nprocess_theories\", which is adjacent in the NEWS and provides a proper <br>\nIsabelle/Scala context for the Isabelle/ML process.</p>\n<p>At some point after the Isabelle2025-1 release, I will revisit the remaining <br>\nThy_Info.use_theories, which is the ML entry point for \"isabelle build\". <br>\nWithout the assumption of being a sequential ML toplevel operation, it can be <br>\ndone more efficiently, e.g. commit presentation hooks when a theory is <br>\nfinished, and delete its intermediate states on the spot (instead of at the <br>\nend of the build 'theories' section).</p>\n<p>Makarius</p>",
+        "id": 546315479,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1761076050
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>Hey, can we somehow limit the logical formulas (like in Isabelle/Pure) from having a quantifier in them? I want to use Isabelle's unification to reason about variable names in formulas etc., but I see that even in Isabelle/Pure, universal and existential quantification is 'on' by default. I want to reason about weaker formulas! I.e. only allow the user to add quantifiers in a particular way and not however they want to. Do you think we can do that in Isabelle? Perhaps I shouldn't even import Pure? :) Thanks!</p>",
+        "id": 516166951,
+        "sender_full_name": "Paweł Balawender",
+        "timestamp": 1746443659
+    },
+    {
+        "content": "<p>Pure doesn't have an existential quantifier, but in any case, what do you even want to achieve? You could check whether  <code>Pure.all</code>, <code>HOL.All</code>, and <code>HOL.Ex</code> appear in your term, but that doesn't stop anyone from defining another constant that is a quantifier</p>",
+        "id": 516168298,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1746444117
+    },
+    {
+        "content": "<p>Depending on what you are trying to achieve, embedding your terms into HOL might be easier, like in <a href=\"https://www.isa-afp.org/sessions/implicational_logic/#Implicational_Logic\">https://www.isa-afp.org/sessions/implicational_logic/#Implicational_Logic</a></p>",
+        "id": 516169731,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1746444605
+    },
+    {
+        "content": "<p>Especially if you want to prove meta-theorems about your formulas</p>",
+        "id": 516169856,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1746444647
+    },
+    {
+        "content": "<p>Hey thank you for the pointers! Embedding into HOL is something I haven't considered, but sounds useful indeed. <span class=\"user-mention\" data-user-id=\"348400\">@Fabian Huch</span> I need to formalize proofs in the area of bounded arithmetics and, more generally, of reverse mathematics. What they do there is to limit the expressiveness of a proof system by restricting the Induction scheme (for <em>every</em> proposition P, if P(0) and P(x)-&gt;P(x+1), then forall x, P(x)) to only some smaller class of propositions. For example, you can consider a proof system consisting of classical natural deduction, some constants and axioms (constants 0, 1, +, *, axiom 0+x=x etc.) + an axiom scheme of induction limited to open formulas - that is, having no quantifiers at all, but possibly having free variables. I attach the relevant part of Wikipedia's article on Arithmetical hierarchy for the specific definition of how to they cluster the formulas. All this is very cool and I think formalizing some of these results would help us \"convert\" a lot of logicians onto our side :) But it seems that implementing these weak systems will require more work than I thought <br>\n<a href=\"/user_uploads/14278/db3zXA7TMpMrzkJxCj8tt8TP/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/db3zXA7TMpMrzkJxCj8tt8TP/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1114x933\" src=\"/user_uploads/thumbnail/14278/db3zXA7TMpMrzkJxCj8tt8TP/image.png/840x560.webp\"></a></div>",
+        "id": 516179587,
+        "sender_full_name": "Paweł Balawender",
+        "timestamp": 1746447189
+    }
+]

@@ -1,0 +1,143 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Trying to understand how to prove an equivalence · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Trying.20to.20understand.20how.20to.20prove.20an.20equivalence.html">[isabelle] Trying to understand how to prove an equivalence</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="619828453"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Trying%20to%20understand%20how%20to%20prove%20an%20equivalence/near/619828453" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Trying.20to.20understand.20how.20to.20prove.20an.20equivalence.html#619828453">(Aug 28 2026 at 15:38)</a>:</h4>
+<p><strong>From:</strong> Nicolas FRANCOIS &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi.</p>
+<p>For reference, you'll find definition files for Propositional Logic and<br>
+"Variational Logic" in files LP.thy and DiffLP.thy. To sum up briefly<br>
+what I'm working on, Variational Formulas are constructed with<br>
+conjunctions, disjunctions and negation on atoms of the form a^v, where<br>
+a is a (propositional) variable and v and "variation symbol". An<br>
+interpretation is a member of Omega^2, and for example, (I,J)<br>
+(abbreviated simply in IJ) satisfies a^+ if I satisfies (not a) and J<br>
+satisfies a. With this we are trying to encode variations of states.</p>
+<p>I'm working on some properties of this notion of Variational Formulas,<br>
+and in the process learning how to use Isabelle, and more precisely<br>
+Isar. Automatic proofs works quite fine, but I would like to enhance my<br>
+knowledge of more complicated proof methods.</p>
+<p>For example, I'm trying to prove that operator |&gt; distributes on<br>
+conjunction (in file DiffLP_lemmas.thy):</p>
+<p>a |&gt; (b /\ c) &lt;=&gt; (a |&gt; b) /\ (a |&gt; c)</p>
+<p>I'm starting like this:</p>
+<p>lemma distr_devient_conj1: "((α⇩1 ∧⋅ α⇩2) ▷ β) ≡⇩Δ ((α⇩1 ▷ β) ∧⇩Δ (α⇩2<br>
+▷ β))" <br>
+proof<br>
+  show ‹(((α⇩1 ∧⋅ α⇩2) ▷ β) ≡⇩Δ ((α⇩1 ▷ β) ∧⇩Δ (α⇩2 ▷ β))) ⟷ (∀IJ.<br>
+DiffLPResult IJ ((α⇩1 ∧⋅ α⇩2) ▷ β) = DiffLPResult IJ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷<br>
+β))› <br>
+  unfolding DiffLPEquivalence_def by auto <br>
+...<br>
+qed</p>
+<p>but Isabelle doesn't seem satisfied by this: when positioning the<br>
+cursor just after "proof", it says</p>
+<p>proof (prove)<br>
+goal (1 subgoal):</p>
+<ol>
+<li>
+<p>(α⇩1 ∧⋅ α⇩2) ▷ β ≡⇩Δ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷ β) <br>
+Failed to apply initial proof method:<br>
+goal (1 subgoal):</p>
+</li>
+<li>
+<p>(α⇩1 ∧⋅ α⇩2) ▷ β ≡⇩Δ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷ β)</p>
+</li>
+</ol>
+<p>But if I position it after "auto", the problem seems to disappear:</p>
+<p>theorem distr_devient_conj1: (?α⇩1 ∧⋅ ?α⇩2) ▷ ?β ≡⇩Δ (?α⇩1 ▷ ?β ∧⇩Δ ?α⇩2 ▷ ?β)</p>
+<p>I'm quite new to all this, so if someone could explain what I don't<br>
+understand, it would be great.</p>
+<p>Thank to anyone who had the courage to read until this :-)</p>
+<p>\bye</p>
+<p>-- </p>
+<p>Nicolas FRANCOIS                      |  /\ <br>
+<a href="http://nicolas.francois.free.fr">http://nicolas.francois.free.fr</a>       | |__|<br>
+                      X--/\\<br>
+We are the Micro$oft.               _\_V<br>
+Resistance is futile.           <br>
+You will be assimilated.         darthvader penguin</p>
+<p><a href="/user_uploads/14278/vi5SvM-zEmNYT_-Rh5lrMbyy/DiffLP.thy">DiffLP.thy</a><br>
+<a href="/user_uploads/14278/qrcXRSgYdG1j_cGRMxg2G6Sh/DiffLP_lemmas.thy">DiffLP_lemmas.thy</a><br>
+<a href="/user_uploads/14278/G6lai2q5r0gLqIZhQSvhfcVl/LP.thy">LP.thy</a></p>
+
+
+
+<a name="620960439"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Trying%20to%20understand%20how%20to%20prove%20an%20equivalence/near/620960439" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Trying.20to.20understand.20how.20to.20prove.20an.20equivalence.html#620960439">(Sep 02 2026 at 10:17)</a>:</h4>
+<p><strong>From:</strong> "Thiemann, René" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear Nicolas,</p>
+<blockquote>
+<p>I'm starting like this:</p>
+<p>lemma distr_devient_conj1: "((α⇩1 ∧⋅ α⇩2) ▷ β) ≡⇩Δ ((α⇩1 ▷ β) ∧⇩Δ (α⇩2<br>
+▷ β))" <br>
+proof<br>
+ show ‹(((α⇩1 ∧⋅ α⇩2) ▷ β) ≡⇩Δ ((α⇩1 ▷ β) ∧⇩Δ (α⇩2 ▷ β))) ⟷ (∀IJ.<br>
+DiffLPResult IJ ((α⇩1 ∧⋅ α⇩2) ▷ β) = DiffLPResult IJ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷<br>
+β))› <br>
+ unfolding DiffLPEquivalence_def by auto <br>
+...<br>
+qed</p>
+</blockquote>
+<p>starting your Isar proof with</p>
+<p>“proof” without arguments wants to already the “initial proof method”, but since<br>
+for your "≡⇩Δ” operator there is no such standard proof method registered, it fails.</p>
+<p>Hence, you should start in this case with</p>
+<p>lemma … <br>
+proof -</p>
+<p>where the - tells the system not to use any initial method.</p>
+<p>Also the next step the use of “show” is wrong, since what you state<br>
+is an intermediate statement, where you have to you use “have” instead.</p>
+<p>In total</p>
+<p>lemma distr_devient_conj1: "((α⇩1 ∧⋅ α⇩2) ▷ β) ≡⇩Δ ((α⇩1 ▷ β) ∧⇩Δ (α⇩2<br>
+▷ β))" <br>
+proof -<br>
+ have ‹(((α⇩1 ∧⋅ α⇩2) ▷ β) ≡⇩Δ ((α⇩1 ▷ β) ∧⇩Δ (α⇩2 ▷ β))) ⟷ (∀IJ.<br>
+DiffLPResult IJ ((α⇩1 ∧⋅ α⇩2) ▷ β) = DiffLPResult IJ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷<br>
+β))› <br>
+ unfolding DiffLPEquivalence_def by auto <br>
+  … continue with further reasoning … <br>
+  show ?thesis … <br>
+qed</p>
+<p>I recommend to you, to first read Chapter 4 on Isar in the<br>
+“Prog-Prove” Tutorial (isabelle doc prog-prove) where this and many <br>
+more elements of Isar are described in more detail.</p>
+<p>Best,<br>
+René</p>
+<blockquote>
+<p>but Isabelle doesn't seem satisfied by this: when positioning the<br>
+cursor just after "proof", it says</p>
+<p>proof (prove)<br>
+goal (1 subgoal):<br>
+1. (α⇩1 ∧⋅ α⇩2) ▷ β ≡⇩Δ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷ β) <br>
+Failed to apply initial proof method:<br>
+goal (1 subgoal):<br>
+1. (α⇩1 ∧⋅ α⇩2) ▷ β ≡⇩Δ (α⇩1 ▷ β ∧⇩Δ α⇩2 ▷ β)</p>
+<p>But if I position it after "auto", the problem seems to disappear:</p>
+<p>theorem distr_devient_conj1: (?α⇩1 ∧⋅ ?α⇩2) ▷ ?β ≡⇩Δ (?α⇩1 ▷ ?β ∧⇩Δ ?α⇩2 ▷ ?β)</p>
+<p>I'm quite new to all this, so if someone could explain what I don't<br>
+understand, it would be great.</p>
+<p>Thank to anyone who had the courage to read until this :-)</p>
+<p>\bye</p>
+<p>-- </p>
+<p>Nicolas FRANCOIS                      |  /\ <br>
+<a href="http://nicolas.francois.free.fr">http://nicolas.francois.free.fr</a>       | |__|<br>
+     X--/\\<br>
+We are the Micro$oft.        _\_V<br>
+Resistance is futile.    <br>
+You will be assimilated.         darthvader penguin<br>
+&lt;DiffLP.thy&gt;&lt;DiffLP_lemmas.thy&gt;&lt;LP.thy&gt;</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

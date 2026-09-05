@@ -1,0 +1,90 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Hooks that nudge LLM coding agents toward sled... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Hooks.20that.20nudge.20LLM.20coding.20agents.20toward.20sled.2E.2E.2E.html">[isabelle] Hooks that nudge LLM coding agents toward sled...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="619763818"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Hooks%20that%20nudge%20LLM%20coding%20agents%20toward%20sled.../near/619763818" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Hooks.20that.20nudge.20LLM.20coding.20agents.20toward.20sled.2E.2E.2E.html#619763818">(Aug 28 2026 at 10:46)</a>:</h4>
+<p><strong>From:</strong> <a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a><br>
+<strong>Subject:</strong> [isabelle] Hooks that nudge LLM coding agents toward sledgehammer</p>
+<p>Hi all,</p>
+<p>Coding agents (Claude Code, Codex, OpenCode) often don't want to run <br>
+sledgehammer: they'd rather guess |by (metis foo bar)|, fail, and guess <br>
+again. They also like falling back to long |apply| scripts.</p>
+<p>I wrote a hook that forces them, to a certain degree, to do it properly:</p>
+<p><a href="https://github.com/balazstothofficial/isabelle-agent-hooks">https://github.com/balazstothofficial/isabelle-agent-hooks</a></p>
+<p>It sits in front of every |.thy| write. A closer that sledgehammer or <br>
+try0 could have found only goes through if a real search result shows up <br>
+in the agent's transcript, and |apply| steps get bounced with a pointer <br>
+to Isar. With that in place, agents fall into a decent workflow on their <br>
+own: Isar skeleton with |sorry|s, then one search per closer.</p>
+<p>It is compatible with the I/Q (AutoCorrode) and isabelle-pide-mcp servers.</p>
+<p>I've used it with Isabelle2025-2 and the development version together <br>
+with I/Q since July and for me it works very well.</p>
+<p>Feedback is very welcome, especially if it blocks something it shouldn't.</p>
+<p>Best,<br>
+Balazs</p>
+<p><a href="/user_uploads/14278/BldCFX1xwJzPYh9epbpzXchJ/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<a name="619774497"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Hooks%20that%20nudge%20LLM%20coding%20agents%20toward%20sled.../near/619774497" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Hooks.20that.20nudge.20LLM.20coding.20agents.20toward.20sled.2E.2E.2E.html#619774497">(Aug 28 2026 at 11:39)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Hooks that nudge LLM coding agents toward sledgehammer</p>
+<p>On 28/08/2026 12:45, <a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a> wrote:</p>
+<blockquote>
+<p><a href="https://github.com/balazstothofficial/isabelle-agent-hooks">https://github.com/balazstothofficial/isabelle-agent-hooks</a></p>
+</blockquote>
+<p>I am not going to look at it before the final release of Isabelle2026.</p>
+<blockquote>
+<p>It sits in front of every |.thy| write.</p>
+</blockquote>
+<p>This is not a proper concept of Isabelle/PIDE. In fact, it works via its own <br>
+internal file-system (better called document model).</p>
+<p>AI agents are wrong in changing files "on disk". (Or the makers of these agents).</p>
+<p>Makarius</p>
+
+
+
+<a name="619800771"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Hooks%20that%20nudge%20LLM%20coding%20agents%20toward%20sled.../near/619800771" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Hooks.20that.20nudge.20LLM.20coding.20agents.20toward.20sled.2E.2E.2E.html#619800771">(Aug 28 2026 at 13:39)</a>:</h4>
+<p><strong>From:</strong> <a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a><br>
+<strong>Subject:</strong> [isabelle] Hooks that nudge LLM coding agents toward sledgehammer</p>
+<p>On 28.08.26 13:37, Makarius wrote:</p>
+<blockquote>
+<p>On 28/08/2026 12:45, <a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a> wrote:</p>
+<blockquote>
+<p><a href="https://github.com/balazstothofficial/isabelle-agent-hooks">https://github.com/balazstothofficial/isabelle-agent-hooks</a></p>
+</blockquote>
+<p>I am not going to look at it before the final release of Isabelle2026. </p>
+</blockquote>
+<p>It is not meant as an addition to the Isabelle distribution or anything. <br>
+It is just a small tool that can be configured for coding agents.</p>
+<p>It just prevents coding agents to do certain tools calls, e.g. through <br>
+MCP servers.</p>
+<blockquote>
+<blockquote>
+<p>It sits in front of every |.thy| write.<br>
+The only thing I meant with that, is that the hook is active if a tool <br>
+call from a coding agent targets a .thy file.</p>
+</blockquote>
+<p>This is not a proper concept of Isabelle/PIDE. In fact, it works via <br>
+its own internal file-system (better called document model).</p>
+<p>AI agents are wrong in changing files "on disk". (Or the makers of <br>
+these agents).</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/n_xYNsJNGLgvMmM-bo2O9jd-/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

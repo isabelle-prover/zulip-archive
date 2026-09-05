@@ -1,0 +1,302 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Is there a &quot;timed&quot; method? · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html">[isabelle] Is there a &quot;timed&quot; method?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="618334097"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618334097" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618334097">(Aug 24 2026 at 11:18)</a>:</h4>
+<p><strong>From:</strong> Steven Obua &lt;<a href="mailto:steven.obua@gmail.com">steven.obua@gmail.com</a>&gt;</p>
+<p>Given that the new Isabelle release is coming up, I am wondering if there<br>
+is a "timed" method or similar available by default now (according to NEWS,<br>
+this doesn't seem to be the case). If not, maybe it could be added? I am<br>
+adding it for every new Isabelle formalisation project currently. I am<br>
+attaching what I am using now with the January 2026 release.</p>
+<p>Cheers,<br>
+Steven</p>
+<p><a href="/user_uploads/14278/o_GMSHYby2uraDKkzR_6u4yZ/Plurals_Tools.thy">Plurals_Tools.thy</a></p>
+
+
+
+<a name="618341107"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618341107" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618341107">(Aug 24 2026 at 11:57)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/08/2026 13:18, Steven Obua wrote:</p>
+<blockquote>
+<p>Given that the new Isabelle release is coming up, I am wondering if there is a <br>
+"timed" method or similar available by default now (according to NEWS, this <br>
+doesn't seem to be the case). If not, maybe it could be added? I am adding it <br>
+for every new Isabelle formalisation project currently. I am attaching what I <br>
+am using now with the January 2026 release.<br>
+Shortly before a release is a very bad time to add "features" on the spot: it <br>
+usually means extra days/weeks to get everything right, but that time is <br>
+required for other things that are already in the pipeline for this release <br>
+(often these get postponed to a later release).</p>
+</blockquote>
+<p>Moreover, the canonical question on this mailing list is "What is your <br>
+application? What is really required".</p>
+<p>Sprinkling ML timeouts into the system is generally fragile: results become <br>
+erratic for various reasons, including technical side-conditions of the <br>
+Isabelle/ML runtime system. So we do need to know what the purpose really is <br>
+--- it will affect how to implement the idea properly, if this is possible in <br>
+the first place.</p>
+<p>Makarius</p>
+
+
+
+<a name="618350232"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618350232" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618350232">(Aug 24 2026 at 12:43)</a>:</h4>
+<p><strong>From:</strong> Steven Obua &lt;<a href="mailto:steven.obua@gmail.com">steven.obua@gmail.com</a>&gt;</p>
+<p>Hi Makarius <span aria-label="smiley" class="emoji emoji-1f603" role="img" title="smiley">:smiley:</span></p>
+<p>I think what the method does is self explanatory. Similarly to "sorry", it<br>
+would not be part of a polished finished theory, it is just a means to<br>
+detect a proof method that does not terminate when you run Isabelle from<br>
+the command line. Even better would be a command line switch that can<br>
+timeout any proof method that takes too much time; currently there is only<br>
+a timeout switch for the entire session, which is not precise enough,<br>
+because how long I am willing to wait for the whole session to succeed<br>
+(minutes) is substantially longer than how long I am willing to wait for<br>
+most proof methods to succeed (seconds).</p>
+<p>It is no issue for me to just add this method to each of my developments,<br>
+so treat this as a JFYI, maybe for the release after the upcoming one in<br>
+case this makes sense to you. The advantage of just adding this method,<br>
+compared to a command-line switch, is that it is immediately portable.<br>
+Adding it to Main would also mean that the AFP could scan theories<br>
+automatically for it, and reject submissions that contain it.</p>
+<p>Cheers,<br>
+Steven</p>
+<p>On Mon, Aug 24, 2026 at 12:57 PM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>On 24/08/2026 13:18, Steven Obua wrote:</p>
+<blockquote>
+<p>Given that the new Isabelle release is coming up, I am wondering if<br>
+there is a<br>
+"timed" method or similar available by default now (according to NEWS,<br>
+this<br>
+doesn't seem to be the case). If not, maybe it could be added? I am<br>
+adding it<br>
+for every new Isabelle formalisation project currently. I am attaching<br>
+what I<br>
+am using now with the January 2026 release.<br>
+Shortly before a release is a very bad time to add "features" on the spot:<br>
+it<br>
+usually means extra days/weeks to get everything right, but that time is<br>
+required for other things that are already in the pipeline for this<br>
+release<br>
+(often these get postponed to a later release).</p>
+</blockquote>
+<p>Moreover, the canonical question on this mailing list is "What is your<br>
+application? What is really required".</p>
+<p>Sprinkling ML timeouts into the system is generally fragile: results<br>
+become<br>
+erratic for various reasons, including technical side-conditions of the<br>
+Isabelle/ML runtime system. So we do need to know what the purpose really<br>
+is<br>
+--- it will affect how to implement the idea properly, if this is possible<br>
+in<br>
+the first place.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="618366334"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618366334" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618366334">(Aug 24 2026 at 13:51)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Larry, I think that Steven thinks more of batch builds, but you had told me <br>
+about PIDE interaction. I have rejected the "patch" some months ago, because <br>
+there where unfounded claims of everything being "trivial", "easy to fix" etc.</p>
+<p>Such changes need to be thought out well, based on the past 20 years of <br>
+experience (and failures) including our timeout facilities. For example, to <br>
+detect long-running proof methods, or commands, or actual proofs: Why not show <br>
+that directly in the Prover IDE, instead of causing an unpredictable failure <br>
+that cannot be recovered?</p>
+<p>Anyway, I am in the process to wrap up several open ends for the release, and <br>
+I will not revisit timeouts right now --- apart from proper process timeouts <br>
+for the "verit" executable, which is a quite different thing.</p>
+<p>I also have some half-finished improvements of PIDE command status in the <br>
+pipeline, but can't say how much of it will be flushed. Shortly after the <br>
+release, there will be many more changes of session builds and PIDE <br>
+interaction, to unify these two historically separate approaches more and more.</p>
+<p>Makarius</p>
+<p>On 24/08/2026 15:19, Lawrence Paulson wrote:</p>
+<blockquote>
+<p>Just for my two cents, the apply_timeout patch which I sent you many months <br>
+ago and which I have been using daily ever since would meet the same purpose, <br>
+i.e. to track down looping proof methods. This is a present one of the most <br>
+tedious aspects of managing change in a large development. And so easy to fix.</p>
+<p>Larry<br>
+On 24 Aug 2026 at 13:43 +0100, Steven Obua &lt;<a href="mailto:steven.obua@gmail.com">steven.obua@gmail.com</a>&gt;, wrote:</p>
+<blockquote>
+<p>Hi Makarius <span aria-label="smiley" class="emoji emoji-1f603" role="img" title="smiley">:smiley:</span></p>
+<p>I think what the method does is self explanatory. Similarly to "sorry", it <br>
+would not be part of a polished finished theory, it is just a means to <br>
+detect a proof method that does not terminate when you run Isabelle from the <br>
+command line. Even better would be a command line switch that can timeout <br>
+any proof method that takes too much time; currently there is only a timeout <br>
+switch for the entire session, which is not precise enough, because how long <br>
+I am willing to wait for the whole session to succeed (minutes) is <br>
+substantially longer than how long I am willing to wait for most proof <br>
+methods to succeed (seconds).</p>
+<p>It is no issue for me to just add this method to each of my developments, so <br>
+treat this as a JFYI, maybe for the release after the upcoming one in case <br>
+this makes sense to you. The advantage of just adding this method, compared <br>
+to a command-line switch, is that it is immediately portable. Adding it to <br>
+Main would also mean that the AFP could scan theories automatically for it, <br>
+and reject submissions that contain it.</p>
+<p>Cheers,<br>
+Steven</p>
+<p>On Mon, Aug 24, 2026 at 12:57 PM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a> <br>
+&lt;mailto:<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;&gt; wrote:</p>
+<p>On 24/08/2026 13:18, Steven Obua wrote:<br>
+    &gt; Given that the new Isabelle release is coming up, I am wondering if<br>
+    there is a<br>
+    &gt; "timed" method or similar available by default now (according to NEWS,<br>
+    this<br>
+    &gt; doesn't seem to be the case). If not, maybe it could be added? I am<br>
+    adding it<br>
+    &gt; for every new Isabelle formalisation project currently. I am attaching<br>
+    what I<br>
+    &gt; am using now with the January 2026 release.<br>
+    Shortly before a release is a very bad time to add "features" on the<br>
+    spot: it<br>
+    usually means extra days/weeks to get everything right, but that time is<br>
+    required for other things that are already in the pipeline for this release<br>
+    (often these get postponed to a later release).</p>
+<p>Moreover, the canonical question on this mailing list is "What is your<br>
+    application? What is really required".</p>
+<p>Sprinkling ML timeouts into the system is generally fragile: results become<br>
+    erratic for various reasons, including technical side-conditions of the<br>
+    Isabelle/ML runtime system. So we do need to know what the purpose really is<br>
+    --- it will affect how to implement the idea properly, if this is<br>
+    possible in<br>
+    the first place.</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="618368539"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618368539" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618368539">(Aug 24 2026 at 14:00)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 24/08/2026 14:42, Steven Obua wrote:</p>
+<blockquote>
+<p>I think what the method does is self explanatory. Similarly to "sorry", it <br>
+would not be part of a polished finished theory, it is just a means to detect <br>
+a proof method that does not terminate when you run Isabelle from the command <br>
+line. Even better would be a command line switch that can timeout any proof <br>
+method that takes too much time; currently there is only a timeout switch for <br>
+the entire session, which is not precise enough, because how long I am willing <br>
+to wait for the whole session to succeed (minutes) is substantially longer <br>
+than how long I am willing to wait for most proof methods to succeed (seconds).<br>
+Instead of provoking a timed failure (timeout), you could try with a plain <br>
+display of long-running command. See also Isabelle2025-1/NEWS:</p>
+</blockquote>
+<p><strong>* System </strong>*</p>
+<ul>
+<li>System option "build_progress_detailed" tells "isabelle build -v" to<br>
+output detailed information while processing theories, notably the<br>
+percentage and cumulated timing and long-running commands (see also<br>
+option "build_progress_threshold"). This requires an output channel<br>
+(terminal) that supports ANSI control sequences, notably for cursor<br>
+movement and deletion of previous output. The default is to output only<br>
+the finished state (100%) with its timing information, and long-running<br>
+commands, without using any ANSI control sequences.</li>
+</ul>
+<p>I've made that specifically for some super-high-end users, to get better <br>
+feedback on their continuous tests.</p>
+<p>Makarius</p>
+
+
+
+<a name="618661403"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618661403" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618661403">(Aug 24 2026 at 20:56)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Steven, if you want to continue the public part of this mailing list thread, <br>
+you are welcome --- I will follow.</p>
+<p>(I will not continue any forked-off private threads. If anybody wants to talk <br>
+to me privately, it needs to start out as a different thread --- not an abuse <br>
+of a public thread.)</p>
+<p>Makarius</p>
+
+
+
+<a name="618684518"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/618684518" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#618684518">(Aug 24 2026 at 23:41)</a>:</h4>
+<p><strong>From:</strong> Steven Obua &lt;<a href="mailto:steven.obua@gmail.com">steven.obua@gmail.com</a>&gt;</p>
+<p>I agree with Larry that having a timeout method that works on the level of<br>
+proof methods is essential. The "timed" method I suggested works well for<br>
+me, it is a simple way of letting an agent such as Codex or Claude try out<br>
+various proof methods quickly, and it works locally, without infecting<br>
+other theories in the base library that might actually need longer proof<br>
+method timeouts. The scenario here is: You have an Isabelle theory, the<br>
+agent modifies the theory, and runs the theory from the command line. This<br>
+works very well with Isabelle, through its existing command line interface,<br>
+the only addition I needed were some simple shell scripts invoking<br>
+Isabelle's command line, and this "timed" method to make proof experiments<br>
+quick.  I don't need a REPL, I just need a way to run Isabelle from the<br>
+command line with local timeouts.</p>
+<p>The more advanced way of letting an agent interact directly with the<br>
+interactive document model is very tempting, I was also designing Practal<br>
+with this idea in mind (see Practal Zero &lt;<a href="https://zero.practal.com">https://zero.practal.com</a>&gt; for its<br>
+interactive document interface). But for now all that I am providing also<br>
+for Practal is the command line interface: agents are very good at creating<br>
+and modifying theories <em>as a whole</em>, so a simple way to invoke the prover<br>
+from the command line seems more than good enough for the short and medium<br>
+term.</p>
+<p>I must admit, I am blown away by how well Isabelle works together with AI<br>
+out of the box, just via invoking Isabelle from the command line.<br>
+Formalisation work that I intended for several years now for abstraction<br>
+logic I was able to complete within just 2 days in Isabelle/HOL, yielding<br>
+25K lines: the soundness and completeness of abstraction logic. This was<br>
+done by just telling the AI to formalise what is in my book, and correcting<br>
+some of the definitions it messed up. And beyond that, important additions<br>
+to the logic such as additional proof rules, proving soundness and<br>
+completeness with respect to them, and support for plurals; all designed,<br>
+formalised, and proven correct within a matter of weeks.</p>
+<p>Interactive theorem proving is really the killer app for AI, which is<br>
+funny, because outside of ITP, most people are blissfully ignorant of what<br>
+that even means, including all the big AI players, and inside of ITP, many<br>
+seem reluctant rather than excited. I mean, *formalising is now faster than<br>
+thinking* in many situations. They spent hundreds of billions of dollars to<br>
+make ITP really really REALLY good <span aria-label="rolling on the floor laughing" class="emoji emoji-1f923" role="img" title="rolling on the floor laughing">:rolling_on_the_floor_laughing:</span>. What a time to live in.</p>
+<p>Well. Slight detour from "timed" <span aria-label="laughing" class="emoji emoji-1f606" role="img" title="laughing">:laughing:</span>.</p>
+<p>On Mon, Aug 24, 2026 at 9:56 PM Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<blockquote>
+<p>Steven, if you want to continue the public part of this mailing list<br>
+thread,<br>
+you are welcome --- I will follow.</p>
+<p>(I will not continue any forked-off private threads. If anybody wants to<br>
+talk<br>
+to me privately, it needs to start out as a different thread --- not an<br>
+abuse<br>
+of a public thread.)</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="619581688"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Is%20there%20a%20%22timed%22%20method%3F/near/619581688" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Is.20there.20a.20.22timed.22.20method.3F.html#619581688">(Aug 27 2026 at 15:46)</a>:</h4>
+<p><strong>From:</strong> Andras Salamon &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>As an alternative to Larry's timeout patch or changes to Isabelle internals, for those using Python<br>
+    pip install isabelle-watchdog<br>
+installs an isabelle-build wrapper that controls timeout behaviour of Isabelle, summarises the verbose build output in a way that seems useful for LLMs, and also optionally keeps trajectories of proof attempts in between verified builds.</p>
+<p>This kind of third-party timeout handling should become less important over time as Isabelle support for LLM-driven workflows improves.</p>
+<p>I developed this tool for our work on large LLM-generated proofs for low-level computational complexity results and I split it out as a standalone tool for others to use. Repo: <a href="https://github.com/ott2/isabelle-watchdog">https://github.com/ott2/isabelle-watchdog</a></p>
+<p>Proof trajectories are rather interesting, but if they are not recorded they are lost like tears in rain. I wish I had started recording them earlier.</p>
+<p>András Salamon<br>
+--<br>
+The University of St Andrews is a charity registered in Scotland, No.SC013532.</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

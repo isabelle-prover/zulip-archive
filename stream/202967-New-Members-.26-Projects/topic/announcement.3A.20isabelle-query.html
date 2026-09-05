@@ -1,0 +1,85 @@
+<html>
+<head><meta charset="utf-8"><title>announcement: isabelle-query · New Members &amp; Projects · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/index.html">New Members &amp; Projects</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/announcement.3A.20isabelle-query.html">announcement: isabelle-query</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="618033114"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/announcement%3A%20isabelle-query/near/618033114" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> András Salamon <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/announcement.3A.20isabelle-query.html#618033114">(Aug 21 2026 at 23:20)</a>:</h4>
+<p>To install: <code>pip install isabelle-query</code></p>
+
+
+
+<a name="619983354"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/announcement%3A%20isabelle-query/near/619983354" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/announcement.3A.20isabelle-query.html#619983354">(Aug 29 2026 at 13:14)</a>:</h4>
+<p>Claude really likes this tool and I thought it would be useful as a base for some IDE-like features for jEdit, so I told Claude to rewrite it in Scala as an isabelle component. A benefit is that it's faster now. <a href="https://github.com/david-wang-0/isabelle-query">https://github.com/david-wang-0/isabelle-query</a></p>
+<p>Pros:</p>
+<ul>
+<li>jEdit dockable and right click for some IDE features like find usages</li>
+<li>Find code equations and instantiations (of locales/classes)</li>
+<li>Uses canonical parser from isabelle distribution</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Did not review the code yet</li>
+<li>Performance needs a running JVM, which is why there is still a Python client that queries a server that's started on the first invocation. <code>isabelle query (no server) -&gt; python3 client -&gt; isabelle query (server)</code></li>
+</ul>
+<p>Table by Claude:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Python <code>query</code></th>
+<th style="text-align: right;">JVM tool, cold</th>
+<th style="text-align: right;">thin client (a plain <code>isabelle query</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>show</code> on a 2-theory AFP entry</td>
+<td style="text-align: right;">73 ms</td>
+<td style="text-align: right;">1091 ms</td>
+<td style="text-align: right;"><strong>33 ms</strong></td>
+</tr>
+<tr>
+<td><code>callers</code> on a 28-theory entry</td>
+<td style="text-align: right;">290 ms</td>
+<td style="text-align: right;">1441 ms</td>
+<td style="text-align: right;"><strong>112 ms</strong></td>
+</tr>
+<tr>
+<td><code>summary</code> on <code>src/HOL</code> (1451 theories)</td>
+<td style="text-align: right;">4865 ms</td>
+<td style="text-align: right;">4197 ms</td>
+<td style="text-align: right;"><strong>64 ms</strong></td>
+</tr>
+<tr>
+<td><code>summary --by-session</code> over the whole AFP</td>
+<td style="text-align: right;">37.5 s</td>
+<td style="text-align: right;">19.5 s</td>
+<td style="text-align: right;"><strong>0.27 s</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+
+<a name="619998264"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/announcement%3A%20isabelle-query/near/619998264" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> András Salamon <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/announcement.3A.20isabelle-query.html#619998264">(Aug 29 2026 at 15:51)</a>:</h4>
+<p>This is good news! I've added a link to David's Scala port in the README of the current version of the Python isabelle-query.</p>
+
+
+
+<a name="620099465"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/announcement%3A%20isabelle-query/near/620099465" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> David Wang <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/announcement.3A.20isabelle-query.html#620099465">(Aug 30 2026 at 11:11)</a>:</h4>
+<p>The JVM startup is not the only reason the server is faster. It holds the entire parsed project in memory. That costs about 1.2GB for the whole AFP. A cold run with Python is still faster. Performance is not strictly better, but rather a trade off between memory and speed.</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

@@ -1,0 +1,157 @@
+<html>
+<head><meta charset="utf-8"><title>How exactly am I supposed to think of LEAST? · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html">How exactly am I supposed to think of LEAST?</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="618328662"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/618328662" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#618328662">(Aug 24 2026 at 10:47)</a>:</h4>
+<p>TL;DR: When should I be using/"unfolding" <code>LEAST</code> and how can I use it to prove a supremum property using <code>Real.thy</code></p>
+<p>So I thought it'd be a good idea to try to learn some (rigorous!) analysis by formalizing it in HOL, using Abbott's Understanding Analysis as a place to start</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">definition</span><span class="w"> </span><span class="n">rsup</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"rsup (X :: real set) z ≡  (∀x ∈ X. x ≤ z) ∧ (∀w. ((∀x ∈ X. x ≤ w) ⟶ z ≤ w))"</span>
+
+<span class="kn">theorem</span><span class="w"> </span><span class="n">lubp</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"real set"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="s">"bdd_above X"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"∃z. rsup X z"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">(</span><span class="n">unfold</span><span class="w"> </span><span class="n">rsup_def</span><span class="o">)</span>
+<span class="gr">oops</span>
+</code></pre></div>
+<p>The reason I defined <code>rsup</code> was because I wanted to define a least-upper-bound property as it would usually be defined in a textbook, not using the <code>LEAST</code> operator (more on this below). If I were to use the latter, it would be something on the lines of <code>∃z. z = Sup X</code> where <code>Sup ?X = (LEAST z. ∀x∈?X. x ≤ z)</code>. I doubt that this is the right way of saying "a least upper bound exists". If so, what should I be using?</p>
+<p>From what I understand from reading the manual, LEAST is guaranteed to exist, but if there is more than one, we can't "unfold" LEAST, if that makes sense. <br>
+From logics.pdf (in the documentation):</p>
+<blockquote>
+<p>so Least is always meaningful, but may yield nothing useful in case there is not a unique least element satisfying P. </p>
+</blockquote>
+<p>I presume then I must show the uniqueness of the least upper bound (which is trivial given antisymmetry and that the reals satisfy the <code>poset</code> typeclass if I recall)</p>
+<p>How exactly am I supposed to use (and when should I use) LEAST? via <code>auto</code>, I can easily prove <code>bdd_above (X :: real set) ==&gt; \exists z. z = Sup X</code>. It's a bit too easy, to be honest, so I'm probably not proving the right statement. Suprisingly, the converse doesn't hold? I'm able to <code>nitpick</code> <code>\exists z. z = Sup X ==&gt; bdd_above (X :: real set)</code>. Why is this the case? </p>
+<p>If I want to use the least-upper-bound property as I would doing pen-and-paper real analysis, is <code>rsup</code> the right way to go?</p>
+
+
+
+<a name="618911798"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/618911798" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Yong Kiam <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#618911798">(Aug 25 2026 at 02:40)</a>:</h4>
+<p>others may be able to give a deeper explanation but here I think are the main points I can see:</p>
+<p>1) every type is inhabited in Isabelle, and with choice, you can pick an element from any type.</p>
+<p>2) as you suspect, the statements you've proved are "trivial" in that <code>\exists z. z = Sup X</code> is trivially witnessed by <code>z = Sup X</code>.</p>
+<p>3) <code>Sup X</code> is always "meaningful" in the sense that <code>Sup</code> is a total function and will always return some element of the type, in this case the reals. </p>
+<p>However, it may not be "useful" in that it may not have the expected properties you are looking for in the supremum (in case the supremum doesn't exist).</p>
+
+
+
+<a name="618924375"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/618924375" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#618924375">(Aug 25 2026 at 04:41)</a>:</h4>
+<p>Yeah, that confirms my suspicions. How do I encode the notion that a supremum may not exist</p>
+
+
+
+<a name="619127493"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619127493" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619127493">(Aug 25 2026 at 20:54)</a>:</h4>
+<p>Follow up question: how would I write out a statement such as "this set of reals has no supremum" in a logic of total functions?</p>
+<p>Like, how would I say that "Sup X" returns no useful value?</p>
+
+
+
+<a name="619127535"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619127535" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619127535">(Aug 25 2026 at 20:55)</a>:</h4>
+<p>if Sup is assumed to be total</p>
+
+
+
+<a name="619134570"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619134570" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Asterix Gallier <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619134570">(Aug 25 2026 at 21:39)</a>:</h4>
+<p>You can't use <code>Sup</code> to write statements about the existence of suprema, because <code>Sup</code> is total, like any function in Isabelle.<br>
+Your function <code>rsup</code> is perfect for this. With it, you can write <code>¬ rsup UNIV z</code> to express that the set of reals (<code>UNIV</code>) has no supremum.</p>
+<blockquote>
+<p>Like, how would I say that "Sup X" returns no useful value?</p>
+</blockquote>
+<p>For this, you need to formalize what you mean by "useful". Presumably, you mean that <code>Sup X</code> actually fulfils the properties of a supremum. You can express this via <code>rsup X (Sup X)</code>, because <code>rsup</code> already captures the properties of a supremum.<br>
+You could go on to prove <code>rsup X (Sup X) ⟷ bdd_above X</code>. You could also prove the uniqueness of the supremum as <code>rsup X z ⟹ rsup X w ⟹ z = w</code>.</p>
+
+
+
+<a name="619202240"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619202240" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619202240">(Aug 26 2026 at 06:44)</a>:</h4>
+<p><span class="user-mention silent" data-user-id="1090031">Asterix Gallier</span> <a href="#narrow/channel/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F/near/619134570">said</a>:</p>
+<blockquote>
+<p>Your function <code>rsup</code> is perfect for this. With it, you can write <code>¬ rsup UNIV z</code> to express that the set of reals (<code>UNIV</code>) has no supremum.</p>
+</blockquote>
+<p>oh wait so UNIV is a set that contains an entire domain of discourse? </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">abbreviation</span><span class="w"> </span><span class="n">UNIV</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"UNIV ≡ top"</span>
+</code></pre></div>
+<p>where I presume it is ordered by set inclusion. </p>
+<p>Also, since people have been formalizing analysis in isabelle for at least 25 years, how come this idea of "there is no supremum" isn't there? Surely someone's done something on these lines.</p>
+
+
+
+<a name="619235158"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619235158" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Asterix Gallier <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619235158">(Aug 26 2026 at 09:22)</a>:</h4>
+<p>Yes, <code>UNIV :: 'a set</code> contains all values of type <code>'a</code>.<br>
+If you're interested, look up the theorem <code>complete_real</code> in <code>Real.thy</code>. It contains most of the work for proving that a supremum of a bounded-above set of reals always exists. Below it, there is an <code>instantiation real :: linear_continuum</code>, which uses this result to prove more properties. In particular, <code>linear_continuum</code> is a subclass of <code>conditionally_complete_lattice</code>, which contains the supremum properties you'd expect for the reals.<br>
+As for "there is no supremum", there is a (technically) stronger statement which has been proven: The set of reals isn't bounded. In <code>Real.thy</code>, <code>real</code> is proven to be a <code>linordered_field</code> (another type class), which in <code>Fields.thy</code> is shown to be a subclass of <code>unbounded_dense_linorder</code>, which in turn is a subclass of <code>no_top</code>, which assumes <code>no_top.gt_ex: "∃y. x &lt; y"</code>.<br>
+If you want to find these things, you can use Ctrl+F and select "Search in: Directory" with the HOL directory of your Isabelle installation. Then, you can type something like <code>instantiation real ::</code> to see what type classes <code>real</code> is part of. Additionally, you can use the "Query" panel at the bottom to semantically search for theorems (you can use underscores as placeholders, i.e. you could search for <code>"∃_. _ &lt; _"</code> and get some results. For me, Query doesn't work when I'm looking at files outside of my project, for some reason.</p>
+
+
+
+<a name="619271237"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619271237" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619271237">(Aug 26 2026 at 12:30)</a>:</h4>
+<p>Thanks! <span aria-label="sweat smile" class="emoji emoji-1f605" role="img" title="sweat smile">:sweat_smile:</span> I must confess I did look at <code>linear_continuum</code>but I think i missed <code>unbounded_dense_linorder</code>, that one's on me</p>
+
+
+
+<a name="619625226"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619625226" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619625226">(Aug 27 2026 at 18:49)</a>:</h4>
+<p>I was skimming Kaliczyk and Urban's Quotients Revisites for Isabelle/HOL</p>
+<p>And I wanted to ask if that's an implementation that's currently being used.</p>
+<p>If so, I want to break down the implementation details here:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="c">(* This seems clear to me *)</span>
+<span class="w"> </span><span class="k">definition</span><span class="w"> </span><span class="n">vanishes</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(nat ⇒ rat) ⇒ bool"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"vanishes X ⟷ (∀r&gt;0. ∃k. ∀n≥k. ¦X n¦ &lt; r)"</span>
+
+<span class="c">(* This is standard for anyone who has seen a Cauchy sequence before *)</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">cauchy</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(nat ⇒ rat) ⇒ bool"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"cauchy X ⟷ (∀r&gt;0. ∃k. ∀m≥k. ∀n≥k. ¦X m - X n¦ &lt; r)"</span>
+
+
+<span class="c">(* this is a bit new to me, I can convince myself this is true but I'd like to know where this comes from *)</span>
+<span class="k">definition</span><span class="w"> </span><span class="n">realrel</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"(nat ⇒ rat) ⇒ (nat ⇒ rat) ⇒ bool"</span>
+<span class="w">  </span><span class="kp">where</span><span class="w"> </span><span class="s">"realrel = (λX Y. cauchy X ∧ cauchy Y ∧ vanishes (λn. X n - Y n))"</span>
+
+
+<span class="kn">quotient_type</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"nat ⇒ rat"</span><span class="w"> </span><span class="n">/</span><span class="w"> </span><span class="n">partial</span><span class="o">:</span><span class="w"> </span><span class="n">realrel</span>
+<span class="w">  </span><span class="kp">morphisms</span><span class="w"> </span><span class="n">rep_real</span><span class="w"> </span><span class="n">Real</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">part_equivp_realrel</span><span class="o">)</span>
+</code></pre></div>
+<p>It seems like there's a lot to break down here.<br>
+Why is <code>realrel</code> marked as partial? <br>
+What are the morphisms <code>rep_real</code> and <code>Real</code>? Are those the abstraction and representation papers mentioned in Kaliczyk's paper? One takes you to the abstract representation, and the other the concrete.</p>
+<p>Why do we need <code>rule part_equivp_realrel</code></p>
+<p>Part_equivp is documented in Relations.thy as a "John Harrison style characterization" </p>
+<p>Ok I found this paper that defines what a partial equivalence relation is<br>
+<a href="https://link.springer.com/content/pdf/10.1007/BFb0028401.pdf">https://link.springer.com/content/pdf/10.1007/BFb0028401.pdf</a></p>
+<p>Is the equivalence partial because we, in some sense, "don't care" that about sequences that are not Cauchy? Or is it that we cannot define equivalence for such sequences.</p>
+<p>Apparently this is what's called a "higher-order" quotient? Is it higher order because we're quotienting over functions (the functions themselves are first order) and not, e.g. sum or product types?</p>
+
+
+
+<a name="619625318"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619625318" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619625318">(Aug 27 2026 at 18:49)</a>:</h4>
+<p>Let me know if I should move this to <a class="stream" data-stream-id="202961" href="/#narrow/channel/202961-General">#General</a></p>
+
+
+
+<a name="619824981"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/How%20exactly%20am%20I%20supposed%20to%20think%20of%20LEAST%3F/near/619824981" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F.html#619824981">(Aug 28 2026 at 15:23)</a>:</h4>
+<p>Or better yet, should I send an email to the mailing list</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

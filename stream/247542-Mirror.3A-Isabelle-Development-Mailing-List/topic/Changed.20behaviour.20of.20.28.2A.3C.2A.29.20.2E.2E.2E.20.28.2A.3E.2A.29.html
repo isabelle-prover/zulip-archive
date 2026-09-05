@@ -1,0 +1,104 @@
+<html>
+<head><meta charset="utf-8"><title>Changed behaviour of (*&lt;*) ... (*&gt;*) · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Changed.20behaviour.20of.20.28.2A.3C.2A.29.20.2E.2E.2E.20.28.2A.3E.2A.29.html">Changed behaviour of (*&lt;*) ... (*&gt;*)</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="619492462"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Changed%20behaviour%20of%20%28%2A%3C%2A%29%20...%20%28%2A%3E%2A%29/near/619492462" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Changed.20behaviour.20of.20.28.2A.3C.2A.29.20.2E.2E.2E.20.28.2A.3E.2A.29.html#619492462">(Aug 27 2026 at 09:32)</a>:</h4>
+<p><strong>From:</strong> "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;</p>
+<p>Hi,</p>
+<p>While trying to address a build failure of one of our AFP entries, I <br>
+spotted  (<em>&lt;</em>) ... (<em>&gt;</em>) does not seem to exclude parts from being <br>
+included in the generated LaTeX/PDF document. For instance, generating a <br>
+PDF from the the theory</p>
+<p>theory Ex imports Main begin<br>
+(<em>&lt;</em>)text\&lt;open&gt;Should this be included in the generated PDF?\&lt;close&gt;(<em>&gt;</em>)<br>
+end</p>
+<p>does not include the text "Should this be included in the generated <br>
+PDF?" in the generated PDF when using Isabelle 2025-2 but is included <br>
+when using the latest version from the repository (TIP: <br>
+85327:dc45b445012a).</p>
+<p>By quickly skimming over the NEWS entries an the hg log messages, I <br>
+could not find out whether this is intentional or not.</p>
+<p>I would appreciate any advise on how I should upgrade my theories to <br>
+make them ready for the future.</p>
+<p>Thanks a lot!</p>
+<p>Best,</p>
+<p>Achim</p>
+
+
+
+<a name="621941528"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Changed%20behaviour%20of%20%28%2A%3C%2A%29%20...%20%28%2A%3E%2A%29/near/621941528" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Changed.20behaviour.20of.20.28.2A.3C.2A.29.20.2E.2E.2E.20.28.2A.3E.2A.29.html#621941528">(Sep 05 2026 at 18:56)</a>:</h4>
+<p><strong>From:</strong> "Achim D. Brucker" &lt;<a href="mailto:adbrucker@0x5f.org">adbrucker@0x5f.org</a>&gt;</p>
+<p>Hi,<br>
+I did some bisection. The changset that introduced the new behaviour is <br>
+"85275:e50cdc94cf5d".</p>
+<p>Starting with this changeset, text enclosed in (<em>&lt;</em>) ... (<em>&gt;</em>) is no <br>
+longer excluded from the LaTeX/PDF generation. I assume this results in <br>
+a "silent" change for most applications (i.e., some text is now included <br>
+in the PDF that was not intended to be excluded). For one of the AFP <br>
+entries (Isabelle_DOF) I co-authored, this is resulting in a hard <br>
+compilation error, as some invalid LateX code is intentionally excluded <br>
+from the final LaTeX/PDF generation using (<em>&lt;</em>) ... (<em>&gt;</em>).</p>
+<p>Best,<br>
+Achim</p>
+<p>On 27/08/2026 10:32, Achim D. Brucker wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>While trying to address a build failure of one of our AFP entries, I <br>
+spotted  (<em>&lt;</em>) ... (<em>&gt;</em>) does not seem to exclude parts from being <br>
+included in the generated LaTeX/PDF document. For instance, generating <br>
+a PDF from the the theory</p>
+<p>theory Ex imports Main begin<br>
+(<em>&lt;</em>)text\&lt;open&gt;Should this be included in the generated <br>
+PDF?\&lt;close&gt;(<em>&gt;</em>)<br>
+end</p>
+<p>does not include the text "Should this be included in the generated <br>
+PDF?" in the generated PDF when using Isabelle 2025-2 but is included <br>
+when using the latest version from the repository (TIP: <br>
+85327:dc45b445012a).</p>
+<p>By quickly skimming over the NEWS entries an the hg log messages, I <br>
+could not find out whether this is intentional or not.</p>
+<p>I would appreciate any advise on how I should upgrade my theories to <br>
+make them ready for the future.</p>
+<p>Thanks a lot!</p>
+<p>Best,</p>
+<p>Achim</p>
+<p>]</p>
+</blockquote>
+
+
+
+<a name="621952536"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Changed%20behaviour%20of%20%28%2A%3C%2A%29%20...%20%28%2A%3E%2A%29/near/621952536" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Changed.20behaviour.20of.20.28.2A.3C.2A.29.20.2E.2E.2E.20.28.2A.3E.2A.29.html#621952536">(Sep 05 2026 at 20:45)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 05/09/2026 20:55, Achim D. Brucker wrote:</p>
+<blockquote>
+<p>Hi,<br>
+I did some bisection. The changset that introduced the new behaviour is <br>
+"85275:e50cdc94cf5d".</p>
+<p>Starting with this changeset, text enclosed in (<em>&lt;</em>) ... (<em>&gt;</em>) is no longer <br>
+excluded from the LaTeX/PDF generation. I assume this results in a "silent" <br>
+change for most applications (i.e., some text is now included in the PDF that <br>
+was not intended to be excluded). For one of the AFP entries (Isabelle_DOF) I <br>
+co-authored, this is resulting in a hard compilation error, as some invalid <br>
+LateX code is intentionally excluded from the final LaTeX/PDF generation using <br>
+(<em>&lt;</em>) ... (<em>&gt;</em>).</p>
+</blockquote>
+<p>Hi Achim,</p>
+<p>there is definitely something wrong in my side, but I did not find time yet to <br>
+figure out the details. Presently, the next defined snapshot will be <br>
+Isabelle2026-RC1. In between, many things can be wrong in many ways.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

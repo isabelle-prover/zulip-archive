@@ -1,0 +1,68 @@
+[
+    {
+        "content": "<p>Hello,</p>\n<p>Last week my Opus 4.6 setup found proofs of false in Rocq and Lean (see <a href=\"https://tristan.st/blog/in_search_of_falsehood\">blog post</a>).</p>\n<p><span class=\"user-mention\" data-user-id=\"233155\">@Lukas Stevens</span> sent me <a href=\"/user_uploads/14278/5Xo7QeDWRBW-boCzzIqyc8oO/overview.md\">overview.md</a> describing areas of suspected vulnerabilities in Isabelle, and I've asked Opus to find bugs and potentially exploit them into proofs of false in the Isabelle codebase.</p>\n<p>Here is what it found so far:  <a href=\"/user_uploads/14278/rh5Vsv3QK6cCTAvaL15j5JYu/REPORT.md\">REPORT.md</a> (Using Isabelle2025-2)</p>\n<p>Section 1 can be ignored as this was already known (<a href=\"/user_uploads/14278/lwPE72tWesEu5COKVQyTEkNf/KuncarPopescu_Exploit.thy\">KuncarPopescu_Exploit.thy</a>) but there may be interesting bugs in Sections 3 and 2.</p>\n<p>I still have access to the agent, let me know if it should be steered in one direction or another :)</p>",
+        "id": 578688217,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773246522
+    },
+    {
+        "content": "<p>Thanks for looking into this. 3.3 could be a one place where it might be worth to try harder. If dependencies really can be lost, then potentially the KuncarPopescu example can be resurrected. If theory merges are to blame, than any counterexample would need to consist of multiple theories (probably with a diamond-shaped import structure).</p>",
+        "id": 578692839,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1773247666
+    },
+    {
+        "content": "<p>With pleasure! OK I will steer it in that direction (currently stucked on an anthropic login bug)</p>",
+        "id": 578695638,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773248375
+    },
+    {
+        "content": "<p><a href=\"/user_uploads/14278/b2hUMJd0yMKiWxMBon6y0A9T/Capture-decran-2026-03-11-a-20.54.15.png\">Capture d’écran 2026-03-11 à 20.54.15.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/b2hUMJd0yMKiWxMBon6y0A9T/Capture-decran-2026-03-11-a-20.54.15.png\" title=\"Capture d’écran 2026-03-11 à 20.54.15.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"2172x568\" src=\"/user_uploads/thumbnail/14278/b2hUMJd0yMKiWxMBon6y0A9T/Capture-decran-2026-03-11-a-20.54.15.png/840x560.webp\"></a></div><p>Here is its updated report: <a href=\"/user_uploads/14278/pihJUXp1lO9LGTbB_A0jsurC/REPORT_UPDATED.md\">REPORT_UPDATED.md</a> it may contain new leads</p>",
+        "id": 578729010,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773258959
+    },
+    {
+        "content": "<p>Good for the merges! The only place I am aware of where unchecked definitions are explicitly used is Nominal1 (src/HOL/Nominal/Nominal.thy). (In contrast Nominal2 in the AFP is fully foundational.) It might makes sense to try to make sense of these particular unchecked definitions (and the checked ones building on top) and see if they can give rise to any problems.</p>",
+        "id": 578851707,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1773301542
+    },
+    {
+        "content": "<p>I forwarded your message and it updated its report but does not seem to have found anything new:<br>\n<a href=\"/user_uploads/14278/djkPwFZfYGJr1QRFR6vgm_Yp/Capture-decran-2026-03-12-a-11.32.44.png\">Capture d’écran 2026-03-12 à 11.32.44.png</a><br>\n<a href=\"/user_uploads/14278/6TvkRvsQXMAo_D9-7nNBPSES/REPORT.md\">REPORT.md</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/djkPwFZfYGJr1QRFR6vgm_Yp/Capture-decran-2026-03-12-a-11.32.44.png\" title=\"Capture d’écran 2026-03-12 à 11.32.44.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"2024x640\" src=\"/user_uploads/thumbnail/14278/djkPwFZfYGJr1QRFR6vgm_Yp/Capture-decran-2026-03-12-a-11.32.44.png/840x560.webp\"></a></div>",
+        "id": 578884714,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773311646
+    },
+    {
+        "content": "<p>Hi Tristan,<br>\nthanks for all your efforts! We from the Copilots for Isabelle project are currently out of ideas on what other details to look out for. If time and tokens permit, you could try to have a go with less specific input to avoid \"overfitting\", so you might just point it to the primitives in <code>thm.ML</code>, <code>overloading</code> and <code>typedef</code>.</p>",
+        "id": 579314520,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1773420297
+    },
+    {
+        "content": "<p>Yes of course! Launching now</p>",
+        "id": 579315982,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773420745
+    },
+    {
+        "content": "<p><img alt=\"Capture d’écran 2026-03-13 à 18.12.43.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"2478x1414\" data-original-src=\"/user_uploads/14278/xY71BrZQhPf8HSv9_dhY2WFx/Capture-decran-2026-03-13-a-18.12.43.png\" src=\"/user_uploads/thumbnail/14278/xY71BrZQhPf8HSv9_dhY2WFx/Capture-decran-2026-03-13-a-18.12.43.png/840x560.webp\"><br>\n<img alt=\"Capture d’écran 2026-03-13 à 18.13.00.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"2320x420\" data-original-src=\"/user_uploads/14278/kiD68ls3E36yAG6uryxpM97j/Capture-decran-2026-03-13-a-18.13.00.png\" src=\"/user_uploads/thumbnail/14278/kiD68ls3E36yAG6uryxpM97j/Capture-decran-2026-03-13-a-18.13.00.png/840x560.webp\"></p>\n<p>It did not try very hard but maybe enough that there is clear direction to nudge it into?</p>",
+        "id": 579320585,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773421998
+    },
+    {
+        "content": "<p>Yes, that doesn't look very promising. I don't have any specific ideas. I am wondering whether it generated any code to test these claims, or if they just come from considering the implementation?</p>",
+        "id": 579928293,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1773750077
+    },
+    {
+        "content": "<p>It generated 28 test files: <br>\n<a href=\"/user_uploads/14278/9LEWcSnaaGQzzH8zR-ilhPm8/isabelle_tests_archive.tar.gz\">isabelle_tests_archive.tar.gz</a></p>",
+        "id": 579930779,
+        "sender_full_name": "Tristan Stérin",
+        "timestamp": 1773750758
+    }
+]

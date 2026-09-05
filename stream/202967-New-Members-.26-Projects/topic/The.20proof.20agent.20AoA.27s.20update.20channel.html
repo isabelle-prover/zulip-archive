@@ -1,0 +1,107 @@
+<html>
+<head><meta charset="utf-8"><title>The proof agent AoA&#x27;s update channel · New Members &amp; Projects · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/index.html">New Members &amp; Projects</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html">The proof agent AoA&#x27;s update channel</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="612881053"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612881053" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612881053">(Jul 27 2026 at 03:19)</a>:</h4>
+<p>This thread is dedicated to AoA news. Discussion is also welcome.</p>
+<hr>
+<p>Introducing AoA (Agent over Abstract Syntax Trees), our proof agent built on Isabelle/HOL.</p>
+<p><span aria-label="direct hit" class="emoji emoji-1f3af" role="img" title="direct hit">:direct_hit:</span> AoA achieves 99.6% on miniF2F, 89.2% on NTP4VC-Pearl, and 97.7% on NTP4VC-realC, while delivering a 2.3–4.7x reduction in API cost, a 2.9–6.9x reduction in token consumption, and 1.4–2.0x faster total execution time compared to Amazon's Isabelle Agent — which is likewise built on Isabelle and equipped with Sledgehammer.</p>
+<p>These results are powered by two key innovations:</p>
+<p><span aria-label="sparkles" class="emoji emoji-2728" role="img" title="sparkles">:sparkles:</span> AoA abstracts away from the concrete syntax of proof languages, representing proofs as abstract syntax trees via a JSON schema. This enables the first effective proof agent on a freshly redesigned language (Isabelle/Minilang) that commercial LLMs have had little exposure to — suggesting that the LLM era, far from stifling new languages, can actually accelerate their development.</p>
+<p><span aria-label="sparkles" class="emoji emoji-2728" role="img" title="sparkles">:sparkles:</span> AoA also abandons the traditional agent interaction paradigm of source-code editing with line-number indexing, adopting a novel tree-editing model that eliminates the line-number drift issues that conventional agents often struggle with.</p>
+<p><span aria-label="document" class="emoji emoji-1f4c4" role="img" title="document">:document:</span> Paper: <a href="https://arxiv.org/abs/2607.16372">https://arxiv.org/abs/2607.16372</a><br>
+<span aria-label="mechanical arm" class="emoji emoji-1f9be" role="img" title="mechanical arm">:mechanical_arm:</span> Source code: <a href="https://github.com/xqyww123/Isa-Mini">https://github.com/xqyww123/Isa-Mini</a></p>
+
+
+
+<a name="612881071"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612881071" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612881071">(Jul 27 2026 at 03:19)</a>:</h4>
+<p>One-line install:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>isabelle<span class="w"> </span>-c<span class="w"> </span>https://conda.qiyuan.me<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>isabelle-ai
+</code></pre></div>
+<p>One-line launch:</p>
+<div class="codehilite" data-code-language="Bash"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>isabelle
+isabelle<span class="w"> </span>jedit
+</code></pre></div>
+<p>One-line usage:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Minilang_AoA.Minilang_AoA</span><span class="w"> </span><span class="n">Complex_Main</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="kn">theorem</span><span class="w"> </span><span class="s">"sqrt 2 ∉ ℚ"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">aoa</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><strong>Important:</strong> AoA is nothing more than an ordinary tactic — you can use it as a drop-in replacement anywhere you'd normally write by auto or a much longer <code>proof ... qed</code>. In this way, AoA respects your project. Unlike existing agents that may extensively rewrite your project, AoA never touches your Isabelle text and produces no side effects beyond the target proof.</p>
+
+
+
+<a name="612881483"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612881483" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612881483">(Jul 27 2026 at 03:24)</a>:</h4>
+<p><strong>Update: <code>isabelle-ai</code> v0.2.0 is out.</strong> If you already have an older version installed, run <code>conda update -c http://conda.qiyuan.me -c conda-forge isabelle-ai</code>.</p>
+<p>This release changes how the Isabelle semantics data is installed. Previously, the ~700MB download ran silently after <code>conda create/install</code>, making the install look like it had hung. It's now shipped and managed as a separate conda package, so <code>conda create/install</code> no longer stalls.</p>
+
+
+
+<a name="612908573"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612908573" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612908573">(Jul 27 2026 at 07:15)</a>:</h4>
+<p>Hi Qiyuan, do you believe the increased efficiency is largely due to the line-numbeded edits in Isabelle/Q? In PIDE MCP, we use string matching-based edits (which are standard in coding agents like open code). Maybe it is worth running it as an alternative competitor since a core claim of your approach is the increased efficiency of Isabelle source text editing.</p>
+
+
+
+<a name="612940356"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612940356" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612940356">(Jul 27 2026 at 10:13)</a>:</h4>
+<p>Hi <span class="user-mention" data-user-id="233154">@Kevin Kappelmann</span>, it's a good point! I will look into adding that experiment. We should indeed be careful not to attribute the cost reduction entirely to the tree-edit model. The gains of AoA come from two sources: the adoption of Minilang and the tree-edit model. These two are strongly coupled and difficult to ablate independently. My impression is that Minilang itself accounts for a non-trivial part of the simplification, though I don't yet know how much.</p>
+
+
+
+<a name="612941086"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612941086" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612941086">(Jul 27 2026 at 10:18)</a>:</h4>
+<p>One more thing to note: AoA/Minilang is purely a proof language, which does not support theory-level declarations, unlike a full-stack MCP over Isar; AoA is merely a proof tactic.</p>
+
+
+
+<a name="612955993"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612955993" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612955993">(Jul 27 2026 at 11:49)</a>:</h4>
+<p>Ok thanks! I think an ablation study separating the effects of using minilang and the tree edits model would indeed be insightful. </p>
+<p>Do I understand correctly that the agent emits tree edits using Minilang commands, the minilang commands are translated symbolically to standard isabelle commands, and the tree is translated symbolically to an Isar proof?</p>
+<p>And the minilang language itself is limited to a fixed grammar, or is it user customisable to include new commands, say coinduction (if not already included) or user defined proof methods?</p>
+
+
+
+<a name="612988970"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612988970" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612988970">(Jul 27 2026 at 14:22)</a>:</h4>
+<p>Good question! The first half is mostly right, but with one correction: Minilang commands are <em>not</em> symbolically elaborated into Isar text. Minilang is designed as a drastic simplification of Isar, but its implementation is largely independent — it has its own proof-script interpreter built directly on Isabelle/ML, driving the proof state itself rather than going through Isar as an intermediate representation.</p>
+<p>The reason for this design is that it gives us more freedom to add harnesses around the interaction model and the feedback the agent receives. A few examples of what we do:</p>
+<ul>
+<li>Detection of free / schematic variables in subgoals — their presence usually signals a mistake, e.g. a forgotten universal quantification, so we surface this to the agent explicitly.</li>
+<li>Elaborated syntax errors — instead of the red squiggly underline in PIDE, we unparse the position markup into plain text so the agent can actually "see" where parsing broke, e.g. <code> the parsing fails at `...λ 【here】λx. x` </code> .</li>
+<li>Detection of so-called "consuming" premises of a rule in Induction / Case_Split (c.f. isar-ref.pdf, p. 157 of the 2025-2 edition). When the agent invokes induction or case-splitting without supplying the required consuming premises, Minilang emits a special message that switches the interaction into a question mode, explicitly prompting the agent to provide them, instead of letting the proof silently go wrong.</li>
+<li>Non-termination detection in rewriting — when rewriting falls into a non-terminating loop, Minilang detects this and notifies the agent, then falls back to a single-step rewriting mode: when multiple redexes are available, the LLM is asked to explicitly choose which one to rewrite.</li>
+</ul>
+<p>In short, we deeply customize/hack the underlying interaction model and feedback channel, so that the agent either gets enough guidance to avoid the common pitfalls, or the pitfalls are mechanically simplified away altogether.</p>
+<p>As for extensibility: the grammar of Minilang itself is fixed by design — we deliberately keep the command set small and closed, since the whole point is to give the agent a minimalistic surface. However, Minilang allows arbitrary Isabelle tactics / proof methods, including user-defined ones. Though not implemented yet, AoA's semantic retrieval module will allow users to write usage documentation for tactics, so that AoA can retrieve a custom tactic together with instructions on how to use it, and then apply it.</p>
+
+
+
+<a name="612989757"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612989757" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612989757">(Jul 27 2026 at 14:26)</a>:</h4>
+<p>OK thanks!</p>
+
+
+
+<a name="612990125"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202967-New%20Members%20%26%20Projects/topic/The%20proof%20agent%20AoA%27s%20update%20channel/near/612990125" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Qiyuan Xu <a href="http://isabelle.systems/zulip-archive/stream/202967-New-Members-.26-Projects/topic/The.20proof.20agent.20AoA.27s.20update.20channel.html#612990125">(Jul 27 2026 at 14:27)</a>:</h4>
+<p>*by the "Detection of free/schematic variables" I actually meant undeclared/schematic variables</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

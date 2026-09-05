@@ -1,0 +1,174 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2026-RC0: macOS ARM vs. Intel · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC0.3A.20macOS.20ARM.20vs.2E.20Intel.html">[isabelle] Isabelle2026-RC0: macOS ARM vs. Intel</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="617048938"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC0%3A%20macOS%20ARM%20vs.%20Intel/near/617048938" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC0.3A.20macOS.20ARM.20vs.2E.20Intel.html#617048938">(Aug 17 2026 at 21:05)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 17/08/2026 22:21, Makarius wrote:</p>
+<blockquote>
+<p>Note that there have been significant changes for the desktop application <br>
+launcher, both on macOS and Windows. Also note that macOS is now separate for <br>
+Apple Silicon (ARM) versus Intel.<br>
+More notes concerning macOS ARM vs. Intel.</p>
+</blockquote>
+<p>Some months ago, I was under the impression that macOS 26 was the last version <br>
+with Rosetta 2, for emulation of Intel on Apple Silicon (ARM) hardware, and <br>
+that starting with "27" it will be discontinued --- meaning the macOS 27 <br>
+release at the end of 2026.</p>
+<p>Thus I made every effort to deliver a Isabelle2026 release that has <br>
+arm64-darwin executables for everything, with the notable exclusion of z3 --- <br>
+it needs further treatment in the near future.</p>
+<p>I was wrong about the meaning of "27", because it will be macOS 28 in 2027, <br>
+not macOS 27 in 2026. Apple grants one more release cycle for Intel-emulation: <br>
+<a href="https://support.apple.com/en-us/102527">https://support.apple.com/en-us/102527</a></p>
+<p>"""<br>
+Rosetta is currently available for any Mac with Apple silicon, and it will <br>
+remain available through the forthcoming macOS 27 — the next major macOS <br>
+release. Starting with computers using macOS 28, Rosetta functionality will be <br>
+available only for certain older, unmaintained games that rely on Intel-based <br>
+frameworks. Find out which macOS you’re using.</p>
+<p>For optimal performance and future compatibility, you should update your <br>
+Intel-based apps, plug-ins, extensions, and other add-ons for Apple silicon.<br>
+"""</p>
+<p>I do think to recall that the original plan was to discontinue Rosetta 2 with <br>
+the coming release (macOS 27 in 2026), but probably there were many complaints <br>
+by users and developers. A sentence like above "you should update your <br>
+Intel-based apps, plug-ins, extensions, and other add-ons for Apple silicon" <br>
+sounds rather non-constructive, with a considerable gap towards reality, <br>
+written by someone (or something) that is not involved in the truth behind <br>
+complex software systems.</p>
+<p>Makarius</p>
+
+
+
+<a name="620089808"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC0%3A%20macOS%20ARM%20vs.%20Intel/near/620089808" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC0.3A.20macOS.20ARM.20vs.2E.20Intel.html#620089808">(Aug 30 2026 at 09:26)</a>:</h4>
+<p><strong>From:</strong> Mete Polat &lt;<a href="mailto:mete@varto.ai">mete@varto.ai</a>&gt;</p>
+<p>From a PM with Makarius:</p>
+<blockquote>
+<p>On 17/08/2026 22:46, Mete Polat wrote:</p>
+<blockquote>
+<p>What’s the reason for z3 still requiring x86_64-darwin? Is it the only component left depending on Rosetta 2?</p>
+</blockquote>
+<p>My understanding: SMT proof reconstruction depends on this particular old <br>
+version, and cannot easily be upgraded without redoing almost everything. The <br>
+plan is to do away with z3-smt proof reconstruction, and use veriT instead, <br>
+but that is not the whole story so far.</p>
+<p>Jasmin Blanchette and Martin Desharnais-Schäfer are the guys for that. It is <br>
+better to ask on the regular channels, to give them a chance to respond.</p>
+</blockquote>
+<p>I finished creating a minimal port of the exact z3 revision for ARM, alongside the missing ARM versions of Nunchaku, SMBC, MiniSat, MiniSatProver, Lingeling and Plingeling, and CryptoMiniSat. I was able to build the AFP without Rosetta 2, so maybe we can completely finish the transition for Isabelle2026 to ARM MacOS?</p>
+<p>I skipped porting CakeML which is required for two AFP theories. I think the port would take some time and it’s probably easier to just upgrade to the first version that also supports ARM builds. I assume the required changes to the two theories are reasonable.</p>
+<p>What’s the preferred way to share the hermetic flox / nix environment that builds these components? Fine if I just append a zipped tar here? Or send a patch directly here?</p>
+<p>Best,<br>
+Mete</p>
+<blockquote>
+<p>On Aug 18, 2026, at 12:05 AM, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>On 17/08/2026 22:21, Makarius wrote:</p>
+<blockquote>
+<p>Note that there have been significant changes for the desktop application launcher, both on macOS and Windows. Also note that macOS is now separate for Apple Silicon (ARM) versus Intel.<br>
+More notes concerning macOS ARM vs. Intel.</p>
+</blockquote>
+<p>Some months ago, I was under the impression that macOS 26 was the last version with Rosetta 2, for emulation of Intel on Apple Silicon (ARM) hardware, and that starting with "27" it will be discontinued --- meaning the macOS 27 release at the end of 2026.</p>
+<p>Thus I made every effort to deliver a Isabelle2026 release that has arm64-darwin executables for everything, with the notable exclusion of z3 --- it needs further treatment in the near future.</p>
+</blockquote>
+<blockquote>
+<p>I was wrong about the meaning of "27", because it will be macOS 28 in 2027, not macOS 27 in 2026. Apple grants one more release cycle for Intel-emulation: <a href="https://support.apple.com/en-us/102527">https://support.apple.com/en-us/102527</a></p>
+<p>"""<br>
+Rosetta is currently available for any Mac with Apple silicon, and it will remain available through the forthcoming macOS 27 — the next major macOS release. Starting with computers using macOS 28, Rosetta functionality will be available only for certain older, unmaintained games that rely on Intel-based frameworks. Find out which macOS you’re using.</p>
+<p>For optimal performance and future compatibility, you should update your Intel-based apps, plug-ins, extensions, and other add-ons for Apple silicon.<br>
+"""</p>
+<p>I do think to recall that the original plan was to discontinue Rosetta 2 with the coming release (macOS 27 in 2026), but probably there were many complaints by users and developers. A sentence like above "you should update your Intel-based apps, plug-ins, extensions, and other add-ons for Apple silicon" sounds rather non-constructive, with a considerable gap towards reality, written by someone (or something) that is not involved in the truth behind complex software systems.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="620102347"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC0%3A%20macOS%20ARM%20vs.%20Intel/near/620102347" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC0.3A.20macOS.20ARM.20vs.2E.20Intel.html#620102347">(Aug 30 2026 at 11:46)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 30/08/2026 10:15, Mete Polat wrote:</p>
+<blockquote>
+<p>I finished creating a minimal port of the exact z3 revision for ARM, alongside the missing ARM versions of Nunchaku, SMBC, MiniSat, MiniSatProver, Lingeling and Plingeling, and CryptoMiniSat.</p>
+</blockquote>
+<p>Hi Mete,</p>
+<p>we mainly need z3: Please send me any patches you have. It needs to be derived <br>
+from precisely the version that is specified in our README: Z3 4.4.0 unstable <br>
+(pre-release, revision 0482e7fe727c).</p>
+<p>If you look at the Mercurial history of Isabelle/Admin/components/main, you <br>
+will see past attempts at arm64-linux that ultimately failed. Usually, all <br>
+arm64 platforms work the same.</p>
+<p>Nunchaku and SMBC have no practical relevance. We have rather incomplete <br>
+platform coverage for this experiment anyway.</p>
+<p>MiniSat already has a complete set of executables.</p>
+<p>MiniSatProver, Lingeling and Plingeling, and CryptoMiniSat are not used by <br>
+Isabelle ---Where did you see them?</p>
+<blockquote>
+<p>I was able to build the AFP without Rosetta 2</p>
+</blockquote>
+<p>That helps to get an overview of the situation, but it is neither necessary <br>
+nor sufficient as a test.</p>
+<p>AFP entries sometimes do odd things with the implicit assumption "running on <br>
+MY MACHINE with my tools installed".</p>
+<blockquote>
+<p>I skipped porting CakeML which is required for two AFP theories.</p>
+</blockquote>
+<p>The "cakeml-2.0" component is the tool context required to build cakeml <br>
+programs a long time ago. It looks like a private experiment by Lars Hupel:<br>
+<a href="https://github.com/isabelle-prover/cakeml-component">https://github.com/isabelle-prover/cakeml-component</a> --- with rather incomplete <br>
+platform coverage --- unmaintained.</p>
+<blockquote>
+<p>What’s the preferred way to share the hermetic flox / nix environment that builds these components? Fine if I just append a zipped tar here? Or send a patch directly here?</p>
+</blockquote>
+<p>I don't know anything about hermetic build environments.</p>
+<p>Better see Isabelle/Admin/components/README.md --- there will be ultimately <br>
+some Isabelle/Scala tool like "isabelle component_XYZ".</p>
+<p>All Isabelle tooling is done in Isabelle/Scala: that has already become a <br>
+tautology after so many years of Isabelle/Scala.</p>
+<p>Makarius</p>
+
+
+
+<a name="620123746"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC0%3A%20macOS%20ARM%20vs.%20Intel/near/620123746" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC0.3A.20macOS.20ARM.20vs.2E.20Intel.html#620123746">(Aug 30 2026 at 15:51)</a>:</h4>
+<p><strong>From:</strong> Mete Polat &lt;<a href="mailto:mete@varto.ai">mete@varto.ai</a>&gt;</p>
+<p>Hi Makarius,</p>
+<p>I attached a patch with an Isabelle component. Thanks for the hint. Lmk if something is not working. It requires Python2, C and C++ compiler. I used Apple’s Xcode Command Line Tools for building.</p>
+<p>Best,<br>
+Mete</p>
+<p><a href="/user_uploads/14278/zX3IFj9OVAvolo_2rwv4KF63/isabelle-z3-arm64-darwin.patch">isabelle-z3-arm64-darwin.patch</a></p>
+
+
+
+<a name="620146094"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC0%3A%20macOS%20ARM%20vs.%20Intel/near/620146094" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC0.3A.20macOS.20ARM.20vs.2E.20Intel.html#620146094">(Aug 30 2026 at 19:51)</a>:</h4>
+<p><strong>From:</strong> Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;</p>
+<blockquote>
+<p>The "cakeml-2.0" component is the tool context required to build cakeml <br>
+programs a long time ago. It looks like a private experiment by Lars Hupel:<br>
+<a href="https://github.com/isabelle-prover/cakeml-component">https://github.com/isabelle-prover/cakeml-component</a> --- with rather <br>
+incomplete platform coverage --- unmaintained.</p>
+</blockquote>
+<p>The platform coverage is restricted by what upstream offered at the <br>
+time: it contains a bootstrapped CakeML compiler as an assembly (.S) <br>
+file, which I downloaded and incorporated into the component.</p>
+<p>It looks like upstream has an ARM version these days; however, porting <br>
+our Isabelle proofs to this new version is probably a Master's <br>
+thesis-level project.</p>
+<p>(To add insult to injury, CakeML has discontinued the use of Lem, an <br>
+intermediate language to specify semantics, a long time ago. We relied <br>
+on that to obtain Isabelle definitions that are morally equivalent to <br>
+their HOL4 definitions.)</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

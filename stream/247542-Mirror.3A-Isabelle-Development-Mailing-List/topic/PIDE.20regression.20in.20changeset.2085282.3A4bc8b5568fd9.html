@@ -1,0 +1,80 @@
+<html>
+<head><meta charset="utf-8"><title>PIDE regression in changeset 85282:4bc8b5568fd9 · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/PIDE.20regression.20in.20changeset.2085282.3A4bc8b5568fd9.html">PIDE regression in changeset 85282:4bc8b5568fd9</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="621780342"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/PIDE%20regression%20in%20changeset%2085282%3A4bc8b5568fd9/near/621780342" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/PIDE.20regression.20in.20changeset.2085282.3A4bc8b5568fd9.html#621780342">(Sep 04 2026 at 18:16)</a>:</h4>
+<p><strong>From:</strong> Manuel Eberl &lt;<a href="mailto:manuel@pruvisto.org">manuel@pruvisto.org</a>&gt;</p>
+<p>Hello,</p>
+<p>I believe I have found an annoying regression involving PIDE and I <br>
+successfully bisected it. The changeset in which the problem first <br>
+occurs is:</p>
+<p>changeset 85282:4bc8b5568fd9, more direct use of Resources.thy for <br>
+PIDE;</p>
+<p>The last good changeset is the one before that:</p>
+<p>changeset 85281:bea102160b8b, tuned;</p>
+<p>The problem is that when one has a theory file with a malformed header <br>
+in Isabelle/jEdit, PIDE seems to crash and never recover and everything <br>
+just becomes unresponsive.</p>
+<p>Steps to reproduce:</p>
+<ol>
+<li>Open Isabelle/jEdit</li>
+<li>Create a new file and save it as "Test.thy"</li>
+<li>Start typing, e.g. type in "theory"</li>
+<li>Before the regression, the IDE would immediately respond saying <br>
+something like "Theory name expected but end of line found". Now, with <br>
+the regression, the IDE does not respond at all and syslog says <br>
+'Isabelle protocol command failure: "Document.update"'. It does not <br>
+recover even if you close "Test.thy" and open another, well-formed <br>
+theory file.</li>
+</ol>
+<p>Hope that helps to track down the issue.</p>
+<p>Manuel</p>
+
+
+
+<a name="621825329"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/PIDE%20regression%20in%20changeset%2085282%3A4bc8b5568fd9/near/621825329" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/PIDE.20regression.20in.20changeset.2085282.3A4bc8b5568fd9.html#621825329">(Sep 04 2026 at 22:42)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 04/09/2026 20:16, Manuel Eberl wrote:</p>
+<blockquote>
+<p>I believe I have found an annoying regression involving PIDE and I <br>
+successfully bisected it. The changeset in which the problem first occurs is:</p>
+<p>changeset 85282:4bc8b5568fd9, more direct use of Resources.thy for PIDE;</p>
+</blockquote>
+<blockquote>
+<p>Steps to reproduce:<br>
+1. Open Isabelle/jEdit<br>
+2. Create a new file and save it as "Test.thy"<br>
+3. Start typing, e.g. type in "theory"<br>
+4. Before the regression, the IDE would immediately respond saying something <br>
+like "Theory name expected but end of line found". Now, with the regression, <br>
+the IDE does not respond at all and syslog says 'Isabelle protocol command <br>
+failure: "Document.update"'. It does not recover even if you close "Test.thy" <br>
+and open another, well-formed theory file.<br>
+Thanks for the hint, this is indeed very bad: it is a hard crash of the PIDE <br>
+protocol in the encode/decode phase of its protocol commands.</p>
+</blockquote>
+<p>The changeset 4bc8b5568fd9 does not tell any reasons for the problem, <br>
+especially why it emerges now and not before. I will investigate this later <br>
+today (in the morning).</p>
+<p>For now the subsequent changeset should be sufficient:</p>
+<p>changeset:   85353:a29e6a740b79<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Sat Sep 05 00:39:03 2026 +0200<br>
+summary:     more robust decode_thy: messages may contain further markup, so <br>
+XML.Decode.string alone will fail;</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Sep 05 2026 at 21:58 UTC</p>
+</html>

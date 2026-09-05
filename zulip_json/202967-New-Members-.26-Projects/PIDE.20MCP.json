@@ -1,0 +1,248 @@
+[
+    {
+        "content": "<p>This is the discussion channel for <a href=\"#narrow/channel/214136-Announcements/topic/PIDE.20MCP.3A.20Connecting.20AI.20Agents.20to.20Isabelle/near/607301673\">PIDE MCP</a></p>",
+        "id": 607301760,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1782803258
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"233154\">@Kevin Kappelmann</span> </p>\n<blockquote>\n<p>Note that <a href=\"https://github.com/awslabs/AutoCorrode/tree/main/iq\">I/Q</a> is an alternative Isabelle MCP which provides an Isabelle/jEdit-centred workflow.<br>\nExperience reports using both systems are very welcome: we hope that the strengths of both MCPs can be combined in the future.</p>\n</blockquote>\n<p>I’d be interested in incorporating this into <a href=\"https://github.com/data61/PSL\">AbductionProver</a>.</p>\n<p>From your perspective, are there already any philosophical or design differences between your Isabelle MCP and I/Q?</p>\n<p>I'm curious whether the two systems have different long-term goals.</p>",
+        "id": 607383635,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1782827700
+    },
+    {
+        "content": "<p>One difference is that I/Q connects to jEdit whereas PIDE MCP works through a headless PIDE session.</p>\n<p>The set of tools offered by I/Q (listed <a href=\"https://github.com/awslabs/AutoCorrode/blob/main/iq/README.md\">here</a>) and PIDE MCP (listed <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/blob/main/src/pide_mcp_tool_schemas.scala#L41\">here</a>) are different. </p>\n<p>Both are fairly easy to set up, so you could simply experiment with both and see which one fits your framework better :)</p>",
+        "id": 607400090,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1782831323
+    },
+    {
+        "content": "<p>I see that this requires Isabelle version <code>c13a4bd3c018</code> i.e. 20 May 2026, so no support for 2025-2. What was the big change in Isabelle between these two changesets that requires the more recent one for the PIDE access?</p>",
+        "id": 607890048,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1783010212
+    },
+    {
+        "content": "<p>Just some changes in the Isabelle/Scala signatures. When you compile PIDE MCP with Isabelle2025-2, you can see the compile errors. An Isabelle2025-2 compatible branch would be very welcomed as a contribution if you want to give it a go.</p>",
+        "id": 607999760,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783062295
+    },
+    {
+        "content": "<p>Do you already have a preferred way for people to cite this project? <span aria-label=\"slight smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"slight smile\">:slight_smile:</span></p>",
+        "id": 608332416,
+        "sender_full_name": "Yutaka Nagashima",
+        "timestamp": 1783296217
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"644411\">Yutaka Nagashima</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/608332416\">said</a>:</p>\n<blockquote>\n<p>Do you already have a preferred way for people to cite this project? <span aria-label=\"slight smile\" class=\"emoji emoji-1f642\" role=\"img\" title=\"slight smile\">:slight_smile:</span></p>\n</blockquote>\n<p>I now added citation information and a Zenodo release: <a href=\"https://github.com/kappelmann/isabelle-pide-mcp#citation\">https://github.com/kappelmann/isabelle-pide-mcp#citation</a></p>",
+        "id": 608417976,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783335515
+    },
+    {
+        "content": "<p>thanks for this work. I'm trying this out and it seems to work, but I've ran into an issue multiple times (which I can't diagnose) where the interface just seems to hang with no progress. The only way to recover is for me to manually restart the mcp (which works but certainly isn't ideal).</p>\n<p>FWIW, here's what Claude thinks:</p>\n<p><a href=\"/user_uploads/14278/Tgt-rMHSK9KV6lJMFyvCtHiR/PastedText.txt\">PastedText.txt</a></p>",
+        "id": 609493663,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783699980
+    },
+    {
+        "content": "<p>if there's a better report or information that you need, let me know and I can try to get that the next time I hit a freeze</p>",
+        "id": 609500474,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783702116
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"234226\">Yong Kiam</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/609493663\">said</a>:</p>\n<blockquote>\n<p>thanks for this work. I'm trying this out and it seems to work, but I've ran into an issue multiple times (which I can't diagnose) where the interface just seems to hang with no progress. The only way to recover is for me to manually restart the mcp (which works but certainly isn't ideal).</p>\n<p>FWIW, here's what Claude thinks:</p>\n<p><a href=\"/user_uploads/14278/Tgt-rMHSK9KV6lJMFyvCtHiR/PastedText.txt\">PastedText.txt</a></p>\n</blockquote>\n<p>Let me address the agent's comments one by one (at least the ones I understand):</p>\n<blockquote>\n<p>One earlier scratch was given a nonexistent import (<code>HOL-Library.Permutations</code>).<br>\n    After that, EVERY MCP operation on that scratch (<code>read</code>, corrective <code>edit</code>)<br>\n    failed with the import error, so it could not be repaired through the MCP</p>\n</blockquote>\n<p>This has been fixed in the meantime.</p>\n<blockquote>\n<p>Symptom 1: file-path node vs session-qualified node diverge</p>\n</blockquote>\n<p>The agent mixed two different ways to refer to a theory: absolute file paths vs. session-qualified. Your shared text indicates that it edited the theory of a base session using an absolute file path but then requested (and imported) that theory session-qualified. But session-qualified base session theories are read-only and changes will not propagate. To see the changes, it also needs to use an absolute import. To try this yourself, start Isabelle with base session HOL and then compare importing and editing \"~~/src/HOL/HOL\" vs \"HOL.HOL\". Only if you import using the former you will see any changes propagate. The import of the latter is instant, the former will process the dependencies.</p>\n<p>I don't know your intended application, but there is a good chance that you do not want the agent to use absolute file paths for base sessions because doing so will re-process the required theories (which is very slow). To this end, there is even a hint for the agent in the <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/blob/main/.opencode/skills/pide-mcp/SKILL.md?plain=1#L37\">PIDE MCP SKILL file</a>.</p>\n<p>Finally, this mismatch/mixed usage of absolute file paths and session-qualified references might also have caused what it calls \"Symptom 2\", essentially a situation where it believes (rightfully or not) to be stuck. Another possible cause is that there are non-terminating commands in some theory file that it did not consider which block the processing of the commands that it is waiting for. The model is then confused as to why the commands it is waiting for are never processed/updated. I have a suspicion that this occurred to me and my collaborators a number of times before. A possible remedy might be to write an MCP tool that provides the agent an overview of all loaded theories and their progress (akin to the progress bar in Isabelle/jEdit). This way, it could locate where Isabelle is stuck (or if the process really stopped responding). Maybe this is likely caus in your case too?</p>\n<p>You can enable writing a log file by passing the <code>-L &lt;file_name&gt;</code> option to PIDE MCP (see <code>isabelle pide_mcp -?</code> for all options). Note, however, that the log file logs all requests and responses, so don't share it blindly if you are doing \"secret\" work.</p>",
+        "id": 609788502,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783931737
+    },
+    {
+        "content": "<p>thanks! I'll check this out the next time I get around to it (which might be after FLOC)</p>",
+        "id": 609790225,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783932383
+    },
+    {
+        "content": "<p>I'm also at the Isabelle Workshop and ITP - hit me up if you wanna try out some things :)</p>",
+        "id": 609790801,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1783932583
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233154\">Kevin Kappelmann</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/609790801\">said</a>:</p>\n<blockquote>\n<p>I'm also at the Isabelle Workshop and ITP - hit me up if you wanna try out some things :)</p>\n</blockquote>\n<p>sounds good, I'll look for you at the workshop.</p>",
+        "id": 609790894,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1783932611
+    },
+    {
+        "content": "<p>I’ve been experimenting with coding-agent hooks for Isabelle proof discipline:</p>\n<p><a href=\"https://github.com/balazstothofficial/isabelle-agent-hooks\">https://github.com/balazstothofficial/isabelle-agent-hooks</a></p>\n<p>The hooks currently discourage <code>apply</code> scripts and require search-discoverable terminal proof methods to have recent <code>sledgehammer</code>/<code>try0</code> evidence. They inspect newly added theory text and support Claude Code, Codex, and OpenCode, including AutoCorrode I/Q and <code>isabelle-pide-mcp</code>.</p>\n<p>I’ve manually tested the setup with all three agents. It is deliberately best-effort and fail-open, since agent hook and transcript interfaces are still evolving. Feedback would be very welcome.</p>\n<p>Disclaimer: The code was mostly written by Claude.</p>",
+        "id": 609848383,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1783951728
+    },
+    {
+        "content": "<p>We have a short workshop to set up an AI with Isabelle at 13:15 in the Isabelle workshop room at FLoC if anybody wants to join.</p>",
+        "id": 612727528,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784977885
+    },
+    {
+        "content": "<p>New in PIDE MCP:</p>\n<ul>\n<li>Update to Isabelle/f672c186c3bb</li>\n<li>New tool unload: Remove (\"clean\") a theory and its dependents.</li>\n<li>New tool get_progress: show progress of theories and currently processed commands.</li>\n</ul>\n<p>The new tools are also available on the Isabelle2025-2 compatible branch <code>2025-2</code>. We hope the tools improve the efficiency of the MCP particularly in large session applications. Feedback is very welcomed.</p>",
+        "id": 612823677,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785075526
+    },
+    {
+        "content": "<p>To update the MCP server, do I sync the mcp repository and re-run the <code>isabelle/bin/isabelle components -u ..</code> installation line?</p>",
+        "id": 612944844,
+        "sender_full_name": "Junming Zhao",
+        "timestamp": 1785148897
+    },
+    {
+        "content": "<p>You just need to pull from the repository. Isabelle will detect that the component changed and rebuild it automatically</p>",
+        "id": 612958759,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785153945
+    },
+    {
+        "content": "<p>thanks!</p>",
+        "id": 612965627,
+        "sender_full_name": "Junming Zhao",
+        "timestamp": 1785156005
+    },
+    {
+        "content": "<p>One note: I unfortunately named the 2025-2 release tag the same as the 2025-2 branch. So make sure you are pulling the newest changes from the branch and you're not on the tag.</p>",
+        "id": 612988955,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785162157
+    },
+    {
+        "content": "<p>There's now an <code>Isabelle2025-2</code> branch to fix this issue.</p>",
+        "id": 613012376,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785167803
+    },
+    {
+        "content": "<p>I think somewhere in the README there could be an \"official\" recommendation for setting up<br>\n prebuilt heaps (and also what to do if the heap changes mid-project)</p>\n<p>it looks like the <code>-l HOL</code> gets baked into the MCP JSON at setup (at least with Claude Code)</p>",
+        "id": 613550399,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1785375946
+    },
+    {
+        "content": "<p>My experience is that claude/codex can parse the ROOT structure and pick up the right base session it needs, if sufficient instruction/prompt is provided</p>",
+        "id": 613552886,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1785378001
+    },
+    {
+        "content": "<p>I'll add a note to the README.<br>\nChanging the base session on the fly is currently not supported. To change the base session, one has to change the <code>-l</code> option (in the mcp json) and then restart the MCP. I think(?) most coding agents do not allow agents to restart MCPs on their own though.</p>",
+        "id": 613646877,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1785418224
+    },
+    {
+        "content": "<p>Right, coding agents generally won't restart an MCP server on their own. What I do is decouple the Isabelle session/process from the MCP itself. Each time an agent (Claude/Codex) starts up, only a thin Python wrapper is launched automatically — the actual Isabelle process isn't spawned until Claude/Codex makes its first call to the MCP. This lazy initialization avoids launching a full Isabelle instance every time I start Claude/Codex, which matters when that session isn't going to touch Isabelle at all (especially since I usually have ~10 Claude instances running in parallel; otherwise I'd end up with 10 Isabelle instances on my laptop :-)</p>",
+        "id": 613668031,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1785423510
+    },
+    {
+        "content": "<p>Hi <span class=\"user-mention\" data-user-id=\"233154\">@Kevin Kappelmann</span> ,</p>\n<p>I am playing around with the PIDE MCP server currently and it works quite well. Thanks.</p>\n<p>I do have a question, though. I observed that an MCP <code>get_state</code> call made immediately after a successful <code>edit</code> response can still use the document version from before the edit.</p>\n<p>I am not sure whether this is intended asynchronous behavior or whether a successful <code>edit</code> is expected to establish that a subsequent sequential <code>get_state</code> sees the edited document.</p>\n<p>I produced a small reproduction against the original Isabelle2025-2 server implementation. The client:</p>\n<ol>\n<li>loads an 11-line theory;</li>\n<li>replaces one comment line with two comment lines;</li>\n<li>waits for the successful <code>edit</code> JSON-RPC response;</li>\n<li>requests the newly added line 12 using <code>get_state</code>.</li>\n</ol>\n<p>The immediate response is:</p>\n<p><code>start_line 12 out of bounds (file has 11 lines)</code></p>\n<p>After a short retry, line 12 is available. The inverse operation shows the same behavior: after shrinking the theory back to 11 lines and receiving the successful <code>edit</code> response, an immediate <code>get_state</code> still accepts line 12 from the previous version.</p>\n<p>This is not caused by pipelined or concurrent client requests: the reproduction waits for each <code>edit</code> response before sending <code>get_state</code>.</p>\n<p>I repeated the expand-and-shrink experiment several times. In every case, the first <code>get_state</code> after the successful <code>edit</code> response still observed the previous document version; a short retry then observed the new version.</p>\n<p>My reading of the implementation is that <code>Session.update</code> returns after the update has been accepted by the session manager, while <code>Document.State.snapshot</code> uses the most recent stable document version. The new version may therefore not yet be the stable tip when <code>get_state</code> runs.</p>\n<p>So in summary, i think that currently the behaviour is as follows:<br>\nA successful <code>edit</code> only queues/submits the PIDE update, and callers are expected to retry <code>get_state</code>; or</p>\n<p>An alternative behaviour would be the following:<br>\nA successful <code>edit</code> guarantees that a subsequent sequential <code>get_state</code> uses the document version containing that edit, although command evaluation may still be running.</p>\n<p>I implemented this behaviour locally by adding an await_stable_snapshop() call:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">session.update</span><span class=\"o\">(</span><span class=\"ow\">...</span><span class=\"o\">)</span>\n<span class=\"n\">session.await_stable_snapshot</span><span class=\"o\">()</span>\n</code></pre></div>\n<p>With that wait after theory text edits, the same reproduction produced no stale observations. I also tested it with a larger payload to widen the previous timing window.</p>\n<p>The change only waits for the edited document version to become the stable history tip; it does not wait for all proof commands to finish evaluating.</p>\n<p>If this is actually the intended behaviour, I would be happy to open a GitHub pull request containing the minimal fix and the reproduction/regression test.</p>\n<p>Thanks again for this nice piece of work,</p>\n<p>Diego</p>",
+        "id": 616267506,
+        "sender_full_name": "Diego Marmsoler",
+        "timestamp": 1786611771
+    },
+    {
+        "content": "<p>On a related note, I also investigated concurrent calls to the PIDE MCP <code>edit</code> tool and wanted to check whether concurrent edits to the same document are expected to be supported.</p>\n<p>It seems that the server dispatches tool calls concurrently. Each <code>edit</code> independently reads the current document, computes a complete updated file, writes it to disk, and submits incremental edits to PIDE.</p>\n<p>Using a small theory containing two distinct markers, I submitted two concurrent edits:</p>\n<ul>\n<li>Replace <code>LEFT_OLD</code> with <code>LEFT_NEW</code>.</li>\n<li>Replace <code>RIGHT_OLD</code> with <code>RIGHT_NEW</code>.</li>\n</ul>\n<p>Both calls returned successfully. However, the resulting states could be:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">disk</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">LEFT_NEW</span><span class=\"w\"> </span><span class=\"ow\">...</span><span class=\"w\"> </span><span class=\"n\">RIGHT_OLD</span>\n<span class=\"n\">PIDE</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">LEFT_NEW</span><span class=\"w\"> </span><span class=\"ow\">...</span><span class=\"w\"> </span><span class=\"n\">RIGHT_NEW</span>\n</code></pre></div>\n<p>Thus, one complete-file disk write overwrote the other, while PIDE applied both incremental edits. This reproduced repeatedly, including without artificial padding. Concurrent edits to different theories remained consistent.</p>\n<p>Concurrent replacements at the same location were timing-dependent. Sometimes the second request was rejected correctly, but I also observed both requests succeeding, disk and PIDE selecting different results, and once Isabelle’s <code>change_parser</code> reporting <code>requirement failed: bad text edit</code>.</p>\n<p>The same race occurred when one request used a relative theory path and the other used its absolute path. Therefore, any synchronization would presumably need to use the resolved document identity rather than the raw request string.</p>\n<p>Even if concurrent edits to the same document are considered unsupported caller behavior, should the server serialize them or reject one explicitly? Returning two successful responses while leaving disk and PIDE inconsistent was unexpected for me.</p>\n<p>Again, I have fixed this locally using per-session, per-canonical-document synchronization and added a regression test. If you think this approach fits the intended API semantics, I would be happy to submit a pull request for this too.</p>",
+        "id": 616301053,
+        "sender_full_name": "Diego Marmsoler",
+        "timestamp": 1786623490
+    },
+    {
+        "content": "<p>I have an upcoming change for the edit tool that might fix some of these issues. Who is Diego and how would I get in contact with him?</p>\n<p>I'm on vacation until next Monday and can then look into it.</p>",
+        "id": 616336126,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1786633037
+    },
+    {
+        "content": "<p>Sorry, I thought the messages were sent by someone else and not you directly <span class=\"user-mention\" data-user-id=\"1186455\">@Diego Marmsoler</span> <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span> will look into it when I'm back to work next week</p>",
+        "id": 616420084,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1786660735
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1186455\">Diego Marmsoler</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/616267506\">said</a>:</p>\n<blockquote>\n<p>I do have a question, though. I observed that an MCP <code>get_state</code> call made immediately after a successful <code>edit</code> response can still use the document version from before the edit...</p>\n</blockquote>\n<p>Yes, <code>get_state</code> takes the latest stable snapshot, which might not contain the latest edits yet. I deliberately didn't use <code>await_stable_snapshot</code> because it may block (possibly even indefinitely on rapid edits). Having just introduced <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/commit/96e74243d74269bbc78426a23ee29e4028cfc1d6\">synchronised edits</a>, I reconsidered this decision and <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/commit/96e74243d74269bbc78426a23ee29e4028cfc1d6\">now use <code>await_stable_snapshot</code> in editing-operations</a>. <br>\nThese changes are also available in the Isabelle2025-2 branch.</p>",
+        "id": 617261038,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787073279
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1186455\">Diego Marmsoler</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/616301053\">said</a>:</p>\n<blockquote>\n<p>On a related note, I also investigated concurrent calls to the PIDE MCP <code>edit</code> tool and wanted to check whether concurrent edits to the same document are expected to be supported...</p>\n</blockquote>\n<p>They weren't \"supported\" (i.e. conflicts as reported by you were expected), but I now introduced <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/commit/96e74243d74269bbc78426a23ee29e4028cfc1d6\">synchronised edits</a>, which should rule out such behaviours in the future.<br>\nThese changes are also available in the Isabelle2025-2 branch.</p>",
+        "id": 617261479,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787073423
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"234226\">Yong Kiam</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/609493663\">said</a>:</p>\n<blockquote>\n<p>I'm trying this out and it seems to work, but I've ran into an issue multiple times (which I can't diagnose) where the interface just seems to hang with no progress....</p>\n</blockquote>\n<p>This and similar stuck process issues should also be resolved now (both on <code>main</code> and <code>Isabelle2025-2</code>).</p>",
+        "id": 617261934,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787073524
+    },
+    {
+        "content": "<p>Unfortunately, I introduced a performance regression in the latest changes that significantly slows down applications using a large number of dynamic dependencies. </p>\n<p>I'm working on a patch. If you are affected, please use an older commit in the meantime. (thanks to <span class=\"user-mention\" data-user-id=\"1186455\">@Diego Marmsoler</span> for reporting it)</p>",
+        "id": 617978025,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787331990
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233154\">Kevin Kappelmann</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/617978025\">said</a>:</p>\n<blockquote>\n<p>I introduced a performance regression</p>\n</blockquote>\n<p>This should be resolved now on <code>main</code> and <code>Isabelle2025-2</code>, along with several other improvements (cf. <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/blob/main/NEWS.md\">NEWS</a>).</p>",
+        "id": 618385186,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787583976
+    },
+    {
+        "content": "<p>Where can I find <span class=\"user-mention\" data-user-id=\"433149\">@Maximilian Schäffeler</span>'s seldgehammer tool for PIDE-MCP?</p>",
+        "id": 619009560,
+        "sender_full_name": "Mohammad Abdulaziz",
+        "timestamp": 1787661379
+    },
+    {
+        "content": "<p>In our project repo, pide_mcp_ext. Here's the link to the sledgehammer tool: <a href=\"https://github.com/schaeffm/copilots-isabelle/blob/main/pide_mcp_ext/src/Tools/tool_sledgehammer.scala\">https://github.com/schaeffm/copilots-isabelle/blob/main/pide_mcp_ext/src/Tools/tool_sledgehammer.scala</a></p>",
+        "id": 619009814,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787661456
+    },
+    {
+        "content": "<p>Note that the code might not work with the newest PIDE MCP version due to several API changes I did in the last couple of days. <br>\nIt probably works with commit <code>002a26bad93593d6b1f90fa2c90e1291a302d1ad</code> of PIDE MCP.<br>\nAlternatively, tell your agent to make it compatible again and hope for the best ;)</p>",
+        "id": 619010632,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787661671
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233154\">Kevin Kappelmann</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/PIDE.20MCP/near/619009814\">said</a>:</p>\n<blockquote>\n<p>In our project repo, pide_mcp_ext. Here's the link to the sledgehammer tool: <a href=\"https://github.com/schaeffm/copilots-isabelle/blob/main/pide_mcp_ext/src/Tools/tool_sledgehammer.scala\">https://github.com/schaeffm/copilots-isabelle/blob/main/pide_mcp_ext/src/Tools/tool_sledgehammer.scala</a></p>\n</blockquote>\n<p>that project isn't public right? <span aria-label=\"laughing\" class=\"emoji emoji-1f606\" role=\"img\" title=\"laughing\">:laughing:</span></p>",
+        "id": 619173684,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1787712537
+    },
+    {
+        "content": "<p>Oops, indeed - Mohammad accidentally posted it on the wrong channel (I moved it to the right one now) and I replied without noticing. For clarification, we have some group work as part of below project:</p>\n<p><a href=\"https://www.renaissancephilanthropy.org/copilots-for-isabelle-learning-logical-structure-for-a-better-proving-experience\">https://www.renaissancephilanthropy.org/copilots-for-isabelle-learning-logical-structure-for-a-better-proving-experience</a></p>",
+        "id": 619212185,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787729897
+    },
+    {
+        "content": "<p>I'm curious to try one of the query engines with isabelle-pide, is there a recommended one that is directly compatible?</p>",
+        "id": 620116420,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1788100215
+    },
+    {
+        "content": "<p>I don't think anyone published a <a href=\"https://github.com/kappelmann/isabelle-pide-mcp/blob/main/src/pide_mcp_tool.scala\">PIDE_MCP_Tool</a> for search tools yet.</p>\n<p>There are several search options. Which one are you interested in?</p>\n<ul>\n<li>A tool for live session searches: <code>find_theorems</code>, <code>find_consts</code>, etc. (Currently agents need to insert them as text in the theory and read the output). <span class=\"user-mention\" data-user-id=\"433149\">@Maximilian Schäffeler</span> did some experiments here, but nothing public yet.</li>\n<li>A tool to search built sessions a la <a href=\"https://search.isabelle.in.tum.de/#search\">find facts</a>, IsaSearch, IsaFinder. <span class=\"user-mention\" data-user-id=\"1032319\">@Basil</span> did some experiments for find facts, but (I think) nothing public yet.</li>\n<li>A tool for unbuilt session searches: I vaguely (or maybe wrongly) remember that AWS wrote something in this direction, but I can't find it. Then there is <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/announcement.3A.20isabelle-query/\">isabelle-query</a>, but it unfortunately doesn't use the right Isabelle/Scala's APIs, so its \"parsing is approximate\" (and the Scala port, as far as I can see, suffers from the same issue; though I didn't check the whole AI-generated code, so maybe it does do it right after all...).</li>\n</ul>",
+        "id": 620253992,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1788169522
+    }
+]

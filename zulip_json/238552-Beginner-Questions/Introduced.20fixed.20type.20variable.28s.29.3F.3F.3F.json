@@ -1,0 +1,290 @@
+[
+    {
+        "content": "<p><img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1003x634\" data-original-src=\"/user_uploads/14278/AwEw4zKTnmnMjI8UVEzB0QHQ/image.png\" src=\"/user_uploads/thumbnail/14278/AwEw4zKTnmnMjI8UVEzB0QHQ/image.png/840x560.webp\"><br>\n<img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"963x520\" data-original-src=\"/user_uploads/14278/1Xj5moV1WEvObv0ElyCWAkXU/image.png\" src=\"/user_uploads/thumbnail/14278/1Xj5moV1WEvObv0ElyCWAkXU/image.png/840x560.webp\"></p>\n<p>What even is the difference between those instances such that I need to like </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n n-Type\">'b</span>\n</code></pre></div>\n<p>in the second one or whatever.</p>",
+        "id": 612102054,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784716689
+    },
+    {
+        "content": "<p>the types to infer are \"deferred\" to the next line</p>",
+        "id": 612200863,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1784744192
+    },
+    {
+        "content": "<p>in <code>a = a</code>, you have no restriction, so you end up with type <code>'b</code>, while in the first case <code>F a</code> restricts <code>a</code> to be exactly the right type</p>",
+        "id": 612201037,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1784744241
+    },
+    {
+        "content": "<p>I don't understand. what kinda restriction does F a put on a's type?</p>",
+        "id": 612204381,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784745229
+    },
+    {
+        "content": "<p>F has a type due to the lemma</p>",
+        "id": 612440324,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1784836717
+    },
+    {
+        "content": "<p>the type is inferred there</p>",
+        "id": 612440450,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1784836772
+    },
+    {
+        "content": "<p>I don't get it <span aria-label=\"sob\" class=\"emoji emoji-1f62d\" role=\"img\" title=\"sob\">:sob:</span></p>",
+        "id": 618113096,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787420700
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1174342\">Yoav Cohen</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F/near/618113096\">said</a>:</p>\n<blockquote>\n<p>I don't get it <span aria-label=\"sob\" class=\"emoji emoji-1f62d\" role=\"img\" title=\"sob\">:sob:</span></p>\n</blockquote>\n<p>what exactly do you not get? That F <em>has</em> a type? That the type can be inferred?</p>",
+        "id": 618113819,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787421070
+    },
+    {
+        "content": "<p>both, but mostly like how are the types working here? F has a predicate type? is = not also a predicate?</p>",
+        "id": 618113924,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787421128
+    },
+    {
+        "content": "<p>Let me copy your snippets into a scratch file and write up a quick explanation</p>\n<div class=\"spoiler-block\"><div class=\"spoiler-header\">\n<p>general advice when talking about code</p>\n</div><div class=\"spoiler-content\" aria-hidden=\"true\">\n<p>It's usually nicer to use <a href=\"https://zulip.com/help/code-blocks\">code blocks</a> if you want people to copy-paste your code rather than a screenshot</p>\n</div></div>",
+        "id": 618114184,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787421280
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1174342\">Yoav Cohen</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F/near/618113924\">said</a>:</p>\n<blockquote>\n<p>F has a predicate type?</p>\n</blockquote>\n<p>Suppose you want to say something about some object <code>x</code>, and you don't specify what type <code>x</code> has. It could be a <code>nat</code>, a <code>bool</code> or something else. Suppose you have some predicate <code>F</code> and you want to prove <code>F x</code>, that is, in more traditional math notation, <span class=\"katex\"><span class=\"katex-mathml\"><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>F</mi><mo stretchy=\"false\">(</mo><mi>x</mi><mo stretchy=\"false\">)</mo></mrow><annotation encoding=\"application/x-tex\">F(x)</annotation></semantics></math></span><span class=\"katex-html\" aria-hidden=\"true\"><span class=\"base\"><span class=\"strut\" style=\"height:1em;vertical-align:-0.25em;\"></span><span class=\"mord mathnormal\" style=\"margin-right:0.1389em;\">F</span><span class=\"mopen\">(</span><span class=\"mord mathnormal\">x</span><span class=\"mclose\">)</span></span></span></span>. Now, Isabelle does not know what type to assign to <code>x</code>, so by default, we will assume it is <em>polymorphic</em>, that is to say, \"it is some type, but I cannot tell you what it is\". </p>\n<p>Are you familiar with polymorphism over functions?</p>",
+        "id": 618115042,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787421696
+    },
+    {
+        "content": "<p>I am not</p>",
+        "id": 618115146,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787421736
+    },
+    {
+        "content": "<p>ok, that's a good place to start. <br>\nIn a typed language (such as ML, or Haskell, and Isabelle for that matter), we can write some functions that take in an input of some type without specifying what that type is. The quintessential example of this is the identity function. This function takes in \"an x\" and spits out the same \"x\". </p>\n<div class=\"codehilite\" data-code-language=\"ml\"><pre><span></span><code>id :: a =&gt; a\nid x = x\n</code></pre></div>\n<p>Notice how <code>id</code> can work if you used a bool, a nat, or some other wacky type you'd like to build. So we use a type variable to say that it is \"some type, but I can't tell you anything else until you give me a concrete input\". So for example, <code>id 5 = 5</code> here treats <code>id</code> as a function of type<code>nat =&gt; nat</code> while <code>id true = true</code> here treats id as a function of type<code>bool =&gt; bool</code></p>",
+        "id": 618115585,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787422015
+    },
+    {
+        "content": "<p><code>a =&gt; a</code> means \"you give me a thing of type a, and I will spit out something of type a\"</p>",
+        "id": 618115637,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787422048
+    },
+    {
+        "content": "<p>does that make sense?</p>",
+        "id": 618115679,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787422070
+    },
+    {
+        "content": "<p>well but this far into the thing, isn't F the same, as far as isabelle is aware? like wouldn't F be able to take any input as far as it knows? just like =</p>",
+        "id": 618115837,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787422125
+    },
+    {
+        "content": "<p>F can, in fact, take in \"any input\", that is, it is polymorphic over its input <code>x</code>.  From the structure of the first lemma, we can infer that F is a <em>predicate</em> (I will elide this step for now, and we can get back to it later).  Since it takes in some <code>x</code>, we will say that <code>x</code> is of type <code>a</code>.  Later on, when you use this theorem on say, the natural numbers, you can apply the theorem in the same way as you would if <code>x</code> were a boolean. </p>\n<p>For what its worth, that a fixed type variable is introduced in your second theorem is a warning from the proof system, not an error.</p>",
+        "id": 618117236,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787422473
+    },
+    {
+        "content": "<p>but well basically, polymorphism allows you to specify one \"type\" for id, and it will make an instance of it for all types?</p>",
+        "id": 618117367,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787422544
+    },
+    {
+        "content": "<p>for whatever type of some input that is passed in to <code>id</code>, yes. You can think of <code>id</code> acting that way. How \"will make an instance of [id]\" works  sounds like an implementation detail of polymorphism, which is an unrelated but interesting thing to read about.</p>",
+        "id": 618117564,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787422667
+    },
+    {
+        "content": "<p>If you want to understand polymorphism, that's usually covered in notes in a functional programming course. I'm biased towards Haskell (despite Isabelle being tied a lot more to ML, a lot of the functional programming ideas transfer over quite easily) so I'd recommend reading <a href=\"https://learnyouahaskell.github.io/types-and-typeclasses.html#type-variables\">this</a> to understand type variables.</p>",
+        "id": 618118009,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787422922
+    },
+    {
+        "content": "<p>does that help? I see two different questions here. One is really about what type variables are and how they work, and the other is what's going on in your proof and why the warning comes up with equality.</p>",
+        "id": 618118232,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787423049
+    },
+    {
+        "content": "<p>That's what it seems to me, that is</p>",
+        "id": 618118412,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787423144
+    },
+    {
+        "content": "<p>well so what's the reason for this warning? isn't = also a predicate? or maybe there is something to do with the quantification instead?</p>",
+        "id": 618118908,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787423433
+    },
+    {
+        "content": "<p>lemme draw this out real quick</p>",
+        "id": 618118950,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787423465
+    },
+    {
+        "content": "<p>Ok this is taking a little longer than I thought to annotate, might be more like 10 minutes</p>",
+        "id": 618119657,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787423985
+    },
+    {
+        "content": "<p>take your time, I am in no hurry</p>",
+        "id": 618119711,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787424010
+    },
+    {
+        "content": "<p><img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1106x640\" data-original-src=\"/user_uploads/14278/XrArTxKsP_Z26Lil-qofmFsr/image.png\" src=\"/user_uploads/thumbnail/14278/XrArTxKsP_Z26Lil-qofmFsr/image.png/840x560.webp\"></p>",
+        "id": 618119847,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424123
+    },
+    {
+        "content": "<p><img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1008x693\" data-original-src=\"/user_uploads/14278/a_5b3rl-_OKjqj6HNThnwHXV/image.png\" src=\"/user_uploads/thumbnail/14278/a_5b3rl-_OKjqj6HNThnwHXV/image.png/840x560.webp\"></p>",
+        "id": 618119863,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424138
+    },
+    {
+        "content": "<p><img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1147x867\" data-original-src=\"/user_uploads/14278/R6Q_H16VuicerQUuhlJDo_oK/image.png\" src=\"/user_uploads/thumbnail/14278/R6Q_H16VuicerQUuhlJDo_oK/image.png/840x560.webp\"></p>",
+        "id": 618119873,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424151
+    },
+    {
+        "content": "<p>as for the other proof</p>",
+        "id": 618119887,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424163
+    },
+    {
+        "content": "<p>Notice specifically where F comes from and where equality comes from. <code>F</code> is arbitrary but defined by you for your proof, while equality isn't, and I think that's where the difference stems from</p>",
+        "id": 618120439,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424682
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(∀x. F x ∧ G x) ⟶ (∀x. F x)\"</span>\n<span class=\"k\">proof</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">meow</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"(∀x. F x ∧ G x)\"</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"F b\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"F c\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"w\">  </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"∀ x. F x\"</span>\n<span class=\"w\">  </span><span class=\"k\">proof</span>\n<span class=\"w\">    </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">a</span>\n<span class=\"w\">    </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">b</span>\n<span class=\"w\">    </span><span class=\"k\">from</span><span class=\"w\"> </span><span class=\"n\">meow</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"F a ∧ G a\"</span><span class=\"w\"> </span><span class=\"ow\">..</span>\n<span class=\"w\">    </span><span class=\"k\">thus</span><span class=\"w\"> </span><span class=\"s\">\"F a\"</span><span class=\"w\"> </span><span class=\"ow\">..</span>\n<span class=\"w\">  </span><span class=\"k\">qed</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>in this example, I have added two lines. It might make more sense if you hover around the type of <code>b</code> and <code>c</code></p>",
+        "id": 618120528,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424760
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"∀x. ∃y. x = y\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">a</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"b = b\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"c = c\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"a = a\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">refl</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"∃y. a = y\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n<span class=\"w\">  </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"∀x. ∃y. x = y\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">blast</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>Now do the same thing here. Equality is already given to you, so every time you make a claim about some equality, it can be a different type. b and c need not be the same. you could have \"true = true\" in one line, and \"2 + 3 = 3 + 2\" in the other</p>",
+        "id": 618120655,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424872
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F/near/612201037\">said</a>:</p>\n<blockquote>\n<p>in <code>a = a</code>, you have no restriction, so you end up with type <code>'b</code>, while in the first case <code>F a</code> restricts <code>a</code> to be exactly the right type</p>\n</blockquote>\n<p>that's what this is trying to say</p>",
+        "id": 618120687,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424905
+    },
+    {
+        "content": "<p>From what I understand, the difference is where F and equality are \"coming from\", respectively</p>",
+        "id": 618120724,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787424934
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(∀x. F x ∧ G x) ⟶ (∀x. F x)\"</span>\n<span class=\"k\">proof</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">meow</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"(∀x. F x ∧ G x)\"</span>\n<span class=\"w\">  </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"∀ x. F x\"</span>\n<span class=\"w\">  </span><span class=\"k\">proof</span>\n<span class=\"w\">    </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">a</span>\n<span class=\"w\">    </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"H a\"</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"w\">    </span><span class=\"k\">from</span><span class=\"w\"> </span><span class=\"n\">meow</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"F a ∧ G a\"</span><span class=\"w\"> </span><span class=\"ow\">..</span>\n<span class=\"w\">    </span><span class=\"k\">thus</span><span class=\"w\"> </span><span class=\"s\">\"F a\"</span><span class=\"w\"> </span><span class=\"ow\">..</span>\n<span class=\"gr\">oops</span>\n</code></pre></div>\n<p>notice what happens in this proof. You haven't specified <code>H</code> beforehand, so what can we infer about <code>a</code>? So it's given a new type: <code>'b</code>. Now notice how we can't say <code>F a</code> anymore because we have no clue if this thing of some type <code>'b</code> is the same as <code>'a</code>. It could be the same, we don't know.</p>",
+        "id": 618120896,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787425097
+    },
+    {
+        "content": "<p>I hope that makes it a bit more enlightening</p>",
+        "id": 618120909,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787425108
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"1174342\">@Yoav Cohen</span>  it may also be useful to add this to your file, so you can see intermediate types in the proof state:<br>\n<code>declare [[show_types]]</code></p>",
+        "id": 618122390,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787426397
+    },
+    {
+        "content": "<p>I think maybe there is something about = being polymorphic that makes it so that every occurence of it uses a different arbitrary type or something</p>",
+        "id": 618633131,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787595711
+    },
+    {
+        "content": "<p>Though I couldn't find the implementation details for that</p>",
+        "id": 618633310,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787595763
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1174342\">Yoav Cohen</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Introduced.20fixed.20type.20variable.28s.29.3F.3F.3F/near/618113924\">said</a>:</p>\n<blockquote>\n<p>both, but mostly like how are the types working here? F has a predicate type? is = not also a predicate?</p>\n</blockquote>\n<p>Let's consider a predicate Same that is binary instead of the F here. We could then characterize the type of both Same and = as <code>['a,'a] =&gt; Bool</code>, however, for = it would also be polymorphic? so for every occurence of it 'a would be changed to something else, first 'b and then 'c and so on</p>",
+        "id": 618636848,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787596959
+    },
+    {
+        "content": "<p>I think the question you're trying to ask is \"is the arity (how many arguments a predicate takes) of my predicate relevant?\" and I think no. </p>\n<p>I think the underlying question is that you want to know when and where <code>Same</code>, <code>F</code> and <code>=</code>'s types are being inferred</p>",
+        "id": 618644704,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787599506
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"361777\">@Makarius Wenzel</span> Is <a href=\"https://mediatum.ub.tum.de/doc/601724/601724.pdf\">your thesis</a>, section 3.4.3 (type inference and polymorphism) relevant here?</p>",
+        "id": 618646063,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787599856
+    },
+    {
+        "content": "<p>Sorry I wasn't clear there, the arity change was irrelevant, it's just so I could characterize their types more easily and stuff</p>",
+        "id": 618646164,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787599894
+    },
+    {
+        "content": "<p>No worries, making clear questions takes time :)</p>",
+        "id": 618646307,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787599944
+    },
+    {
+        "content": "<p>I've found this <a href=\"https://stackoverflow.com/q/33857454\">https://stackoverflow.com/q/33857454</a></p>",
+        "id": 618650133,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1787601269
+    },
+    {
+        "content": "<p>Good catch. That was 11 years ago, so is it still good practice to bind the type variable explicitly?</p>",
+        "id": 618650945,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787601491
+    },
+    {
+        "content": "<p>(I'm asking because I don't know)</p>",
+        "id": 618650970,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787601498
+    }
+]

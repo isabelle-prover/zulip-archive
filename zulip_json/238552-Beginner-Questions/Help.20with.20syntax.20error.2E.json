@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Hi, I am re-learning how to use Isabelle again to play with the LTL stuff.  </p>\n<p>I'm afraid that I'm very out of practice with the syntax for Isabelle, so I'm getting errors that I'm not 100% sure how to fix. </p>\n<p>I am trying to write this: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">SanityCheck</span>\n<span class=\"w\">  </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"s\">\"LTL.LTL\"</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">p</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"p _ = True\"</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">excluded_middle</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"Or_ltlc (LTL.Prop_ltlc p) (LTL.Not_ltlc (LTL.Prop_ltlc p)) ≡ LTL.True_ltlc\"</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>and I am getting this error: </p>\n<p>Outer syntax error⌂: keyword \"(\" expected,<br>\nbut end-of-input⌂ was found</p>\n<p>Can someone tell me the correct syntax?</p>",
+        "id": 531912063,
+        "sender_full_name": "Thomas Gebert",
+        "timestamp": 1753902888
+    },
+    {
+        "content": "<p>just leave out the <code>by</code> (<code>sorry</code> closes the goal on its own, it's not a proof method that could be applied to <code>by</code> or <code>apply</code> the way <code>simp</code>/<code>auto</code>/etc. are)</p>",
+        "id": 531922421,
+        "sender_full_name": "terru",
+        "timestamp": 1753906580
+    },
+    {
+        "content": "<p>Ah, ok, that fixed it.  I really need to reread the concrete semantics book.  Thanks!</p>",
+        "id": 531924412,
+        "sender_full_name": "Thomas Gebert",
+        "timestamp": 1753907320
+    }
+]

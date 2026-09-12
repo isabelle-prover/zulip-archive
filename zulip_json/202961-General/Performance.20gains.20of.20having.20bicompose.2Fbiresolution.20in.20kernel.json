@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>Does anyone have a rough idea of the speedup obtained by having Thm.bicompose and Thm.biresolution in the kernel?</p>",
+        "id": 561280234,
+        "sender_full_name": "irvin",
+        "timestamp": 1764625022
+    },
+    {
+        "content": "<p>And is performance being slow outside of the kernel a natural consequence of the tactics being implemented via thm's compared to hol4 <code>(term list * term)</code> and hol-light's <code>(string * thm) list * term</code></p>",
+        "id": 561281450,
+        "sender_full_name": "irvin",
+        "timestamp": 1764625410
+    },
+    {
+        "content": "<p>I think the most expensive step would be the certification of the unifier.<br>\nI once tried to move the unifier out of the trusted code base of <code>bicompose_aux</code>, resulting in an overhead of 1.5 (check if unifier returns convertible results) up to 1.9 (unifier returns an equality theorem explicitly).</p>\n<p>But those have not been thorough experiments. Maybe you can do much better with some engineering.</p>",
+        "id": 561342197,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1764661279
+    },
+    {
+        "content": "<p>Was that a measure of just the raw performance or building a bunch of isabelle theories? I would think the bi net will filter out most candidates anyway</p>",
+        "id": 561508799,
+        "sender_full_name": "irvin",
+        "timestamp": 1764705859
+    },
+    {
+        "content": "<p>Total build time of session HOL</p>",
+        "id": 561537198,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1764717121
+    },
+    {
+        "content": "<p>Didn't Simon Wimmer and his student investigate this thoroughly like 8 years ago or so?</p>",
+        "id": 561945291,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1764871676
+    },
+    {
+        "content": "<p>And aren't flex flex pairs another issue?</p>",
+        "id": 561945334,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1764871692
+    },
+    {
+        "content": "<p>Yes, there was a BSc thesis attempting to move bicompose_aux out of the kernel. The thesis isn't publicly available I believe. The final CPU build time increased by a factor of 2.4 and flex-flex pairs were smashed as a simplifying step indeed (some sessions did not build anymore as a result).<br>\nRelated work on flex-flex pairs by Simon: <a href=\"https://home.cit.tum.de/~wimmers/papers/Smashing_Isabelle.pdf\">https://home.cit.tum.de/~wimmers/papers/Smashing_Isabelle.pdf</a></p>",
+        "id": 561965001,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1764878615
+    }
+]

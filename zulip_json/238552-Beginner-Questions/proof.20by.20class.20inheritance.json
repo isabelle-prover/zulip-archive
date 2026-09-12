@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>I'm trying out a trivial proof as follows (ripped from Midlands Grad School'25): consider a typeclass representing partial orders, total orders, and lattices. It is quite easy to prove that a total order is a lattice  i.e. <code>subclass (in total_order)  lattice</code>. I already have this proof</p>\n<p>Say, I want to show that the <code>int</code>s form a lattice. While auto would just reduce this proof to proving that for any two elements there exists a supremum and an infimum (which is always one of the two elements), I noticed that would be unnecessary. Consider that I prove that the <code>int</code>s form a total order (i.e. <code>interpretation ints_to: total_order \"less_eq :: int ⇒ int ⇒ bool\"</code>). How can I use the fact that <code>total_order</code> is a subclass of <code>lattice</code> to finish the proof, without having to explicitly write out the sup/inf cases?</p>",
+        "id": 581334363,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774349958
+    },
+    {
+        "content": "<p>You should have fact called <code>ints_to.lattice_axioms</code> at your disposal, right? In this specific case, <code>apply rule</code>/ <code>standard</code> / <code>unfold_locales</code> might also work directly.</p>",
+        "id": 581338368,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1774351108
+    },
+    {
+        "content": "<p>Yeah, that's exactly what I was looking for<br>\nHow do I find all of the theorems generated from an <code>interpretation</code> or a <code>subclass</code>?</p>",
+        "id": 581339770,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774351486
+    },
+    {
+        "content": "<p>You can add the command <code>print_theorems</code> after other commands in your theory file and check which theorems were produced. It might be insightful to also check after function or datatype definitions.</p>",
+        "id": 581342498,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1774352272
+    },
+    {
+        "content": "<p>this is exactly what I needed, thanks!</p>",
+        "id": 581342619,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1774352310
+    }
+]

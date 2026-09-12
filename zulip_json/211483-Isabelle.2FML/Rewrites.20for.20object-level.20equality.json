@@ -1,0 +1,110 @@
+[
+    {
+        "content": "<p>I'm writing a logic atop Pure with its own object-level equality. I have lots of theorems of the form \"complicated lhs = simple rhs\" which I'd like to use as simplifying rules. It seems this is not possible, as the simplifier works with meta-level equality only, right? Does every object logic need to implement its own simplifier/rewrite engine? Or can you 'hook into' the simplifier? I did already write a simplifier which takes a theorem, extracts its lhs and rhs, recursively finds a match for the lhs in a term and then applies the axioms for equality substitution and discharges the resulting subgoal with the theorem used for rewriting. Is this anywhere close to an idiomatic approach? I could still profit from existing infrastructure to be sublinear in the number of rewrite theorems. I'm really sorry if this is all the wrong place for a question like this.</p>",
+        "id": 532780524,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333644
+    },
+    {
+        "content": "<p>I am confused by your question. There is a <em>pure</em> simplifier (<code>Pure.simp</code>) which should work also in your case</p>",
+        "id": 532780823,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754333791
+    },
+    {
+        "content": "<p>It seems it only accepts rewrite rules using meta-level equality, which none of my rewrite rules use. They all use object-level equality. How can I circumvent that.</p>",
+        "id": 532781031,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333883
+    },
+    {
+        "content": "<p>Ah, you mean that you have an equality that cannot be converted to <code>==</code>?</p>",
+        "id": 532781117,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754333916
+    },
+    {
+        "content": "<p>Yes.</p>",
+        "id": 532781135,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333924
+    },
+    {
+        "content": "<p>But maybe it is idiomatic to not do what I do (is object-level equality usually convertible to meta-level equality == ?) and I would be glad about a pointer like that as well</p>",
+        "id": 532781279,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754333984
+    },
+    {
+        "content": "<p>As far as I know, the simplifier only works for meta-equality (it is a limitation of Isabelle's simplifier)</p>",
+        "id": 532781348,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334015
+    },
+    {
+        "content": "<p>Do HOL and other object logics all have their own simplifier then?</p>",
+        "id": 532781455,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754334063
+    },
+    {
+        "content": "<p>No, in HOL <code>=</code>  can be converted to <code>==</code></p>",
+        "id": 532781781,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334212
+    },
+    {
+        "content": "<p>same in ZF</p>",
+        "id": 532781802,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334219
+    },
+    {
+        "content": "<p>And if you look at <code>~~//Tools/eqsubst.ML</code>, the first thing that happen is:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"c\">(* changes object \"=\" to meta \"==\" which prepares a given rewrite rule *)</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">prep_meta_eq</span><span class=\"w\"> </span><span class=\"n\">ctxt</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"n\">Simplifier.mksimps</span><span class=\"w\"> </span><span class=\"n\">ctxt</span><span class=\"w\"> </span><span class=\"n\">#&gt;</span><span class=\"w\"> </span><span class=\"n\">map</span><span class=\"w\"> </span><span class=\"n\">Drule.zero_var_indexes;</span>\n</code></pre></div>",
+        "id": 532781877,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1754334256
+    },
+    {
+        "content": "<p>Thanks! Seems I should seek compatibility with meta equality then.</p>",
+        "id": 532782006,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1754334307
+    },
+    {
+        "content": "<p>There's supposedly a draft version of a tool to do rewriting modulo arbitrary congruences by <span class=\"user-mention\" data-user-id=\"302181\">@Simon Roßkopf</span>, but it's been a draft version for a long time at this point. <span aria-label=\"smile\" class=\"emoji emoji-1f604\" role=\"img\" title=\"smile\">:smile:</span></p>",
+        "id": 539102485,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1757692080
+    },
+    {
+        "content": "<p>Not sure if it's specific to HOL though. Although I see no reason why it should be.</p>",
+        "id": 539102602,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1757692099
+    },
+    {
+        "content": "<p>Has there been a measure of slow down? Transitive is a kernel primitive in most HOL family theorem provers. Even HOL-light which was aiming for minimal inference rules has it.</p>",
+        "id": 539115411,
+        "sender_full_name": "irvin",
+        "timestamp": 1757694262
+    },
+    {
+        "content": "<p>Also HOL4's simplifier supports rewriting with arbitrary preorders. see<br>\n8.5.6.6 of the description manual for a user guide <a href=\"https://github.com/HOL-Theorem-Prover/HOL/releases/download/trindemossen-2/trindemossen-2-description.pdf\">https://github.com/HOL-Theorem-Prover/HOL/releases/download/trindemossen-2/trindemossen-2-description.pdf</a><br>\n you might want to look at the code here <a href=\"https://github.com/HOL-Theorem-Prover/HOL/tree/develop/src/simp/src\">https://github.com/HOL-Theorem-Prover/HOL/tree/develop/src/simp/src</a></p>",
+        "id": 539120194,
+        "sender_full_name": "irvin",
+        "timestamp": 1757695061
+    },
+    {
+        "content": "<p>The idea behind it isn't too hard you just need to provide a equivalent of Thm.reflexive and Conv.then_conv. Thm.reflexive is needed to discharge assumptions of congruence rules where no progress has been made.</p>",
+        "id": 539123296,
+        "sender_full_name": "irvin",
+        "timestamp": 1757695652
+    },
+    {
+        "content": "<p>I ended up just adding an axiom that converts object equality = to meta equality == just like HOL does.</p>",
+        "id": 539809366,
+        "sender_full_name": "Sascha Kehrli",
+        "timestamp": 1758038945
+    }
+]

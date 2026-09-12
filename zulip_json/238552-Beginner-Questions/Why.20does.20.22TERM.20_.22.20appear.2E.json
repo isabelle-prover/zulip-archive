@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>I was playing around with PRIMITIVE and I've noticed that if I do</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">ML</span><span class=\"s\">‹</span>\n<span class=\"s\">val print_internal_goal = PRIMITIVE (fn x =&gt; (@{print} x ; x))</span>\n<span class=\"s\">›</span>\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"a ⟹ (b ⟹ a)\"</span><span class=\"w\"> </span><span class=\"s\">\"b\"</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">tactic</span><span class=\"w\"> </span><span class=\"n\">print_internal_goal</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>I get the following printed</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"s\">\"TERM _\"</span><span class=\"n\">⌂</span>\n<span class=\"s\">\"(a ⟹ b ⟹ a) ⟹ b ⟹ ((a ⟹ b ⟹ a) &amp;&amp;&amp; b)\"</span><span class=\"n\">⌂</span>\n</code></pre></div>\n<p>What is the origin of the <code>\"TERM _\"</code></p>",
+        "id": 523096107,
+        "sender_full_name": "irvin",
+        "timestamp": 1749476463
+    },
+    {
+        "content": "<p>as far as i know, it is used to check whether your tactic fails gracefully (i.e. return an empty sequence) in case it is applied to a state that it cannot act on. See <a href=\"#narrow/channel/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20emergence.20of.20.22TERM.20_.22.20.28using.20quickcheck.20and.20ni.2E.2E.2E/near/294320409\">#Archive Mirror: Isabelle Users Mailing List &gt; &#91;isabelle&#93; emergence of \"TERM _\" (using quickcheck and ni... @ 💬</a></p>",
+        "id": 523491801,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1749625024
+    },
+    {
+        "content": "<p>Thanks!</p>",
+        "id": 523662949,
+        "sender_full_name": "irvin",
+        "timestamp": 1749690709
+    },
+    {
+        "content": "<p>Note that you probably should not use <code>PRIMITIVE</code> etc directly. Whatever you want to do can probably also be done with high level combinators like <code>Subgoal.FOCUS</code></p>",
+        "id": 523987501,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1749835926
+    }
+]

@@ -1,0 +1,129 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] MCP resources bounds · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20MCP.20resources.20bounds.html">[isabelle] MCP resources bounds</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="622557715"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20MCP%20resources%20bounds/near/622557715" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20MCP.20resources.20bounds.html#622557715">(Sep 08 2026 at 14:23)</a>:</h4>
+<p><strong>From:</strong> "Putti, Edoardo (UT-EEMCS)" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Dear list,</p>
+<p>As many of you all I am developing a MCP server for the Isabelle theorem prover to see what is possible today in terms of using LLMs for autoformalization.</p>
+<p>In my work I would like to treat Isabelle/ML code as adversarial. It should be limited in how it can affect the control flow and resource usage of my MCP server.</p>
+<p>One of the problem with this thesis is that Isabelle/ML code can always send messages to the Isabelle/Scala side. When a human is in control and has a GUI to act this is not a problem. In a headless settings instead I cannot stop the prover and Isabelle/ML code if it continuously sends me garbage.</p>
+<p>How are you all dealing with this problem?</p>
+<p>Other problems with the current implementation of the PIDE protocol are all based in the fact that it is trusted. This means that, when reading a PIDE frame, the following values are uncapped and can be written with arbitrary values from the Isabelle/ML side.</p>
+<ul>
+<li>Header size</li>
+<li>Chunks size</li>
+<li>Individual Chunk size</li>
+</ul>
+<p>Unfortunately I have no control over these values. I cannot setup the PIDE to reject messages that are just way too large and close the connection there are no extension points for me to implement a bounded reader.</p>
+<p>I have mitigated the following problems in my implementation but this only happens after the fact. The ML side of the PIDE can send me arbitrary sized garbage and I will first read it into memory and then reject it.</p>
+<p>Happy to hear your thoughts.</p>
+<p>Edoardo</p>
+
+
+
+<a name="622584523"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20MCP%20resources%20bounds/near/622584523" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20MCP.20resources.20bounds.html#622584523">(Sep 08 2026 at 15:57)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 08/09/2026 16:22, Putti, Edoardo (UT-EEMCS) (via cl-isabelle-users Mailing <br>
+List) wrote:</p>
+<blockquote>
+<p>I have mitigated the following problems in my implementation but this only happens after the fact. The ML side of the PIDE can send me arbitrary sized garbage and I will first read it into memory and then reject it.<br>
+There is indeed a fundamental problem here, because the MCP violates <br>
+longstanding assumptions about how the prover works, and is used by a human <br>
+user. So any "mitigation" can only be symbolic, not really a proper solution.</p>
+</blockquote>
+<p>At FLoC 2026 in Lisbon, I've had some discussions with users of AI + MCP. My <br>
+conclusion: we should gradually make the system more robust, and no longer let <br>
+doors and windows stand open, as an invitation to mess things up.</p>
+<p>This will take quite some time, and it will annoy people who have done various <br>
+experiments on "hacking Isabelle" that are outside normal user space --- <br>
+depending on the very "doors and windows" to stand wide open.</p>
+<p>Makarius</p>
+
+
+
+<a name="622590996"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20MCP%20resources%20bounds/near/622590996" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20MCP.20resources.20bounds.html#622590996">(Sep 08 2026 at 16:21)</a>:</h4>
+<p><strong>From:</strong> "Mulligan, Dominic" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi,</p>
+<blockquote>
+<p>At FLoC 2026 in Lisbon, I've had some discussions with users of AI + MCP. My</p>
+</blockquote>
+<blockquote>
+<p>conclusion: we should gradually make the system more robust, and no longer let</p>
+</blockquote>
+<blockquote>
+<p>doors and windows stand open, as an invitation to mess things up.</p>
+</blockquote>
+<blockquote>
+<p>This will take quite some time, and it will annoy people who have done various</p>
+</blockquote>
+<blockquote>
+<p>experiments on "hacking Isabelle" that are outside normal user space ---</p>
+</blockquote>
+<blockquote>
+<p>depending on the very "doors and windows" to stand wide open.</p>
+</blockquote>
+<p>OK, but the alternative approach needs to come first.  The alternative is that we will not update Isabelle versions or even move away from Isabelle completely.  AI agent integration in 2026 is more important than moving to the latest Isabelle release.</p>
+<p>Thanks,</p>
+<p>Dominic</p>
+
+
+
+<a name="622704567"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20MCP%20resources%20bounds/near/622704567" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20MCP.20resources.20bounds.html#622704567">(Sep 09 2026 at 02:11)</a>:</h4>
+<p><strong>From:</strong> Qiyuan XU &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi,</p>
+<p>People try to contribute to the community and to Isabelle. The real issue, I think, is that the Isabelle sources contain very few comments. People are willing to follow conventions, but only if they first know what those conventions are ― what should be used and what shouldn't. Of course, I'm assuming here that the developers still welcome extensions to Isabelle/ML from the community, even if they remain third-party and are never merged into the main line. But if that's not the case, I'm afraid forking is the only way out for enthusiastic users. Narrowing down the "doors and windows" is certainly a good thing, since at least people will finally know what they're not supposed to use...</p>
+<p>Hi other Isabelle hackers,</p>
+<p>A few years ago I tried to read through the Isabelle sources by hand. It was a challenging and painful stretch of time, given the lack of documentation and comments. But I've since found that Claude Code is remarkably good at reading and understanding code; I think it's more than capable of giving you everything you need, if you could use it properly, e.g. by questioning what it says and actively spawning subagents to verify its conclusions.</p>
+<p>Hi Dominic,</p>
+<p>I think one option is to use patch management (e.g., <a href="https://github.com/xqyww123/my_better_isabelle_prover">https://github.com/xqyww123/my_better_isabelle_prover</a>) to keep track of the changes you have to make to the Isabelle sources, and optionally maintain your own forked release to keep your own ecosystem consistent (e.g., <a href="https://conda.qiyuan.me">https://conda.qiyuan.me</a>). All of this was done through vibe coding and took me only a few days. I also set up a release pipeline (driven by checklist docs) so that whenever a new Isabelle version comes out, I can update everything with a single Claude Code instruction.</p>
+<p>Best wishes<br>
+Qiyuan</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Mulligan, Dominic &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: Wednesday, 09 September 2026 00:21:22<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: Re: [isabelle] MCP resources bounds</p>
+<p>[Alert:<br>
+ Non-NTU Email] Be cautious before clicking any link or attachment.</p>
+<p>Hi,</p>
+<blockquote>
+<p>At FLoC 2026 in Lisbon, I've had some discussions with users of AI + MCP. My</p>
+</blockquote>
+<blockquote>
+<p>conclusion: we should gradually make the system more robust, and no longer let</p>
+</blockquote>
+<blockquote>
+<p>doors and windows stand open, as an invitation to mess things up.</p>
+</blockquote>
+<blockquote>
+<p>This will take quite some time, and it will annoy people who have done various</p>
+</blockquote>
+<blockquote>
+<p>experiments on "hacking Isabelle" that are outside normal user space ---</p>
+</blockquote>
+<blockquote>
+<p>depending on the very "doors and windows" to stand wide open.</p>
+</blockquote>
+<p>OK, but the alternative approach needs to come first.  The alternative is that we will not update Isabelle versions or even move away from Isabelle completely.  AI agent integration in 2026 is more important than moving to the latest Isabelle release.</p>
+<p>Thanks,</p>
+<p>Dominic</p>
+<hr>
+<p>CONFIDENTIALITY: This email is intended solely for the person(s) named and may be confidential and/or privileged. If you are not the intended recipient, please delete it, notify us and do not copy, use, or disclose its contents.<br>
+Towards a sustainable earth: Print only when necessary. Thank you.</p>
+
+
+
+<hr><p>Last updated: Sep 12 2026 at 21:59 UTC</p>
+</html>

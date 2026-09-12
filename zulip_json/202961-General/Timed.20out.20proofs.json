@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>Sometimes Sledgehammer gives an answer with a timeout:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"o\">(</span><span class=\"n\">&gt;</span><span class=\"w\"> </span><span class=\"n\">1.0</span><span class=\"w\"> </span><span class=\"n\">s</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">timed</span><span class=\"w\"> </span><span class=\"n\">out</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>What does this mean? When I click on the suggested one-liner, Isabelle/jEdit shows it in purple, and that means it is not an accepted proof by the kernel, possibly there is some looping.</p>\n<p>What is a strategy to find an accepted proof? Sometimes it works that I copy the lemmas in the suggested one-liners into a <code>using</code> clause and then invoke Sledgehammer again. But this does not work always.</p>\n<p>Shall I prove more intermediate lemmas?</p>",
+        "id": 505634813,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1741947387
+    },
+    {
+        "content": "<p>It means that sledgehammer tried the tactic for 1s and it did not finish</p>",
+        "id": 505636679,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741947931
+    },
+    {
+        "content": "<p>There are a few possibilities:</p>\n<p>- the proof method actually works, but it takes more time (but sledgehammer does not know that)<br>\n  - the proof method actually does not work (taking forever), which is why sledgehammer is warning you about it</p>",
+        "id": 505637151,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741948057
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"234198\">Gergely Buday</span> <a href=\"#narrow/channel/202961-General/topic/Timed.20out.20proofs/near/505634813\">said</a>:</p>\n<blockquote>\n<p>Shall I prove more intermediate lemmas?</p>\n</blockquote>\n<p>Exactly like if sledgehammer failed: you have to provide a proof by hand.</p>",
+        "id": 505637390,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741948117
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"234198\">Gergely Buday</span> <a href=\"#narrow/channel/202961-General/topic/Timed.20out.20proofs/near/505634813\">said</a>:</p>\n<blockquote>\n<p>What is a strategy to find an accepted proof? Sometimes it works that I copy the lemmas in the suggested one-liners into a <code>using</code> clause and then invoke Sledgehammer again. But this does not work always.</p>\n</blockquote>\n<p>This way basically works if there is another way to find the proof. If this is an inherent problem (let's say a limitation of metis / an issue in smt), this will not solve the problem.</p>",
+        "id": 505640542,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1741948998
+    },
+    {
+        "content": "<p>Thanks. Sometimes giving a longer timeout also works, but not in the case I face now.</p>",
+        "id": 505640986,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1741949112
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"233198\">@Mathias Fleury</span> I have managed to prove the lemma.</p>\n<p>The strategy was to give a calculational proof of three steps. For every step the search space was smaller than for the original lemma so Sledgehammer was able to find a proper one-liner proof. </p>\n<p>I could visualise this as a square diagram where the square is created by the product of two transformations, and the original lemma was one side, while the calculational proof is going around on the other three sides.</p>",
+        "id": 505720299,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1741970405
+    }
+]

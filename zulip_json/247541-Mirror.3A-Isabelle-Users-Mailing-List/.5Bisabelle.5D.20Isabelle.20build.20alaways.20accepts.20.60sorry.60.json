@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Simon Wimmer &lt;<a href=\"mailto:wimmersimon@gmail.com\">wimmersimon@gmail.com</a>&gt;</p>\n<p>Dear list,</p>\n<p>It seems that Isabelle-2025-1 always accepts <code>sorry</code> during <code>isabelle\nbuild</code>,<br>\nregardless of whether <code>quick_and_dirty</code> is set. I attach a minimal example<br>\nat the end.</p>\n<p>This behavior appears on Apple Silicon and Linux (Intel).<br>\nIt was already present in RC1.</p>\n<p>Simon</p>\n<p>Example:</p>\n<p>ROOT:</p>\n<p>session Test = Main +<br>\n  theories<br>\n    Test</p>\n<p>Test.thy:</p>\n<p>theory Test<br>\n  imports Main<br>\nbegin</p>\n<p>lemma False<br>\n  sorry</p>\n<p>end</p>\n<p>Command:</p>\n<p>isabelle build -d . -c -o quick_and_dirty=false Test</p>",
+        "id": 568470852,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1768579909
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 16/01/2026 17:11, Simon Wimmer wrote:</p>\n<blockquote>\n<p>It seems that Isabelle-2025-1 always accepts <code>sorry</code> during <code>isabelle build</code>,<br>\nregardless of whether <code>quick_and_dirty</code> is set. I attach a minimal example at <br>\nthe end.</p>\n</blockquote>\n<blockquote>\n<p>Command:</p>\n<p>isabelle build -d . -c -o quick_and_dirty=false Test</p>\n</blockquote>\n<p>This is bad.</p>\n<p>Note that it works properly as follows:</p>\n<p>isabelle build -d . -c -o quick_and_dirty=false -o show_results=false Test</p>\n<p>We have accumulated a bit too many options, variants, modes. I need to <br>\ninvestigate this further, to understand its intended meaning and purpose.</p>\n<p>Makarius</p>",
+        "id": 568476542,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1768581508
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 16/01/2026 17:38, Makarius wrote:</p>\n<blockquote>\n<p>This is bad.</p>\n</blockquote>\n<p>For the historical record, here is the relevant changeset from 28-Aug-2025:</p>\n<p>changeset:   83065:0a1a054d9b23<br>\nuser:        wenzelm<br>\ndate:        Thu Aug 28 15:55:07 2025 +0200<br>\nsummary:     clarified show_results to serve as guard for interactive mode -- <br>\navoid printing internal consts, e.g. in 'record' or 'datatype', where <br>\nSpecification.definition is used as convenience for class instantiation (see <br>\nalso 889d5cdc034b, 951abf9db857, ecf80e37ed1a);</p>\n<p>This treats all Isar commands in \"isabelle build\" as interactive and thus <br>\nalways allows 'sorry'.</p>\n<p>I need to think about Isabelle2025-2 (January 2026) where this is partially <br>\nreverted.</p>\n<p>Makarius</p>",
+        "id": 568525605,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1768598382
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 16/01/2026 22:19, Makarius wrote:</p>\n<blockquote>\n<p>On 16/01/2026 17:38, Makarius wrote:</p>\n<blockquote>\n<p>This is bad.</p>\n</blockquote>\n<p>I need to think about Isabelle2025-2 (January 2026) where this is partially <br>\nreverted.</p>\n</blockquote>\n<p>My current plan is to apply carefully chosen changes on top of Isabelle2025-1, <br>\nand publish that as Isabelle2025-2 at the start of next week. There won't be <br>\nany incompatibilities. AFP may remain at afp-2025-1 and does not need to be <br>\nrelaunched.</p>\n<p>We've had such a slightly awkward situation before, with Isabelle2023-1 <br>\n(November 2013) vs. Isabelle2023-1 (December 2013). See also <br>\n<a href=\"https://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle2013-2/NEWS\">https://isabelle.in.tum.de/website-Isabelle2013-2/dist/Isabelle2013-2/NEWS</a> --- <br>\nbut with fewer changes this time.</p>\n<p>Makarius</p>",
+        "id": 568612267,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1768679969
+    }
+]

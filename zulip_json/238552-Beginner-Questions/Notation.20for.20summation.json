@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>I'd very much like to take a sum over a small finite set. I've tried writing this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">j</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">S</span><span class=\"o\">::</span><span class=\"s\">\"nat set set\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"card S = 3\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"T ∈ S ⟹ card T = 2\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"6 = ∑ T ∈ S . card T\"</span>\n</code></pre></div>\n<p>but I get an error message (inner syntax error) at the <code>∈</code> .<br>\nI've looked at the definition of <code> ∑</code> and it <em>seems</em> to allow this notation, but apparently I'm misunderstanding. </p>\n<p>Can you show me how to fix this theorem statement? (I'm hoping that <em>proving</em> it will be relatively easy!)</p>",
+        "id": 527004510,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1751551298
+    },
+    {
+        "content": "<p>You need to put parentheses around the right-hand side to delimit the binder, i.e. <code>(∑ T ∈ S . card T)</code>.</p>",
+        "id": 527005328,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1751551496
+    },
+    {
+        "content": "<p>Thank you so much... I <em>knew</em> it had to be something simple!</p>",
+        "id": 527006415,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1751551744
+    },
+    {
+        "content": "<p>That's a general rule: any syntax that binds a variable should have parentheses around it. The same also applies for mixfix syntax like <code>if then else</code> and <code>case</code>. Some exceptions apply (e.g. nested sums), but it's a good rule of thumb.</p>",
+        "id": 527646150,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1751968425
+    }
+]

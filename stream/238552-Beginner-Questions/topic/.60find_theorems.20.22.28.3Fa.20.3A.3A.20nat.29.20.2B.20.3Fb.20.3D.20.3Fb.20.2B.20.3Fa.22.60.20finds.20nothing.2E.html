@@ -1,0 +1,38 @@
+<html>
+<head><meta charset="utf-8"><title>`find_theorems &quot;(?a :: nat) + ?b = ?b + ?a&quot;` finds nothing. · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.60find_theorems.20.22.28.3Fa.20.3A.3A.20nat.29.20.2B.20.3Fb.20.3D.20.3Fb.20.2B.20.3Fa.22.60.20finds.20nothing.2E.html">`find_theorems &quot;(?a :: nat) + ?b = ?b + ?a&quot;` finds nothing.</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="623308659"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%60find_theorems%20%22%28%3Fa%20%3A%3A%20nat%29%20%2B%20%3Fb%20%3D%20%3Fb%20%2B%20%3Fa%22%60%20finds%20nothing./near/623308659" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mario Xerxes Castelán Castro <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.60find_theorems.20.22.28.3Fa.20.3A.3A.20nat.29.20.2B.20.3Fb.20.3D.20.3Fb.20.2B.20.3Fa.22.60.20finds.20nothing.2E.html#623308659">(Sep 11 2026 at 01:33)</a>:</h4>
+<p>Why does <code>find_theorems "(?a :: nat) + ?b = ?b + ?a"</code> find nothing, but <code>find_theorems "(?a :: num) + ?b = ?b + ?a"</code> does find <code>Num.add_One_commute</code>? How do I find the theorem about commutativity of natural number addition with <code>find_theorems</code>?</p>
+
+
+
+<a name="623481348"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%60find_theorems%20%22%28%3Fa%20%3A%3A%20nat%29%20%2B%20%3Fb%20%3D%20%3Fb%20%2B%20%3Fa%22%60%20finds%20nothing./near/623481348" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.60find_theorems.20.22.28.3Fa.20.3A.3A.20nat.29.20.2B.20.3Fb.20.3D.20.3Fb.20.2B.20.3Fa.22.60.20finds.20nothing.2E.html#623481348">(Sep 11 2026 at 08:19)</a>:</h4>
+<p><code>find_theorems</code> on the top level, by default, uses matching: it returns theorems that are instances of your pattern. But you don't want to find instances of the pattern, you want to find theorems of which your pattern is an instance of (the reverse direction). </p>
+<p>There's unfortunately no way to flip the matching direction when using <code>find_theorems</code> on the top level (I think you could write a patch to include that and propose that to the mailing list), but you can flip the direction by writing the pattern in a lemma and use it this way:</p>
+<blockquote>
+<p>lemma "(a :: nat) + b = b + a"<br>
+  find_theorems solves</p>
+</blockquote>
+<p>Note that there are more modifiers next to solves, e.g. <code>intro</code>, <code>dest</code>,...</p>
+
+
+
+<a name="623482611"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/%60find_theorems%20%22%28%3Fa%20%3A%3A%20nat%29%20%2B%20%3Fb%20%3D%20%3Fb%20%2B%20%3Fa%22%60%20finds%20nothing./near/623482611" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/.60find_theorems.20.22.28.3Fa.20.3A.3A.20nat.29.20.2B.20.3Fb.20.3D.20.3Fb.20.2B.20.3Fa.22.60.20finds.20nothing.2E.html#623482611">(Sep 11 2026 at 08:24)</a>:</h4>
+<p>NB. in order to answer your question, I used <a href="https://github.com/kappelmann/isabelle-pide-mcp">PIDE MCP</a> and prompted my coding agent your question to find the cause, which it did in a few seconds.</p>
+<p>That's just a shameless plug - I don't mind your questions, but wanna increase adoption of the MCP ;)</p>
+
+
+
+<hr><p>Last updated: Sep 12 2026 at 21:59 UTC</p>
+</html>

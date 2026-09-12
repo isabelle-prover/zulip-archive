@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Peter &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\n<strong>Subject:</strong> [isabelle] MATCH exception on smt (verit), but works fine without (verit)</p>\n<p>Hi List,</p>\n<p>sledgehammer gave me a proof (with a &gt;1.0s, timeout) using smt (verit), <br>\nand it failed with a MATCH exception. Without the (verit) option, it <br>\ngoes through in a few milliseconds.</p>\n<p>--</p>\n<p>Peter</p>\n<p>theory Scratch<br>\nimports Complex_Main<br>\nbegin</p>\n<p>lemma log_b_0[simp]: \"log 0 x = 0\"<br>\n   unfolding log_def by simp</p>\n<p>lemma \"0≤⌈log b n⌉\" for b n :: nat<br>\n   apply (smt (verit) ln_0 ln_one log_b_0 log_def of_nat_0 <br>\nof_nat_le_0_iff one_of_nat_le_iff zero_le_ceiling zero_le_log_cancel_iff)<br>\n   (* exception MATCH raised (line 284 of \"pattern.ML\") *)</p>\n<p>apply (smt         ln_0 ln_one log_b_0 log_def of_nat_0 <br>\nof_nat_le_0_iff one_of_nat_le_iff zero_le_ceiling zero_le_log_cancel_iff)<br>\n   (* No subgoals! *)</p>",
+        "id": 623209587,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1789059649
+    }
+]

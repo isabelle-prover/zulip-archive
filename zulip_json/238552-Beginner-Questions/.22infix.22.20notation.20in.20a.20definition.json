@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I've written theorems of the form \"if $g$ is a function with certain properties, then ...\"; a typical one starts like this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">AB</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">Points</span><span class=\"o\">::</span><span class=\"s\">\"'p set\"</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">Lines</span><span class=\"o\">::</span><span class=\"s\">\"'l set\"</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">incid</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'p ⇒ 'l ⇒ bool\"</span><span class=\"w\">  </span><span class=\"o\">(</span><span class=\"kp\">infix</span><span class=\"w\"> </span><span class=\"s\">\"⊲\"</span><span class=\"w\"> </span><span class=\"n\">60</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">join</span><span class=\"o\">::</span><span class=\"s\">\"'p ⇒ 'p ⇒ 'l\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"ow\">...</span><span class=\"w\"> </span><span class=\"n\">various</span><span class=\"w\"> </span><span class=\"n\">things...</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"ow\">...</span><span class=\"n\">something...</span>\n</code></pre></div>\n<p>where I typically show something about the functions <code>incid</code> and <code>join</code>. </p>\n<p>I not want to state a theorem in the form \"If we define $g$ to be the function [details], then $g$ has the following properties...\" A typical theorem statement is this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">Ap2</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">ap</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"affine_plane Points Lines incid join find_parallel\"</span>\n<span class=\"w\">  </span><span class=\"kp\">defines</span><span class=\"w\"> </span><span class=\"n\">pPdef</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"pPoints ≡ {OrdinaryP P | P . (P ∈ Points)} ∪ {Ideal t | k t .</span>\n<span class=\"s\">                  ((k ∈ Lines) ∧ (t = affine_plane_data.line_pencil Points Lines (incid) k) )}\"</span>\n<span class=\"w\">  </span><span class=\"kp\">defines</span><span class=\"w\"> </span><span class=\"n\">pLdef</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"pLines ≡ {OrdinaryL n | n . (n ∈ Lines)} ∪ {Infty}\"</span>\n<span class=\"w\">  </span><span class=\"kp\">defines</span><span class=\"w\"> </span><span class=\"s\">‹pincid ≡  mprojectivize (incid) (infix \"⊲\" 60)›</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"⟦k ∈ pLines; n ∈ pLines⟧ ⟹ ∃ P . (P ∈ pPoints ∧ P ⊲ k ∧ P ⊲ n)\"</span>\n</code></pre></div>\n<p>Here, in the definition of <code>pincid</code>, I've used cartouches rather than double-quotes, but I've also tried </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"kp\">defines</span><span class=\"w\"> </span><span class=\"s\">\"pincid ≡  mprojectivize (incid) (infix \"</span><span class=\"n\">⊲\"</span><span class=\"w\"> </span><span class=\"n\">60</span><span class=\"o\">)</span><span class=\"s\">\"</span>\n</code></pre></div>\n<p>which fails because the double-quotes starting the 'infix' expression terminate the opening double-quotes. And I've tried</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"kp\">defines</span><span class=\"w\"> </span><span class=\"s\">‹pincid ≡  mprojectivize (incid) (infix ‹⊲› 60)›</span>\n</code></pre></div>\n<p>in hope that matching of open- and close- cartouches might help Isabelle parse this, but without any luck. <br>\nAs you can see, the \"shows\" line uses the <code>⊲</code>; so does the rather long proof. I could get rid of this and use prefix notation throughout, but it's certainly less readable. Is there any way to do what I'm trying to do, or is this a limitation of the fixes-assumes-defines-shows notation?</p>",
+        "id": 520183513,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1748081425
+    },
+    {
+        "content": "<p>Use a context. In the context you can define notations…</p>",
+        "id": 520189166,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748086329
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">context</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">l</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">nat</span>\n<span class=\"k\">begin</span>\n<span class=\"n\">qualified</span><span class=\"w\"> </span><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">‹x a b = (l + a &gt; b)›</span>\n\n<span class=\"k\">notation</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"kp\">infix</span><span class=\"w\"> </span><span class=\"s\">\"TT\"</span><span class=\"w\"> </span><span class=\"n\">70</span><span class=\"o\">)</span>\n\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">H</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">‹a TT 4›</span>\n<span class=\"w\">  </span><span class=\"gr\">sorry</span>\n<span class=\"k\">end</span>\n\n<span class=\"kt\">thm</span><span class=\"w\"> </span><span class=\"n\">H</span>\n</code></pre></div>",
+        "id": 520189383,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748086547
+    },
+    {
+        "content": "<p>and if the definitions are not interesting enough to be named in the theorem, there is no reason to have them in a theorem either…</p>",
+        "id": 520189450,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748086579
+    },
+    {
+        "content": "<p>Thanks for the tip on 'context' -- I hadn't seen that before. </p>\n<p>I've also found a workaround in the theorem statement, replacing the last <code>defines</code> with</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">pincid</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"kp\">infix</span><span class=\"w\"> </span><span class=\"s\">\"p⊲\"</span><span class=\"w\"> </span><span class=\"n\">60</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">‹pincid =  mprojectivize (incid)›</span>\n</code></pre></div>\n<p>which seems to achieve the same thing.</p>",
+        "id": 520195164,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1748091331
+    },
+    {
+        "content": "<p>I thought that you did not want that:</p>\n<blockquote>\n<p>I not want to state a theorem in the form \"If we define $g$ to be the function [details], then $g$ has the following properties...\"</p>\n</blockquote>",
+        "id": 520261153,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748150922
+    },
+    {
+        "content": "<p>You are (sort of) correct. I just tried to re-read what I wrote and it made no sense to me, either. </p>\n<p>The key problem is this: I wrote \"I not want to ...\", but I intended to write \"I <strong>now</strong> want to...\"  My apologies for the confusion.</p>",
+        "id": 520874082,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1748433612
+    }
+]

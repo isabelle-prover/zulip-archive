@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Found this while doing some exercises:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">f_the_inv_into_f_bij_betw</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"s\">\"bij_betw f A B ⟹ (bij_betw f A B ⟹ x ∈ B) ⟹ f (the_inv_into A f x) = x\"</span>\n<span class=\"w\">  </span><span class=\"k\">unfolding</span><span class=\"w\"> </span><span class=\"n\">bij_betw_def</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">blast</span><span class=\"w\"> </span><span class=\"n\">intro</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">f_the_inv_into_f</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>Why the extra implication in the second premise? The inj_on version doesn't have anything of the sort.</p>",
+        "id": 588485838,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1776721579
+    },
+    {
+        "content": "<p>Good question. This looks pretty odd.</p>",
+        "id": 588703371,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1776799222
+    },
+    {
+        "content": "<p>I used theorems in that style when I had to use them with <code>erule</code> (so it chooses the right assumption and correctly deals with higher order unification), but still needed the assumption for later in the proof. Maybe this was a similar case? I'd love to have a version of erule/eresolve_tac that keeps the assumption and only uses it for unification</p>",
+        "id": 590201869,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1776862855
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"392255\">@Jan van Brügge</span> so you're saying that this is essentially for <code>erule</code> to leave the <code>bij_betw</code> in?</p>",
+        "id": 590229716,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1776868867
+    },
+    {
+        "content": "<p>it is  just a guess ¯\\_(ツ)_/¯</p>",
+        "id": 590229940,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1776868914
+    },
+    {
+        "content": "<p>Looking at the mercurial history, this is a lemma that used to live in src/HOL/BNF_Least_Fixpoint.thy. At that time, its only usage was in tactics used by the datatype command (src/HOL/Tools/BNF/bnf_lfp_tactics.ML). I do not recall the precise usage, but what Jan writes makes sense to me as a plausible explanation. In 2020, the lemma was moved to Fun.thy (rather than e.g., creating an alternative lemma that has a more canonical shape).</p>",
+        "id": 590234191,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1776869894
+    }
+]

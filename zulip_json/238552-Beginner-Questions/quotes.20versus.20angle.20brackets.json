@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>In Isabelle it seems that \"x + y\" and ‹x + y› are synonymous.  For example, I can write</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">conj</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"bool ⇒ bool ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"conj True True = True\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"w\">  </span><span class=\"s\">\"conj _ _ = False\"</span>\n</code></pre></div>\n<p>or</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">conj</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹bool ⇒ bool ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">‹conj True True = True›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"w\">  </span><span class=\"s\">‹conj _ _ = False›</span>\n</code></pre></div>\n<p>and Isabelle will happily accept either form.</p>\n<p>Why do both of these syntaxes exist?  Is one preferred over another in certain situations?</p>",
+        "id": 582308796,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1774685203
+    },
+    {
+        "content": "<p><code>\"</code> is the \"older\" form</p>",
+        "id": 582309881,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774686425
+    },
+    {
+        "content": "<p>It is easier to type, but it has a major drawback: you cannot put quotes within quotes</p>",
+        "id": 582309915,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774686458
+    },
+    {
+        "content": "<p>There is no way to parse:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">ML</span><span class=\"w\"> </span><span class=\"s\">\"@{term \"</span><span class=\"n\">x</span><span class=\"o\">=</span><span class=\"n\">y\"</span><span class=\"ow\">}</span><span class=\"s\">\"</span>\n</code></pre></div>",
+        "id": 582309954,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774686486
+    },
+    {
+        "content": "<p>while <code>ML ‹@{term ‹x=y›}›</code> is clear</p>",
+        "id": 582309991,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774686514
+    }
+]

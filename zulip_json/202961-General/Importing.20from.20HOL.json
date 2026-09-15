@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I am to tweak a file in the src/HOL directory. I copied it into my repository and gave an extended name, updated the theory name accordingly. Now the imports declaration does not work, the system looks for the files in the current directory, not in the HOL session. How can I make this work? My ROOT file is</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">session</span><span class=\"w\"> </span><span class=\"n\">My_Spec</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">HOL</span><span class=\"w\"> </span><span class=\"o\">+</span>\n<span class=\"w\">  </span><span class=\"n\">theories</span>\n<span class=\"w\">      </span><span class=\"n\">SpecTheory_MYVERSION</span>\n</code></pre></div>\n<p>Is it a problem that the imported files are not present in the HOL session's ROOT file?</p>",
+        "id": 603768521,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1781620951
+    },
+    {
+        "content": "<p>You have to add the session qualifier <code>HOL.</code> <br>\nE.g. <code>imports List</code> becomes <code>imports HOL.List</code></p>",
+        "id": 603776879,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1781622191
+    },
+    {
+        "content": "<p>Follow-up: this line is not parsed:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\"> </span><span class=\"s\">\"card_order r ⟹ ( |A1| +c cone) ^c r = |Func UNIV (Inl ` A1 ∪ {Inr ()})|\"</span>\n</code></pre></div>\n<p>due to the vertical bar syntax for set cardinality. But I do import</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">HOL.BNF_Cardinal_Arithmetic</span>\n</code></pre></div>\n<p>What do I miss compared to the original file?</p>",
+        "id": 603788102,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1781624010
+    },
+    {
+        "content": "<p>Somehow the cardinal arithmetic notation does not propagate to my file.</p>",
+        "id": 603792321,
+        "sender_full_name": "Gergely Buday",
+        "timestamp": 1781624734
+    },
+    {
+        "content": "<p>If it works in the original file and you haven't changed anything besides adding <code>HOL.</code> to the imports, it should work.</p>",
+        "id": 604052458,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1781682872
+    },
+    {
+        "content": "<p><code>+c</code> is not exposed by default:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">unbundle</span><span class=\"w\"> </span><span class=\"n\">cardinal_syntax</span>\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"card_order r ⟹ ( |A1| +c cone) ^c r = |Func UNIV (Inl ` A1 ∪ {Inr ()})|\"</span>\n<span class=\"w\">  </span><span class=\"gr\">sorry</span>\n<span class=\"n\">unbundle</span><span class=\"w\"> </span><span class=\"n\">no</span><span class=\"w\"> </span><span class=\"n\">cardinal_syntax</span>\n</code></pre></div>",
+        "id": 604228985,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1781716823
+    }
+]

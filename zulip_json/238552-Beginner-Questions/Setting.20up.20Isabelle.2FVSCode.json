@@ -1,0 +1,128 @@
+[
+    {
+        "content": "<p>Hi, <br>\nI'm trying to get the extension for isabelle/vscode running. I looked at the source repo and I couldn't find much in the README. When I installed it on windows, it came with a VSIX file, although the same does not hold true for Linux. I went into <code>src/tools/VSCode/extension</code> and ran <code>sudo vsce package</code> to no avail, as I got the following runtime error in Node: </p>\n<div class=\"codehilite\" data-code-language=\"JavaScript\"><pre><span></span><code><span class=\"err\">/usr/local/lib/node_modules/@vscode/vsce/node_modules/undici/lib/web/webidl/index.js:534</span>\n<span class=\"nx\">webidl</span><span class=\"p\">.</span><span class=\"nx\">is</span><span class=\"p\">.</span><span class=\"nx\">File</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"nx\">webidl</span><span class=\"p\">.</span><span class=\"nx\">util</span><span class=\"p\">.</span><span class=\"nx\">MakeTypeAssertion</span><span class=\"p\">(</span><span class=\"nx\">File</span><span class=\"p\">)</span>\n<span class=\"w\">                                               </span><span class=\"o\">^</span>\n\n<span class=\"ne\">ReferenceError</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"nx\">File</span><span class=\"w\"> </span><span class=\"nx\">is</span><span class=\"w\"> </span><span class=\"nx\">not</span><span class=\"w\"> </span><span class=\"nx\">defined</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nb\">Object</span><span class=\"p\">.</span><span class=\"o\">&lt;</span><span class=\"nx\">anonymous</span><span class=\"o\">&gt;</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"err\">/usr/local/lib/node_modules/@vscode/vsce/node_modules/undici/lib/web/webidl/index.js:534:48)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">_compile</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1356</span><span class=\"o\">:</span><span class=\"mf\">14</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">_extensions</span><span class=\"p\">..</span><span class=\"nx\">js</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1414</span><span class=\"o\">:</span><span class=\"mf\">10</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">load</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1197</span><span class=\"o\">:</span><span class=\"mf\">32</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">_load</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1013</span><span class=\"o\">:</span><span class=\"mf\">12</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">require</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1225</span><span class=\"o\">:</span><span class=\"mf\">19</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">require</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">helpers</span><span class=\"o\">:</span><span class=\"mf\">177</span><span class=\"o\">:</span><span class=\"mf\">18</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nb\">Object</span><span class=\"p\">.</span><span class=\"o\">&lt;</span><span class=\"nx\">anonymous</span><span class=\"o\">&gt;</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"err\">/usr/local/lib/node_modules/@vscode/vsce/node_modules/undici/lib/web/fetch/util.js:12:20)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">_compile</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1356</span><span class=\"o\">:</span><span class=\"mf\">14</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"nx\">at</span><span class=\"w\"> </span><span class=\"nx\">Module</span><span class=\"p\">.</span><span class=\"nx\">_extensions</span><span class=\"p\">..</span><span class=\"nx\">js</span><span class=\"w\"> </span><span class=\"p\">(</span><span class=\"nx\">node</span><span class=\"o\">:</span><span class=\"nx\">internal</span><span class=\"o\">/</span><span class=\"nx\">modules</span><span class=\"o\">/</span><span class=\"nx\">cjs</span><span class=\"o\">/</span><span class=\"nx\">loader</span><span class=\"o\">:</span><span class=\"mf\">1414</span><span class=\"o\">:</span><span class=\"mf\">10</span><span class=\"p\">)</span>\n\n<span class=\"nx\">Node</span><span class=\"p\">.</span><span class=\"nx\">js</span><span class=\"w\"> </span><span class=\"nx\">v18</span><span class=\"mf\">.19.1</span>\n</code></pre></div>\n<p>What exactly am I doing wrong? If there is documentation on installing the extension, where can I find it?</p>",
+        "id": 573612516,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770928338
+    },
+    {
+        "content": "<p>You can run <code>isabelle vscode</code> (instead of <code>isabelle jedit</code>) from your terminal.</p>",
+        "id": 573614215,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1770929126
+    },
+    {
+        "content": "<p>but does that install the extension?</p>",
+        "id": 573614285,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770929161
+    },
+    {
+        "content": "<p>or are you implying that I don't need to bother with installation?</p>",
+        "id": 573614333,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770929179
+    },
+    {
+        "content": "<p>You don't need to bother. It automatically opens a patched VSCodium. Note that this is separate from your own VSCode installation in case you have one.</p>",
+        "id": 573614457,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1770929246
+    },
+    {
+        "content": "<p>Thanks, I got it working! :) <br>\nIf I may ask, do you know why it's done like this? Why not just allow people to interface with their pre-existing vsc installation?</p>",
+        "id": 573614608,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770929312
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Setting.20up.20Isabelle.2FVSCode/near/573614608\">said</a>:</p>\n<blockquote>\n<p>Thanks, I got it working! :) <br>\nIf I may ask, do you know why it's done like this? Why not just allow people to interface with their pre-existing vsc installation?</p>\n</blockquote>\n<p>First of all, VSCode needs to be patched to work with Isabelle. Therefore, an existing installation would not work. Furthermore, VSCode is a moving target paying no regards to backwards compatability. Since Isabelle is a software distribution, it must fix the version of VSCode for each release to ensure that every component of the distribution (including VSCode) works together.</p>",
+        "id": 573704765,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770976709
+    },
+    {
+        "content": "<p>Does anybody know <em>why</em> VSCode needs to be patched to work with Isabelle? With the help of extensions, it supports hundreds of programming languages, including the Lean proof assistant.</p>",
+        "id": 573725751,
+        "sender_full_name": "Lawrence Paulson",
+        "timestamp": 1770984115
+    },
+    {
+        "content": "<p>I think the primary reason is that it needs to keep track of two buffers: one with Isabelle-UTF8 and its symbols and the more low-level one that translates it to ASCII.</p>",
+        "id": 573726106,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770984221
+    },
+    {
+        "content": "<p>As far as I know, Lean uses UTF-8 directly. But this comes with restrictions because there are things in Isabelle notation that UTF-8 does not support.</p>",
+        "id": 573726400,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770984334
+    },
+    {
+        "content": "<p>I've heard from other people that apparently vs code supports having a view over a text file but have not managed to find what feature they are talking about</p>",
+        "id": 573726742,
+        "sender_full_name": "irvin",
+        "timestamp": 1770984465
+    },
+    {
+        "content": "<p>Yeah, but this does not really solve the issue. You really want the symbols in your buffer to be one symbol not a lengthy ASCII string since that makes editing it a pain.</p>",
+        "id": 573726886,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770984523
+    },
+    {
+        "content": "<p>If you iterate on the view thing long enough, you will probably end up with the current solution <span aria-label=\"wink\" class=\"emoji emoji-1f609\" role=\"img\" title=\"wink\">:wink:</span></p>",
+        "id": 573727042,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770984584
+    },
+    {
+        "content": "<p>Another question when using Isabelle/VSCode. My X-Y problem is that I want to understand <em>how</em> Isabelle made the proof (even though that's not relevant), but I don't know Isar <em>yet</em>. </p>\n<p>Suppose I have a lemma <code>simp1</code>, and I have this line in my proof script:<br>\n<code>prf simp1</code>. <br>\nhow do I display this? Do I need to use Isabelle/jEdit?</p>",
+        "id": 573756434,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770993132
+    },
+    {
+        "content": "<p>While I know this is usually not the point, I would like to take a \"peek under the hood\"</p>",
+        "id": 573756540,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770993164
+    },
+    {
+        "content": "<p>Well, I \"ran\" <code>prf simp1</code> and got this: </p>\n<p><code>❙? ∙ (Pure.PClass type_class ⋅ TYPE(?'a))</code></p>",
+        "id": 573757454,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770993409
+    },
+    {
+        "content": "<p>in the Isabelle Output window</p>",
+        "id": 573757482,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1770993421
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233155\">Lukas Stevens</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Setting.20up.20Isabelle.2FVSCode/near/573726106\">said</a>:</p>\n<blockquote>\n<p>I think the primary reason is that it needs to keep track of two buffers: one with Isabelle-UTF8 and its symbols and the more low-level one that translates it to ASCII.</p>\n</blockquote>\n<p>Also, it needs the proper font in all places, which VSCode extensions can't regularly do (Lean simply uses a standard monospace font).</p>",
+        "id": 574097534,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1771244711
+    },
+    {
+        "content": "<p>Out of curiosity, what's the problem with a standard monospace font? I've been using something different than the default (in Isabelle/jEdit), and quite prefer the uniform character width (although exponent notation still messes with that). The obvious downside is that the long arrows are relatively short, but this is an acceptable trade-off for me.</p>",
+        "id": 574121138,
+        "sender_full_name": "Max Lang",
+        "timestamp": 1771251877
+    },
+    {
+        "content": "<ul>\n<li>you want a consistent font, otherwise symbols look differently for different people</li>\n<li>the goal is to provide a math environment, and there symbols are not of uniform size (neither width nor height)</li>\n</ul>",
+        "id": 574124107,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1771252756
+    },
+    {
+        "content": "<p>So it is a tradeoff: Simplicity vs quality.</p>",
+        "id": 574124207,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1771252781
+    }
+]

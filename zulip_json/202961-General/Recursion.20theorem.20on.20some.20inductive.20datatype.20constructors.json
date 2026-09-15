@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>Suppose I have some inductive data type like a tree in a locale:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">tree</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">        </span><span class=\"n\">Leaf</span><span class=\"w\"> </span><span class=\"n\">int</span>\n<span class=\"w\">     </span><span class=\"o\">|</span><span class=\"w\">  </span><span class=\"n\">Branch</span><span class=\"w\"> </span><span class=\"s\">\"tree\"</span><span class=\"w\"> </span><span class=\"s\">\"'tree\"</span>\n\n<span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">recFn</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">tree</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"n\">&gt;</span><span class=\"w\"> </span><span class=\"n\">nat</span>\n<span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"n\">bar</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"recFn Leaf x = 0\"</span>\n</code></pre></div>\n<p>Is it possible to show that there exists some helper function f', whose type signature is tree =&gt; tree =&gt; int (or in general, for an inductive constructor <code>X a b c</code> that its signature is a =&gt; b =&gt; c =&gt; d, which I believe would need some sort of reflection on the types of the objects that an instance of X stores), that recursively calls <code>recFn</code> somewhere in its body? I believe this is how the Recursion Theorem works, although that is used in a set-theoretic context. Additionally, since I am \"breaking apart\" a type into its constituent components, would this notion be easier to represent using a <code>codatatype</code>. Can we construct <code>f'</code> in a way that its type can be inferred?</p>",
+        "id": 578391965,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1773148675
+    },
+    {
+        "content": "<p>Your source code is ill-formed, but a statement that 'some function calls some other function' can't be expressed in HOL, unless you are talking about the semantics of some embedded language.</p>",
+        "id": 578407850,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1773152090
+    },
+    {
+        "content": "<p>Sorry bout that, here's the example, with corrections:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">tree</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">        </span><span class=\"n\">Leaf</span><span class=\"w\"> </span><span class=\"n\">int</span>\n<span class=\"w\">     </span><span class=\"o\">|</span><span class=\"w\">  </span><span class=\"n\">Branch</span><span class=\"w\"> </span><span class=\"s\">\"tree\"</span><span class=\"w\"> </span><span class=\"s\">\"tree\"</span>\n\n<span class=\"w\">      </span><span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">      </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">recFn</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"tree ⇒ nat\"</span>\n<span class=\"w\">      </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">bar</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"recFn (Leaf x) = 0\"</span>\n</code></pre></div>\n<p>(also, meta-question: why can't I edit prior messages?)<br>\n(well, I'm able to edit this message, but not the previous one)</p>",
+        "id": 578408856,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1773152309
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Recursion.20theorem.20on.20some.20inductive.20datatype.20constructors/near/578407850\">said</a>:</p>\n<blockquote>\n<p>some function calls some other function</p>\n</blockquote>\n<p>How about a refinement: For the <code>Branch</code> constructor: ∃ f s.t. <code>recFn (Branch x y) = f x y</code>, or some generalized form of this for every constructor that is not the \"base\" constructor</p>",
+        "id": 578409698,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1773152503
+    },
+    {
+        "content": "<p>I doubt that this is what you want since <code>λ x y. recFn (Branch x y)</code> is a trivial witness.</p>",
+        "id": 578412086,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1773153027
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>I've got a function \"perspectivity\" that takes 3 arguments -- a point and two lines. I've made a fake version here that takes 3 ints so that I don't have to include other definitions. </p>\n<p>Perspectivity is denoted like this <br>\n<a href=\"/user_uploads/14278/cq6UzKuYFBhPSICcN_WvHGqs/image.png\">image.png</a> in the book we're working from, and in an attempt to capture something that that notation, I developed the notation below. Yes, in my case the point sits <em>below</em>  instead of above the dash, and there no little wedge, but it's close enough:</p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/cq6UzKuYFBhPSICcN_WvHGqs/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"59x38\" src=\"/user_uploads/thumbnail/14278/cq6UzKuYFBhPSICcN_WvHGqs/image.png/840x560.webp\"></a></div><div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">perspectivity</span><span class=\"o\">::</span><span class=\"s\">\"int ⇒ int ⇒ int ⇒ int\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"perspectivity l1 P l2 = 0\"</span>\n<span class=\"k\">notation</span><span class=\"w\"> </span><span class=\"n\">perspectivity</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"s\">‹( _/ -⇩_-/ _)›</span><span class=\"w\"> </span><span class=\"n\">10</span><span class=\"o\">)</span>\n\n<span class=\"kt\">term</span><span class=\"w\"> </span><span class=\"s\">\"perspectivity  l1 P l2\"</span>\n</code></pre></div>\n<p>The result looks like this:<br>\n<a href=\"/user_uploads/14278/G_H6XdXr1hvfCP7Gb3xK9n6d/image.png\">image.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/G_H6XdXr1hvfCP7Gb3xK9n6d/image.png\" title=\"image.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"187x68\" src=\"/user_uploads/thumbnail/14278/G_H6XdXr1hvfCP7Gb3xK9n6d/image.png/840x560.webp\"></a></div><p>Unfortunately, we'd really like to have this be the notation for \"perspectivity P l1 l2\", because in the actual definition, the point comes first (and this is 'natural' for various other parts of the development). Is there any way to refer to the arguments when writing mixfix so that the second arg can come first in the notation, etc? </p>\n<p>I assume not, or my search through various theory files in the sources might have revealed it, but if someone can confirm that it's hopeless, or tell me how to do it if it's possible, that'd be great.</p>",
+        "id": 547384991,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1761605995
+    },
+    {
+        "content": "<p>You can add an abbreviation for the infix notation:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">abbreviation</span><span class=\"w\"> </span><span class=\"s\">\"perspectivity_infix P l1 ≡ perspectivity l1 P\"</span>\n<span class=\"k\">notation</span><span class=\"w\"> </span><span class=\"n\">perspectivity_infix</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"ow\">...</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>I also do that in the AFP, e.g. <a href=\"https://www.isa-afp.org/sessions/transport/#Transport_Functions_Base.html#offset_2624..2642\">here</a></p>",
+        "id": 547421157,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1761634657
+    },
+    {
+        "content": "<p>Excellent solution -- thanks very much!</p>",
+        "id": 547613098,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1761700896
+    }
+]

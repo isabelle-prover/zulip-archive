@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>I'm not so familiar with the ML-side of Isabelle, so I'm not sure if there is an easy way to achieve what I want:</p>\n<p>I have a locale that could be interpreted by any BNF. Is it possible to get a list of all registered BNFs and interpret this locale for them?<br>\nI was looking into the implementation of the command <code>print_bnfs</code> but couldn't figure out how to get the list of BNFs and not just the pretty printed output</p>",
+        "id": 505257035,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1741815883
+    },
+    {
+        "content": "<p>I don't recall such a function being exported. The interface allows you to query whether a given type is a BNF.</p>\n<p>We are using plugins for (co)datatypes if we want to have something done for any type introduced by these commands. For basic BNFs (sums, products, functions, etc.) it would have to be done manually though.</p>\n<p>Can you give more hints about your application?</p>",
+        "id": 505351474,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1741854365
+    },
+    {
+        "content": "<p>I have a lifting of definitions and lemmas (regarding substitutions of terms) that works for natural functors. I don't need the bounded property. I have a locale specifying natural functors and it would be cool to automatically have bnfs interpret this locale, such that I do not have to do it manually</p>",
+        "id": 505418630,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1741871836
+    },
+    {
+        "content": "<p>When you say: \"I have a locale specifying natural functors\" do you mean some monomorphic version of the naturality/functoriality properties? I.e., what is the type of Fmap in your locale?</p>",
+        "id": 505422751,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1741872830
+    },
+    {
+        "content": "<p>Yes, it's a monomorphic version:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">natural_functor</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span>\n<span class=\"w\">    </span><span class=\"n\">map</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"('a ⇒ 'a) ⇒ 'b ⇒ 'b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span>\n<span class=\"w\">    </span><span class=\"n\">to_set</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'b ⇒ 'a set\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span>\n<span class=\"w\">    </span><span class=\"n\">map_comp</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"⋀b f g. map f (map g b) = map (λx. f (g x)) b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span>\n<span class=\"w\">    </span><span class=\"n\">map_ident</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"⋀b. map (λx. x) b = b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span>\n<span class=\"w\">    </span><span class=\"n\">map_cong0</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">cong</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"⋀b f g. (⋀a. a ∈ to_set b ⟹ f a = g a) ⟹ map f b = map g b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span>\n<span class=\"w\">    </span><span class=\"n\">to_set_map</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"⋀b f. to_set (map f b) = f ` to_set b\"</span><span class=\"w\"> </span><span class=\"kp\">and</span>\n<span class=\"w\">    </span><span class=\"n\">exists_functor</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">intro</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"⋀a. ∃b. a ∈ to_set b\"</span>\n</code></pre></div>",
+        "id": 505428785,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1741874300
+    },
+    {
+        "content": "<p>I see. You can use the following. It is a bit wasteful, because it looks at all types declared in a context, but as long as you are not doing this over and over again it should be fine.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">ML</span><span class=\"w\"> </span><span class=\"s\">‹fun all_bnfs ctxt = ctxt |&gt; Proof_Context.theory_of |&gt; Theory.defs_of |&gt; Defs.all_specifications_of</span>\n<span class=\"s\">  |&gt; map_filter (fn ((kind, name), _) =&gt; if kind = Defs.Type then BNF_Def.bnf_of ctxt name else NONE)›</span>\n\n<span class=\"k\">declare</span><span class=\"w\"> </span><span class=\"o\">[[</span><span class=\"n\">ML_print_depth</span><span class=\"o\">=</span><span class=\"n\">100</span><span class=\"o\">]]</span>\n<span class=\"k\">ML</span><span class=\"w\"> </span><span class=\"s\">‹all_bnfs @{context} |&gt; map BNF_Def.T_of_bnf›</span>\n</code></pre></div>",
+        "id": 505445761,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1741877893
+    },
+    {
+        "content": "<p>I'll try that, thanks!</p>",
+        "id": 505449536,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1741878736
+    }
+]

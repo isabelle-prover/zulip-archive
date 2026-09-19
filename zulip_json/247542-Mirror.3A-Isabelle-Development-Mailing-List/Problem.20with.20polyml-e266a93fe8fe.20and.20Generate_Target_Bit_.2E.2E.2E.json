@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nI have tested a recent repository version of Poly/ML <br>\n<a href=\"https://github.com/polyml/polyml/commit/e266a93fe8fe\">https://github.com/polyml/polyml/commit/e266a93fe8fe</a> with current <br>\nIsabelle/9e5f645d6000.</p>\n<p>This causes a problem in line 83 of theory <br>\n\"Codegenerator_Test.Generate_Target_Bit_Operations.thy\":</p>\n<p>*** Evaluation for PolyML failed:<br>\n*** exception Fail raised (line 5): Bad max</p>\n<p>Looking only superficially, I don't quite understand what is the intention of <br>\nthe test.</p>\n<p>Note that there have been recent changes in Poly/ML on word arithmetic.</p>\n<p>Makarius</p>",
+        "id": 512035068,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1744624192
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 14/04/2025 11:49, Makarius wrote:</p>\n<blockquote>\n<p>I have tested a recent repository version of Poly/ML <a href=\"https://github.com/\">https://github.com/</a> <br>\npolyml/polyml/commit/e266a93fe8fe with current Isabelle/9e5f645d6000.</p>\n</blockquote>\n<p>I should also say that this can be built like this:</p>\n<p>isabelle component_polyml -V e266a93fe8fe</p>\n<p>Makarius</p>",
+        "id": 512035902,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1744624402
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>I have tested a recent repository version of Poly/ML <a href=\"https://github.com/\">https://github.com/</a> <br>\npolyml/polyml/commit/e266a93fe8fe with current Isabelle/9e5f645d6000.</p>\n<p>This causes a problem in line 83 of theory <br>\n\"Codegenerator_Test.Generate_Target_Bit_Operations.thy\":</p>\n<p>*** Evaluation for PolyML failed:<br>\n*** exception Fail raised (line 5): Bad max</p>\n<p>Looking only superficially, I don't quite understand what is the <br>\nintention of the test.</p>\n<p>Note that there have been recent changes in Poly/ML on word arithmetic.</p>\n</blockquote>\n<p>The explanation for this test can be found (admittedly, very indirect <br>\nand implicit) at</p>\n<p><a href=\"https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Code_Numeral.thy#l1014\">https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Code_Numeral.thy#l1014</a></p>\n<p>reading</p>\n<p>val max_index = pow (fromInt 2, Int.- (Word.wordSize, 3)) - fromInt 1; <br>\n(<em>experimentally determined</em>)</p>\n<p>This is the maximum value usable as index in bit shifts.</p>\n<p>The check in Generate_Target_Bit_Operations.thy then asserts that this <br>\nis really the maximum.</p>\n<p>I am uncertain where to proceed from here. If this max_index is no <br>\nlonger unique across different ML versions, it is maybe best to drop the <br>\nline</p>\n<p><a href=\"https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Codegenerator_Test/Generate_Target_Bit_Operations.thy#l76\">https://isabelle.in.tum.de/repos/isabelle/file/tip/src/HOL/Codegenerator_Test/Generate_Target_Bit_Operations.thy#l76</a></p>\n<p>Ie. just assert that the index is small enough.</p>\n<p>Cheers,<br>\n    Florian</p>\n<p><a href=\"/user_uploads/14278/fMUsjIRzyf6-AiY4fa1C7WJO/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/KOO8lKaAo5SYaU3iIwcX5R_f/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 512248060,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1744702566
+    }
+]

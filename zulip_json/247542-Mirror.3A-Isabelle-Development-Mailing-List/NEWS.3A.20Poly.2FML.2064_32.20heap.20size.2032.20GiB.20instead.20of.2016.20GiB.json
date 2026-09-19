@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 14/07/2026 23:31, Lawrence Paulson wrote:</p>\n<blockquote>\n<p>Could this be used with Isabelle 2025-2?</p>\n</blockquote>\n<p>Maybe. We have not tried it.</p>\n<p>Isabelle development is linear, moving forward on a single branch, or rather <br>\nno branches at all.</p>\n<p>Makarius</p>",
+        "id": 610673675,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1784064946
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p><strong>* System </strong>*</p>\n<ul>\n<li>Poly/ML 5.9.2 has been patched to support larger heap size in the<br>\nspecial x86_64_32/arm64_32 mode with 32-bit values: the limit is now 32<br>\nGiB, instead of 16 GiB before. The cost is a factor of 1.2 .. 1.5 more<br>\nmemory requirement (due to alignment of values), and a slowdown factor<br>\n0.9 .. 0.95 for average sessions. For very large sessions, the gain is a<br>\nspeedup factor 1.9 .. 1.2, due to reduced GC time. It also avoids the<br>\nneed for bulky x86_64/arm64 mode with 64-bit values and excessive GC<br>\ntime.</li>\n</ul>\n<p>This refers to Isabelle/e3c3e01d3eb1.</p>\n<p>This is the result of significant work by David Matthews in collaboration with <br>\nMartin Desharnais-Schäfer.</p>\n<p>The plan is to use the enlarged 64_32 memory model as \"one size fits for <br>\nalmost all applications\", and omit the old 64_32 mode with 16 GiB that is in <br>\nprinciple still supported by Poly/ML.</p>\n<p>The full 64-bit mode is available as before, but discouraged. Its known GC <br>\nperformance problems will be addressed at a later stage. (Not now and not for <br>\nthis release.)</p>\n<p>Makarius</p>",
+        "id": 610673925,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1784065083
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>Here are some measurements from a few days ago:<br>\n<a href=\"https://files.sketis.net/build_profiling_11-Jul-2026\">https://files.sketis.net/build_profiling_11-Jul-2026</a></p>\n<p>This has been produced with a command-line like this:</p>\n<p>isabelle build_profiling -A: Automated_Stateful_Protocol_Verification <br>\nBicategory CZH_Universal_Constructions Category3 Frequency_Moments <br>\nJinjaThreads MiniSail ResiduatedTransitionSystem2 Two_Hermitian_Results <br>\nHOL-Probability</p>\n<p>The \"isabelle build_profiling\" tool is for administrative purposes, which <br>\nexplains its lack of documentation in the \"system\" manual. It is so useful, <br>\nthat I might make it more official for the coming release, with proper <br>\ndocumentation.</p>\n<p>The above test sessions are mainly those that hit the former 16 GiB limit, <br>\nwhich explains why the speedup is quite good. Various other sessions, e.g. <br>\nrequirements of the main tests, need much less ML heap: here we see a small <br>\nslowdown and increase of stored heap size.</p>\n<p>I do hope that slowdown and increased heap images are not significant in <br>\npractice, so that we can proceed with the plan to have just one main Poly/ML <br>\nconfiguration.</p>\n<p>Makarius</p>",
+        "id": 610674739,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1784065449
+    }
+]

@@ -1,0 +1,40 @@
+<html>
+<head><meta charset="utf-8"><title>Differences between Simple Type Theory and Isabelle/HOL · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Differences.20between.20Simple.20Type.20Theory.20and.20Isabelle.2FHOL.html">Differences between Simple Type Theory and Isabelle/HOL</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="624446582"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Differences%20between%20Simple%20Type%20Theory%20and%20Isabelle/HOL/near/624446582" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bob Rubbens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Differences.20between.20Simple.20Type.20Theory.20and.20Isabelle.2FHOL.html#624446582">(Sep 15 2026 at 19:38)</a>:</h4>
+<p>Hi all,</p>
+<p><a href="https://doi.org/10.1016/j.jal.2007.11.001">The seven virtues of simple type theory</a> has <em>really</em> improved my understanding of why simple type theory is a good foundation for a theorem prover. Now I'm curious to learn more about the differences between the type theory that Isabelle supports, and the type theory presented in seven virtues. In particular, I'm wondering about the extensions that Isabelle has done to make simple type theory practically usable, such as polymorphism. Seven virtues also mentions undefinedness, indefinite description, and multi-sortedness, which as far as I can tell Isabelle all supports. Is there a nice description out there somewhere of Isabelle's STT++? Are these really <em>extensions</em> to STT in Isabelle, or is there somehow a translation of, e.g., undefinedness in the frontend to some kind of encoding in plain STT? </p>
+<p>I also don't understand what exactly needs to go into the kernel, and what goes outside of it. Going by the explanation in seven virtues, I'd expect that a kernel contains:</p>
+<ol>
+<li>An implementation of an interpreter, for evaluating function application</li>
+<li>A type checker</li>
+<li>A proof system, e.g. to keep track of the proof steps using the axiom schemas as defined in section 6.</li>
+<li>Some notion of substitutibility, which is only explained in prose in seven virtues but probably also pretty important to get right, I reckon?</li>
+</ol>
+<p>What I find confusing is that I've read on the internet that the kernel only needs part 1, an implementation of the interpreter. Is that the case? How are part 2 and 3 included without mistakes then?</p>
+<p>(For completeness, my background is formal methods with an eye towards industry, which explains why finding good sources and understanding all this material remains challenging for me)</p>
+
+
+
+<a name="624453237"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Differences%20between%20Simple%20Type%20Theory%20and%20Isabelle/HOL/near/624453237" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Differences.20between.20Simple.20Type.20Theory.20and.20Isabelle.2FHOL.html#624453237">(Sep 15 2026 at 20:09)</a>:</h4>
+<p>Hi Bob, below paper by Kuncar and Popescu deals with the consistency of Isabelle/HOL's axioms.<br>
+<a href="https://link.springer.com/article/10.1007/s10817-018-9454-8">https://link.springer.com/article/10.1007/s10817-018-9454-8</a></p>
+<p>Function application is just beta reduction, which is one of the axioms of Isabelle.<br>
+The type checker is part of the kernel.<br>
+The proof system is part of the kernel.<br>
+Type and term instantiation are Isabelle axioms.</p>
+
+
+
+<hr><p>Last updated: Sep 19 2026 at 18:28 UTC</p>
+</html>

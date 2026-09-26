@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Why is it that this does not work</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">my_divides</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"my_divides n m = ∃k. m = k * n\"</span>\n</code></pre></div>\n<p>but adding parentheses works</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">my_divides</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"my_divides n m = (∃k. m = k * n)\"</span>\n</code></pre></div>\n<p>?</p>",
+        "id": 565540129,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1766884633
+    },
+    {
+        "content": "<p>Bindings often need parentheses to know their scope - parsing is done before type checking so it can't use the type information to know what scope would make sense, and here the equality has quite low precedence so I think it leads to ambiguity</p>",
+        "id": 565991599,
+        "sender_full_name": "Christian Pardillo Laursen",
+        "timestamp": 1767290085
+    }
+]

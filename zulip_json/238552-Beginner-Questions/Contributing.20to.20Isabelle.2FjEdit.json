@@ -1,0 +1,92 @@
+[
+    {
+        "content": "<p>Hi, I have some fixes (mostly unicode-related) that I wanted to implement in isabelle/jEdit and write a \"pull  request\" for (or the mercurial equivalent). How exactly do I do this? I can copy the source code but I have no clue how contributing to the isabelle codebase seems to work.</p>\n<p><a href=\"https://github.com/seL4/isabelle/blob/master/README_REPOSITORY\">https://github.com/seL4/isabelle/blob/master/README_REPOSITORY</a></p>\n<p>I read this but it says nothing about \"PR\"-like behaviours, especially from someone who has not contributed is the isabelle repository before</p>",
+        "id": 604113547,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781695065
+    },
+    {
+        "content": "<p>You typically first discuss the behaviour that you think deserves a change with the community (e.g. on the mailing list or maybe on Zulip for early stage proposals). Many times, it turns out that the reported behaviour works as expected and there's nothing to change.</p>\n<p>Then there are owners for each piece of code (documented at the top of the relevant source files and the mercurial history also tells you which persons contributed to the code). Ultimately, you need to get in contact with the relevant owners and see if they approve of your changes.</p>",
+        "id": 604121083,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1781696711
+    },
+    {
+        "content": "<p>oooh,<br>\nokie, I'll do that</p>",
+        "id": 604121321,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781696764
+    },
+    {
+        "content": "<p>(ty)</p>",
+        "id": 604121390,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781696778
+    },
+    {
+        "content": "<p>Also, the Isabelle implementation is not accidental but usually result of many decades of work. So the chances that an outside contribution improves on the existing sources are generally low.</p>",
+        "id": 604125898,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781697687
+    },
+    {
+        "content": "<p>Out of curiosity, what are the unicode-related issues you wanted to address?</p>",
+        "id": 604126045,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781697711
+    },
+    {
+        "content": "<p>From <a href=\"#narrow/channel/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Preprint.20on.20grounded.20arithmetic.20.28GA.29.20metatheor.2E.2E.2E/with/571211304\">this topic</a>: </p>\n<blockquote>\n<p>A few Unicode symbols not yet supported in Isabelle2025 that would be nice to have for mathematical logic purposes:<br>\nThe corners or “Quine quotes” — ⌜ and ⌝ — U+231C and U+231D. Maybe nice to add the bottom corners U+231E &gt; and U+231F just for completeness/symmetry.<br>\nThe negated turnstile symbols ⊬ (U+22AC) “Does Not Prove” and ⊭ (U+22AD) “Not True”<br>\nThe “Left Tack” symbol ⊣ (U+22A3)....</p>\n</blockquote>\n<p>Dunno how useful this is to bring up, but it seems Dr. Paulson also agrees with this:</p>\n<blockquote>\n<p>...I second the request for Quine quotes, which are often used in some branches of logic, and I hope that is a straightforward thing to do. Similarly for the other symbols...</p>\n</blockquote>\n<p>(I can't get zulip's quote system to work with mailing list messages nicely, hence the delay in responding) </p>\n<p>This would now be for Isabelle2026 and it would need modifying <code>IsabelleDejaVu*.ttf</code> (which can be found in doc/fonts, and a few other places afaict). As well as <code>etc/symbols</code> to begin with</p>",
+        "id": 604128922,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781698309
+    },
+    {
+        "content": "<p>Extending the Isabelle symbols might be a reasonable contribution, but has little to do with unicode and nothing with Isabelle/jEdit (it requires producing proper glyphs for out font).</p>",
+        "id": 604131352,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781698768
+    },
+    {
+        "content": "<p>oh, I see. I thought it would require introducing support in jEdit as well, because modifying etc/symbols (and using a nerd font that supports the symbol) had jEdit throw some runtime exception about unicode (I don't remember the exact name).</p>",
+        "id": 604131822,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781698861
+    },
+    {
+        "content": "<p>Should I start a thread on the mailing list?</p>",
+        "id": 604131853,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781698868
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Contributing.20to.20Isabelle.2FjEdit/near/604131822\">said</a>:</p>\n<blockquote>\n<p>oh, I see. I thought it would require introducing support in jEdit as well, because modifying symbols (and using a nerd font that supports the symbol) had jEdit throw some runtime exception about unicode (I don't remember the exact name).</p>\n</blockquote>\n<p>It would of course need to fit to the existing symbols. See also <code>Admin/isabelle_fonts/README</code> for more background about font compilation.</p>",
+        "id": 604133848,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781699254
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Contributing.20to.20Isabelle.2FjEdit/near/604131853\">said</a>:</p>\n<blockquote>\n<p>Should I start a thread on the mailing list?</p>\n</blockquote>\n<p>As you wrote, there is already one</p>",
+        "id": 604134059,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781699295
+    },
+    {
+        "content": "<p>Isn't that a few months old? I've read mailing lists before but never written to one. Wouldn't \"necroposting\" would be considered gauche?</p>",
+        "id": 604134926,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781699466
+    },
+    {
+        "content": "<p>No, this would be the right place to post a patch file where glyphs and symbols are added.</p>",
+        "id": 604146150,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781701521
+    },
+    {
+        "content": "<p>ok! I'll write up a patchfile and send it in the thread (if I understood you correctly)</p>",
+        "id": 604146697,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1781701632
+    }
+]

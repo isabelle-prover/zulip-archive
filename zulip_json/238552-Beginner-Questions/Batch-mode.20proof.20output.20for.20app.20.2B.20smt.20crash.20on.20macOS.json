@@ -1,0 +1,104 @@
+[
+    {
+        "content": "<p>Hi everyone, I'm in a bit of a bind </p>\n<p>So simply put, I’ve built a desktop app that allows users to check for some verification, the reasoning system is based in Isabelle, and I want it to call a script that runs proofs in batch mode (no GUI). My goal is to show users that certain named lemmas have been proved, sort of like auto-verifying a set of logical claims so there is no need for user interaction with isabelle. </p>\n<p>I hit the following error when building in batch mode: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">***</span><span class=\"w\"> </span><span class=\"n\">exception</span><span class=\"w\"> </span><span class=\"n\">Fail</span><span class=\"w\"> </span><span class=\"n\">raised</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">line</span><span class=\"w\"> </span><span class=\"n\">55</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"s\">\"System/isabelle_system.ML\"</span><span class=\"o\">):</span><span class=\"w\"> </span><span class=\"n\">Bad</span><span class=\"w\"> </span><span class=\"n\">bash_process</span><span class=\"w\"> </span><span class=\"n\">server</span><span class=\"w\"> </span><span class=\"n\">address</span>\n<span class=\"n\">***</span><span class=\"w\"> </span><span class=\"n\">At</span><span class=\"w\"> </span><span class=\"n\">command</span><span class=\"w\"> </span><span class=\"s\">\"by\"</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">line</span><span class=\"w\"> </span><span class=\"n\">1399</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"s\">\"/Applications/Isabelle2024.app/src/HOL/Algebra/Group.thy\"</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>It happens when I run </p>\n<p><code>isabelle build -o -D TheoryA</code> or basically any variant of this command. Everything works fine in jEdit. At first it would show errors wherever I used smt in my theories so I changed that because from what I’ve read, this seems related to <code>smt</code> or <code>verit</code> subprocesses on macOS being blocked in batch mode - not sure if that is accurate? Do I need to remove all smt usage? Or is there another solution like moving to Linux because I keep encountering issues in batch mode and sometimes even when there is no error in jEdit, I still come across this... I have checked the documentation but that has not helped much with this particular problem.</p>\n<p>I also want to know how isabelle build and isabelle process command is different - for example if I use <code>isabelle build -D .</code> <br>\nor <code>isabelle process -l HOL -e 'use_thy \"theoryA\";'</code> <br>\nHow do they work? </p>\n<p>Any suggestions, tips, or \"you’re totally doing this wrong\" are very welcome.</p>",
+        "id": 510307695,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1743809637
+    },
+    {
+        "content": "<p>This is strange</p>",
+        "id": 510580512,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744010559
+    },
+    {
+        "content": "<p>Especially since <code>isabelle build</code> is tested and everyone is using it (at least to build HOL)</p>",
+        "id": 510580646,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744010596
+    },
+    {
+        "content": "<p>Does it also happen if you limit the number of threads?</p>",
+        "id": 510580959,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744010688
+    },
+    {
+        "content": "<p><code>isabelle build -o \"threads=4\" -D TheoryA</code>?</p>",
+        "id": 510581060,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1744010719
+    },
+    {
+        "content": "<p>Is this in the environment of your 'desktop app', or does this happen when running a<code>build</code> through the command line?<br>\nAlso (but probably unrelated) Isabelle2024 is outdated, we're at Isabelle2025.</p>",
+        "id": 510590195,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744013174
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"874965\">Sana I.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510307695\">said</a>:</p>\n<blockquote>\n<p>I also want to know how isabelle build and isabelle process command is different - for example if I use <code>isabelle build -D .</code> <br>\nor <code>isabelle process -l HOL -e 'use_thy \"theoryA\";'</code> <br>\nHow do they work? </p>\n</blockquote>\n<p>Isabelle <code>build</code> manages everything around the build (heap images, session structure, concurrent processes, presentation, etc.). <code>process</code> runs a single raw ML process.</p>",
+        "id": 510590911,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744013372
+    },
+    {
+        "content": "<p>It happens when running a build through the command line. Actually, I should mention that <code>isabelle build -o \"threads=4\" -D TheoryA</code> gives a successful build.</p>\n<p>The output is </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Running</span><span class=\"w\">  </span><span class=\"ow\">...</span>\n\n<span class=\"n\">Finished</span><span class=\"w\"> </span><span class=\"ow\">...</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">0</span><span class=\"o\">:</span><span class=\"n\">00</span><span class=\"o\">:</span><span class=\"n\">14</span><span class=\"w\"> </span><span class=\"n\">elapsed</span><span class=\"w\"> </span><span class=\"n\">time</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">0</span><span class=\"o\">:</span><span class=\"n\">00</span><span class=\"o\">:</span><span class=\"n\">46</span><span class=\"w\"> </span><span class=\"n\">cpu</span><span class=\"w\"> </span><span class=\"n\">time</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">factor</span><span class=\"w\"> </span><span class=\"n\">3.28</span><span class=\"o\">)</span>\n\n<span class=\"n\">0</span><span class=\"o\">:</span><span class=\"n\">00</span><span class=\"o\">:</span><span class=\"n\">19</span><span class=\"w\"> </span><span class=\"n\">elapsed</span><span class=\"w\"> </span><span class=\"n\">time</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">0</span><span class=\"o\">:</span><span class=\"n\">00</span><span class=\"o\">:</span><span class=\"n\">46</span><span class=\"w\"> </span><span class=\"n\">cpu</span><span class=\"w\"> </span><span class=\"n\">time</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">factor</span><span class=\"w\"> </span><span class=\"n\">2.36</span>\n</code></pre></div>\n<p>but since I want to load a single theory and see the proof output, I am using isabelle process -T use_thy and thats where I am running into issues with smt, encoding errors and this..</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">1.295s</span><span class=\"w\"> </span><span class=\"n\">elapsed</span><span class=\"w\"> </span><span class=\"n\">time</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">1.709s</span><span class=\"w\"> </span><span class=\"n\">cpu</span><span class=\"w\"> </span><span class=\"n\">time</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">0.351s</span><span class=\"w\"> </span><span class=\"n\">GC</span><span class=\"w\"> </span><span class=\"n\">time</span>\n<span class=\"n\">exception</span><span class=\"w\"> </span><span class=\"n\">Fail</span><span class=\"w\"> </span><span class=\"n\">raised</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">line</span><span class=\"w\"> </span><span class=\"n\">55</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"s\">\"System/isabelle_system.ML\"</span><span class=\"o\">):</span><span class=\"w\"> </span><span class=\"n\">Bad</span><span class=\"w\"> </span><span class=\"n\">bash_process</span><span class=\"w\"> </span><span class=\"n\">server</span><span class=\"w\"> </span><span class=\"n\">address</span>\n<span class=\"n\">At</span><span class=\"w\"> </span><span class=\"n\">command</span><span class=\"w\"> </span><span class=\"s\">\"by\"</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">line</span><span class=\"w\"> </span><span class=\"n\">1399</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"s\">\"/Applications/Isabelle2024.app/src/HOL/Algebra/Group.thy\"</span><span class=\"o\">)</span>\n</code></pre></div>",
+        "id": 510614163,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1744019173
+    },
+    {
+        "content": "<p>Does the error occur when running <code>isabelle build -D TheoryA</code>?</p>",
+        "id": 510625016,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744021847
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510625016\">said</a>:</p>\n<blockquote>\n<p>Does the error occur when running <code>isabelle build -D TheoryA</code>?</p>\n</blockquote>\n<p>No, it does not occur when I use `isabelle build -D TheoryA. I am not sure what is causing it. I have used it without issues in other small projects. As I mentioned before, it is happening when I load a single thoery using isabelle process and I am trying to print proof output via command line.. I am at a loss</p>",
+        "id": 510788235,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1744070708
+    },
+    {
+        "content": "<p>Well a raw ML process is really only a raw ML process. Some (very restricted) theories might run only using the ML side, but other parts (printing, external solvers such as smt, file handling, export, database etc.) need the whole Isabelle system, which is not initialized by <code>isabelle process</code>. This is what Isabelle build/jEdit do.  If you want to build your own special Isabelle application you'll have to do the same as well.</p>",
+        "id": 510857230,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744097102
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"874965\">Sana I.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510788235\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510625016\">said</a>:</p>\n<blockquote>\n<p>Does the error occur when running <code>isabelle build -D TheoryA</code>?</p>\n</blockquote>\n<p>No, it does not occur when I use `isabelle build -D TheoryA. I am not sure what is causing it. I have used it without issues in other small projects. As I mentioned before, it is happening when I load a single thoery using isabelle process and I am trying to print proof output via command line.. I am at a loss</p>\n</blockquote>\n<p>If I recall correctly isabelle has a mechanism for sessions to produce build output. Just can't remember what it's called</p>",
+        "id": 510857664,
+        "sender_full_name": "irvin",
+        "timestamp": 1744097238
+    },
+    {
+        "content": "<p>Do you mean the <code>Export</code>?</p>",
+        "id": 510858678,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744097576
+    },
+    {
+        "content": "<p>That can be used to write results to the database, yes.</p>",
+        "id": 510858758,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744097605
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Batch-mode.20proof.20output.20for.20app.20.2B.20smt.20crash.20on.20macOS/near/510857230\">said</a>:</p>\n<blockquote>\n<p>Well a raw ML process is really only a raw ML process. Some (very restricted) theories might run only using the ML side, but other parts (printing, external solvers such as smt, file handling, export, database etc.) need the whole Isabelle system, which is not initialized by <code>isabelle process</code>. This is what Isabelle build/jEdit do.  If you want to build your own special Isabelle application you'll have to do the same as well.</p>\n</blockquote>\n<p>Thank you so much, it makes more sense now and I feel quite stupid for not understanding the obvious. Thanks again</p>",
+        "id": 510966294,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1744126501
+    },
+    {
+        "content": "<p>No worries, these implementation details are certainly not obvious unless one is quite familiar with the code-base (at which point it is surprisingly self-explanatory).</p>",
+        "id": 510966700,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1744126637
+    },
+    {
+        "content": "<p>Although I am able to build successfully, I still have a follow up question.</p>\n<p>I saw batch mode used like this in a paper and I was interested in finding out how we can use Isabelle like this..</p>\n<p><a href=\"/user_uploads/14278/9q1eLQ1__DF4Wt9pyYpTGffI/Screenshot-2025-04-11-at-10.32.43AM.png\">Screenshot 2025-04-11 at 10.32.43 AM.png</a></p>\n<div class=\"message_inline_image\"><a href=\"/user_uploads/14278/9q1eLQ1__DF4Wt9pyYpTGffI/Screenshot-2025-04-11-at-10.32.43AM.png\" title=\"Screenshot 2025-04-11 at 10.32.43 AM.png\"><img data-original-content-type=\"image/png\" data-original-dimensions=\"1041x728\" src=\"/user_uploads/thumbnail/14278/9q1eLQ1__DF4Wt9pyYpTGffI/Screenshot-2025-04-11-at-10.32.43AM.png/840x560.webp\"></a></div>",
+        "id": 511673280,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1744383609
+    }
+]

@@ -1,0 +1,74 @@
+<html>
+<head><meta charset="utf-8"><title>Proofs over n-ary functions of arbitrary type · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html">Proofs over n-ary functions of arbitrary type</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="626088012"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626088012" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626088012">(Sep 22 2026 at 16:34)</a>:</h4>
+<p>It seems to me that proving an arbitrary property over an n-ary HOL function of type <code>(a1 =&gt; (a2 =&gt; ... (an =&gt; b)))</code> is not possible, since STT doesn't permit quantifying over types themselves. Is there some sort of smart workaround that I can use to prove properties over n-ary (curried or uncurried) functions</p>
+
+
+
+<a name="626088055"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626088055" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626088055">(Sep 22 2026 at 16:34)</a>:</h4>
+<p>(note: n is variable)</p>
+
+
+
+<a name="626102258"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626102258" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626102258">(Sep 22 2026 at 17:32)</a>:</h4>
+<p>fold + lists is a workaround</p>
+
+
+
+<a name="626105641"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626105641" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626105641">(Sep 22 2026 at 17:46)</a>:</h4>
+<p>wouldn't that work if all of the <code>a_i</code> are the same type</p>
+
+
+
+<a name="626105696"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626105696" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626105696">(Sep 22 2026 at 17:46)</a>:</h4>
+<p>which they aren't?</p>
+
+
+
+<a name="626105770"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626105770" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626105770">(Sep 22 2026 at 17:46)</a>:</h4>
+<p>since lists are homogenous</p>
+
+
+
+<a name="626106470"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626106470" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626106470">(Sep 22 2026 at 17:49)</a>:</h4>
+<p>Correct, but usually n-ary operators have a fixed type as argument...</p>
+
+
+
+<a name="626106504"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626106504" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626106504">(Sep 22 2026 at 17:49)</a>:</h4>
+<p>(at least in my experience)</p>
+
+
+
+<a name="626108467"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626108467" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626108467">(Sep 22 2026 at 17:56)</a>:</h4>
+<p>I'm guessing I'm making an X-Y problem here, sorry about that. </p>
+<p>I'm trying to get the hang of HOLCF. What I'd like to prove is that if (σ1, ... σn) are all flat types, then (σ1 -&gt; (σ2 -&gt; ... -&gt; (σn -&gt; τ))) that is strict in its first n arguments is monotonic (Logic and Computation, exercise 3.4)</p>
+
+
+
+<a name="626341001"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Proofs%20over%20n-ary%20functions%20of%20arbitrary%20type/near/626341001" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Ant S. <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Proofs.20over.20n-ary.20functions.20of.20arbitrary.20type.html#626341001">(Sep 23 2026 at 14:39)</a>:</h4>
+<p>(typo: exercise 3.3)</p>
+
+
+
+<hr><p>Last updated: Sep 26 2026 at 22:28 UTC</p>
+</html>

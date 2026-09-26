@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Why does <code>find_theorems \"(?a :: nat) + ?b = ?b + ?a\"</code> find nothing, but <code>find_theorems \"(?a :: num) + ?b = ?b + ?a\"</code> does find <code>Num.add_One_commute</code>? How do I find the theorem about commutativity of natural number addition with <code>find_theorems</code>?</p>",
+        "id": 623308659,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1789090395
+    },
+    {
+        "content": "<p><code>find_theorems</code> on the top level, by default, uses matching: it returns theorems that are instances of your pattern. But you don't want to find instances of the pattern, you want to find theorems of which your pattern is an instance of (the reverse direction). </p>\n<p>There's unfortunately no way to flip the matching direction when using <code>find_theorems</code> on the top level (I think you could write a patch to include that and propose that to the mailing list), but you can flip the direction by writing the pattern in a lemma and use it this way:</p>\n<blockquote>\n<p>lemma \"(a :: nat) + b = b + a\"<br>\n  find_theorems solves</p>\n</blockquote>\n<p>Note that there are more modifiers next to solves, e.g. <code>intro</code>, <code>dest</code>,...</p>",
+        "id": 623481348,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1789114756
+    },
+    {
+        "content": "<p>NB. in order to answer your question, I used <a href=\"https://github.com/kappelmann/isabelle-pide-mcp\">PIDE MCP</a> and prompted my coding agent your question to find the cause, which it did in a few seconds.</p>\n<p>That's just a shameless plug - I don't mind your questions, but wanna increase adoption of the MCP ;)</p>",
+        "id": 623482611,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1789115086
+    },
+    {
+        "content": "<p>Another shameless plug on my part and that of <span class=\"user-mention\" data-user-id=\"1022782\">@András Salamon</span>. His <a href=\"https://github.com/ott2/isabelle-query\">isabelle-query</a> tool implemented something like this for callers of a function or constant. I saw that this had a use case and exposed this functionality through jEdit's UI. See <a href=\"https://github.com/david-wang-0/isabelle-query\">the fork</a>.</p>\n<p>I have vibe coded an addition for <code>instances</code>/instantiations and code equations as well. It's not done yet, because it doesn't compute the transitive closure of the class hierarchy. It fails in your exact use case. I'll let a Claude session implement this over night. It still works, but might be more suitable for LLMs, who can manually find the closure.</p>\n<p>Here's what Claude has to say:</p>\n<blockquote>\n<p><strong>What the fork answers today, from the sources and without a prover.</strong> <code>isabelle query instances &lt;class&gt;</code> lists every declared <code>instantiation</code>, <code>instance</code>, <code>interpretation</code> and <code>sublocale</code> site naming the subject. It is the reverse direction of <code>find_theorems</code>: start from the class that owns the lemma and ask who instantiates it.<br>\n<code>sh\ncd &lt;Isabelle&gt;/src/HOL\nisabelle query instances ab_semigroup_add   # 8 direct sites: prod, fun, set, vec, fps, ...  no nat\nisabelle query instances comm_monoid_diff   # 3 sites, incl.  Nat:213  instantiation nat :: comm_monoid_diff\nisabelle query callers ab_semigroup_add     # the class/subclass declarations that extend it\nisabelle query enclosing Nat:213            # the block around any reported locus\n</code><br>\n<code>nat</code> never instantiates <code>ab_semigroup_add</code> by name, so the first command does not list it. The <code>instances</code> verb deliberately excludes hierarchy edges so that a count means one relation. The planned addition is a closure over the <code>class</code> and <code>subclass</code> declarations in the same sources, so that <code>instances ab_semigroup_add</code> can report <code>nat</code> via <code>comm_monoid_diff</code>.</p>\n<p><strong>In jEdit.</strong> Right-clicking an identifier in a theory buffer adds an <code>Isabelle Query: &lt;name&gt;</code> submenu with <em>Find usages</em>, <em>Find external usages</em>, <em>Find definition</em>, <em>Peek definition</em>, and, when the name resolves to a locale or class, <em>Find instantiations</em> (likewise <em>Find code equations</em> for a constant). Hits land in the Isabelle Query dockable grouped by file; double-click or Enter opens, shift-click opens a new pane, alt-click peeks. The index reads dirty buffers, so the answer arrives before the prover has processed the file.</p>\n<p><strong>PIDE MCP.</strong> The optional <code>pide_mcp_query</code> component exposes the same CLI as a <code>query</code> tool on the <a href=\"https://github.com/david-wang-0/isabelle-pide-mcp\">isabelle-pide-mcp</a> server. An agent passes the argument vector and gets back <code>exit</code>, <code>stdout</code> and <code>stderr</code>:<br>\n<code>json\n{\"argv\": [\"-R\", \"/path/to/Isabelle/src/HOL\", \"instances\", \"comm_monoid_diff\"]}\n</code><br>\nThe root comes from <code>-R</code>, else from the single directory of the running PIDE session, so an agent can combine this structural answer with a live <code>find_theorems</code> through the prover-side tools on the same server.</p>\n</blockquote>",
+        "id": 623787309,
+        "sender_full_name": "David Wang",
+        "timestamp": 1789251349
+    },
+    {
+        "content": "<p>On another note, if you install the query fork, its features are exposed through the PIDE MCP as well.</p>",
+        "id": 623789432,
+        "sender_full_name": "David Wang",
+        "timestamp": 1789253452
+    },
+    {
+        "content": "<p>Implemented in the fork. No guarantees that the code is free of bugs.</p>",
+        "id": 623800355,
+        "sender_full_name": "David Wang",
+        "timestamp": 1789260046
+    }
+]

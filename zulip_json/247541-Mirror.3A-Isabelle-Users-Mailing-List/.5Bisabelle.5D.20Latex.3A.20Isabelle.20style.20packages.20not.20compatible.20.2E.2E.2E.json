@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Peter Hoefner &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\nHi all,</p>\n<p>It seems that the standard Isabelle packages (Isabelle.sty,isabellesym.sty) do not work with the package comment.<br>\nMinimal working example attached (comment in line 3 to see error message).<br>\nThis is problematic since the document class of lipics requires comment.</p>\n<p>Cheers<br>\nPeter</p>\n<p>%\\documentclass{lipics-v2021}<br>\n\\documentclass{article}<br>\n% \\usepackage{comment} % &lt;-- breaks if package comment is used;<br>\n% this package is used in lipics document class<br>\n\\usepackage{isabelle,isabellesym}</p>\n<p>\\begin{document}<br>\n\\begin{isabelle}<br>\n    something<br>\n    \\isadelimproof<br>\n%    %<br>\n    \\endisadelimproof<br>\n\\end{isabelle}<br>\n\\end{document}</p>",
+        "id": 508151948,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1742948791
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 26/03/2025 01:25, Peter Hoefner (via cl-isabelle-users Mailing List) wrote:</p>\n<blockquote>\n<p>Hi all,</p>\n<p>It seems that the standard Isabelle packages (Isabelle.sty,isabellesym.sty) do <br>\nnot work with the package comment.<br>\nMinimal working example attached (comment in line 3 to see error message).<br>\nThis is problematic since the document class of lipics requires comment.</p>\n</blockquote>\n<p>The Isabelle document preparation system requires the \"comment\" package on its <br>\nown account. It uses it in PlainTeX mode as follows:</p>\n<p>%plain TeX version of comment package -- much faster!<br>\n\\let\\isafmtname\\fmtname\\def\\fmtname{plain}<br>\n\\usepackage{comment}<br>\n\\let\\fmtname\\isafmtname</p>\n<p>The regular LaTeX setup is available via \"options [document_comment_latex]\" in <br>\nthe session ROOT configuration.</p>\n<p>(One happy day I will remove the need for \"comment\" in Isabelle document <br>\noutput, and just do it directly in Isabelle/Scala instead of odd TeX programming.)</p>\n<p>Makarius</p>",
+        "id": 508234621,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1742984999
+    }
+]

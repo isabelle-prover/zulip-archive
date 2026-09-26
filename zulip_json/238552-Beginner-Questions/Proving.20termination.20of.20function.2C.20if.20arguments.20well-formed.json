@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>I have a function that only terminates if it's called with valid arguments, and that is always the case.<br>\nCan I prove this conditional termination to obtain executable code, or do I actually have to modify the function such that it also terminates with invalid arguments, then prove that?</p>",
+        "id": 521356926,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1748632423
+    },
+    {
+        "content": "<p>You can define the type of only valid arguments</p>",
+        "id": 521357766,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748632760
+    },
+    {
+        "content": "<p>Ooooh, thanks, I'll play around with that.</p>",
+        "id": 521357922,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1748632806
+    },
+    {
+        "content": "<p>I did this once <a href=\"https://github.com/IsaFoL/IsaFoL/blob/master/Weidenbach_Book/CDCL/DPLL_W_Implementation.thy#L361\">https://github.com/IsaFoL/IsaFoL/blob/master/Weidenbach_Book/CDCL/DPLL_W_Implementation.thy#L361</a>, but have forgotten all the details now. I just remember that this is described somewhere in the codegen tutorial</p>",
+        "id": 521358105,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748632895
+    },
+    {
+        "content": "<p>What I did in a similar case is to modify the function definition like this: <code>f x = if valid x then &lt;recursion&gt; else undefined</code> and then derived a better simp rule afterwards that assumed <code>valid x</code> and did not have the undefined</p>",
+        "id": 521425979,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1748683244
+    },
+    {
+        "content": "<p>Dealing with subtypes can be annoying sometimes</p>",
+        "id": 521425990,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1748683260
+    },
+    {
+        "content": "<p>Oh yeah that's even better in my case, thank you!</p>",
+        "id": 521426240,
+        "sender_full_name": "Maximilian Vollath",
+        "timestamp": 1748683492
+    },
+    {
+        "content": "<p>Yes if <code>valid x</code> is simple enough and that you do not care about performance…</p>",
+        "id": 521452131,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1748705477
+    },
+    {
+        "content": "<p>These two approaches are probably the best ones for most use cases: a simple validity check if performance and decidability of that check is not an issue, and a typedef otherwise.</p>\n<p>Another thing you can do is to use the <code>partial_function</code> command with the <code>(option)</code> flag, which makes it so that your function logically returns <code>None</code> in case of nontermination or <code>Some x</code> in case of termination with a result <code>x</code>. If your function definition is tail-recursive, you can use <code>partial_function</code> with the <code>(tailrec)</code> flag instead and do away with the option type; in that case, the result in nonterminating cases is simply unspecified.</p>",
+        "id": 522162210,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1748966189
+    }
+]

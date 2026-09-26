@@ -1,0 +1,56 @@
+[
+    {
+        "content": "<p>An Isabelle RPC library is provided, allowing Isabelle/ML code to call procedures written in Python (or other languages in the future) on a (remote) host. Not fully tested, but I'm actively using it in my Isabelle AI projects.<br>\nThe RPC communication is over TCP and MessagePack, so the implementation of a host on other languages should be straightforward.</p>\n<p><a href=\"https://github.com/xqyww123/Isabelle_RPC\">https://github.com/xqyww123/Isabelle_RPC</a></p>",
+        "id": 569778714,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1769192176
+    },
+    {
+        "content": "<p>Is there a specific reason to do this in Isabelle/ML? The standard way would be a Isabelle/Scala implementation (e.g. there is already a JSON RPC implementation for Isabelle/VSCode, see <code>Tools/VSCode/src/channel.scala</code>) that is simply called from Isabelle/ML.</p>",
+        "id": 570027607,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769414311
+    },
+    {
+        "content": "<p>This is easier to learn (for myself, and no need to learn Scala), through faster protocol (MessagePack vs XML), and involves fewer dependencies (no dependency on Scala, so easier to maintain (for myself))</p>",
+        "id": 570533092,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1769600107
+    },
+    {
+        "content": "<p>Also, no need to recompile the Scala plugin, so easier to redistribute (as a standard Isabelle session)</p>",
+        "id": 570533278,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1769600165
+    },
+    {
+        "content": "<p>Also, it supports multiple languages. The PIDE protocol ASAIK, is heavy and implemented only on Scala. But you know, most of machine learning infrastructures are written in Python. So in the end, an AI infrastructure needs both the bridge between Poly/ML &lt;--&gt; Scala and the bridge between Scala &lt;--&gt; Python through some RPC protocol.</p>\n<p>But now, we can directly bridge Poly/ML &lt;--&gt; Python through the standard TCP and MessagePack. Note that MessagePack is supported by 50+ languages (according to <a href=\"https://msgpack.org/index.html\">official site</a>). So we can similarly write the RPC hosts in many other languages <strong>without modifying the Isabelle end</strong>. Indeed, I've written an OCaml client before.</p>\n<p>Given the benefits above, the implementation is also slim. You see, it takes only 351 lines of ML code 288 lines of Python. Sure it might not be very mature for now, but the whole tech stack is standard (TCP and MessagePack).</p>",
+        "id": 570548451,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1769604794
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/Isabelle.20Remote.20Procedure.20Call/near/570533092\">said</a>:</p>\n<blockquote>\n<p>This is easier to learn (for myself, and no need to learn Scala), through faster protocol (MessagePack vs XML), and involves fewer dependencies (no dependency on Scala, so easier to maintain (for myself))</p>\n</blockquote>\n<p>Well, I was asking because it would be much <em>easier</em> to maintain since most of what you'd need is already there, though of course not knowing Isabelle/Scala is a bit of a barrier. Note that there will likely be a Isabelle/Scala tutorial in the next Isabelle workshop at FLOC.</p>\n<p>Is performance of these messages actually a bottleneck for your application? It rarely is except when dealing with huge term structures e.g. for proof terms. And this is only for the internal communication between Isabelle/ML and Isabelle/Scala (which uses YXML, which already is a space-efficient representation of XML trees); for communication with the outside, one could easily go to even more efficient formats such as protobuf.</p>",
+        "id": 570549231,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769604982
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/Isabelle.20Remote.20Procedure.20Call/near/570533278\">said</a>:</p>\n<blockquote>\n<p>Also, no need to recompile the Scala plugin, so easier to redistribute (as a standard Isabelle session)</p>\n</blockquote>\n<p>This seems to be a misconception, no need to do that at any point (a Isabelle component is a s easy to redistribute as a session). The system takes care of recompilation itself where needed.</p>",
+        "id": 570549447,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769605032
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/Isabelle.20Remote.20Procedure.20Call/near/570548451\">said</a>:</p>\n<blockquote>\n<p>Also, it supports multiple languages. The PIDE protocol ASAIK, is heavy and implemented only on Scala. But you know, most of machine learning infrastructures are written in Python. So in the end, an AI infrastructure needs both the bridge between Poly/ML &lt;--&gt; Scala and the bridge between Scala &lt;--&gt; Python through some RPC protocol.</p>\n</blockquote>\n<p>I don't quite understand what you are saying here. To clarify:</p>\n<ul>\n<li>Isabelle/Scala controls the actual prover processes, and deals with any interaction with the physical world: external processes, file system, compression, etc.</li>\n<li>The logical machinery is implemented in Isabelle/ML.</li>\n</ul>\n<p>Those two processes communicate via internal messages (all the time). When talking to external infrastructure -- independent on how you do that, e.g. via MessagePack -- you would normally talk to the Isabelle/Scala process only. Internally, that might talk to the Isabelle/ML process if needed.</p>",
+        "id": 570551070,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769605458
+    },
+    {
+        "content": "<p>Indeed, any new feature introduces additional maintenance costs compared to existing ones. This argument applies to any new feature. However, people do need a simple and easy-to-learn way to enable communication between Poly/ML and the external environment; they don't want to learn complex software system architectures. I knocked out this framework in one night, in hundreds of lines of code, and it doesn't need to be merged into main. May let users pick whichever one they want.</p>",
+        "id": 570553447,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1769606081
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 19/11/2025 20:46, Makarius wrote:</p>\n<blockquote>\n<p>a consolidated release candidate of Isabelle2025-1 (December 2025) is <br>\navailable from <a href=\"https://isabelle.in.tum.de/website-Isabelle2025-1-RC2\">https://isabelle.in.tum.de/website-Isabelle2025-1-RC2</a><br>\nTesting that on macOS, I now see we have a new record in application bundle <br>\nsize: 3.56 GiB. Thus we are slowly approaching the 6 GiB of MacTeX.</p>\n</blockquote>\n<p>This continued inflation has two reasons:</p>\n<p>(1) more ambitious bundling of add-on components, e.g. VSCodium with its <br>\nElectron and Node.js framework, or pre-built browser_info and Find_Facts data,</p>\n<p>(2) native ARM64 binaries for the majority of Isabelle tools and <br>\nframeworks, in addition to old Intel binaries.</p>\n<p>Presently we still demand Apple's Rosetta2 to run old x86_64-darwin <br>\nexecutables on the spot, like the initial app launcher <br>\n<a href=\"http://Isabelle2025-1-RC2.app/Isabelle2025-1-RC2\">Isabelle2025-1-RC2.app/Isabelle2025-1-RC2</a> --- that startup-wrapper ensures <br>\nthat Rosetta2 is already present when external ATPs and SMTs are run later on.</p>\n<p>Within the next 1-2 years, I would like to see native arm64-darwin executables <br>\nfor all Isabelle add-on tools, and make x86_64-darwin optional. Then we will <br>\nno longer demand Rosetta2 --- it will be discontinued by Apple after macOS 26. <br>\nThat might pose a challenge for some old tools: We will need to work on that.</p>\n<p>A bit later we could phase out x86_64-darwin altogether, and thus get back to <br>\nthe subject of this mail: reduce the bulk of the app bundle again, having <br>\njust one copy of jdk, vscodium, cvc5, vampire etc.</p>\n<p>This also poses the question if Intel-Mac users still exist: We do have our <br>\nown test machines as existence proof for that platform, to build and test <br>\nexecutables, but is there anybody else still out there?</p>\n<p>Makarius</p>",
+        "id": 558309326,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1763588865
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 19/11/2025 22:47, Makarius wrote:</p>\n<blockquote>\n<p>On 19/11/2025 20:46, Makarius wrote:</p>\n<blockquote>\n<p>a consolidated release candidate of Isabelle2025-1 (December 2025) is <br>\navailable from <a href=\"https://isabelle.in.tum.de/website-Isabelle2025-1-RC2\">https://isabelle.in.tum.de/website-Isabelle2025-1-RC2</a><br>\nTesting that on macOS, I now see we have a new record in application bundle <br>\nsize: 3.56 GiB. Thus we are slowly approaching the 6 GiB of MacTeX.</p>\n</blockquote>\n</blockquote>\n<p>To be more precise, the situation is as follows:</p>\n<p>Isabelle2025-1-RC2_macos.tar.gz  1.7G<br>\n<a href=\"http://Isabelle2025-1-RC2.app/\">Isabelle2025-1-RC2.app/</a>          3.6G</p>\n<p>MacTeX.pkg  5.9G<br>\n   MacTeX installed  9.7G</p>\n<p>So we have a little headroom left, before we need to call it \"as bulky as MacTeX\".</p>\n<p>Makarius</p>",
+        "id": 558313775,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1763590434
+    },
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nThe 2019 iMacs offered attractive performance and I imagine there could be many floating around, but they don’t support Tahoe.</p>\n<blockquote>\n<p>On 19 Nov 2025, at 21:47, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>This also poses the question if Intel-Mac users still exist: We do have our own test machines as existence proof for that platform, to build and test executables, but is there anybody else still out there?</p>\n</blockquote>",
+        "id": 558317220,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1763591818
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 19/11/2025 23:36, Lawrence Paulson wrote:</p>\n<blockquote>\n<blockquote>\n<p>On 19 Nov 2025, at 21:47, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>This also poses the question if Intel-Mac users still exist: We do have our own test machines as existence proof for that platform, to build and test executables, but is there anybody else still out there?</p>\n</blockquote>\n</blockquote>\n<blockquote>\n<p>The 2019 iMacs offered attractive performance and I imagine there could be <br>\nmany floating around, but they don’t support Tahoe.</p>\n</blockquote>\n<p>Yes, Intel Macs will get stuck on macOS 26. It will continue to work for a few <br>\nyears, and then be discontinued by Apple.</p>\n<p>Presently, I would like to get an idea about the timespan we should continue <br>\nto support Intel Macs --- meaning that we need keep some of the hardware <br>\naround in some basement (even buy new ones).</p>\n<p>Makarius</p>",
+        "id": 558318218,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1763592248
+    },
+    {
+        "content": "<p><strong>From:</strong> Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;</p>\n<p>Almost the entire Apple product line had moved to ARM chips by April 2021. The exception is the Mac Pro, and I imagine nobody has one of those.</p>\n<p>You could always announce \"I propose to drop Mac Intel support starting with Isabelle2026\", and count how many object. I'd like my Intel iMac but I have to admit, it is getting old.</p>\n<p>Larry</p>\n<blockquote>\n<p>On 19 Nov 2025, at 22:43, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>Presently, I would like to get an idea about the timespan we should continue to support Intel Macs --- meaning that we need keep some of the hardware around in some basement (even buy new ones).</p>\n</blockquote>",
+        "id": 558407051,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1763638436
+    }
+]

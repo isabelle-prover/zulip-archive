@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>As an exercise, I defined my own natural number type and addition function:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">no_notation</span><span class=\"w\"> </span><span class=\"n\">plus</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"kp\">infixl</span><span class=\"w\"> </span><span class=\"s\">\"+\"</span><span class=\"w\"> </span><span class=\"n\">65</span><span class=\"o\">)</span>\n\n<span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">natt</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">One</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">S</span><span class=\"w\"> </span><span class=\"n\">natt</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">add</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"natt ⇒ natt ⇒ natt\"</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"kp\">infixl</span><span class=\"w\"> </span><span class=\"s\">\"+\"</span><span class=\"w\"> </span><span class=\"n\">65</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"add x One = S x\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"w\">  </span><span class=\"s\">\"add x (S y) = S (x + y)\"</span>\n</code></pre></div>\n<p>I proved inductively that x + One = One + x for all x:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">thm_3_3</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"x + One = One + x\"</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"kp\">is</span><span class=\"w\"> </span><span class=\"s\">\"?P x\"</span><span class=\"o\">)</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">induction</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"?P One\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"k\">next</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"s\">\"?P x\"</span>\n\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\">  </span><span class=\"s\">\"S x + One = (x + One) + One\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">also</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"... = (One + x) + One\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">auto</span><span class=\"w\"> </span><span class=\"n\">cong</span><span class=\"w\"> </span><span class=\"n\">add</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">‹?P x›</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">also</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"... = One + (x + One)\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">also</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"... = One + S x\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">finally</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"?P (S x)\"</span><span class=\"w\"> </span><span class=\"ow\">.</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>In the first \"also have\" line above, I tried \"auto simp add: ‹?P x›\" but it failed.  I don't understand why.  I thought that would cause auto to use \"x + One = One + x\" as a simplification rule, i.e. replace \"x + One\" with \"One + x\" which would prove the step immediately.  Randomly I tried \"auto cong add\" instead and it worked, but I don't really understand why since my understanding is that \"cong\" is intended for more general congruence rules, as explained e.g. in section 9.1.1 \"Advanced Features\" of the \"Isabelle-HOL: A Proof Assistant\" book.</p>\n<p>Did I really need to use \"auto cong add\" here?  Is there some easier/nicer way to prove the step?</p>",
+        "id": 582323412,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1774698927
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"w\">  </span><span class=\"k\">also</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"... = (One + x) + One\"</span>\n<span class=\"w\">    </span><span class=\"n\">supply</span><span class=\"w\"> </span><span class=\"o\">[[</span><span class=\"n\">simp_trace_new</span><span class=\"o\">]]</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">simp</span><span class=\"w\"> </span><span class=\"n\">flip</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">‹?P x›</span><span class=\"o\">)</span>\n</code></pre></div>",
+        "id": 582326259,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774701559
+    },
+    {
+        "content": "<p>But the answer is boring: look at the trace of the simplifier with <code>simp add</code> and <code>simp flip</code></p>",
+        "id": 582326306,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774701593
+    },
+    {
+        "content": "<p>but the real real answer to the question is not why it fails, but that you lemma is written the wrong way around</p>",
+        "id": 582326495,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774701735
+    },
+    {
+        "content": "<p>the left trivially simplifies to <code>S x</code></p>",
+        "id": 582326508,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774701755
+    },
+    {
+        "content": "<p>and you absolutely should not rewrite anything away from that normalized form</p>",
+        "id": 582326536,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1774701778
+    }
+]

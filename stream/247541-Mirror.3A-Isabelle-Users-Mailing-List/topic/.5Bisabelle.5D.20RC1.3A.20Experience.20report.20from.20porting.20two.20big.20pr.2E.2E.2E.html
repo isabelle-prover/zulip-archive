@@ -1,0 +1,57 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] RC1: Experience report from porting two big pr... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC1.3A.20Experience.20report.20from.20porting.20two.20big.20pr.2E.2E.2E.html">[isabelle] RC1: Experience report from porting two big pr...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="628421625"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC1%3A%20Experience%20report%20from%20porting%20two%20big%20pr.../near/628421625" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC1.3A.20Experience.20report.20from.20porting.20two.20big.20pr.2E.2E.2E.html#628421625">(Oct 01 2026 at 15:47)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] RC1: Experience report from porting two big projects to RC1</p>
+<p>Dear list,</p>
+<p>I've ported Isabelle LLVM and our parallel Bernoulli Number computation <br>
+from 2025-2 to RC2. No bigger issues to report, apart from a <br>
+sledgehammer anomaly that I reported in a separate message.</p>
+<p>--</p>
+<p>Peter</p>
+<h1>Isabelle LLVM</h1>
+<ul>
+<li>
+<p>largely straightforward. Discontinued addsimps is a bit annoying, but <br>
+just reoplacing it with |&gt; Simplifier.add_simps works in many cases, <br>
+otherwise add () around argument.</p>
+</li>
+<li>
+<p>Ran into sledgehammer problem when using is present, reported separately.<br>
+     Noticed that sledgehammmer now generates using for local facts <br>
+itself: nice!</p>
+</li>
+<li>
+<p>The warning on strings that look like formal names "<a href="http://foo.bar">foo.bar</a>" is nice! <br>
+Using \verbatim to disable, for eg LLVM-intrinsic names, is not too much <br>
+of a pain. And    I found one spot where I actually am using formal <br>
+names as a string ;)</p>
+</li>
+<li>
+<p>Some function, eg in Specification, got a verbose-option. It's not <br>
+clear to me what that does, I set it to false analogously to such <br>
+changes in AFP.</p>
+</li>
+</ul>
+<h1>Bernoulli Number Computation</h1>
+<p>bernoulli_rat is gone: awkward type-annot adding (but probably there <br>
+are easier ways to fix the proof)</p>
+<p>otherwise, straightforward, and most problems where caused by, at the <br>
+same time, switching to a new version of Isabelle LLVM that has slightly <br>
+different rules for the refinement of sequential by parallel code <br>
+(dynamic-assertion support required this change).</p>
+
+
+
+<hr><p>Last updated: Oct 03 2026 at 13:08 UTC</p>
+</html>

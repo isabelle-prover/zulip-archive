@@ -1,0 +1,144 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] memory leak(?): GC not reclaiming memory when ... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20memory.20leak.28.3F.29.3A.20GC.20not.20reclaiming.20memory.20when.20.2E.2E.2E.html">[isabelle] memory leak(?): GC not reclaiming memory when ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="628435005"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20memory%20leak%28%3F%29%3A%20GC%20not%20reclaiming%20memory%20when%20.../near/628435005" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20memory.20leak.28.3F.29.3A.20GC.20not.20reclaiming.20memory.20when.20.2E.2E.2E.html#628435005">(Oct 01 2026 at 16:38)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] memory leak(?): GC not reclaiming memory when an importing theory is open (affecting Isabelle2026-RC2 and Isabelle2025-2)</p>
+<p>Dear list,</p>
+<p>Below are instructions to create a memory leak(?), tested with <br>
+Isabelle2026-RC2 and Isabelle2025-2.</p>
+<p>Summary: When an ML command in a theory is re-evaluated (with each <br>
+evaluation possibly allocating memory) while a theory importing it is <br>
+open, a subsequent full GC does not reclaim most of the memory. Without <br>
+the importing theory, a full GC brings the memory usage back to a normal <br>
+level.</p>
+<p>Steps to reproduce (theories attached):</p>
+<ol>
+<li>Start <code>isabelle jedit -l Pure Base.thy</code> (only open <code>Base.thy</code>).</li>
+<li>Re-evaluate the ML command in Base a few times.</li>
+<li>
+<p>Open the jEdit Monitor window (double click on the ML usage bar, <br>
+bottom right) and run a full GC. The memory usage drops significantly.</p>
+</li>
+<li>
+<p>Split the window (View -&gt; Splitting) and open <code>Importer.thy</code> side by <br>
+side (having it open in the background is not sufficient).</p>
+</li>
+<li>
+<p>Repeat steps 2 and 3. The full GC now leaves most of the memory in use.</p>
+</li>
+</ol>
+<p>I also reproduced the same behaviour with VSCode and a headless PIDE <br>
+session.</p>
+<p>Background/how I discovered it: When developing an ML package, its ML <br>
+commands are repeatedly evaluated (due to me editing them), gradually <br>
+filling up my machine's memory until I have to restart Isabelle.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p><a href="/user_uploads/14278/tf3qZB7tWfzEzC98Urb0FzUS/Base.thy">Base.thy</a><br>
+<a href="/user_uploads/14278/zpcUGQRlYhfYeEDiWVrE1Bki/Importer.thy">Importer.thy</a></p>
+
+
+
+<a name="628436423"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20memory%20leak%28%3F%29%3A%20GC%20not%20reclaiming%20memory%20when%20.../near/628436423" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20memory.20leak.28.3F.29.3A.20GC.20not.20reclaiming.20memory.20when.20.2E.2E.2E.html#628436423">(Oct 01 2026 at 16:44)</a>:</h4>
+<p><strong>From:</strong> "Lammich, Peter (UT-EEMCS)" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] memory leak(?): GC not reclaiming memory when an importing theory is open (affecting Isabelle2026-RC2 and Isabelle2025-2)</p>
+<p>That fits an observation of mine: when working on refactoring jobs, I'd have a base theory and a dependent theory open at the same time in two buffers ( typically I use new view)... This regularly leads to responsiveness degrading until there's no other way than restarting the whole thing... I intuitively avoid this setup, and rather switch one buffer between the two theories.</p>
+<p>Peter</p>
+<p>Sent from Outlook for Android&lt;<a href="https://aka.ms/AAb9ysg">https://aka.ms/AAb9ysg</a>&gt;</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Sent: Thursday, 01 October 2026 17:38:04<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] memory leak(?): GC not reclaiming memory when an importing theory is open (affecting Isabelle2026-RC2 and Isabelle2025-2)</p>
+<p>Dear list,</p>
+<p>Below are instructions to create a memory leak(?), tested with<br>
+Isabelle2026-RC2 and Isabelle2025-2.</p>
+<p>Summary: When an ML command in a theory is re-evaluated (with each<br>
+evaluation possibly allocating memory) while a theory importing it is<br>
+open, a subsequent full GC does not reclaim most of the memory. Without<br>
+the importing theory, a full GC brings the memory usage back to a normal<br>
+level.</p>
+<p>Steps to reproduce (theories attached):</p>
+<ol>
+<li>Start <code>isabelle jedit -l Pure Base.thy</code> (only open <code>Base.thy</code>).</li>
+<li>Re-evaluate the ML command in Base a few times.</li>
+<li>
+<p>Open the jEdit Monitor window (double click on the ML usage bar,<br>
+bottom right) and run a full GC. The memory usage drops significantly.</p>
+</li>
+<li>
+<p>Split the window (View -&gt; Splitting) and open <code>Importer.thy</code> side by<br>
+side (having it open in the background is not sufficient).</p>
+</li>
+<li>
+<p>Repeat steps 2 and 3. The full GC now leaves most of the memory in use.</p>
+</li>
+</ol>
+<p>I also reproduced the same behaviour with VSCode and a headless PIDE<br>
+session.</p>
+<p>Background/how I discovered it: When developing an ML package, its ML<br>
+commands are repeatedly evaluated (due to me editing them), gradually<br>
+filling up my machine's memory until I have to restart Isabelle.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+
+
+
+<a name="628437597"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20memory%20leak%28%3F%29%3A%20GC%20not%20reclaiming%20memory%20when%20.../near/628437597" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20memory.20leak.28.3F.29.3A.20GC.20not.20reclaiming.20memory.20when.20.2E.2E.2E.html#628437597">(Oct 01 2026 at 16:49)</a>:</h4>
+<p><strong>From:</strong> Jan van Brügge &lt;<a href="mailto:jan@vanbruegge.de">jan@vanbruegge.de</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] memory leak(?): GC not reclaiming memory when an importing theory is open (affecting Isabelle2026-RC2 and Isabelle2025-2)</p>
+<p>I have also noticed Isabelle crawling to after developing ML for a while now. I did not report it as I run a modified version of Isabelle and could not exclude that as the source of the issue.</p>
+<p>Jan</p>
+<p>01.10.2026 18:44:05 "Lammich, Peter (UT-EEMCS)" (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;:</p>
+<blockquote>
+<p>That fits an observation of mine: when working on refactoring jobs, I'd have a base theory and a dependent theory open at the same time in two buffers ( typically I use new view)... This regularly leads to responsiveness degrading until there's no other way than restarting the whole thing... I intuitively avoid this setup, and rather switch one buffer between the two theories.</p>
+<p>Peter </p>
+<p>Sent from Outlook for Android[https://aka.ms/AAb9ysg]</p>
+<hr>
+<p><em>From:</em> <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Sent:</em> Thursday, 01 October 2026 17:38:04<br>
+<em>To:</em> <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<em>Subject:</em> [isabelle] memory leak(?): GC not reclaiming memory when an importing theory is open (affecting Isabelle2026-RC2 and Isabelle2025-2)</p>
+<p>Dear list,</p>
+<p>Below are instructions to create a memory leak(?), tested with<br>
+Isabelle2026-RC2 and Isabelle2025-2.</p>
+<p>Summary: When an ML command in a theory is re-evaluated (with each<br>
+evaluation possibly allocating memory) while a theory importing it is<br>
+open, a subsequent full GC does not reclaim most of the memory. Without<br>
+the importing theory, a full GC brings the memory usage back to a normal<br>
+level.</p>
+<p>Steps to reproduce (theories attached):</p>
+<ol>
+<li>Start <code>isabelle jedit -l Pure Base.thy</code> (only open <code>Base.thy</code>).</li>
+<li>Re-evaluate the ML command in Base a few times.</li>
+<li>Open the jEdit Monitor window (double click on the ML usage bar,<br>
+bottom right) and run a full GC. The memory usage drops significantly.</li>
+<li>Split the window (View -&gt; Splitting) and open <code>Importer.thy</code> side by<br>
+side (having it open in the background is not sufficient).</li>
+<li>Repeat steps 2 and 3. The full GC now leaves most of the memory in use.</li>
+</ol>
+<p>I also reproduced the same behaviour with VSCode and a headless PIDE<br>
+session.</p>
+<p>Background/how I discovered it: When developing an ML package, its ML<br>
+commands are repeatedly evaluated (due to me editing them), gradually<br>
+filling up my machine's memory until I have to restart Isabelle.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Oct 03 2026 at 13:08 UTC</p>
+</html>

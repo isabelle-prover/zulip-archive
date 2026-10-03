@@ -1,0 +1,114 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Caching Axclass&#x27;s unoverloading simpset · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Caching.20Axclass.27s.20unoverloading.20simpset.html">[isabelle] Caching Axclass&#x27;s unoverloading simpset</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="628332910"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Caching%20Axclass%27s%20unoverloading%20simpset/near/628332910" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Caching.20Axclass.27s.20unoverloading.20simpset.html#628332910">(Oct 01 2026 at 10:37)</a>:</h4>
+<p><strong>From:</strong> "Becker, Hanno" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi,</p>
+<p>During code generation, Isabelle calls <code>Axclass.unoverload</code> for each code equation, and evaluates:</p>
+<div class="codehilite" data-code-language="Standard ML"><pre><span></span><code><span class="n">rewrite_rule</span> <span class="n">ctxt</span> <span class="p">(</span><span class="n">inst_thms</span> <span class="n">ctxt</span><span class="p">)</span>
+</code></pre></div>
+<p>What this does in an example: An equation may use addition on natural numbers through the generic addition operation. Before code generation, Isabelle replaces that operation with the constant registered for natural-number addition. <code>inst_thms</code> collects every equation used for replacements of this kind across the current theory. This preparation does not depend on the individual code equation, yet is repeated for each constant.</p>
+<p>One can consider caching the prepared simplification rules in Axclass theory data. I added a tentative patch below (AI generated); probably there are better ways.</p>
+<p>I also add a small theory file which illustrates the speedup, using <code>code_timing</code> to report preprocessing time. Locally on a 64-core AArch64 host using eight threads, processing took about 17 seconds with Isabelle2025-2, and about 11 seconds with the proposed change, a reduction of 36 percent.</p>
+<p>The change was also evaluated in a larger internal project, leading to a reduction in runtime of a large <code>export_code</code> command from about 29 minutes to under 3 minutes.</p>
+<p>I’m not requesting for this to be included in 2026 (I did not check if it applies equally), it’s just an observation that one may take into account for future revisions and that others may find interesting/useful.</p>
+<p>Hanno</p>
+<p>===== Code-export example ====</p>
+<p><code>Code_Export_Observation.thy</code>:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Code_Export_Observation</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+<span class="k">declare</span><span class="w"> </span><span class="o">[[</span><span class="n">code_timing</span><span class="o">]]</span>
+<span class="k">export_code</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="kp">checking</span><span class="w"> </span><span class="n">SML</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>==== Patch ====</p>
+<div class="codehilite" data-code-language="Diff"><pre><span></span><code><span class="gh">diff --git a/src/Pure/axclass.ML b/src/Pure/axclass.ML</span>
+<span class="gd">--- a/src/Pure/axclass.ML</span>
+<span class="gi">+++ b/src/Pure/axclass.ML</span>
+<span class="gu">@@ -72,12 +72,16 @@ datatype data = Data of</span>
+<span class="w"> </span>  inst_params:
+<span class="w"> </span>    (string * thm) Symtab.table Symtab.table *
+<span class="w"> </span>      (*constant name ~&gt; type constructor ~&gt; (constant name, equation)*)
+<span class="gd">-    (string * string) Symtab.table (*constant name ~&gt; (constant name, type constructor)*)};</span>
+<span class="gi">+    (string * string) Symtab.table,</span>
+<span class="gi">+      (*constant name ~&gt; (constant name, type constructor)*)</span>
+<span class="gi">+  unoverload_cache:</span>
+<span class="gi">+    (Context.theory_id * Raw_Simplifier.simpset) option Synchronized.var};</span>
+
+<span class="w"> </span>fun rep_data (Data args) = args;
+
+<span class="w"> </span>fun make_data (axclasses, params, inst_params) =
+<span class="gd">-  Data {axclasses = axclasses, params = params, inst_params = inst_params};</span>
+<span class="gi">+  Data {axclasses = axclasses, params = params, inst_params = inst_params,</span>
+<span class="gi">+    unoverload_cache = Synchronized.var "Axclass.unoverload cache" NONE};</span>
+
+<span class="w"> </span>structure Data = Theory_Data'
+<span class="w"> </span>(
+<span class="gu">@@ -104,7 +108,7 @@ structure Data = Theory_Data'</span>
+<span class="w"> </span>);
+
+<span class="w"> </span>fun map_data f =
+<span class="gd">-  Data.map (fn Data {axclasses, params, inst_params} =&gt;</span>
+<span class="gi">+  Data.map (fn Data {axclasses, params, inst_params, ...} =&gt;</span>
+<span class="w"> </span>    make_data (f (axclasses, params, inst_params)));
+
+<span class="w"> </span>fun map_axclasses f =
+<span class="gu">@@ -124,6 +128,7 @@ val rep_theory_data = Data.get #&gt; rep_data;</span>
+<span class="w"> </span>val axclasses_of = #axclasses o rep_theory_data;
+<span class="w"> </span>val params_of = #params o rep_theory_data;
+<span class="w"> </span>val inst_params_of = #inst_params o rep_theory_data;
+<span class="gi">+val unoverload_cache_of = #unoverload_cache o rep_theory_data;</span>
+
+
+<span class="w"> </span>(* axclasses with parameters *)
+<span class="gu">@@ -164,12 +169,32 @@ fun inst_thms ctxt =</span>
+<span class="w"> </span>    (Symtab.fold (cons o #2 o #2) o #2) (#1 (inst_params_of (Proof_Context.theory_of ctxt))) []
+<span class="w"> </span>  |&gt; map (Thm.transfer' ctxt);
+
+<span class="gi">+fun unoverload_simpset ctxt =</span>
+<span class="gi">+  let</span>
+<span class="gi">+    val thy = Proof_Context.theory_of ctxt;</span>
+<span class="gi">+    val thy_id = Context.theory_id thy;</span>
+<span class="gi">+    val cache = unoverload_cache_of thy;</span>
+<span class="gi">+    fun get NONE =</span>
+<span class="gi">+          let</span>
+<span class="gi">+            val simpset =</span>
+<span class="gi">+              Raw_Simplifier.init_simpset (inst_thms ctxt) ctxt</span>
+<span class="gi">+              |&gt; Raw_Simplifier.simpset_of;</span>
+<span class="gi">+          in (simpset, SOME (thy_id, simpset)) end</span>
+<span class="gi">+      | get (SOME (thy_id', simpset)) =</span>
+<span class="gi">+          if Context.eq_thy_id (thy_id, thy_id')</span>
+<span class="gi">+          then (simpset, SOME (thy_id', simpset))</span>
+<span class="gi">+          else get NONE;</span>
+<span class="gi">+  in Synchronized.change_result cache get end;</span>
+<span class="gi">+</span>
+<span class="gi">+fun put_unoverload_simpset ctxt =</span>
+<span class="gi">+  Raw_Simplifier.put_simpset (unoverload_simpset ctxt) ctxt;</span>
+<span class="gi">+</span>
+<span class="w"> </span>fun get_inst_tyco consts = try (dest_Type_name o the_single o Consts.typargs consts);
+
+<span class="gd">-fun unoverload ctxt = rewrite_rule ctxt (inst_thms ctxt);</span>
+<span class="gi">+fun unoverload ctxt = Raw_Simplifier.rewrite0_rule (put_unoverload_simpset ctxt);</span>
+<span class="w"> </span>fun overload ctxt = rewrite_rule ctxt (map Thm.symmetric (inst_thms ctxt));
+
+<span class="gd">-fun unoverload_conv ctxt = Raw_Simplifier.rewrite_wrt ctxt true (inst_thms ctxt);</span>
+<span class="gi">+fun unoverload_conv ctxt = Raw_Simplifier.rewrite0 (put_unoverload_simpset ctxt) true;</span>
+<span class="w"> </span>fun overload_conv ctxt = Raw_Simplifier.rewrite_wrt ctxt true (map Thm.symmetric (inst_thms ctxt));
+
+<span class="w"> </span>fun lookup_inst_param consts params (c, T) =
+</code></pre></div>
+
+
+
+<hr><p>Last updated: Oct 03 2026 at 13:08 UTC</p>
+</html>

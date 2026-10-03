@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Zili Wang &lt;<a href=\"mailto:ziliwang271@gmail.com\">ziliwang271@gmail.com</a>&gt;</p>\n<p>Dear list,</p>\n<p>I am interested in working with the Propositional_Proof_Systems and<br>\nSATSolverVerification<br>\ntogether, by the CNF file of the two sessions clash. Here is a minimal file<br>\nto recreate the issue:</p>\n<p>CNF_clash.thy<br>\n'''<br>\ntheory CNF_clash</p>\n<p>imports<br>\nPropositional_Proof_Systems.CNF<br>\nSATSolverVerification.CNF</p>\n<p>begin</p>\n<p>end<br>\n'''</p>\n<p>Output:<br>\n\"exception THEORY raised (line 383 of \"context.ML\"):<br>\n  Duplicate theory name<br>\n  {..., Main, HOL-Library.Cancellation, HOL-Library.Multiset,<br>\nSATSolverVerification.MoreList, CNF}<br>\n  {..., HOL.Binomial, Main, HOL-Library.Case_Converter,<br>\nHOL-Library.Simps_Case_Conv, CNF}\"</p>\n<p>What is the suggested workaround for importing both formalizations<br>\nsimultaneously? I am using the latest AFP and Isabelle.</p>\n<p>Thanks,<br>\nZili</p>",
+        "id": 609722899,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1783891231
+    },
+    {
+        "content": "<p><strong>From:</strong> Tobias Nipkow &lt;<a href=\"mailto:nipkow@in.tum.de\">nipkow@in.tum.de</a>&gt;</p>\n<p>Hi Zili,</p>\n<p>Unless you can import stuff selectively and avoid importing both CNF theories, I <br>\nthink you will have to go in and modify the theory names by hand. The authors of <br>\nthe two entries will in parallel liaise and modify their entries in the <br>\ndevelopment version of the AFP.</p>\n<p>Thanks for the notification<br>\nTobias</p>\n<p>On 12/07/2026 23:19, Zili Wang wrote:</p>\n<blockquote>\n<p>Dear list,</p>\n<p>I am interested in working with the Propositional_Proof_Systems and <br>\nSATSolverVerification together, by the CNF file of the two sessions clash. Here <br>\nis a minimal file to recreate the issue:</p>\n<p>CNF_clash.thy<br>\n'''<br>\ntheory CNF_clash</p>\n<p>imports<br>\nPropositional_Proof_Systems.CNF<br>\nSATSolverVerification.CNF</p>\n<p>begin</p>\n<p>end<br>\n'''</p>\n<p>Output:<br>\n\"exception THEORY raised (line 383 of \"context.ML\"):<br>\n   Duplicate theory name<br>\n   {..., Main, HOL-Library.Cancellation, HOL-Library.Multiset, <br>\nSATSolverVerification.MoreList, CNF}<br>\n   {..., HOL.Binomial, Main, HOL-Library.Case_Converter, HOL- <br>\nLibrary.Simps_Case_Conv, CNF}\"</p>\n<p>What is the suggested workaround for importing both formalizations <br>\nsimultaneously? I am using the latest AFP and Isabelle.</p>\n<p>Thanks,<br>\nZili<br>\n</p>\n</blockquote>\n<p><a href=\"/user_uploads/14278/Zdip5IQ3JTtq5ytneQuMsYJ-/smime.p7s\">smime.p7s</a></p>",
+        "id": 609784514,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1783930355
+    }
+]

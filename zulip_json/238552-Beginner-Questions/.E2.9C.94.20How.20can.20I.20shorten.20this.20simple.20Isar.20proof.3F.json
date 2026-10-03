@@ -1,0 +1,116 @@
+[
+    {
+        "content": "<p>Consider this proof:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"∀x :: nat. x &gt; 3 ⟶ x &gt; 2\"</span>\n<span class=\"k\">proof</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">nat</span>\n<span class=\"w\">  </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 3 ⟶ x &gt; 2\"</span>\n<span class=\"w\">  </span><span class=\"k\">proof</span>\n<span class=\"w\">    </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 3\"</span>\n<span class=\"w\">    </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"(3 :: nat) &gt; 2\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">    </span><span class=\"k\">with</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 2\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">qed</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>And never mind that \"auto\" could prove the entire lemma, since really I'm asking about the block structure here.  The proof seems too verbose, since <code>fix x :: nat</code> and <code>show \"x &gt; 3 ⟶ x &gt; 2\"</code> and <code>assume a: \"x &gt; 3\"</code> all duplicate text that appear in the lemma statement.  Is there some way to tell Isabelle to apply these automatically?</p>\n<p>By the way, I know that if I omit ∀ in the lemma statement I can get this shorter proof:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"(x :: nat) &gt; 3 ⟶ x &gt; 2\"</span>\n<span class=\"k\">proof</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 3\"</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"(3 :: nat) &gt; 2\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">with</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 2\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>However that still seems too verbose, since I must explicitly write \"assume\".  (And maybe I'd prefer to have ∀ in the lemma statement anyway.)</p>",
+        "id": 584957292,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775918324
+    },
+    {
+        "content": "<p>Aha, two minutes after posting this I realized I can write this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">nat</span><span class=\"w\"> </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 3\"</span><span class=\"w\"> </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 2\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">  </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"(3 :: nat) &gt; 2\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"w\">  </span><span class=\"k\">with</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"x &gt; 2\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>Is that the best/only way to shorten the proof?</p>",
+        "id": 584957599,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775918598
+    },
+    {
+        "content": "<p>Also, I noticed that if I write the last form above with \"fixes\" then I end up with a lemma with meta-level implication (<code>?x &gt; 3 ⟹ ?x &gt; 2</code>) rather than object-level implication (<code>?x &gt; 3 ⟶ ?x &gt; 2</code>).  Presumably this doesn't matter since they are logically equivalent, but I'm still curious whether there is a compact way to write the proof that will produce the object-level version.</p>",
+        "id": 584958600,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775919369
+    },
+    {
+        "content": "<p><code>lemma \"(x :: nat) &gt; 3 ⟹ x &gt; 2\" by simp</code></p>",
+        "id": 584958616,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1775919381
+    },
+    {
+        "content": "<p>Kevin: as I wrote above \"never mind that \"auto\" could prove the entire lemma, since really I'm asking about the block structure here\".</p>",
+        "id": 584958667,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775919418
+    },
+    {
+        "content": "<p>I don't understand how you further want to \"shorten\" the proof then.</p>",
+        "id": 584958817,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1775919524
+    },
+    {
+        "content": "<p>This is a contrived example - I'm actually working on a more complex proof that has a similar block structure, and which \"auto\" or \"simp\" cannot solve automatically.  It's not worth presenting the details of that proof here.</p>\n<p>I'll rephrase my question as follows.  Suppose that I have a proof of this form:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"∀x :: nat. &lt;P&gt; ⟶ &lt;Q&gt;\"</span>\n<span class=\"k\">proof</span>\n<span class=\"w\">  </span><span class=\"k\">fix</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">nat</span>\n<span class=\"w\">  </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"&lt;P&gt; ⟶ &lt;Q&gt;\"</span>\n<span class=\"w\">  </span><span class=\"k\">proof</span>\n<span class=\"w\">    </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"&lt;P&gt;\"</span>\n<span class=\"w\">    </span><span class=\"ow\">...</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"ow\">...</span>\n<span class=\"w\">    </span><span class=\"k\">with</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"&lt;Q&gt;\"</span>\n<span class=\"w\">  </span><span class=\"k\">qed</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>How can I write the proof without repeating &lt;P&gt; and &lt;Q&gt; so many times?</p>\n<p>As I wrote above, I realized I can write</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">x</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">nat</span><span class=\"w\"> </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"&lt;P&gt;\"</span><span class=\"w\"> </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"&lt;Q&gt;\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">-</span>\n<span class=\"w\">    </span><span class=\"ow\">...</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"ow\">...</span>\n<span class=\"w\">    </span><span class=\"k\">with</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">\"&lt;Q&gt;\"</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>That's shorter, which is nice.  Presumably this is the best way, then?</p>",
+        "id": 584959276,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775919936
+    },
+    {
+        "content": "<p>Yes, use meta-level connectives for theorem statements.<br>\nAnd you can write <code>show ?thesis</code> instead of repeating your shows statement.<br>\nYou can also use <code>(is \"&lt;some patterns&gt;\")</code> next to your assumptions and conclusion.</p>",
+        "id": 584959434,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1775920065
+    },
+    {
+        "content": "<p>Thanks for the suggestions.  Regarding meta-level connectives, I believe you are saying that theorem statements should generally use <code>⋀</code> and <code>⟹</code> rather than '∀' and '⟶'.  Can you elaborate on this a bit?  I'm not sure why/when I might prefer one form over the other.  Will built-in proof methods sometimes work better with the meta-level connectives?</p>",
+        "id": 584959714,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775920345
+    },
+    {
+        "content": "<p>Meta-level forall and implication are typically nicer to work with in Isar (Isabelle's structured proof language) and most proof methods. Rule of thumb: use them in theorem statements whenever you can.</p>",
+        "id": 584961563,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1775922020
+    },
+    {
+        "content": "<p>OK, thanks for the advice.</p>",
+        "id": 584963384,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775923637
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1054129\">Adam Dingle</span> has marked this topic as resolved.</p>",
+        "id": 584963391,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1775923641
+    },
+    {
+        "content": "<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>",
+        "id": 588682585,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1776792484
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1033557\">Alex Mobius</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/588682585\">said</a>:</p>\n<blockquote>\n<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>\n</blockquote>\n<p>There is a nice rule combining these two as well: <code>(intro strip)</code>.</p>",
+        "id": 590254545,
+        "sender_full_name": "David Wang",
+        "timestamp": 1776874456
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"655321\">David Wang</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590254545\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"1033557\">Alex Mobius</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/588682585\">said</a>:</p>\n<blockquote>\n<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>\n</blockquote>\n<p>There is a nice rule combining these two as well: <code>(intro strip)</code>.</p>\n</blockquote>\n<p>Is it specifically those two rules its introducing, or does it do more? How can I check? (Could also be useful for the meta tips threads I'm trying to prop up in <a href=\"#narrow/channel/202961-General/topic/.5Bmeta.5D.20an.20advice.20channel.20for.20tips.2Ftricks.20we.20may.20stumble.20upon/with/583517672\">#**General**</a> )</p>",
+        "id": 590305956,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1776892732
+    },
+    {
+        "content": "<p><code>thm strip</code></p>",
+        "id": 590355573,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1776918157
+    },
+    {
+        "content": "<p>oh oops lol I shoulda checked that</p>",
+        "id": 590411405,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1776937867
+    },
+    {
+        "content": "<p><code>proof safe</code> is also a very common pattern.</p>",
+        "id": 590450605,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1776946202
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590305956\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"655321\">David Wang</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/590254545\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"1033557\">Alex Mobius</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/.E2.9C.94.20How.20can.20I.20shorten.20this.20simple.20Isar.20proof.3F/near/588682585\">said</a>:</p>\n<blockquote>\n<p>Worth noting that you can also write <code>proof (intro allI impI)</code> to do both introduction steps at once, if you need to work with atomized objects.</p>\n</blockquote>\n<p>There is a nice rule combining these two as well: <code>(intro strip)</code>.</p>\n</blockquote>\n<p>Is it specifically those two rules its introducing, or does it do more? How can I check? (Could also be useful for the meta tips threads I'm trying to prop up in <a href=\"#narrow/channel/202961-General/topic/.5Bmeta.5D.20an.20advice.20channel.20for.20tips.2Ftricks.20we.20may.20stumble.20upon/with/583517672\">#**General**</a> )</p>\n</blockquote>\n<p>Good idea.</p>",
+        "id": 590573647,
+        "sender_full_name": "David Wang",
+        "timestamp": 1776980711
+    }
+]

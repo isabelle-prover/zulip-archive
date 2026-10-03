@@ -1,0 +1,80 @@
+[
+    {
+        "content": "<p>Hello,<br>\nlong story short, I have a type that is a map from maps (representing vectors in some space) to values, plus two additional sets bounding the domain vectors' dimensionality, and some theorems. Thus it boils down to 'a set + 'a set + ('a =&gt; 'b) =&gt; 'c. I would like to define a recursive type based on it through the 'a position, so that dimension labels can also refer to these \"partial scalar fields\".</p>\n<p>The default BNF for ('a =&gt; 'b) =&gt; 'c marks 'a, 'b as dead and 'c as alive. I am wondering if there's a way to define 'a to be alive too. I'm not very good with category theory, so I defined the obvious map, but I am struggling with setfns/predicators/relators - what is a natural transformation for this functor in 'a place? By the equation it seems it should be something like \"set of all the arguments that the outer function will pass to the inner function\", but I'm not sure how to formalize this.</p>",
+        "id": 575396827,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1771880564
+    },
+    {
+        "content": "<p>Update: I am trying to move forward with just the <code>map</code> for right now, here's my repro:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">map_fn2</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"('a ⇒ 'd) ⇒ ('c ⇒ 'e) ⇒ (('a ⇒ 'b) ⇒ 'c) ⇒ (('d ⇒ 'b) ⇒ 'e)\"</span>\n<span class=\"w\">  </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"map_fn2 map_arg map_val f0 farg = map_val (f0 (farg ∘ map_arg))\"</span>\n\n<span class=\"kn\">bnf</span><span class=\"w\"> </span><span class=\"n\">fn2</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"('a ⇒ 'b) ⇒ 'c\"</span>\n<span class=\"w\">  </span><span class=\"n\">map</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">map_fn2</span>\n<span class=\"w\">  </span><span class=\"n\">sets</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"λ_.{}\"</span><span class=\"w\"> </span><span class=\"n\">range</span>\n<span class=\"w\">  </span><span class=\"n\">bd</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"card_suc ( card_of (UNIV::'a set) )\"</span><span class=\"w\"> </span><span class=\"c\">(*placeholder*)</span>\n<span class=\"c\">(* exception UnequalLengths raised (line 553 of \"library.ML\") *)</span>\n</code></pre></div>\n<p>Now the cardinal type is probably wrong, but something is going wronger... What does that exception mean? Do I need to communicate some additional things to the BNF procedure?</p>",
+        "id": 575415495,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1771888511
+    },
+    {
+        "content": "<p>The error message is unfortunately a low level crash, but the bound may not depend on live BNF parameters.</p>\n<p>Also if you pick set to be \"%_. {}\", you basically require the map function via the congruence property to ignore the corresponding position 'a.</p>\n<p>Generally, I doubt that this will work for the general <code>('a =&gt; 'b) =&gt; 'c</code>. There may be some restricted variant (e.g., such functions + an explicit finite/countable/'k-bounded domain for 'a). You have these additional sets. Are they bounded in some way?</p>",
+        "id": 575462907,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1771914586
+    },
+    {
+        "content": "<p>Yes, I've realized that there's no way to satisfy both congruence and natural transformation laws while providing the obvious mapping.<br>\nThankfully the actual datatype I need is ('a, 'b) fmap .&gt; 'c * 'a fset, where the domains of domain are bounded by this additional set. (There's more stuff but not important). Looks like the first set is then just this additional set - it's obviously an upper bound on congruence, and obviously a natural transformation. I do need to fogure out how to express the cardinality bound though, looks to be something like \"the set of (finite) subsets of 'b\", is that what c_sup does?</p>",
+        "id": 575512979,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1771930993
+    },
+    {
+        "content": "<p>Nevermind, brushed up on my cardinal arithmetic, think I got this.</p>",
+        "id": 575559591,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1771944018
+    },
+    {
+        "content": "<p>Ah, it seems that I am not quite there - the dimension map does not commute with <code>range</code>... which is just as it is - for example, mapping two dimensions to the same value corresponds then to taking a diagonal, which loses values :( Everything else commutes just fine - the dimension map and the value map, the value map and the dimension set, composition and identity rules hold, obviously).</p>\n<p>I suppose my only option is to make two separate BNFs. Would I be able to choose which one to use in the type definitions downstream, in some way?</p>",
+        "id": 575709047,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1772006129
+    },
+    {
+        "content": "<p>Each type can be only associated with one BNF structure. But maybe I'm misunderstanding what you are trying to achieve. Can you post your datatype that you are trying to construct?</p>",
+        "id": 575731188,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1772013012
+    },
+    {
+        "content": "<p>The original file is long, contains additional restrictions and claims, so I've made an abridged version that omits the proofs of the true facts<br>\n<a href=\"/user_uploads/14278/hS2yHCEb8wmJbuGavAh4QZh0/ValsetAbridged.thy\">ValsetAbridged.thy</a><br>\nthe claim \"vrange_idem\" at the bottom is untrue, but it is the lemma we would need to be true if we were to prove that \"bnf_map\" is a natural transformation in its second argument. The rest of the laws are satisfied.</p>",
+        "id": 575801699,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1772033312
+    },
+    {
+        "content": "<p>I suppose I only really need to recurse in the first type argument, so I could just limit myself to that :) it is somewhat unsatisfying, but such is it.</p>",
+        "id": 575801927,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1772033363
+    },
+    {
+        "content": "<p>Limiting yourself to a BNF in 'a is plausible if that is what your application requires. I had a quick look at the theory and wondered if <code>vrange</code> is the right notion. I.e., should you restrict your attention to only these 'c elements that are in the range of some mapping M whose domain is contained in the explicit <code>max_dims</code> bound? (Not sure if this helps with the naturality in 'c though.)</p>",
+        "id": 575811765,
+        "sender_full_name": "Dmitriy Traytel",
+        "timestamp": 1772035718
+    },
+    {
+        "content": "<p>I'm pretty sure vrange is the only definition that satisfies congruence and naturality for <code>map_val</code>. Congruence says the set has to be at least as large as vrange, and naturality says it has to be at least as small. In a philosophical sense, those are indeed the values of 'c that the mapping contains!</p>",
+        "id": 575818069,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1772037163
+    },
+    {
+        "content": "<blockquote>\n<p>naturality says it has to be at least as small</p>\n</blockquote>\n<p>e.g. have <code>vrange vsU = UNIV</code>, then for any set2 for which <code>set2 (map_val f vsU) = f `` set2 vsU</code>, we have <code>set2 (map_val f vsU) = vrange (map_val f vsU)</code>, now observe that for any vs, <code>typedef t = {vrange vs}</code> implies <code>vs = map_val Rep_t (map_val Abs_t  vs)</code> and <code>vrange (map_val Abs_t vs) = UNIV</code>.</p>",
+        "id": 575822994,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1772038398
+    },
+    {
+        "content": "<p>Unfortunately, after a couple of days of struggling with relator and trying to define alternative notions of map (even dropping into <code>(('a, 'b) fmap \\&lt;times&gt; 'c) set</code>, I'm starting to suspect it might not be possible. Would anyone have pointers as to how I ma convince myself of that? :) I'm unfortunately only passingly familiar with CT</p>",
+        "id": 576839667,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1772490501
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>It seems <code>isabelle vscode</code> hard codes <code>--locale en-us</code>, so switching display language within VSCodium does not work at all. How can I customise the command line arguments?</p>",
+        "id": 612816584,
+        "sender_full_name": "Ruifeng Xie",
+        "timestamp": 1785068309
+    },
+    {
+        "content": "<p>I don't know what to say ...</p>\n<p>I found the Scala source code for launching VSCode, and discovered that it hard codes the command line arguments:</p>\n<div class=\"codehilite\" data-code-language=\"Scala\"><pre><span></span><code><span class=\"w\">    </span><span class=\"kd\">val</span><span class=\"w\"> </span><span class=\"n\">args0</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">      </span><span class=\"nc\">List</span><span class=\"p\">(</span><span class=\"n\">platform_path</span><span class=\"p\">(</span><span class=\"s\">\"$ISABELLE_VSCODIUM_RESOURCES/vscodium/out/cli.js\"</span><span class=\"p\">),</span><span class=\"w\"> </span><span class=\"s\">\"--locale\"</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"s\">\"en-US\"</span><span class=\"p\">,</span>\n<span class=\"w\">        </span><span class=\"s\">\"--user-data-dir\"</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">platform_path</span><span class=\"p\">(</span><span class=\"s\">\"$ISABELLE_VSCODE_SETTINGS/user-data\"</span><span class=\"p\">),</span>\n<span class=\"w\">        </span><span class=\"s\">\"--extensions-dir\"</span><span class=\"p\">,</span><span class=\"w\"> </span><span class=\"n\">platform_path</span><span class=\"p\">(</span><span class=\"s\">\"$ISABELLE_VSCODE_SETTINGS/extensions\"</span><span class=\"p\">))</span>\n</code></pre></div>\n<p>I thought that it does not harm to try and edit this myself, and I deleted the <code>--locale</code> option (the file is read-only, so I had to force the update). I am completely shocked when I see the command <code>isabelle vscode</code> rebuild the jar file and the issue is fixed.</p>\n<p>I do not know who decided to bundle a Scala SDK into the Isabelle distribution, but this is really amazing UX. Perhaps this can be fixed upstream (or there might be a reason for hard coding the locale?). Otherwise, I think this case is resolved.</p>",
+        "id": 612817244,
+        "sender_full_name": "Ruifeng Xie",
+        "timestamp": 1785069182
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1177582\">Ruifeng Xie</span> has marked this topic as resolved.</p>",
+        "id": 612817266,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1785069209
+    }
+]

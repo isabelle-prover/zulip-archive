@@ -1,0 +1,148 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2026-RC3 missing &quot;verit&quot; facts that wo... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.20missing.20.22verit.22.20facts.20that.20wo.2E.2E.2E.html">[isabelle] Isabelle2026-RC3 missing &quot;verit&quot; facts that wo...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="629378850"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%20missing%20%22verit%22%20facts%20that%20wo.../near/629378850" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.20missing.20.22verit.22.20facts.20that.20wo.2E.2E.2E.html#629378850">(Oct 05 2026 at 22:31)</a>:</h4>
+<p><strong>From:</strong> "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Isabelle2026-RC3 missing "verit" facts that worked in Isabelle 2026-Rc0</p>
+<p>I downloaded Isabelle2026-RC3 and tried it on something I had been working on.<br>
+Some proofs that previously worked do not, now, due to facts that seem no longer<br>
+to be known.  I tried to repair one of these using sledgehammer (which was probably<br>
+what I used to find the first proof), but it fails.</p>
+<p>- Gene Stark</p>
+<p>lemma rank_uminus [simp]:<br>
+  shows "ρ[- f] = ρ[f]"<br>
+    by (metis nle_le pointwise_op_def rank_pointwise_op uminus_FR_def verit_minus_simplify(4))</p>
+<p>"verit_minus_simplify(4)" is no longer known</p>
+<p>lemma leq_FR_antisymmetric:<br>
+  assumes "leq_FR f g ∧ leq_FR g f"<br>
+  shows "f = g"<br>
+    unfolding leq_FR_def<br>
+    by (meson antisym_conv1 assms eq_iff_eq_val leq_FR_def order_less_irrefl verit_la_disequality)</p>
+<p>"verit_la_disequality" is no longer known</p>
+<p>lemma leq_FR_pointwise_op:<br>
+  assumes "⋀x y. x ≤ y ⟹ h x ≤ h y"<br>
+  and "leq_FR f g"<br>
+  shows "leq_FR (pointwise_op h f) (pointwise_op h g)"<br>
+    using assms<br>
+    by (metis leq_FR_def val_pointwise_op verit_comp_simplify1(2))</p>
+<p>"verit_comp_simplify1(2)" is no longer known</p>
+<p>On 10/5/26 17:21, Makarius wrote:</p>
+<blockquote>
+<p>Dear Isabelle users,</p>
+<p>the Isabelle2026 release train has arrived at station "RC3", see also <a href="https://sketis.net/2026/release-candidates-for-">https://sketis.net/2026/release-candidates-for-</a><br>
+isabelle2026 for details. A few minor technical problems still need to be sorted out, and some documentations needs<br>
+final updates.</p>
+<p>The main Isabelle website is <a href="https://isabelle.in.tum.de/website-Isabelle2026-RC3">https://isabelle.in.tum.de/website-Isabelle2026-RC3</a></p>
+<p>We now also have regular afp-2026 to go with it: <a href="https://foss.heptapod.net/isa-afp/afp-2026">https://foss.heptapod.net/isa-afp/afp-2026</a></p>
+<p>Any feedback about Isabelle release candidates should be posted with a meaningful Mail subject, not just a clone of this<br>
+announcement.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="629393598"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%20missing%20%22verit%22%20facts%20that%20wo.../near/629393598" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.20missing.20.22verit.22.20facts.20that.20wo.2E.2E.2E.html#629393598">(Oct 06 2026 at 00:26)</a>:</h4>
+<p><strong>From:</strong> "Lammich, Peter (UT-EEMCS)" &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Isabelle2026-RC3 missing "verit" facts that worked in Isabelle 2026-Rc0</p>
+<p>Hello</p>
+<p>Yes, sledgehammer unfortunately sometimes selects obviously internal names for proofs. This causes brittle proofs. In most cases sledgehammering again works. Last resort: find out the lemma statement using the old version, and then use find theorems to find it in the new version</p>
+<p>Peter</p>
+<p>Sent from Outlook for Android&lt;<a href="https://aka.ms/AAb9ysg">https://aka.ms/AAb9ysg</a>&gt;</p>
+<hr>
+<p>From: <a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users-request@lists.cam.ac.uk">cl-isabelle-users-request@lists.cam.ac.uk</a>&gt; on behalf of Eugene W. Stark &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+Sent: Monday, 05 October 2026 23:31:34<br>
+To: <a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a> &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+Subject: [isabelle] Isabelle2026-RC3 missing "verit" facts that worked in Isabelle 2026-Rc0</p>
+<p>I downloaded Isabelle2026-RC3 and tried it on something I had been working on.<br>
+Some proofs that previously worked do not, now, due to facts that seem no longer<br>
+to be known.  I tried to repair one of these using sledgehammer (which was probably<br>
+what I used to find the first proof), but it fails.</p>
+<p>- Gene Stark</p>
+<p>lemma rank_uminus [simp]:<br>
+  shows "ρ[- f] = ρ[f]"<br>
+    by (metis nle_le pointwise_op_def rank_pointwise_op uminus_FR_def verit_minus_simplify(4))</p>
+<p>"verit_minus_simplify(4)" is no longer known</p>
+<p>lemma leq_FR_antisymmetric:<br>
+  assumes "leq_FR f g ∧ leq_FR g f"<br>
+  shows "f = g"<br>
+    unfolding leq_FR_def<br>
+    by (meson antisym_conv1 assms eq_iff_eq_val leq_FR_def order_less_irrefl verit_la_disequality)</p>
+<p>"verit_la_disequality" is no longer known</p>
+<p>lemma leq_FR_pointwise_op:<br>
+  assumes "⋀x y. x ≤ y ⟹ h x ≤ h y"<br>
+  and "leq_FR f g"<br>
+  shows "leq_FR (pointwise_op h f) (pointwise_op h g)"<br>
+    using assms<br>
+    by (metis leq_FR_def val_pointwise_op verit_comp_simplify1(2))</p>
+<p>"verit_comp_simplify1(2)" is no longer known</p>
+<p>On 10/5/26 17:21, Makarius wrote:</p>
+<blockquote>
+<p>Dear Isabelle users,</p>
+<p>the Isabelle2026 release train has arrived at station "RC3", see also <a href="https://sketis.net/2026/release-candidates-for-">https://sketis.net/2026/release-candidates-for-</a><br>
+isabelle2026 for details. A few minor technical problems still need to be sorted out, and some documentations needs<br>
+final updates.</p>
+<p>The main Isabelle website is <a href="https://isabelle.in.tum.de/website-Isabelle2026-RC3">https://isabelle.in.tum.de/website-Isabelle2026-RC3</a></p>
+<p>We now also have regular afp-2026 to go with it: <a href="https://foss.heptapod.net/isa-afp/afp-2026">https://foss.heptapod.net/isa-afp/afp-2026</a></p>
+<p>Any feedback about Isabelle release candidates should be posted with a meaningful Mail subject, not just a clone of this<br>
+announcement.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="630193773"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%20missing%20%22verit%22%20facts%20that%20wo.../near/630193773" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.20missing.20.22verit.22.20facts.20that.20wo.2E.2E.2E.html#630193773">(Oct 08 2026 at 16:00)</a>:</h4>
+<p><strong>From:</strong> Hanna Elif Lachnitt &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Isabelle2026-RC3 missing "verit" facts that worked in   Isabelle 2026-Rc0</p>
+<p>Hi Gene,</p>
+<p>All the facts have been renamed from verit_&lt;name&gt; to alethe_&lt;name&gt;. The veriT solver's output format has been refined and is now called Alethe and also used by cvc5.</p>
+<p>To avoid issues like this one in the future, the lemmas have now been marked as [no_atp], which is why Sledgehammer won't find them.</p>
+<p>Best,<br>
+Hanna Lachnitt</p>
+<hr>
+<p>Message-ID: &lt;<a href="mailto:354c4b1a-a8cf-4b99-a4b6-c55167bafcd9@starkeffect.com">354c4b1a-a8cf-4b99-a4b6-c55167bafcd9@starkeffect.com</a>&gt;<br>
+Date: Mon, 5 Oct 2026 18:31:34 -0400<br>
+From: "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;<br>
+Subject: [isabelle] Isabelle2026-RC3 missing "verit" facts that worked in<br>
+ Isabelle 2026-Rc0</p>
+<p>I downloaded Isabelle2026-RC3 and tried it on something I had been working on.<br>
+Some proofs that previously worked do not, now, due to facts that seem no<br>
+longer<br>
+to be known.  I tried to repair one of these using sledgehammer (which was<br>
+probably<br>
+what I used to find the first proof), but it fails.</p>
+<p>- Gene Stark</p>
+<p>lemma rank_uminus [simp]:<br>
+  shows "ρ[- f] = ρ[f]"<br>
+    by (metis nle_le pointwise_op_def rank_pointwise_op uminus_FR_def<br>
+verit_minus_simplify(4))</p>
+<p>"verit_minus_simplify(4)" is no longer known</p>
+<p>lemma leq_FR_antisymmetric:<br>
+  assumes "leq_FR f g ∧ leq_FR g f"<br>
+  shows "f = g"<br>
+    unfolding leq_FR_def<br>
+    by (meson antisym_conv1 assms eq_iff_eq_val leq_FR_def order_less_irrefl<br>
+verit_la_disequality)</p>
+<p>"verit_la_disequality" is no longer known</p>
+<p>lemma leq_FR_pointwise_op:<br>
+  assumes "⋀x y. x ≤ y ⟹ h x ≤ h y"<br>
+  and "leq_FR f g"<br>
+  shows "leq_FR (pointwise_op h f) (pointwise_op h g)"<br>
+    using assms<br>
+    by (metis leq_FR_def val_pointwise_op verit_comp_simplify1(2))</p>
+<p>"verit_comp_simplify1(2)" is no longer known</p>
+
+
+
+<hr><p>Last updated: Oct 11 2026 at 04:42 UTC</p>
+</html>

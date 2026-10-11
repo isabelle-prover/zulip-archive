@@ -1,0 +1,140 @@
+[
+    {
+        "content": "<p>When renaming a file, or changing the capitalization (and then of course also adapting the theory name), Isabelle will complain <br>\n`bad theory name [new name] for file [old file name.thy].<br>\nFor Isabelle/jEdit it was sufficient to delete the corresponding ~ file.<br>\nFor Isabelle/Vscode i still get the error, even after a restart of Isabelle/Vscode.<br>\nWhat can i do?</p>",
+        "id": 508004207,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742904439
+    },
+    {
+        "content": "<p>logging out didn't help either.</p>",
+        "id": 508004529,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742904534
+    },
+    {
+        "content": "<p>I think your error is somewhere else, Isabelle/VSCode doesn't try to remember a file name.</p>",
+        "id": 508005414,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742904810
+    },
+    {
+        "content": "<p>perhaps you are loading a session and the name is in the ROOT file?</p>",
+        "id": 508005476,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742904830
+    },
+    {
+        "content": "<p>Deleting the file, closing Isabelle/VsCode, opening Isabelle/Vscode, then restoring the theory (in my case i did it via git) worked</p>",
+        "id": 508005493,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742904835
+    },
+    {
+        "content": "<p>idk what a session is, but the header of my file looks like this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Chomsky_Schuetzenberger</span>\n<span class=\"w\">  </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"s\">\"../CFG\"</span><span class=\"w\"> </span><span class=\"s\">\"../CFL\"</span><span class=\"w\"> </span><span class=\"s\">\"../Parse_Tree\"</span><span class=\"w\"> </span><span class=\"s\">\"Finite_Automata_Not_HF\"</span><span class=\"w\"> </span><span class=\"s\">\"$AFP/Regular-Sets/Regexp_Constructions\"</span>\n<span class=\"k\">begin</span>\n</code></pre></div>",
+        "id": 508005897,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742904937
+    },
+    {
+        "content": "<p>I also use Isabelle/vscodes <code>Open folder</code> instead of only this one file</p>",
+        "id": 508006033,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742904967
+    },
+    {
+        "content": "<p>Maybe there is a problem in your file system with case sensitivity?</p>",
+        "id": 508007914,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742905496
+    },
+    {
+        "content": "<p>E.g. on Macos file names are case insensitive so maybe your change didn't really work?</p>",
+        "id": 508008042,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742905527
+    },
+    {
+        "content": "<p>I have confirmed, that this also happens, when one only opens one file via Vscode.<br>\nWhat works when not using the <code>open folder</code> feature, is to close all editors of the renamed file, and then restart vscode</p>",
+        "id": 508008448,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742905634
+    },
+    {
+        "content": "<p>I am using macOS atm, but im pretty sure i also had such a problem on windows before.</p>",
+        "id": 508008556,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742905666
+    },
+    {
+        "content": "<p>also i renamed the file using github, so idk what happens on macOS then</p>",
+        "id": 508008681,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742905692
+    },
+    {
+        "content": "<p>Let me hop on windows real quick</p>",
+        "id": 508008720,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742905708
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"768294\">Moritz R</span> <a href=\"#narrow/channel/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60/near/508008681\">said</a>:</p>\n<blockquote>\n<p>also i renamed the file using github, so idk what happens on macOS then</p>\n</blockquote>\n<p>This might be the problem -- no idea what git does in this situation</p>",
+        "id": 508008809,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742905731
+    },
+    {
+        "content": "<p>Off-topic: Usually imports are session-qualified rather than using paths with environment variables</p>",
+        "id": 508009147,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742905813
+    },
+    {
+        "content": "<blockquote>\n<p>Off-topic: Usually imports are session-qualified rather than using paths with environment variables</p>\n</blockquote>\n<p>i'm not sure what session-qualified means, but you mean i shouldn't use $AFP ? What is a better option?</p>",
+        "id": 508009869,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742906000
+    },
+    {
+        "content": "<p>\"&lt;sessionname&gt;.&lt;theoryname&gt;\"</p>",
+        "id": 508010722,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742906257
+    },
+    {
+        "content": "<p>I am actually surprised that the import with $AFP still work. Isabelle is now very strict on checking that you are using the session-qualified right if you have a ROOT file (and you should have one).</p>",
+        "id": 508011280,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742906432
+    },
+    {
+        "content": "<p>Ok, so on windows and macOS, if you use finder/explorer to rename the file everything works as expected.</p>\n<p>On both systems, pulling a rename - e.g. someone else renamed it, pushed it into a github and you pulled it -<br>\nwill get the mentioned error.</p>\n<hr>\n<p><strong>FIX:</strong><br>\nWhat seems to work reliably, is to use <br>\n<code>File -&gt; Close Folder</code>, <strong>then</strong> restart Isabelle/VSCode.<br>\nYou might have to select the file again, as it will still have the old file in the editor panel (idk where it saves that).</p>\n<hr>",
+        "id": 508012522,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742906798
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60/near/508011280\">said</a>:</p>\n<blockquote>\n<p>I am actually surprised that the import with $AFP still work. Isabelle is now very strict on checking that you are using the session-qualified right if you have a ROOT file (and you should have one).</p>\n</blockquote>\n<p>Well i dont know what a root file is, so i guess thats why my imports work?</p>",
+        "id": 508012788,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742906865
+    },
+    {
+        "content": "<p><a href=\"https://isabelle.in.tum.de/doc/system.pdf\">https://isabelle.in.tum.de/doc/system.pdf</a>, chapter 2; although the two slides from <a href=\"http://cl-informatik.uibk.ac.at/teaching/ss24/itpIsa/slides/12x1.pdf\">http://cl-informatik.uibk.ac.at/teaching/ss24/itpIsa/slides/12x1.pdf</a> are probably as useful as the description in the system manual</p>",
+        "id": 508013337,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742907010
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"768294\">Moritz R</span> <a href=\"#narrow/channel/202961-General/topic/Renaming.20a.20.2Ethy.20file.20gives.20.60bad.20theory.20name.60/near/508012522\">said</a>:</p>\n<blockquote>\n<p>Ok, so on windows and macOS, if you use finder/explorer to rename the file everything works as expected.</p>\n<p>On both systems, pulling a rename - e.g. someone else renamed it, pushed it into a github and you pulled it -<br>\nwill get the mentioned error.</p>\n<hr>\n<p><strong>FIX:</strong><br>\nWhat seems to work reliably, is to use <br>\n<code>File -&gt; Close Folder</code>, <strong>then</strong> restart Isabelle/VSCode.<br>\nYou might have to select the file again, as it will still have the old file in the editor panel (idk where it saves that).</p>\n<hr>\n</blockquote>\n<p>This looks like a VSCode problem then, where it keeps the file cached when in reality it was changed on disk but only if the inode didn't change. This wouldn't have anything to do with Isabelle except that wer're still using an older version -- maybe it's fixed on newer VSCode versions</p>",
+        "id": 508016115,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742907731
+    },
+    {
+        "content": "<p>Yes, looks a lot like this issue, that isn't fixed in our version <a href=\"https://github.com/microsoft/vscode/issues/161743\">https://github.com/microsoft/vscode/issues/161743</a></p>",
+        "id": 508046632,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742914488
+    }
+]

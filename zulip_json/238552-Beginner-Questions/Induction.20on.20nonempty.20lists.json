@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p>In Isar, I'm trying to do induction over nonempty lists. I've made up a tiny example reflecting this problem: show that the sum of a nonempty list of positive integers is in fact positive.  I'd like to do this <em>without</em> defining the sum of an empty list, because in my actual use-case, there's no reasonable way to define the function-value for an empty list. </p>\n<p>I wrote the following definitions:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Scratch</span>\n<span class=\"w\">   </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">Complex_Main</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">listsum</span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(int list) ⇒ int\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"listsum [] = undefined\"</span>\n<span class=\"o\">|</span><span class=\"w\"> </span><span class=\"s\">\"listsum [n] = n\"</span>\n<span class=\"o\">|</span><span class=\"w\"> </span><span class=\"s\">\"listsum (n # ns) = n + listsum ns\"</span>\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">good</span><span class=\"o\">::</span><span class=\"s\">\"(int list) ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"good [] = undefined\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">\"good [n] = (n &gt; 0)\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">\"good (n # ns) = ((n &gt; 0) ∧ (good ns))\"</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"good ns ⟹ listsum ns &gt; 0\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">induction</span><span class=\"w\"> </span><span class=\"n\">ns</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">case</span><span class=\"w\"> </span><span class=\"n\">Nil</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"k\">case</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"k\">next</span>\n<span class=\"w\">  </span><span class=\"k\">case</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">Cons</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"n\">ns</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"o\">?</span><span class=\"k\">case</span><span class=\"w\"> </span><span class=\"gr\">sorry</span>\n<span class=\"k\">qed</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>Isabelle offered up the usual induction proof-structure (<code>case Nil</code> and <code>case (Cons a ns)</code>) but that obviously isn't the way to go here, because the lemma's assertion isn't even true for the <code>Nil</code> case. </p>\n<p>Programming and Proving doesn't seem to discuss this particular problem, so I'm at a bit of a loss.</p>",
+        "id": 572218217,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1770314952
+    },
+    {
+        "content": "<p>You may want to try to add the assumption that ns is non-empty to the lemma and then try: <code>proof (induction ns rule: list_nonempty_induct)</code>. You can find such specialized induction rules using e.g. <code>find_theorems name: induct name: list</code>.</p>",
+        "id": 572219939,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1770315503
+    },
+    {
+        "content": "<p>Thanks; that does, indeed, seem to work. And thanks for the tip about finding specialized induction rules --- \"where to look\" and \"how to look\" are my biggest beginning-user problems at this point.</p>",
+        "id": 572221203,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1770315906
+    },
+    {
+        "content": "<p>You can find a short tutorial on <code>find_theorems</code> here: <a href=\"https://isabelle.systems/cookbook/src/commands/\">https://isabelle.systems/cookbook/src/commands/</a></p>",
+        "id": 572221776,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1770316089
+    },
+    {
+        "content": "<p>I just want to point here that knowing that the assumption <code>good ns</code> in the <code>Nil</code> case, i.e. when <code>ns = []</code> only lets us conclude that <code>true = good [] = undefined</code> which is unhelpful because we can't really say anything about <code>undefined</code>. This is why you need an extra nonempty assumption. I recall getting tripped up on <code>undefined</code> like so when I was newer to Isabelle.</p>\n<p>Regarding search, I also recommend using the <a href=\"https://search.isabelle.in.tum.de/#search\">Find Facts search engine</a>, as it lets you do a more fuzzy search (think google search) over everything in the core libraries and the AFP. On the other hand, <code>find_theorems</code> is much better for targeted searches where you already have a pattern in mind, but it only searches over those theories which you already imported (directly or transitively).</p>",
+        "id": 572279004,
+        "sender_full_name": "Joe Watt",
+        "timestamp": 1770341736
+    },
+    {
+        "content": "<p>I would like to also note that in case your theorem state should seem to suggest that using functional induction via <code>good.induct</code> seems very natural to me.</p>",
+        "id": 572301829,
+        "sender_full_name": "irvin",
+        "timestamp": 1770359235
+    },
+    {
+        "content": "<p>Joe Watt: \"I just want to point here that knowing that the assumption <code>good ns</code> in the <code>Nil</code> case, i.e. when <code>ns = []</code> only lets us conclude that <code>true = good [] = undefined</code> which is unhelpful because we can't really say anything about <code>undefined</code>.\"</p>\n<p>You're completely right... I was trying to write an example parallel to my actual proof, and screwed up -- I should have written <code>good[] = False</code>, which is what I <em>did</em> write in the actual proof. </p>\n<p>Thanks for the pointer to \"Find Facts\" -- I'll have to give that a try.</p>",
+        "id": 572344383,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1770374636
+    },
+    {
+        "content": "<p>Irvin: I don't know what 'functional induction' is, and a search in Programming and Proving doesn't yield anything. Can you perhaps show what a \"functional induction\" proof looks like in this simple case, after altering my definition of <code>good</code> to say <code>good [] = False</code> ?</p>",
+        "id": 572344932,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1770374802
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"699541\">John  Hughes</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Induction.20on.20nonempty.20lists/near/572344932\">said</a>:</p>\n<blockquote>\n<p>Irvin: I don't know what 'functional induction' is, and a search in Programming and Proving doesn't yield anything. Can you perhaps show what a \"functional induction\" proof looks like in this simple case, after altering my definition of <code>good</code> to say <code>good [] = false</code> ?</p>\n</blockquote>\n<p>I don't know it as functional induction but as computation induction. Anyways, it is the induction scheme that corresponds to the recursion scheme of a recursively defined function. For a function <code>f</code> the computation induction scheme is called <code>f.induct</code>.</p>",
+        "id": 572345218,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770374900
+    },
+    {
+        "content": "<p>Lukas: As so often happens with Isabelle stuff, I feel as if I'm reading interesting things in a language that I don't actually know. I'll see whether a search on \"computation induction\" leads to any insight. I've tried typing <code>thm good.induct</code> and the resulting thing doesn't mean much to me; I'm a little surprised to not see <code>good</code> anywhere in the output, for instance. Perhaps when I'm a bit more awake it'll mean more. but thanks for the pointer.</p>\n<p>Ahh...I see it in Section 2.3.4 of P&amp;P. I'm off to read that carefully!</p>",
+        "id": 572345803,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1770375091
+    },
+    {
+        "content": "<p>The function <code>good</code> does not appear in the output since the induction rule is just derived from the <em>recursion scheme</em>. The recursion scheme is independent of the function itself. For example, if I have two functions defined as <code>f 0 = 0  | f n = Suc (f (n -1))</code> and <code>g 0 = 0 | g n = Suc (g (n -1))</code> both of them have the same recursion scheme and you get the same induction rule. In fact, for this simple example the induction rule <code>f.induct</code> is equivalent to <code>nat.induct</code>.</p>",
+        "id": 572346994,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1770375450
+    },
+    {
+        "content": "<p>I think this is a relevant resource on functional induction <a href=\"https://link.springer.com/chapter/10.1007/BFb0028400\">https://link.springer.com/chapter/10.1007/BFb0028400</a></p>",
+        "id": 572370484,
+        "sender_full_name": "irvin",
+        "timestamp": 1770382843
+    }
+]

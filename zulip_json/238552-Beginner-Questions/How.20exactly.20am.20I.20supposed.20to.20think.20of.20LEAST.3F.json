@@ -1,0 +1,74 @@
+[
+    {
+        "content": "<p>TL;DR: When should I be using/\"unfolding\" <code>LEAST</code> and how can I use it to prove a supremum property using <code>Real.thy</code></p>\n<p>So I thought it'd be a good idea to try to learn some (rigorous!) analysis by formalizing it in HOL, using Abbott's Understanding Analysis as a place to start</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">rsup</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"rsup (X :: real set) z ≡  (∀x ∈ X. x ≤ z) ∧ (∀w. ((∀x ∈ X. x ≤ w) ⟶ z ≤ w))\"</span>\n\n<span class=\"kn\">theorem</span><span class=\"w\"> </span><span class=\"n\">lubp</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">X</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"real set\"</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"bdd_above X\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"∃z. rsup X z\"</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">unfold</span><span class=\"w\"> </span><span class=\"n\">rsup_def</span><span class=\"o\">)</span>\n<span class=\"gr\">oops</span>\n</code></pre></div>\n<p>The reason I defined <code>rsup</code> was because I wanted to define a least-upper-bound property as it would usually be defined in a textbook, not using the <code>LEAST</code> operator (more on this below). If I were to use the latter, it would be something on the lines of <code>∃z. z = Sup X</code> where <code>Sup ?X = (LEAST z. ∀x∈?X. x ≤ z)</code>. I doubt that this is the right way of saying \"a least upper bound exists\". If so, what should I be using?</p>\n<p>From what I understand from reading the manual, LEAST is guaranteed to exist, but if there is more than one, we can't \"unfold\" LEAST, if that makes sense. <br>\nFrom logics.pdf (in the documentation):</p>\n<blockquote>\n<p>so Least is always meaningful, but may yield nothing useful in case there is not a unique least element satisfying P. </p>\n</blockquote>\n<p>I presume then I must show the uniqueness of the least upper bound (which is trivial given antisymmetry and that the reals satisfy the <code>poset</code> typeclass if I recall)</p>\n<p>How exactly am I supposed to use (and when should I use) LEAST? via <code>auto</code>, I can easily prove <code>bdd_above (X :: real set) ==&gt; \\exists z. z = Sup X</code>. It's a bit too easy, to be honest, so I'm probably not proving the right statement. Suprisingly, the converse doesn't hold? I'm able to <code>nitpick</code> <code>\\exists z. z = Sup X ==&gt; bdd_above (X :: real set)</code>. Why is this the case? </p>\n<p>If I want to use the least-upper-bound property as I would doing pen-and-paper real analysis, is <code>rsup</code> the right way to go?</p>",
+        "id": 618328662,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787568475
+    },
+    {
+        "content": "<p>others may be able to give a deeper explanation but here I think are the main points I can see:</p>\n<p>1) every type is inhabited in Isabelle, and with choice, you can pick an element from any type.</p>\n<p>2) as you suspect, the statements you've proved are \"trivial\" in that <code>\\exists z. z = Sup X</code> is trivially witnessed by <code>z = Sup X</code>.</p>\n<p>3) <code>Sup X</code> is always \"meaningful\" in the sense that <code>Sup</code> is a total function and will always return some element of the type, in this case the reals. </p>\n<p>However, it may not be \"useful\" in that it may not have the expected properties you are looking for in the supremum (in case the supremum doesn't exist).</p>",
+        "id": 618911798,
+        "sender_full_name": "Yong Kiam",
+        "timestamp": 1787625658
+    },
+    {
+        "content": "<p>Yeah, that confirms my suspicions. How do I encode the notion that a supremum may not exist</p>",
+        "id": 618924375,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787632893
+    },
+    {
+        "content": "<p>Follow up question: how would I write out a statement such as \"this set of reals has no supremum\" in a logic of total functions?</p>\n<p>Like, how would I say that \"Sup X\" returns no useful value?</p>",
+        "id": 619127493,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787691298
+    },
+    {
+        "content": "<p>if Sup is assumed to be total</p>",
+        "id": 619127535,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787691308
+    },
+    {
+        "content": "<p>You can't use <code>Sup</code> to write statements about the existence of suprema, because <code>Sup</code> is total, like any function in Isabelle.<br>\nYour function <code>rsup</code> is perfect for this. With it, you can write <code>¬ rsup UNIV z</code> to express that the set of reals (<code>UNIV</code>) has no supremum.</p>\n<blockquote>\n<p>Like, how would I say that \"Sup X\" returns no useful value?</p>\n</blockquote>\n<p>For this, you need to formalize what you mean by \"useful\". Presumably, you mean that <code>Sup X</code> actually fulfils the properties of a supremum. You can express this via <code>rsup X (Sup X)</code>, because <code>rsup</code> already captures the properties of a supremum.<br>\nYou could go on to prove <code>rsup X (Sup X) ⟷ bdd_above X</code>. You could also prove the uniqueness of the supremum as <code>rsup X z ⟹ rsup X w ⟹ z = w</code>.</p>",
+        "id": 619134570,
+        "sender_full_name": "Asterix Gallier",
+        "timestamp": 1787693979
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1090031\">Asterix Gallier</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/How.20exactly.20am.20I.20supposed.20to.20think.20of.20LEAST.3F/near/619134570\">said</a>:</p>\n<blockquote>\n<p>Your function <code>rsup</code> is perfect for this. With it, you can write <code>¬ rsup UNIV z</code> to express that the set of reals (<code>UNIV</code>) has no supremum.</p>\n</blockquote>\n<p>oh wait so UNIV is a set that contains an entire domain of discourse? </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">abbreviation</span><span class=\"w\"> </span><span class=\"n\">UNIV</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a set\"</span>\n<span class=\"w\">  </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"UNIV ≡ top\"</span>\n</code></pre></div>\n<p>where I presume it is ordered by set inclusion. </p>\n<p>Also, since people have been formalizing analysis in isabelle for at least 25 years, how come this idea of \"there is no supremum\" isn't there? Surely someone's done something on these lines.</p>",
+        "id": 619202240,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787726688
+    },
+    {
+        "content": "<p>Yes, <code>UNIV :: 'a set</code> contains all values of type <code>'a</code>.<br>\nIf you're interested, look up the theorem <code>complete_real</code> in <code>Real.thy</code>. It contains most of the work for proving that a supremum of a bounded-above set of reals always exists. Below it, there is an <code>instantiation real :: linear_continuum</code>, which uses this result to prove more properties. In particular, <code>linear_continuum</code> is a subclass of <code>conditionally_complete_lattice</code>, which contains the supremum properties you'd expect for the reals.<br>\nAs for \"there is no supremum\", there is a (technically) stronger statement which has been proven: The set of reals isn't bounded. In <code>Real.thy</code>, <code>real</code> is proven to be a <code>linordered_field</code> (another type class), which in <code>Fields.thy</code> is shown to be a subclass of <code>unbounded_dense_linorder</code>, which in turn is a subclass of <code>no_top</code>, which assumes <code>no_top.gt_ex: \"∃y. x &lt; y\"</code>.<br>\nIf you want to find these things, you can use Ctrl+F and select \"Search in: Directory\" with the HOL directory of your Isabelle installation. Then, you can type something like <code>instantiation real ::</code> to see what type classes <code>real</code> is part of. Additionally, you can use the \"Query\" panel at the bottom to semantically search for theorems (you can use underscores as placeholders, i.e. you could search for <code>\"∃_. _ &lt; _\"</code> and get some results. For me, Query doesn't work when I'm looking at files outside of my project, for some reason.</p>",
+        "id": 619235158,
+        "sender_full_name": "Asterix Gallier",
+        "timestamp": 1787736171
+    },
+    {
+        "content": "<p>Thanks! <span aria-label=\"sweat smile\" class=\"emoji emoji-1f605\" role=\"img\" title=\"sweat smile\">:sweat_smile:</span> I must confess I did look at <code>linear_continuum</code>but I think i missed <code>unbounded_dense_linorder</code>, that one's on me</p>",
+        "id": 619271237,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787747402
+    },
+    {
+        "content": "<p>I was skimming Kaliczyk and Urban's Quotients Revisites for Isabelle/HOL</p>\n<p>And I wanted to ask if that's an implementation that's currently being used.</p>\n<p>If so, I want to break down the implementation details here:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"c\">(* This seems clear to me *)</span>\n<span class=\"w\"> </span><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">vanishes</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(nat ⇒ rat) ⇒ bool\"</span>\n<span class=\"w\">  </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"vanishes X ⟷ (∀r&gt;0. ∃k. ∀n≥k. ¦X n¦ &lt; r)\"</span>\n\n<span class=\"c\">(* This is standard for anyone who has seen a Cauchy sequence before *)</span>\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">cauchy</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(nat ⇒ rat) ⇒ bool\"</span>\n<span class=\"w\">  </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"cauchy X ⟷ (∀r&gt;0. ∃k. ∀m≥k. ∀n≥k. ¦X m - X n¦ &lt; r)\"</span>\n\n\n<span class=\"c\">(* this is a bit new to me, I can convince myself this is true but I'd like to know where this comes from *)</span>\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">realrel</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"(nat ⇒ rat) ⇒ (nat ⇒ rat) ⇒ bool\"</span>\n<span class=\"w\">  </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"s\">\"realrel = (λX Y. cauchy X ∧ cauchy Y ∧ vanishes (λn. X n - Y n))\"</span>\n\n\n<span class=\"kn\">quotient_type</span><span class=\"w\"> </span><span class=\"n\">real</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ rat\"</span><span class=\"w\"> </span><span class=\"n\">/</span><span class=\"w\"> </span><span class=\"n\">partial</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">realrel</span>\n<span class=\"w\">  </span><span class=\"kp\">morphisms</span><span class=\"w\"> </span><span class=\"n\">rep_real</span><span class=\"w\"> </span><span class=\"n\">Real</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">part_equivp_realrel</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>It seems like there's a lot to break down here.<br>\nWhy is <code>realrel</code> marked as partial? <br>\nWhat are the morphisms <code>rep_real</code> and <code>Real</code>? Are those the abstraction and representation papers mentioned in Kaliczyk's paper? One takes you to the abstract representation, and the other the concrete.</p>\n<p>Why do we need <code>rule part_equivp_realrel</code></p>\n<p>Part_equivp is documented in Relations.thy as a \"John Harrison style characterization\" </p>\n<p>Ok I found this paper that defines what a partial equivalence relation is<br>\n<a href=\"https://link.springer.com/content/pdf/10.1007/BFb0028401.pdf\">https://link.springer.com/content/pdf/10.1007/BFb0028401.pdf</a></p>\n<p>Is the equivalence partial because we, in some sense, \"don't care\" that about sequences that are not Cauchy? Or is it that we cannot define equivalence for such sequences.</p>\n<p>Apparently this is what's called a \"higher-order\" quotient? Is it higher order because we're quotienting over functions (the functions themselves are first order) and not, e.g. sum or product types?</p>",
+        "id": 619625226,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787856571
+    },
+    {
+        "content": "<p>Let me know if I should move this to <a class=\"stream\" data-stream-id=\"202961\" href=\"/#narrow/channel/202961-General\">#General</a></p>",
+        "id": 619625318,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787856593
+    },
+    {
+        "content": "<p>Or better yet, should I send an email to the mailing list</p>",
+        "id": 619824981,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1787930601
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>With the goal of eventually defining PGL(3, R) (3x3 invertible matrices over the reals, where two matrices are 'the same' if one is a nonzero scalar multiple of the other), we ran into troubles almost immediately, and have distilled them down to this minimal example (replacing \"3\" with \"2\" for simplicity). The example was produced in analogy with the definition of rationals (i.e., I didn't completely understand what I was doing):</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Quo</span>\n<span class=\"w\">  </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">Main</span><span class=\"w\"> </span><span class=\"s\">\"HOL-Analysis.Finite_Cartesian_Product\"</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">type_synonym</span><span class=\"w\"> </span><span class=\"n\">t</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"(real,2) vec\"</span>\n\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">rel</span><span class=\"o\">::</span><span class=\"s\">\"t ⇒ t ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"rel x y = (x$1 = y$1)\"</span>\n\n<span class=\"kn\">quotient_type</span><span class=\"w\"> </span><span class=\"n\">q</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"t\"</span><span class=\"w\"> </span><span class=\"n\">/</span><span class=\"w\"> </span><span class=\"s\">\"rel\"</span>\n<span class=\"w\">  </span><span class=\"kp\">morphisms</span><span class=\"w\"> </span><span class=\"n\">Abs_rel</span><span class=\"w\"> </span><span class=\"n\">Rep_rel</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">metis</span><span class=\"w\"> </span><span class=\"n\">equivpI</span><span class=\"w\"> </span><span class=\"n\">reflpI</span><span class=\"w\"> </span><span class=\"n\">rel_def</span><span class=\"w\"> </span><span class=\"n\">sympI</span><span class=\"w\"> </span><span class=\"n\">transpI</span><span class=\"o\">)</span>\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>which generates <code>No map function defined for Finite_Cartesian_Product.vec. This will cause problems later on.</code> and <code>Generation of a parametrized correspondence relation failed.\nReason:  No relator for the type \"Numeral_Type.bit0\" found.</code> When I changed to <code>(real, 3) vec</code>, the second error turned into <code>.bit1</code>; when I changed to <code>(real, 4) vec</code> it changed <strong>back</strong> to <code>.bit0</code>, at which point I realized I was beyond my depth. </p>\n<p>The corresponding theory using ordered pairs (and a proof discovered by sledgehammer) actually works without errors/warnings:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Quo</span>\n<span class=\"w\">  </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">Main</span><span class=\"w\"> </span><span class=\"s\">\"HOL-Analysis.Finite_Cartesian_Product\"</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">type_synonym</span><span class=\"w\"> </span><span class=\"n\">t</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"real × real\"</span>\n\n<span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">rel</span><span class=\"o\">::</span><span class=\"s\">\"t ⇒ t ⇒ bool\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"rel ≡ %(a,b)  . %(x, y) .   (x=a)\"</span>\n\n<span class=\"kn\">quotient_type</span><span class=\"w\"> </span><span class=\"n\">q</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"t\"</span><span class=\"w\"> </span><span class=\"n\">/</span><span class=\"w\"> </span><span class=\"s\">\"rel\"</span>\n<span class=\"w\">  </span><span class=\"kp\">morphisms</span><span class=\"w\"> </span><span class=\"n\">Abs_rel</span><span class=\"w\"> </span><span class=\"n\">Rep_rel</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">metis</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">mono_tags</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">lifting</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">equivp_def</span><span class=\"w\"> </span><span class=\"n\">rel_def</span><span class=\"w\"> </span><span class=\"n\">split_beta</span><span class=\"o\">)</span>\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>but since I'll actually need the <code>vec</code> stuff for defining my matrices, and don't want to rederive all imaginable linear algebra stuff (determinants!), I'd really like to get the first version to work if that's possible. Googling for the error messages didn't yield a lot of insight, unfortunately: two were pointers to source code, and one (<a href=\"https://groups.google.com/g/fa.isabelle/c/IOc9mYXxxFo\">https://groups.google.com/g/fa.isabelle/c/IOc9mYXxxFo</a>) includes a note from Ondřej Kunčar that suggests that the two errors can be ignored, an idea that always worries me.</p>\n<p>Is there a way to make the first version work?</p>",
+        "id": 528546506,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1752429874
+    },
+    {
+        "content": "<p>The issue is that vec is not registered as a BNF and thus your quotient type fails to register as a BNF.  I do not understand BNF's enough to know whether you can register vec as a BNF but I would agree that you can ignore those warning unless you fail to define a new datatype depending on q</p>",
+        "id": 528647227,
+        "sender_full_name": "irvin",
+        "timestamp": 1752495054
+    },
+    {
+        "content": "<p>I think I must be misunderstanding. Are you saying that if I type</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">junk</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">Junk</span><span class=\"w\"> </span><span class=\"s\">\"q\"</span>\n</code></pre></div>\n<p>in the first example, and then never use the datatype <code>junk</code> again, I should be OK? </p>\n<p>Perhaps I'm mis-parsing the negatives in your last sentence. </p>\n<p>(BTW, I tried to read about BNFs a while back, and can confidently say that I also do not understand them well enough!)</p>",
+        "id": 528654704,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1752497434
+    },
+    {
+        "content": "<p>I'm saying that if you encounter failure when trying to define a new datatype that uses q, then I would bother figuring out whether I can fix this problem. Otherwise I would just ignore it.</p>",
+        "id": 528675073,
+        "sender_full_name": "irvin",
+        "timestamp": 1752503275
+    },
+    {
+        "content": "<p>Of course!...that's a much more reasonable interpretation of the sentence you wrote! Thanks for the clarification.</p>",
+        "id": 528685257,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1752506222
+    },
+    {
+        "content": "<p>Wait I might be completely wrong. I just looked at the code behind quotient_type and it does not seem to be related to bnfs at all.</p>",
+        "id": 528685628,
+        "sender_full_name": "irvin",
+        "timestamp": 1752506341
+    },
+    {
+        "content": "<p>Ok so the first error is due to vec not registered as a functor.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">map_vec</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"map_vec f g v = vec_lambda (map_fun g f (vec_nth v))\"</span>\n<span class=\"k\">functor</span><span class=\"w\"> </span><span class=\"n\">map_vec</span>\n<span class=\"w\">  </span><span class=\"k\">unfolding</span><span class=\"w\"> </span><span class=\"n\">map_vec_def</span>\n<span class=\"w\">   </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">fastforce</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">eq_id_iff</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">fastforce</span>\n</code></pre></div>\n<p>This seems fix the first issue</p>",
+        "id": 528710295,
+        "sender_full_name": "irvin",
+        "timestamp": 1752514476
+    },
+    {
+        "content": "<p>Wow...thanks. You're really going above and beyond!</p>",
+        "id": 528733443,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1752524344
+    }
+]

@@ -1,0 +1,114 @@
+<html>
+<head><meta charset="utf-8"><title>Alethe · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Alethe.html">Alethe</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="628710778"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Alethe/near/628710778" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Alethe.html#628710778">(Oct 02 2026 at 16:01)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@proof.cit.tum.de">isabelle-dev@proof.cit.tum.de</a>&gt;</p>
+<p>I am looking forward to the new support for CVC5 through Alethe. But could all those files be put in their own directory before the freeze tomorrow? We are putting up with 12 BNF files in the top level directory, but we don't need to do this again. </p>
+<p>Larry</p>
+
+
+
+<a name="628783339"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Alethe/near/628783339" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Alethe.html#628783339">(Oct 02 2026 at 21:04)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>-------- Forwarded Message --------<br>
+Subject: Re: Alethe<br>
+Date: Fri, 2 Oct 2026 23:00:29 +0200<br>
+From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+To: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;, Lawrence Paulson via isabelle-dev <br>
+&lt;<a href="mailto:isabelle-dev@proof.cit.tum.de">isabelle-dev@proof.cit.tum.de</a>&gt;</p>
+<p>On 02/10/2026 18:00, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>I am looking forward to the new support for CVC5 through Alethe. But could all those files be put in their own directory before the freeze tomorrow? We are putting up with 12 BNF files in the top level directory, but we don't need to do this again.<br>
+You probably mean the many .thy files of the HOL session: this is the proper <br>
+representation of its structure. I count session sub directories with theories <br>
+here and there as a bad thing --- it introduces an uncertainty what the <br>
+sources really are, and also makes the session hard to browse.</p>
+</blockquote>
+<p>At this stage of the release process we should also concentrate on really <br>
+important things, like the Sledgehammer observations by Peter Lammich <br>
+01-Oct-2026 (RC2).</p>
+<p>Makarius</p>
+
+
+
+<a name="628859410"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Alethe/near/628859410" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Alethe.html#628859410">(Oct 03 2026 at 09:36)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 02/10/2026 23:02, Makarius wrote:</p>
+<blockquote>
+<p>-------- Forwarded Message --------<br>
+Subject: Re: Alethe<br>
+Date: Fri, 2 Oct 2026 23:00:29 +0200<br>
+From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+To: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;, Lawrence Paulson via isabelle-dev <br>
+&lt;<a href="mailto:isabelle-dev@proof.cit.tum.de">isabelle-dev@proof.cit.tum.de</a>&gt;</p>
+<p>On 02/10/2026 18:00, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>I am looking forward to the new support for CVC5 through Alethe. But could <br>
+all those files be put in their own directory before the freeze tomorrow? We <br>
+are putting up with 12 BNF files in the top level directory, but we don't <br>
+need to do this again.<br>
+You probably mean the many .thy files of the HOL session: this is the proper <br>
+representation of its structure. I count session sub directories with theories <br>
+here and there as a bad thing --- it introduces an uncertainty what the <br>
+sources really are, and also makes the session hard to browse.<br>
+I have spent 5 more minutes o Alethe: there are approx. 10 relatively small <br>
+.thy files, most of them could be just one Alethe.thy and another one for <br>
+Alethe_Real.thy, for example. This is not relevant for the release, and won't <br>
+happen now.</p>
+</blockquote>
+</blockquote>
+<p>After the release we shall have an appointment with Hanna Lachnit to sort out <br>
+various questions. Notably about generated sources by the IsaRARE tool, the <br>
+use of 'named_theorems" etc.</p>
+<p>Makarius</p>
+
+
+
+<a name="629171153"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Alethe/near/629171153" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Alethe.html#629171153">(Oct 05 2026 at 08:43)</a>:</h4>
+<p><strong>From:</strong> Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;</p>
+<blockquote>
+<p>At this stage of the release process we should also concentrate on really important things, like the Sledgehammer observations by Peter Lammich 01-Oct-2026 (RC2).</p>
+</blockquote>
+<p>Indeed. I'm looking into the Sledgehammer issue.</p>
+<p>Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette">https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette</a></p>
+<blockquote>
+<p>On 2. Oct 2026, at 23:02, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>-------- Forwarded Message --------<br>
+Subject: Re: Alethe<br>
+Date: Fri, 2 Oct 2026 23:00:29 +0200<br>
+From: Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+To: Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;, Lawrence Paulson via isabelle-dev &lt;<a href="mailto:isabelle-dev@proof.cit.tum.de">isabelle-dev@proof.cit.tum.de</a>&gt;</p>
+<p>On 02/10/2026 18:00, Lawrence Paulson via isabelle-dev wrote:</p>
+<blockquote>
+<p>I am looking forward to the new support for CVC5 through Alethe. But could all those files be put in their own directory before the freeze tomorrow? We are putting up with 12 BNF files in the top level directory, but we don't need to do this again.<br>
+You probably mean the many .thy files of the HOL session: this is the proper representation of its structure. I count session sub directories with theories here and there as a bad thing --- it introduces an uncertainty what the sources really are, and also makes the session hard to browse.</p>
+</blockquote>
+<p>At this stage of the release process we should also concentrate on really important things, like the Sledgehammer observations by Peter Lammich 01-Oct-2026 (RC2).</p>
+<p>Makarius<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/AhaLMhu8_bUqkEUR8fMSaH_R/smime.p7s">smime.p7s</a></p>
+
+
+
+<hr><p>Last updated: Oct 11 2026 at 04:42 UTC</p>
+</html>

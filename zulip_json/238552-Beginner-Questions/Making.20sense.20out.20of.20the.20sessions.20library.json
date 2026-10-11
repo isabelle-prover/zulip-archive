@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>The HOL theory library in the Isabelle documentation page goes to a <a href=\"https://isabelle.in.tum.de/dist/library/HOL/index.html\">list of sessions</a>.<br>\nLet's say I am looking for the Finite_Map theory. How am I supposed to know that it's part of the HOL-Probability session?<br>\nThe only way I have found to find documentation is google online and grep locally. This surfaces stuff, but in isolated patches that don't allow me to get any idea of a bigger picture. <br>\nAm I missing something?</p>",
+        "id": 529683686,
+        "sender_full_name": "hmijail",
+        "timestamp": 1753012799
+    },
+    {
+        "content": "<p>Finite_Map is in HOL-Library, not HOL-Probability</p>",
+        "id": 529701799,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1753032224
+    },
+    {
+        "content": "<p>and Isabelle has no policy to move things one at a time. So when \"library\"-like version enters HOL it is usually with everything in it</p>",
+        "id": 529701990,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1753032395
+    },
+    {
+        "content": "<p>You can see it in the AFP with the number of <code>_More</code> theories</p>",
+        "id": 529707810,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1753038999
+    },
+    {
+        "content": "<p>Huh... When I googled for Finite_Map, the result I got was in session HOL-Probability:  <a href=\"https://isabelle.in.tum.de/dist/library/HOL/HOL-Probability/HOL-Library.Finite_Map.html\">HOL-Probability/HOL-Library.Finite_Map</a>. I see now:</p>\n<ul>\n<li>that it's <em>also</em> in the HOL-Library session, where it makes more sense</li>\n<li>that one file can be reflected in 2 positions of the session hierarchy</li>\n<li>that the \"HOL-Library\" part of its name seems to mean another session (at first I assumed it was a filepath)</li>\n</ul>\n<p>OK, so this all together hints at how to navigate sessions and search results a bit better... thank you.</p>",
+        "id": 529728061,
+        "sender_full_name": "hmijail",
+        "timestamp": 1753057202
+    },
+    {
+        "content": "<p>The issue is that an Isabelle session can only be built on top of one other session</p>",
+        "id": 529750490,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1753072433
+    },
+    {
+        "content": "<p>Until recently: you would usually pick the most important (slowest) one to avoid recompiling it each time you start the development</p>",
+        "id": 529750537,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1753072481
+    },
+    {
+        "content": "<p>(now you can declare in the ROOT file that some sessions should be known, so you do not have to recompile them each time... but it is not really merging several sessions and has weird side effects like you saw on Finite_Map)</p>",
+        "id": 529750606,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1753072543
+    }
+]

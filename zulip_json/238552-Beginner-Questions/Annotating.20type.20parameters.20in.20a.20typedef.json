@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>So, I was trying to use <code>typedef</code> to define a \"type of ordered pairs of type <code>'a × 'a</code> whose first and second place differ (are unequal)\". Of course, it's not guaranteed that type will be inhabited for an arbitrary <code>'a</code>, so I imposed a type restriction using a typeclass for types that have at least two terms. The <code>typedef</code> went through.</p>\n<p>However, now any time I use the resulting type, I have to use the type annotation on its type parameter, or I get a type unification error when trying to use any of the actual properties of my type.</p>\n<p>My goal in creating this type was to be able to refer to an arbitrary such ordered pair without having to explicitly impose the <code>fst a ≠ snd a</code> condition every time (I'm working on a theory file that frequently deals with such pairs, and types derived from them, and I wanted to clean things up a little). In the end, the need to use this annotation in all the lemmas and constructions for this type is very tolerable, but it strikes me as also a possible indication that I'm doing things in a clumsy way.</p>\n<p>My actual question is a bit vague: is this a sensible way of going about this? Is there a better/cleaner approach I should know about?</p>",
+        "id": 592329751,
+        "sender_full_name": "Cassidy Eastwood",
+        "timestamp": 1777657529
+    },
+    {
+        "content": "<p>You could add the constraint in a context:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">declare</span><span class=\"o\">[[</span><span class=\"n\">show_sorts</span><span class=\"o\">]]</span>\n\n<span class=\"k\">class</span><span class=\"w\"> </span><span class=\"n\">non_singleton</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"n\">non_singleton</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"∃x y. x ≠ y\"</span>\n\n<span class=\"kn\">typedef</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'a</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n\">non_singleton</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"{p :: 'a × 'a . ∃x y. p = (x, y) ∧ x ≠ y}\"</span>\n<span class=\"w\">  </span><span class=\"k\">using</span><span class=\"w\"> </span><span class=\"n\">non_singleton</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n\n<span class=\"k\">context</span><span class=\"w\"> </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">dummy</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a :: non_singleton\"</span>\n<span class=\"k\">begin</span>\n\n<span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"s\">\"P (x :: 'a foo)\"</span><span class=\"w\"> </span><span class=\"c\">(*'a has the right constraint*)</span>\n<span class=\"w\">  </span><span class=\"gr\">oops</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>I think there's no way to add the sort constraint to the type defined by typedef by default (cf <a href=\"#narrow/channel/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20typedef.20with.20sorts\">this thread</a> form the mailing list)</p>",
+        "id": 592343226,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1777662097
+    },
+    {
+        "content": "<p>I see, thank you!</p>",
+        "id": 592349320,
+        "sender_full_name": "Cassidy Eastwood",
+        "timestamp": 1777664669
+    }
+]

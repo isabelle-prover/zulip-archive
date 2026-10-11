@@ -1,0 +1,126 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] conditional thy imports in ROOT files in Isabe... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20conditional.20thy.20imports.20in.20ROOT.20files.20in.20Isabe.2E.2E.2E.html">[isabelle] conditional thy imports in ROOT files in Isabe...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="629388091"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20conditional%20thy%20imports%20in%20ROOT%20files%20in%20Isabe.../near/629388091" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20conditional.20thy.20imports.20in.20ROOT.20files.20in.20Isabe.2E.2E.2E.html#629388091">(Oct 05 2026 at 23:46)</a>:</h4>
+<p><strong>From:</strong> Gerwin Klein &lt;<a href="mailto:gerwin.klein@proofcraft.systems">gerwin.klein@proofcraft.systems</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] conditional thy imports in ROOT files in Isabelle2026-RC3</p>
+<p>The new handling of theory options in ROOT files (empty theory instead of not loading the theory) is preventing us from applying this kind of pattern:</p>
+<p>theories [condition = "SKIP_DUPLICATED_PROOFS", quick_and_dirty, skip_proofs]<br>
+    "Include_C"<br>
+  theories<br>
+    "Include_C"</p>
+<p>We’re doing that to speed up development builds significantly when the dependencies of theory Include_C are already checked in other sessions. Of course we do want them to be properly checked for “real” proof check runs when we are not developing and SKIP_DUPLICATED_PROOFS is off.</p>
+<p>Have others run into this? What are our options?</p>
+<p>Cheers,<br>
+Gerwin</p>
+
+
+
+<a name="630251378"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20conditional%20thy%20imports%20in%20ROOT%20files%20in%20Isabe.../near/630251378" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20conditional.20thy.20imports.20in.20ROOT.20files.20in.20Isabe.2E.2E.2E.html#630251378">(Oct 08 2026 at 19:51)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] conditional thy imports in ROOT files in Isabelle2026-RC3</p>
+<p>On 06/10/2026 01:46, Gerwin Klein wrote:</p>
+<blockquote>
+<p>The new handling of theory options in ROOT files (empty theory instead of not loading the theory) is preventing us from applying this kind of pattern:</p>
+<p>theories [condition = "SKIP_DUPLICATED_PROOFS", quick_and_dirty, skip_proofs]<br>
+     "Include_C"<br>
+   theories<br>
+     "Include_C"</p>
+<p>We’re doing that to speed up development builds significantly when the dependencies of theory Include_C are already checked in other sessions. Of course we do want them to be properly checked for “real” proof check runs when we are not developing and SKIP_DUPLICATED_PROOFS is off.</p>
+</blockquote>
+<p>That is a very strange pattern, not to call it abuse.</p>
+<p>I have occasionally thought about improving "isabelle build" to skip proofs <br>
+from theories from imported sessions on demand, but it would require yet <br>
+another round of refinement of this increasingly complex tool environment. <br>
+That will happen eventually.</p>
+<p>For now the main observation is that the re-interpreted "condition" for <br>
+theories is conceptually close to old skip_proofs. Thus the following change <br>
+on isabelle-release will help on the spot:</p>
+<p>changeset:   85780:a06cb1ccadaf<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Thu Oct 08 17:35:04 2026 +0200<br>
+files:       NEWS etc/options src/Doc/System/Sessions.thy <br>
+src/Pure/Build/build.ML src/Pure/Build/resources.ML <br>
+src/Pure/Build/resources.scala src/Pure/Isar/toplevel.ML <br>
+src/Pure/PIDE/document.ML src/Pure/Thy/thy_conditions.scala<br>
+description:<br>
+support system option "condition_proofs", which is analogous to "condition", <br>
+but for skipping proofs (implicit 'sorry');</p>
+<p>This will be in Isabelle2026-RC4, presumably published 14-Oct-2026. Better try <br>
+it now from the isabelle-release repository, it tell me if anything else needs <br>
+to be refined in this area (where I have spent many weeks recently).</p>
+<p>Further note that the above option "quick_and_dirty" is not required for <br>
+skip_proofs, but maybe you've had something else in mind.</p>
+<p>Makarius</p>
+
+
+
+<a name="630321814"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20conditional%20thy%20imports%20in%20ROOT%20files%20in%20Isabe.../near/630321814" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20conditional.20thy.20imports.20in.20ROOT.20files.20in.20Isabe.2E.2E.2E.html#630321814">(Oct 09 2026 at 04:43)</a>:</h4>
+<p><strong>From:</strong> Gerwin Klein &lt;<a href="mailto:gerwin.klein@proofcraft.systems">gerwin.klein@proofcraft.systems</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] conditional thy imports in ROOT files in Isabelle2026-RC3</p>
+<blockquote>
+<p>On 9 Oct 2026, at 06:51, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>For now the main observation is that the re-interpreted "condition" for theories is conceptually close to old skip_proofs. Thus the following change on isabelle-release will help on the spot:</p>
+<p>changeset:   85780:a06cb1ccadaf<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Thu Oct 08 17:35:04 2026 +0200<br>
+files:       NEWS etc/options src/Doc/System/Sessions.thy src/Pure/Build/build.ML src/Pure/Build/resources.ML src/Pure/Build/resources.scala src/Pure/Isar/toplevel.ML src/Pure/PIDE/document.ML src/Pure/Thy/thy_conditions.scala<br>
+description:<br>
+support system option "condition_proofs", which is analogous to "condition", but for skipping proofs (implicit 'sorry');</p>
+<p>This will be in Isabelle2026-RC4, presumably published 14-Oct-2026. Better try it now from the isabelle-release repository, it tell me if anything else needs to be refined in this area (where I have spent many weeks recently).</p>
+</blockquote>
+<p>Thank you, I had not expected that before the release. This is very welcome and I can confirm that it works for l4v.</p>
+<p>A further refinement could be to make skip_proofs visible on the ML side when it is set like this via condition_proofs. Currently, ML code that checks for skip_proofs explicitly, still sees skip_proofs = false. This is not urgent, though, happy to discuss after the release.</p>
+<blockquote>
+<p>Further note that the above option "quick_and_dirty" is not required for skip_proofs, but maybe you've had something else in mind.</p>
+</blockquote>
+<p>The quick_and_dirty was intended for packages like datatype, BNF, etc, which are checking quick_and_dirty explicitly to reduce work. The difference is marginal, though, not worth spending time on. It was a leftover from times when machines were a lot slower.</p>
+<p>Cheers,<br>
+Gerwin</p>
+
+
+
+<a name="630412609"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20conditional%20thy%20imports%20in%20ROOT%20files%20in%20Isabe.../near/630412609" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20conditional.20thy.20imports.20in.20ROOT.20files.20in.20Isabe.2E.2E.2E.html#630412609">(Oct 09 2026 at 12:32)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] conditional thy imports in ROOT files in Isabelle2026-RC3</p>
+<p>On 09/10/2026 06:43, Gerwin Klein wrote:</p>
+<blockquote>
+<blockquote>
+<p>On 9 Oct 2026, at 06:51, Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt; wrote:</p>
+<p>For now the main observation is that the re-interpreted "condition" for theories is conceptually close to old skip_proofs. Thus the following change on isabelle-release will help on the spot:</p>
+<p>changeset:   85780:a06cb1ccadaf</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>A further refinement could be to make skip_proofs visible on the ML side when it is set like this via condition_proofs. Currently, ML code that checks for skip_proofs explicitly, still sees skip_proofs = false. This is not urgent, though, happy to discuss after the release.</p>
+</blockquote>
+<p>The current approach does not use skip_proofs at all, but a newly introduced <br>
+concept Toplevel.skipped: the overall idea is to separate management of <br>
+command execution (by the system) from the execution itself (in user space).</p>
+<p>I was tempted to schedule skip_proofs for removal after the release. So we <br>
+could already discuss the canonical question now: What are remaining uses of <br>
+skip_proofs / Goal.skip_proofs_enabled?</p>
+<blockquote>
+<p>The quick_and_dirty was intended for packages like datatype, BNF, etc, which are checking quick_and_dirty explicitly to reduce work. The difference is marginal, though, not worth spending time on. It was a leftover from times when machines were a lot slower.<br>
+OK, this is what I suspected.</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Oct 11 2026 at 04:42 UTC</p>
+</html>

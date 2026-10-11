@@ -1,0 +1,398 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] RC2: different sledgehammer behaviour with using · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html">[isabelle] RC2: different sledgehammer behaviour with using</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="628310727"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/628310727" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#628310727">(Oct 01 2026 at 09:08)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi List,</p>
+<p>I'm currently porting stuff (myself,  not AI-assisted, to be able to <br>
+write reports like this) from 2025-2 -&gt; 2026-RC2.</p>
+<p>One pattern that I typically use when a metis/smt call fails (e.g. due <br>
+to a changed lemma name) was</p>
+<p>using &lt;lemms that still exist&gt; sledgehammer</p>
+<p>and this will quickly find the new names for the missing lemmas. Now, <br>
+however, I get a strange error message about one-line proof <br>
+reconstruction failed, then coming back with an essential one-line Isar <br>
+proof, that actually would have worked as a one-line proof.</p>
+<p>--</p>
+<p>Peter</p>
+<p>Here's my example:</p>
+<p>case False<br>
+     then show ?thesis<br>
+       using ab add.commute error_def zerosign_def<br>
+       sledgehammer</p>
+<p>Sledgehammering...<br>
+cvc5 found a proof...<br>
+vampire found a proof...<br>
+spass found a proof...<br>
+e found a proof...<br>
+verit found a proof...<br>
+cvc5: One-line proof reconstruction failed: by (smt (verit))<br>
+spass: One-line proof reconstruction failed:<br>
+   by (metis diff_add_cancel[of "valof (IEEE.round To_nearest (valof a + <br>
+valof b))" "valof a + valof b"])</p>
+<p>Isar proof (108 ms):<br>
+proof -<br>
+   show ?thesis<br>
+     by (metis False ab add.commute diff_add_cancel error_def zerosign_def)<br>
+qed<br>
+e: One-line proof reconstruction failed:<br>
+   by (metis add_minus_cancel[of "valof a + valof b" "- (- (valof a + <br>
+valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))"]<br>
+     add_minus_cancel[of "- (valof a + valof b)" "- (- (- (valof a + <br>
+valof b))) + valof (a + b)"]<br>
+     add_minus_cancel[of "- (- (valof a + valof b))" "valof (a + b)"]<br>
+     add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) </p>
+<ul>
+<li>
+<ul>
+<li>(- (valof a + valof b))"]<br>
+     add_minus_cancel[of "- (valof a + valof b)" "- (- (valof a + valof <br>
+b))"] add_minus_cancel[of "- (valof a + valof b)" "valof a + valof b"]<br>
+     diff_minus_eq_add[of "- (- (valof a + valof b)) + (- (- (- (valof a </li>
+</ul>
+</li>
+<li>
+<p>valof b))) + valof (a + b))" "- (valof a + valof b)"]<br>
+     diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof <br>
+b)) + - (- (valof a + valof b))"]<br>
+     diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof <br>
+b)) + (valof a + valof b)"])<br>
+vampire: One-line proof reconstruction failed:<br>
+   by (metis add_minus_cancel[of "valof a + valof b" "valof (IEEE.round <br>
+To_nearest (valof a + valof b))"]<br>
+     add_uminus_conv_diff[of "valof (IEEE.round To_nearest (valof a + <br>
+valof b))" "valof a + valof b"])<br>
+verit: One-line proof reconstruction failed: by (smt (verit))</p>
+</li>
+</ul>
+<p>Isar proof (969 ms):<br>
+proof -<br>
+   show ?thesis<br>
+     by (smt (verit) False ab error_def zerosign_def)<br>
+qed<br>
+Done</p>
+<p>But note that the proposed Isar-proofs are essentially one-liners, and <br>
+work when used as such, e.g., the following is perfectly valid.</p>
+<p>case False<br>
+     then show ?thesis<br>
+       using ab add.commute error_def zerosign_def<br>
+         by (metis False ab add.commute diff_add_cancel error_def <br>
+zerosign_def)</p>
+<p>and so it keeps valid when manually removing the already "used" lemmas <br>
+from the metis call.</p>
+<p>then show ?thesis<br>
+       using ab add.commute error_def zerosign_def<br>
+         by (metis diff_add_cancel )</p>
+
+
+
+<a name="629188023"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/629188023" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#629188023">(Oct 05 2026 at 09:50)</a>:</h4>
+<p><strong>From:</strong> Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;</p>
+<p>Dear Peter,</p>
+<p>Thanks for your detailed report. Unfortunately, it's not quite detailed enough -- it's not self-contained. Is there any chance that you could send us a .thy file that can be processed, ideally using "Main" as its only "import"?</p>
+<p>In the meantime, I'll see if I can reproduce the issue on my side by blindly playing around.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette">https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette</a></p>
+<blockquote>
+<p>On 1. Oct 2026, at 11:08, Peter (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Hi List,</p>
+<p>I'm currently porting stuff (myself,  not AI-assisted, to be able to write reports like this) from 2025-2 -&gt; 2026-RC2.</p>
+<p>One pattern that I typically use when a metis/smt call fails (e.g. due to a changed lemma name) was</p>
+<p>using &lt;lemms that still exist&gt; sledgehammer</p>
+<p>and this will quickly find the new names for the missing lemmas. Now, however, I get a strange error message about one-line proof reconstruction failed, then coming back with an essential one-line Isar proof, that actually would have worked as a one-line proof.</p>
+<p>--</p>
+<p>Peter</p>
+<p>Here's my example:</p>
+<p>case False<br>
+    then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+      sledgehammer</p>
+<p>Sledgehammering...<br>
+cvc5 found a proof...<br>
+vampire found a proof...<br>
+spass found a proof...<br>
+e found a proof...<br>
+verit found a proof...<br>
+cvc5: One-line proof reconstruction failed: by (smt (verit))<br>
+spass: One-line proof reconstruction failed:<br>
+  by (metis diff_add_cancel[of "valof (IEEE.round To_nearest (valof a + valof b))" "valof a + valof b"])</p>
+<p>Isar proof (108 ms):<br>
+proof -<br>
+  show ?thesis<br>
+    by (metis False ab add.commute diff_add_cancel error_def zerosign_def)<br>
+qed<br>
+e: One-line proof reconstruction failed:<br>
+  by (metis add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))"]<br>
+    add_minus_cancel[of "- (valof a + valof b)" "- (- (- (valof a + valof b))) + valof (a + b)"]<br>
+    add_minus_cancel[of "- (- (valof a + valof b))" "valof (a + b)"]<br>
+    add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) + - (- (valof a + valof b))"]<br>
+    add_minus_cancel[of "- (valof a + valof b)" "- (- (valof a + valof b))"] add_minus_cancel[of "- (valof a + valof b)" "valof a + valof b"]<br>
+    diff_minus_eq_add[of "- (- (valof a + valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))" "- (valof a + valof b)"]<br>
+    diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof b)) + - (- (valof a + valof b))"]<br>
+    diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof b)) + (valof a + valof b)"])<br>
+vampire: One-line proof reconstruction failed:<br>
+  by (metis add_minus_cancel[of "valof a + valof b" "valof (IEEE.round To_nearest (valof a + valof b))"]<br>
+    add_uminus_conv_diff[of "valof (IEEE.round To_nearest (valof a + valof b))" "valof a + valof b"])<br>
+verit: One-line proof reconstruction failed: by (smt (verit))</p>
+<p>Isar proof (969 ms):<br>
+proof -<br>
+  show ?thesis<br>
+    by (smt (verit) False ab error_def zerosign_def)<br>
+qed<br>
+Done</p>
+<p>But note that the proposed Isar-proofs are essentially one-liners, and work when used as such, e.g., the following is perfectly valid.</p>
+<p>case False<br>
+    then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+        by (metis False ab add.commute diff_add_cancel error_def zerosign_def)</p>
+<p>and so it keeps valid when manually removing the already "used" lemmas from the metis call.</p>
+<p>then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+        by (metis diff_add_cancel )</p>
+</blockquote>
+<p><a href="/user_uploads/14278/zn1sQdZY1D31N25CNqndGtcg/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="629191447"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/629191447" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#629191447">(Oct 05 2026 at 10:03)</a>:</h4>
+<p><strong>From:</strong> Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;</p>
+<p>Hi Peter, all,</p>
+<p>Good news: I was able to reproduce the problem with this example (put right at the bottom of "Sledgehammer.thy"):</p>
+<p>lemma "(x::nat) = 0 ∨ x &gt; 0"<br>
+proof (cases "x = 0")<br>
+  case False<br>
+  then show ?thesis<br>
+    using zero_less_iff_neq_zero<br>
+    sledgehammer[vampire, dont_try0]</p>
+<p>It would appear that "using ..." is ignored in the reconstruction code. I'll investigate.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette">https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette</a></p>
+<blockquote>
+<p>On 5. Oct 2026, at 11:49, Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt; wrote:</p>
+<p>Dear Peter,</p>
+<p>Thanks for your detailed report. Unfortunately, it's not quite detailed enough -- it's not self-contained. Is there any chance that you could send us a .thy file that can be processed, ideally using "Main" as its only "import"?</p>
+<p>In the meantime, I'll see if I can reproduce the issue on my side by blindly playing around.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette">https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette</a></p>
+<blockquote>
+<p>On 1. Oct 2026, at 11:08, Peter (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Hi List,</p>
+<p>I'm currently porting stuff (myself,  not AI-assisted, to be able to write reports like this) from 2025-2 -&gt; 2026-RC2.</p>
+<p>One pattern that I typically use when a metis/smt call fails (e.g. due to a changed lemma name) was</p>
+<p>using &lt;lemms that still exist&gt; sledgehammer</p>
+<p>and this will quickly find the new names for the missing lemmas. Now, however, I get a strange error message about one-line proof reconstruction failed, then coming back with an essential one-line Isar proof, that actually would have worked as a one-line proof.</p>
+<p>--</p>
+<p>Peter</p>
+<p>Here's my example:</p>
+<p>case False<br>
+    then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+      sledgehammer</p>
+<p>Sledgehammering...<br>
+cvc5 found a proof...<br>
+vampire found a proof...<br>
+spass found a proof...<br>
+e found a proof...<br>
+verit found a proof...<br>
+cvc5: One-line proof reconstruction failed: by (smt (verit))<br>
+spass: One-line proof reconstruction failed:<br>
+  by (metis diff_add_cancel[of "valof (IEEE.round To_nearest (valof a + valof b))" "valof a + valof b"])</p>
+<p>Isar proof (108 ms):<br>
+proof -<br>
+  show ?thesis<br>
+    by (metis False ab add.commute diff_add_cancel error_def zerosign_def)<br>
+qed<br>
+e: One-line proof reconstruction failed:<br>
+  by (metis add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))"]<br>
+    add_minus_cancel[of "- (valof a + valof b)" "- (- (- (valof a + valof b))) + valof (a + b)"]<br>
+    add_minus_cancel[of "- (- (valof a + valof b))" "valof (a + b)"]<br>
+    add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) + - (- (valof a + valof b))"]<br>
+    add_minus_cancel[of "- (valof a + valof b)" "- (- (valof a + valof b))"] add_minus_cancel[of "- (valof a + valof b)" "valof a + valof b"]<br>
+    diff_minus_eq_add[of "- (- (valof a + valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))" "- (valof a + valof b)"]<br>
+    diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof b)) + - (- (valof a + valof b))"]<br>
+    diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof b)) + (valof a + valof b)"])<br>
+vampire: One-line proof reconstruction failed:<br>
+  by (metis add_minus_cancel[of "valof a + valof b" "valof (IEEE.round To_nearest (valof a + valof b))"]<br>
+    add_uminus_conv_diff[of "valof (IEEE.round To_nearest (valof a + valof b))" "valof a + valof b"])<br>
+verit: One-line proof reconstruction failed: by (smt (verit))</p>
+<p>Isar proof (969 ms):<br>
+proof -<br>
+  show ?thesis<br>
+    by (smt (verit) False ab error_def zerosign_def)<br>
+qed<br>
+Done</p>
+<p>But note that the proposed Isar-proofs are essentially one-liners, and work when used as such, e.g., the following is perfectly valid.</p>
+<p>case False<br>
+    then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+        by (metis False ab add.commute diff_add_cancel error_def zerosign_def)</p>
+<p>and so it keeps valid when manually removing the already "used" lemmas from the metis call.</p>
+<p>then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+        by (metis diff_add_cancel )</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/aF7IK0zD6rF2BrgcexIhF36I/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="629214243"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/629214243" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#629214243">(Oct 05 2026 at 11:46)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 05/10/2026 12:03, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Peter, all,</p>
+<p>Good news: I was able to reproduce the problem with this example (put right at <br>
+the bottom of "Sledgehammer.thy"):</p>
+<p>lemma "(x::nat) = 0 ∨ x &gt; 0"<br>
+proof (cases "x = 0")<br>
+   case False<br>
+   then show ?thesis<br>
+     using zero_less_iff_neq_zero<br>
+     sledgehammer[vampire, dont_try0]</p>
+<p>It would appear that "using ..." is ignored in the reconstruction code. I'll <br>
+investigate.<br>
+Great. I will wait until the evening with the pending Isabelle2026-RC3 <br>
+(approx. 18:00 Royal Bavarian Time).</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<a name="629217448"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/629217448" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#629217448">(Oct 05 2026 at 11:59)</a>:</h4>
+<p><strong>From:</strong> Jasmin Blanchette &lt;<a href="mailto:jasmin.blanchette@ifi.lmu.de">jasmin.blanchette@ifi.lmu.de</a>&gt;</p>
+<p>Hi Makarius,</p>
+<p>Please apply the attached export.</p>
+<p>Best,<br>
+Jasmin</p>
+<p>--<br>
+Prof. Dr. Jasmin Blanchette<br>
+Chair of Theoretical Computer Science and Theorem Proving<br>
+Ludwig-Maximilians-Universität München<br>
+Oettingenstr. 67, 80538 München, Germany<br>
+Tel.: +49 (0)89 2180 9341<br>
+Web: <a href="https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette">https://www.tcs.ifi.lmu.de/staff/jasmin-blanchette</a></p>
+<p>￼</p>
+<blockquote>
+<p>On 1. Oct 2026, at 11:08, Peter (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Hi List,</p>
+<p>I'm currently porting stuff (myself,  not AI-assisted, to be able to write reports like this) from 2025-2 -&gt; 2026-RC2.</p>
+<p>One pattern that I typically use when a metis/smt call fails (e.g. due to a changed lemma name) was</p>
+<p>using &lt;lemms that still exist&gt; sledgehammer</p>
+<p>and this will quickly find the new names for the missing lemmas. Now, however, I get a strange error message about one-line proof reconstruction failed, then coming back with an essential one-line Isar proof, that actually would have worked as a one-line proof.</p>
+<p>--</p>
+<p>Peter</p>
+<p>Here's my example:</p>
+<p>case False<br>
+    then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+      sledgehammer</p>
+<p>Sledgehammering...<br>
+cvc5 found a proof...<br>
+vampire found a proof...<br>
+spass found a proof...<br>
+e found a proof...<br>
+verit found a proof...<br>
+cvc5: One-line proof reconstruction failed: by (smt (verit))<br>
+spass: One-line proof reconstruction failed:<br>
+  by (metis diff_add_cancel[of "valof (IEEE.round To_nearest (valof a + valof b))" "valof a + valof b"])</p>
+<p>Isar proof (108 ms):<br>
+proof -<br>
+  show ?thesis<br>
+    by (metis False ab add.commute diff_add_cancel error_def zerosign_def)<br>
+qed<br>
+e: One-line proof reconstruction failed:<br>
+  by (metis add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))"]<br>
+    add_minus_cancel[of "- (valof a + valof b)" "- (- (- (valof a + valof b))) + valof (a + b)"]<br>
+    add_minus_cancel[of "- (- (valof a + valof b))" "valof (a + b)"]<br>
+    add_minus_cancel[of "valof a + valof b" "- (- (valof a + valof b)) + - (- (valof a + valof b))"]<br>
+    add_minus_cancel[of "- (valof a + valof b)" "- (- (valof a + valof b))"] add_minus_cancel[of "- (valof a + valof b)" "valof a + valof b"]<br>
+    diff_minus_eq_add[of "- (- (valof a + valof b)) + (- (- (- (valof a + valof b))) + valof (a + b))" "- (valof a + valof b)"]<br>
+    diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof b)) + - (- (valof a + valof b))"]<br>
+    diff_minus_eq_add[of "- (valof a + valof b)" "- (- (valof a + valof b)) + (valof a + valof b)"])<br>
+vampire: One-line proof reconstruction failed:<br>
+  by (metis add_minus_cancel[of "valof a + valof b" "valof (IEEE.round To_nearest (valof a + valof b))"]<br>
+    add_uminus_conv_diff[of "valof (IEEE.round To_nearest (valof a + valof b))" "valof a + valof b"])<br>
+verit: One-line proof reconstruction failed: by (smt (verit))</p>
+<p>Isar proof (969 ms):<br>
+proof -<br>
+  show ?thesis<br>
+    by (smt (verit) False ab error_def zerosign_def)<br>
+qed<br>
+Done</p>
+<p>But note that the proposed Isar-proofs are essentially one-liners, and work when used as such, e.g., the following is perfectly valid.</p>
+<p>case False<br>
+    then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+        by (metis False ab add.commute diff_add_cancel error_def zerosign_def)</p>
+<p>and so it keeps valid when manually removing the already "used" lemmas from the metis call.</p>
+<p>then show ?thesis<br>
+      using ab add.commute error_def zerosign_def<br>
+        by (metis diff_add_cancel )</p>
+</blockquote>
+<p><a href="/user_uploads/14278/ttgUVLo-FGNzg_V-19zv8jWQ/sledgehammer.export">sledgehammer.export</a><br>
+<a href="/user_uploads/14278/JEPdlq_7_1FQ2WAOC3q-psGT/smime.p7s">smime.p7s</a></p>
+
+
+
+<a name="629245287"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/629245287" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#629245287">(Oct 05 2026 at 13:31)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 05/10/2026 13:59, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<p>Please apply the attached export.<br>
+OK, it will be in Isabelle2026-RC3 (later today).</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<a name="629371405"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20RC2%3A%20different%20sledgehammer%20behaviour%20with%20using/near/629371405" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20RC2.3A.20different.20sledgehammer.20behaviour.20with.20using.html#629371405">(Oct 05 2026 at 21:41)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 05/10/2026 13:59, Jasmin Blanchette wrote:</p>
+<blockquote>
+<p>Hi Makarius,</p>
+<p>Please apply the attached export.</p>
+</blockquote>
+<p>I have done that for Isabelle2026-RC3, but have not tried out anything myself.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Oct 11 2026 at 04:42 UTC</p>
+</html>

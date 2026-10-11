@@ -1,0 +1,62 @@
+[
+    {
+        "content": "<p>Hi there</p>\n<p>I am using VS Code 1.97.2<br>\nand when I try to install vscode_extension-20241002/isabelle-2.0.0.vsix then I get following error</p>\n<blockquote>\n<p>Error: Unable to install extension 'isabelle.isabelle' as it is not compatible with VS Code '1.97.2'.</p>\n</blockquote>\n<p>Even when I edit <strong>engines.vscode</strong> field from <strong>1.70.1</strong> to <strong>1.97.2</strong> in <strong>$ISABELLE_HOME/src/Tools/VSCode/extension/package.json</strong> file and compile the plugin manually then it successfully gets installed but the plugin does not work(maybe because incompatible API interfaces between 1.97.2 and 1.70.1 versions of vscode)</p>\n<p>vscode 1.70.1 is almost 3 year old</p>",
+        "id": 506721316,
+        "sender_full_name": "nnarek",
+        "timestamp": 1742389220
+    },
+    {
+        "content": "<p>You are supposed to use the version that is included in Isabelle (<code>isabelle vscodium</code>, not your version)</p>",
+        "id": 506721830,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742389329
+    },
+    {
+        "content": "<p>I'm also interested in this. I made some modifications to make the extension work on latest vscode, would the upstream accept my patches?</p>\n<p>Or shall I maintain it as a fork?</p>",
+        "id": 507698273,
+        "sender_full_name": "Poscat",
+        "timestamp": 1742808719
+    },
+    {
+        "content": "<p>oh, where is your fork? <span aria-label=\"eyes\" class=\"emoji emoji-1f440\" role=\"img\" title=\"eyes\">:eyes:</span></p>",
+        "id": 507698714,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1742808820
+    },
+    {
+        "content": "<p>You mean modifications to <code>Component_VSCodium</code>? That would certainly be of interest.</p>",
+        "id": 507700454,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742809203
+    },
+    {
+        "content": "<p>I've uploaded it here: <a href=\"https://github.com/poscat0x04/isabelle/tree/vscode-ext-update\">https://github.com/poscat0x04/isabelle/tree/vscode-ext-update</a> (IDK how to use hg)</p>\n<p>It's a bit crude but it works.</p>",
+        "id": 507703387,
+        "sender_full_name": "Poscat",
+        "timestamp": 1742809857
+    },
+    {
+        "content": "<p>Also pardon the formatting changes cause I forgot to turn off the formatter</p>",
+        "id": 507703727,
+        "sender_full_name": "Poscat",
+        "timestamp": 1742809925
+    },
+    {
+        "content": "<p>While I appreciate the effort, there are some misconceptions here:</p>\n<ul>\n<li>for Isabelle/VScode we use a patched vscodium (see the <code>Component_VSCode</code> module) to include the symbol encoding needed, which can't be done as an extension.  Updating this is difficult due to build issues on Windows IIRC.</li>\n<li>The VSCode extension is built as a component to run on Isabelle/VSCode by the <code>Component_VSCode_Extension</code> module. What you see in <code>src/Tools/VSCode/extension</code> are sources for that module, not a standalone extension. This is why you will find things like <code> \"ISABELLE_OPTIONS\": {},</code> that are replaced in the build process.</li>\n</ul>",
+        "id": 507707317,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742810725
+    },
+    {
+        "content": "<p>So patching an aextension like this and running it on a standard vscode(ium) has the following problems:</p>\n<ul>\n<li>Missing fonts, i.e. some symbols couldn't be rendered.</li>\n<li>Due to missing encoding, most symbols won't be rendered anyway and you'd be working with ASCII art.</li>\n<li>Hard-coded paths such as <code>/opt/isabelle</code> will lead to funny error messages (especially on different platforms).</li>\n<li>Isabelle options can't be controlled via the editor.</li>\n</ul>",
+        "id": 507708598,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742811034
+    },
+    {
+        "content": "<p>So, any work that wants to be included in upstream needs to update <code>Component_VSCode</code> such that it produces a good Isabelle/VSCode binary on all platforms.</p>",
+        "id": 507709237,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742811182
+    }
+]

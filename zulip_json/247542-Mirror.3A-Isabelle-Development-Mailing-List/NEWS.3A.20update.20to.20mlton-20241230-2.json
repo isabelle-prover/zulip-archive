@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p><strong>* System </strong>*</p>\n<ul>\n<li>The Isabelle component for the MLton compiler now covers all platform<br>\nvariants for Linux and macOS (x86_64 and arm64), but still not Windows.<br>\nISABELLE_MLTON_OPTIONS are empty by default, but may be overridden in<br>\n$ISABELLE_HOME_USER/etc/settings; new ISABELLE_MLTON_NATIVE_OPTIONS<br>\nenable \"-codegen native\" on x86_64, but not on arm64. Mlton requires a C<br>\ncompiler with libgmp, as before.</li>\n</ul>\n<p>This refers to Isabelle/4370df23614d. It is still the old mlton-20241230-1, <br>\nbut with slightly different binaries from the new Github home of the project. <br>\nI have tested the Mlton applications in AFP/b9b19405ddc3 on x64_64-linux and <br>\narm64-darwin like this:</p>\n<p>isabelle build -A: PAC_Checker Munta_Model_Checker <br>\nMunta_Certificate_Checker Native_Word Buchi_Complementation</p>\n<p>For arm64-linux it should work in principle, but I need a better test machine: <br>\nprobably Docker on Apple hardware, which I did not try yet.</p>\n<p>For x86_64-windows, I did not do anything. There are now binaries for various <br>\nC compilers, including Msys2 / UCRT64. It should eventually work, but there is <br>\nno time now.</p>\n<p>Makarius</p>",
+        "id": 628790746,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1790977861
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 02/10/2026 23:50, Makarius wrote:</p>\n<blockquote>\n<p>isabelle build -A: PAC_Checker Munta_Model_Checker <br>\nMunta_Certificate_Checker Native_Word Buchi_Complementation</p>\n<p>For arm64-linux it should work in principle, but I need a better test machine: <br>\nprobably Docker on Apple hardware, which I did not try yet.</p>\n</blockquote>\n<p>After some experimentation, it did work quite well with Podman <br>\n<a href=\"https://podman.io\">https://podman.io</a> instead of Docker. So Mlton looks fine on arm64-linux now, <br>\nbut z3 doesn't. Most of the above applications required (smt (z3)), but that <br>\nis too unstable on arm64-linux (see Isabelle/65f981cf4474).</p>\n<p>Makarius</p>",
+        "id": 628885975,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1791038646
+    }
+]

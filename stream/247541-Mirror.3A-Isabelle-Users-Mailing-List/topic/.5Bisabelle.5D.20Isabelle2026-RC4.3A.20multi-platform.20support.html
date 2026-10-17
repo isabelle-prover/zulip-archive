@@ -1,0 +1,50 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2026-RC4: multi-platform support · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC4.3A.20multi-platform.20support.html">[isabelle] Isabelle2026-RC4: multi-platform support</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="631771920"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC4%3A%20multi-platform%20support/near/631771920" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC4.3A.20multi-platform.20support.html#631771920">(Oct 14 2026 at 20:55)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>This is a brief summary of the multi-platform situation in RC4, and thus <br>
+probably also for the final release.</p>
+<p>- x86_64-linux: everything should work smoothly as before; this is de-facto <br>
+the main development and test platform of Isabelle.</p>
+<p>- arm64-darwin: for the first time, everything should work without Intel <br>
+emulation (Rosetta 2); z3 on arm64-darwin is somewhat unstable when many <br>
+instances are run in parallel, but this situation has been the same for <br>
+x86_64-darwin in the past (e.g. seen in parallel builds of Isabelle/AFP).</p>
+<p>- x86_64-darwin: still fully supported, for a few years to come; I have an <br>
+old Intel i3 MacMini on my desk for testing (a bit slow, but works fine).</p>
+<p>- arm64-linux: a fringe platform that becomes gradually more important, <br>
+e.g. for containers on Apple Silicon or low-energy servers with ARM hardware; <br>
+notable omission: z3 --- it was found too unstable, often non-terminating, <br>
+unlike the version for arm64-darwin.</p>
+<p>- x86_64-windows: slightly improved support, especially for the desktop app <br>
+launcher, including the 7zip SFX module; tangible support for Nonvisual Access <br>
+Technology (audio output or Braille display), based on a slightly patched <br>
+version of Java and its included Java Access Bridge. As before, a few <br>
+components add-on are absent on Windows, e.g. Mlton.</p>
+<p>- arm64-windows: not available, no plans to support it (lack of test <br>
+hardware, lack of significance); better rely on MS doing the emulation of <br>
+x86_64-windows for us, but I don't have test hardware to check even that.</p>
+<p>Implicitly, the idea behind all that: We deliver a regular application that <br>
+happens to work on all these platforms. We don't "containerize" user working <br>
+environments, with a private operating system for every compartment.</p>
+<p>Ultimately, end-users should get "Isabelle" as some kind of meta-operating <br>
+system where almost everything just works, in reminiscence to ancient LISP <br>
+machines, before Unix became popular. This particularly means that <br>
+Isabelle/Scala needs to be used as the primary means for systems programming <br>
+of any kind (not funny scripting languages from distant past).</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Oct 17 2026 at 18:16 UTC</p>
+</html>

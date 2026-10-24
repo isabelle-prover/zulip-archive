@@ -1,0 +1,44 @@
+<html>
+<head><meta charset="utf-8"><title>Issues with git integration in vscode · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Issues.20with.20git.20integration.20in.20vscode.html">Issues with git integration in vscode</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="634308335"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Issues%20with%20git%20integration%20in%20vscode/near/634308335" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikolaus Huber <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Issues.20with.20git.20integration.20in.20vscode.html#634308335">(Oct 23 2026 at 10:14)</a>:</h4>
+<p>Hej!</p>
+<p>I've been using <code>isabelle vscode</code> for a while, and generally really enjoy working with it. It took a while to fully configure it so that the difference between the version shipped with Isabelle and my "normal" VSCode isn't so noticeable, but one thing I just cannot get to work reliably is the git plugin, that already comes pre-installed with <code>isabelle vscode</code>. It seems to work ok most of the time, but then occasionally it will mark a full file as having changed, even though only a couple lines were altered, and most of the time, when I'm double checking the diff before committing it shows files as completely blank, even though there is definitely code in them. The same happens if I try to resolve a merge conflict with the inbuilt merge editor, most of the time I just get three empty editor panels. Is somebody else having similar issues?</p>
+
+
+
+<a name="634334096"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Issues%20with%20git%20integration%20in%20vscode/near/634334096" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Issues.20with.20git.20integration.20in.20vscode.html#634334096">(Oct 23 2026 at 11:30)</a>:</h4>
+<p>This sounds like a problem of the git plugin, although perhaps the problem won't be visible in the next release (or current devel version) of Isabelle/VSCode.</p>
+
+
+
+<a name="634334486"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Issues%20with%20git%20integration%20in%20vscode/near/634334486" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Nikolaus Huber <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Issues.20with.20git.20integration.20in.20vscode.html#634334486">(Oct 23 2026 at 11:31)</a>:</h4>
+<p>I would assume that the git plugin is the same as the one used in regular VSCode, right?</p>
+
+
+
+<a name="634350470"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Issues%20with%20git%20integration%20in%20vscode/near/634350470" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Issues.20with.20git.20integration.20in.20vscode.html#634350470">(Oct 23 2026 at 12:17)</a>:</h4>
+<p>Yes.</p>
+
+
+
+<a name="634352397"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Issues%20with%20git%20integration%20in%20vscode/near/634352397" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Fabian Huch <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Issues.20with.20git.20integration.20in.20vscode.html#634352397">(Oct 23 2026 at 12:23)</a>:</h4>
+<p>Until recently we had a problem in the LSP where unnecessary (but idempotent) full-file edits were sent, and given that VSCode used to have tons of problems with filesystem operations, I would speculate that the git plugin does not handle this well.</p>
+
+
+
+<hr><p>Last updated: Oct 24 2026 at 08:44 UTC</p>
+</html>

@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>Hello,</p>\n<p>I am interested in writing a command which will parse entire apply scripts. For instance, I want something like</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"True ∧ (a ∨ ¬a)\"</span>\n<span class=\"w\">  </span><span class=\"n\">my_command</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">conjI</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">True</span><span class=\"o\">])</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">auto</span><span class=\"o\">[</span><span class=\"n\">1</span><span class=\"o\">]</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">done</span>\n</code></pre></div>\n<p>where <code>my_command</code> will be able to parse the entire apply script and e.g. do something with each tactic.</p>\n<p>If each <code>apply</code> is changed to a string that is not a command, like <code>apply'</code>, then I am able to use <code>Parse.reserved \"apply'\"</code> to parse this. However, this approach does not seem to be able to parse <code>apply</code> since it is already a command. I've tried other parser functions like <code>Parse.command_name</code> and <code>Parse.keyword_with</code>, but these do not seem to parse the <code>apply</code> commands either. Is what I am trying to do possible?</p>",
+        "id": 540677257,
+        "sender_full_name": "Sage Binder",
+        "timestamp": 1758481092
+    },
+    {
+        "content": "<p>Hi, I am afraid I do not understand your question. Do you want to parse <code>apply</code> commands? Have you tried <code>Method.parse</code>? You can see examples of parsers parsing methods and embedded keywords in <code>ISABELLE_HOME/src/HOL/ex/Sketch_and_Explore</code> and in <code>ISABELLE_HOME/src/HOL/Tools/Sledgehammer/sledgehammer_commands.ML</code></p>",
+        "id": 540962910,
+        "sender_full_name": "Jonathan Julian Huerta y Munive",
+        "timestamp": 1758618190
+    },
+    {
+        "content": "<p>Thank you for pointing me toward the Sketch_and_Explore. I actually did not know about that, and it looks interesting.</p>\n<p>Let me try and clarify what I want to do. I want a command which can examine an apply script and extract the list of tactics used. Currently. I can use <code>Scan.repeat (Parse.reserved \"apply2\" |-- (Method.parse)</code>, which will parse a sequence of <code>apply2 TACTIC</code> commands into the list of applied tactics. E.g., with</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"True ∧ (a ∨ ¬a)\"</span>\n<span class=\"w\">  </span><span class=\"n\">my_command</span>\n<span class=\"w\">  </span><span class=\"n\">apply2</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">conjI</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">True</span><span class=\"o\">])</span>\n<span class=\"w\">  </span><span class=\"n\">apply2</span><span class=\"w\"> </span><span class=\"n\">auto</span><span class=\"o\">[</span><span class=\"n\">1</span><span class=\"o\">]</span>\n<span class=\"w\">  </span><span class=\"n\">apply2</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">done</span>\n</code></pre></div>\n<p><code>my_command</code> will yield (with a little additional processing) something like <code>[\"rule conjI[of True]\", \"auto\", \"simp\"]</code>. However, to actually apply <code>my_command</code> to a proof script,  I would have to change each <code>apply</code> to <code>apply2</code>. I'd like to make it so that I do not have to do this. E.g., given</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"True ∧ (a ∨ ¬a)\"</span>\n<span class=\"w\">  </span><span class=\"n\">my_command</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">conjI</span><span class=\"o\">[</span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"n\">True</span><span class=\"o\">])</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">auto</span><span class=\"o\">[</span><span class=\"n\">1</span><span class=\"o\">]</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">simp</span>\n<span class=\"w\">  </span><span class=\"k\">done</span>\n</code></pre></div>\n<p>I would like <code>my_command</code> to still produce the same list <code>[\"rule conjI[of True]\", \"auto\", \"simp\"]</code>. However, simply changing <code>Parse.reserved \"apply2\"</code> to <code>Parse.reserved \"apply\"</code> does not work, I presume because <code>apply</code> is already a command/keyword. I also tried <code>Parse.command</code>, <code>Parse.keyword_with</code>, and <code>Parse.embedded</code>, but <code>my_command</code> just yields an empty list in all cases.</p>\n<p>FYI, I have the keyword <code>\"my_command\" :: prf_script % \"proof\"</code> at the beginning of the .thy file. Maybe something different is needed for what I want to do?</p>",
+        "id": 541115096,
+        "sender_full_name": "Sage Binder",
+        "timestamp": 1758668847
+    },
+    {
+        "content": "<p>Afaik reusing keywords is only possible if you patch isabelle</p>",
+        "id": 541208772,
+        "sender_full_name": "irvin",
+        "timestamp": 1758714513
+    },
+    {
+        "content": "<p>Strictly speaking, I need to temporarily \"forget\" that <code>apply</code> is a keyword, but maybe that is not possible either...</p>",
+        "id": 541244100,
+        "sender_full_name": "Sage Binder",
+        "timestamp": 1758724086
+    },
+    {
+        "content": "<p>Yea that's want I meant by reusing a keyword. I know a project which patched isabelle for this functionality but I'm not sure how they did it</p>",
+        "id": 541375710,
+        "sender_full_name": "irvin",
+        "timestamp": 1758780497
+    },
+    {
+        "content": "<p>I am not sure that what you want is stragihtforward with Isabelle/ML. The \"official\" solution would probably require a combination of Isabelle/Scala and Isabelle/ML. But If you are willing to change your approach a bit and do something (currently) brittle, I have written <a href=\"https://github.com/yonoteam/DeepIsaHOL/blob/1d07a30fae5164835b9aabde517f016663b31a8e/src/main/ml/json_maker.ML#L276\">functionality</a> (develop branch) to retrieve the \"user actions\" from a <code>.thy</code> file up to a line number. You would need to make this <a href=\"https://github.com/yonoteam/DeepIsaHOL/blob/1d07a30fae5164835b9aabde517f016663b31a8e/src/main/ml/actions.ML#L91\">function</a> dependent on the local <code> \\&lt;^theory&gt;</code> and pass it as an argument.</p>",
+        "id": 541431054,
+        "sender_full_name": "Jonathan Julian Huerta y Munive",
+        "timestamp": 1758798750
+    },
+    {
+        "content": "<p>Fantastic, I will take a look at this. Thanks very much!</p>",
+        "id": 541563836,
+        "sender_full_name": "Sage Binder",
+        "timestamp": 1758846628
+    }
+]

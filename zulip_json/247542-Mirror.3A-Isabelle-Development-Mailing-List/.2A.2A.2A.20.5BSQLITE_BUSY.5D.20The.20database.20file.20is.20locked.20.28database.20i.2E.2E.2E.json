@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nI am still using the plain old <a href=\"http://lxcisa0.informatik.tu-muenchen.de\">lxcisa0.informatik.tu-muenchen.de</a> for <br>\ncertain tasks</p>\n<p>Recently, a problem emerged:</p>\n<p>$ isabelle build -b Pure<br>\n*** [SQLITE_BUSY] The database file is locked (database is locked)</p>\n<p>I am using rev c8d92d4ced73 and a minimal ~/.isabelle/etc/settings:</p>\n<p>init_components <br>\n\"${ISABELLE_COMPONENTS_BASE:-$USER_HOME/.isabelle/contrib}\" <br>\n\"$ISABELLE_HOME/Admin/components/main\"</p>\n<p>What is going wrong here? Maybe NFS makes problems.</p>\n<p>Thanks for any hint,<br>\n    Florian</p>\n<p><a href=\"/user_uploads/14278/nJ40oNxZzbyG5EMFYHA0INVi/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/3LUA4Iy0XcRTCYp8IM7BMqfW/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 526854744,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1751479346
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>Recently, a problem emerged:</p>\n<p>$ isabelle build -b Pure<br>\n*** [SQLITE_BUSY] The database file is locked (database is locked)</p>\n<p>I am using rev c8d92d4ced73 and a minimal ~/.isabelle/etc/settings:</p>\n<p>init_components \"${ISABELLE_COMPONENTS_BASE:-$USER_HOME/.isabelle/ <br>\ncontrib}\" \"$ISABELLE_HOME/Admin/components/main\"</p>\n<p>What is going wrong here? Maybe NFS makes problems.</p>\n</blockquote>\n<p>Redirecting ISABELLE_HEAPS to /tmp/… helps.</p>\n<p>Seems to be an issue with NFS.</p>\n<p>Indeed, sqlite has some reputation to pose problems with network file <br>\nsystems, or certain configurations of them.</p>\n<p>Since there is a work-around, it is maybe not worth pursuing further.</p>\n<p>Florian</p>\n<p><a href=\"/user_uploads/14278/1bE0ee7ZzTx3ewvSswB5dWa3/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/mu0cZouIZ2uPrIwd_txNIYn7/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 529220962,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1752738478
+    }
+]

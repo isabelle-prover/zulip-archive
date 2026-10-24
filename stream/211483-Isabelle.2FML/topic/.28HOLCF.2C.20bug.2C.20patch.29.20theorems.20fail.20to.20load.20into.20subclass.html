@@ -1,0 +1,34 @@
+<html>
+<head><meta charset="utf-8"><title>(HOLCF, bug, patch) theorems fail to load into subclass · Isabelle/ML · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/index.html">Isabelle/ML</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/.28HOLCF.2C.20bug.2C.20patch.29.20theorems.20fail.20to.20load.20into.20subclass.html">(HOLCF, bug, patch) theorems fail to load into subclass</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="633349488"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/%28HOLCF%2C%20bug%2C%20patch%29%20theorems%20fail%20to%20load%20into%20subclass/near/633349488" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/.28HOLCF.2C.20bug.2C.20patch.29.20theorems.20fail.20to.20load.20into.20subclass.html#633349488">(Oct 20 2026 at 15:02)</a>:</h4>
+<p>Hello,<br>
+I have written a couple of times here about this bug, which I believe I have a fix for now. Essentially, raising the default sort lf a class context (like HOLCF class <code>bifinite</code> does, raising it from <code>type</code> to <code>cpo</code>) leads to the class context failing to import theorem definitions from superclasses, leaving instead locale versions that refer to locale fixes (e.g. <code>po.below</code> instead of global <code>below :: 'a::po =&gt; 'a =&gt; bool</code>). The fix is relatively straightforward - when assembling the class context, cast the 'a type variable in the definitions to the right sort. This is sound, because subclasses necessarily have higher sort for that variable than superclasses. The small patch and the reproduction suite are attached, checked against the newest RC3. I would really appreciate if someone could take a look.<br>
+<a href="/user_uploads/14278/KXXXhKk9kM8VmzzDaniwSYwx/class-base-sort-repro.tar.gz">class-base-sort-repro.tar.gz</a><br>
+<a href="/user_uploads/14278/mtNuI9scilQdRlQn_zLGzr2m/class-base-sort-syntax.patch">class-base-sort-syntax.patch</a></p>
+
+
+
+<a name="633405510"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/%28HOLCF%2C%20bug%2C%20patch%29%20theorems%20fail%20to%20load%20into%20subclass/near/633405510" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/.28HOLCF.2C.20bug.2C.20patch.29.20theorems.20fail.20to.20load.20into.20subclass.html#633405510">(Oct 20 2026 at 18:08)</a>:</h4>
+<p>Hi Alex, it seems like the file you are trying to patch is authored by Florian Haftmann, TU Munich. Have you tried to contact him directly? Typically patching something such fundamental requires having a discussion with the responsible author of the affected modules.</p>
+
+
+
+<a name="634582358"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/211483-Isabelle/ML/topic/%28HOLCF%2C%20bug%2C%20patch%29%20theorems%20fail%20to%20load%20into%20subclass/near/634582358" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Alex Mobius <a href="http://isabelle.systems/zulip-archive/stream/211483-Isabelle.2FML/topic/.28HOLCF.2C.20bug.2C.20patch.29.20theorems.20fail.20to.20load.20into.20subclass.html#634582358">(Oct 24 2026 at 07:35)</a>:</h4>
+<p>Thank you for the advice, Kevin! Will do. Unfortunately it doesn't seem like you can easily get on isabelle-dev mailing list... Seems like that'd be a good place to find the current maintainer</p>
+
+
+
+<hr><p>Last updated: Oct 24 2026 at 08:44 UTC</p>
+</html>

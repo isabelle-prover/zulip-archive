@@ -1,0 +1,673 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Isabelle2026-RC3: proper termination of verit · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html">[isabelle] Isabelle2026-RC3: proper termination of verit</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="630417723"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630417723" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630417723">(Oct 09 2026 at 12:51)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit processes <br>
+hanging around. My original plan for the Isabelle2026 was to change its <br>
+timeout management to that of Isabelle, instead of relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the Isabelle/HOL SMT <br>
+update, then I was busy elsewhere. The SMT update also includes a quite <br>
+different version of veriT, which could be again quite different wrt. timeouts.</p>
+<p>So did anybody see verit processes hanging around with this new version?</p>
+<p>Makarius</p>
+
+
+
+<a name="630756258"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630756258" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630756258">(Oct 11 2026 at 13:21)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 09/10/2026 14:50, Makarius wrote:</p>
+<blockquote>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit processes <br>
+hanging around. My original plan for the Isabelle2026 was to change its <br>
+timeout management to that of Isabelle, instead of relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the Isabelle/HOL SMT <br>
+update, then I was busy elsewhere. The SMT update also includes a quite <br>
+different version of veriT, which could be again quite different wrt. timeouts.<br>
+The problem is on our side, because the smt_timeout was disabled since <br>
+Isabelle2021, without any explanation. The critical changesets are:</p>
+</blockquote>
+<p>changeset:   72347:478b7599a1a0<br>
+parent:      72342:4195e75a92ef<br>
+user:        desharna<br>
+date:        Wed Sep 30 18:37:22 2020 +0200<br>
+files:       src/HOL/SMT.thy src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+Effectively disable timeout for smt method/tactic</p>
+<p>changeset:   73386:f3378101f555<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:52:08 2021 +0100<br>
+files:       src/HOL/SMT.thy src/HOL/SMT_Examples/Boogie_Dijkstra.certs <br>
+src/HOL/SMT_Examples/Boogie_Max.certs src/HOL/SMT_Examples/SMT_Examples.certs <br>
+src/H<br>
+OL/SMT_Examples/SMT_Word_Examples.certs src/HOL/SMT_Examples/VCC_Max.certs <br>
+src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+more direct unlimited smt_timeout;<br>
+update of certificates: generated command-line options are part of input / digest;</p>
+<p>The plan for Isabelle2026-RC3 (presumably on 14-Oct-2026) is to return to the <br>
+original smt_timeout=20 --- and no change to the invocations of the external <br>
+solvers.</p>
+<p>Makarius</p>
+
+
+
+<a name="630756924"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630756924" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630756924">(Oct 11 2026 at 13:27)</a>:</h4>
+<p><strong>From:</strong> "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;</p>
+<p>I would perhaps caution against this, as at least from what I have seen,<br>
+the increase/removal of the smt timeout does in fact result in many proofs<br>
+being found that would have timed out previously, so it was useful.</p>
+<p>If it is deemed appropriate to re-enable a timeout, I would make it much<br>
+longer: long enough that most proofs are still found, but not so long that<br>
+a runaway smt solver can persist for a very long time while sucking up CPU<br>
+and perhaps also RAM.  Something on the order of 5 minutes would be<br>
+reasonable, in my opinion.</p>
+<p>On 10/11/26 09:21, Makarius wrote:</p>
+<blockquote>
+<p>On 09/10/2026 14:50, Makarius wrote:</p>
+<blockquote>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit processes hanging around. My original plan for<br>
+the Isabelle2026 was to change its timeout management to that of Isabelle, instead of relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the Isabelle/HOL SMT update, then I was busy elsewhere. The SMT<br>
+update also includes a quite different version of veriT, which could be again quite different wrt. timeouts.<br>
+The problem is on our side, because the smt_timeout was disabled since Isabelle2021, without any explanation. The<br>
+critical changesets are:</p>
+</blockquote>
+<p>changeset:   72347:478b7599a1a0<br>
+parent:      72342:4195e75a92ef<br>
+user:        desharna<br>
+date:        Wed Sep 30 18:37:22 2020 +0200<br>
+files:       src/HOL/SMT.thy src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+Effectively disable timeout for smt method/tactic</p>
+<p>changeset:   73386:f3378101f555<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:52:08 2021 +0100<br>
+files:       src/HOL/SMT.thy src/HOL/SMT_Examples/Boogie_Dijkstra.certs src/HOL/SMT_Examples/Boogie_Max.certs src/HOL/<br>
+SMT_Examples/SMT_Examples.certs src/H<br>
+OL/SMT_Examples/SMT_Word_Examples.certs src/HOL/SMT_Examples/VCC_Max.certs src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+more direct unlimited smt_timeout;<br>
+update of certificates: generated command-line options are part of input / digest;</p>
+<p>The plan for Isabelle2026-RC3 (presumably on 14-Oct-2026) is to return to the original smt_timeout=20 --- and no change<br>
+to the invocations of the external solvers.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="630757851"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630757851" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630757851">(Oct 11 2026 at 13:35)</a>:</h4>
+<p><strong>From:</strong> "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;</p>
+<p>A CPU time limit on external solvers (probably in the range of several minutes)<br>
+would seem to make the most sense to me.  I tried to hack one in at one point<br>
+by interposing a shell script that set resource limits before the invocation of<br>
+verit, but I don't recall that it was completely satisfactory and I took it out.<br>
+Actually setting resource limits using a system call at the point where the<br>
+child process is invoked would be more robust, but I didn't want to spend enough<br>
+time on it to find/figure out the process invocation code and rebuild the system.</p>
+<p>On 10/11/26 09:27, Eugene W. Stark wrote:</p>
+<blockquote>
+<p>I would perhaps caution against this, as at least from what I have seen,<br>
+the increase/removal of the smt timeout does in fact result in many proofs<br>
+being found that would have timed out previously, so it was useful.</p>
+<p>If it is deemed appropriate to re-enable a timeout, I would make it much<br>
+longer: long enough that most proofs are still found, but not so long that<br>
+a runaway smt solver can persist for a very long time while sucking up CPU<br>
+and perhaps also RAM.  Something on the order of 5 minutes would be<br>
+reasonable, in my opinion.</p>
+<p>On 10/11/26 09:21, Makarius wrote:</p>
+<blockquote>
+<p>On 09/10/2026 14:50, Makarius wrote:</p>
+<blockquote>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit processes hanging around. My original plan for<br>
+the Isabelle2026 was to change its timeout management to that of Isabelle, instead of relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the Isabelle/HOL SMT update, then I was busy elsewhere. The SMT<br>
+update also includes a quite different version of veriT, which could be again quite different wrt. timeouts.<br>
+The problem is on our side, because the smt_timeout was disabled since Isabelle2021, without any explanation. The<br>
+critical changesets are:</p>
+</blockquote>
+<p>changeset:   72347:478b7599a1a0<br>
+parent:      72342:4195e75a92ef<br>
+user:        desharna<br>
+date:        Wed Sep 30 18:37:22 2020 +0200<br>
+files:       src/HOL/SMT.thy src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+Effectively disable timeout for smt method/tactic</p>
+<p>changeset:   73386:f3378101f555<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:52:08 2021 +0100<br>
+files:       src/HOL/SMT.thy src/HOL/SMT_Examples/Boogie_Dijkstra.certs src/HOL/SMT_Examples/Boogie_Max.certs src/HOL/<br>
+SMT_Examples/SMT_Examples.certs src/H<br>
+OL/SMT_Examples/SMT_Word_Examples.certs src/HOL/SMT_Examples/VCC_Max.certs src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+more direct unlimited smt_timeout;<br>
+update of certificates: generated command-line options are part of input / digest;</p>
+<p>The plan for Isabelle2026-RC3 (presumably on 14-Oct-2026) is to return to the original smt_timeout=20 --- and no change<br>
+to the invocations of the external solvers.</p>
+<p>Makarius</p>
+</blockquote>
+</blockquote>
+
+
+
+<a name="630763983"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630763983" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630763983">(Oct 11 2026 at 14:45)</a>:</h4>
+<p><strong>From:</strong> Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;</p>
+<p>Hi Makarius,</p>
+<p>Please do not read this timeout. It is not solving problems, it is only <br>
+adding instability to the overall system and a dependency to the CPU <br>
+power of the solver.</p>
+<p>The problem of the timeout is that it measure the time between the <br>
+beginning of the smt tactic and the moment it is proven. Except that <br>
+with <code>isabelle build</code> a lot of jobs and launched and it can take a lot <br>
+of time between the beginning of the tactic and the moment it is really <br>
+executed. This timeout has lead in the past to issues in the AFP <br>
+(spurious timeout that you cannot reproduce) and in Isabelle/HOL itself <br>
+(if you run Isabelle on an underpowered machine).</p>
+<p>For everyone who has never seen this: take your favorite theory, open <br>
+the timing panel, look at the three slowest tactics. Now rerun the file <br>
+and compare the timings. Some will be faster, some will be slower by <br>
+(from what I have seen) around one order of magnitude. A hard timeout <br>
+means that you might have to run Isabelle several times to build <br>
+dependencies, because it will depend if that tactic is slow or fast <br>
+during that run.</p>
+<p>Mathias</p>
+<p>On 10/11/26 15:21, Makarius wrote:</p>
+<blockquote>
+<p>On 09/10/2026 14:50, Makarius wrote:</p>
+<blockquote>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit <br>
+processes hanging around. My original plan for the Isabelle2026 was <br>
+to change its timeout management to that of Isabelle, instead of <br>
+relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the <br>
+Isabelle/HOL SMT update, then I was busy elsewhere. The SMT update <br>
+also includes a quite different version of veriT, which could be <br>
+again quite different wrt. timeouts.<br>
+The problem is on our side, because the smt_timeout was disabled since <br>
+Isabelle2021, without any explanation. The critical changesets are:</p>
+</blockquote>
+<p>changeset:   72347:478b7599a1a0<br>
+parent:      72342:4195e75a92ef<br>
+user:        desharna<br>
+date:        Wed Sep 30 18:37:22 2020 +0200<br>
+files:       src/HOL/SMT.thy src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+Effectively disable timeout for smt method/tactic</p>
+<p>changeset:   73386:f3378101f555<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:52:08 2021 +0100<br>
+files:       src/HOL/SMT.thy <br>
+src/HOL/SMT_Examples/Boogie_Dijkstra.certs <br>
+src/HOL/SMT_Examples/Boogie_Max.certs <br>
+src/HOL/SMT_Examples/SMT_Examples.certs src/H<br>
+OL/SMT_Examples/SMT_Word_Examples.certs <br>
+src/HOL/SMT_Examples/VCC_Max.certs src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+more direct unlimited smt_timeout;<br>
+update of certificates: generated command-line options are part of <br>
+input / digest;</p>
+<p>The plan for Isabelle2026-RC3 (presumably on 14-Oct-2026) is to return <br>
+to the original smt_timeout=20 --- and no change to the invocations of <br>
+the external solvers.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="630772333"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630772333" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630772333">(Oct 11 2026 at 16:10)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Just for my understanding: Isn't the underlying problem that the veriT <br>
+process somehow becomes detached from its controlling Isabelle session? <br>
+Ideally, all processes should be killed when the underlying sledgehammer <br>
+command is cancelled, isn't it? "Fixing" that by accepting that this <br>
+doesn't happen and simply setting a timeout looks like an ad-hoc <br>
+solution to me, with potential problems for replay stability as laid out <br>
+further in this thread.</p>
+<p>Are the rogue veriT processes only caused by sledgehammer, or also by <br>
+proper (non-diagnostic) commands like apply? If the former is the case, <br>
+couldn't we just add the timeout when invoking veriT from sledgehammer, <br>
+but leave it without timeout when invoked as tactic?</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 11/10/2026 15:21, Makarius wrote:</p>
+<blockquote>
+<p>On 09/10/2026 14:50, Makarius wrote:</p>
+<blockquote>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit <br>
+processes hanging around. My original plan for the Isabelle2026 was <br>
+to change its timeout management to that of Isabelle, instead of <br>
+relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the <br>
+Isabelle/HOL SMT update, then I was busy elsewhere. The SMT update <br>
+also includes a quite different version of veriT, which could be <br>
+again quite different wrt. timeouts.<br>
+The problem is on our side, because the smt_timeout was disabled since <br>
+Isabelle2021, without any explanation. The critical changesets are:</p>
+</blockquote>
+<p>changeset:   72347:478b7599a1a0<br>
+parent:      72342:4195e75a92ef<br>
+user:        desharna<br>
+date:        Wed Sep 30 18:37:22 2020 +0200<br>
+files:       src/HOL/SMT.thy src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+Effectively disable timeout for smt method/tactic</p>
+<p>changeset:   73386:f3378101f555<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:52:08 2021 +0100<br>
+files:       src/HOL/SMT.thy <br>
+src/HOL/SMT_Examples/Boogie_Dijkstra.certs <br>
+src/HOL/SMT_Examples/Boogie_Max.certs <br>
+src/HOL/SMT_Examples/SMT_Examples.certs src/H<br>
+OL/SMT_Examples/SMT_Word_Examples.certs <br>
+src/HOL/SMT_Examples/VCC_Max.certs src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+more direct unlimited smt_timeout;<br>
+update of certificates: generated command-line options are part of <br>
+input / digest;</p>
+<p>The plan for Isabelle2026-RC3 (presumably on 14-Oct-2026) is to return <br>
+to the original smt_timeout=20 --- and no change to the invocations of <br>
+the external solvers.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="630775109"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630775109" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630775109">(Oct 11 2026 at 16:39)</a>:</h4>
+<p><strong>From:</strong> "Eugene W. Stark" &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;</p>
+<p>Interestingly, I had a look just now, using "top", and I happen to have a rogue cvc5-bin process (not verit).<br>
+I am using Isabelle2026-RC3 on Linux Mint 22.2:</p>
+<blockquote>
+<p>Tasks: 435 total,   2 running, 433 sleeping,   0 stopped,   0 zombie<br>
+%Cpu(s):  5.5 us,  0.0 sy,  0.0 ni, 94.4 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st <br>
+MiB Mem : 128623.6 total,  11739.1 free,  99920.9 used,  21077.1 buff/cache     <br>
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.  28702.7 avail Mem </p>
+<p>PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                      <br>
+ 909979 gene      20   0   13.1g  12.6g  20788 R 100.0  10.1      9,16 cvc5-bin    </p>
+</blockquote>
+<p>Sledgehammer is not running, and there are no purple bars in the right-hand gutter area.</p>
+<p>Here is a process tree output from "ps -axjf".  Maybe the information in it will help someone<br>
+understand what is the relationship between the cvc5-bin process and the Isabelle session,<br>
+and why it might still be running:</p>
+<blockquote>
+<p>12828  724318  724318   12828 pts/0    1010522 S     1000   0:00  |   |   \_ bash /opt/Isabelle2026-RC3/lib/Tools/java -splash:/opt/Isabelle2026-RC3/lib/logo/isabelle.gif -Dsun.java2d.metal=false -Duser.language=en -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dapple.laf.useScreenMenuBar=true -Dapple.awt.application.name=Isabelle -Dapple.awt.application.appearance=system -Xms512m -Xmx4g -Xss16m isabelle.jedit.JEdit_Main<br>
+ 724318  724541  724318   12828 pts/0    1010522 Sl    1000 139:39  |   |   |   \_ /opt/Isabelle2026-RC3/contrib/jdk-25.0.4/x86_64-linux/bin/java -server -Dfile.encoding=UTF-8 -Dstdin.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Disabelle.threads=0 -XX:+UseZGC -XX:+UseStringDeduplication --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -classpath /opt/Isabelle2026-RC3/contrib/flatlaf-3.7.2/lib/flatlaf-3.7.2-no-natives.jar:/opt/Isabelle2026-RC3/contrib/flatlaf-3.7.2/lib/flatlaf-extras-3.7.2.jar:/opt/Isabelle2026-RC3/contrib/isabelle_setup-20260630/lib/isabelle_setup.jar:/opt/Isabelle2026-RC3/contrib/itext-2.1.5/lib/iText-2.1.5.jar:/opt/Isabelle2026-RC3/contrib/javamail-20251022/lib/jakarta.mail-api-2.1.5.jar:/opt/Isabelle2026-RC3/contrib/javamail-20251022/lib/jakarta.activation-api-2.1.4.jar:/opt/Isabelle2026-RC3/contrib/javamail-20251022/lib/angus-mail-2.0.5.jar:/opt/Isabelle2026-RC3/contrib/javamail-20251022/lib/angus-activation-2.0.3.jar:/opt/Isabelle2026-RC3/contrib/jedit-20260515/jedit5.7.0-patched/jedit.jar:/opt/Isabelle2026-RC3/contrib/jfreechart-1.5.6-1/lib/jfreechart-1.5.6.jar:/opt/Isabelle2026-RC3/contrib/jortho-1.0-2/jortho.jar:/opt/Isabelle2026-RC3/contrib/jsoup-1.21.2/lib/jsoup-1.21.2.jar:/opt/Isabelle2026-RC3/contrib/jsvg-2.0.0/lib/jsvg-2.0.0.jar:/opt/Isabelle2026-RC3/contrib/kodkodi-20260628/jar/antlr-runtime-3.1.1.jar:/opt/Isabelle2026-RC3/contrib/kodkodi-20260628/jar/kodkod-1.5.jar:/opt/Isabelle2026-RC3/contrib/kodkodi-20260628/jar/kodkodi-1.5.7.jar:/opt/Isabelle2026-RC3/contrib/kodkodi-20260628/jar/sat4j-2.3.jar:/opt/Isabelle2026-RC3/contrib/postgresql-42.7.12/lib/postgresql-42.7.12.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-library-2.13.18.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala3-library_3-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-asm-9.9.0-scala-1.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/compiler-interface-1.10.7.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala3-interfaces-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala3-compiler_3-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/tasty-core_3-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala3-staging_3-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala3-tasty-inspector_3-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/jline-reader-3.29.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/jline-terminal-3.29.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/jline-terminal-jni-3.29.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/jline-native-3.29.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-parallel-collections_3-1.2.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-parser-combinators_3-2.4.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-parser-combinators_sjs1_3-2.4.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-swing_3-3.0.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-xml_3-2.4.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-linker_2.13-1.21.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-linker-interface_2.13-1.21.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-ir_2.13-1.21.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-logging_2.13-1.2.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-parallel-collections_2.13-0.2.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-library_2.13-1.21.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-javalib-1.21.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-scalalib_2.13-2.13.18+1.21.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala3-library_sjs1_3-3.3.8.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scalajs-dom_sjs1_3-2.8.1.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-java-time_sjs1_3-2.7.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/scala-java-locales_sjs1_3-1.5.4.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/cldr-api_sjs1_3-4.5.0.jar:/opt/Isabelle2026-RC3/contrib/scala-3.3.8-1/lib/portable-scala-reflect_sjs1_2.13-1.1.3.jar:/opt/Isabelle2026-RC3/contrib/solr-9.9.0/lib/solr-solrj-9.9.0.jar:/opt/Isabelle2026-RC3/contrib/solr-9.9.0/lib/solr-api-9.9.0.jar:/opt/Isabelle2026-RC3/contrib/solr-9.9.0/lib/solr-core-9.9.0.jar:/opt/Isabelle2026-RC3/contrib/sqlite-3.53.4.0/lib/sqlite-jdbc-3.53.4.0.jar:/opt/Isabelle2026-RC3/contrib/sqlite-3.53.4.0/lib/slf4j-api-2.0.18.jar:/opt/Isabelle2026-RC3/contrib/sqlite-3.53.4.0/lib/slf4j-nop-2.0.18.jar:/opt/Isabelle2026-RC3/contrib/xz-java-1.12/lib/xz-1.12.jar:/opt/Isabelle2026-RC3/contrib/zstd-jni-1.5.7-11/lib/zstd-jni-1.5.7-11.jar:/opt/Isabelle2026-RC3/contrib/naproche-20260903/Isabelle/naproche.jar:/opt/Isabelle2026-RC3/lib/classes/isabelle.jar:/opt/Isabelle2026-RC3/src/Tools/Demo/lib/demo.jar:/opt/Isabelle2026-RC3/lib/classes/isabelle_graphbrowser.jar:/opt/Isabelle2026-RC3/src/Tools/Scalajs_Demo/lib/scalajs_demo.jar -splash:/opt/Isabelle2026-RC3/lib/logo/isabelle.gif -Dsun.java2d.metal=false -Duser.language=en -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dapple.laf.useScreenMenuBar=true -Dapple.awt.application.name=Isabelle -Dapple.awt.application.appearance=system -Xms512m -Xmx4g -Xss16m isabelle.jedit.JEdit_Main<br>
+ 724541  724651  724318   12828 pts/0    1010522 S     1000   0:00  |   |   |       \_ /opt/Isabelle2026-RC3/contrib/bash_process-20260628/x86_64-linux/bash_process /tmp/isabelle-gene/bash_timing12042178832686959234 bash /tmp/isabelle-gene/bash_script15557422083189852215<br>
+ 724651  724652  724652  724652 ?             -1 Ss    1000   0:00  |   |   |       |   \_ bash /tmp/isabelle-gene/bash_script15557422083189852215<br>
+ 724652  724653  724652  724652 ?             -1 Sl    1000 608:26  |   |   |       |       \_ /opt/Isabelle2026-RC3/contrib/polyml-5.9.2-5/x86_64-linux/poly -q --maxheap 64G --gcthreads 8 --exportstats --eval (PolyML.SaveState.loadHierarchy ["/home/gene/.isabelle/Isabelle2026-RC3/heaps/polyml-5.9.2_x86_64-linux/Pure", "/home/gene/.isabelle/Isabelle2026-RC3/heaps/polyml-5.9.2_x86_64-linux/HOL", "/home/gene/.isabelle/Isabelle2026-RC3/heaps/polyml-5.9.2_x86_64-linux/Codegen"]; PolyML.print_depth 0) --eval Print_Mode.add_modes ["brackets"] --eval Options.load_process_default () --eval Resources.init_session_env () --eval Isabelle_Process.init ()<br>
+ 724541  724654  724318   12828 pts/0    1010522 S     1000   0:00  |   |   |       \_ /opt/Isabelle2026-RC3/contrib/bash_process-20260628/x86_64-linux/bash_process /tmp/isabelle-gene/bash_timing16962933835369893077 bash /tmp/isabelle-gene/bash_script10394524241022510708<br>
+ 724654  724656  724656  724656 ?             -1 Ss    1000   0:00  |   |   |       |   \_ bash /tmp/isabelle-gene/bash_script10394524241022510708<br>
+ 724656  724657  724656  724656 ?             -1 Sl    1000   0:00  |   |   |       |       \_ /opt/Isabelle2026-RC3/contrib/naproche-20260903/x86_64-linux/Naproche --server<br>
+ 724541  724731  724318   12828 pts/0    1010522 S     1000   0:00  |   |   |       \_ /opt/Isabelle2026-RC3/contrib/bash_process-20260628/x86_64-linux/bash_process /tmp/isabelle-gene/bash_timing6915759027931769726 bash /tmp/isabelle-gene/bash_script6460271195429146234<br>
+ 724731  724735  724735  724735 ?             -1 Ss    1000   0:00  |   |   |       |   \_ bash /tmp/isabelle-gene/bash_script6460271195429146234<br>
+ 724735  724739  724735  724735 ?             -1 Sl    1000   2:55  |   |   |       |       \_ /opt/Isabelle2026-RC3/contrib/polyml-5.9.2-5/x86_64-linux/poly -q --use src/Pure/ML/ml_statistics.ML --eval ML_Statistics.monitor 724653 0.5<br>
+ 724541  909972  724318   12828 pts/0    1010522 S     1000   0:00  |   |   |       \_ /opt/Isabelle2026-RC3/contrib/bash_process-20260628/x86_64-linux/bash_process /tmp/isabelle-gene/bash_timing7849664714219515811 bash /tmp/isabelle-gene/bash_script8574898642069030792<br>
+ 909972  909973  909973  909973 ?             -1 Ss    1000   0:00  |   |   |           \_ bash /tmp/isabelle-gene/bash_script8574898642069030792<br>
+ 909973  909978  909973  909973 ?             -1 S     1000   0:00  |   |   |               \_ bash /opt/Isabelle2026-RC3/contrib/cvc5-1.3.4/x86_64-linux/cvc5 --proof-format-mode=alethe --proof-granularity=dsl-rewrite --proof-mode=full-proof-strict --enum-inst --no-stats --sat-random-seed=1 --lang=smt2 --proof-prune --proof-prune-input --proof-e<br>
+[message truncated]</p>
+</blockquote>
+
+
+
+<a name="630782100"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630782100" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630782100">(Oct 11 2026 at 17:41)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>As far as I know, the problem is runaway processes (veriT and cvc5) from sledgehammer calls. So the fix should affect sledgehammer only.</p>
+<p>Larry<br>
+On 11 Oct 2026 at 14:27 +0100, Eugene W. Stark &lt;<a href="mailto:isabelle-users@starkeffect.com">isabelle-users@starkeffect.com</a>&gt;, wrote:<br>
+I would perhaps caution against this, as at least from what I have seen,<br>
+the increase/removal of the smt timeout does in fact result in many proofs<br>
+being found that would have timed out previously, so it was useful.</p>
+<p>If it is deemed appropriate to re-enable a timeout, I would make it much<br>
+longer: long enough that most proofs are still found, but not so long that<br>
+a runaway smt solver can persist for a very long time while sucking up CPU<br>
+and perhaps also RAM. Something on the order of 5 minutes would be<br>
+reasonable, in my opinion.</p>
+<p>On 10/11/26 09:21, Makarius wrote:<br>
+On 09/10/2026 14:50, Makarius wrote:</p>
+<blockquote>
+<p>Dear testers of Isabelle2026 release candidates,</p>
+<p>in recent years, there have been occasional observations about verit processes hanging around. My original plan for<br>
+the Isabelle2026 was to change its timeout management to that of Isabelle, instead of relying on the one of veriT.</p>
+<p>I did not do anything so far: first I was waiting for the Isabelle/HOL SMT update, then I was busy elsewhere. The SMT<br>
+update also includes a quite different version of veriT, which could be again quite different wrt. timeouts.<br>
+The problem is on our side, because the smt_timeout was disabled since Isabelle2021, without any explanation. The<br>
+critical changesets are:</p>
+</blockquote>
+<p>changeset:   72347:478b7599a1a0<br>
+parent:      72342:4195e75a92ef<br>
+user:        desharna<br>
+date:        Wed Sep 30 18:37:22 2020 +0200<br>
+files:       src/HOL/SMT.thy src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+Effectively disable timeout for smt method/tactic</p>
+<p>changeset:   73386:f3378101f555<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:52:08 2021 +0100<br>
+files:       src/HOL/SMT.thy src/HOL/SMT_Examples/Boogie_Dijkstra.certs src/HOL/SMT_Examples/Boogie_Max.certs src/HOL/<br>
+SMT_Examples/SMT_Examples.certs src/H<br>
+OL/SMT_Examples/SMT_Word_Examples.certs src/HOL/SMT_Examples/VCC_Max.certs src/HOL/Tools/SMT/smt_config.ML<br>
+description:<br>
+more direct unlimited smt_timeout;<br>
+update of certificates: generated command-line options are part of input / digest;</p>
+<p>The plan for Isabelle2026-RC3 (presumably on 14-Oct-2026) is to return to the original smt_timeout=20 --- and no change<br>
+to the invocations of the external solvers.</p>
+<p>Makarius</p>
+
+
+
+<a name="630788314"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630788314" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630788314">(Oct 11 2026 at 18:36)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 18:10, Peter (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Just for my understanding: Isn't the underlying problem that the veriT process <br>
+somehow becomes detached from its controlling Isabelle session? Ideally, all <br>
+processes should be killed when the underlying sledgehammer command is <br>
+cancelled, isn't it?</p>
+</blockquote>
+<p>I have started with these assumptions some years ago, and gave the usual <br>
+lectures on external processes that escape their process session group, and <br>
+thus cannot be killed systematically. Then I started looking at the sources <br>
+(like smt_config.ML and smt_systems.ML), and was surprised that no Isabelle <br>
+timeout management is used there, only soft limits given to the back-end tools <br>
+on the command line. So in this corner, none of our process kills will ever <br>
+happen. Today I was surprised that smt_timeout was actually not used --- <br>
+without any explanations in the history, which means that the change is <br>
+formally void, without justification.</p>
+<p>The overall situation might turn out quite different: sledgehammer probably <br>
+has problems with the management of its tasks, and that needs to be revisited <br>
+after so many years. In particular: Why does this particular problem only <br>
+happen to the "SMT" class of tools, and not the "ATP" one?</p>
+<p>That is a question for a future release, not the present one. We have missed <br>
+the window of opportunity already several weeks/months ago.</p>
+<p>Makarius</p>
+
+
+
+<a name="630789729"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630789729" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630789729">(Oct 11 2026 at 18:49)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 16:45, Mathias Fleury wrote:</p>
+<blockquote>
+<p>Please do not read this timeout. It is not solving problems, it is only adding <br>
+instability to the overall system and a dependency to the CPU power of the <br>
+solver.</p>
+<p>The problem of the timeout is that it measure the time between the beginning <br>
+of the smt tactic and the moment it is proven. Except that with <code>isabelle 
+build</code> a lot of jobs and launched and it can take a lot of time between the <br>
+beginning of the tactic and the moment it is really executed. This timeout has <br>
+lead in the past to issues in the AFP (spurious timeout that you cannot <br>
+reproduce) and in Isabelle/HOL itself (if you run Isabelle on an underpowered <br>
+machine).</p>
+</blockquote>
+<p>I do agree that timeouts are generally evil, but we have different situations <br>
+for timeouts, and different partial attempts to make them more robust.</p>
+<p>Note that it is not the case that the timeout is on the smt tactic/proof <br>
+method. The smt_timeout is for an external process running on its own, so it <br>
+is the best possible situation. The timeout could be also scaled with Isabelle <br>
+system option timeout_scale.</p>
+<p>Despite this best case of a bad situation, I do see smt process failures <br>
+routinely, even without the timeout: notably "z3" on x86_64-darwin or <br>
+arm64-darwin. Under heavy load with many parallel build process, it is very <br>
+unreliable. That might be a problem of this particularly old z3 version, or a <br>
+general problem on the SMT setup elsewhere.</p>
+<blockquote>
+<p>For everyone who has never seen this: take your favorite theory, open the <br>
+timing panel, look at the three slowest tactics. Now rerun the file and <br>
+compare the timings. Some will be faster, some will be slower by (from what I <br>
+have seen) around one order of magnitude. A hard timeout means that you might <br>
+have to run Isabelle several times to build dependencies, because it will <br>
+depend if that tactic is slow or fast during that run.</p>
+</blockquote>
+<p>The timing panel is the worst-case situation on timeouts: it essentially shows <br>
+Isabelle/ML tasks running inside a parallel LISP machine with GC happening in <br>
+between. Some years ago, I have made some attempts to distinguish timeouts <br>
+with or without GC time; there is also timeout_scale applied by default. None <br>
+of this is really reliable.</p>
+<p>The ML timeout problem remains open and needs to be revisited eventually. (Not <br>
+now, not for this release.)</p>
+<p>Sledgehammer timeouts can probably be improved independently, by managing the <br>
+external Isabelle bash processes via Isabelle/Scala (with the existing process <br>
+timeout), instead of anything in Isabelle/ML --- nor a soft limit on the <br>
+external program.</p>
+<p>Makarius</p>
+
+
+
+<a name="630791043"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630791043" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630791043">(Oct 11 2026 at 19:01)</a>:</h4>
+<p><strong>From:</strong> Mathias Fleury &lt;<a href="mailto:mathias.fleury12@gmail.com">mathias.fleury12@gmail.com</a>&gt;</p>
+<p>Hi all,</p>
+<p>On 10/11/26 20:36, Makarius wrote:</p>
+<blockquote>
+<p>I have started with these assumptions some years ago, and gave the <br>
+usual lectures on external processes that escape their process session <br>
+group, and thus cannot be killed systematically. Then I started <br>
+looking at the sources (like smt_config.ML and smt_systems.ML), and <br>
+was surprised that no Isabelle timeout management is used there, only <br>
+soft limits given to the back-end tools on the command line. So in <br>
+this corner, none of our process kills will ever happen. Today I was <br>
+surprised that smt_timeout was actually not used --- without any <br>
+explanations in the history, which means that the change is formally <br>
+void, without justification.</p>
+</blockquote>
+<p>There are two timeouts: Sledgehammer sets a timeout (5s). This timeout <br>
+is passed to the solver. And the tool itself is invoked with a timeout:</p>
+<p>fun get_timeout ctxt =<br>
+   let val t = seconds (Config.get ctxt timeout);<br>
+   in if Timeout.ignored t then NONE else SOME (Timeout.scale_time t) end;</p>
+<p>fun with_time_limit ctxt error_msg timeout_config f x =<br>
+   Timeout.apply (seconds (Config.get ctxt timeout_config)) f x<br>
+     handle Timeout.TIMEOUT _ =&gt; raise SMT_Failure.SMT <br>
+(SMT_Failure.Time_Out error_msg)</p>
+<p>On the Isabelle side:</p>
+<p>lemma False<br>
+   supply [[smt_trace]]<br>
+   sledgehammer[verit]</p>
+<p>(* --max-time=5000*)<br>
+   oops</p>
+<p>So while I understand that veriT might have bugs with the timeout: If <br>
+Timeout.apply is not the right way to run jobs with a timeout, what is <br>
+the right way then?</p>
+<p>Mathias</p>
+<blockquote>
+<p>The overall situation might turn out quite different: sledgehammer <br>
+probably has problems with the management of its tasks, and that needs <br>
+to be revisited after so many years. In particular: Why does this <br>
+particular problem only happen to the "SMT" class of tools, and not <br>
+the "ATP" one?</p>
+<p>That is a question for a future release, not the present one. We have <br>
+missed the window of opportunity already several weeks/months ago.</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<a name="630793060"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630793060" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630793060">(Oct 11 2026 at 19:19)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 21:01, Mathias Fleury wrote:</p>
+<blockquote>
+<p>There are two timeouts: Sledgehammer sets a timeout (5s). This timeout is <br>
+passed to the solver. And the tool itself is invoked with a timeout:</p>
+<p>fun get_timeout ctxt =<br>
+   let val t = seconds (Config.get ctxt timeout);<br>
+   in if Timeout.ignored t then NONE else SOME (Timeout.scale_time t) end;</p>
+<p>fun with_time_limit ctxt error_msg timeout_config f x =<br>
+   Timeout.apply (seconds (Config.get ctxt timeout_config)) f x<br>
+     handle Timeout.TIMEOUT _ =&gt; raise SMT_Failure.SMT (SMT_Failure.Time_Out <br>
+error_msg)</p>
+<p>On the Isabelle side:</p>
+<p>lemma False<br>
+   supply [[smt_trace]]<br>
+   sledgehammer[verit]</p>
+<p>(* --max-time=5000*)<br>
+   oops</p>
+<p>So while I understand that veriT might have bugs with the timeout: If <br>
+Timeout.apply is not the right way to run jobs with a timeout, what is the <br>
+right way then?<br>
+Timeout.apply is usually right in Isabelle/ML, but there are many <br>
+side-conditions on the overall ML runtime context. I can't say anything about <br>
+sledgehammer in this respect. Since we do see problems for some years, there <br>
+must be something wrong somewhere.</p>
+</blockquote>
+<p>Timeouts in Isabelle/ML generally depend on more side-conditions than outside <br>
+of Isabelle/ML, notably Isabelle/Scala.</p>
+<p>Since the current purpose is to manage an external process, it is better to <br>
+pass the timeout directly into Bash.timeout, which then ends up in a watchdog <br>
+thread on the JVM. At given times, that will produce a "kill" on the external <br>
+process. That is the most direct way to do it in Isabelle, everything else <br>
+will eventually come to that mechanism (if nothing else goes wrong on the way).</p>
+<p>Makarius</p>
+
+
+
+<a name="630796144"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630796144" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630796144">(Oct 11 2026 at 19:48)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 20:48, Makarius wrote:</p>
+<blockquote>
+<p>I do agree that timeouts are generally evil, but we have different situations <br>
+for timeouts, and different partial attempts to make them more robust.</p>
+<p>Note that it is not the case that the timeout is on the smt tactic/proof <br>
+method. The smt_timeout is for an external process running on its own, so it <br>
+is the best possible situation. The timeout could be also scaled with Isabelle <br>
+system option timeout_scale.</p>
+</blockquote>
+<p>We do have timeout_scale for smt_timeout already, since the following change:</p>
+<p>changeset:   73385:a40e69fde2b4<br>
+user:        wenzelm<br>
+date:        Fri Mar 05 20:38:55 2021 +0100<br>
+files:       src/HOL/Tools/SMT/smt_config.ML src/HOL/Tools/SMT/smt_systems.ML <br>
+src/Pure/Concurrent/timeout.ML<br>
+description:<br>
+clarified smt: support Timeout.ignored and Timeout.scale_time;</p>
+<p>It means that e.g. "isabelle build timeout_scale=10" might have occasionally <br>
+helped, when the timeout was still there.</p>
+<p>Makarius</p>
+
+
+
+<a name="630796867"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630796867" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630796867">(Oct 11 2026 at 19:57)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 21:01, Mathias Fleury wrote:</p>
+<blockquote>
+<p>There are two timeouts: Sledgehammer sets a timeout (5s). This timeout is <br>
+passed to the solver. And the tool itself is invoked with a timeout:</p>
+<p>fun get_timeout ctxt =<br>
+   let val t = seconds (Config.get ctxt timeout);<br>
+   in if Timeout.ignored t then NONE else SOME (Timeout.scale_time t) end;</p>
+<p>fun with_time_limit ctxt error_msg timeout_config f x =<br>
+   Timeout.apply (seconds (Config.get ctxt timeout_config)) f x<br>
+     handle Timeout.TIMEOUT _ =&gt; raise SMT_Failure.SMT (SMT_Failure.Time_Out <br>
+error_msg)</p>
+</blockquote>
+<p>I was not aware of that.</p>
+<p>This odd stacking of 2 timeouts for the SMT process is somewhat fragile. There <br>
+might be race conditions, which of the 2 attempts get through on time, and <br>
+there might be odd breakdowns coming from that.</p>
+<p>I can't say if this is relevant, though. It has been like that from the very <br>
+beginning:</p>
+<p>changeset:   36898:8e55aa1306c5<br>
+user:        boehmes<br>
+date:        Wed May 12 23:54:02 2010 +0200</p>
+<p>Makarius</p>
+
+
+
+<a name="630797930"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/630797930" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#630797930">(Oct 11 2026 at 20:08)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 21:56, Makarius wrote:</p>
+<blockquote>
+<p>On 11/10/2026 21:01, Mathias Fleury wrote:</p>
+<blockquote>
+<p>There are two timeouts: Sledgehammer sets a timeout (5s). This timeout is <br>
+passed to the solver. And the tool itself is invoked with a timeout:</p>
+<p>fun get_timeout ctxt =<br>
+   let val t = seconds (Config.get ctxt timeout);<br>
+   in if Timeout.ignored t then NONE else SOME (Timeout.scale_time t) end;</p>
+<p>fun with_time_limit ctxt error_msg timeout_config f x =<br>
+   Timeout.apply (seconds (Config.get ctxt timeout_config)) f x<br>
+     handle Timeout.TIMEOUT _ =&gt; raise SMT_Failure.SMT (SMT_Failure.Time_Out <br>
+error_msg)</p>
+</blockquote>
+<p>I was not aware of that.</p>
+<p>This odd stacking of 2 timeouts for the SMT process is somewhat fragile. There <br>
+might be race conditions, which of the 2 attempts get through on time, and <br>
+there might be odd breakdowns coming from that.</p>
+<p>I can't say if this is relevant, though. It has been like that from the very <br>
+beginning:<br>
+... and there is timeout=0 anyway, so nothing happens at that point, because <br>
+of Timeout.ignored. Also note that the relevant combinator is actually <br>
+with_timeout, after with_time_limit in the above source of version <br>
+Isabelle2026-RC3.</p>
+</blockquote>
+<p>So we are back to the question, what sledgehammer really does on its various <br>
+back-ends (ATP, SMT, ...).</p>
+<p>Makarius</p>
+
+
+
+<a name="631339015"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Isabelle2026-RC3%3A%20proper%20termination%20of%20verit/near/631339015" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Isabelle2026-RC3.3A.20proper.20termination.20of.20verit.html#631339015">(Oct 13 2026 at 14:58)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 11/10/2026 21:18, Makarius wrote:</p>
+<blockquote>
+<p>On 11/10/2026 21:01, Mathias Fleury wrote:</p>
+<blockquote>
+<p>So while I understand that veriT might have bugs with the timeout: If <br>
+Timeout.apply is not the right way to run jobs with a timeout, what is the <br>
+right way then?<br>
+Timeout.apply is usually right in Isabelle/ML, but there are many side- <br>
+conditions on the overall ML runtime context. I can't say anything about <br>
+sledgehammer in this respect. Since we do see problems for some years, there <br>
+must be something wrong somewhere.</p>
+</blockquote>
+</blockquote>
+<p>As already explained on another thread, I have now included this patch in <br>
+isabelle-release:</p>
+<p>changeset:   85808:9d3a192c2b3f<br>
+tag:         tip<br>
+user:        wenzelm<br>
+date:        Tue Oct 13 13:08:18 2026 +0200<br>
+files:       src/Pure/Concurrent/future.ML<br>
+description:<br>
+proper Exn.reraise exn (amending 461e924cc825) --- e.g. Exn.is_interrupt <br>
+during Single_Assignment.assign, which might occur during Timeout.apply (based <br>
+on patches/Isabelle2024/future_assign_interrupt by Xu Qiyuan);</p>
+<p>That might improve the situation, but I have no empirical proof for that. At <br>
+least 461e924cc825 is clear in being an editing mistake by myself, when I <br>
+introduced Interrupt_Break vs. Isabelle_Breakdown in recent years; and the <br>
+time span roughly corresponds to reports about verit problems.</p>
+<p>After the release, we should dedicate some time to eliminate odd SMT options <br>
+that are better no used, e.g. smt_timeout; maybe also smt_oracle, which looks <br>
+like a sophisticated version of 'sorry'.</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Oct 24 2026 at 08:44 UTC</p>
+</html>

@@ -1,0 +1,50 @@
+[
+    {
+        "content": "<p>I've been working with Claude Code using <code>isabelle build</code> as the source of ground truth, editing theories on disk and avoiding the IDE. For my project this has worked well and I now have a proof of the first main result. This takes about 30s to build. However, the cache system doesn't behave like I expected (each theory is rebuilt within a session) and the only approach that I have found to work as the project grows is to split into multiple sessions.</p>\n<p>Is splitting into many sessions the right workflow, or is there a better approach that people tend to use?</p>\n<p>Most of the time is spent waiting for <code>isabelle build</code> to generate an error or to time out, and this time increases as the theories grow even if most of the theories in a session don't change. I would appreciate pointers to more efficient workflows or ways people think about structuring projects. AFP entries tend to be single sessions (only 19 right now have two or more, 2% of the entries), with ODE on 7 as an outlier. Maybe I am using incorrect session/theory granularity?</p>",
+        "id": 596885589,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1779413054
+    },
+    {
+        "content": "<p>Have you looked at the IDE integrations discussed on the mailing list?</p>",
+        "id": 596906618,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1779424723
+    },
+    {
+        "content": "<p>But, at that point, you should ask claude to write a wrapper around <code>isabelle server</code>.</p>",
+        "id": 596906780,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1779424805
+    },
+    {
+        "content": "<p>You are not using like anyone else is. So it is not surprising that the tooling is not great</p>",
+        "id": 596906867,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1779424850
+    },
+    {
+        "content": "<p>*using Isabelle like anyone else is</p>",
+        "id": 596910377,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1779426483
+    },
+    {
+        "content": "<p>This paper describes an autoformalization workflow based on <code>isabelle build</code>: <a href=\"https://arxiv.org/pdf/2604.07455\">https://arxiv.org/pdf/2604.07455</a>. In my experience, Claude is quite good at interacting with <a href=\"https://github.com/awslabs/AutoCorrode/tree/main/iq\">Isabelle/Q</a>. This MCP-based approach also avoids <code>isabelle build</code>.</p>",
+        "id": 596951038,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1779440800
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"433149\">Maximilian Schäffeler</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/workflow.3F/near/596951038\">said</a>:</p>\n<blockquote>\n<p>This paper describes an autoformalization workflow based on <code>isabelle build</code>: <a href=\"https://arxiv.org/pdf/2604.07455\">https://arxiv.org/pdf/2604.07455</a>. ... This MCP-based approach also avoids <code>isabelle build</code>.</p>\n</blockquote>\n<p>Thanks for the pointers! I'm using custom tooling extensively but haven't looked at wrapping it in MCP or using Isabelle/Q.</p>\n<p>The proofs are easy but bulky, with large objects being reasoned about for many steps. The challenge here seems to be balancing the writing out of proof steps in excruciating detail versus the effort put into finding a proof method that works quickly with the chosen abstractions. Carefully crafting Isar in an IDE seems appropriate for results that need more difficult reasoning but seems hard to justify here.</p>",
+        "id": 596974032,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1779447658
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/workflow.3F/near/596906780\">said</a>:</p>\n<blockquote>\n<p>But, at that point, you should ask claude to write a wrapper around <code>isabelle server</code>.</p>\n</blockquote>\n<p>Sounds like an excellent idea, thanks!</p>",
+        "id": 596974659,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1779447824
+    }
+]

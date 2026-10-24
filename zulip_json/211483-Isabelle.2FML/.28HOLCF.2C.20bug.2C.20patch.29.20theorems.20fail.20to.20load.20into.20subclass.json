@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p>Hello,<br>\nI have written a couple of times here about this bug, which I believe I have a fix for now. Essentially, raising the default sort lf a class context (like HOLCF class <code>bifinite</code> does, raising it from <code>type</code> to <code>cpo</code>) leads to the class context failing to import theorem definitions from superclasses, leaving instead locale versions that refer to locale fixes (e.g. <code>po.below</code> instead of global <code>below :: 'a::po =&gt; 'a =&gt; bool</code>). The fix is relatively straightforward - when assembling the class context, cast the 'a type variable in the definitions to the right sort. This is sound, because subclasses necessarily have higher sort for that variable than superclasses. The small patch and the reproduction suite are attached, checked against the newest RC3. I would really appreciate if someone could take a look.<br>\n<a href=\"/user_uploads/14278/KXXXhKk9kM8VmzzDaniwSYwx/class-base-sort-repro.tar.gz\">class-base-sort-repro.tar.gz</a><br>\n<a href=\"/user_uploads/14278/mtNuI9scilQdRlQn_zLGzr2m/class-base-sort-syntax.patch\">class-base-sort-syntax.patch</a></p>",
+        "id": 633349488,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1792508537
+    },
+    {
+        "content": "<p>Hi Alex, it seems like the file you are trying to patch is authored by Florian Haftmann, TU Munich. Have you tried to contact him directly? Typically patching something such fundamental requires having a discussion with the responsible author of the affected modules.</p>",
+        "id": 633405510,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1792519681
+    },
+    {
+        "content": "<p>Thank you for the advice, Kevin! Will do. Unfortunately it doesn't seem like you can easily get on isabelle-dev mailing list... Seems like that'd be a good place to find the current maintainer</p>",
+        "id": 634582358,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1792827343
+    }
+]

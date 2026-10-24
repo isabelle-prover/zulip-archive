@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>Hey there, I was just wondering if there was a general way to build the isabelle_setup jar from the source under <code>src/Tools/Setup/src</code>? I can see the build.props under the <code>src/Tools/Setup/etc</code> directory, but I'm not familar with how to use these, is there some tool that can parse this to use? Or is that just manually converted into a shell command with <code>jar</code>?</p>",
+        "id": 518682062,
+        "sender_full_name": "Myria",
+        "timestamp": 1747406593
+    },
+    {
+        "content": "<p>For every component X (except for 1-2 from the very early days) there is a <code>Component_X</code>module that defines a command of shape <code>isabelle component_x</code>, which builds the component. Components and their <code>build.props</code> description are explained in the system manual.</p>",
+        "id": 518684883,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1747407390
+    },
+    {
+        "content": "<p>So in this case, you can just run <code>isabelle component_setup</code>.</p>",
+        "id": 518684999,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1747407418
+    },
+    {
+        "content": "<p>Note that such administrative tools are only present in the development version and not releases.</p>",
+        "id": 518685070,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1747407435
+    },
+    {
+        "content": "<p>Ah, thank you! I'll have a look around for it</p>",
+        "id": 518689860,
+        "sender_full_name": "Myria",
+        "timestamp": 1747408708
+    },
+    {
+        "content": "<p>if you want to bootstrap, you can do what i did for nixpkgs and build it only with javac: <a href=\"https://github.com/jvanbruegge/nixpkgs/blob/fa09ff7a7d38a618a9d8e2e614dae6b175993a37/pkgs/by-name/is/isabelle/package.nix#L180\">https://github.com/jvanbruegge/nixpkgs/blob/fa09ff7a7d38a618a9d8e2e614dae6b175993a37/pkgs/by-name/is/isabelle/package.nix#L180</a></p>",
+        "id": 518761431,
+        "sender_full_name": "Jan van Brügge",
+        "timestamp": 1747438021
+    },
+    {
+        "content": "<p>Ah, I didn't notice that when looking through your nixpkgs version. Gonna look at that more, thanks.</p>",
+        "id": 518785647,
+        "sender_full_name": "Myria",
+        "timestamp": 1747458870
+    }
+]

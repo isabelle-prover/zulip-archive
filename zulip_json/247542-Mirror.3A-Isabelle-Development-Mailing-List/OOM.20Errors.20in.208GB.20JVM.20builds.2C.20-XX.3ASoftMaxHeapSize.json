@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;</p>\n<p>We are recently seeing OOM errors for builds with 8GB heap memory, e.g.: <br>\n<a href=\"https://build.proof.cit.tum.de/build?name=user%2F2212\">https://build.proof.cit.tum.de/build?name=user%2F2212</a></p>\n<p>Since we are using the Z garbage collector, I've now changed the build <br>\nmanager to use its soft heap max size (8g) with a hard limit of 32g.</p>\n<p>This should mean that we won't see any OOM errors unless things really <br>\ngo wrong. However, it is a bit concerning that we went from &lt;4g to &gt;8g <br>\nin the last few months.</p>\n<p>If the soft heap limit works well, we could also do this by default in <br>\nthe distribution.</p>\n<p>Fabian</p>",
+        "id": 560775534,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1764333142
+    },
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p>On 28/11/2025 13:32, Fabian Huch wrote:</p>\n<blockquote>\n<p>Since we are using the Z garbage collector, I've now changed the build manager <br>\nto use its soft heap max size (8g) with a hard limit of 32g.</p>\n</blockquote>\n<p>I was not aware of that fine point. Would you say that the Z garbage collector <br>\nis where high-end Java applications are going, and that its extra options work <br>\nproperly?</p>\n<blockquote>\n<p>This should mean that we won't see any OOM errors unless things really go <br>\nwrong. However, it is a bit concerning that we went from &lt;4g to &gt;8g in the <br>\nlast few months.</p>\n</blockquote>\n<p>We have accumulated a lot of extras in Isabelle/Scala, tons of markup, and <br>\nrecently the online monitoring via Progress.Nodes_Status --- which is <br>\nimmediately visible in the initial session build panel of Isabelle/jEdit, with <br>\nall these percentages and inverse status lines. The actual motivation behind <br>\nthat was support for \"long running commands\" in regular progress output, for <br>\nbatch builds, to see potential non-termination earlier.</p>\n<p>I hope this state of affairs is sufficient for the Isabelle2025-1 release, so <br>\nthat further performance tuning can be postponed.</p>\n<blockquote>\n<p>If the soft heap limit works well, we could also do this by default in the <br>\ndistribution.</p>\n</blockquote>\n<p>Yes, as long as it means \"the Distribution after Isabelle2025-1\".</p>\n<p>Makarius</p>",
+        "id": 560787086,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1764336459
+    },
+    {
+        "content": "<p><strong>From:</strong> Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;</p>\n<blockquote>\n<blockquote>\n<p>Since we are using the Z garbage collector, I've now changed the <br>\nbuild manager to use its soft heap max size (8g) with a hard limit of <br>\n32g.</p>\n</blockquote>\n<p>I was not aware of that fine point. Would you say that the Z garbage <br>\ncollector is where high-end Java applications are going,<br>\nI would expect most desktop applications to migrate to generational ZGC. <br>\nLatency is better than G1GC, it's more efficient, and allows for desktop <br>\napplications with a low memory footprint. That solves all the main <br>\nproblems with JVM garbage collection.<br>\nand that its extra options work properly?</p>\n</blockquote>\n<p>I have never seen JVM options misbehave. The only caveat is that this is <br>\nan XX option, i.e. subject to change without notice (but typically even <br>\nthose remain stable).</p>\n<p>Fabian</p>",
+        "id": 560799722,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1764340388
+    }
+]

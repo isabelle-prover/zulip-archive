@@ -1,0 +1,118 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Soundness-critical issues in thm.ML · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Soundness-critical.20issues.20in.20thm.2EML.html">[isabelle] Soundness-critical issues in thm.ML</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="635318655"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Soundness-critical%20issues%20in%20thm.ML/near/635318655" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Soundness-critical.20issues.20in.20thm.2EML.html#635318655">(Oct 27 2026 at 08:39)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi everyone,</p>
+<p>Fabian Huch and I recently discovered some soundness-critical issues <br>
+(attached below) in thm.ML with the help of AI agents(*).</p>
+<p>Makarius and the AFP editors are informed.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>(*) We used GPT-6-Astra and Claude Opus 5.5 via PIDE MCP<br>
+<a href="https://github.com/kappelmann/isabelle-pide-mcp">https://github.com/kappelmann/isabelle-pide-mcp</a></p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">theory</span><span class="w"> </span><span class="n">Scratch</span>
+<span class="w">  </span><span class="kp">imports</span><span class="w"> </span><span class="n">Main</span>
+<span class="k">begin</span>
+
+<span class="k">text</span><span class="w"> </span><span class="s">‹Problems in ‹thm.ML›. Tested on Isabelle dev, hg 410b271f3ac4</span>
+<span class="s">(committed 2026-10-08).</span>
+<span class="s">Line numbers refer to ‹src/Pure/thm.ML› in that revision.›</span>
+
+<span class="gu">section</span><span class="w"> </span><span class="s">‹Soundness issues›</span>
+
+<span class="gu">subsection</span><span class="w"> </span><span class="s">‹Case 1: ‹res› drops the rule's flex-flex pairs (L2620)›</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">flex_rule1</span><span class="o">:</span><span class="w"> </span><span class="s">"x True ⟹ x True"</span><span class="w"> </span><span class="ow">.</span><span class="w"> </span><span class="n">―‹Important</span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="n">must</span>
+<span class="n">share</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">name.›</span>
+<span class="kn">lemma</span><span class="w"> </span><span class="n">flex_rule2</span><span class="o">:</span><span class="w"> </span><span class="s">"P True ⟹ ∀x::bool. P True"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"∀y::bool. False"</span><span class="w"> </span><span class="n">―</span><span class="w"> </span><span class="s">‹Important: name of y must not be equal to x›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">flex_rule1</span><span class="o">[</span><span class="n">THEN</span><span class="w"> </span><span class="n">flex_rule2</span><span class="o">])</span><span class="w"> </span><span class="n">―</span><span class="w"> </span><span class="s">‹new subgoal: ‹?y True›,</span>
+<span class="s">should be ‹False››</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">TrueI</span><span class="o">)</span>
+
+<span class="k">text</span><span class="w"> </span><span class="s">‹Possible cause: L2620 passes only ‹[BBi]› to ‹newAs›, not the</span>
+<span class="s">rule's flex-flex pairs ‹rtpairs›.</span>
+<span class="s">So ‹?x›, whose pair got solved, is not protected (L2432--2435) and is</span>
+<span class="s">renamed to ‹?y›</span>
+<span class="s">(L2439--2442). The binding for ‹?x› then misses ‹?y›.›</span>
+
+<span class="gu">subsection</span><span class="w"> </span><span class="s">‹Case 2: ‹eres› drops the rule's flex-flex pairs (L2608)›</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">eres_rule</span><span class="o">:</span><span class="w"> </span><span class="s">"P True ⟹ (∀x::bool. ¬ P True) ⟹ False"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="s">"∀y::bool. ¬ False ⟹ False"</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">erule</span><span class="w"> </span><span class="n">flex_rule1</span><span class="o">[</span><span class="n">THEN</span><span class="w"> </span><span class="n">eres_rule</span><span class="o">,</span><span class="w"> </span><span class="n">rotated</span><span class="o">])</span><span class="w"> </span><span class="n">―</span><span class="w"> </span><span class="s">‹new subgoal: ‹?y</span>
+<span class="s">True›, should be ‹False››</span>
+<span class="w">  </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">TrueI</span><span class="o">)</span>
+
+<span class="k">text</span><span class="w"> </span><span class="s">‹Possible cause: like Case 1, but on the elim-resolution path:</span>
+<span class="s">L2608 passes only</span>
+<span class="s">‹[BBi, (concl', asm')]› to ‹newAs›.›</span>
+
+<span class="gu">subsection</span><span class="w"> </span><span class="s">‹Case 3: ‹strip_apply› renames only part of a premise</span>
+<span class="s">(L2408--2414)›</span>
+
+<span class="k">definition</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"prop"</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"X ≡ (⋀w::bool. True ⟹ False)"</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">split_rule</span><span class="o">:</span><span class="w"> </span><span class="s">"(⋀z::bool. z = w ⟹ z ≠ w) ⟹ PROP X"</span><span class="w"> </span><span class="n">―</span><span class="w"> </span><span class="s">‹Important: w</span>
+<span class="s">here and in X must share the same name.›</span>
+<span class="w">  </span><span class="k">unfolding</span><span class="w"> </span><span class="n">X_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">split_aux</span><span class="o">:</span><span class="w"> </span><span class="s">"z = True ⟹ z ≠ False"</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">simp</span>
+
+<span class="n">schematic_goal</span><span class="w"> </span><span class="n">split_bad</span><span class="o">:</span><span class="w"> </span><span class="s">"PROP ?G (λv::nat. v)"</span><span class="w"> </span><span class="n">―</span><span class="w"> </span><span class="s">‹Important: name of v</span>
+<span class="s">must not be equal to w›</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">split_rule</span><span class="o">[</span><span class="n">unfolded</span><span class="w"> </span><span class="n">X_def</span><span class="o">])</span><span class="w"> </span><span class="n">―</span><span class="w"> </span><span class="s">‹new subgoal: ‹⋀z. z = ?w ⟹</span>
+<span class="s">z ≠ ?v››</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">split_aux</span><span class="o">)</span>
+<span class="w">  </span><span class="kp">apply</span><span class="w"> </span><span class="n">assumption</span>
+<span class="w">  </span><span class="k">done</span>
+
+<span class="kn">lemma</span><span class="w"> </span><span class="n">False</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">split_bad</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">rule</span><span class="w"> </span><span class="n">TrueI</span><span class="o">)</span>
+
+<span class="k">text</span><span class="w"> </span><span class="s">‹Possible cause: ‹strip_apply› (L2408--2414, used at L2584) strips</span>
+<span class="s">‹⋀›/‹⟹› as long as ‹B› has them,</span>
+<span class="s">not just the ‹nlift› lifted ones. With a rule conclusion ‹⋀w. …› it cuts</span>
+<span class="s">into the premise, so</span>
+<span class="s">‹?w› is renamed in ‹z ≠ ?w› but not in ‹z = ?w›.›</span>
+
+<span class="k">end</span>
+</code></pre></div>
+
+
+
+<a name="635494307"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Soundness-critical%20issues%20in%20thm.ML/near/635494307" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Soundness-critical.20issues.20in.20thm.2EML.html#635494307">(Oct 27 2026 at 19:36)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p>On 27/10/2026 09:38, Kevin Kappelmann (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Fabian Huch and I recently discovered some soundness-critical issues (attached <br>
+below) in thm.ML with the help of AI agents(*).</p>
+</blockquote>
+<p>Thanks for the concrete example, to substantiate what I said on a realated <br>
+thread "MCP resources bounds" (Sep-2026):</p>
+<p>On 08/09/2026 17:57, Makarius wrote:</p>
+<blockquote>
+<p>There is indeed a fundamental problem here, because the MCP violates<br>
+longstanding assumptions about how the prover works, and is used by a human<br>
+user. So any "mitigation" can only be symbolic, not really a proper solution.</p>
+<p>At FLoC 2026 in Lisbon, I've had some discussions with users of AI + MCP. My<br>
+conclusion: we should gradually make the system more robust [...]</p>
+</blockquote>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Oct 31 2026 at 14:23 UTC</p>
+</html>

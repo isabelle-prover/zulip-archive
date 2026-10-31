@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>I'm trying to define a large set (hundreds/thousands of records) from an <code>.ML</code> file instead of bloating my <code>.thy</code> file.</p>\n<p>In my <code>.thy</code> file:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">context</span><span class=\"w\"> </span><span class=\"n\">MyDataset_A</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">ML_file</span><span class=\"w\"> </span><span class=\"s\">\"MyDataset_generator.ML\"</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>In the generated ML file </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kp\">structure</span><span class=\"w\"> </span><span class=\"n\">MyDataset_Generator_Set</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">struct</span>\n<span class=\"n\">val</span><span class=\"w\"> </span><span class=\"o\">_</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"n\">Theory.setup</span><span class=\"w\"> </span><span class=\"o\">(</span>\n<span class=\"w\">    </span><span class=\"n\">Local_Theory.map_background</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">fn</span><span class=\"w\"> </span><span class=\"n\">lthy</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"n\">&gt;</span>\n<span class=\"w\">      </span><span class=\"k\">let</span>\n<span class=\"w\">        </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"n\">MyDataset_generator_term</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">@</span><span class=\"ow\">{</span><span class=\"kt\">term</span>\n<span class=\"w\">          </span><span class=\"s\">\"{{⟪Slabel1, Nat 42⟫, ⟪Slabel2, Bool True⟫}, {⟪Slabel1, Nat 55⟫, ⟪Slabel2, Bool False⟫},</span>\n<span class=\"s\">{⟪Slabel1, Nat 42⟫, ⟪Slabel2, Bool True⟫}, {⟪Slabel1, Nat 55⟫, ⟪Slabel2, Bool False⟫}} :: sdatum set\"</span><span class=\"ow\">}</span><span class=\"n\">;</span>\n<span class=\"w\">        </span><span class=\"n\">val</span><span class=\"w\"> </span><span class=\"o\">((_,</span><span class=\"w\"> </span><span class=\"o\">_),</span><span class=\"w\"> </span><span class=\"n\">lthy'</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">Local_Theory.define</span><span class=\"w\"> </span><span class=\"o\">((</span><span class=\"n\">Binding.name</span><span class=\"w\"> </span><span class=\"s\">\"MyDataset_generator\"</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">NoSyn</span><span class=\"o\">),</span>\n<span class=\"w\">          </span><span class=\"o\">((</span><span class=\"n\">Thm.def_binding</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">Binding.name</span><span class=\"w\"> </span><span class=\"s\">\"MyDataset_generator_def\"</span><span class=\"o\">),</span><span class=\"w\"> </span><span class=\"o\">[]),</span><span class=\"w\"> </span><span class=\"n\">MyDataset_generator_term</span><span class=\"o\">))</span><span class=\"w\"> </span><span class=\"n\">lthy;</span>\n<span class=\"w\">      </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"n\">lthy'</span><span class=\"w\"> </span><span class=\"k\">end</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"o\">)</span>\n<span class=\"k\">end</span><span class=\"n\">;</span>\n<span class=\"k\">end</span><span class=\"n\">;</span>\n</code></pre></div>\n<p>However, the Ml file gives an error at line  where I have {{....}}<br>\nI</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">nner</span><span class=\"w\"> </span><span class=\"n\">lexical</span><span class=\"w\"> </span><span class=\"n\">error</span>\n<span class=\"n\">Failed</span><span class=\"w\"> </span><span class=\"n\">to</span><span class=\"w\"> </span><span class=\"n\">parse</span><span class=\"w\"> </span><span class=\"kt\">term</span>\n</code></pre></div>\n<p>What is causing this? Is it the use of <code>@{term \"...}</code> with large or nested terms? Is there a better way to load such constants?</p>",
+        "id": 507149674,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1742536726
+    },
+    {
+        "content": "<p>Try <br>\nML \\&lt;open&gt;<br>\n@{term ....}<br>\n\\&lt;close&gt;<br>\nin a theory file…</p>",
+        "id": 507172437,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742537587
+    },
+    {
+        "content": "<p>then you can minimize the term to see where it fails</p>",
+        "id": 507172884,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742537604
+    },
+    {
+        "content": "<p>(BTW, I suspect the issue is <code>⟫</code>)</p>",
+        "id": 507204088,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742540557
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Inner.20lexical.20error.20.3F/near/507204088\">said</a>:</p>\n<blockquote>\n<p>(BTW, I suspect the issue is <code>⟫</code>)</p>\n</blockquote>\n<p>Thanks for the help, Mathias. </p>\n<p>The <code>@{term ...}</code> approach works fine when I use <code>ML ‹...›</code> directly in a <code>.thy</code> file. But when I try to move the same definition into a separate <code>.ML</code> file (and include it via <code>ML_file</code> in my theory), I get a lexical error due to the Unicode angle brackets (⟪ ⟫), even though the same term works inline.</p>\n<p>Do you happen to know a workaround for this? Or maybe an alternative way to load structured definitions from an external file into the theory context?</p>",
+        "id": 507209405,
+        "sender_full_name": "Sana I.",
+        "timestamp": 1742542899
+    }
+]

@@ -1,0 +1,31 @@
+<html>
+<head><meta charset="utf-8"><title>Document generation fails if \&lt;Zprime&gt; is used in theory · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Document.20generation.20fails.20if.20.5C.3CZprime.3E.20is.20used.20in.20theory.html">Document generation fails if \&lt;Zprime&gt; is used in theory</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="632160196"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Document%20generation%20fails%20if%20%5C%3CZprime%3E%20is%20used%20in%20theory/near/632160196" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Poscat <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Document.20generation.20fails.20if.20.5C.3CZprime.3E.20is.20used.20in.20theory.html#632160196">(Oct 16 2026 at 05:34)</a>:</h4>
+<p>Repo here: <a href="https://github.com/poscat0x04/isabelle-prime-repro">https://github.com/poscat0x04/isabelle-prime-repro</a><br>
+Run <code>isabelle build -D .</code> at project root to reproduce error.<br>
+Root cause seems to be that <code>\isasymZprime</code> is undefined in <code>isabellesym.sty</code></p>
+<p>Found a workaround: add</p>
+<div class="codehilite" data-code-language="TeX"><pre><span></span><code><span class="k">\newcommand</span><span class="nb">{</span><span class="k">\isasymZprime</span><span class="nb">}{</span><span class="k">\isamath</span><span class="nb">{^</span><span class="k">\prime</span><span class="nb">}}</span>
+</code></pre></div>
+<p>to your <code>root.tex</code></p>
+
+
+
+<a name="632210837"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Document%20generation%20fails%20if%20%5C%3CZprime%3E%20is%20used%20in%20theory/near/632210837" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Document.20generation.20fails.20if.20.5C.3CZprime.3E.20is.20used.20in.20theory.html#632210837">(Oct 16 2026 at 09:44)</a>:</h4>
+<p>Seems like something that should be sent to the Isabelle developers. Include the Isabelle version you used in your email.</p>
+
+
+
+<hr><p>Last updated: Oct 31 2026 at 14:23 UTC</p>
+</html>

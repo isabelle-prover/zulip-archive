@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>I've been using HOL-Library.Finite_Map in my theories and have noticed a couple of warts:</p>\n<ul>\n<li>Some definitions seem redundant, perhaps added before their counterparts in Map were added - <code>map_restrict_set</code> is <code>Map.restrict_map</code> with arguments swapped, <code>set_of_map</code> is <code>Map.graph</code>. The corresponding <code>fmap_restrict</code> also doesn't have any syntax to it. The common definitions have more lemmas that could be transferred, but I don't know how much value there is in making the aliases explicit.</li>\n<li><code>fmap_subseteq</code> is missing partial order lemmas (unsure if <code>order</code> instantiation is warranted here - it exists for unbounded maps). These partial lemmas are trivial to prove <code>by transfer'</code>, but surprisingly tricky using just the provided lemmas (even reflexivity is non-trivial!) - they should IMO definitely be included.<br>\nI'm happy to contribute on these counts, but don't really know what the model for that is - I hope I don't need a scholarship at TUM :).</li>\n</ul>",
+        "id": 575600159,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1771953238
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1033557\">Alex Mobius</span> <a href=\"#narrow/channel/202961-General/topic/Apparent.20redundancies.20.2F.20omissions.20in.20HOL-Library.2EFinite_Map/near/575600159\">said</a>:</p>\n<blockquote>\n<p>I'm happy to contribute on these counts, but don't really know what the model for that is - I hope I don't need a scholarship at TUM :).</p>\n</blockquote>\n<p>The model is to propose the changes in question on the users mailing list.</p>",
+        "id": 575601287,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1771953564
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"348400\">@Fabian Huch</span> thank you. How do I format them, as hg patches or is it better to start with a textual proposition?</p>",
+        "id": 575627608,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1771962190
+    },
+    {
+        "content": "<p>I brief summary and a patch file should be fine.</p>",
+        "id": 575639663,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1771966583
+    }
+]

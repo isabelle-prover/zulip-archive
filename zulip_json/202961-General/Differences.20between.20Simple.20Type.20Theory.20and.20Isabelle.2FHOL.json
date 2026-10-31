@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>Hi all,</p>\n<p><a href=\"https://doi.org/10.1016/j.jal.2007.11.001\">The seven virtues of simple type theory</a> has <em>really</em> improved my understanding of why simple type theory is a good foundation for a theorem prover. Now I'm curious to learn more about the differences between the type theory that Isabelle supports, and the type theory presented in seven virtues. In particular, I'm wondering about the extensions that Isabelle has done to make simple type theory practically usable, such as polymorphism. Seven virtues also mentions undefinedness, indefinite description, and multi-sortedness, which as far as I can tell Isabelle all supports. Is there a nice description out there somewhere of Isabelle's STT++? Are these really <em>extensions</em> to STT in Isabelle, or is there somehow a translation of, e.g., undefinedness in the frontend to some kind of encoding in plain STT? </p>\n<p>I also don't understand what exactly needs to go into the kernel, and what goes outside of it. Going by the explanation in seven virtues, I'd expect that a kernel contains:</p>\n<ol>\n<li>An implementation of an interpreter, for evaluating function application</li>\n<li>A type checker</li>\n<li>A proof system, e.g. to keep track of the proof steps using the axiom schemas as defined in section 6.</li>\n<li>Some notion of substitutibility, which is only explained in prose in seven virtues but probably also pretty important to get right, I reckon?</li>\n</ol>\n<p>What I find confusing is that I've read on the internet that the kernel only needs part 1, an implementation of the interpreter. Is that the case? How are part 2 and 3 included without mistakes then?</p>\n<p>(For completeness, my background is formal methods with an eye towards industry, which explains why finding good sources and understanding all this material remains challenging for me)</p>",
+        "id": 624446582,
+        "sender_full_name": "Bob Rubbens",
+        "timestamp": 1789501127
+    },
+    {
+        "content": "<p>Hi Bob, below paper by Kuncar and Popescu deals with the consistency of Isabelle/HOL's axioms.<br>\n<a href=\"https://link.springer.com/article/10.1007/s10817-018-9454-8\">https://link.springer.com/article/10.1007/s10817-018-9454-8</a></p>\n<p>Function application is just beta reduction, which is one of the axioms of Isabelle.<br>\nThe type checker is part of the kernel.<br>\nThe proof system is part of the kernel.<br>\nType and term instantiation are Isabelle axioms.</p>",
+        "id": 624453237,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1789502942
+    }
+]

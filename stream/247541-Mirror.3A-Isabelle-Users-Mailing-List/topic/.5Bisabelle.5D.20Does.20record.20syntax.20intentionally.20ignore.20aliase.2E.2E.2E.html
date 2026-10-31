@@ -1,0 +1,67 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Does record syntax intentionally ignore aliase... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Does.20record.20syntax.20intentionally.20ignore.20aliase.2E.2E.2E.html">[isabelle] Does record syntax intentionally ignore aliase...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="633460048"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Does%20record%20syntax%20intentionally%20ignore%20aliase.../near/633460048" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Does.20record.20syntax.20intentionally.20ignore.20aliase.2E.2E.2E.html#633460048">(Oct 20 2026 at 22:01)</a>:</h4>
+<p><strong>From:</strong> Mete Polat &lt;<a href="mailto:mete@varto.com">mete@varto.com</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Does record syntax intentionally ignore aliases of hidden constructor names?</p>
+<p>Hi everyone,</p>
+<p>Is record-literal syntax intentionally independent of constructor name-space aliases? I observe the following in Isabelle2025-2 and Isabelle2026-RC4:</p>
+<p>theory Record_Constructor_Repro<br>
+  imports Main<br>
+begin</p>
+<p>record public_record = public_field :: nat<br>
+record hidden_record = hidden_field :: nat</p>
+<p>ML ‹<br>
+  val hidden_constructor = @{const_name hidden_record.hidden_record_ext};<br>
+  val public_constructor = @{const_name public_record.public_record_ext};<br>
+›</p>
+<p>value "hidden_record.hidden_record_ext 1 () = ⦇hidden_field = 1⦈"</p>
+<p>text ‹Hide the second record's constructor, then give its name to the<br>
+  first record's constructor as an alias.›<br>
+hide_const hidden_record.hidden_record_ext<br>
+setup ‹Sign.const_alias (Binding.qualified_name hidden_constructor) public_constructor›</p>
+<p>text ‹The name now resolves to the public constructor›<br>
+value "(hidden_record.hidden_record_ext 1 () :: public_record)"</p>
+<p>text ‹But record syntax still constructs a hidden_record using the original<br>
+  hidden constructor, despite that constructor name now resolving elsewhere.›<br>
+value "(⦇hidden_field = 1⦈ :: hidden_record)"</p>
+<p>text ‹Clash of types "_ public_record_scheme” and "_ hidden_record_scheme"›<br>
+value "hidden_record.hidden_record_ext 1 () = ⦇hidden_field = 1⦈"</p>
+<p>end</p>
+<p>In the final <code>value</code>, the record literal remains valid and uses the original hidden constructor after that constructor’s name has been hidden and aliased to a different constructor. Is this intended?</p>
+<p>Best,<br>
+Mete</p>
+
+
+
+<a name="634728102"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Does%20record%20syntax%20intentionally%20ignore%20aliase.../near/634728102" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Does.20record.20syntax.20intentionally.20ignore.20aliase.2E.2E.2E.html#634728102">(Oct 25 2026 at 08:05)</a>:</h4>
+<p><strong>From:</strong> Lars Hupel &lt;<a href="mailto:lars@hupel.info">lars@hupel.info</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Does record syntax intentionally ignore aliases of hidden constructor names?</p>
+<p>Hi Mete,</p>
+<blockquote>
+<p>Is record-literal syntax intentionally independent of constructor name-space aliases?</p>
+</blockquote>
+<p>I believe that the record syntax is older than local theories and <br>
+namespaces in Isabelle.</p>
+<p>You may want to try instead HOL-Library.Datatype_Records, which provides <br>
+the same syntax but uses BNF's more modern machinery under the hood. (I <br>
+have never tested it under the presence of namespace modifications, <br>
+though.) The downside of that package is that extensible records are not <br>
+supported, since I never had a use for them.</p>
+<p>Cheers<br>
+Lars</p>
+
+
+
+<hr><p>Last updated: Oct 31 2026 at 14:23 UTC</p>
+</html>

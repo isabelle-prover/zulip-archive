@@ -1,0 +1,120 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] (PATCH) `sublocale` in a class causes subclass... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.28PATCH.29.20.60sublocale.60.20in.20a.20class.20causes.20subclass.2E.2E.2E.html">[isabelle] (PATCH) `sublocale` in a class causes subclass...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="630840324"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%28PATCH%29%20%60sublocale%60%20in%20a%20class%20causes%20subclass.../near/630840324" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.28PATCH.29.20.60sublocale.60.20in.20a.20class.20causes.20subclass.2E.2E.2E.html#630840324">(Oct 12 2026 at 02:06)</a>:</h4>
+<p><strong>From:</strong> Alex Mobius &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] (PATCH) <code>sublocale</code> in a class causes subclass declarations with a raised sort to fail</p>
+<p>Another bug with non-default-sort classes I hit: if a class has a raised <br>
+sort for its type variable, say S (because its "assumes" use a constant <br>
+with a sort bound for example), and there is a "sublocale" declaration <br>
+in its superclass, the declaration fails with "Type inference imposes <br>
+additional sort constraint {subclass_sort} of type parameter 'a of sort <br>
+{superclass_sort}". In absence of the sublocale declaration, the <br>
+subclass declaration goes through.</p>
+<p>As far as i understand, the mechanism is that replaying the locale <br>
+definitions fixes sort of 'a to what it was at the time of sublocale. <br>
+The easiest fix I've found is to restore the constraints specifically <br>
+after superclass body replay in classes. It feels a little iffy, but <br>
+should be sound, as monotonicity of sorts for 'a is established elsewhere.</p>
+<p>Disclaimer: finding the root cause of this bug was machine-assisted and <br>
+the fix, as well as the test suite, is machine-generated. I did my best <br>
+to think about and test all of the corner cases that could break, and <br>
+the patch itself is tiny, which gives me hopes about its correctness. I <br>
+would kindly ask the maintainers to take a more informed look.</p>
+<p>With best wishes,</p>
+<p>Alex.</p>
+<p><a href="/user_uploads/14278/gy_SnrhUTmLw8PtbLFvM15Fx/sublocale-leak-repro.tar.gz">sublocale-leak-repro.tar.gz</a><br>
+<a href="/user_uploads/14278/rKlvumA55T2eSREkCGk8S74P/sublocale-leak.patch">sublocale-leak.patch</a></p>
+
+
+
+<a name="635437802"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%28PATCH%29%20%60sublocale%60%20in%20a%20class%20causes%20subclass.../near/635437802" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.28PATCH.29.20.60sublocale.60.20in.20a.20class.20causes.20subclass.2E.2E.2E.html#635437802">(Oct 27 2026 at 15:55)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] (PATCH) <code>sublocale</code> in a class causes subclass declarations with a raised sort to fail</p>
+<p>Hi Alex,</p>
+<p>thanks for pinning the ancient issue down.</p>
+<p>I have examined your patches and they seem to capture the right idea.</p>
+<p>It will take some time until I have adapted them, though.</p>
+<p>Regards,<br>
+    Florian</p>
+<p>Am 12.10.26 um 04:06 schrieb Alex Mobius (via cl-isabelle-users Mailing <br>
+List):</p>
+<blockquote>
+<p>Another bug with non-default-sort classes I hit: if a class has a raised <br>
+sort for its type variable, say S (because its "assumes" use a constant <br>
+with a sort bound for example), and there is a "sublocale" declaration <br>
+in its superclass, the declaration fails with "Type inference imposes <br>
+additional sort constraint {subclass_sort} of type parameter 'a of sort <br>
+{superclass_sort}". In absence of the sublocale declaration, the <br>
+subclass declaration goes through.</p>
+<p>As far as i understand, the mechanism is that replaying the locale <br>
+definitions fixes sort of 'a to what it was at the time of sublocale. <br>
+The easiest fix I've found is to restore the constraints specifically <br>
+after superclass body replay in classes. It feels a little iffy, but <br>
+should be sound, as monotonicity of sorts for 'a is established elsewhere.</p>
+<p>Disclaimer: finding the root cause of this bug was machine-assisted and <br>
+the fix, as well as the test suite, is machine-generated. I did my best <br>
+to think about and test all of the corner cases that could break, and <br>
+the patch itself is tiny, which gives me hopes about its correctness. I <br>
+would kindly ask the maintainers to take a more informed look.</p>
+<p>With best wishes,</p>
+<p>Alex.</p>
+</blockquote>
+
+
+
+<a name="636059550"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20%28PATCH%29%20%60sublocale%60%20in%20a%20class%20causes%20subclass.../near/636059550" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20.28PATCH.29.20.60sublocale.60.20in.20a.20class.20causes.20subclass.2E.2E.2E.html#636059550">(Oct 29 2026 at 16:35)</a>:</h4>
+<p><strong>From:</strong> Florian Haftmann &lt;<a href="mailto:florian.haftmann@cit.tum.de">florian.haftmann@cit.tum.de</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] (PATCH) <code>sublocale</code> in a class causes subclass declarations with a raised sort to fail</p>
+<p>For the record: this has been now adopted in eda71b79a2cb.</p>
+<p>Am 27.10.26 um 16:55 schrieb Florian Haftmann:</p>
+<blockquote>
+<p>Hi Alex,</p>
+<p>thanks for pinning the ancient issue down.</p>
+<p>I have examined your patches and they seem to capture the right idea.</p>
+<p>It will take some time until I have adapted them, though.</p>
+<p>Regards,<br>
+     Florian</p>
+<p>Am 12.10.26 um 04:06 schrieb Alex Mobius (via cl-isabelle-users Mailing <br>
+List):</p>
+<blockquote>
+<p>Another bug with non-default-sort classes I hit: if a class has a <br>
+raised sort for its type variable, say S (because its "assumes" use a <br>
+constant with a sort bound for example), and there is a "sublocale" <br>
+declaration in its superclass, the declaration fails with "Type <br>
+inference imposes additional sort constraint {subclass_sort} of type <br>
+parameter 'a of sort {superclass_sort}". In absence of the sublocale <br>
+declaration, the subclass declaration goes through.</p>
+<p>As far as i understand, the mechanism is that replaying the locale <br>
+definitions fixes sort of 'a to what it was at the time of sublocale. <br>
+The easiest fix I've found is to restore the constraints specifically <br>
+after superclass body replay in classes. It feels a little iffy, but <br>
+should be sound, as monotonicity of sorts for 'a is established <br>
+elsewhere.</p>
+<p>Disclaimer: finding the root cause of this bug was machine-assisted <br>
+and the fix, as well as the test suite, is machine-generated. I did my <br>
+best to think about and test all of the corner cases that could break, <br>
+and the patch itself is tiny, which gives me hopes about its <br>
+correctness. I would kindly ask the maintainers to take a more <br>
+informed look.</p>
+<p>With best wishes,</p>
+<p>Alex.</p>
+</blockquote>
+</blockquote>
+<p><a href="/user_uploads/14278/QkzReAsREOmuuHzaI0O35X7E/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Oct 31 2026 at 14:23 UTC</p>
+</html>

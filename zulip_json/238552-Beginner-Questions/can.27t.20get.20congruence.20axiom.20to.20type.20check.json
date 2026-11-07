@@ -1,0 +1,98 @@
+[
+    {
+        "content": "<p>As an experiment, I'm trying to define my own equality operator and a congruence axiom.  I first tried this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">axiomatization</span>\n<span class=\"w\">    </span><span class=\"n\">eq</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ 'a ⇒ bool\"</span>\n<span class=\"kp\">where</span>\n<span class=\"w\">    </span><span class=\"n\">comb</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"eq s t ⟹ eq u v ⟹ eq (s u) (t v)\"</span>\n</code></pre></div>\n<p>Isabelle complains:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Type</span><span class=\"w\"> </span><span class=\"n\">unification</span><span class=\"w\"> </span><span class=\"n\">failed</span>\n\n<span class=\"n\">Type</span><span class=\"w\"> </span><span class=\"n\">error</span><span class=\"w\"> </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"n\">application</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">operator</span><span class=\"w\"> </span><span class=\"n\">not</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">type</span>\n\n<span class=\"n\">Operator</span><span class=\"o\">:</span><span class=\"w\">  </span><span class=\"n\">s</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span>\n<span class=\"n\">Operand</span><span class=\"o\">:</span><span class=\"w\">   </span><span class=\"n\">u</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span>\n</code></pre></div>\n<p>Why isn't Isabelle inferring a proper polymorphic type for s, t, u, and v?</p>\n<p>I then tried moving the definition of <code>comb</code> into a separate axiomatization statement:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">axiomatization</span>\n<span class=\"w\">    </span><span class=\"n\">eq</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ 'a ⇒ bool\"</span>\n\n<span class=\"k\">axiomatization</span>\n<span class=\"kp\">where</span>\n<span class=\"w\">    </span><span class=\"n\">comb</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"eq s t ⟹ eq u v ⟹ eq (s u) (t v)\"</span>\n</code></pre></div>\n<p>Now I just get a warning:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Introduced</span><span class=\"w\"> </span><span class=\"n\">fixed</span><span class=\"w\"> </span><span class=\"n\">type</span><span class=\"w\"> </span><span class=\"n\">variable</span><span class=\"o\">(</span><span class=\"n\">s</span><span class=\"o\">):</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n n-Type\">'b</span><span class=\"w\"> </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"s\">\"s\"</span><span class=\"w\"> </span><span class=\"n\">or</span><span class=\"w\"> </span><span class=\"s\">\"t\"</span><span class=\"w\"> </span><span class=\"n\">or</span><span class=\"w\"> </span><span class=\"s\">\"u\"</span><span class=\"w\"> </span><span class=\"n\">or</span><span class=\"w\"> </span><span class=\"s\">\"v\"</span>\n</code></pre></div>\n<p>Is the warning benign?  Is there some way to make it go away?  Thanks for any advice.</p>",
+        "id": 584036345,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775579105
+    },
+    {
+        "content": "<p>You might want to inspect the theory \"HOL\" (import as HOL.HOL). There, the axiomatization commands produce similar warnings.</p>",
+        "id": 584044935,
+        "sender_full_name": "Maximilian Schäffeler",
+        "timestamp": 1775581556
+    },
+    {
+        "content": "<p>I realized that in my second example above, adding a universal quantifier makes the warning go away:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">axiomatization</span>\n<span class=\"kp\">where</span>\n<span class=\"w\">    </span><span class=\"n\">comb</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"⋀s t u v . eq s t ⟹ eq u v ⟹ eq (s u) (t v)\"</span>\n</code></pre></div>\n<p>However, this doesn't help if I put this into the same axiomatization statement where I declare \"eq\", as in my first example above.  I'm not sure why.</p>",
+        "id": 584138395,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775628255
+    },
+    {
+        "content": "<p>have tried to explicitly put types?</p>",
+        "id": 584138771,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775628441
+    },
+    {
+        "content": "<p>the warning states that Isabelle added types (which is sometimes what you want but often enough a mistake)</p>",
+        "id": 584138848,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775628476
+    },
+    {
+        "content": "<p>so add the types yourself and Isabelle should not complain…</p>",
+        "id": 584138886,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775628491
+    },
+    {
+        "content": "<p>I tried adding explicit types, without the universal quantifier: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">axiomatization</span>\n<span class=\"kp\">where</span>\n<span class=\"w\">    </span><span class=\"n\">comb</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"eq (s :: 'a ⇒ 'b) (t :: 'a ⇒ 'b) ⟹ eq (u :: 'a) (v :: 'a) ⟹ eq (s u) (t v)\"</span>\n</code></pre></div>\n<p>However Isabelle still issues a warning:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Introduced</span><span class=\"w\"> </span><span class=\"n\">fixed</span><span class=\"w\"> </span><span class=\"n\">type</span><span class=\"w\"> </span><span class=\"n\">variable</span><span class=\"o\">(</span><span class=\"n\">s</span><span class=\"o\">):</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n n-Type\">'b</span><span class=\"w\"> </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"s\">\"s\"</span><span class=\"w\"> </span><span class=\"n\">or</span><span class=\"w\"> </span><span class=\"s\">\"t\"</span><span class=\"w\"> </span><span class=\"n\">or</span><span class=\"w\"> </span><span class=\"s\">\"u\"</span><span class=\"w\"> </span><span class=\"n\">or</span><span class=\"w\"> </span><span class=\"s\">\"v\"</span>\n</code></pre></div>\n<p>So it seems that the quantifier is necessary if I want the warning to disappear.</p>",
+        "id": 584140380,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775629118
+    },
+    {
+        "content": "<p>that is a feature right?</p>",
+        "id": 584140764,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775629275
+    },
+    {
+        "content": "<p>Isabelle type unification does: disregard every type annotation, then come up with its own type, and only then combine those inferred types with the ones you provided</p>",
+        "id": 584140928,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775629336
+    },
+    {
+        "content": "<p>So I am not surprised that annotations are not declaring types</p>",
+        "id": 584141015,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775629378
+    },
+    {
+        "content": "<p>I could consider this behavior to be a feature if I really understood how Isabelle's type inference worked, but some things are still mysterious to me:</p>\n<ol>\n<li>Suppose that I comment out the \"comb\" axiom above, and instead introduce it as a lemma:</li>\n</ol>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">comb</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"eq s t ⟹ eq u v ⟹ eq (s u) (t v)\"</span>\n<span class=\"gr\">sorry</span>\n</code></pre></div>\n<p>Now Isabelle does not report the \"introduced fixed type variables\" warning.  So apparently type inference works differently in an axiomatization statement than in a lemma; I'm not sure why.</p>\n<ol start=\"2\">\n<li>Suppose I put the \"comb\" axiom with the universal quantifier into the same axiomatization statement where I declare eq:</li>\n</ol>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">axiomatization</span>\n<span class=\"w\">    </span><span class=\"n\">eq</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ 'a ⇒ bool\"</span>\n<span class=\"kp\">where</span>\n<span class=\"w\">    </span><span class=\"n\">comb</span><span class=\"w\"> </span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"⋀s t u v . eq s t ⟹ eq u v ⟹ eq (s u) (t v)\"</span>\n</code></pre></div>\n<p>Then type checking fails completely:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Type</span><span class=\"w\"> </span><span class=\"n\">unification</span><span class=\"w\"> </span><span class=\"n\">failed</span>\n\n<span class=\"n\">Type</span><span class=\"w\"> </span><span class=\"n\">error</span><span class=\"w\"> </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"n\">application</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">operator</span><span class=\"w\"> </span><span class=\"n\">not</span><span class=\"w\"> </span><span class=\"n\">of</span><span class=\"w\"> </span><span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">type</span>\n\n<span class=\"n\">Operator</span><span class=\"o\">:</span><span class=\"w\">  </span><span class=\"n\">s</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span>\n<span class=\"n\">Operand</span><span class=\"o\">:</span><span class=\"w\">   </span><span class=\"n\">u</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span>\n</code></pre></div>\n<p>I don't see why.</p>",
+        "id": 584142659,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775630038
+    },
+    {
+        "content": "<p>Polymorphism in Pure and HOL is schematic (standard HM-polymorphism): a polymorphic type does not exist, only a polymorphic type schema. You <em>can</em> declare a polymorphic constant (this gives you a polymorphic let-binding) and then axiomatize something about a specific instance, but here you have a fixed 'a.</p>",
+        "id": 584151157,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1775633399
+    },
+    {
+        "content": "<p>So the following will also not work:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">P</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ bool\"</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">\"P (1::nat)\"</span>\n</code></pre></div>",
+        "id": 584151279,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1775633431
+    },
+    {
+        "content": "<p>But you can declare the polymorphic constant <code>P</code>:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">consts</span><span class=\"w\"> </span><span class=\"n\">P</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ bool\"</span>\n</code></pre></div>\n<p>and later on create your axiomatization:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">axiomatization</span><span class=\"w\"> </span><span class=\"kp\">where</span><span class=\"w\"> </span><span class=\"n\">ax</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"P (1::nat)\"</span>\n</code></pre></div>",
+        "id": 584151414,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1775633476
+    },
+    {
+        "content": "<p>(this has nothing to do with equality or function types per se)</p>",
+        "id": 584151462,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1775633500
+    },
+    {
+        "content": "<p>Fabian: This is helpful and explains some of the mystery, thanks.</p>",
+        "id": 584151991,
+        "sender_full_name": "Adam Dingle",
+        "timestamp": 1775633673
+    }
+]

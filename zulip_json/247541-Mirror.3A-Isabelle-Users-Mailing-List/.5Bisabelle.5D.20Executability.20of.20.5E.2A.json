@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Tobias Nipkow &lt;<a href=\"mailto:nipkow@in.tum.de\">nipkow@in.tum.de</a>&gt;</p>\n<p>The transitive reflexive closure ^* on relations is not executable simply <br>\nbecause of reflexivity, which result is an infinite relation if the base type is <br>\ninfinite. In contrast, the transitive closure ^+ is executable.</p>\n<p>Here is a proposal of how to make ^* executable in specific contexts. We start <br>\nwith \"R^* `` A\":</p>\n<p>lemma rtrancl_Image_code[code_unfold]: \"R^* <code> A = R^+ </code> A ∪ A\"<br>\nby (metis Image_Id Un_Image reflcl_trancl)</p>\n<p>Now terms of the form \"R^* `` A\" are executable (if R and A are finite).</p>\n<p>This helps some, but related situations still pose a problem, eg \"(R^*)^-1 `` A\" <br>\nis not covered. Luckily, another lemma helps:</p>\n<p>lemma rtrancl_converse_code[code_unfold]: \"(R^*)^-1 <code> A = (R^+)^-1 </code> A ∪ A\"<br>\nby (metis rtrancl_Image_code rtrancl_converse trancl_converse)</p>\n<p>For my particular situation, this does the job. However, it looks like one may <br>\nend up with a lot of special case code_unfold lemmas.</p>\n<p>Alternatively, one could define a special case of R^* that is reflexive only on <br>\nthe elements already present in R. Using that alternative may require more <br>\nmanual adjustments. But since one needs to prove most code equations manually <br>\nanyway, maybe that's the way to go.</p>\n<p>Comments?</p>\n<p>Tobias</p>\n<p><a href=\"/user_uploads/14278/wfsngvyNHZQ5F0u6u6SITj0p/smime.p7s\">smime.p7s</a></p>",
+        "id": 611933954,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1784651230
+    }
+]

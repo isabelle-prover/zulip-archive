@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>I want to embed (via mixfix operators and perhaps <code>syntax</code> and <code>translation</code> definitions ) a DSL with arbitrary identifiers, and ingest them as Isabelle strings. While my DSL can be parsed if I wrap all identifiers with quotations so they are auto-ingested as strings, that's ugly. Further, even if all identifiers in my DSL are disambiguated with a cleaner, special symbol, there still doesn't appear to be a straight path. </p>\n<p>I think the following methods could work:</p>\n<ol>\n<li><code>translation</code> has access to outer syntax, so it's able to take in the special <code>id</code>, which doesn't seem to exist in the inner syntax level. With some additional ML code, could I directly convert an <code>id</code> to a string in a <code>translation</code>?</li>\n<li>If identifiers are untouched when they come in, then perhaps they will be a <code>Free</code>/<code>Bound</code> variable, which can be intercepted with a proper <code>Sign.parse_translation</code> registration.</li>\n</ol>\n<p>Is there an easier method? Would my proposed implementations work? Is there relevant code and docs I can be pointed to?</p>\n<p>Thanks!<br>\nAndrew</p>",
+        "id": 534730670,
+        "sender_full_name": "Andrew Chen",
+        "timestamp": 1755309489
+    },
+    {
+        "content": "<p>To be perfectly clear, if my DSL fragment was:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Var</span><span class=\"w\"> </span><span class=\"n\">a</span><span class=\"w\"> </span><span class=\"o\">:=</span><span class=\"w\"> </span><span class=\"n\">7;</span>\n</code></pre></div>\n<p>I want <code>a</code> to be directly parsed into a string. I'm also cool if I must disambiguate with:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Var</span><span class=\"w\"> </span><span class=\"n\">&lt;a&gt;</span><span class=\"w\"> </span><span class=\"o\">:=</span><span class=\"w\"> </span><span class=\"n\">7</span>\n</code></pre></div>\n<p>or better yet, with a suffix symbol. Just not the quotations themselves:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Var</span><span class=\"w\"> </span><span class=\"n\">''a''</span><span class=\"w\"> </span><span class=\"o\">:=</span><span class=\"w\"> </span><span class=\"n\">7</span><span class=\"w\"> </span><span class=\"o\">--</span><span class=\"w\"> </span><span class=\"n\">too</span><span class=\"w\"> </span><span class=\"n\">much</span><span class=\"o\">!</span>\n</code></pre></div>",
+        "id": 534730807,
+        "sender_full_name": "Andrew Chen",
+        "timestamp": 1755309640
+    }
+]

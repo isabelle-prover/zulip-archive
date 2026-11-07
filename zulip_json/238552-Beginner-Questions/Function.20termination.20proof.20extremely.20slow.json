@@ -1,0 +1,158 @@
+[
+    {
+        "content": "<p>I have defined a Relation on symbols for a formalization in Theoretical computer science, but it takes on the order of half a 30 seconds and a 50 seconds on a decently speced macbook for Isabelle to accept the definition (hovering on the <code>fun</code> keyword gives these values, and they are indeed correct).<br>\nIf i isolate the definitons it is alot faster (10 seconds and 20 seconds) but still not fast. Anything i can do?</p>\n<p>Here's the isolated version:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'n</span><span class=\"o\">,</span><span class=\"n n-Type\">'t</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">sym</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">Nt</span><span class=\"w\"> </span><span class=\"n n-Type\">'n</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">Tm</span><span class=\"w\"> </span><span class=\"n n-Type\">'t</span>\n\n<span class=\"k\">type_synonym</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'n</span><span class=\"o\">,</span><span class=\"n n-Type\">'t</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">syms</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"('n,'t) sym list\"</span>\n\n<span class=\"k\">type_synonym</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'n</span><span class=\"o\">,</span><span class=\"n n-Type\">'t</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">prod</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"'n × ('n,'t) syms\"</span>\n\n<span class=\"k\">type_synonym</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'n</span><span class=\"o\">,</span><span class=\"n n-Type\">'t</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">prods</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"('n,'t) prod list\"</span>\n<span class=\"k\">type_synonym</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n n-Type\">'n</span><span class=\"o\">,</span><span class=\"n n-Type\">'t</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">Prods</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"s\">\"('n,'t) prod set\"</span>\n\n\n<span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">bracket</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">Op</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">Cl</span>\n\n<span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">version</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">One</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">Two</span>\n\n<span class=\"k\">text</span><span class=\"s\">‹after each (Op,A→a,1) comes a (Cl,A→a,1) and after each (Op,A→a,2) comes a (Cl,A→a,2)›</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">P4</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), One)) (Cl, ((X, [Tm y]), One)) = (X = A ∧ y = a)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), One)) in2  = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), Two)) (Cl, ((X, [Tm y]), Two)) = (X = A ∧ y = a)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), Two)) in2 = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P4 x y = True›</span>\n\n\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">P4_sym</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹('n, bracket × ('n,'t) prod × version) sym ⇒ ('n, bracket × ('n,'t) prod × version) sym ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P4_sym (Tm (Op, ((A, [Tm a]), One))) (Tm (Cl, ((X, [Tm y]), One))) = (X = A ∧ y = a)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4_sym (Tm (Op, ((A, [Tm a]), One))) in2  = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P4_sym (Tm (Op, ((A, [Tm a]), Two))) (Tm (Cl, ((X, [Tm y]), Two))) = (X = A ∧ y = a)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4_sym (Tm (Op, ((A, [Tm a]), Two))) in2 = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P4_sym x y = True›</span>\n</code></pre></div>",
+        "id": 506131365,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742213205
+    },
+    {
+        "content": "<p>P4.simps has length 96 after disambiguation…</p>",
+        "id": 506132346,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742213459
+    },
+    {
+        "content": "<p>yes, and im not sure i can do anything about the complex pattern :(</p>",
+        "id": 506132617,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742213533
+    },
+    {
+        "content": "<p>isn't this the same:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">text</span><span class=\"s\">‹after each (Op,A→a,1) comes a (Cl,A→a,1) and after each (Op,A→a,2) comes a (Cl,A→a,2)›</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">P4</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), s)) (Cl, ((X, [Tm y]), t)) = (s = t ∧ X = A ∧ y = a)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), One)) in2  = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), Two)) in2 = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P4 x y = True›</span>\n</code></pre></div>",
+        "id": 506132720,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742213557
+    },
+    {
+        "content": "<p>(that cuts the patterns in half)</p>",
+        "id": 506132846,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742213583
+    },
+    {
+        "content": "<p>ah yes! Good catch!</p>",
+        "id": 506133019,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742213631
+    },
+    {
+        "content": "<p>and then this</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">text</span><span class=\"s\">‹after each (Op,A→a,1) comes a (Cl,A→a,1) and after each (Op,A→a,2) comes a (Cl,A→a,2)›</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">P4</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), s)) (Cl, ((X, [Tm y]), t)) = (s = t ∧ X = A ∧ y = a)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4 (Op, ((A, [Tm a]), _)) in2  = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P4 x y = True›</span>\n</code></pre></div>",
+        "id": 506133071,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742213642
+    },
+    {
+        "content": "<p>(I am not touching the list, I assume you really need more then 1 element and not just some/none)</p>",
+        "id": 506133459,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742213745
+    },
+    {
+        "content": "<p>sorry, what list do you mean?</p>",
+        "id": 506133950,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742213848
+    },
+    {
+        "content": "<p>[Tm a]</p>",
+        "id": 506134293,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742213931
+    },
+    {
+        "content": "<p>Ah, yea that is the right side of a production, that needs to stay as a list</p>",
+        "id": 506134383,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742213960
+    },
+    {
+        "content": "<p>Do you see any optimization potential for </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">text</span><span class=\"s\">‹After each (Op,A→BC,1), always comes a (Op,(B, _),1),  And after each (Op,A→BC,2), always comes a (Op,(C, _),1)›</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">P3</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P3 (Op, ((A, [Nt B, Nt C]), One)) (Op, ((X,y), One)) = (X = B)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P3 (Op, ((A, [Nt B, Nt C]), One)) in2  = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P3 (Op, ((A, [Nt B, Nt C]), Two)) (Op, ((X,y), One)) = (X = C)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P3 (Op, ((A, [Nt B, Nt C]), Two)) in2 = False›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n\n<span class=\"s\">‹P3 x y = True›</span>\n</code></pre></div>\n<p>aswell?</p>",
+        "id": 506134496,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742213993
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">text</span><span class=\"s\">‹After each (Op,A→BC,1), always comes a (Op,(B, _),1),  And after each (Op,A→BC,2), always comes a (Op,(C, _),1)›</span>\n<span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">P3'</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">‹(bracket × ('n,'t) prod × version) ⇒ (bracket × ('n,'t) prod × version) ⇒ bool›</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P3' (Op, ((A, [Nt B, Nt C]), One)) (p, ((X,y), t)) = (p = Op ∧ t = One ∧ X = B)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P3' (Op, ((A, [Nt B, Nt C]), Two)) (p, ((X,y), t)) = (p = Op ∧ t = One ∧ X = C)›</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"s\">‹P3' x y = True›</span>\n</code></pre></div>",
+        "id": 506135708,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742214304
+    },
+    {
+        "content": "<p>But you could also go for case:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">definition</span><span class=\"w\"> </span><span class=\"n\">P3''</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">‹P3'' x y = (case (x, y) of</span>\n<span class=\"s\">   ((Op, ((A, [Nt B, Nt C]), One)), (Op, ((X,y), t))) ⇒ (t = One ∧ X = B) |</span>\n<span class=\"s\">   ((Op, ((A, [Nt B, Nt C]), One)), _)  ⇒ False |</span>\n<span class=\"s\">   ((Op, ((A, [Nt B, Nt C]), Two)), (Op, ((X,y), t))) ⇒ (t = One ∧X = C) |</span>\n<span class=\"s\">   ((Op, ((A, [Nt B, Nt C]), Two)), in2) ⇒ False |</span>\n<span class=\"s\">   _ ⇒ True)›</span>\n</code></pre></div>",
+        "id": 506135766,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742214321
+    },
+    {
+        "content": "<p>and prove the few simp rules that will be useful for your case</p>",
+        "id": 506135817,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742214335
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span>\n<span class=\"w\">  </span><span class=\"s\">‹P3''  (Op, ((A, [Nt B, Nt C]), One)) (Op, ((X,y), One)) = (X = B)›</span>\n<span class=\"w\">  </span><span class=\"s\">‹P3'' (Op, ((A, [Nt B, Nt C]), Two)) (Op, ((X,y), One)) = (X = C)›</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">auto</span><span class=\"w\"> </span><span class=\"n\">simp</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">P3''_def</span><span class=\"w\"> </span><span class=\"n\">split</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">bracket.splits</span><span class=\"w\"> </span><span class=\"n\">list.splits</span><span class=\"w\"> </span><span class=\"n\">sym.splits</span><span class=\"o\">)</span>\n</code></pre></div>",
+        "id": 506136440,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742214479
+    },
+    {
+        "content": "<p>Usually during proofs, you will only get the matching pattern, not the other weird ones anyway</p>",
+        "id": 506136553,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742214499
+    },
+    {
+        "content": "<p>Considering i will also need to throw this on some concrete strings, the function way would probably be less manual work right?</p>",
+        "id": 506137799,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742214793
+    },
+    {
+        "content": "<p>If i put some constants like you did with Op and turn them to variables that are checked on the right side of the equation, that reduces the pattern match count, but in turn might also make me do more case splitting in induction proofs right?</p>",
+        "id": 506139317,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742215184
+    },
+    {
+        "content": "<p>Yep</p>",
+        "id": 506139728,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742215272
+    },
+    {
+        "content": "<p>but you can also define your own induction principle that does not have duplicates</p>",
+        "id": 506139791,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742215290
+    },
+    {
+        "content": "<p>Although technically, you are only doing a case distinction, it is not really an induction…</p>",
+        "id": 506139894,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742215317
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Function.20termination.20proof.20extremely.20slow/near/506139791\">schrieb</a>:</p>\n<blockquote>\n<p>but you can also define your own induction principle that does not have duplicates</p>\n</blockquote>\n<p>But then i would have to write out all the 100 cases again? I guess there is no free lunch</p>",
+        "id": 506140234,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742215394
+    },
+    {
+        "content": "<p>I am not sure that you need the 100 cases</p>",
+        "id": 506142285,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742215905
+    },
+    {
+        "content": "<p>Usually in proofs you only have the meaningful cases, as the others are deleted by assumptions</p>",
+        "id": 506142513,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742215959
+    },
+    {
+        "content": "<p>Thank you, you have been very helpful!<br>\nAll the functions are now under 1 second (i have multiple of them) and it has become manageable again.</p>",
+        "id": 506146994,
+        "sender_full_name": "Moritz R",
+        "timestamp": 1742217004
+    }
+]

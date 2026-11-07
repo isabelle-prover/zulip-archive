@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>I see these two modifiers -- <code>intro!</code> and <code>elim!</code> -- used in various places, e.g., in HOL-Algebra, in places like this</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">id_ring_hom</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">simp</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"id ∈ ring_hom R R\"</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">auto</span><span class=\"w\"> </span><span class=\"n\">intro</span><span class=\"o\">!:</span><span class=\"w\"> </span><span class=\"n\">ring_hom_memI</span><span class=\"o\">)</span>\n</code></pre></div>\n<p>but none of the standard documentation seems to say what they are. Can someone give a brief explanation of what they're doing, and how they differ from <code>intro</code> and <code>elim</code>?</p>",
+        "id": 524069101,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1749911879
+    },
+    {
+        "content": "<p>intro and elim are apply by auto with a bound (maximum 4 times and 2 times or something like that)</p>",
+        "id": 524072092,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1749915255
+    },
+    {
+        "content": "<p>intro! and elim! are applied unconditionnaly</p>",
+        "id": 524072104,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1749915273
+    },
+    {
+        "content": "<p>Thanks, Mathias.  Is there someplace I could have learned this without resorting to Zulip?</p>",
+        "id": 524072687,
+        "sender_full_name": "John  Hughes",
+        "timestamp": 1749915968
+    },
+    {
+        "content": "<p>It is mentioned in the tutorial:</p>\n<blockquote>\n<p>The exclamation mark (intro!) signifies<br>\nsafe rules, which are applied aggressively. Rules given without the exclama-<br>\ntion mark are applied reluctantly and their uses can be undone if the search<br>\nbacktracks. Here the unsafe rule expresses transitivity of the divides relation:</p>\n</blockquote>\n<p>(<a href=\"https://isabelle.in.tum.de/doc/tutorial.pdf\">https://isabelle.in.tum.de/doc/tutorial.pdf</a>, p105)</p>",
+        "id": 524072810,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1749916123
+    }
+]

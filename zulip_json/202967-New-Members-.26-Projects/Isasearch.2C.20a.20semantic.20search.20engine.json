@@ -1,0 +1,86 @@
+[
+    {
+        "content": "<p>Excited to announce the release of Isasearch (<a href=\"https://isabelle-semantics.qiyuan.me/\">https://isabelle-semantics.qiyuan.me/</a>), a semantic search engine for the Isabelle standard library and the Archive of Formal Proofs (AFP)! <span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span><span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span><span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span></p>\n<p>Isasearch lets you use natural language to semantically search for theorems, constants, and other entities across the standard library and the AFP. The goal is to help you discover existing formalizations that could support your own work, instead of re-proving what is already there.</p>\n<p>How it works: Isasearch first uses LLMs to explain each entity in natural language. An embedding model then encodes each explanation as a vector in a high-dimensional space, where the distance between vectors reflects semantic difference. When you search, your natural-language query is mapped into the same vector space by the same embedding model and compared against the entity vectors using cosine similarity; the most relevant entities are then returned.</p>",
+        "id": 619702931,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787890738
+    },
+    {
+        "content": "<p><img alt=\"截图 2026-08-28 12-24-15.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1671x1193\" data-original-src=\"/user_uploads/14278/yAe8VZzeJsid7sHNw4W2usF4/2026-08-28-12-24-15.png\" src=\"/user_uploads/thumbnail/14278/yAe8VZzeJsid7sHNw4W2usF4/2026-08-28-12-24-15.png/840x560.webp\"></p>",
+        "id": 619703754,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787891205
+    },
+    {
+        "content": "<p>Hi Qiyuan, I just tried some queries and it looks nice at first glance. Thanks!</p>\n<p>Note that you have a name clash with IsaSearch, presented at the Isabelle workshop this summer: <a href=\"https://files.sketis.net/Isabelle_Workshop_2026/Isabelle_2026_paper8.pdf\">https://files.sketis.net/Isabelle_Workshop_2026/Isabelle_2026_paper8.pdf</a></p>\n<p>Related to that, have you already compared your approach (e.g. how you export and embed the data) with the one from linked paper? Would be interesting to hear. </p>\n<p>My personal plea: I wish we can get to a state where we have a robust pipeline that exports session data, embeds it, and offers an API to query it, all in one robust Isabelle/Scala component. (I'm also interested what <span class=\"user-mention\" data-user-id=\"659740\">@Balazs Toth</span> has to say about that).</p>\n<p>This would give us a uniform way to ship such tools with Isabelle, let users install them as expected and use them for their own sessions, and also expose them to MCPs. The HTML presentation (or even jedit/vscode integration), of course, is a big plus on top for human users. Isabelle's Find Facts tool is probably a case example for this.</p>",
+        "id": 619731711,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1787903852
+    },
+    {
+        "content": "<p>Hi Kevin,</p>\n<p>Many thanks for your suggestions.</p>\n<p>Apologies, I wasn't aware of Fabian's IsaSearch before. I will rename my site to <code>IsaFinder</code>.</p>\n<p>I haven't yet done a comparison with IsaSearch. My IsaFinder is more like a by-product of the semantic retrieval engine that ships with the AoA proof agent. I just recently put a web frontend on top of it and hosted it online.</p>\n<p>As for your suggestion of embedding the search frontend into Isabelle, I think it's an excellent idea. In fact, AoA's semantic engine already has much of the needed functionality nearly complete: internally, it probes the constants, theorems, and other entities of a working session and builds their dependency graph, then dynamically re-interprets the semantics of any updated entities and their descendants. This is already complete and will be released in the next version of AoA; I'd be happy to build a retrieval frontend for jEdit/VSCode afterwards. One concern, though:</p>\n<p>As you know, many of my components are currently built in Python. If we want pure Scala components, one issue would be library dependencies: the Claude Agent SDK currently only officially supports TypeScript and Python, and the Claude backend would hardly work without it. For now, I'm using a Python bridge that talks directly to Isabelle/ML, which has been stable in my experience — though, of course, this level of stability may only meet the bar for a third-party component.</p>",
+        "id": 619743530,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787907552
+    },
+    {
+        "content": "<p>just to notify I've renamed the site :-)</p>",
+        "id": 619745899,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787908255
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/202967-New-Members-.26-Projects/topic/Isasearch.2C.20a.20semantic.20search.20engine/near/619702931\">said</a>:</p>\n<blockquote>\n<p>Excited to announce the release of Isasearch (<a href=\"https://isabelle-semantics.qiyuan.me/\">https://isabelle-semantics.qiyuan.me/</a>), a semantic search engine for the Isabelle standard library and the Archive of Formal Proofs (AFP)! <span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span><span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span><span aria-label=\"tada\" class=\"emoji emoji-1f389\" role=\"img\" title=\"tada\">:tada:</span></p>\n<p>Isasearch lets you use natural language to semantically search for theorems, constants, and other entities across the standard library and the AFP. The goal is to help you discover existing formalizations that could support your own work, instead of re-proving what is already there.</p>\n<p>How it works: Isasearch first uses LLMs to explain each entity in natural language. An embedding model then encodes each explanation as a vector in a high-dimensional space, where the distance between vectors reflects semantic difference. When you search, your natural-language query is mapped into the same vector space by the same embedding model and compared against the entity vectors using cosine similarity; the most relevant entities are then returned.</p>\n</blockquote>\n<p>Hi Quiyuan,</p>\n<p>looks very interesting and seems to work well!</p>\n<p>Our approach seems to be quite similar to yours. We are also currently in the process of hosting our search.</p>\n<p>Do you have a write-up of the details of your project?<br>\nWhat LLM do you use to for the informalisation of the entities?<br>\nMaybe we could meet (together with Fabian Kadlez) and share experiences?</p>\n<p><span class=\"user-mention\" data-user-id=\"233154\">@Kevin Kappelmann</span> Our project is also written in Python, but nothing speaks against converting it to a Isabelle/Scala component, since we only use local models. I don't have the capacities to do it myself, but I might find a student that is interested in the topic.<br>\nFor the LLM that does the informalisations one needs a semi-decent GPU though. So probably the best way to make it available would be to ship the informalisations with the component. I'll tell Fabian to also join this zulip and tell his opinion, since he did most of the work.</p>",
+        "id": 619748970,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1787909177
+    },
+    {
+        "content": "<p>Hi Balaz,</p>\n<p>Thank you. I'm really glad you enjoyed my work. Your team's work is excellent as well.</p>\n<p>I haven't put together a dedicated write-up for this project yet. The data on AFP was generated using a mix of four models: Claude Opus 4.8, Claude Opus 5, ChatGPT 5.6 sol, and DeepSeek v4 Pro. And of course, I'd genuinely love to chat about this online!</p>",
+        "id": 619752958,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787910460
+    },
+    {
+        "content": "<p>Ah, we used local models to avoid costs. Do you have a rough estimate on how much it cost to informalise the whole AFP?</p>",
+        "id": 619753265,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1787910571
+    },
+    {
+        "content": "<p>Yes, though I'm not entirely sure the figure is accurate. Based on what's recorded in the database, it comes to roughly $14,000 in total. Most of that was covered by subscriptions and an unlimited OpenAI account provided by an institution I was visiting at the time, so I actually paid essentially nothing out of pocket.</p>",
+        "id": 619754151,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787910836
+    },
+    {
+        "content": "<p>Without the unlimited account, I guess a single Claude $200 Max subscription would be enough. The main bottleneck would be waiting for the quota to reset, so the whole thing might have needed to run continuously for a full month. In that case, the actual cost would effectively come down to one $200 subscription.</p>",
+        "id": 619755629,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787911276
+    },
+    {
+        "content": "<p>Our informalisation is currently rerunning with a locally hosted gemma-4-26B-A4B-it-qat-UD-Q4_K_XL model.<br>\nI would be very interested in the quality differences. We have a little benchmark in our project. If it is not too much work for you, I would be very interested in numbers that your search achieves in it.</p>",
+        "id": 619756943,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1787911681
+    },
+    {
+        "content": "<p>The semantic interpretation data is available on <a href=\"https://huggingface.co/datasets/ANTPG/MLML-data/blob/main/contrib/Semantic_Embedding/Isabelle_Semantic_Embedding.tar.zst\">Hugging Face</a> in an LMDB format, and the code to access the DB is available from <a href=\"https://github.com/xqyww123/Isabelle_Semantic_Embedding\">GitHub</a>. I think Claude Code or Codex could help you to read the code, decipher the database schema, and extract the data you want</p>",
+        "id": 619761345,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1787913160
+    },
+    {
+        "content": "<p>I'll have a look, thanks!</p>",
+        "id": 619761417,
+        "sender_full_name": "Balazs Toth",
+        "timestamp": 1787913185
+    },
+    {
+        "content": "<p><span class=\"user-mention\" data-user-id=\"418224\">@Qiyuan Xu</span>: Thanks for renaming your tool so quickly, and great job on IsaFinder! It's super interesting to see someone else tackling the exact same problem. The fact that you used models like Claude and GPT-4 for the informalization (and hit that $14k cost equivalent) is exactly why we focused so heavily on making this work with local, self-hosted models like Phi-3.5 and Gemma to keep it accessible for everyone.</p>\n<p><span class=\"user-mention\" data-user-id=\"233154\">@Kevin Kappelmann</span>: Regarding your questions about the architecture: Our approach relies on Isabelle's FindFacts module to export the syntactic formal content (theorems, lemmas) into a Solr index. From there, we pipe it through a local Ollama instance for the LLM informalization and use ChromaDB for the semantic vector indexing.<br>\nRegarding the Isabelle/Scala component: I completely agree that a pure Scala integration would be the holy grail for distribution. Right now, our pipeline is Python-based because managing the local LLM inference (Ollama) and the vector database (ChromaDB) is currently much easier in that ecosystem. For example you can easily distribute the CheomaDB, Solr, web server and Ollama instance on different servers, which we are also doing on our setup currently on the LMU servers, or quickly switch between Solr databases. But making this a native Isabelle component would definitely be the next logical step for the future!</p>",
+        "id": 619979791,
+        "sender_full_name": "Fabian Kadlez",
+        "timestamp": 1788006801
+    }
+]

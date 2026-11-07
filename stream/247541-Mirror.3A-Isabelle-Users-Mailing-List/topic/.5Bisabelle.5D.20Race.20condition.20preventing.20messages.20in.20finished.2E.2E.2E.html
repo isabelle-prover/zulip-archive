@@ -1,0 +1,84 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Race condition preventing messages in finished... · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Race.20condition.20preventing.20messages.20in.20finished.2E.2E.2E.html">[isabelle] Race condition preventing messages in finished...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="637864496"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Race%20condition%20preventing%20messages%20in%20finished.../near/637864496" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Race.20condition.20preventing.20messages.20in.20finished.2E.2E.2E.html#637864496">(Nov 05 2026 at 16:01)</a>:</h4>
+<p><strong>From:</strong> Fabian Huch &lt;<a href="mailto:huch@in.tum.de">huch@in.tum.de</a>&gt;<br>
+<strong>Subject:</strong> [isabelle] Race condition preventing messages in finished_theories outlet</p>
+<p>Since Isabelle/74ffd288f3bf, there is a race condition that can prevent <br>
+finished_theories messages to be posted. This results e.g. in missing <br>
+HTML documents even though the build finished successfully.</p>
+<p>The race condition is that the Session.nodes_status_buffer.state gets <br>
+resetted within the thread at the beginning of its main loop (l. 432):</p>
+<p>val current =state.change_result(st =&gt; (st, st.reset))</p>
+<p>Once the prover completes, the shutdown() method on line 483 sets the <br>
+state to finished and stops the thread, but non-atomically:</p>
+<p>def shutdown():Unit = {<br>
+   state.change(_.finish)<br>
+   thread.join()<br>
+}</p>
+<p>This update can be lost, depending on where the thread execution is, <br>
+resulting in a missing post when finished is checked (l. 467):</p>
+<p>if (current.finished) {<br>
+   for (thy_snapshot &lt;-current.finished_theories) {<br>
+     finished_theories.post(</p>
+<p>Fabian</p>
+
+
+
+<a name="637906543"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Race%20condition%20preventing%20messages%20in%20finished.../near/637906543" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Race.20condition.20preventing.20messages.20in.20finished.2E.2E.2E.html#637906543">(Nov 05 2026 at 18:00)</a>:</h4>
+<p><strong>From:</strong> <a href="mailto:balazs.toth@lmu.de">balazs.toth@lmu.de</a><br>
+<strong>Subject:</strong> [isabelle] Race condition preventing messages in finished_theories outlet</p>
+<p>Hi Fabian,</p>
+<p>I think I hit the same race, in my case as missing PIDE exports instead <br>
+of missing HTML. In a full AFP build with Isabelle2026, 67 of 1168 <br>
+session dbs had no PIDE/document_id for any theory, so Find_Facts just <br>
+said “No snapshot for theory ...” for the whole session. The affected <br>
+sessions looked random.</p>
+<p>I don’t think the finish itself gets lost, since state.change is atomic <br>
+and reset keeps the flag. What I believe happens is that main() runs <br>
+after handle_exit has added the finished theories but before shutdown() <br>
+sets finished. It then takes them with finished = false, resets them and <br>
+posts nothing, and the last run after shutdown has nothing left.</p>
+<p>My claude tells me, that something like this should fix it:</p>
+<p>val current =<br>
+   state.change_result(st =&gt;<br>
+     (st, if (st.finished) st.reset else st.copy(changed_nodes = Set.empty)))</p>
+<p>Balazs</p>
+<p>On 05.11.26 17:01, Fabian Huch wrote:</p>
+<blockquote>
+<p>Since Isabelle/74ffd288f3bf, there is a race condition that can <br>
+prevent finished_theories messages to be posted. This results e.g. in <br>
+missing HTML documents even though the build finished successfully.</p>
+<p>The race condition is that the Session.nodes_status_buffer.state gets <br>
+resetted within the thread at the beginning of its main loop (l. 432):</p>
+<p>val current =state.change_result(st =&gt; (st, st.reset))</p>
+<p>Once the prover completes, the shutdown() method on line 483 sets the <br>
+state to finished and stops the thread, but non-atomically:</p>
+<p>def shutdown():Unit = {<br>
+   state.change(_.finish)<br>
+   thread.join()<br>
+}</p>
+<p>This update can be lost, depending on where the thread execution is, <br>
+resulting in a missing post when finished is checked (l. 467):</p>
+<p>if (current.finished) {<br>
+   for (thy_snapshot &lt;-current.finished_theories) {<br>
+     finished_theories.post(</p>
+<p>Fabian<br>
+</p>
+</blockquote>
+<p><a href="/user_uploads/14278/TZU1HMjZOANi67zbZlvaHXET/OpenPGP_signature.asc">OpenPGP_signature.asc</a></p>
+
+
+
+<hr><p>Last updated: Nov 07 2026 at 14:45 UTC</p>
+</html>

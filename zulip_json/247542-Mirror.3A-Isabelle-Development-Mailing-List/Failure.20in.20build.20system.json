@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>*** Unable to convert bytea parameter at position 7 to literal<br>\nJob ended at Wed Jun 25 21:29:15 GMT+2 2025, with status failed</p>\n</blockquote>\n<p><a href=\"https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958\">https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958</a></p>\n<p><a href=\"/user_uploads/14278/6kZkwzbd1654EbseaW-AgHxD/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/l4XhSwVN21PL2aHHTnUNZjZB/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 525776556,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1750879999
+    },
+    {
+        "content": "<p>From: Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;<br>\nThose are due to repeated crashes because of memory problems since <br>\nyesterday afternoon:</p>\n<p><strong>* </strong>* java.lang.OutOfMemoryError: Java heap space</p>\n<p>*** Ran out of memory retrieving query results.</p>\n<p>I am not yet sure what causes the increased memory consumption.</p>\n<p>Fabian</p>\n<p>On 6/25/25 21:32, Florian Haftmann wrote:</p>\n<blockquote>\n<blockquote>\n<p>*** Unable to convert bytea parameter at position 7 to literal<br>\nJob ended at Wed Jun 25 21:29:15 GMT+2 2025, with status failed</p>\n</blockquote>\n<p><a href=\"https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958\">https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958</a> </p>\n</blockquote>",
+        "id": 525848460,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1750925788
+    },
+    {
+        "content": "<p>From: Fabian Huch &lt;<a href=\"mailto:huch@in.tum.de\">huch@in.tum.de</a>&gt;<br>\nI think the problem comes from Isabelle/0e36478a1b6a. Initializing the <br>\nPIDE Session inside Session_Job creates a null store:</p>\n<p>override val store:Store =store</p>\n<p>so each call of Session.cache creates a new cache, allocating additional <br>\nmemory. It looks like the intention of the above assignment is to assign <br>\nthe store from the build context?</p>\n<p>Fabian</p>\n<p>On 6/26/25 10:15, Fabian Huch wrote:</p>\n<blockquote>\n<p>Those are due to repeated crashes because of memory problems since <br>\nyesterday afternoon:</p>\n<p><strong>* </strong>* java.lang.OutOfMemoryError: Java heap space<br>\n*** Ran out of memory retrieving query results.</p>\n<p>I am not yet sure what causes the increased memory consumption.</p>\n<p>Fabian</p>\n<p>On 6/25/25 21:32, Florian Haftmann wrote:</p>\n<blockquote>\n<blockquote>\n<p>*** Unable to convert bytea parameter at position 7 to literal<br>\nJob ended at Wed Jun 25 21:29:15 GMT+2 2025, with status failed</p>\n</blockquote>\n<p><a href=\"https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958\">https://build.proof.cit.tum.de/build?id=e42c0340-8807-4c4c-b9c4-64757f490958</a> </p>\n</blockquote>\n</blockquote>",
+        "id": 525855544,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1750928155
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 26/06/2025 10:55, Fabian Huch wrote:</p>\n<blockquote>\n<p>I think the problem comes from Isabelle/0e36478a1b6a. Initializing the PIDE <br>\nSession inside Session_Job creates a null store:</p>\n<p>override val store:Store =store</p>\n<p>so each call of Session.cache creates a new cache, allocating additional <br>\nmemory. It looks like the intention of the above assignment is to assign the <br>\nstore from the build context?</p>\n</blockquote>\n<p>There is indeed something wrong. See now:</p>\n<p>changeset:   82769:7cb5ef6da1f0<br>\nuser:        wenzelm<br>\ndate:        Thu Jun 26 17:14:01 2025 +0200<br>\nfiles:       src/Pure/Build/build_job.scala src/Pure/PIDE/session.scala<br>\ndescription:<br>\nproper <a href=\"http://build_context.store\">build_context.store</a>, instead of circular null value (amending <br>\n0e36478a1b6a and e891ff63e6db);</p>\n<p>Makarius</p>",
+        "id": 525929631,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1750951245
+    }
+]

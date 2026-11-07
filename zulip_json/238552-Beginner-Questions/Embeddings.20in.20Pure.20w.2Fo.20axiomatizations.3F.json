@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p>There are really two questions here, but I'll write it out as one. <br>\n<a href=\"https://isabelle.in.tum.de/dist/library/Pure/Pure-Examples/document.pdf\">https://isabelle.in.tum.de/dist/library/Pure/Pure-Examples/document.pdf</a><br>\nHere, any embedding of a logic within Pure requires the use of an axiomatization. But I've heard more that <code>axiomatization</code>s are a bad idea since they lead to inconsistency (and that's why people tend to use locales). </p>\n<ol>\n<li>Why do embeddings in Pure tend to use axiomatizations, when axiomatizations are considered a bad idea in general?</li>\n<li>When is it OK to use an axiomatization?</li>\n</ol>",
+        "id": 596214068,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1779206746
+    },
+    {
+        "content": "<p>Well, you have to use some axioms in any theory :) Axiomatizations are \"a bad idea\" because you might accidentally become able to prove False, so the more you can construct from a small set of axioms, the better.</p>",
+        "id": 597391567,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1779620899
+    },
+    {
+        "content": "<p>Axiomatizations for object logics are so fundamental, that one (or at least I) want them to live globally and not in some locale (of course, one could improve several tools such that it becomes more practical (or even feasible at all -- some axiomatizations are not expressible with locales) and then I wouldn't object).</p>",
+        "id": 597392220,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1779621648
+    },
+    {
+        "content": "<p>What sort of axiomatization wouldn't be feasible in a locale? E.g. <code>typedecl</code>s? Since locales don't play nice with monomorphisation iirc</p>",
+        "id": 597393002,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1779622359
+    },
+    {
+        "content": "<p>yes, polymorphic constants and type constructors are problematic. Example for the former:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">test</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"kp\">fixes</span><span class=\"w\"> </span><span class=\"n\">id</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"'a ⇒ 'a\"</span>\n<span class=\"k\">begin</span>\n<span class=\"c\">(*Problem: id has type \"'a ⇒ 'a\" and not \"?'a ⇒ ?'a\"*)</span>\n<span class=\"kt\">term</span><span class=\"w\"> </span><span class=\"s\">\"id True\"</span>\n<span class=\"k\">end</span>\n</code></pre></div>",
+        "id": 597393348,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1779622714
+    },
+    {
+        "content": "<p>As an aside: has anyone considered improving polymorphism support for locales? And if so, What'd need to be done? I remember reading the Zulip thread talking about that but I don't remember if it went over why</p>",
+        "id": 597393730,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1779623068
+    },
+    {
+        "content": "<p>Yes Popescu, Traytel, Buday have some preliminary work on that.</p>",
+        "id": 597396140,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1779625331
+    }
+]

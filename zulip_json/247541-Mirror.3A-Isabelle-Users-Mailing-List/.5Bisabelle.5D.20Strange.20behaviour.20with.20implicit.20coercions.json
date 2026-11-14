@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt;<br>\nConsider the following function definition:</p>\n<p>lemma \"quotient_of (rat_of_nat i) = (i, 1)\"</p>\n<p>Here i has type nat while the result type of quotient_of is int*int, so the right hand side needs the coercion int to be inserted. The lemma is seemingly equivalent to</p>\n<p>lemma \"quotient_of (rat_of_nat i) = (int i, 1)\"</p>\n<p>But in fact what Isabelle displays is</p>\n<p>quotient_of (rat_of_nat i) = (case (i, 1) of (x, y) ⇒ (int x, y))</p>\n<p>Unexpected, to say the least!</p>\n<p>Larry</p>",
+        "id": 506953703,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1742472153
+    },
+    {
+        "content": "<p>From: Dmitriy Traytel &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;<br>\nHi Larry,</p>\n<p>This is a recurrent question, and I recall that you and me already had some discussions about coercions in the past.</p>\n<p>The guarantee of the coercion inference is two-fold</p>\n<ul>\n<li>well-typed terms will not be modified</li>\n<li>given an ill-typed term, you will get a well-typed term if it is possible to get one by inserting coercions and coercion maps (all registered ones are shown under print_coercions).</li>\n</ul>\n<p>There is no guarantee <em>where</em> coercions will be inserted (and this behavior is not easily amended without compromising the prior completeness statement).</p>\n<p>Thus you may or may not get the resulting well-typed term that you expect. (In your example, the two are equivalent, but in general they of course might even mean different things; coercion inference is purely syntactic.)  The best way to avoid any surprises is still to write well-typed terms.</p>\n<p>Dmitriy</p>\n<blockquote>\n<p>On 20 Mar 2025, at 13.01, Lawrence Paulson &lt;<a href=\"mailto:lp15@cam.ac.uk\">lp15@cam.ac.uk</a>&gt; wrote:</p>\n<p>Consider the following function definition:</p>\n<p>lemma \"quotient_of (rat_of_nat i) = (i, 1)\"</p>\n<p>Here i has type nat while the result type of quotient_of is int*int, so the right hand side needs the coercion int to be inserted. The lemma is seemingly equivalent to</p>\n<p>lemma \"quotient_of (rat_of_nat i) = (int i, 1)\"</p>\n<p>But in fact what Isabelle displays is</p>\n<p>quotient_of (rat_of_nat i) = (case (i, 1) of (x, y) ⇒ (int x, y))</p>\n<p>Unexpected, to say the least!</p>\n<p>Larry<br>\n</p>\n</blockquote>",
+        "id": 506984713,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1742479943
+    }
+]

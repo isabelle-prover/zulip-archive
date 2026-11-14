@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>To install: <code>pip install isabelle-query</code></p>",
+        "id": 618033114,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1787354428
+    },
+    {
+        "content": "<p>Claude really likes this tool and I thought it would be useful as a base for some IDE-like features for jEdit, so I told Claude to rewrite it in Scala as an isabelle component. A benefit is that it's faster now. <a href=\"https://github.com/david-wang-0/isabelle-query\">https://github.com/david-wang-0/isabelle-query</a></p>\n<p>Pros:</p>\n<ul>\n<li>jEdit dockable and right click for some IDE features like find usages</li>\n<li>Find code equations and instantiations (of locales/classes)</li>\n<li>Uses canonical parser from isabelle distribution</li>\n</ul>\n<p>Cons:</p>\n<ul>\n<li>Did not review the code yet</li>\n<li>Performance needs a running JVM, which is why there is still a Python client that queries a server that's started on the first invocation. <code>isabelle query (no server) -&gt; python3 client -&gt; isabelle query (server)</code></li>\n</ul>\n<p>Table by Claude:</p>\n<table>\n<thead>\n<tr>\n<th></th>\n<th style=\"text-align: right;\">Python <code>query</code></th>\n<th style=\"text-align: right;\">JVM tool, cold</th>\n<th style=\"text-align: right;\">thin client (a plain <code>isabelle query</code>)</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><code>show</code> on a 2-theory AFP entry</td>\n<td style=\"text-align: right;\">73 ms</td>\n<td style=\"text-align: right;\">1091 ms</td>\n<td style=\"text-align: right;\"><strong>33 ms</strong></td>\n</tr>\n<tr>\n<td><code>callers</code> on a 28-theory entry</td>\n<td style=\"text-align: right;\">290 ms</td>\n<td style=\"text-align: right;\">1441 ms</td>\n<td style=\"text-align: right;\"><strong>112 ms</strong></td>\n</tr>\n<tr>\n<td><code>summary</code> on <code>src/HOL</code> (1451 theories)</td>\n<td style=\"text-align: right;\">4865 ms</td>\n<td style=\"text-align: right;\">4197 ms</td>\n<td style=\"text-align: right;\"><strong>64 ms</strong></td>\n</tr>\n<tr>\n<td><code>summary --by-session</code> over the whole AFP</td>\n<td style=\"text-align: right;\">37.5 s</td>\n<td style=\"text-align: right;\">19.5 s</td>\n<td style=\"text-align: right;\"><strong>0.27 s</strong></td>\n</tr>\n</tbody>\n</table>",
+        "id": 619983354,
+        "sender_full_name": "David Wang",
+        "timestamp": 1788009278
+    },
+    {
+        "content": "<p>This is good news! I've added a link to David's Scala port in the README of the current version of the Python isabelle-query.</p>",
+        "id": 619998264,
+        "sender_full_name": "András Salamon",
+        "timestamp": 1788018662
+    },
+    {
+        "content": "<p>The JVM startup is not the only reason the server is faster. It holds the entire parsed project in memory. That costs about 1.2GB for the whole AFP. A cold run with Python is still faster. Performance is not strictly better, but rather a trade off between memory and speed.</p>",
+        "id": 620099465,
+        "sender_full_name": "David Wang",
+        "timestamp": 1788088277
+    }
+]

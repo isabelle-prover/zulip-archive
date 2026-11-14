@@ -1,0 +1,96 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] congproc crashes on atomic RHS · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20congproc.20crashes.20on.20atomic.20RHS.html">[isabelle] congproc crashes on atomic RHS</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="638558707"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20congproc%20crashes%20on%20atomic%20RHS/near/638558707" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20congproc.20crashes.20on.20atomic.20RHS.html#638558707">(Nov 08 2026 at 21:48)</a>:</h4>
+<p><strong>From:</strong> Mete Polat &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi,</p>
+<p>This crashes in Isabelle 2026 and I think it also does in earlier versions:</p>
+<p>theory Scratch<br>
+  imports Main<br>
+begin</p>
+<p>simproc_setup congproc p ("id id True") = ‹K (K (K (SOME @{lemma "id id True ≡ True" by simp})))›</p>
+<p>lemma "id id True" by simp</p>
+<p>end</p>
+<p>exception THM 0 raised (line 1534 of "thm.ML"):<br>
+  transitive: middle term<br>
+  id id True ≡ True<br>
+  id id True ≡ id True</p>
+<p>Best,<br>
+Mete</p>
+
+
+
+<a name="638788442"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20congproc%20crashes%20on%20atomic%20RHS/near/638788442" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20congproc.20crashes.20on.20atomic.20RHS.html#638788442">(Nov 09 2026 at 16:51)</a>:</h4>
+<p><strong>From:</strong> Peter &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Mete</p>
+<p>Did you really mean to declare a congproc? "id id True ≡ True" is not a <br>
+typical congruence rule.</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 08/11/2026 22:48, Mete Polat (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>This crashes in Isabelle 2026 and I think it also does in earlier versions:</p>
+<p>theory Scratch<br>
+   imports Main<br>
+begin</p>
+<p>simproc_setup congproc p ("id id True") = ‹K (K (K (SOME @{lemma "id id True ≡ True" by simp})))›</p>
+<p>lemma "id id True" by simp</p>
+<p>end</p>
+<p>exception THM 0 raised (line 1534 of "thm.ML"):<br>
+   transitive: middle term<br>
+   id id True ≡ True<br>
+   id id True ≡ id True</p>
+<p>Best,<br>
+Mete</p>
+</blockquote>
+
+
+
+<a name="638798069"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20congproc%20crashes%20on%20atomic%20RHS/near/638798069" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20congproc.20crashes.20on.20atomic.20RHS.html#638798069">(Nov 09 2026 at 17:21)</a>:</h4>
+<p><strong>From:</strong> Mete Polat &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi Peter,</p>
+<p>It’s a minimal example of the crash. I should have mentioned that. The actual congproc where we first encountered the crash is way more elaborate.</p>
+<p>Best,<br>
+Mete</p>
+<blockquote>
+<p>On Nov 9, 2026, at 7:50 PM, Peter (via cl-isabelle-users Mailing List) &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>
+<p>Hi Mete</p>
+<p>Did you really mean to declare a congproc? "id id True ≡ True" is not a typical congruence rule.</p>
+<p>--</p>
+<p>Peter</p>
+<p>On 08/11/2026 22:48, Mete Polat (via cl-isabelle-users Mailing List) wrote:</p>
+<blockquote>
+<p>Hi,</p>
+<p>This crashes in Isabelle 2026 and I think it also does in earlier versions:</p>
+<p>theory Scratch<br>
+  imports Main<br>
+begin</p>
+<p>simproc_setup congproc p ("id id True") = ‹K (K (K (SOME @{lemma "id id True ≡ True" by simp})))›</p>
+<p>lemma "id id True" by simp</p>
+<p>end</p>
+<p>exception THM 0 raised (line 1534 of "thm.ML"):<br>
+  transitive: middle term<br>
+  id id True ≡ True<br>
+  id id True ≡ id True</p>
+<p>Best,<br>
+Mete<br>
+</p>
+</blockquote>
+</blockquote>
+
+
+
+<hr><p>Last updated: Nov 14 2026 at 17:46 UTC</p>
+</html>

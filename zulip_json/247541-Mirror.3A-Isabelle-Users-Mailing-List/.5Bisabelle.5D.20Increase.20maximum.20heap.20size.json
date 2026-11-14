@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>From: Yakoub Nemouchi &lt;<a href=\"mailto:y.nemouchi@gmail.com\">y.nemouchi@gmail.com</a>&gt;<br>\nHello list</p>\n<p>How can I increase the maximum heap size of the java heap memory? I think<br>\nthe default max is 4096MiB.</p>\n<p>I am sure there is an Isabelle command line to increase this.</p>\n<p>Best wishes,</p>\n<p>Yakoub.</p>",
+        "id": 513634688,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745334256
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 22/04/2025 17:03, Yakoub Nemouchi wrote:</p>\n<blockquote>\n<p>How can I increase the maximum heap size of the java heap memory? I think the <br>\ndefault max is 4096MiB.</p>\n</blockquote>\n<p>You need to tinker manually with Java options. The details depend on context <br>\n(OS platform, application).</p>\n<p>For Isabelle/jEdit run via \"isabelle jedit\" you can set <br>\nJEDIT_JAVA_OPTIONS=\"-Xms512m -Xmx4g -Xss16m\" in $ISABELLE_HOME_USER/etc/settings</p>\n<p>The Isabelle/jEdit desktop application has its Java options in a <br>\nplatform-specific file next to it.</p>\n<p>For most other Isabelle/Scala command-line tools it works via <br>\nISABELLE_TOOL_JAVA_OPTIONS in $ISABELLE_HOME_USER/etc/settings</p>\n<p>Makarius</p>",
+        "id": 513810282,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745397651
+    },
+    {
+        "content": "<p>From: Yakoub Nemouchi &lt;<a href=\"mailto:y.nemouchi@gmail.com\">y.nemouchi@gmail.com</a>&gt;<br>\nOn Wed, Apr 23, 2025 at 2:40 AM Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<blockquote>\n<p>On 22/04/2025 17:03, Yakoub Nemouchi wrote:</p>\n<blockquote>\n<p>How can I increase the maximum heap size of the java heap memory? I<br>\nthink the<br>\ndefault max is 4096MiB.</p>\n</blockquote>\n<p>You need to tinker manually with Java options. The details depend on<br>\ncontext<br>\n(OS platform, application).</p>\n<p>I am using macOS Ventura 13.7.5<br>\napp: Isabelle2024</p>\n</blockquote>\n<p>Yakoub.</p>",
+        "id": 514144156,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745505295
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 24/04/2025 16:34, Yakoub Nemouchi wrote:</p>\n<blockquote>\n<p>On Wed, Apr 23, 2025 at 2:40 AM Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a> <br>\n&lt;mailto:<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;&gt; wrote:</p>\n<p>On 22/04/2025 17:03, Yakoub Nemouchi wrote:<br>\n     &gt;<br>\n     &gt; How can I increase the maximum heap size of the java heap memory? I<br>\n    think the<br>\n     &gt; default max is 4096MiB.</p>\n<p>You need to tinker manually with Java options. The details depend on context<br>\n    (OS platform, application).</p>\n<p>I am using macOS Ventura 13.7.5<br>\napp: Isabelle2024</p>\n</blockquote>\n<p>The relevant file is <a href=\"http://Isabelle2024.app/Isabelle.options\">Isabelle2024.app/Isabelle.options</a> --- each line has a <br>\nsingle Java option. The given defaults are:</p>\n<p>-Xms512m<br>\n-Xmx4g<br>\n-Xss16m</p>\n<p>Makarius</p>",
+        "id": 514155100,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745507721
+    },
+    {
+        "content": "<p>From: Yakoub Nemouchi &lt;<a href=\"mailto:y.nemouchi@gmail.com\">y.nemouchi@gmail.com</a>&gt;<br>\nPerfect! Worked very well. After I made my tweaks, I had to restart<br>\nIsabelleapp to observe the  changes.</p>\n<p>On Thu, Apr 24, 2025 at 9:14 AM Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<blockquote>\n<p>On 24/04/2025 16:34, Yakoub Nemouchi wrote:</p>\n<blockquote>\n<p>On Wed, Apr 23, 2025 at 2:40 AM Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a><br>\n&lt;mailto:<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;&gt; wrote:</p>\n<p>On 22/04/2025 17:03, Yakoub Nemouchi wrote:<br>\n     &gt;<br>\n     &gt; How can I increase the maximum heap size of the java heap memory?<br>\nI<br>\n    think the<br>\n     &gt; default max is 4096MiB.</p>\n<p>You need to tinker manually with Java options. The details depend on<br>\ncontext<br>\n    (OS platform, application).</p>\n<p>I am using macOS Ventura 13.7.5<br>\napp: Isabelle2024</p>\n</blockquote>\n<p>The relevant file is <a href=\"http://Isabelle2024.app/Isabelle.options\">Isabelle2024.app/Isabelle.options</a> --- each line has a<br>\nsingle Java option. The given defaults are:</p>\n<p>-Xms512m<br>\n-Xmx4g<br>\n-Xss16m</p>\n<p>Makarius</p>\n</blockquote>",
+        "id": 514167538,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745511184
+    }
+]

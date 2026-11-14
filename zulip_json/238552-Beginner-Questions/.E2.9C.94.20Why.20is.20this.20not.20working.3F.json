@@ -1,0 +1,152 @@
+[
+    {
+        "content": "<p><img alt=\"image.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1016x948\" data-original-src=\"/user_uploads/14278/l5X8cvtP5OE_8OC1cBG_otrB/image.png\" src=\"/user_uploads/thumbnail/14278/l5X8cvtP5OE_8OC1cBG_otrB/image.png/840x560.webp\"></p>",
+        "id": 610823953,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784125928
+    },
+    {
+        "content": "<p>curiously, it works if I use auto instead of .. (or more explicitly conjI) which is very weird</p>",
+        "id": 610826024,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784126424
+    },
+    {
+        "content": "<p>B, C is not the same as B /\\ C, and conjI is exactly the theorem allowing you to prove the latter from the former.</p>",
+        "id": 610826307,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784126486
+    },
+    {
+        "content": "<p>I am trying to prove B /\\ C from B, C using conjI and it is not working as you can see in the screenshot. Maybe this is a bug.</p>",
+        "id": 610826578,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784126547
+    },
+    {
+        "content": "<p>You're passing C, B not B, C:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">notepad</span>\n<span class=\"k\">begin</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"s\">\"A\"</span><span class=\"w\"> </span><span class=\"s\">\"B\"</span>\n<span class=\"w\">  </span><span class=\"k\">from</span><span class=\"w\"> </span><span class=\"s\">‹A›</span><span class=\"w\"> </span><span class=\"s\">‹B›</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"A ∧ B\"</span><span class=\"w\"> </span><span class=\"ow\">..</span><span class=\"w\"> </span><span class=\"c\">(*OK*)</span>\n<span class=\"w\">  </span><span class=\"k\">from</span><span class=\"w\"> </span><span class=\"s\">‹B›</span><span class=\"w\"> </span><span class=\"s\">‹A›</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"A ∧ B\"</span><span class=\"w\"> </span><span class=\"ow\">..</span><span class=\"w\"> </span><span class=\"c\">(*not OK*)</span>\n<span class=\"k\">end</span>\n</code></pre></div>",
+        "id": 610827626,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784126785
+    },
+    {
+        "content": "<p>I guess there is no rule overloading in isabelle, but is there really no conjI2 or something for these cases?</p>",
+        "id": 610828188,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784126913
+    },
+    {
+        "content": "<p>You can prove that lemma if you like it.<br>\nIn practice, people don't write such proofs because automation takes care of such irrelevances (so nobody misses the rule).<br>\nI don't know what you mean by rule overloading.</p>",
+        "id": 610828759,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127035
+    },
+    {
+        "content": "<p>rule overloading is where you cite the same rule and it functions as different rules depending on certain other factors. for example, one might cite iffD and it will choose iffD1 or iffD2 based on context (or something)</p>",
+        "id": 610829194,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127114
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1174342\">Yoav Cohen</span> has marked this topic as resolved.</p>",
+        "id": 610829765,
+        "sender_full_name": "Notification Bot",
+        "timestamp": 1784127225
+    },
+    {
+        "content": "<p>You can make a theorem collection <code>iffD</code> which contains <code>iffD1</code> and <code>iffD2</code>: <code>lemmas iffD = iffD1 iffD2</code>.</p>",
+        "id": 610829992,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127267
+    },
+    {
+        "content": "<p>And then I can cite it as a rule?</p>",
+        "id": 610830105,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127293
+    },
+    {
+        "content": "<p>if by rule you mean an argument passed to the <code>rule</code> method, then yes.</p>",
+        "id": 610830202,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127313
+    },
+    {
+        "content": "<p>I am not sure what that means, I was just thinking like \"by\"</p>",
+        "id": 610830311,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127335
+    },
+    {
+        "content": "<p>oh you mean like (rule something)?</p>",
+        "id": 610830378,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127347
+    },
+    {
+        "content": "<p>like this:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">conj_swapI</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"s\">\"A ⟹ B ⟹ B ∧ A\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"k\">lemmas</span><span class=\"w\"> </span><span class=\"n\">conj_intros</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">conjI</span><span class=\"w\"> </span><span class=\"n\">conj_swapI</span>\n\n<span class=\"k\">notepad</span>\n<span class=\"k\">begin</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"s\">\"A\"</span><span class=\"w\"> </span><span class=\"s\">\"B\"</span>\n<span class=\"w\">  </span><span class=\"k\">from</span><span class=\"w\"> </span><span class=\"s\">‹A›</span><span class=\"w\"> </span><span class=\"s\">‹B›</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"A ∧ B\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">conj_intros</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"c\">(*OK*)</span>\n<span class=\"w\">  </span><span class=\"k\">from</span><span class=\"w\"> </span><span class=\"s\">‹B›</span><span class=\"w\"> </span><span class=\"s\">‹A›</span><span class=\"w\"> </span><span class=\"k\">have</span><span class=\"w\"> </span><span class=\"s\">\"A ∧ B\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">conj_intros</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"c\">(*OK*)</span>\n<span class=\"k\">end</span>\n</code></pre></div>",
+        "id": 610830417,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127358
+    },
+    {
+        "content": "<p>omg that is so cool, double thanks</p>",
+        "id": 610830609,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127396
+    },
+    {
+        "content": "<p>also so for my thing I wanted conj_swapI?</p>",
+        "id": 610830679,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127410
+    },
+    {
+        "content": "<p>I suppose so.</p>",
+        "id": 610830744,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127423
+    },
+    {
+        "content": "<p>does this work with like modus ponens too?</p>",
+        "id": 610830781,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127429
+    },
+    {
+        "content": "<p>yes: <code>lemmas mps = mp rev_mp</code></p>",
+        "id": 610831254,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127540
+    },
+    {
+        "content": "<p>why is this one swap and this one rev??</p>",
+        "id": 610831393,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127569
+    },
+    {
+        "content": "<p>Because those are human made-up names. You can name them in any way you like.</p>",
+        "id": 610832087,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127706
+    },
+    {
+        "content": "<p>like why is it not consistent though?</p>",
+        "id": 610832167,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127726
+    },
+    {
+        "content": "<p>Because I just gave conj_swapI some name without having consistency of naming wrt rev_mp in mind. Don't overthink it.</p>",
+        "id": 610832516,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1784127814
+    },
+    {
+        "content": "<p>oh wait I just realized my confusion. I am very sorry, I thought those were built-in because I missed the line in which you defined it.</p>",
+        "id": 610832709,
+        "sender_full_name": "Yoav Cohen",
+        "timestamp": 1784127858
+    }
+]

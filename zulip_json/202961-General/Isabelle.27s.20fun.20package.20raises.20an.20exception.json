@@ -1,0 +1,104 @@
+[
+    {
+        "content": "<p>I've noticed that isabelle raises an exception given this function</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">test</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"test n = (if n = 0 then 0 else</span>\n<span class=\"s\">          let x = (λn. test n) in</span>\n<span class=\"s\">          test (x (n - 1)))\"</span>\n</code></pre></div>\n<p>I'm not sure whether it's worth reporting since the condition generated is going to be impossible to prove anyway see this which succeeds but can't be proved.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">test</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"test n = (if n = 0 then 0 else</span>\n<span class=\"s\">          let x = (λn. test n) in</span>\n<span class=\"s\">          (x (n - 1)))\"</span>\n</code></pre></div>",
+        "id": 570758054,
+        "sender_full_name": "irvin",
+        "timestamp": 1769682833
+    },
+    {
+        "content": "<p>The package also raises exceptions when you give bad fundef_cong rules but that's also kinda to be expected</p>",
+        "id": 570761751,
+        "sender_full_name": "irvin",
+        "timestamp": 1769683808
+    },
+    {
+        "content": "<p>This is surely worth reporting, especially because it can be broken to relatively simple functions, e.g.</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">fun</span><span class=\"w\"> </span><span class=\"n\">f</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"w\">  </span><span class=\"s\">\"f 0 = 0\"</span><span class=\"w\"> </span><span class=\"o\">|</span>\n<span class=\"w\">  </span><span class=\"s\">\"f _ = (let x = f in f 0)\"</span>\n</code></pre></div>",
+        "id": 570771200,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769686669
+    },
+    {
+        "content": "<p>Isn't f still unprovable due to how the let cong rule works</p>",
+        "id": 570771631,
+        "sender_full_name": "irvin",
+        "timestamp": 1769686837
+    },
+    {
+        "content": "<p>Not sure what you mean by that</p>",
+        "id": 570772175,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769687045
+    },
+    {
+        "content": "<p>Surely one can always remove the let e.g. via <code>Let_const</code> rule?</p>",
+        "id": 570772361,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769687094
+    },
+    {
+        "content": "<p>In any case, throwing a raw exception is not good</p>",
+        "id": 570772578,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769687161
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">test</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"test n = (if n = 0 then 0 else</span>\n<span class=\"s\">          let x = test in</span>\n<span class=\"s\">          (x (0)))\"</span>\n<span class=\"w\">   </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">pat_completeness</span>\n<span class=\"w\">  </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"kn\">termination</span><span class=\"w\"> </span><span class=\"n\">test</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"o\">(</span><span class=\"n\">relation</span><span class=\"w\"> </span><span class=\"s\">\"measure id \"</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"kp\">apply</span><span class=\"w\"> </span><span class=\"n\">auto</span><span class=\"w\"> </span><span class=\"c\">(*the goal here is unprovable *)</span>\n</code></pre></div>",
+        "id": 570772663,
+        "sender_full_name": "irvin",
+        "timestamp": 1769687188
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">let_cong</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">fundef_cong</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"M = N ⟹ (⋀x. x = N ⟹ f x = g x) ⟹ Let M f = Let N g\"</span>\n</code></pre></div>\n<p>The issue here is that <code>M = N</code> is not restricted</p>",
+        "id": 570773105,
+        "sender_full_name": "irvin",
+        "timestamp": 1769687324
+    },
+    {
+        "content": "<p>And you can't restrict a cong rule this way</p>",
+        "id": 570773150,
+        "sender_full_name": "irvin",
+        "timestamp": 1769687339
+    },
+    {
+        "content": "<p>Maybe <span class=\"user-mention\" data-user-id=\"233977\">@Alexander Krauss</span> knows how to make the fun package support this?</p>",
+        "id": 570773701,
+        "sender_full_name": "irvin",
+        "timestamp": 1769687525
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/202961-General/topic/Isabelle's.20fun.20package.20raises.20an.20exception/near/570772361\">said</a>:</p>\n<blockquote>\n<p>Surely one can always remove the let e.g. via <code>Let_const</code> rule?</p>\n</blockquote>\n<p>If you inline by removing the let it's provable i think</p>",
+        "id": 570774110,
+        "sender_full_name": "irvin",
+        "timestamp": 1769687652
+    },
+    {
+        "content": "<p>But you can't inline unconditionally without having to fix back the induction rule</p>",
+        "id": 570774263,
+        "sender_full_name": "irvin",
+        "timestamp": 1769687702
+    },
+    {
+        "content": "<p>You can use an alternative congruence rule for let:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">let_cong_alt</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">fundef_cong</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"f x = g y ⟹ Let x f = Let y g\"</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n\n<span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">test</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"test n = (if n = 0 then 0 else</span>\n<span class=\"s\">          let x = test in x 0)\"</span>\n<span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n<span class=\"kn\">termination</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">relation</span><span class=\"w\"> </span><span class=\"s\">\"measure id \"</span><span class=\"o\">)</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n</code></pre></div>",
+        "id": 570775669,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1769688104
+    },
+    {
+        "content": "<p>Do you know how to phrase the MAP cong rule for this?</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">function</span><span class=\"w\"> </span><span class=\"n\">test</span><span class=\"w\"> </span><span class=\"o\">::</span><span class=\"w\"> </span><span class=\"s\">\"nat ⇒ nat\"</span><span class=\"w\"> </span><span class=\"kp\">where</span>\n<span class=\"s\">\"test n = (if n = 0 then 0 else</span>\n<span class=\"s\">          hd (map (λf. f (n - 1)) [test]))\"</span>\n</code></pre></div>",
+        "id": 570776211,
+        "sender_full_name": "irvin",
+        "timestamp": 1769688239
+    },
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">map_cong_single</span><span class=\"w\"> </span><span class=\"o\">[</span><span class=\"n\">fundef_cong</span><span class=\"o\">]:</span><span class=\"w\"> </span><span class=\"s\">\"f x = g y ⟹ map f [x] = map g [y]\"</span>\n<span class=\"k\">by</span><span class=\"w\"> </span><span class=\"n\">auto</span>\n</code></pre></div>",
+        "id": 570777726,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1769688700
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"714722\">irvin</span> <a href=\"#narrow/channel/202961-General/topic/Isabelle's.20fun.20package.20raises.20an.20exception/near/570773150\">said</a>:</p>\n<blockquote>\n<p>And you can't restrict a cong rule this way</p>\n</blockquote>\n<p>You can just ignore the variable, e.g. with <code> \"f = g ⟹ Let x (λ_. f) = Let y (λ_. g)\"</code>. With that,  the function package works of course, but raising a <code>THM 0</code> instead of reporting that it could not find termination is not great IMO.</p>",
+        "id": 570810383,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1769696989
+    }
+]

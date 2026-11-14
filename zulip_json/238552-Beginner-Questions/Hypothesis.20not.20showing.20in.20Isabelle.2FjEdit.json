@@ -1,0 +1,44 @@
+[
+    {
+        "content": "<p><img alt=\"screenshot.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"2036x1763\" data-original-src=\"/user_uploads/14278/vZIL_VnTTjaVYki4txCVGcwu/screenshot.png\" src=\"/user_uploads/thumbnail/14278/vZIL_VnTTjaVYki4txCVGcwu/screenshot.png/840x560.webp\"><br>\nWhy do I get this, and not <code>p</code> and <code>q</code> as proved facts?</p>",
+        "id": 630578012,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1791602176
+    },
+    {
+        "content": "<p>How can I get the proof state to show in Isabelle/jEdit, like it shows in vscodium for Lean?<br>\n<img alt=\"screenshot 2.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1226x848\" data-original-src=\"/user_uploads/14278/2295_FAnRJARm9ezRvSN90BH/screenshot-2.png\" src=\"/user_uploads/thumbnail/14278/2295_FAnRJARm9ezRvSN90BH/screenshot-2.png/840x560.webp\"></p>",
+        "id": 630578879,
+        "sender_full_name": "Mario Xerxes Castelán Castro",
+        "timestamp": 1791602851
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"992716\">Mario Xerxes Castelán Castro</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Hypothesis.20not.20showing.20in.20Isabelle.2FjEdit/near/630578879\">said</a>:</p>\n<blockquote>\n<p>How can I get the proof state to show in Isabelle/jEdit, like it shows in vscodium for Lean?<br>\n<img alt=\"screenshot 2.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"1226x848\" data-original-src=\"/user_uploads/14278/2295_FAnRJARm9ezRvSN90BH/screenshot-2.png\" src=\"/user_uploads/thumbnail/14278/2295_FAnRJARm9ezRvSN90BH/screenshot-2.png/840x560.webp\"></p>\n</blockquote>\n<p>You do not want to: Nice forward proofs don't work like that. If you use apply style (backward proofs), then it works. But again, you do not want that: those proofs are fragile and hard to understand and maintain.</p>\n<p>Also: we can discuss that Isabelle has more text here, but the version you have is identical to the lean version. And The Isabelle version is clearer, because you do need to know the <code>h</code> to see what is happening -- on this example, this would be stupid, but on long proofs, knowing locally what is happening is important.</p>",
+        "id": 630589578,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1791610062
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"992716\">Mario Xerxes Castelán Castro</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Hypothesis.20not.20showing.20in.20Isabelle.2FjEdit/near/630578012\">said</a>:</p>\n<blockquote>\n<p><img alt=\"screenshot.png\" class=\"inline-image\" data-original-content-type=\"image/png\" data-original-dimensions=\"2036x1763\" data-original-src=\"/user_uploads/14278/vZIL_VnTTjaVYki4txCVGcwu/screenshot.png\" src=\"/user_uploads/thumbnail/14278/vZIL_VnTTjaVYki4txCVGcwu/screenshot.png/840x560.webp\"><br>\nWhy do I get this, and not <code>p</code> and <code>q</code> as proved facts?</p>\n</blockquote>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span>\n<span class=\"w\">  </span><span class=\"s\">‹p ∧ q ⟶ q ∧ p›</span>\n<span class=\"k\">proof</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">intro</span><span class=\"w\"> </span><span class=\"n\">impI</span><span class=\"o\">,</span><span class=\"w\"> </span><span class=\"n\">elim</span><span class=\"w\"> </span><span class=\"n\">conjE</span><span class=\"o\">)</span>\n<span class=\"w\">  </span><span class=\"k\">assume</span><span class=\"w\"> </span><span class=\"s\">‹q›</span><span class=\"w\"> </span><span class=\"kp\">and</span><span class=\"w\"> </span><span class=\"s\">‹p›</span>\n<span class=\"w\">  </span><span class=\"k\">then</span><span class=\"w\"> </span><span class=\"k\">show</span><span class=\"w\"> </span><span class=\"s\">‹q ∧ p›</span><span class=\"w\"> </span><span class=\"k\">by</span><span class=\"w\"> </span><span class=\"o\">(</span><span class=\"n\">rule</span><span class=\"w\"> </span><span class=\"n\">conjI</span><span class=\"o\">)</span>\n<span class=\"k\">qed</span>\n</code></pre></div>\n<p>but the natural way in Isabelle is to write:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">‹p›</span><span class=\"w\"> </span><span class=\"kp\">and</span><span class=\"w\">  </span><span class=\"s\">‹q›</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">‹q∧p›</span>\n</code></pre></div>",
+        "id": 630589995,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1791610332
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"992716\">Mario Xerxes Castelán Castro</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Hypothesis.20not.20showing.20in.20Isabelle.2FjEdit/near/630578012\">said</a>:</p>\n<blockquote>\n<p>Why do I get this, and not <code>p</code> and <code>q</code> as proved facts?</p>\n</blockquote>\n<p>You put your cursor just after having proved <code>q</code>. <code>this</code> always refer to the last result produced in the text. Hence the output. See <a href=\"https://isabelle.in.tum.de/doc/isar-ref.pdf\">https://isabelle.in.tum.de/doc/isar-ref.pdf</a> for a reference manual on Isabelle's input language Isar.</p>",
+        "id": 630608459,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1791621636
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"992716\">Mario Xerxes Castelán Castro</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Hypothesis.20not.20showing.20in.20Isabelle.2FjEdit/near/630578879\">said</a>:</p>\n<blockquote>\n<p>How can I get the proof state to show in Isabelle/jEdit, like it shows in vscodium for Lean?</p>\n</blockquote>\n<p>You could write a new print mode and use it instead of the default one. But note that there is a big difference between lean and Isabelle: the former always scopes a unique goal and its commands act on it while in Isabelle you can have several open goals in scope and solve them in any order you want. In Isar, only once you use <code>show</code>, unification will be used to decide which of the open goals you solved.</p>",
+        "id": 630608838,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1791621944
+    },
+    {
+        "content": "<p>There is also the Print Context menu in the Query panel. This allows you to show the local facts and bindings (e.g. ?thesis).</p>",
+        "id": 630610141,
+        "sender_full_name": "Lukas Stevens",
+        "timestamp": 1791622830
+    }
+]

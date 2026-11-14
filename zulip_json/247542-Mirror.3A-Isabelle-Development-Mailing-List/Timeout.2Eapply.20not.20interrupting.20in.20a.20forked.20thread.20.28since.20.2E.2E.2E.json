@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Kevin Kappelmann via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@proof.cit.tum.de\">isabelle-dev@proof.cit.tum.de</a>&gt;<br>\n<strong>Subject:</strong> Timeout.apply not interrupting in a forked thread (since 86049:b6e33c2b52c9)</p>\n<p>Hi all,</p>\n<p>since 86049:b6e33c2b52c9 (10.11.2026), Timeout.apply no longer <br>\ninterrupts Future.join in a forked thread. An example is attached below.</p>\n<p>Best wishes,</p>\n<p>Kevin</p>\n<p>isabelle<br>\ntheory Scratch<br>\n   imports Pure<br>\nbegin</p>\n<p>ML \\&lt;open&gt;<br>\nval start = <a href=\"http://Time.now\">Time.now</a> ()<br>\nval _ = Isabelle_Thread.join (Isabelle_Thread.fork<br>\n   (Isabelle_Thread.params \"test\" |&gt; Isabelle_Thread.interrupts) (fn () =&gt;<br>\n     Timeout.apply (seconds 1.0) (fn () =&gt;<br>\n       Future.join (Future.fork (fn () =&gt; Time.sleep (seconds 5.0)))) ()<br>\n     handle Timeout.TIMEOUT _ =&gt; ()))<br>\nval _ = writeln (Time.toString (<a href=\"http://Time.now\">Time.now</a> () - start))<br>\n\\&lt;close&gt;</p>\n<p>end</p>",
+        "id": 640329396,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1794667922
+    }
+]

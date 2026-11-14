@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>Hi <br>\nI'm trying to prove that a trace in my semantics decomposes into 3 different sections as follows</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"kn\">lemma</span><span class=\"w\"> </span><span class=\"n\">split_call_trace</span><span class=\"o\">:</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">‹prg ⊢ (cstk, loc, conc) →* (f # cstk, loc', conc')›</span>\n<span class=\"w\">  </span><span class=\"kp\">shows</span><span class=\"w\"> </span><span class=\"s\">‹∃ lcall ccall lent cent.</span>\n<span class=\"s\">    prg ⊢ (cstk, loc, conc) →* (cstk, lcall, ccall) ∧</span>\n<span class=\"s\">    prg ⊢ (cstk, lcall, ccall) → (f # cstk, lent, cent) ∧</span>\n<span class=\"s\">    prg ⊢ (f # cstk, lent, cent) →* (f # cstk, loc', conc')›</span>\n</code></pre></div>\n<p>I tried to use cases to get rid of the trivial case where no steps are taken e.g x -&gt;* x. and induct in the step case. However, I can't go any further and get stuck when the single separated step isn't the the one where the call occurs (the one that appends the call stack). I think I need something similar to a loop invariant which weakens the goal. That is to say either lcall ccall lent cent exists in order to satisfy the goal or we are yet to encounter it. I'm unsure of how to set something like that up. Could you please guide me or point me to resources where a similar thing is done?</p>",
+        "id": 602087037,
+        "sender_full_name": "sadra",
+        "timestamp": 1781170679
+    }
+]

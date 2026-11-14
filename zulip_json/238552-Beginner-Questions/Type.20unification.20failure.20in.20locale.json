@@ -1,0 +1,146 @@
+[
+    {
+        "content": "<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">test</span>\n<span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">Main</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">locale</span><span class=\"w\"> </span><span class=\"n\">test2</span>\n<span class=\"k\">begin</span>\n<span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"n\">foo1</span><span class=\"w\"> </span><span class=\"s\">\"foo list\"</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">foo2</span><span class=\"w\"> </span><span class=\"n\">nat</span>\n\n<span class=\"kt\">value</span><span class=\"w\"> </span><span class=\"s\">\"foo1 ([(foo2 (2:: nat))] :: foo list)\"</span>\n\n<span class=\"k\">datatype</span><span class=\"w\"> </span><span class=\"n\">bar</span><span class=\"w\"> </span><span class=\"o\">=</span>\n<span class=\"w\">  </span><span class=\"n\">bar1</span><span class=\"w\"> </span><span class=\"s\">\"bar list\"</span><span class=\"w\"> </span><span class=\"o\">|</span><span class=\"w\"> </span><span class=\"n\">bar2</span><span class=\"w\"> </span><span class=\"s\">\"bool\"</span>\n<span class=\"kt\">value</span><span class=\"w\"> </span><span class=\"s\">\"bar1 [(bar2 (true))]\"</span>\n<span class=\"k\">end</span>\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>I'm playing around with these types foo and bar (as a minimal reproducible example) and for some reason, when I try to run \"value \"foo1 ([(foo2 (2:: nat))] :: foo list)\" in a locale, I get a type unification error: </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">Type</span><span class=\"w\"> </span><span class=\"n\">unification</span><span class=\"w\"> </span><span class=\"n\">failed</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">No</span><span class=\"w\"> </span><span class=\"n\">type</span><span class=\"w\"> </span><span class=\"n\">arity</span><span class=\"w\"> </span><span class=\"n\">foo</span><span class=\"w\"> </span><span class=\"o\">::</span>\n<span class=\"w\">                 </span><span class=\"n\">term_of</span>\n\n<span class=\"n\">Type</span><span class=\"w\"> </span><span class=\"n\">error</span><span class=\"w\"> </span><span class=\"kp\">in</span><span class=\"w\"> </span><span class=\"n\">application</span><span class=\"o\">:</span><span class=\"w\"> </span><span class=\"n\">incompatible</span><span class=\"w\"> </span><span class=\"n\">operand</span><span class=\"w\"> </span><span class=\"n\">type</span>\n</code></pre></div>\n<p>As you may notice, I tried to explicitly write out the type of each subterm, to no avail</p>\n<p>However, \"value \"bar1 [(bar2 (true))]\" returns a value with no error in this locale. <br>\nAlso more interesting: value \"foo1 ([(foo2 (2:: nat))] :: foo list)\" works just fine if <code>foo</code> and the value statement are <em>not</em> declared in a locale. I tried looking at StackOverflow pages and searched through threads here to little success. What exactly am I missing? Is this specifically a problem with nats and locales?</p>",
+        "id": 584415000,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775730404
+    },
+    {
+        "content": "<p>don't put datatype declaration in locales</p>",
+        "id": 584416186,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775730802
+    },
+    {
+        "content": "<p>is this a general rule-of-thumb?</p>",
+        "id": 584416240,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775730818
+    },
+    {
+        "content": "<p>the datatype package is not really localized</p>",
+        "id": 584416244,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775730819
+    },
+    {
+        "content": "<p>Sometimes you get errors, sometimes stuff stops working down the line like here</p>",
+        "id": 584416400,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775730873
+    },
+    {
+        "content": "<p>I see<br>\nis this in the datatypes manual?</p>",
+        "id": 584416558,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775730931
+    },
+    {
+        "content": "<p>also what do you mean when you say that a package \"is not localized\"?</p>",
+        "id": 584416619,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775730950
+    },
+    {
+        "content": "<p>what exactly does it mean to localize a package in Isabelle/HOL?</p>",
+        "id": 584416651,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775730961
+    },
+    {
+        "content": "<p>compatible with locales</p>",
+        "id": 584416665,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775730969
+    },
+    {
+        "content": "<p>oh<br>\nwhy is that</p>",
+        "id": 584416692,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775730980
+    },
+    {
+        "content": "<p>from my understanding, there are fundamental issues (see <a href=\"https://isabelle.systems/zulip-archive/stream/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20in.20locale.20context.html\">https://isabelle.systems/zulip-archive/stream/336180-Archive-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Datatype.20definition.20in.20locale.20context.html</a>)</p>",
+        "id": 584416983,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775731068
+    },
+    {
+        "content": "<p>so support is only going to be possible for a subset of locales</p>",
+        "id": 584417092,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775731103
+    },
+    {
+        "content": "<p>does this also mean that I can't declare a function over a type in a locale?</p>",
+        "id": 584417150,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731121
+    },
+    {
+        "content": "<p>So it is not very motivating to fix all the tactics in the BNF package</p>",
+        "id": 584417181,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775731136
+    },
+    {
+        "content": "<p>(or recursive functions in general)</p>",
+        "id": 584417187,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731138
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417150\">said</a>:</p>\n<blockquote>\n<p>does this also mean that I can't declare a function over a type in a locale?</p>\n</blockquote>\n<p>This works as far as I know, but you are going into issues if you want to generate code / use value</p>",
+        "id": 584417355,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775731187
+    },
+    {
+        "content": "<p>oh, I see</p>",
+        "id": 584417382,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731196
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417355\">said</a>:</p>\n<blockquote>\n<p>if you want to generate code / use value</p>\n</blockquote>\n<p>if the function is in the locale?</p>",
+        "id": 584417742,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731304
+    },
+    {
+        "content": "<p>or if the datatype is  (still) in the locale</p>",
+        "id": 584417793,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731317
+    },
+    {
+        "content": "<p>Is that why you'd get something like \"no code equations for fn, requested by dependencies\"</p>",
+        "id": 584418618,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731597
+    },
+    {
+        "content": "<p>where fn is some function</p>",
+        "id": 584418641,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1775731604
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"1028125\">Ant S.</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417742\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"233198\">Mathias Fleury</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/Type.20unification.20failure.20in.20locale/near/584417355\">said</a>:</p>\n<blockquote>\n<p>if you want to generate code / use value</p>\n</blockquote>\n<p>if the function is in the locale?</p>\n</blockquote>\n<p>Yes. There are two issues: code equations depend on the parameters of the locale and second the function are actually abbreviations and the code generator cannot handle that</p>",
+        "id": 584424587,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775733522
+    },
+    {
+        "content": "<p>In practice, this has never really been an issue for me</p>",
+        "id": 584424681,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775733550
+    },
+    {
+        "content": "<p>I never had the case of the termination depending on the local parameters, so moving the function out of the locale was always possible</p>",
+        "id": 584424824,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1775733595
+    }
+]

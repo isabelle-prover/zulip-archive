@@ -1,0 +1,20 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Mete Polat &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>\n<p>Hi,</p>\n<p>This crashes in Isabelle 2026 and I think it also does in earlier versions:</p>\n<p>theory Scratch<br>\n  imports Main<br>\nbegin</p>\n<p>simproc_setup congproc p (\"id id True\") = ‹K (K (K (SOME @{lemma \"id id True ≡ True\" by simp})))›</p>\n<p>lemma \"id id True\" by simp</p>\n<p>end</p>\n<p>exception THM 0 raised (line 1534 of \"thm.ML\"):<br>\n  transitive: middle term<br>\n  id id True ≡ True<br>\n  id id True ≡ id True</p>\n<p>Best,<br>\nMete</p>",
+        "id": 638558707,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1794174516
+    },
+    {
+        "content": "<p><strong>From:</strong> Peter &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>\n<p>Hi Mete</p>\n<p>Did you really mean to declare a congproc? \"id id True ≡ True\" is not a <br>\ntypical congruence rule.</p>\n<p>--</p>\n<p>Peter</p>\n<p>On 08/11/2026 22:48, Mete Polat (via cl-isabelle-users Mailing List) wrote:</p>\n<blockquote>\n<p>Hi,</p>\n<p>This crashes in Isabelle 2026 and I think it also does in earlier versions:</p>\n<p>theory Scratch<br>\n   imports Main<br>\nbegin</p>\n<p>simproc_setup congproc p (\"id id True\") = ‹K (K (K (SOME @{lemma \"id id True ≡ True\" by simp})))›</p>\n<p>lemma \"id id True\" by simp</p>\n<p>end</p>\n<p>exception THM 0 raised (line 1534 of \"thm.ML\"):<br>\n   transitive: middle term<br>\n   id id True ≡ True<br>\n   id id True ≡ id True</p>\n<p>Best,<br>\nMete</p>\n</blockquote>",
+        "id": 638788442,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1794243078
+    },
+    {
+        "content": "<p><strong>From:</strong> Mete Polat &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>\n<p>Hi Peter,</p>\n<p>It’s a minimal example of the crash. I should have mentioned that. The actual congproc where we first encountered the crash is way more elaborate.</p>\n<p>Best,<br>\nMete</p>\n<blockquote>\n<p>On Nov 9, 2026, at 7:50 PM, Peter (via cl-isabelle-users Mailing List) &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt; wrote:</p>\n<p>Hi Mete</p>\n<p>Did you really mean to declare a congproc? \"id id True ≡ True\" is not a typical congruence rule.</p>\n<p>--</p>\n<p>Peter</p>\n<p>On 08/11/2026 22:48, Mete Polat (via cl-isabelle-users Mailing List) wrote:</p>\n<blockquote>\n<p>Hi,</p>\n<p>This crashes in Isabelle 2026 and I think it also does in earlier versions:</p>\n<p>theory Scratch<br>\n  imports Main<br>\nbegin</p>\n<p>simproc_setup congproc p (\"id id True\") = ‹K (K (K (SOME @{lemma \"id id True ≡ True\" by simp})))›</p>\n<p>lemma \"id id True\" by simp</p>\n<p>end</p>\n<p>exception THM 0 raised (line 1534 of \"thm.ML\"):<br>\n  transitive: middle term<br>\n  id id True ≡ True<br>\n  id id True ≡ id True</p>\n<p>Best,<br>\nMete<br>\n</p>\n</blockquote>\n</blockquote>",
+        "id": 638798069,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1794244887
+    }
+]

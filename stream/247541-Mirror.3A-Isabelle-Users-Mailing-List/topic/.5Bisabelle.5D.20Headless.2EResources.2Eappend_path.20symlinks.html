@@ -1,0 +1,60 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Headless.Resources.append_path symlinks · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Headless.2EResources.2Eappend_path.20symlinks.html">[isabelle] Headless.Resources.append_path symlinks</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="638065508"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Headless.Resources.append_path%20symlinks/near/638065508" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Headless.2EResources.2Eappend_path.20symlinks.html#638065508">(Nov 06 2026 at 08:59)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Hi all,</p>
+<p>in Isabelle/Scala, Headless.Resources uses the default append_path, <br>
+which does not resolve symlinks. The same file can thus become two <br>
+nodes, e.g. with a symlink "/tmp/a -&gt; /tmp/b" and a headless session</p>
+<p>session.use_theories(List("/tmp/a/Scratch"))<br>
+   session.use_theories(List("/tmp/b/Scratch"))</p>
+<p>loads and checks Scratch twice as two separate nodes.</p>
+<p>Isabelle/jEdit, in contrast, resolves symlinks in its append_path since <br>
+e212e2001b2a. Could Headless.Resources do the same, e.g. with .canonical <br>
+instead of .expand? Or could the constructor of Headless.Resources be <br>
+made public, so that applications, like PIDE MCP, can override <br>
+append_path themselves?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+
+
+
+<a name="640176213"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Headless.Resources.append_path%20symlinks/near/640176213" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Headless.2EResources.2Eappend_path.20symlinks.html#640176213">(Nov 13 2026 at 18:48)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann &lt;<a href="mailto:cl-isabelle-users@lists.cam.ac.uk">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>
+<p>Brief update: this is not relevant for my application anymore as I <br>
+decided to write my own Resources layer for other reasons anyway.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>On 06.11.26 09:59, Kevin Kappelmann wrote:</p>
+<blockquote>
+<p>Hi all,</p>
+<p>in Isabelle/Scala, Headless.Resources uses the default append_path, <br>
+which does not resolve symlinks. The same file can thus become two <br>
+nodes, e.g. with a symlink "/tmp/a -&gt; /tmp/b" and a headless session</p>
+<p>session.use_theories(List("/tmp/a/Scratch"))<br>
+   session.use_theories(List("/tmp/b/Scratch"))</p>
+<p>loads and checks Scratch twice as two separate nodes.</p>
+<p>Isabelle/jEdit, in contrast, resolves symlinks in its append_path since <br>
+e212e2001b2a. Could Headless.Resources do the same, e.g. with .canonical <br>
+instead of .expand? Or could the constructor of Headless.Resources be <br>
+made public, so that applications, like PIDE MCP, can override <br>
+append_path themselves?</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Nov 14 2026 at 17:46 UTC</p>
+</html>

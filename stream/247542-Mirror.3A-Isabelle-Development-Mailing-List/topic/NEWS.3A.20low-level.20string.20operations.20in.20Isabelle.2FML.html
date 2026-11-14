@@ -1,0 +1,54 @@
+<html>
+<head><meta charset="utf-8"><title>NEWS: low-level string operations in Isabelle/ML · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20low-level.20string.20operations.20in.20Isabelle.2FML.html">NEWS: low-level string operations in Isabelle/ML</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="639894491"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/NEWS%3A%20low-level%20string%20operations%20in%20Isabelle/ML/near/639894491" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/NEWS.3A.20low-level.20string.20operations.20in.20Isabelle.2FML.html#639894491">(Nov 12 2026 at 21:13)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;</p>
+<p><strong>* ML </strong>*</p>
+<ul>
+<li>
+<p>Various low-level string operations have been renamed as follows.<br>
+INCOMPATIBILITY.</p>
+<p>nth_string           ~&gt;  String.nth_str<br>
+ fold_string          ~&gt;  String.fold_str<br>
+ fold_rev_string      ~&gt;  String.fold_rev_str<br>
+ exists_string        ~&gt;  String.exists_str<br>
+ forall_string        ~&gt;  String.forall_str<br>
+ member_string        ~&gt;  String.member_str<br>
+ raw_explode          ~&gt;  String.explode_str<br>
+ translate_string     ~&gt;  String.translate_str<br>
+ Bytes.exists_string  ~&gt;  Bytes.exists_str<br>
+ Bytes.forall_string  ~&gt;  Bytes.forall_str</p>
+</li>
+</ul>
+<p>This refers to Isabelle/ad6679bf69a4.</p>
+<p>Further note that String.explode_str avoids the stack-based implementation of <br>
+structure SML90, which could cause problems with very large input. This was <br>
+discovered by Martin Desharnais-Schäfer.</p>
+<p>As a reminder, see also the "implementation" manual (a4b37e45d75b):</p>
+<p>paragraph ‹Historical note.›<br>
+text ‹<br>
+   In the original SML90 standard the primitive ML type \&lt;^ML_type&gt;‹char› did not<br>
+   exist, and \&lt;^ML_text&gt;‹explode: string -&gt; string list› produced a list of<br>
+   singleton strings like \&lt;^ML&gt;‹String.explode_str: string -&gt; string list› in<br>
+   Isabelle/ML today. When SML97 came out, Isabelle did not adopt its somewhat<br>
+   anachronistic 8-bit or 16-bit characters, but the idea of exploding a string<br>
+   into a list of small strings was extended to ``symbols'' as explained above.<br>
+   Thus Isabelle sources can refer to an infinite store of user-defined<br>
+   symbols, without having to worry about the multitude of Unicode encodings<br>
+   that have emerged over the years.<br>
+›</p>
+<p>Makarius</p>
+
+
+
+<hr><p>Last updated: Nov 14 2026 at 17:46 UTC</p>
+</html>

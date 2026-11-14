@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>From: Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>\nI wonder if we will be able to act on this question before the next release. The key question is precisely how this type class should be defined.</p>\n<p>Larry</p>\n<blockquote>\n<p>On 14 Aug 2024, at 08:58, Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@informatik.tu-muenchen.de\">florian.haftmann@informatik.tu-muenchen.de</a>&gt; wrote:</p>\n<blockquote>\n<p>This type class is defined in a number of AFP entries. Unfortunately, the definitions used are not the same and it's not clear whether they are equivalent either. We ought to fill this gap, though I am not sure of the best way to do it. In LLL_Basis_Reduction/Missing_Lemmas it is used to generalise a number of simple results currently proved for a smaller type class, ordered_idom.</p>\n</blockquote>\n<p>Looks interesting.</p>\n<p>A few insights I gained from studying the occurrences:</p>\n<p>a) Abstract-Rewriting/SN_Orders.thy</p>\n<p>This seems somehow special and I would be inclined to put that aside in the first iteration.</p>\n<p>b) (A) Complex_Bounded_Operators/extra/Extra_Ordered_Fields.thy and (B) LLL_Basis_Reduction/Missing_Lemmas.thy</p>\n<p>Btw. (A) is an excellent example for separating generic and application-specific material in an AFP entry.</p>\n<p>The two specifications are almost equivalent, since</p>\n<p>subclass (in ordered_semiring_1) ordered_semiring_0 ..</p>\n<p>holds in (A) and thus ordered_semiring_0 could also be removed as initial parent class in (B).</p>\n<p>The remaining difference is zero_less_one. I would be inclined to add that as parent class to (A) to check whether all required instances are still valid.</p>\n<p>After consolidation, the re-integration into HOL-Main could proceed.</p>\n<p>Any thoughts?<br>\nFlorian<br>\n&lt;OpenPGP_0xA707172232CFA4E9.asc&gt;</p>\n</blockquote>",
+        "id": 484485777,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1732618796
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nReving this old thread after <br>\n<a href=\"https://isabelle.sketis.net/repos/afp-devel/rev/a194ec58339d\">https://isabelle.sketis.net/repos/afp-devel/rev/a194ec58339d</a> the <br>\nsituation is now:</p>\n<p>In Complex_Bounded_Operators/extra/Extra_Ordered_Fields.thy, type class <br>\nordered_semiring_1 is now also based on zero_neq_one</p>\n<p>Hence it should now be equivalent to its counterpart <br>\nLLL_Basis_Reduction/Missing_Lemmas.thy</p>\n<p>And note that there is also Jordan_Normal_Form/Missing_Ring.thy with <br>\nsimilar type classes.</p>\n<p>I do not know if anybody has an agenda to unify these; a suitable <br>\nstarting point could to be to integrate (parts of) <br>\nComplex_Bounded_Operators/extra/Extra_Ordered_Fields.thy into <br>\nHOL-Library.Ordered_Rings_and_Fields and then consolidate with the two <br>\nother theories.</p>\n<p>Florian</p>\n<p><a href=\"/user_uploads/14278/WPZR8_NpPGyePRW7z-ikp8lp/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/CkHSayfbzKXMVD-Zu_n_MIvy/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 513927111,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745429089
+    },
+    {
+        "content": "<p>From: Lawrence Paulson via isabelle-dev &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;<br>\nLooking at that, I see the case for these:</p>\n<p>class unbounded_dense_order = dense_order + no_top + no_bot<br>\nclass ordered_semiring_1 = ordered_semiring + semiring_1 + zero_neq_one<br>\nclass ordered_semiring_strict = semiring + comm_monoid_add + ordered_cancel_ab_semigroup_add + … (mult_strict_left_mono, mult_strict_right_mono)</p>\n<p>They look like they could go into Orderings, Rings, etc.</p>\n<p>But I have big doubts about this:</p>\n<p>class partial_abs_if = minus + uminus + ord + zero + abs +</p>\n<p>Thoughts?</p>\n<p>Larry</p>\n<blockquote>\n<p>On 23 Apr 2025, at 18:16, Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt; wrote:</p>\n<p>I do not know if anybody has an agenda to unify these; a suitable starting point could to be to integrate (parts of) Complex_Bounded_Operators/extra/Extra_Ordered_Fields.thy into HOL-Library.Ordered_Rings_and_Fields and then consolidate with the two other theories.</p>\n</blockquote>",
+        "id": 514365302,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745583155
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>But I have big doubts about this:</p>\n<p>class partial_abs_if = minus + uminus + ord + zero + abs +</p>\n<p>Thoughts?</p>\n</blockquote>\n<p>Looks slightly special indeed.</p>\n<p>I would recommend to proceed iteratively and to leave doubtful classes <br>\nwhere they currently are.</p>\n<p>Florian</p>\n<p><a href=\"/user_uploads/14278/b43Q5mAy1M6cM0jxQhhdDZmi/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/DPP_NxE8NMb_ewxBRQ_1YMxS/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 515667036,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1746175440
+    },
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>But why zero_neq_one rather than zero_less_one? Are there really ordered semirings where 0&lt;1 does not hold? Other AFP entries use that version.</p>\n</blockquote>\n<p>Surely, for an ordering 0 &lt; 1 is a reasonable assumption if 0 =/= 1.</p>\n<p>Florian</p>\n<p><a href=\"/user_uploads/14278/7Br8QLReV9jSzlBSQFBiyR-Y/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/xoM4Z1wNvyCOWhxVYU0Z_KjB/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 515667167,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1746175475
+    },
+    {
+        "content": "<p>From: \"Thiemann, René via isabelle-dev\" &lt;<a href=\"mailto:isabelle-dev@mailman.proof.cit.tum.de\">isabelle-dev@mailman.proof.cit.tum.de</a>&gt;</p>\n<blockquote>\n<p>Am 02.05.2025 um 10:44 schrieb Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;:</p>\n<blockquote>\n<p>But why zero_neq_one rather than zero_less_one? Are there really ordered semirings where 0&lt;1 does not hold? Other AFP entries use that version.</p>\n</blockquote>\n</blockquote>\n<blockquote>\n<p>Surely, for an ordering 0 &lt; 1 is a reasonable assumption if 0 =/= 1. </p>\n</blockquote>\n<p>Although it is a frequently used assumption, 0 &lt; 1 is not satisfied for all ordered semirings.</p>\n<p>For instance, for termination proving one sometimes uses semirings where x &lt; y is defined as</p>\n<p>x + delta &lt;= y</p>\n<p>where delta is some user-specified positive rational number, i.e., for delta = 2, 0 &lt; 1 is not satisfied.</p>\n<p>However, since these semirings are not modelled as a type-class, as there are infinitely many possible choices of delta, this should not be a problem for a type-based definition of ordered semiring.</p>\n<p>Best,<br>\nRené</p>",
+        "id": 516155602,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1746439607
+    }
+]

@@ -1,0 +1,53 @@
+<html>
+<head><meta charset="utf-8"><title>Suppressing document generation when building sessions · General · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/index.html">General</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html">Suppressing document generation when building sessions</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="510961231"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Suppressing%20document%20generation%20when%20building%20sessions/near/510961231" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Adem Rimpapa <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html#510961231">(Apr 08 2025 at 15:13)</a>:</h4>
+<p>I am trying to build several sessions, some of which have the option <code>document=pdf</code> enabled in their ROOT files. I want to build the sessions without generating the documents, but running something like<br>
+<code>isabelle build ... -o document=false</code> does not seem to work. Is this not the right way to suppress the document generation for this specific build?</p>
+
+
+
+<a name="639419259"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Suppressing%20document%20generation%20when%20building%20sessions/near/639419259" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bob Rubbens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html#639419259">(Nov 11 2026 at 09:53)</a>:</h4>
+<p>Sorry to necro this thread. Did you ever figure it out? I'm running into the same issue.</p>
+
+
+
+<a name="639423126"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Suppressing%20document%20generation%20when%20building%20sessions/near/639423126" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html#639423126">(Nov 11 2026 at 10:10)</a>:</h4>
+<p>Session options take precedence, so you cannot overwrite it like that.<br>
+If the session does not set <code>document_variants</code>, you may be able to skip document generation by using <code>-o document_variants=</code> (i.e. empty document variants)</p>
+
+
+
+<a name="639425665"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Suppressing%20document%20generation%20when%20building%20sessions/near/639425665" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bob Rubbens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html#639425665">(Nov 11 2026 at 10:22)</a>:</h4>
+<p>Thanks for clearing that up so timely.</p>
+<p>Just to document for anyone else running into this thread: I'm making a setup script for a docker-based artifact, and I've settled on the following structure: provide two root files (ROOT_no_pdf and ROOT_pdf), requiring the user to copy the right one in before running my build scripts depending on what they want. That, and including the <code>-c</code> flag in all my <code>isabelle</code> invocations to make sure the cache is cleaned. This ensures PDFs are built when I want them to. Somehow if the theory is in the cache already somehow latex+pdf generation is not triggered. Not a problem but a bit annoying if you're an oblivious noob like me.</p>
+<p>Makes it all a bit slow, luckily my isabelle development takes only a minute to check so that's okay. Would be nice to have an "on-demand" PDF generation button in the <code>isabelle</code> tool, though I understand it's not really a priority.</p>
+
+
+
+<a name="639428282"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Suppressing%20document%20generation%20when%20building%20sessions/near/639428282" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Kevin Kappelmann <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html#639428282">(Nov 11 2026 at 10:34)</a>:</h4>
+<p>Maybe you can use <code>isabelle document</code>...? You can <code>build</code> and later use <code>document</code>.</p>
+
+
+
+<a name="639435915"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/202961-General/topic/Suppressing%20document%20generation%20when%20building%20sessions/near/639435915" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Bob Rubbens <a href="http://isabelle.systems/zulip-archive/stream/202961-General/topic/Suppressing.20document.20generation.20when.20building.20sessions.html#639435915">(Nov 11 2026 at 11:09)</a>:</h4>
+<p>Gosh, not sure how I missed that. If I'll have time I'll experiment with that a bit. Thanks!</p>
+
+
+
+<hr><p>Last updated: Nov 14 2026 at 17:46 UTC</p>
+</html>

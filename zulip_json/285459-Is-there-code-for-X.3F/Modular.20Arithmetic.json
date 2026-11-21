@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>Are there specialized simprocs to deal with <code>[a_0+a_1+...+a_m = b_0+b_1+...+b_n](mod k)</code>? All the necessary theory is in <code>Cong.thy</code> but simply adding those lemmas to <code>simp</code> loops.</p>",
+        "id": 521067734,
+        "sender_full_name": "David E. Narváez",
+        "timestamp": 1748515264
+    },
+    {
+        "content": "<p>Not to my knowledge. I typically just use the rules like <code>cong_add</code> etc. manually. What did you have in mind?</p>",
+        "id": 521321359,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1748619126
+    },
+    {
+        "content": "<p>I was hoping for a simproc that does precisely what one would do when facing a congruence problem: check if there are terms that vanish, reduce terms that are over the modulus, etc. For the particular need I currently have it would be enough to detect numerals in the mod and in the terms and apply the necessary rules, I am a quarter of the way towards writing that. In general it would be good to have that for any reasonable term (so something like <code>[5m + k=z-m] (mod m)</code> would simplify to <code>[k=z] (mod m)</code> for example).</p>",
+        "id": 521329369,
+        "sender_full_name": "David E. Narváez",
+        "timestamp": 1748621740
+    },
+    {
+        "content": "<p>The proper way to do this would be with a \"rewriting modulo congruences\" procedure, i.e. generalising the simplifier to work with congruences other than equality. This has been something that people have wanted to have for a long time, and I think there was even once a prototype implementation by <span class=\"user-mention\" data-user-id=\"302181\">@Simon Roßkopf</span>.</p>",
+        "id": 521360810,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1748634034
+    },
+    {
+        "content": "<p>One could probably make a custom-made procedure just for <code>Cong.cong</code> and package it as a simproc. I don't think anyone has ever done that.</p>",
+        "id": 521360894,
+        "sender_full_name": "Manuel Eberl",
+        "timestamp": 1748634078
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"232736\">Manuel Eberl</span> <a href=\"#narrow/channel/285459-Is-there-code-for-X.3F/topic/Modular.20Arithmetic/near/521360810\">said</a>:</p>\n<blockquote>\n<p>The proper way to do this would be with a \"rewriting modulo congruences\" procedure, i.e. generalising the simplifier to work with congruences other than equality. This has been something that people have wanted to have for a long time, and I think there was even once a prototype implementation by <span class=\"user-mention silent\" data-user-id=\"302181\">Simon Roßkopf</span>.</p>\n</blockquote>\n<p>Do you mean a <code>[cong]</code> rule?</p>",
+        "id": 521371053,
+        "sender_full_name": "David E. Narváez",
+        "timestamp": 1748638829
+    }
+]

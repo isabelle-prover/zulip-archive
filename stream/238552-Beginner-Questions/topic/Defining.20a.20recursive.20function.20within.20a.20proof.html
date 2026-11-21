@@ -1,0 +1,181 @@
+<html>
+<head><meta charset="utf-8"><title>Defining a recursive function within a proof · Beginner Questions · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/index.html">Beginner Questions</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html">Defining a recursive function within a proof</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="640466867"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640466867" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640466867">(Nov 15 2026 at 14:01)</a>:</h4>
+<p>I can define a function inside a proof like this (the lemma statement is just there to let me open up a proof context): </p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span><span class="w"> </span><span class="n">example</span><span class="o">:</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">k</span><span class="o">::</span><span class="n">nat</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="s">"k &lt; k+1"</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">n</span><span class="o">::</span><span class="n">nat</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">"n = 4"</span>
+
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">g</span><span class="o">::</span><span class="s">"nat ⇒ nat"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"g  = (λ k .  k + n)"</span>
+</code></pre></div>
+<p>and it's OK for <code>g</code> to refer to the 'local variable'  <code>n</code> without it being another argument to the function. But is there a way to write a <em>recursive</em> function --- the kind of thing I'd define using <code>fun</code> outside the context of a theorem?  And more important, one that uses a local variable in a similar way. For instance, suppose I wanted to define g(0) = 5 and g(Suc k) = k + n (where <code>n</code> here is the constant in the definition above). Is there a way to do this?</p>
+<p>To give a little more context, my actual lemma looks like this:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="o">::</span><span class="w"> </span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Y</span><span class="o">::</span><span class="w"> </span><span class="s">"'b set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ 'b"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">g</span><span class="o">::</span><span class="w"> </span><span class="s">"'b ⇒ 'a"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">injf</span><span class="o">:</span><span class="w"> </span><span class="s">"inj_on f X"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">injg</span><span class="o">:</span><span class="w"> </span><span class="s">"inj_on g Y"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="ow">...</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="ow">...</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">Rdef</span><span class="o">:</span><span class="w"> </span><span class="s">"R = X - g`Y"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">hdef</span><span class="o">:</span><span class="w"> </span><span class="s">"h = g ∘ f"</span>
+
+<span class="w">  </span><span class="k">fun</span><span class="w"> </span><span class="n">Xset</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒  'a set"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"Xset 0 = X - g`Y"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"Xset (Suc n)  = h`(Xset n)"</span>
+</code></pre></div>
+<p>except that the <code>fun</code> definition generates an error "Bad context for command "fun" -- using reset state", with a note that variables X, g, and Y occur only on the right hand side in the first branch of the function definition.</p>
+
+
+
+<a name="640469577"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640469577" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640469577">(Nov 15 2026 at 14:30)</a>:</h4>
+<p>sort of. You can use <code>rec_nat</code> and have to derive the simplification lemmas yourself</p>
+
+
+
+<a name="640469843"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640469843" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640469843">(Nov 15 2026 at 14:32)</a>:</h4>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">Xset</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">‹Xset = rec_nat (X - g`Y) (λ_ a. h ` a)›</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">‹Xset 0 = X - g`Y›</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="s">‹Xset (Suc n)  = h`(Xset n)›</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">n</span>
+<span class="w">    </span><span class="k">unfolding</span><span class="w"> </span><span class="n">Xset_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+
+
+
+<a name="640470546"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640470546" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640470546">(Nov 15 2026 at 14:38)</a>:</h4>
+<p>I have done this a few times, but I don't remember a case where the translation was not obvious.</p>
+
+
+
+<a name="640470594"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640470594" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640470594">(Nov 15 2026 at 14:39)</a>:</h4>
+<p><code>primrec</code> is actually using the recursor, so you can get the definition directly:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">primrec</span><span class="w"> </span><span class="n">Xset</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒  'a set"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"Xset 0 = X - g`Y"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"Xset (Suc n)  = h`(Xset n)"</span>
+
+<span class="w">  </span><span class="kt">thm</span><span class="w"> </span><span class="n">Xset_def</span>
+<span class="c">(*local.Xset ≡ rec_nat (X - g ` Y) (λn. (`) h)*)</span>
+</code></pre></div>
+
+
+
+<a name="640470920"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640470920" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640470920">(Nov 15 2026 at 14:42)</a>:</h4>
+<p><code>fun</code> is using fixpoints</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">declare</span><span class="w"> </span><span class="o">[[</span><span class="n">function_internals</span><span class="o">]]</span>
+<span class="k">context</span>
+
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="o">::</span><span class="w"> </span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Y</span><span class="o">::</span><span class="w"> </span><span class="s">"'b set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ 'b"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">g</span><span class="o">::</span><span class="w"> </span><span class="s">"'b ⇒ 'a"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">h</span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ 'a"</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">fun</span><span class="w"> </span><span class="n">Xset</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">"nat ⇒  'a set"</span><span class="w"> </span><span class="kp">where</span>
+<span class="w">  </span><span class="s">"Xset 0 = X - g`Y"</span><span class="w"> </span><span class="o">|</span>
+<span class="w">  </span><span class="s">"Xset (Suc n)  = h`(Xset n)"</span>
+
+<span class="w">  </span><span class="kt">thm</span><span class="w">  </span><span class="n">nitpick_unfold</span><span class="o">(</span><span class="n">161</span><span class="o">)</span>
+<span class="c">(*</span>
+<span class="c">local.Xset_graph ≡ lfp (λp x1 x2. (∃Xset_sum. x1 = 0 ∧ x2 = X - g ` Y) ∨ (∃Xset_sum n. x1 = Suc n ∧ x2 = h ` Xset_sum n ∧ p n (Xset_sum n)))</span>
+<span class="c">*</span>
+</code></pre></div>
+<p>so if you need full fun power, it is more (or even a lot) of work to translate the function back to the recursor</p>
+
+
+
+<a name="640470949"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640470949" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640470949">(Nov 15 2026 at 14:42)</a>:</h4>
+<p>That being said, I don't ever remember needing that (a function that is not definable using primrec).</p>
+
+
+
+<a name="640480648"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640480648" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640480648">(Nov 15 2026 at 16:09)</a>:</h4>
+<p>I don't follow a lot of this ... I'll have to look at the definition of <code>rec_nat</code> for it to make sense, but it clearly does the job. </p>
+<p>I'm not sure what you mean by "<code>primrec</code> is actually using the recursor ...", because when I type that  primrec definition before my lemma, it says that <code>Y</code> is an extra variable on the RHS, and if I type it inside the lemma I get a "bad context for primrec".  Any chance you can explain about this? </p>
+<p>The final paragraph feels a bit like what I'd like, but I'm not sure how it fits into the bigger picture. Fortunately, I don't think I need that full power, and the "a lot of work to translate back" says that I should probably avoid this for now.</p>
+
+
+
+<a name="640483161"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640483161" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640483161">(Nov 15 2026 at 16:32)</a>:</h4>
+<p><code>primrec</code> internally defines the constant <code>Xset</code> using the recursor (<code>Xset_def</code>) and proves the simplification lemmas <code>Xset.simps</code>.</p>
+
+
+
+<a name="640483275"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640483275" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640483275">(Nov 15 2026 at 16:33)</a>:</h4>
+<p>In proofs, <code>primrec</code> does not work and you have to do the same construct yourself, but it is easy.</p>
+
+
+
+<a name="640483316"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640483316" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640483316">(Nov 15 2026 at 16:33)</a>:</h4>
+<p>But you can see the definition produced by <code>primrec</code> (once you have fixed the variables you want the function to depend end). So you don't have to guess it.</p>
+
+
+
+<a name="640483587"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640483587" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640483587">(Nov 15 2026 at 16:36)</a>:</h4>
+<blockquote>
+<p>The final paragraph feels a bit like what I'd like, but I'm not sure how it fits into the bigger picture. Fortunately, I don't think I need that full power, and the "a lot of work to translate back" says that I should probably avoid this for now.</p>
+</blockquote>
+<p>There are functions that you cannot express easily with primrec:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="k">fun</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">‹nat ⇒ nat›</span><span class="w"> </span><span class="kp">where</span>
+<span class="w"> </span><span class="s">‹f 0 = 1›</span><span class="w"> </span><span class="o">|</span>
+<span class="w"> </span><span class="s">‹f n = Suc (f (n div 2))›</span>
+</code></pre></div>
+<p><code>fun</code> manages to define <code>f</code> using the least-fix-point, proves termination automatically, and derives the simplification lemmas.</p>
+<p>It must be possible, but I don't know how to easily define such recursive pattern with the recursor.</p>
+
+
+
+<a name="640483941"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640483941" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Mathias Fleury <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640483941">(Nov 15 2026 at 16:40)</a>:</h4>
+<p>Here is the complete example:</p>
+<div class="codehilite" data-code-language="Isabelle"><pre><span></span><code><span class="kn">lemma</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">X</span><span class="o">::</span><span class="w"> </span><span class="s">"'a set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">Y</span><span class="o">::</span><span class="w"> </span><span class="s">"'b set"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">f</span><span class="o">::</span><span class="w"> </span><span class="s">"'a ⇒ 'b"</span>
+<span class="w">  </span><span class="kp">fixes</span><span class="w"> </span><span class="n">g</span><span class="o">::</span><span class="w"> </span><span class="s">"'b ⇒ 'a"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">injf</span><span class="o">:</span><span class="w"> </span><span class="s">"inj_on f X"</span>
+<span class="w">  </span><span class="kp">assumes</span><span class="w"> </span><span class="n">injg</span><span class="o">:</span><span class="w"> </span><span class="s">"inj_on g Y"</span>
+<span class="w">  </span><span class="kp">shows</span><span class="w"> </span><span class="n">False</span>
+<span class="k">proof</span><span class="w"> </span><span class="o">-</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">Rdef</span><span class="o">:</span><span class="w"> </span><span class="s">"R = X - g`Y"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="n">hdef</span><span class="o">:</span><span class="w"> </span><span class="s">"h = g ∘ f"</span>
+<span class="w">  </span><span class="n">define</span><span class="w"> </span><span class="n">Xset</span><span class="w"> </span><span class="kp">where</span><span class="w"> </span><span class="s">‹Xset = rec_nat (X - g`Y) (λ_ a. h ` a)›</span>
+<span class="w">  </span><span class="k">have</span><span class="w"> </span><span class="o">[</span><span class="n">simp</span><span class="o">]:</span><span class="w"> </span><span class="s">‹Xset 0 = X - g`Y›</span><span class="w"> </span><span class="kp">and</span><span class="w"> </span><span class="s">‹Xset (Suc n)  = h`(Xset n)›</span><span class="w"> </span><span class="kp">for</span><span class="w"> </span><span class="n">n</span>
+<span class="w">    </span><span class="k">unfolding</span><span class="w"> </span><span class="n">Xset_def</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">auto</span>
+</code></pre></div>
+
+
+
+<a name="640484249"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/238552-Beginner%20Questions/topic/Defining%20a%20recursive%20function%20within%20a%20proof/near/640484249" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> John  Hughes <a href="http://isabelle.systems/zulip-archive/stream/238552-Beginner-Questions/topic/Defining.20a.20recursive.20function.20within.20a.20proof.html#640484249">(Nov 15 2026 at 16:44)</a>:</h4>
+<p>Aha....now I see what you meant in that earlier explanation. Thanks very much for taking part of your Sunday to explain this to me. I'll go on with the example code, since my particular case is a relatively simple one.</p>
+
+
+
+<hr><p>Last updated: Nov 21 2026 at 21:29 UTC</p>
+</html>

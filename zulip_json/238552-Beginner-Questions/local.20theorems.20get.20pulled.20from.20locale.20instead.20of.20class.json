@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>following code:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Scratch</span><span class=\"w\"> </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">HOLCF</span><span class=\"w\"> </span><span class=\"k\">begin</span>\n\n<span class=\"k\">class</span><span class=\"w\"> </span><span class=\"n\">works</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">pcpo</span><span class=\"w\"> </span><span class=\"k\">begin</span>\n<span class=\"kt\">typ</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span><span class=\"w\"> </span><span class=\"c\">(* 'a::type *)</span>\n<span class=\"kt\">thm</span><span class=\"w\"> </span><span class=\"n\">is_ubI</span><span class=\"w\"> </span><span class=\"c\">(*(⋀x. x ∈ ?S ⟹ x ⊑ ?u) ⟹ ?S &lt;| ?u*)</span>\n<span class=\"k\">end</span>\n\n<span class=\"k\">class</span><span class=\"w\"> </span><span class=\"n\">weird</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">profinite</span><span class=\"w\"> </span><span class=\"k\">begin</span>\n<span class=\"kt\">typ</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span><span class=\"w\"> </span><span class=\"c\">(* 'a::cpo *)</span>\n<span class=\"kt\">thm</span><span class=\"w\"> </span><span class=\"n\">is_ubI</span><span class=\"w\"> </span><span class=\"c\">(*(⋀x. x ∈ ?S ⟹ below x ?u) ⟹ po.is_ub below ?S ?u*)</span>\n<span class=\"k\">end</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>So in \"profinite\" context, the definitions from parent contexts have the locale form instead of class form which means they cannot be applied to normal definitions (<code>po.is_ub</code> and <code>po_class.is_ub</code> are distinct entities).</p>\n<p>Not sure what to make of it, seems like some sort of a bug, especially the fact that it happens with profinite/bifinite/domain but not with cpo/pcpo. Not sure what to make of it, please help.</p>",
+        "id": 593052946,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1777998681
+    },
+    {
+        "content": "<p>Ah, I figure this is likely because <code>bifinite</code> and <code>profinite</code> definition is defined on <code>approx_chain</code> which is limited to sort <code>cpo</code>, so context setup chokes on that in some way...</p>",
+        "id": 593053793,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1777998925
+    },
+    {
+        "content": "<p>I don't quite get it. I think if you could minimise it to a self-contained theory not using HOLCF, it would be easier to help.</p>",
+        "id": 593178155,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1778052167
+    },
+    {
+        "content": "<p>Weirdly, I can only reproduce this with HOLCF:</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Repro</span><span class=\"w\"> </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">HOLCF</span><span class=\"w\"> </span><span class=\"k\">begin</span>\n<span class=\"k\">default_sort</span><span class=\"w\"> </span><span class=\"n\">type</span>\n\n<span class=\"c\">(* the trick works with a HOLCF class *)</span>\n<span class=\"k\">class</span><span class=\"w\"> </span><span class=\"n\">holcf</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">pcpo</span><span class=\"w\"> </span><span class=\"o\">+</span><span class=\"w\"> </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"∃(a::(nat⇒'a::cpo)). chain a\"</span>\n<span class=\"k\">begin</span>\n<span class=\"kt\">typ</span><span class=\"w\"> </span><span class=\"n n-Type\">'a</span><span class=\"w\"> </span><span class=\"c\">(* 'a::cpo *)</span>\n<span class=\"c\">(*theorem borked*)</span>\n<span class=\"kt\">thm</span><span class=\"w\"> </span><span class=\"n\">is_ubI</span><span class=\"w\"> </span><span class=\"c\">(*(⋀x. x ∈ ?S ⟹ below x ?u) ⟹ po.is_ub below ?S ?u*)</span>\n<span class=\"k\">end</span>\n\n<span class=\"c\">(*but doesn't work with a HOL class *)</span>\n\n<span class=\"k\">class</span><span class=\"w\"> </span><span class=\"n\">hol</span><span class=\"w\"> </span><span class=\"o\">=</span><span class=\"w\"> </span><span class=\"n\">linorder</span><span class=\"w\"> </span><span class=\"o\">+</span>\n<span class=\"w\">  </span><span class=\"kp\">assumes</span><span class=\"w\"> </span><span class=\"s\">\"∃(a :: (nat⇒'a::order)). mono a\"</span>\n<span class=\"c\">(*error \"Sort constraint order inconsistent with default type for type variable \"'a\"*)</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n<p>So, no luck reproducing without. But it's part of standard distribution and not very big, like HOL-Analysis...</p>",
+        "id": 593274906,
+        "sender_full_name": "Alex Mobius",
+        "timestamp": 1778077661
+    }
+]

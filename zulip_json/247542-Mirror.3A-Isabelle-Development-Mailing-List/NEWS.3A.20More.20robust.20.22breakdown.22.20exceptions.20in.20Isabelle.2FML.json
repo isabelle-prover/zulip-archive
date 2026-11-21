@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<p><strong>* ML </strong>*</p>\n<ul>\n<li>\n<p>Exceptions General.Overflow and General.Size need to be used in<br>\nqualified form: to make it harder to use them casually. Minor<br>\nINCOMPATIBILITY.</p>\n</li>\n<li>\n<p>Predicate Exn.is_interrupt_breakdown now covers General.Size and<br>\nGeneral.Overflow as well, in addition to Exn.Interrupt_Breakdown before.<br>\nIn particular, these exceptions are no longer handled by the \"can\" or<br>\n\"try\" combinators, or \\&lt;^try&gt;‹... catch ...› expressions.<br>\nINCOMPATIBILITY: subtle change of semantics of program exceptions; need<br>\nto use Exn.capture if the Isabelle/ML evaluation should be checked under<br>\nprogram control.</p>\n</li>\n</ul>\n<p>This refers to Isabelle/867cbd97b013. It is another attempt to keep accidental <br>\nsystem breakdown out of the normal semantics of the ML program.</p>\n<p>General.Size typically happens on blobs that are too large, notably for type <br>\nstring and array (the latter is hardly ever used). In very rare situations, <br>\nexception General.Size shows up for different purposes in some odd libraries <br>\n--- we can probably afford that.</p>\n<p>General.Overflow should show up extremely rarely, because our type int is <br>\nalready unbounded and should never overflow.</p>\n<p>Such very rare events are better not handled implicitly, as in our \"try\" family.</p>\n<p>Makarius</p>",
+        "id": 639899021,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1794518876
+    }
+]

@@ -1,0 +1,8 @@
+[
+    {
+        "content": "<p>From: Manuel Eberl &lt;<a href=\"mailto:manuel@pruvisto.org\">manuel@pruvisto.org</a>&gt;<br>\nHello,</p>\n<p>here's an issue that has been bugging me for years: in methods like <br>\n\"cases\", \"induct\", and \"induction\" that take a rule and instantiations <br>\nfor that rule, it seems that type inference is first run for the <br>\ninstantiations separately and the results are then plugged into the rule.</p>\n<p>This can lead to problems, e.g. the following does not work:</p>\n<p>lemma<br>\n     fixes P :: \"int ⇒ bool\"<br>\n     shows \"P a\"<br>\n   proof (cases a 0 rule: linorder_cases)</p>\n<p>exception THM 0 raised (line 756 of \"drule.ML\"):<br>\n     infer_instantiate_types: type int of variable ?y<br>\n     cannot be unified with type 'a of term 0<br>\n     (?x &lt; ?y ⟹ ?P) ⟹<br>\n     (?x = ?y ⟹ ?P) ⟹ (?y &lt; ?x ⟹ ?P) ⟹ ?P</p>\n<p>There is an easy workaround, of course:</p>\n<p>proof (cases a \"0::int\" rule: linorder_cases)</p>\n<p>However, I remember that I was quite puzzled when I first encountered <br>\nthis. Perhaps it would be worth investigating whether this can be made <br>\nmore robust. I can e.g. write</p>\n<p>thm linorder_cases[of a 0]</p>\n<p>just fine, so it must be possible to plug in the instantiations first an <br>\nthen do the type inference. I tried to do it myself but didn't get very far.</p>\n<p>Cheers,</p>\n<p>Manuel</p>",
+        "id": 513939230,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1745432894
+    }
+]

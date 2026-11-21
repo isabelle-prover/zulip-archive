@@ -1,0 +1,32 @@
+[
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 13/08/2025 09:35, Tobias Nipkow wrote:</p>\n<blockquote>\n<p>I tuned another slow proof in HOL-Analysis.<br>\nUsing the timimg panel, I was surprised that this showed up:</p>\n<ul>\n<li>HOL-Analysis.Infinite_Sum<br>\n  - 91.8 command \"text\"</li>\n</ul>\n<p>Does that have anything to do with the cite command in that text block?</p>\n</blockquote>\n<p>I cannot reproduce this problem, neither in your version Isabelle/304519f22c2c <br>\nnor in official Isabelle2025.</p>\n<p>* What happens when you use Isabelle2025, the official download?</p>\n<p>* What happens when you delete the cite antiquotation?</p>\n<p>Makarius</p>",
+        "id": 534210933,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1755084661
+    },
+    {
+        "content": "<p>From: Manuel Eberl &lt;<a href=\"mailto:manuel@pruvisto.org\">manuel@pruvisto.org</a>&gt;<br>\nMight be obvious, but just in case: did you try running this command a <br>\nfew more times? If I recall correctly, timings are sometimes spuriously <br>\nvery high on innocuous commands. Perhaps due to garbage collection.</p>\n<p>Manuel</p>\n<p>On 13/08/2025 13:30, Makarius wrote:</p>\n<blockquote>\n<p>On 13/08/2025 09:35, Tobias Nipkow wrote:</p>\n<blockquote>\n<p>I tuned another slow proof in HOL-Analysis.<br>\nUsing the timimg panel, I was surprised that this showed up:</p>\n<ul>\n<li>HOL-Analysis.Infinite_Sum<br>\n  - 91.8 command \"text\"</li>\n</ul>\n<p>Does that have anything to do with the cite command in that text block?</p>\n</blockquote>\n<p>I cannot reproduce this problem, neither in your version <br>\nIsabelle/304519f22c2c nor in official Isabelle2025.</p>\n<p>* What happens when you use Isabelle2025, the official download?</p>\n<p>* What happens when you delete the cite antiquotation?</p>\n<p>Makarius</p>\n</blockquote>",
+        "id": 534217517,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1755087348
+    },
+    {
+        "content": "<p>From: Tobias Nipkow &lt;<a href=\"mailto:nipkow@in.tum.de\">nipkow@in.tum.de</a>&gt;<br>\nIsabelle 2025 behaves the same for me. The way I tested it was to load <br>\nAnalysis.thy a number of times, without significant other system load. The <br>\nactual time for the text block differs but is always in the 20-90 secs range. <br>\nHowever, when I remove the cite, the timing issue disappears.</p>\n<p>Tobias</p>\n<p>On 13/08/2025 13:30, Makarius wrote:</p>\n<blockquote>\n<p>On 13/08/2025 09:35, Tobias Nipkow wrote:</p>\n<blockquote>\n<p>I tuned another slow proof in HOL-Analysis.<br>\nUsing the timimg panel, I was surprised that this showed up:</p>\n<ul>\n<li>HOL-Analysis.Infinite_Sum<br>\n  - 91.8 command \"text\"</li>\n</ul>\n<p>Does that have anything to do with the cite command in that text block?</p>\n</blockquote>\n<p>I cannot reproduce this problem, neither in your version Isabelle/304519f22c2c <br>\nnor in official Isabelle2025.</p>\n<p>* What happens when you use Isabelle2025, the official download?</p>\n<p>* What happens when you delete the cite antiquotation?</p>\n<p>Makarius<br>\n</p>\n</blockquote>\n<p><a href=\"/user_uploads/14278/swsubyNUoiKaFgzC4SKE6kBK/smime.p7s\">smime.p7s</a></p>",
+        "id": 534225409,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1755090158
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 13/08/2025 15:02, Tobias Nipkow wrote:</p>\n<blockquote>\n<p>The way I tested it was to load <br>\nAnalysis.thy a number of times, without significant other system load. The <br>\nactual time for the text block differs but is always in the 20-90 secs range. <br>\nHowever, when I remove the cite, the timing issue disappears.</p>\n</blockquote>\n<p>That way, I managed to see a reported timing of approx. 60s for the 'text' <br>\ncommand with \"cite\" antiquotation, but not every time.</p>\n<p>Behind the \"cite\" antiquotation is quite some complexity: Isabelle/ML needs to <br>\nask Isabelle/Scala to parse bibtex files --- but results are made persistent <br>\nfor the underlying session, and the bibtex parsing is quite fast in the first <br>\nplace.</p>\n<p>After further experimentation with the implementation, it looks like the high <br>\nnumber is caused by lots of proof tasks running in parallel to an asynchronous <br>\nrequest from ML to Scala and back to ML. There is no long-running task behind <br>\nit, just delays in elapsed time.</p>\n<p>Conclusion: nothing to be seen here; can be ignored.</p>\n<p>Makarius</p>",
+        "id": 534770460,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1755359635
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;</p>\n<blockquote>\n<blockquote>\n<p>On 16 Aug 2025, at 16:53, Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt; wrote:</p>\n<p>After further experimentation with the implementation, it looks like the <br>\nhigh number is caused by lots of proof tasks running in parallel to an <br>\nasynchronous request from ML to Scala and back to ML. There is no long-running <br>\ntask behind it, just delays in elapsed time.<br>\n</p>\n</blockquote>\n</blockquote>\n<p>On 16/08/2025 18:09, Lawrence Paulson wrote:</p>\n<blockquote>\n<p>The timing panel is subject to extreme variations depending on what else is going on. I guess this is part of poly/ML and cannot be fixed.</p>\n</blockquote>\n<p>We have many things stacked on top of each other: Poly/ML, Isabelle/ML, <br>\nIsabelle/Scala.</p>\n<p>Timings are expected to occasionally inaccurate, especially in a parallel and <br>\nasynchronous system like Isabelle.</p>\n<p>Makarius</p>",
+        "id": 534776225,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1755366585
+    }
+]

@@ -1,0 +1,122 @@
+[
+    {
+        "content": "<p>This is very confusing.<br>\nExecute the following shell script</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">export</span><span class=\"w\"> </span><span class=\"n\">ISABELLE_TOOL_JAVA_OPTIONS</span><span class=\"o\">=</span><span class=\"s\">\"-Xms4g -Xmx64g -Xss64m\"</span>\n<span class=\"n\">isabelle</span><span class=\"w\"> </span><span class=\"n\">getenv</span><span class=\"w\"> </span><span class=\"o\">-</span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">ISABELLE_TOOL_JAVA_OPTIONS</span>\n<span class=\"n\">#</span><span class=\"w\"> </span><span class=\"n\">the</span><span class=\"w\"> </span><span class=\"n\">ISABELLE_TOOL_JAVA_OPTIONS</span><span class=\"w\"> </span><span class=\"kp\">is</span><span class=\"w\"> </span><span class=\"n\">unchanged</span><span class=\"o\">!</span>\n</code></pre></div>\n<p>Let's try another way</p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">ISABELLE_TOOL_JAVA_OPTIONS</span><span class=\"o\">=</span><span class=\"s\">\"-Xms4g -Xmx64g -Xss64m\"</span><span class=\"w\"> </span><span class=\"n\">isabelle</span><span class=\"w\"> </span><span class=\"n\">getenv</span><span class=\"w\"> </span><span class=\"o\">-</span><span class=\"n\">b</span><span class=\"w\"> </span><span class=\"n\">ISABELLE_TOOL_JAVA_OPTIONS</span>\n<span class=\"n\">#</span><span class=\"w\"> </span><span class=\"n\">It</span><span class=\"w\"> </span><span class=\"kp\">is</span><span class=\"w\"> </span><span class=\"n\">still</span><span class=\"w\"> </span><span class=\"n\">not</span><span class=\"w\"> </span><span class=\"n\">changed</span><span class=\"o\">!</span>\n</code></pre></div>\n<p>It's very annoying. How can I change this stubborn environment variable?</p>",
+        "id": 507665589,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742799597
+    },
+    {
+        "content": "<p>Okay, I see Isabelle's system.pdf</p>\n<blockquote>\n<p>These variables are not in-<br>\ntended to be set directly from the shell, but are provided by Isabelle compo-<br>\nnents within their settings files, as explained below.</p>\n</blockquote>\n<p>Sorry, but I must complain, this is really a terrible design. The reference manual admits, \"okay, this is an environment variable\" but a variable that is very unconventional and cannot changed from the shell environment.</p>",
+        "id": 507666577,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742799944
+    },
+    {
+        "content": "<p>at least some warning or error message should be given because it is very easy to make mistakes here. But everything just silently works, and no one can realize, \"oh damn, I didn't properly set the environment variable\". No one could have imagined that Isabelle cannot support such conventional things.</p>",
+        "id": 507668535,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742800721
+    },
+    {
+        "content": "<p>Okay, I tried to add a local settings file under the root path of my project </p>\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"n\">my</span><span class=\"o\">-</span><span class=\"n\">project/</span>\n<span class=\"o\">|-</span><span class=\"w\"> </span><span class=\"n\">etc</span>\n<span class=\"w\">   </span><span class=\"o\">|-</span><span class=\"w\"> </span><span class=\"n\">settings</span>\n<span class=\"o\">|-</span><span class=\"w\"> </span><span class=\"n\">ROOT</span>\n</code></pre></div>\n<p>Now, if I directly run <code>isabelle build -D. MY_PROJECT</code>, <code>etc/settings</code> will not be loaded and the building process will not use any env var settings in the file.<br>\nUnless you add <code>my-project</code> into Isabelle's components, the <code>etc/settings</code> will not take effect.<br>\nThis is also confusing and more like a bug because I did say <code>-D. MY_PROJECT</code>, which should reasonably load the <code>etc/settings</code>.</p>",
+        "id": 507670148,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742801310
+    },
+    {
+        "content": "<p>why would you ever set java options for a component and not globally?</p>",
+        "id": 507672504,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742802060
+    },
+    {
+        "content": "<p><code>~/.isabelle/etc/settings</code> or <code>~/.isabelle/Isabelle2025/etc/settings</code> is the place to put those settings</p>",
+        "id": 507672802,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742802141
+    },
+    {
+        "content": "<p>because 4GB mem is too small. I'm working on some machine learning experiment (especially reinforcement learning) and it would be beneficial to make a heap image for the entire AFP. So, I'm using a supercomputer (200GB+ mem) to build a very large bunch of theories (~2.4k theories). In this case, the default 4GB Java mem is far for sufficiency</p>",
+        "id": 507672906,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742802177
+    },
+    {
+        "content": "<p>So far, while I have hit similar issues, it was only in places where I was like \"Yeah, okay, this is something that I (as a expert want) but is too easy to misuse\"</p>",
+        "id": 507673006,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742802211
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507672906\">said</a>:</p>\n<blockquote>\n<p>because 4GB mem is too small. I'm working on some machine learning experiment (especially reinforcement learning) and it would be beneficial to make a heap image for the entire AFP. So, I'm using a supercomputer (200GB+ mem) to build a very large bunch of theories (~2.4k theories). In this case, the default 4GB Java mem is far for sufficiency</p>\n</blockquote>\n<p>… so the global etc/settings is what you want to have as sane option on that supercomputer</p>",
+        "id": 507673169,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742802247
+    },
+    {
+        "content": "<p>Certainly you can put<br>\n them into ~/.isabelle/Isabelle2025/etc/settings globally, but this kind of setting should (ideally) be set locally only</p>",
+        "id": 507673185,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742802251
+    },
+    {
+        "content": "<p>… No, I don't think so.</p>",
+        "id": 507673429,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742802323
+    },
+    {
+        "content": "<p>whenever you are on this computer you want the more memory</p>",
+        "id": 507673508,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742802347
+    },
+    {
+        "content": "<p>well, this session is the only huge one that requires a lot of Java mem. In other cases, I'd prefer to leave memory to Poly/ML. For this reason, we don't want the Java to consume too much memory right? and want its GC more eagle to save mem. Therefore, I cannot set this globally.</p>\n<p>Anyway, where to put the setting file, this is really a small matter because I'm using some scripts and can always remove / reset the global setting.</p>\n<p>The thing is, for almost 100% engineers, if you mention environment variables to them, they will want to change them by <code>VAR=xxx command</code> or <code>export VAR = xxx; command</code>. Certainly, it's okay to have some special design to use some setting files, but the env var settings from the shell environment should also take effect because this is what is conventional and engineers would expect. If you want to introduce some unconventional things, it would be definitely appreciated if you warn users when they make mistakes.</p>",
+        "id": 507674985,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742802793
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507674985\">said</a>:</p>\n<blockquote>\n<p>In other cases, I'd prefer to leave memory to Poly/ML. For this reason, we don't want the Java to consume too much memory right?</p>\n</blockquote>\n<p>No, Poly/ML is optimized for 16GB of heap memory max. Unless you explicitly change the ML system, it won't even be able to use more than that due to how values are represented.</p>",
+        "id": 507683764,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742805198
+    },
+    {
+        "content": "<p>And be aware that changing this can have drastic performance implications.</p>",
+        "id": 507683854,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742805231
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507674985\">said</a>:</p>\n<blockquote>\n<p>The thing is, for almost 100% engineers, if you mention environment variables to them, they will want to change them by <code>VAR=xxx command</code> or <code>export VAR = xxx; command</code>. Certainly, it's okay to have some special design to use some setting files, but the env var settings from the shell environment should also take effect because this is what is conventional and engineers would expect. If you want to introduce some unconventional things, it would be definitely appreciated if you warn users when they make mistakes.</p>\n</blockquote>\n<p>Engineers maybe, but this is theorem proving: We don't want our environment to be polluted by implicit variables (and the manual does warn you).</p>",
+        "id": 507684454,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742805402
+    },
+    {
+        "content": "<p><code>Xmx</code> states a maximum memory usage, not a minimum. So you are likely to not see a change by setting the option.</p>",
+        "id": 507684707,
+        "sender_full_name": "Mathias Fleury",
+        "timestamp": 1742805474
+    },
+    {
+        "content": "<p><span class=\"user-mention silent\" data-user-id=\"348400\">Fabian Huch</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507684454\">said</a>:</p>\n<blockquote>\n<p><span class=\"user-mention silent\" data-user-id=\"418224\">Qiyuan Xu</span> <a href=\"#narrow/channel/238552-Beginner-Questions/topic/stubborn.20environment.20variable/near/507674985\">said</a>:</p>\n<blockquote>\n<p>The thing is, for almost 100% engineers, if you mention environment variables to them, they will want to change them by <code>VAR=xxx command</code> or <code>export VAR = xxx; command</code>. Certainly, it's okay to have some special design to use some setting files, but the env var settings from the shell environment should also take effect because this is what is conventional and engineers would expect. If you want to introduce some unconventional things, it would be definitely appreciated if you warn users when they make mistakes.</p>\n</blockquote>\n<p>Engineers maybe, but this is theorem proving: We don't want our environment to be polluted by implicit variables (and the manual does warn you).</p>\n</blockquote>\n<p>Hi, Fabian, I agree with the need to keep a specialized environment. I don't want to change the current design but only hope to add warning messages in the command line interface if the actual values taken by the system are different from the real environment variables.</p>\n<p>Moreover, environment variable is a <em>defined term</em> that has a specific meaning in today's computer systems.  You cannot call a variable as an environment variable just because it is determined by the environment. If the variables in Isabelle cannot be changed by the OS interfaces for environment variables, they are not environment variables but merely <em>configuration variables</em>. The system document shouldn't call them environment variables, which is a big misleading.</p>",
+        "id": 507715991,
+        "sender_full_name": "Qiyuan Xu",
+        "timestamp": 1742812685
+    },
+    {
+        "content": "<p>I agree that a warning could be useful. In what sense do Isabelle environment variables not adhere to the POSIX standard?</p>",
+        "id": 507742357,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742818585
+    },
+    {
+        "content": "<p>It specifically allows user-defined special implementations as well as readonly variables.</p>",
+        "id": 507743092,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1742818770
+    }
+]

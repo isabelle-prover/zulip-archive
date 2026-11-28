@@ -1,0 +1,38 @@
+[
+    {
+        "content": "<p>I am trying to build several sessions, some of which have the option <code>document=pdf</code> enabled in their ROOT files. I want to build the sessions without generating the documents, but running something like<br>\n<code>isabelle build ... -o document=false</code> does not seem to work. Is this not the right way to suppress the document generation for this specific build?</p>",
+        "id": 510961231,
+        "sender_full_name": "Adem Rimpapa",
+        "timestamp": 1744125187
+    },
+    {
+        "content": "<p>Sorry to necro this thread. Did you ever figure it out? I'm running into the same issue.</p>",
+        "id": 639419259,
+        "sender_full_name": "Bob Rubbens",
+        "timestamp": 1794390787
+    },
+    {
+        "content": "<p>Session options take precedence, so you cannot overwrite it like that.<br>\nIf the session does not set <code>document_variants</code>, you may be able to skip document generation by using <code>-o document_variants=</code> (i.e. empty document variants)</p>",
+        "id": 639423126,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1794391841
+    },
+    {
+        "content": "<p>Thanks for clearing that up so timely.</p>\n<p>Just to document for anyone else running into this thread: I'm making a setup script for a docker-based artifact, and I've settled on the following structure: provide two root files (ROOT_no_pdf and ROOT_pdf), requiring the user to copy the right one in before running my build scripts depending on what they want. That, and including the <code>-c</code> flag in all my <code>isabelle</code> invocations to make sure the cache is cleaned. This ensures PDFs are built when I want them to. Somehow if the theory is in the cache already somehow latex+pdf generation is not triggered. Not a problem but a bit annoying if you're an oblivious noob like me.</p>\n<p>Makes it all a bit slow, luckily my isabelle development takes only a minute to check so that's okay. Would be nice to have an \"on-demand\" PDF generation button in the <code>isabelle</code> tool, though I understand it's not really a priority.</p>",
+        "id": 639425665,
+        "sender_full_name": "Bob Rubbens",
+        "timestamp": 1794392542
+    },
+    {
+        "content": "<p>Maybe you can use <code>isabelle document</code>...? You can <code>build</code> and later use <code>document</code>.</p>",
+        "id": 639428282,
+        "sender_full_name": "Kevin Kappelmann",
+        "timestamp": 1794393255
+    },
+    {
+        "content": "<p>Gosh, not sure how I missed that. If I'll have time I'll experiment with that a bit. Thanks!</p>",
+        "id": 639435915,
+        "sender_full_name": "Bob Rubbens",
+        "timestamp": 1794395347
+    }
+]

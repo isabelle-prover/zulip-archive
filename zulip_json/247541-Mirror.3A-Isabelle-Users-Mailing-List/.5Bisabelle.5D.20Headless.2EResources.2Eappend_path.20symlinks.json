@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p><strong>From:</strong> Kevin Kappelmann &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>\n<p>Hi all,</p>\n<p>in Isabelle/Scala, Headless.Resources uses the default append_path, <br>\nwhich does not resolve symlinks. The same file can thus become two <br>\nnodes, e.g. with a symlink \"/tmp/a -&gt; /tmp/b\" and a headless session</p>\n<p>session.use_theories(List(\"/tmp/a/Scratch\"))<br>\n   session.use_theories(List(\"/tmp/b/Scratch\"))</p>\n<p>loads and checks Scratch twice as two separate nodes.</p>\n<p>Isabelle/jEdit, in contrast, resolves symlinks in its append_path since <br>\ne212e2001b2a. Could Headless.Resources do the same, e.g. with .canonical <br>\ninstead of .expand? Or could the constructor of Headless.Resources be <br>\nmade public, so that applications, like PIDE MCP, can override <br>\nappend_path themselves?</p>\n<p>Best wishes,</p>\n<p>Kevin</p>",
+        "id": 638065508,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1793955556
+    },
+    {
+        "content": "<p><strong>From:</strong> Kevin Kappelmann &lt;<a href=\"mailto:cl-isabelle-users@lists.cam.ac.uk\">cl-isabelle-users@lists.cam.ac.uk</a>&gt;</p>\n<p>Brief update: this is not relevant for my application anymore as I <br>\ndecided to write my own Resources layer for other reasons anyway.</p>\n<p>Best wishes,</p>\n<p>Kevin</p>\n<p>On 06.11.26 09:59, Kevin Kappelmann wrote:</p>\n<blockquote>\n<p>Hi all,</p>\n<p>in Isabelle/Scala, Headless.Resources uses the default append_path, <br>\nwhich does not resolve symlinks. The same file can thus become two <br>\nnodes, e.g. with a symlink \"/tmp/a -&gt; /tmp/b\" and a headless session</p>\n<p>session.use_theories(List(\"/tmp/a/Scratch\"))<br>\n   session.use_theories(List(\"/tmp/b/Scratch\"))</p>\n<p>loads and checks Scratch twice as two separate nodes.</p>\n<p>Isabelle/jEdit, in contrast, resolves symlinks in its append_path since <br>\ne212e2001b2a. Could Headless.Resources do the same, e.g. with .canonical <br>\ninstead of .expand? Or could the constructor of Headless.Resources be <br>\nmade public, so that applications, like PIDE MCP, can override <br>\nappend_path themselves?</p>\n<p>Best wishes,</p>\n<p>Kevin</p>\n</blockquote>",
+        "id": 640176213,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1794595720
+    }
+]

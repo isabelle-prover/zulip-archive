@@ -1,0 +1,111 @@
+<html>
+<head><meta charset="utf-8"><title>Timeout.apply not interrupting in a forked thread (since ... · Mirror: Isabelle Development Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/index.html">Mirror: Isabelle Development Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Timeout.2Eapply.20not.20interrupting.20in.20a.20forked.20thread.20.28since.20.2E.2E.2E.html">Timeout.apply not interrupting in a forked thread (since ...</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="640329396"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Timeout.apply%20not%20interrupting%20in%20a%20forked%20thread%20%28since%20.../near/640329396" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Timeout.2Eapply.20not.20interrupting.20in.20a.20forked.20thread.20.28since.20.2E.2E.2E.html#640329396">(Nov 14 2026 at 14:52)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann via isabelle-dev &lt;<a href="mailto:isabelle-dev@proof.cit.tum.de">isabelle-dev@proof.cit.tum.de</a>&gt;<br>
+<strong>Subject:</strong> Timeout.apply not interrupting in a forked thread (since 86049:b6e33c2b52c9)</p>
+<p>Hi all,</p>
+<p>since 86049:b6e33c2b52c9 (10.11.2026), Timeout.apply no longer <br>
+interrupts Future.join in a forked thread. An example is attached below.</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>isabelle<br>
+theory Scratch<br>
+   imports Pure<br>
+begin</p>
+<p>ML \&lt;open&gt;<br>
+val start = <a href="http://Time.now">Time.now</a> ()<br>
+val _ = Isabelle_Thread.join (Isabelle_Thread.fork<br>
+   (Isabelle_Thread.params "test" |&gt; Isabelle_Thread.interrupts) (fn () =&gt;<br>
+     Timeout.apply (seconds 1.0) (fn () =&gt;<br>
+       Future.join (Future.fork (fn () =&gt; Time.sleep (seconds 5.0)))) ()<br>
+     handle Timeout.TIMEOUT _ =&gt; ()))<br>
+val _ = writeln (Time.toString (<a href="http://Time.now">Time.now</a> () - start))<br>
+\&lt;close&gt;</p>
+<p>end</p>
+
+
+
+<a name="640376401"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Timeout.apply%20not%20interrupting%20in%20a%20forked%20thread%20%28since%20.../near/640376401" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Timeout.2Eapply.20not.20interrupting.20in.20a.20forked.20thread.20.28since.20.2E.2E.2E.html#640376401">(Nov 14 2026 at 22:23)</a>:</h4>
+<p><strong>From:</strong> Makarius &lt;<a href="mailto:makarius@sketis.net">makarius@sketis.net</a>&gt;<br>
+<strong>Subject:</strong> Timeout.apply not interrupting in a forked thread (since 86049:b6e33c2b52c9)</p>
+<p>On 14/11/2026 15:51, Kevin Kappelmann via isabelle-dev wrote:</p>
+<blockquote>
+<p>since 86049:b6e33c2b52c9 (10.11.2026), Timeout.apply no longer interrupts <br>
+Future.join in a forked thread.<br>
+Thanks for the hint. There was another spot where interrupts were missing. See <br>
+now these changesets:</p>
+</blockquote>
+<p>changeset:   86095:0f620b9c12f5<br>
+user:        wenzelm<br>
+date:        Sat Nov 14 19:58:08 2026 +0100<br>
+files:       src/Pure/Concurrent/future.ML<br>
+description:<br>
+proper interrupts for Future.join and the scheduler thread (amending <br>
+b6e33c2b52c9);</p>
+<p>changeset:   86094:20ae53370ed1<br>
+user:        wenzelm<br>
+date:        Sat Nov 14 19:31:23 2026 +0100<br>
+files:       src/Pure/Concurrent/future.ML <br>
+src/Pure/Concurrent/multithreading.ML src/Pure/Concurrent/single_assignment.ML <br>
+src/Pure/Concurrent/syn<br>
+chronized.ML src/Pure/Concurrent/task_queue.ML src/Tools/Metis/make_metis <br>
+src/Tools/Metis/metis.ML<br>
+description:<br>
+clarified names, to emphasize the semantics better (see b6e33c2b52c9);</p>
+<p>Makarius</p>
+
+
+
+<a name="643661289"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247542-Mirror%3A%20Isabelle%20Development%20Mailing%20List/topic/Timeout.apply%20not%20interrupting%20in%20a%20forked%20thread%20%28since%20.../near/643661289" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247542-Mirror.3A-Isabelle-Development-Mailing-List/topic/Timeout.2Eapply.20not.20interrupting.20in.20a.20forked.20thread.20.28since.20.2E.2E.2E.html#643661289">(Nov 25 2026 at 18:21)</a>:</h4>
+<p><strong>From:</strong> Kevin Kappelmann via isabelle-dev &lt;<a href="mailto:isabelle-dev@proof.cit.tum.de">isabelle-dev@proof.cit.tum.de</a>&gt;<br>
+<strong>Subject:</strong> Timeout.apply not interrupting in a forked thread (since 86049:b6e33c2b52c9)</p>
+<p>Hi Makarius,</p>
+<p>Thanks for the quick response! Unfortunately, the example from my <br>
+original mail still does not work. I checked with 86203:c929a2c01c20</p>
+<p>Best wishes,</p>
+<p>Kevin</p>
+<p>On 14.11.26 23:22, Makarius wrote:</p>
+<blockquote>
+<p>On 14/11/2026 15:51, Kevin Kappelmann via isabelle-dev wrote:</p>
+<blockquote>
+<p>since 86049:b6e33c2b52c9 (10.11.2026), Timeout.apply no longer <br>
+interrupts Future.join in a forked thread.<br>
+Thanks for the hint. There was another spot where interrupts were <br>
+missing. See now these changesets:</p>
+</blockquote>
+<p>changeset:   86095:0f620b9c12f5<br>
+user:        wenzelm<br>
+date:        Sat Nov 14 19:58:08 2026 +0100<br>
+files:       src/Pure/Concurrent/future.ML<br>
+description:<br>
+proper interrupts for Future.join and the scheduler thread (amending <br>
+b6e33c2b52c9);</p>
+<p>changeset:   86094:20ae53370ed1<br>
+user:        wenzelm<br>
+date:        Sat Nov 14 19:31:23 2026 +0100<br>
+files:       src/Pure/Concurrent/future.ML src/Pure/Concurrent/ <br>
+multithreading.ML src/Pure/Concurrent/single_assignment.ML src/Pure/ <br>
+Concurrent/syn<br>
+chronized.ML src/Pure/Concurrent/task_queue.ML src/Tools/Metis/ <br>
+make_metis src/Tools/Metis/metis.ML<br>
+description:<br>
+clarified names, to emphasize the semantics better (see b6e33c2b52c9);</p>
+<p>Makarius</p>
+</blockquote>
+
+
+
+<hr><p>Last updated: Nov 28 2026 at 07:02 UTC</p>
+</html>

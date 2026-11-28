@@ -1,0 +1,59 @@
+<html>
+<head><meta charset="utf-8"><title>[isabelle] Kernel soundness patches · Mirror: Isabelle Users Mailing List · Zulip Chat Archive</title></head>
+<h2>Stream: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/index.html">Mirror: Isabelle Users Mailing List</a></h2>
+<h3>Topic: <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Kernel.20soundness.20patches.html">[isabelle] Kernel soundness patches</a></h3>
+
+<hr>
+
+<base href="https://isabelle.zulipchat.com/">
+
+<head><link href="http://isabelle.systems/zulip-archive/style.css" rel="stylesheet"></head>
+
+<a name="643670731"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Kernel%20soundness%20patches/near/643670731" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Kernel.20soundness.20patches.html#643670731">(Nov 25 2026 at 19:02)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Dear colleagues,</p>
+<p>Many of you may have heard rumours about soundness bugs in Isabelle. Today I’m sharing a comprehensive patch for four issues (three of which concern soundness), and just as important, a deeper knowledge of what the issues actually are.</p>
+<p>Two of the soundness bugs concern a small chunk of code whose purpose is to present the user with familiar variable names. That is, when new Bound and Var (unifiable) variables are created, their names are generated from names already present in your subgoal. The names of Bound variables are stored in their binder and have no significance, but Vars must be renamed consistently. The existing code was already correct in all normal circumstances, but not if the “rule” applied to the “proof state” was non-standard in either of two ways:</p>
+<ul>
+<li>having flex-flex constraints (a very obscure artifact of higher order unification)</li>
+<li>having its meta-connectives in the “wrong” order, e.g. “A ==&gt; (!!x. B x)”.</li>
+</ul>
+<p>You cannot actually store a rule with either of those characteristics, but nevertheless they can be created by a bad person. The fix in each case takes a single line of code. These patches were shared to this list by Qiyuan XU on 4 November and are included in the attached patch file.</p>
+<p>An error, though not a soundness issue, could occur if a type variable became instantiated by a function type during unification. The fix to enforce eta-expansion even in recursive calls to HOU. These three issues were introduced around 1991.</p>
+<p>The final issue concerns soundness and has been present probably from the very beginning, i.e. 1986. My aggressive implementation of HOU tried to do the job in a single pass rather than using the layer‑by‑layer approach published by Gérard Huet. Unfortunately, in rare cases, it could create a circular environment and then admit a false unification. The fix is to revert to Huet’s approach. Unfortunately, this fix can affect existing proofs if they are brittle enough to refer to the “indexes” of Vars. I'm attaching two additional patches to cover situations where that happens (once in Isabelle/ZF/UNITY and ones in the AutoCorres2 AFP entry).</p>
+<p>Obviously, these problems need to be fixed and will be in the next release. Given how difficult these are to trigger, people should not feel obliged to patch their current release. But, in case you want to, here is the patch. Set $SRC to point to the src directory of your copy of Isabelle and type</p>
+<p>patch -d $SRC -p2 &lt; isabelle2026-soundness-04-05-07-08.patch</p>
+<p>My particular thanks to Dmitriy Traytel and others for investigating these issues. He has even proved the correctness of the patched code. But we will not be resting on our laurels and will probably be adopting a proposal by Simon Wimmer to pull HOU out of the kernel altogether. That would remove nearly 700 lines of particularly fiendish code.</p>
+<p>Larry</p>
+<p><a href="/user_uploads/14278/Ub05juuoMGKZmBRDPbW-DKLl/isabelle2026-soundness-04-05-07-08.patch">isabelle2026-soundness-04-05-07-08.patch</a><br>
+<a href="/user_uploads/14278/5yC3b_-0xzKT26wn_3BxEbiC/06-zf-unity-indices.patch">06-zf-unity-indices.patch</a><br>
+<a href="/user_uploads/14278/ivhMa6W3MxD4P4Ob9x1qW77Y/AutoCorres2-maxidx.patch">AutoCorres2-maxidx.patch</a></p>
+
+
+
+<a name="643685662"></a>
+<h4><a href="https://isabelle.zulipchat.com/#narrow/stream/247541-Mirror%3A%20Isabelle%20Users%20Mailing%20List/topic/%5Bisabelle%5D%20Kernel%20soundness%20patches/near/643685662" class="zl"><img src="http://isabelle.systems/zulip-archive/assets/img/zulip.svg" alt="view this post on Zulip" style="width:20px;height:20px;"></a> Email Gateway <a href="http://isabelle.systems/zulip-archive/stream/247541-Mirror.3A-Isabelle-Users-Mailing-List/topic/.5Bisabelle.5D.20Kernel.20soundness.20patches.html#643685662">(Nov 25 2026 at 20:05)</a>:</h4>
+<p><strong>From:</strong> Lawrence Paulson &lt;<a href="mailto:lp15@cam.ac.uk">lp15@cam.ac.uk</a>&gt;</p>
+<p>Dear colleagues,</p>
+<p>Many of you may have heard rumours about soundness bugs in Isabelle. Today I’m sharing a comprehensive patch for four issues (three of which concern soundness), and just as important, a deeper knowledge of what the issues actually are.</p>
+<p>Two of the soundness bugs concern a small chunk of code whose purpose is to present the user with familiar variable names. That is, when new Bound and Var (unifiable) variables are created, their names are generated from names already present in your subgoal. The names of Bound variables are stored in their binder and have no significance, but Vars must be renamed consistently. The existing code was already correct in all normal circumstances, but not if the “rule” applied to the “proof state” was non-standard in either of two ways:</p>
+<ul>
+<li>having flex-flex constraints (a very obscure artifact of higher order unification)</li>
+<li>having its meta-connectives in the “wrong” order, e.g. “A ==&gt; (!!x. B x)”.</li>
+</ul>
+<p>You cannot actually store a rule with either of those characteristics, but nevertheless they can be created by a bad person. The fix in each case takes a single line of code. These patches were shared to this list by Qiyuan XU on 4 November and are included in the attached patch file.</p>
+<p>An error, though not a soundness issue, could occur if a type variable became instantiated by a function type during unification. The fix to enforce eta-expansion even in recursive calls to HOU. These three issues were introduced around 1991.</p>
+<p>The final issue concerns soundness and has been present probably from the very beginning, i.e. 1986. My aggressive implementation of HOU tried to do the job in a single pass rather than using the layer‑by‑layer approach published by Gérard Huet. Unfortunately, in rare cases, it could create a circular environment and then admit a false unification. The fix is to revert to Huet’s approach. Unfortunately, this fix can affect existing proofs if they are brittle enough to refer to the “indexes” of Vars. I'm attaching two additional patches to cover situations where that happens (once in Isabelle/ZF/UNITY and ones in the AutoCorres2 AFP entry).</p>
+<p>Obviously, these problems need to be fixed and will be in the next release. Given how difficult these are to trigger, people should not feel obliged to patch their current release. But, in case you want to, here is the patch. Set $SRC to point to the src directory of your copy of Isabelle and type</p>
+<p>patch -d $SRC -p2 &lt; isabelle2026-soundness-04-05-07-08.patch</p>
+<p>My particular thanks to Dmitriy Traytel and others for investigating these issues. He has even proved the correctness of the patched code. But we will not be resting on our laurels and will probably be adopting a proposal by Simon Wimmer to pull HOU out of the kernel altogether. That would remove nearly 700 lines of particularly fiendish code.</p>
+<p>Larry</p>
+<p><a href="/user_uploads/14278/oRVQ6-zkvOaC7sJKlHc5ZYaa/isabelle2026-soundness-04-05-07-08.patch">isabelle2026-soundness-04-05-07-08.patch</a><br>
+<a href="/user_uploads/14278/n-ylXI8JqEMrOWvySpN2JEIw/06-zf-unity-indices.patch">06-zf-unity-indices.patch</a><br>
+<a href="/user_uploads/14278/Yya3mnsWQQbusvvTt06Xje9z/AutoCorres2-maxidx.patch">AutoCorres2-maxidx.patch</a></p>
+
+
+
+<hr><p>Last updated: Nov 28 2026 at 07:02 UTC</p>
+</html>

@@ -1,0 +1,80 @@
+[
+    {
+        "content": "<p>I recently installed the isabelle linter (for Isabelle2025) and now when I open jEDIT, I get this error in Linter.thy: <br>\n\"Outer syntax error⌂: command expected,<br>\nbut identifier endtheory⌂ was found\" for the keyword end.</p>\n<div class=\"spoiler-block\"><div class=\"spoiler-header\">\n<p>theory file for reference</p>\n</div><div class=\"spoiler-content\" aria-hidden=\"true\">\n<div class=\"codehilite\" data-code-language=\"Isabelle\"><pre><span></span><code><span class=\"k\">theory</span><span class=\"w\"> </span><span class=\"n\">Linter</span>\n<span class=\"w\">  </span><span class=\"kp\">imports</span><span class=\"w\"> </span><span class=\"n\">Pure</span>\n<span class=\"k\">begin</span>\n\n<span class=\"k\">ML</span><span class=\"w\"> </span><span class=\"s\">‹</span>\n<span class=\"s\">open Command;</span>\n\n<span class=\"s\">val _ =</span>\n<span class=\"s\">  let</span>\n<span class=\"s\">    fun get_out s = case s of</span>\n<span class=\"s\">        \"info\" =&gt; SOME writeln</span>\n<span class=\"s\">      | \"warn\" =&gt; SOME warning</span>\n<span class=\"s\">      | \"error\" =&gt; SOME error</span>\n<span class=\"s\">      | _ =&gt; NONE</span>\n<span class=\"s\">    fun write_msgs args =</span>\n<span class=\"s\">      case args of</span>\n<span class=\"s\">       level :: msg :: args1 =&gt;</span>\n<span class=\"s\">          let</span>\n<span class=\"s\">           val msg1 = (msg |&gt; XML.parse |&gt; YXML.string_of) handle _ =&gt; msg</span>\n<span class=\"s\">            val _ = case get_out level of SOME out =&gt; out msg1 | NONE =&gt; ()</span>\n<span class=\"s\">          in write_msgs args1 end</span>\n<span class=\"s\">      | _ =&gt; ()</span>\n<span class=\"s\">  in</span>\n<span class=\"s\">    print_function \"print_xml\"</span>\n<span class=\"s\">      (fn {args, ...} =&gt;</span>\n<span class=\"s\">        SOME {delay = NONE, pri = Task_Queue.urgent_pri + 1, persistent = false, strict = false,</span>\n<span class=\"s\">          print_fn = fn _ =&gt; fn _ =&gt; write_msgs args})</span>\n<span class=\"s\">  end;</span>\n<span class=\"s\">›</span>\n\n<span class=\"k\">end</span>\n</code></pre></div>\n</div></div>\n<p>Say I change end to \"en\". I know this is clearly wrong, however, the error I get in jEdit's output window is that \"entheory\" is not found. For some reason, it keeps on appending the string theory to the end of a file. How do I even being to debug this? </p>\n<p>I would post an issue, but this is my first time finding a bug like this so I wasn't sure if it was due to some silly mistake on my part</p>",
+        "id": 592591901,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777839938
+    },
+    {
+        "content": "<p>The current version is Isabelle2025-2.</p>",
+        "id": 592667226,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1777880817
+    },
+    {
+        "content": "<p>hmm<br>\nIs there a general assumption that a slightly older version of isabelle loses all support the moment a new version is released?</p>",
+        "id": 592667657,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777880900
+    },
+    {
+        "content": "<p>Yes.</p>",
+        "id": 592667762,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1777880921
+    },
+    {
+        "content": "<p>Though you might be able to run an older version of Isabelle with an older version of tool x as long as they match.</p>",
+        "id": 592667986,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1777880964
+    },
+    {
+        "content": "<p>Yes. I'm specifically running a version of the linter released for Isabelle2025</p>",
+        "id": 592668097,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777880993
+    },
+    {
+        "content": "<p>i haven't yet moved to 2025-2 mostly due to some porting work that is on the backburner</p>",
+        "id": 592668245,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777881031
+    },
+    {
+        "content": "<p>While that is fine, discussing issues with old versions is not helpful.</p>",
+        "id": 592669419,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1777881341
+    },
+    {
+        "content": "<p>In any case, I see that the same message appears in Isabelle2025-2. But other than this message, everything works fine.</p>",
+        "id": 592669613,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1777881395
+    },
+    {
+        "content": "<p>I understand. <br>\nI'll keep this in mind for any other system queries I have in the future.</p>",
+        "id": 592669829,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777881461
+    },
+    {
+        "content": "<p>As a further incentive to update: In Isabelle2025-2, you will not see the <code>Linter</code> theory error-highlighted unless you open it.</p>",
+        "id": 592682829,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1777885217
+    },
+    {
+        "content": "<p>(it auto-opens in 2025, I didn't open it myself)</p>",
+        "id": 592696504,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777889228
+    },
+    {
+        "content": "<p>or are you trying to say that Linter.thy isn't opened automatically</p>",
+        "id": 592696617,
+        "sender_full_name": "Ant S.",
+        "timestamp": 1777889254
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "content": "<p>From: Florian Haftmann &lt;<a href=\"mailto:florian.haftmann@cit.tum.de\">florian.haftmann@cit.tum.de</a>&gt;<br>\nIn</p>\n<p><a href=\"https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/Fixed_Length_Vector/Fixed_Length_Vector.thy?ref_type=heads#L272\">https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/Fixed_Length_Vector/Fixed_Length_Vector.thy?ref_type=heads#L272</a></p>\n<p>there is</p>\n<blockquote>\n<p>lift_definition vec_lambda :: ‹('b :: index ⇒ 'a) ⇒ 'a ^ 'b› (binder ‹χ› 10)<br>\n  is ‹λf. map f indexes› by simp</p>\n</blockquote>\n<p>The term ‹vec_lambda (λv. f v i)› then prints as ‹χv. f v i›, which does <br>\nnot parse again, but ‹χ v. f v i› does.</p>\n<p>The cause might be that χ and v share the same lexical category.</p>\n<p>What to do here?  My first idea would be to change the syntax to (binder <br>\n‹χ › 10) but there might be more behind it.</p>\n<p>Florian</p>\n<p><a href=\"/user_uploads/14278/7c8i7DEZ-WKcbs2TjR73kPXq/OpenPGP_0xA707172232CFA4E9.asc\">OpenPGP_0xA707172232CFA4E9.asc</a><br>\n<a href=\"/user_uploads/14278/AF5VV4mZcxZCKVtjJ48GbS9-/OpenPGP_signature.asc\">OpenPGP_signature.asc</a></p>",
+        "id": 515673305,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1746177720
+    },
+    {
+        "content": "<p>From: Makarius &lt;<a href=\"mailto:makarius@sketis.net\">makarius@sketis.net</a>&gt;<br>\nOn 02/05/2025 11:21, Florian Haftmann wrote:</p>\n<blockquote>\n<p>In</p>\n<p><a href=\"https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/\">https://foss.heptapod.net/isa-afp/afp-devel/-/blob/branch/default/thys/</a> <br>\nFixed_Length_Vector/Fixed_Length_Vector.thy?ref_type=heads#L272</p>\n<p>there is</p>\n<blockquote>\n<p>lift_definition vec_lambda :: ‹('b :: index ⇒ 'a) ⇒ 'a ^ 'b› (binder ‹χ› 10)<br>\n  is ‹λf. map f indexes› by simp</p>\n</blockquote>\n<p>The term ‹vec_lambda (λv. f v i)› then prints as ‹χv. f v i›, which does not <br>\nparse again, but ‹χ v. f v i› does.</p>\n<p>The cause might be that χ and v share the same lexical category.</p>\n</blockquote>\n<p>The problem is indeed that greek and latin letters may be freely mixed to form <br>\nan identifier. That issue was swept under the carpet many decades ago by <br>\ntreating \\&lt;lambda&gt; as a non-letter. So it happens to work there, but in <br>\ngenerality it doesn't.</p>\n<p>The usual workaround in library theories is to use an extra space like this:</p>\n<blockquote>\n<p>My first idea would be to change the syntax to (binder ‹χ › <br>\n10) but there might be more behind it.</p>\n</blockquote>\n<p>I have no better idea right now. It falls into the category \"our bad habits <br>\nhave become best practices\".</p>\n<p>Makarius</p>",
+        "id": 519562416,
+        "sender_full_name": "Email Gateway",
+        "timestamp": 1747818905
+    }
+]

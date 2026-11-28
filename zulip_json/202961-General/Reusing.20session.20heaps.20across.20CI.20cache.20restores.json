@@ -1,0 +1,26 @@
+[
+    {
+        "content": "<p>Hi all, question about <code>isabelle build</code> and CI caching.</p>\n<p>I have a GitHub Actions job that builds a heavy session dependency cone:<br>\nAFP <code>Berlekamp_Zassenhaus</code> + <code>Word_Lib</code> + a small vendored session, around 50 min cold.</p>\n<p>To avoid rebuilding on every run, I set <code>ISABELLE_HOME_USER</code> inside the workspace and cache it across runs, including the AFP/component directories. On a later run the cache restores cleanly. Sources and absolute paths appear identical; only mtimes differ. But <code>isabelle build -bv &lt;Session&gt;</code> still rebuilds the whole dependency cone instead of reusing the restored heaps.</p>\n<p>What I’m trying to understand:</p>\n<ol>\n<li>\n<p>Is <code>isabelle build</code>’s up-to-date check expected to be content/path based, so restored heaps should be reused if sources and paths are identical?</p>\n</li>\n<li>\n<p>Or are mtimes, component registration state, build logs, session database identity, etc. part of the validity check in a way that can legitimately force a rebuild after a CI cache restore?</p>\n</li>\n<li>\n<p>Is there an idiomatic/supported way to make session images reusable across CI runs? For example, should I cache a particular <code>ISABELLE_HEAPS</code> layout, use a prebuilt component, avoid changing <code>ISABELLE_HOME_USER</code>, or something else?</p>\n</li>\n</ol>\n<p>One possible culprit: my setup re-runs</p>\n<div class=\"codehilite\"><pre><span></span><code>isabelle components -u &lt;afp&gt;/thys\nisabelle components -u &lt;saw-lib&gt;\n</code></pre></div>\n\n<p>on every CI run before building. Could repeated component registration perturb the session graph or invalidate the restored build state?</p>\n<p>The concrete repo is here if useful:<br>\n<a href=\"https://github.com/amarshat/pqc-assay\">https://github.com/amarshat/pqc-assay</a></p>\n<p>The relevant setup script is <code>scripts/setup_isabelle_cryptol.sh</code>, and the GitHub Actions <code>verify</code> job does the caching.</p>",
+        "id": 601208049,
+        "sender_full_name": "Amar Akshat",
+        "timestamp": 1780940625
+    },
+    {
+        "content": "<p>Digests depend only on content and options. To make them resuable in a CI system I would pull them into a database and materialize them when needed, like how it is done for the distributed build already.</p>",
+        "id": 601819943,
+        "sender_full_name": "Fabian Huch",
+        "timestamp": 1781103332
+    },
+    {
+        "content": "<p>Thanks - this sent me to actually measure it. Locally, session-heap reuse is exactly content+options digest based: it survives a tar round-trip of the store, and even survives touching the AFP sources to newer than the heaps (no rebuild). So mtimes/paths aren't the issue.</p>\n<p>Turns out my CI just wasn't persisting the right thing - I was caching only the toolchain dir, not <code>~/.isabelle/.../heaps</code> (the heaps + per-session build database). <br>\nOnce I cache that store, the warm path reuses the AFP/Cryptol cone instead of rebuilding. Confirming on the actual runner now.</p>\n<p>For a single runner that on-disk store seems sufficient; I can see why the build_process database is the right answer once you're distributing across machines. Thanks for the pointer.</p>",
+        "id": 601950492,
+        "sender_full_name": "Amar Akshat",
+        "timestamp": 1781132900
+    },
+    {
+        "content": "<p>Confirmed on the runner: persisting the heap store makes the warm build reuse the AFP/Cryptol cone - the \"Build AFP + Cryptol\" step dropped from ~60–90 min to 21 seconds, total verify run ~3 min. As you said, it's purely the content+options digest; my CI just wasn't persisting ~/.isabelle/.../heaps (I was caching only the toolchain dir).<br>\n Config: <a href=\"https://github.com/amarshat/pqc-assay/blob/main/.github/workflows/verify.yml\">https://github.com/amarshat/pqc-assay/blob/main/.github/workflows/verify.yml</a> - and the warm run showing the 21s step: <a href=\"https://github.com/amarshat/pqc-assay/actions/runs/27334580624\">https://github.com/amarshat/pqc-assay/actions/runs/27334580624</a></p>\n<p>Thanks again - for a single runner the on-disk store is enough.</p>",
+        "id": 602087552,
+        "sender_full_name": "Amar Akshat",
+        "timestamp": 1781170776
+    }
+]
